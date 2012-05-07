@@ -72,7 +72,12 @@ namespace CadEditor
             return 0x1C354 + 0x10 * palId;
         }
 
-        public static List<ScreenRec> buildScreenRecs(int levelNo)
+        public static int getBackTileAddr(int levelNo)
+        {
+            return 0x1E909 + levelNo * 0x10;
+        }
+
+        public static List<ScreenRec> buildScreenRecs(int levelNo, bool stopOnDoor)
         {
              var lr = Globals.levelData[levelNo];
              int width = lr.getWidth();
@@ -90,44 +95,124 @@ namespace CadEditor
                  dirs[i] = Globals.romdata[lr.getActualDirsAddr() + i];
              }
              LevelLayerData curLevelLayerData = new LevelLayerData(width, height, layer, scroll, dirs);
-             int curIndex = getStartLoc(levelNo);
-             int curDoor = 0;
-             int prevDoor = curDoor;
-             var roomsList = new List<List<ScreenRec>>();
-             List<ScreenRec> curRoomList = new List<ScreenRec>();
-             roomsList.Add(curRoomList);
-             bool needChangeRoom = false;
-             while (curIndex != -1 && curRoomList.Count < MAX_SCREEN_LIST_LEN && roomsList.Count < MAX_SCREEN_LIST_LEN)
-             {
-                 if (curIndex < 0 || curIndex >= curLevelLayerData.width * curLevelLayerData.height)
-                     break;
-                 byte v = curLevelLayerData.layer[curIndex];
-                 int x = curIndex % curLevelLayerData.width;
-                 int y = curIndex / curLevelLayerData.width;
-                 bool backSort = getBacksort(curLevelLayerData, curIndex);
-                 curRoomList.Add(new ScreenRec(v, (byte)x, (byte)y, prevDoor, backSort));
-                 if (needChangeRoom)
-                 {
-                     curRoomList = new List<ScreenRec>();
-                     roomsList.Add(curRoomList);
-                     needChangeRoom = false;
-                 }
 
-                 curIndex = getNextIndex(curLevelLayerData, curIndex);
-                 int nextDoor = getNextDoor(curLevelLayerData, curIndex);
-                 prevDoor = curDoor;
-                 if (nextDoor != 0)
-                 {
-                     curDoor = nextDoor;
-                     needChangeRoom = true;
-                 }
-             }
-             //sort rooms
-             roomsList.Sort(compareRooms);
-             var res = new List<ScreenRec>();
-             for (int i = 0; i < roomsList.Count; i++)
-                 res.AddRange(roomsList[i]);
-             return res;
+             int[] roomInds = new int[width * height];
+             for (int i = 0; i < width * height; i++)
+                 roomInds[i] = -1;
+
+            List<int> doorsIndexes = new List<int>();
+            doorsIndexes.Add(0);
+            //sort doors left to right
+            for (int i = 0; i < width; i++)
+              for (int j = height-1; j >=0 ; j--)
+            {
+                int curIndex1 = j*width + i;
+                int doorIndex = curLevelLayerData.scroll[curIndex1] & 0x1F;
+                if (doorIndex > 0 && doorIndex != 25 /*hack for last door with no exit*/)
+                    doorsIndexes.Add(curIndex1);
+            }
+            List<int> startIndexes = new List<int>();
+            //first stage. marking layout
+            for (int doorInd = 0; doorInd < doorsIndexes.Count; doorInd++)
+            {
+                int doorNo = curLevelLayerData.scroll[doorsIndexes[doorInd]] & 0x1F;
+                int curIndex = doorInd == 0 ? getStartLoc(levelNo) : Globals.doorsData[doorNo-1].startLoc;
+                if (curIndex >= 0 && curIndex < width * height)
+                {
+                    roomInds[curIndex] = doorNo;
+                    startIndexes.Add(curIndex);
+                }
+                int roomLen = 0;
+                List<int> newWays = new List<int>();
+                while (roomLen < MAX_SCREEN_LIST_LEN)
+                {
+                    int scrollVal = curLevelLayerData.scroll[curIndex] >> 5;
+                    int nextIndex = getNextIndex(curLevelLayerData, curIndex, 0, stopOnDoor);
+                    if (scrollVal == 7)
+                    {
+                        int newWayIndex = getNextIndex(curLevelLayerData, curIndex, 1);
+                        if (newWayIndex != -1 && roomInds[newWayIndex] == -1 && curLevelLayerData.layer[newWayIndex]!=0)
+                            newWays.Add(newWayIndex);
+                    }
+                    if (nextIndex != -1 && roomInds[nextIndex] == -1 && layer[nextIndex] !=0)
+                    {
+                        curIndex = nextIndex;
+                    }
+                    else if (newWays.Count > 0)
+                    {
+                        curIndex = newWays[0];
+                        newWays.RemoveAt(0);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                    roomLen++;
+                    if (doorInd == 0)
+                    {
+                        roomInds[curIndex] = 0;
+                    }
+                    else
+                    {
+                        roomInds[curIndex] = doorNo;
+                    }
+                }
+            }
+
+            //sort start rooms
+            doorsIndexes.Sort(makeSortDoorsForExits(curLevelLayerData));
+
+            //second stage. get room list
+            var res = new List<ScreenRec>();
+            for (int doorInd = 0; doorInd < doorsIndexes.Count; doorInd++)
+            {
+                int doorNo = doorInd == 0 ? 0 : curLevelLayerData.scroll[doorsIndexes[doorInd]] & 0x1F;
+                for (int y = height - 1; y >= 0; y--)
+                {
+                    int dir = curLevelLayerData.dirs[y];
+                    if (dir == 0)
+                    {
+                        for (int x = 0; x < width; x++)
+                            if (roomInds[y*width+x] == doorNo)
+                            {
+                                int curIndex1 = y * width + x;
+                                bool upsort = getUpsort(curLevelLayerData, curIndex1);
+                                if (res.FindIndex((scr)=>{ return scr.no == layer[curIndex1];})==-1)
+                                  res.Add(new ScreenRec(layer[curIndex1], (byte)x, (byte)y, doorNo, false, upsort));
+                            }
+                    }
+                    else
+                    {
+                        for (int x = width-1; x >=0; x--)
+                            if (roomInds[y * width + x] == doorNo)
+                            {
+                                int curIndex1 = y * width + x;
+                                bool upsort = getUpsort(curLevelLayerData, curIndex1);
+                                if (res.FindIndex((scr) => { return scr.no == layer[curIndex1]; }) == -1)
+                                  res.Add(new ScreenRec(layer[curIndex1], (byte)x, (byte)y, doorNo, false, upsort));
+                            }
+                    }
+                }
+            }
+            return res;
+        }
+
+        private static Comparison<int> makeSortDoorsForExits(LevelLayerData currentLevelData)
+        {
+            return (x, y) => { return sortDoorsForExits(currentLevelData, x, y); };
+        }
+
+        private static int sortDoorsForExits(LevelLayerData curLevelLayerData, int doorIndex1, int doorIndex2)
+        {
+            if (doorIndex1 == 0)
+                return doorIndex2 == 0 ? 0 : -1;
+            else if (doorIndex2==0)
+                return 1;
+            int doorNo1 = doorIndex1 == 0 ? 0 : curLevelLayerData.scroll[doorIndex1] & 0x1F;
+            int doorNo2 = doorIndex2 == 0 ? 0 : curLevelLayerData.scroll[doorIndex2] & 0x1F;
+            var r1 = Globals.doorsData[doorNo1 - 1];
+            var r2 = Globals.doorsData[doorNo2 - 1];
+            return r1.scrX > r2.scrX ? 1 : r1.scrX < r2.scrX ? -1 : r1.scrY > r2.scrY ? 1 : r1.scrY < r2.scrY ? -1 : 0;
         }
 
         private static int compareRooms(List<ScreenRec> r1, List<ScreenRec> r2)
@@ -139,13 +224,20 @@ namespace CadEditor
 
         private static bool getBacksort(LevelLayerData curLevelLayerData, int curIndex)
         {
-            int curScroll = curLevelLayerData.scroll[curIndex] >> 5;
+            //int curScroll = curLevelLayerData.scroll[curIndex] >> 5;
             int height = curIndex / curLevelLayerData.width;
             bool backSort = curLevelLayerData.dirs[height] != 0;
             return backSort;
         }
 
-        public static List<ScreenRec> buildScreenRecsForObjects(int levelNo)
+        private static bool getUpsort(LevelLayerData curLevelLayerData, int curIndex)
+        {
+            int curScroll = curLevelLayerData.scroll[curIndex] >> 5;
+            bool upsort = curScroll == 0;
+            return upsort;
+        }
+
+        /*public static List<ScreenRec> buildScreenRecsForObjects(int levelNo)
         {
             //preload
             var lr = Globals.levelData[levelNo];
@@ -164,7 +256,6 @@ namespace CadEditor
                 dirs[i] = Globals.romdata[lr.getActualDirsAddr() + i];
             }
             LevelLayerData curLevelLayerData = new LevelLayerData(width, height, layer, scroll, dirs);
-
             List<ScreenRec> res = new List<ScreenRec>();
             for (int y = height - 1; y >= 0; y--)
             {
@@ -181,7 +272,7 @@ namespace CadEditor
             }
             
             return res;
-        }
+        }*/
 
         private static int getNextDoor(LevelLayerData curLevelLayerData, int curIndex)
         {
@@ -190,44 +281,52 @@ namespace CadEditor
             return curLevelLayerData.scroll[curIndex] & 0x1F;
         }
 
-        private static int getNextIndex(LevelLayerData curLevelLayerData, int curIndex)
+        private static int getNextIndex(LevelLayerData curLevelLayerData, int curIndex, int dir=0, bool stopOnDoor = false)
         {
             int scrollVal = curLevelLayerData.scroll[curIndex] >> 5;
             int doorVal = curLevelLayerData.scroll[curIndex] & 0x1F;
-            if (doorVal != 0)
+            if (doorVal != 0 && stopOnDoor)
             {
-                curIndex = getTeleport(doorVal);
-                return curIndex;
+                return -1;
             }
-            else if (scrollVal == 0 || scrollVal == 1 || scrollVal == 2)
+            else
+            if (scrollVal == 0 || scrollVal == 1 || scrollVal == 2)
             {
                 curIndex -= curLevelLayerData.width;
                 return curIndex < 0 ? -1 : curIndex;
             }
             else if (scrollVal == 6)
             {
-                curIndex++;
-                return (curIndex >= curLevelLayerData.width * curLevelLayerData.height) ? -1 : curIndex;
+                ++curIndex;
+                if (curIndex % curLevelLayerData.width == 0)
+                    return -1;
+                return curIndex;
             }
             else if (scrollVal == 7)
             {
-                int dir = curLevelLayerData.getDirForIndex(curIndex);
+                //int dir = curLevelLayerData.getDirForIndex(curIndex);
                 int dirAdd = dir == 0 ? 1 : -1;
                 curIndex += dirAdd;
-                return (curIndex >= curLevelLayerData.width * curLevelLayerData.height || curIndex < 0) ? -1 : curIndex;
+                if (dir == 0 && curIndex % curLevelLayerData.width == 0)
+                    return -1;
+                if (dir != 0 && curIndex % curLevelLayerData.width == curLevelLayerData.width - 1)
+                    return -1;
+                return curIndex;
             }
             else if (scrollVal == 5)
             {
-                curIndex--;
-                return curIndex < 0 ? -1 : curIndex;
+                --curIndex;
+                if (curIndex % curLevelLayerData.width == curLevelLayerData.width - 1)
+                    return -1;
+                return curIndex;
             }
             return -1;
         }
 
-        private static int getTeleport(int doorNo)
+        /*private static int getTeleport(int doorNo)
         {
             return doorNo == 25 ? -1 : doorsData[doorNo - 1].startLoc;
-        }
+        }*/
 
         private static int getStartLoc(int no)
         {
@@ -248,7 +347,7 @@ namespace CadEditor
         public static int VIDEO_PAGE_SIZE = 4096;
         public static int OBJECTS_COUNT = 256;
         public static int PAL_LEN = 16;
-        public static int MAX_SCREEN_LIST_LEN = 32;
+        public static int MAX_SCREEN_LIST_LEN = 64;
     }
 
     public struct LevelObjRec
@@ -303,18 +402,20 @@ namespace CadEditor
 
     public struct ScreenRec
     {
-        public ScreenRec(int no, byte sx, byte sy, int door, bool backSort = false)
+        public ScreenRec(int no, byte sx, byte sy, int door, bool backSort = false, bool upSort = false)
         {
             this.no = no;
             this.sx = sx;
             this.sy = sy;
             this.backSort = backSort;
+            this.upsort = upSort;
             this.door = door;
         }
         public int no;
         public byte sx;
         public byte sy;
         public bool backSort;
+        public bool upsort;
         public int door;
     }
 

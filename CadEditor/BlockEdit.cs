@@ -36,8 +36,17 @@ namespace CadEditor
             setVideo();
             setVideoImage();
             setObjects();
+            setBack();
+            pbBacks.Refresh();
             if (resetDirty)
               dirty = false;
+        }
+
+        private void setBack()
+        {
+            int backAddr = Globals.getBackTileAddr(curActiveLevel);
+            for (int i = 0; i < 16; i++)
+              curActiveBack[i] = Globals.romdata[backAddr + i];
         }
 
         private void setPal()
@@ -137,6 +146,7 @@ namespace CadEditor
         private byte[] palette = new byte[Globals.PAL_LEN];
         private ObjRec[] objects = new ObjRec[256];
         private ImageList[] videoSprites = new ImageList[4];
+        private byte[] curActiveBack = new byte[16];
         private bool dirty;
 
         private string[] subPalItems = { "1", "2", "3", "4" };
@@ -205,10 +215,14 @@ namespace CadEditor
             ComboBox cb = (ComboBox)sender;
             int index = (int)cb.Tag;
             objects[index].typeColor = (byte)((objects[index].typeColor & 0x0F) | (cb.SelectedIndex << 4));
+            //try
+            int t = objects[index].getType();
+            var pbBack = (PictureBox)mapObjects.Controls[index].Controls[4];
+            pbBack.Visible = t >= 0x0E || t == 1;
             dirty = true;
         }
 
-        Image makeObjImage(int index)
+        public Image makeObjImage(int index)
         {
             Bitmap b = new Bitmap(32, 32);
             var obj = objects[index];
@@ -242,6 +256,12 @@ namespace CadEditor
                 Globals.romdata[addr + 0x200 + i] = objects[i].c3;
                 Globals.romdata[addr + 0x300 + i] = objects[i].c4;
                 Globals.romdata[addr + 0x400 + i] = objects[i].typeColor;
+            }
+
+            int backAddr = Globals.getBackTileAddr(curActiveLevel);
+            for (int i = 0; i <16; i++)
+            {
+                Globals.romdata[backAddr + i] = curActiveBack[i];
             }
 
             string romFname = "Chip 'n Dale Rescue Rangers (U) [!].nes";
@@ -345,8 +365,15 @@ namespace CadEditor
                 Panel fp = new Panel();
                 fp.Size = new Size(mapObjects.Width - 25, 32);
                 //
+                Label lb = new Label();
+                lb.Location = new Point(0, 0);
+                lb.Size = new Size(24, 32);
+                lb.Tag = i;
+                lb.Text = String.Format("{0:X}",i);
+                fp.Controls.Add(lb);
+                //
                 PictureBox pb = new PictureBox();
-                pb.Location = new Point(0, 0);
+                pb.Location = new Point(24, 0);
                 pb.Size = new Size(32, 32);
                 pb.Tag = i;
                 pb.MouseClick += new MouseEventHandler(pb_MouseClick);
@@ -354,7 +381,7 @@ namespace CadEditor
                 //
                 ComboBox cbColor = new ComboBox();
                 cbColor.Size = cbSubpalette.Size;
-                cbColor.Location = new Point(36, 0);
+                cbColor.Location = new Point(60, 0);
                 cbColor.Tag = pb;
                 cbColor.DrawMode = DrawMode.OwnerDrawVariable;
                 cbColor.DrawItem += new DrawItemEventHandler(cbSubpalette_DrawItemEvent);
@@ -365,12 +392,19 @@ namespace CadEditor
                 //
                 ComboBox cbType = new ComboBox();
                 cbType.Items.AddRange(objectTypes);
-                cbType.Location = new Point(130, 0);
+                cbType.Location = new Point(156, 0);
                 cbType.Size = new Size(120, 21);
                 cbType.Tag = i;
                 cbType.DropDownStyle = ComboBoxStyle.DropDownList;
                 cbType.SelectedIndexChanged += cbType_SelectedIndexChanged;
                 fp.Controls.Add(cbType);
+                //
+                PictureBox pb2 = new PictureBox();
+                pb2.Location = new Point(280, 0);
+                pb2.Size = new Size(32, 32);
+                pb2.Tag = i;
+                pb2.Visible = false;
+                fp.Controls.Add(pb2);
                 //
                 mapObjects.Controls.Add(fp);
             }
@@ -383,12 +417,17 @@ namespace CadEditor
             for (int i = 0; i < Globals.OBJECTS_COUNT; i++)
             {
                 Panel p = (Panel)mapObjects.Controls[i];
-                PictureBox pb = (PictureBox)p.Controls[0];
+                PictureBox pb = (PictureBox)p.Controls[1];
                 pb.Image = makeObjImage(i);
-                ComboBox cbColor = (ComboBox)p.Controls[1];
+                ComboBox cbColor = (ComboBox)p.Controls[2];
                 cbColor.SelectedIndex = objects[i].getSubpallete();
-                ComboBox cbType = (ComboBox)p.Controls[2];
+                ComboBox cbType = (ComboBox)p.Controls[3];
                 cbType.SelectedIndex = objects[i].getType();
+
+                PictureBox pb2 = (PictureBox)p.Controls[4];
+                pb2.Image = makeObjImage(curActiveBack[i % 16]);
+                int t = objects[i].getType();
+                pb2.Visible = t >= 0x0E || t == 1;
             }
         }
 
@@ -399,6 +438,26 @@ namespace CadEditor
               curDoor = cbDoor.SelectedIndex;
               reloadLevel(false);
             }
+        }
+
+        private void pbBacks_Paint(object sender, PaintEventArgs e)
+        {
+            var g = e.Graphics;
+            for (int i = 0; i < 16; i++)
+                g.DrawImage(makeObjImage(curActiveBack[i]), new Point(i % 8 * 32 + i % 8, i / 8 * 32));
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var f = new BoxBackForm();
+            f.setParentForm(this);
+            f.ShowDialog();
+            reloadLevel(false);
+        }
+
+        public int getActiveLevel()
+        {
+            return curActiveLevel;
         }
     }
 }

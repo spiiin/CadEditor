@@ -22,7 +22,7 @@ namespace CadEditor
 
             cbScreenNo.Items.Clear();
             for (int i = 0; i < SCREEN_COUNT; i++)
-                cbScreenNo.Items.Add(String.Format("{0:X}", i));
+                cbScreenNo.Items.Add(String.Format("{0:X}", i+1));
             cbScreenNo.SelectedIndex = 0;
             setScreens();
 
@@ -105,10 +105,7 @@ namespace CadEditor
         {
             screens = new byte[SCREEN_COUNT][];
             for (int i = 0; i < SCREEN_COUNT; i++)
-            {
-                screens[i] = Video.getScreen(i);
-            }
-            curActiveScreen = 0;
+              screens[i] = Video.getScreen(i);
         }
 
         private void updateMap()

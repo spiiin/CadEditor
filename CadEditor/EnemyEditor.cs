@@ -65,7 +65,8 @@ namespace CadEditor
             for (int i = 0; i < SCREENS_COUNT; i++)
                 scrImages[i] = emptyScreen(512, 512);
 
-            var screenList = Globals.buildScreenRecs(curActiveLevel);
+            bool stopOnDoors = cbStopOnDoors.Checked;
+            var screenList = Globals.buildScreenRecs(curActiveLevel, stopOnDoors);
 
             var sortedScreenList = new List<ScreenRec>(screenList);
             sortedScreenList.Sort((r1, r2) => { return r1.door > r2.door ? 1 : r1.door < r2.door ? -1 : 0; });
@@ -262,13 +263,17 @@ namespace CadEditor
         private void sortObjects()
         {
             List<ObjectRec> sortedObjects = new List<ObjectRec>();
-            List<ScreenRec> sortedScreens = Globals.buildScreenRecs(curActiveLevel);
+            bool stopOnDoor = cbStopOnDoors.Checked;
+            List<ScreenRec> sortedScreens = Globals.buildScreenRecs(curActiveLevel, stopOnDoor);
             for (int i = 0; i < sortedScreens.Count; i++)
             {
                 var scrrec = sortedScreens[i];
                 var objectsAtScreen = objects.FindAll((o) => { return (o.sx == scrrec.sx) && (o.sy == scrrec.sy); });
                 int backSortCoeff = scrrec.backSort ? -1 : 1;
-                objectsAtScreen.Sort((obj1, obj2) => { return obj1.x > obj2.x ? backSortCoeff : obj1.x < obj2.x ? -backSortCoeff : 0; });
+                if (scrrec.upsort)
+                    objectsAtScreen.Sort((obj1, obj2) => { return obj1.y < obj2.y ? 1 : obj1.y > obj2.y ? -1 : 0; });
+                else
+                    objectsAtScreen.Sort((obj1, obj2) => { return obj1.x > obj2.x ? backSortCoeff : obj1.x < obj2.x ? -backSortCoeff : 0; });
                 sortedObjects.AddRange(objectsAtScreen);
             }
             var undefinedObjects = objects.FindAll(isUndefindedObj);
@@ -477,7 +482,8 @@ namespace CadEditor
             var romFname = "Chip 'n Dale Rescue Rangers (U) [!].nes";
             LevelRec lr = Globals.levelRecs[curActiveLevel];
             //write objects
-            sortObjects();
+            if (!cbManualSort.Checked)
+              sortObjects();
             int addrBase = lr.objectsBeginAddr;
             int objCount = lr.objCount;
             if (objects.Count > lr.objCount)
@@ -538,6 +544,8 @@ namespace CadEditor
             {
                 cbCoordX.Enabled = false;
                 cbCoordY.Enabled = false;
+                //btSortDown.Enabled = false;
+                //btSortUp.Enabled = false;
                 return;
             }
             int index = lvObjects.SelectedItems[0].Index;
@@ -545,6 +553,11 @@ namespace CadEditor
             cbCoordY.Enabled = true;
             cbCoordX.SelectedIndex = objects[index].x;
             cbCoordY.SelectedIndex = objects[index].y;
+            if (lvObjects.SelectedIndices.Count > 0)
+            {
+                btSortDown.Enabled = cbManualSort.Checked && lvObjects.SelectedIndices[lvObjects.SelectedIndices.Count - 1] < objects.Count - 1;
+                btSortUp.Enabled = cbManualSort.Checked && lvObjects.SelectedIndices[0] > 0;
+            }
         }
 
         private void btSave_Click(object sender, EventArgs e)
@@ -567,6 +580,55 @@ namespace CadEditor
             cbLevel.SelectedIndexChanged -= cbLevel_SelectedIndexChanged;
             cbLevel.SelectedIndex = curActiveLevel;
             cbLevel.SelectedIndexChanged += cbLevel_SelectedIndexChanged;
+        }
+
+        private void btSortUp_Click(object sender, EventArgs e)
+        {
+            var selInds = new List<int>();
+            for (int i = 0; i < lvObjects.SelectedIndices.Count; i++)
+            {
+                int ind = lvObjects.SelectedIndices[i];
+                selInds.Add(ind);
+                var xchg = objects[ind];
+                objects[ind] = objects[ind - 1];
+                objects[ind - 1] = xchg;
+            }
+            btSortUp.Enabled = lvObjects.SelectedIndices[0] > 1;
+            btSortDown.Enabled = true;
+            fillObjectsListBox();
+            for (int i = 0; i < selInds.Count; i++)
+                lvObjects.Items[selInds[i] - 1].Selected = true;
+            lvObjects.Select();
+            dirty = true;
+        }
+
+        private void btSortDown_Click(object sender, EventArgs e)
+        {
+            var selInds = new List<int>();
+            for (int i = lvObjects.SelectedIndices.Count-1; i >=0 ; i--)
+            {
+                int ind = lvObjects.SelectedIndices[i];
+                selInds.Add(ind);
+                var xchg = objects[ind];
+                objects[ind] = objects[ind + 1];
+                objects[ind + 1] = xchg;
+            }
+            btSortDown.Enabled = lvObjects.SelectedIndices[lvObjects.SelectedIndices.Count-1] < objects.Count - 3;
+            btSortUp.Enabled = true;
+            fillObjectsListBox();
+            for (int i = 0; i < selInds.Count; i++)
+                lvObjects.Items[selInds[i] + 1].Selected = true;
+            lvObjects.Select();
+            dirty = true;
+        }
+
+        private void cbManualSort_CheckedChanged(object sender, EventArgs e)
+        {
+            if (lvObjects.SelectedIndices.Count > 0)
+            {
+                btSortDown.Enabled = cbManualSort.Checked && lvObjects.SelectedIndices[lvObjects.SelectedIndices.Count - 1] < objects.Count - 1;
+                btSortUp.Enabled = cbManualSort.Checked && lvObjects.SelectedIndices[0] > 0;
+            }
         }
 
     }

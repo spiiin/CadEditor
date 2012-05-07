@@ -292,7 +292,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Text = "Chip and Dale Editor v0.5b by spiiin";
+            this.Text = "Chip and Dale Editor v0.6b by spiiin";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();

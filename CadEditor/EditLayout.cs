@@ -388,7 +388,8 @@ namespace CadEditor
         private void btPreview_Click(object sender, EventArgs e)
         {
             saveToFile();
-            var screenList = Globals.buildScreenRecs(curActiveLevel);
+            bool stopOnDoor = cbStopOnDoor.Checked;
+            var screenList = Globals.buildScreenRecs(curActiveLevel, stopOnDoor);
             lvObjects.Items.Clear();
             for (int i = 0; i < screenList.Count; i++)
                 lvObjects.Items.Add(String.Format("{0:X} ({1}:{2}) [{3:X}]", screenList[i].no, screenList[i].sx, screenList[i].sy, screenList[i].door));

@@ -49,6 +49,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.activeBlock = new System.Windows.Forms.PictureBox();
             this.btSave = new System.Windows.Forms.Button();
+            this.cbManualSort = new System.Windows.Forms.CheckBox();
+            this.btSortUp = new System.Windows.Forms.Button();
+            this.btSortDown = new System.Windows.Forms.Button();
+            this.cbStopOnDoors = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.SuspendLayout();
@@ -100,7 +104,7 @@
             this.btLeft.Name = "btLeft";
             this.btLeft.Size = new System.Drawing.Size(53, 22);
             this.btLeft.TabIndex = 31;
-            this.btLeft.Text = "<";
+            this.btLeft.Text = "←";
             this.btLeft.UseVisualStyleBackColor = true;
             this.btLeft.Click += new System.EventHandler(this.btLeft_Click);
             // 
@@ -110,7 +114,7 @@
             this.btRight.Name = "btRight";
             this.btRight.Size = new System.Drawing.Size(53, 22);
             this.btRight.TabIndex = 32;
-            this.btRight.Text = ">";
+            this.btRight.Text = "→";
             this.btRight.UseVisualStyleBackColor = true;
             this.btRight.Click += new System.EventHandler(this.btRight_Click);
             // 
@@ -120,7 +124,7 @@
             this.btUp.Name = "btUp";
             this.btUp.Size = new System.Drawing.Size(53, 22);
             this.btUp.TabIndex = 33;
-            this.btUp.Text = "^";
+            this.btUp.Text = "↑";
             this.btUp.UseVisualStyleBackColor = true;
             this.btUp.Click += new System.EventHandler(this.btUp_Click);
             // 
@@ -130,7 +134,7 @@
             this.btDown.Name = "btDown";
             this.btDown.Size = new System.Drawing.Size(53, 22);
             this.btDown.TabIndex = 34;
-            this.btDown.Text = "V";
+            this.btDown.Text = "↓";
             this.btDown.UseVisualStyleBackColor = true;
             this.btDown.Click += new System.EventHandler(this.btDown_Click);
             // 
@@ -168,7 +172,7 @@
             this.lvObjects.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lvObjects.Location = new System.Drawing.Point(711, 17);
             this.lvObjects.Name = "lvObjects";
-            this.lvObjects.Size = new System.Drawing.Size(192, 448);
+            this.lvObjects.Size = new System.Drawing.Size(192, 424);
             this.lvObjects.SmallImageList = this.objectSprites;
             this.lvObjects.TabIndex = 38;
             this.lvObjects.UseCompatibleStateImageBehavior = false;
@@ -194,7 +198,7 @@
             this.cbCoordY.Items.AddRange(new object[] {
             "Tiles",
             "Obj types"});
-            this.cbCoordY.Location = new System.Drawing.Point(850, 465);
+            this.cbCoordY.Location = new System.Drawing.Point(850, 441);
             this.cbCoordY.Name = "cbCoordY";
             this.cbCoordY.Size = new System.Drawing.Size(53, 21);
             this.cbCoordY.TabIndex = 42;
@@ -208,7 +212,7 @@
             this.cbCoordX.Items.AddRange(new object[] {
             "Tiles",
             "Obj types"});
-            this.cbCoordX.Location = new System.Drawing.Point(793, 465);
+            this.cbCoordX.Location = new System.Drawing.Point(793, 441);
             this.cbCoordX.Name = "cbCoordX";
             this.cbCoordX.Size = new System.Drawing.Size(53, 21);
             this.cbCoordX.TabIndex = 41;
@@ -217,7 +221,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(711, 468);
+            this.label5.Location = new System.Drawing.Point(711, 444);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(76, 13);
             this.label5.TabIndex = 40;
@@ -261,11 +265,60 @@
             this.btSave.UseVisualStyleBackColor = true;
             this.btSave.Click += new System.EventHandler(this.btSave_Click);
             // 
+            // cbManualSort
+            // 
+            this.cbManualSort.AutoSize = true;
+            this.cbManualSort.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbManualSort.Location = new System.Drawing.Point(714, 468);
+            this.cbManualSort.Name = "cbManualSort";
+            this.cbManualSort.Size = new System.Drawing.Size(81, 17);
+            this.cbManualSort.TabIndex = 46;
+            this.cbManualSort.Text = "Manual sort";
+            this.cbManualSort.UseVisualStyleBackColor = true;
+            this.cbManualSort.CheckedChanged += new System.EventHandler(this.cbManualSort_CheckedChanged);
+            // 
+            // btSortUp
+            // 
+            this.btSortUp.Location = new System.Drawing.Point(810, 464);
+            this.btSortUp.Name = "btSortUp";
+            this.btSortUp.Size = new System.Drawing.Size(34, 22);
+            this.btSortUp.TabIndex = 47;
+            this.btSortUp.Text = "↑";
+            this.btSortUp.UseVisualStyleBackColor = true;
+            this.btSortUp.Click += new System.EventHandler(this.btSortUp_Click);
+            // 
+            // btSortDown
+            // 
+            this.btSortDown.Location = new System.Drawing.Point(850, 464);
+            this.btSortDown.Name = "btSortDown";
+            this.btSortDown.Size = new System.Drawing.Size(34, 22);
+            this.btSortDown.TabIndex = 48;
+            this.btSortDown.Text = "↓";
+            this.btSortDown.UseVisualStyleBackColor = true;
+            this.btSortDown.Click += new System.EventHandler(this.btSortDown_Click);
+            // 
+            // cbStopOnDoors
+            // 
+            this.cbStopOnDoors.AutoSize = true;
+            this.cbStopOnDoors.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbStopOnDoors.Checked = true;
+            this.cbStopOnDoors.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbStopOnDoors.Location = new System.Drawing.Point(15, 353);
+            this.cbStopOnDoors.Name = "cbStopOnDoors";
+            this.cbStopOnDoors.Size = new System.Drawing.Size(156, 17);
+            this.cbStopOnDoors.TabIndex = 49;
+            this.cbStopOnDoors.Text = "Branch type (stop on doors)";
+            this.cbStopOnDoors.UseVisualStyleBackColor = true;
+            // 
             // EnemyEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(910, 535);
+            this.Controls.Add(this.cbStopOnDoors);
+            this.Controls.Add(this.btSortDown);
+            this.Controls.Add(this.btSortUp);
+            this.Controls.Add(this.cbManualSort);
             this.Controls.Add(this.btSave);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.activeBlock);
@@ -319,5 +372,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox activeBlock;
         private System.Windows.Forms.Button btSave;
+        private System.Windows.Forms.CheckBox cbManualSort;
+        private System.Windows.Forms.Button btSortUp;
+        private System.Windows.Forms.Button btSortDown;
+        private System.Windows.Forms.CheckBox cbStopOnDoors;
     }
 }

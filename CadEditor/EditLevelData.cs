@@ -128,6 +128,7 @@ namespace CadEditor
             lbd2.Enabled = !isLevel;
             lbd3.Enabled = !isLevel;
             lbd4.Enabled = !isLevel;
+            dirty = false;
         }
 
         private void EditLevelData_Load(object sender, EventArgs e)

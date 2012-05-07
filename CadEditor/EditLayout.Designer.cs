@@ -50,6 +50,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.cbStopOnDoor = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.SuspendLayout();
@@ -179,7 +180,7 @@
             this.lvObjects.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lvObjects.Location = new System.Drawing.Point(973, 31);
             this.lvObjects.Name = "lvObjects";
-            this.lvObjects.Size = new System.Drawing.Size(88, 462);
+            this.lvObjects.Size = new System.Drawing.Size(92, 436);
             this.lvObjects.TabIndex = 22;
             this.lvObjects.UseCompatibleStateImageBehavior = false;
             this.lvObjects.View = System.Windows.Forms.View.List;
@@ -192,7 +193,7 @@
             // 
             this.btPreview.Location = new System.Drawing.Point(973, 499);
             this.btPreview.Name = "btPreview";
-            this.btPreview.Size = new System.Drawing.Size(88, 28);
+            this.btPreview.Size = new System.Drawing.Size(92, 28);
             this.btPreview.TabIndex = 23;
             this.btPreview.Text = "make preview";
             this.btPreview.UseVisualStyleBackColor = true;
@@ -249,11 +250,25 @@
             this.label5.TabIndex = 32;
             this.label5.Text = "Select door no:";
             // 
+            // cbStopOnDoor
+            // 
+            this.cbStopOnDoor.AutoSize = true;
+            this.cbStopOnDoor.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbStopOnDoor.Checked = true;
+            this.cbStopOnDoor.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbStopOnDoor.Location = new System.Drawing.Point(975, 473);
+            this.cbStopOnDoor.Name = "cbStopOnDoor";
+            this.cbStopOnDoor.Size = new System.Drawing.Size(90, 17);
+            this.cbStopOnDoor.TabIndex = 33;
+            this.cbStopOnDoor.Text = "stop on doors";
+            this.cbStopOnDoor.UseVisualStyleBackColor = true;
+            // 
             // EditLayout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1081, 533);
+            this.Controls.Add(this.cbStopOnDoor);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
@@ -306,5 +321,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox cbStopOnDoor;
     }
 }

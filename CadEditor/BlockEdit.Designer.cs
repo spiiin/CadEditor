@@ -47,9 +47,18 @@
             this.button1 = new System.Windows.Forms.Button();
             this.cbDoor = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.pbBacks = new System.Windows.Forms.PictureBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.editBack = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.paletteMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBacks)).BeginInit();
             this.SuspendLayout();
             // 
             // paletteMap
@@ -118,9 +127,9 @@
             // mapObjects
             // 
             this.mapObjects.AutoScroll = true;
-            this.mapObjects.Location = new System.Drawing.Point(290, 12);
+            this.mapObjects.Location = new System.Drawing.Point(290, 35);
             this.mapObjects.Name = "mapObjects";
-            this.mapObjects.Size = new System.Drawing.Size(294, 366);
+            this.mapObjects.Size = new System.Drawing.Size(370, 444);
             this.mapObjects.TabIndex = 10;
             // 
             // videoSprites2
@@ -244,11 +253,92 @@
             this.label5.TabIndex = 16;
             this.label5.Text = "View with door:";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(322, 11);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(32, 13);
+            this.label6.TabIndex = 17;
+            this.label6.Text = "Tiles:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(375, 11);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(42, 13);
+            this.label7.TabIndex = 18;
+            this.label7.Text = "Pallete:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(436, 11);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(34, 13);
+            this.label8.TabIndex = 19;
+            this.label8.Text = "Type:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(551, 11);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(51, 13);
+            this.label9.TabIndex = 20;
+            this.label9.Text = "Back tile:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(292, 11);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(24, 13);
+            this.label10.TabIndex = 21;
+            this.label10.Text = "No:";
+            // 
+            // pbBacks
+            // 
+            this.pbBacks.Location = new System.Drawing.Point(12, 415);
+            this.pbBacks.Name = "pbBacks";
+            this.pbBacks.Size = new System.Drawing.Size(264, 64);
+            this.pbBacks.TabIndex = 22;
+            this.pbBacks.TabStop = false;
+            this.pbBacks.Paint += new System.Windows.Forms.PaintEventHandler(this.pbBacks_Paint);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(12, 391);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(93, 13);
+            this.label11.TabIndex = 23;
+            this.label11.Text = "Tiles under boxes:";
+            // 
+            // editBack
+            // 
+            this.editBack.Location = new System.Drawing.Point(107, 386);
+            this.editBack.Name = "editBack";
+            this.editBack.Size = new System.Drawing.Size(59, 23);
+            this.editBack.TabIndex = 24;
+            this.editBack.Text = "edit";
+            this.editBack.UseVisualStyleBackColor = true;
+            this.editBack.Click += new System.EventHandler(this.button2_Click);
+            // 
             // BlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(590, 390);
+            this.ClientSize = new System.Drawing.Size(668, 484);
+            this.Controls.Add(this.editBack);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.pbBacks);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cbDoor);
             this.Controls.Add(this.button1);
@@ -271,6 +361,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.paletteMap)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBacks)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -296,5 +387,13 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox cbDoor;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.PictureBox pbBacks;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button editBack;
     }
 }
