@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml;
 using System.IO;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace CadEditor
 {
@@ -10,10 +12,13 @@ namespace CadEditor
     {
         static Globals()
         {
-            var romFname = "Chip 'n Dale Rescue Rangers (U) [!].nes";
+        }
+
+        public static void loadData(string Filename, string ConfigFilename)
+        {
             try
             {
-                using (FileStream f = File.OpenRead(romFname))
+                using (FileStream f = File.OpenRead(Filename))
                 {
                     f.Read(romdata, 0, Globals.FILE_SIZE);
                 }
@@ -23,17 +28,43 @@ namespace CadEditor
                 MessageBox.Show(ex.Message);
             }
 
-            levelRecs.Add(new LevelRec(0x10388, 76));
-            levelRecs.Add(new LevelRec(0x10456, 31));
-            levelRecs.Add(new LevelRec(0x105A1, 73));
-            levelRecs.Add(new LevelRec(0x106D1, 57));
-            levelRecs.Add(new LevelRec(0x10890, 97));
-            levelRecs.Add(new LevelRec(0x10A1D, 74));
-            levelRecs.Add(new LevelRec(0x10B0E, 41));
-            levelRecs.Add(new LevelRec(0x10C88, 83));
-            levelRecs.Add(new LevelRec(0x10DB3, 53));
-            levelRecs.Add(new LevelRec(0x10EA1, 45));
-            levelRecs.Add(new LevelRec(0x10FED, 71));
+            try
+            {
+                using (XmlReader reader = XmlReader.Create(ConfigFilename, new XmlReaderSettings()))
+                {
+                    palOffset.readFromXml(reader, "pallete");
+                    videoOffset.readFromXml(reader, "videoBack");
+                    videoObjOffset.readFromXml(reader, "videoObj");
+                    bigBlocksOffset.readFromXml(reader, "bigBlocks");
+                    blocksOffset.readFromXml(reader, "blocks");
+                    screensOffset.readFromXml(reader, "screens");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            levelRecsCad.Add(new LevelRec(0x10388, 76));
+            levelRecsCad.Add(new LevelRec(0x10456, 31));
+            levelRecsCad.Add(new LevelRec(0x105A1, 73));
+            levelRecsCad.Add(new LevelRec(0x106D1, 57));
+            levelRecsCad.Add(new LevelRec(0x10890, 97));
+            levelRecsCad.Add(new LevelRec(0x10A1D, 74));
+            levelRecsCad.Add(new LevelRec(0x10B0E, 41));
+            levelRecsCad.Add(new LevelRec(0x10C88, 83));
+            levelRecsCad.Add(new LevelRec(0x10DB3, 53));
+            levelRecsCad.Add(new LevelRec(0x10EA1, 45));
+            levelRecsCad.Add(new LevelRec(0x10FED, 71));
+
+            levelRecsDwd.Add(new LevelRec(0x10315, 51));
+            levelRecsDwd.Add(new LevelRec(0x10438, 60));
+            levelRecsDwd.Add(new LevelRec(0x10584, 68));
+            levelRecsDwd.Add(new LevelRec(0x106A0, 54));
+            levelRecsDwd.Add(new LevelRec(0x10816, 80));
+            levelRecsDwd.Add(new LevelRec(0x10962, 63));
+            levelRecsDwd.Add(new LevelRec(0x10A89, 58));
+ 
             reloadLevelParamsData();
         }
 
@@ -50,31 +81,39 @@ namespace CadEditor
         public static int getVideoPageAddr(byte id)
         {
             if ((id & 0xF0) == 0x90)
-                return 0x30010 + 0x1000 * (id & 0x0F);
+                return videoOffset.beginAddr + videoOffset.recSize * (id & 0x0F);
             else if ((id & 0xF0) == 0x80)
-                return 0x20010 + 0x1000 * (id & 0x0F); 
+                return videoObjOffset.beginAddr + videoObjOffset.recSize * (id & 0x0F); 
             return -1;
         }
 
         public static int getTilesAddr(byte id)
         {
-            return 0x3AF0 + 0x4000 * id;
+            return blocksOffset.beginAddr + blocksOffset.recSize * id;
         }
 
-        //same as getTilesAddr
         public static int getBigTilesAddr(byte id)
         {
-            return 0x36F0 + 0x4000 * id;
+            return bigBlocksOffset.beginAddr + bigBlocksOffset.recSize * id;
         }
 
         public static int getPalAddr(byte palId)
         {
-            return 0x1C354 + 0x10 * palId;
+            return palOffset.beginAddr + palId * palOffset.recSize;
         }
 
         public static int getBackTileAddr(int levelNo)
         {
             return 0x1E909 + levelNo * 0x10;
+        }
+
+        public static byte[] getScreen(int screenIndex)
+        {
+            var result = new byte[screensOffset.recSize];
+            int beginAddr = screensOffset.beginAddr + screenIndex * screensOffset.recSize;
+            for (int i = 0; i < screensOffset.recSize; i++)
+                result[i] = Globals.romdata[beginAddr + i];
+            return result;
         }
 
         public static List<ScreenRec> buildScreenRecs(int levelNo, bool stopOnDoor)
@@ -328,13 +367,27 @@ namespace CadEditor
             return doorNo == 25 ? -1 : doorsData[doorNo - 1].startLoc;
         }*/
 
+        //C&D specific
         private static int getStartLoc(int no)
         {
             var n = new[] { 0x23, 0x15, 0x10, 0x10, 0x18, 0x10, 0x20, 0x18, 0x20, 0x10, 0x18 };
             return n[no];
         }
 
-        public static List<LevelRec> levelRecs = new List<LevelRec>();
+        //DWD specific
+        public static int[] layoutAddrs = 
+        {
+            0x1DFA0, 
+            0x1DFE4,
+            0x1E028,
+            0x1E06C,
+            0x1E0E4,
+            0x1E11D,
+            0x1E156,
+        };
+
+        public static List<LevelRec> levelRecsCad = new List<LevelRec>();
+        public static List<LevelRec> levelRecsDwd = new List<LevelRec>();
         public static List<LevelData> levelData = new List<LevelData>(LEVELS_COUNT);
         public static List<DoorData> doorsData = new List<DoorData>(DOORS_COUNT);
 
@@ -348,6 +401,53 @@ namespace CadEditor
         public static int OBJECTS_COUNT = 256;
         public static int PAL_LEN = 16;
         public static int MAX_SCREEN_LIST_LEN = 64;
+
+        public static OffsetRec palOffset;
+        public static OffsetRec videoOffset;
+        public static OffsetRec videoObjOffset;
+        public static OffsetRec bigBlocksOffset;
+        public static OffsetRec blocksOffset;
+        public static OffsetRec screensOffset;
+    }
+
+    public struct OffsetRec
+    {
+        public OffsetRec(int beginAddr, int recCount, int recSize)
+        {
+            this.beginAddr = beginAddr;
+            this.recCount = recCount;
+            this.recSize = recSize;
+        }
+
+        public void readFromXml(XmlReader reader, string nodeName)
+        {
+            reader.ReadToFollowing(nodeName);
+            reader.MoveToAttribute("begin");
+            beginAddr = parseInt(reader.Value);
+            reader.MoveToAttribute("count");
+            recCount = parseInt(reader.Value);
+            reader.MoveToAttribute("size");
+            recSize = parseInt(reader.Value);
+        }
+
+        private int parseInt(string value)
+        {
+            int ans = 0;
+            //try hex parsing
+            if ((value.Length > 2) && (value[0] == '0') && ((value[1] == 'x') || (value[1] == 'X')))
+            {
+                var newStr = value.Substring(2);
+                int.TryParse(newStr, NumberStyles.HexNumber, CultureInfo.CurrentCulture, out ans);
+                return ans;
+            }
+            int.TryParse(value, out ans);
+            return ans;
+
+        }
+
+        public int beginAddr;
+        public int recCount;
+        public int recSize;
     }
 
     public struct LevelObjRec
@@ -601,4 +701,11 @@ namespace CadEditor
         public int playerX;
         public int playerY;
     }
+
+    public enum GameType
+    {
+        Generic,
+        CAD
+    };
 }
+

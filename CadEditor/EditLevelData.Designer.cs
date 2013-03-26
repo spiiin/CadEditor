@@ -73,6 +73,7 @@
             this.label23 = new System.Windows.Forms.Label();
             this.lbDirsAddr = new System.Windows.Forms.Label();
             this.btSave = new System.Windows.Forms.Button();
+            this.btChangeDoorIndex = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -535,11 +536,22 @@
             this.btSave.UseVisualStyleBackColor = true;
             this.btSave.Click += new System.EventHandler(this.btSave_Click);
             // 
+            // btChangeDoorIndex
+            // 
+            this.btChangeDoorIndex.Location = new System.Drawing.Point(228, 173);
+            this.btChangeDoorIndex.Name = "btChangeDoorIndex";
+            this.btChangeDoorIndex.Size = new System.Drawing.Size(56, 23);
+            this.btChangeDoorIndex.TabIndex = 45;
+            this.btChangeDoorIndex.Text = "change";
+            this.btChangeDoorIndex.UseVisualStyleBackColor = true;
+            this.btChangeDoorIndex.Click += new System.EventHandler(this.btChangeDoorIndex_Click);
+            // 
             // EditLevelData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(454, 531);
+            this.Controls.Add(this.btChangeDoorIndex);
             this.Controls.Add(this.btSave);
             this.Controls.Add(this.lbDirsAddr);
             this.Controls.Add(this.label23);
@@ -643,5 +655,6 @@
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label lbDirsAddr;
         private System.Windows.Forms.Button btSave;
+        private System.Windows.Forms.Button btChangeDoorIndex;
     }
 }

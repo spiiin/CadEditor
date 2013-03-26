@@ -93,7 +93,7 @@ namespace CadEditor
             {
                 Globals.romdata[backAddr + i] = curActiveBack[i];
             }
-            string romFname = "Chip 'n Dale Rescue Rangers (U) [!].nes";
+            string romFname = OpenFile.FileName;
             try
             {
                 using (FileStream f = File.OpenWrite(romFname))

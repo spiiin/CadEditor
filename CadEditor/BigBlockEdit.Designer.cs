@@ -34,16 +34,26 @@
             this.cbTileset = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btSave = new System.Windows.Forms.Button();
-            this.cbLevel = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.smallBlocks = new System.Windows.Forms.ImageList(this.components);
             this.pbActive = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.subPalletes = new System.Windows.Forms.ImageList(this.components);
+            this.label10 = new System.Windows.Forms.Label();
+            this.cbGame = new System.Windows.Forms.ComboBox();
+            this.pnEditCad = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.cbDoor = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cbLevel = new System.Windows.Forms.ComboBox();
+            this.pnGeneric = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.cbPaletteNo = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cbVideoNo = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).BeginInit();
+            this.pnEditCad.SuspendLayout();
+            this.pnGeneric.SuspendLayout();
             this.SuspendLayout();
             // 
             // mapScreen
@@ -59,9 +69,9 @@
             // blocksPanel
             // 
             this.blocksPanel.AutoScroll = true;
-            this.blocksPanel.Location = new System.Drawing.Point(15, 189);
+            this.blocksPanel.Location = new System.Drawing.Point(15, 236);
             this.blocksPanel.Name = "blocksPanel";
-            this.blocksPanel.Size = new System.Drawing.Size(251, 349);
+            this.blocksPanel.Size = new System.Drawing.Size(251, 302);
             this.blocksPanel.TabIndex = 7;
             // 
             // cbTileset
@@ -93,44 +103,13 @@
             // 
             // btSave
             // 
-            this.btSave.Location = new System.Drawing.Point(15, 160);
+            this.btSave.Location = new System.Drawing.Point(15, 207);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(134, 23);
             this.btSave.TabIndex = 10;
             this.btSave.Text = "Save";
             this.btSave.UseVisualStyleBackColor = true;
             this.btSave.Click += new System.EventHandler(this.btSave_Click);
-            // 
-            // cbLevel
-            // 
-            this.cbLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbLevel.FormattingEnabled = true;
-            this.cbLevel.Items.AddRange(new object[] {
-            "Level 0",
-            "Level A",
-            "Level B",
-            "Level C",
-            "Level D",
-            "Level E",
-            "Level F",
-            "Level G",
-            "Level H",
-            "Level I",
-            "Level J"});
-            this.cbLevel.Location = new System.Drawing.Point(12, 82);
-            this.cbLevel.Name = "cbLevel";
-            this.cbLevel.Size = new System.Drawing.Size(251, 21);
-            this.cbLevel.TabIndex = 11;
-            this.cbLevel.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 66);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 13);
-            this.label2.TabIndex = 12;
-            this.label2.Text = "View with level:";
             // 
             // smallBlocks
             // 
@@ -140,7 +119,7 @@
             // 
             // pbActive
             // 
-            this.pbActive.Location = new System.Drawing.Point(231, 151);
+            this.pbActive.Location = new System.Drawing.Point(231, 198);
             this.pbActive.Name = "pbActive";
             this.pbActive.Size = new System.Drawing.Size(32, 32);
             this.pbActive.TabIndex = 13;
@@ -149,7 +128,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(155, 165);
+            this.label3.Location = new System.Drawing.Point(155, 212);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(73, 13);
             this.label3.TabIndex = 14;
@@ -161,13 +140,47 @@
             this.subPalletes.ImageSize = new System.Drawing.Size(16, 16);
             this.subPalletes.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(12, 66);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(38, 13);
+            this.label10.TabIndex = 50;
+            this.label10.Text = "Game:";
+            // 
+            // cbGame
+            // 
+            this.cbGame.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbGame.FormattingEnabled = true;
+            this.cbGame.Items.AddRange(new object[] {
+            "Generic",
+            "Chip \'n Dale Rescue Rangers"});
+            this.cbGame.Location = new System.Drawing.Point(15, 82);
+            this.cbGame.Name = "cbGame";
+            this.cbGame.Size = new System.Drawing.Size(248, 21);
+            this.cbGame.TabIndex = 49;
+            this.cbGame.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
+            // 
+            // pnEditCad
+            // 
+            this.pnEditCad.Controls.Add(this.label4);
+            this.pnEditCad.Controls.Add(this.cbDoor);
+            this.pnEditCad.Controls.Add(this.label2);
+            this.pnEditCad.Controls.Add(this.cbLevel);
+            this.pnEditCad.Location = new System.Drawing.Point(12, 114);
+            this.pnEditCad.Name = "pnEditCad";
+            this.pnEditCad.Size = new System.Drawing.Size(251, 81);
+            this.pnEditCad.TabIndex = 51;
+            this.pnEditCad.Visible = false;
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 106);
+            this.label4.Location = new System.Drawing.Point(3, 42);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(33, 13);
-            this.label4.TabIndex = 16;
+            this.label4.TabIndex = 20;
             this.label4.Text = "Door:";
             // 
             // cbDoor
@@ -201,23 +214,129 @@
             "Door 17",
             "Door 18",
             "Door 19"});
-            this.cbDoor.Location = new System.Drawing.Point(12, 122);
+            this.cbDoor.Location = new System.Drawing.Point(6, 58);
             this.cbDoor.Name = "cbDoor";
-            this.cbDoor.Size = new System.Drawing.Size(251, 21);
-            this.cbDoor.TabIndex = 15;
+            this.cbDoor.Size = new System.Drawing.Size(236, 21);
+            this.cbDoor.TabIndex = 19;
             this.cbDoor.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 2);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(80, 13);
+            this.label2.TabIndex = 18;
+            this.label2.Text = "View with level:";
+            // 
+            // cbLevel
+            // 
+            this.cbLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbLevel.FormattingEnabled = true;
+            this.cbLevel.Items.AddRange(new object[] {
+            "Level 0",
+            "Level A",
+            "Level B",
+            "Level C",
+            "Level D",
+            "Level E",
+            "Level F",
+            "Level G",
+            "Level H",
+            "Level I",
+            "Level J"});
+            this.cbLevel.Location = new System.Drawing.Point(6, 18);
+            this.cbLevel.Name = "cbLevel";
+            this.cbLevel.Size = new System.Drawing.Size(236, 21);
+            this.cbLevel.TabIndex = 17;
+            this.cbLevel.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
+            // 
+            // pnGeneric
+            // 
+            this.pnGeneric.Controls.Add(this.label9);
+            this.pnGeneric.Controls.Add(this.cbPaletteNo);
+            this.pnGeneric.Controls.Add(this.label7);
+            this.pnGeneric.Controls.Add(this.cbVideoNo);
+            this.pnGeneric.Location = new System.Drawing.Point(12, 112);
+            this.pnGeneric.Name = "pnGeneric";
+            this.pnGeneric.Size = new System.Drawing.Size(251, 81);
+            this.pnGeneric.TabIndex = 54;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(3, 44);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(42, 13);
+            this.label9.TabIndex = 48;
+            this.label9.Text = "Pallete:";
+            // 
+            // cbPaletteNo
+            // 
+            this.cbPaletteNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPaletteNo.FormattingEnabled = true;
+            this.cbPaletteNo.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15"});
+            this.cbPaletteNo.Location = new System.Drawing.Point(6, 57);
+            this.cbPaletteNo.Name = "cbPaletteNo";
+            this.cbPaletteNo.Size = new System.Drawing.Size(236, 21);
+            this.cbPaletteNo.TabIndex = 47;
+            this.cbPaletteNo.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(2, 3);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(64, 13);
+            this.label7.TabIndex = 42;
+            this.label7.Text = "VideoBlock:";
+            // 
+            // cbVideoNo
+            // 
+            this.cbVideoNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVideoNo.FormattingEnabled = true;
+            this.cbVideoNo.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"});
+            this.cbVideoNo.Location = new System.Drawing.Point(5, 19);
+            this.cbVideoNo.Name = "cbVideoNo";
+            this.cbVideoNo.Size = new System.Drawing.Size(237, 21);
+            this.cbVideoNo.TabIndex = 41;
+            this.cbVideoNo.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
             // 
             // BigBlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(792, 550);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.cbDoor);
+            this.Controls.Add(this.pnGeneric);
+            this.Controls.Add(this.pnEditCad);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.cbGame);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.pbActive);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.cbLevel);
             this.Controls.Add(this.btSave);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbTileset);
@@ -231,6 +350,10 @@
             this.Load += new System.EventHandler(this.BigBlockEdit_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).EndInit();
+            this.pnEditCad.ResumeLayout(false);
+            this.pnEditCad.PerformLayout();
+            this.pnGeneric.ResumeLayout(false);
+            this.pnGeneric.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -243,13 +366,21 @@
         private System.Windows.Forms.ComboBox cbTileset;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btSave;
-        private System.Windows.Forms.ComboBox cbLevel;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ImageList smallBlocks;
         private System.Windows.Forms.PictureBox pbActive;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ImageList subPalletes;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ComboBox cbGame;
+        private System.Windows.Forms.Panel pnEditCad;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbDoor;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cbLevel;
+        private System.Windows.Forms.Panel pnGeneric;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox cbPaletteNo;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cbVideoNo;
     }
 }

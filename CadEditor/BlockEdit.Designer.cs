@@ -37,6 +37,15 @@
             this.videoSprites1 = new System.Windows.Forms.ImageList(this.components);
             this.subpalSprites = new System.Windows.Forms.ImageList(this.components);
             this.mapObjects = new System.Windows.Forms.FlowLayoutPanel();
+            this.pnGeneric = new System.Windows.Forms.Panel();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.cbPalette = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.cbVideo = new System.Windows.Forms.ComboBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.cbTileset = new System.Windows.Forms.ComboBox();
             this.videoSprites2 = new System.Windows.Forms.ImageList(this.components);
             this.videoSprites3 = new System.Windows.Forms.ImageList(this.components);
             this.videoSprites4 = new System.Windows.Forms.ImageList(this.components);
@@ -55,15 +64,22 @@
             this.pbBacks = new System.Windows.Forms.PictureBox();
             this.label11 = new System.Windows.Forms.Label();
             this.editBack = new System.Windows.Forms.Button();
+            this.pnCad = new System.Windows.Forms.Panel();
+            this.label12 = new System.Windows.Forms.Label();
+            this.cbGame = new System.Windows.Forms.ComboBox();
+            this.pnBacks = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.paletteMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
+            this.pnGeneric.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbBacks)).BeginInit();
+            this.pnCad.SuspendLayout();
+            this.pnBacks.SuspendLayout();
             this.SuspendLayout();
             // 
             // paletteMap
             // 
-            this.paletteMap.Location = new System.Drawing.Point(12, 79);
+            this.paletteMap.Location = new System.Drawing.Point(15, 135);
             this.paletteMap.Name = "paletteMap";
             this.paletteMap.Size = new System.Drawing.Size(256, 16);
             this.paletteMap.TabIndex = 0;
@@ -71,7 +87,7 @@
             // 
             // mapScreen
             // 
-            this.mapScreen.Location = new System.Drawing.Point(12, 122);
+            this.mapScreen.Location = new System.Drawing.Point(15, 178);
             this.mapScreen.Name = "mapScreen";
             this.mapScreen.Size = new System.Drawing.Size(256, 256);
             this.mapScreen.TabIndex = 6;
@@ -81,7 +97,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 63);
+            this.label1.Location = new System.Drawing.Point(9, 119);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(42, 13);
             this.label1.TabIndex = 7;
@@ -90,7 +106,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 98);
+            this.label2.Location = new System.Drawing.Point(12, 154);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(106, 13);
             this.label2.TabIndex = 8;
@@ -106,7 +122,7 @@
             "2",
             "3",
             "4"});
-            this.cbSubpalette.Location = new System.Drawing.Point(115, 95);
+            this.cbSubpalette.Location = new System.Drawing.Point(118, 151);
             this.cbSubpalette.Name = "cbSubpalette";
             this.cbSubpalette.Size = new System.Drawing.Size(90, 21);
             this.cbSubpalette.TabIndex = 9;
@@ -131,6 +147,96 @@
             this.mapObjects.Name = "mapObjects";
             this.mapObjects.Size = new System.Drawing.Size(370, 444);
             this.mapObjects.TabIndex = 10;
+            // 
+            // pnGeneric
+            // 
+            this.pnGeneric.Controls.Add(this.label17);
+            this.pnGeneric.Controls.Add(this.label16);
+            this.pnGeneric.Controls.Add(this.label15);
+            this.pnGeneric.Controls.Add(this.cbPalette);
+            this.pnGeneric.Controls.Add(this.label13);
+            this.pnGeneric.Controls.Add(this.cbVideo);
+            this.pnGeneric.Controls.Add(this.label14);
+            this.pnGeneric.Controls.Add(this.cbTileset);
+            this.pnGeneric.Location = new System.Drawing.Point(12, 29);
+            this.pnGeneric.Name = "pnGeneric";
+            this.pnGeneric.Size = new System.Drawing.Size(264, 87);
+            this.pnGeneric.TabIndex = 17;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(162, 54);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(74, 13);
+            this.label17.TabIndex = 20;
+            this.label17.Text = "(change view)";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(162, 30);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(74, 13);
+            this.label16.TabIndex = 19;
+            this.label16.Text = "(change view)";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(3, 54);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(40, 13);
+            this.label15.TabIndex = 18;
+            this.label15.Text = "Palette";
+            // 
+            // cbPalette
+            // 
+            this.cbPalette.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPalette.FormattingEnabled = true;
+            this.cbPalette.Location = new System.Drawing.Point(45, 51);
+            this.cbPalette.Name = "cbPalette";
+            this.cbPalette.Size = new System.Drawing.Size(111, 21);
+            this.cbPalette.TabIndex = 17;
+            this.cbPalette.SelectedIndexChanged += new System.EventHandler(this.VisibleOnlyChange_SelectedIndexChanged);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(5, 30);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(34, 13);
+            this.label13.TabIndex = 12;
+            this.label13.Text = "Video";
+            // 
+            // cbVideo
+            // 
+            this.cbVideo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVideo.FormattingEnabled = true;
+            this.cbVideo.Location = new System.Drawing.Point(45, 27);
+            this.cbVideo.Name = "cbVideo";
+            this.cbVideo.Size = new System.Drawing.Size(111, 21);
+            this.cbVideo.TabIndex = 11;
+            this.cbVideo.SelectedIndexChanged += new System.EventHandler(this.VisibleOnlyChange_SelectedIndexChanged);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(5, 7);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(38, 13);
+            this.label14.TabIndex = 16;
+            this.label14.Text = "Tileset";
+            // 
+            // cbTileset
+            // 
+            this.cbTileset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTileset.FormattingEnabled = true;
+            this.cbTileset.Location = new System.Drawing.Point(45, 4);
+            this.cbTileset.Name = "cbTileset";
+            this.cbTileset.Size = new System.Drawing.Size(111, 21);
+            this.cbTileset.TabIndex = 15;
+            this.cbTileset.SelectedIndexChanged += new System.EventHandler(this.cbLevelSelect_SelectedIndexChanged);
             // 
             // videoSprites2
             // 
@@ -166,16 +272,16 @@
             "Level H",
             "Level I",
             "Level J"});
-            this.cbLevelSelect.Location = new System.Drawing.Point(107, 8);
+            this.cbLevelSelect.Location = new System.Drawing.Point(88, 6);
             this.cbLevelSelect.Name = "cbLevelSelect";
-            this.cbLevelSelect.Size = new System.Drawing.Size(98, 21);
+            this.cbLevelSelect.Size = new System.Drawing.Size(111, 21);
             this.cbLevelSelect.TabIndex = 11;
             this.cbLevelSelect.SelectedIndexChanged += new System.EventHandler(this.cbLevelSelect_SelectedIndexChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 11);
+            this.label3.Location = new System.Drawing.Point(3, 9);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(36, 13);
             this.label3.TabIndex = 12;
@@ -184,7 +290,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(211, 98);
+            this.label4.Location = new System.Drawing.Point(214, 154);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(40, 13);
             this.label4.TabIndex = 13;
@@ -192,7 +298,7 @@
             // 
             // pbActive
             // 
-            this.pbActive.Location = new System.Drawing.Point(252, 95);
+            this.pbActive.Location = new System.Drawing.Point(255, 151);
             this.pbActive.Name = "pbActive";
             this.pbActive.Size = new System.Drawing.Size(16, 16);
             this.pbActive.TabIndex = 14;
@@ -200,7 +306,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(214, 6);
+            this.button1.Location = new System.Drawing.Point(217, 6);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(59, 23);
             this.button1.TabIndex = 0;
@@ -238,16 +344,16 @@
             "Door 16",
             "Door 17",
             "Door 18"});
-            this.cbDoor.Location = new System.Drawing.Point(107, 35);
+            this.cbDoor.Location = new System.Drawing.Point(88, 27);
             this.cbDoor.Name = "cbDoor";
-            this.cbDoor.Size = new System.Drawing.Size(98, 21);
+            this.cbDoor.Size = new System.Drawing.Size(111, 21);
             this.cbDoor.TabIndex = 15;
-            this.cbDoor.SelectedIndexChanged += new System.EventHandler(this.cbDoor_SelectedIndexChanged);
+            this.cbDoor.SelectedIndexChanged += new System.EventHandler(this.VisibleOnlyChange_SelectedIndexChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 38);
+            this.label5.Location = new System.Drawing.Point(3, 30);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(79, 13);
             this.label5.TabIndex = 16;
@@ -300,7 +406,7 @@
             // 
             // pbBacks
             // 
-            this.pbBacks.Location = new System.Drawing.Point(12, 415);
+            this.pbBacks.Location = new System.Drawing.Point(-1, 28);
             this.pbBacks.Name = "pbBacks";
             this.pbBacks.Size = new System.Drawing.Size(264, 64);
             this.pbBacks.TabIndex = 22;
@@ -310,7 +416,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(12, 391);
+            this.label11.Location = new System.Drawing.Point(6, 7);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(93, 13);
             this.label11.TabIndex = 23;
@@ -318,7 +424,7 @@
             // 
             // editBack
             // 
-            this.editBack.Location = new System.Drawing.Point(107, 386);
+            this.editBack.Location = new System.Drawing.Point(103, 2);
             this.editBack.Name = "editBack";
             this.editBack.Size = new System.Drawing.Size(59, 23);
             this.editBack.TabIndex = 24;
@@ -326,27 +432,68 @@
             this.editBack.UseVisualStyleBackColor = true;
             this.editBack.Click += new System.EventHandler(this.button2_Click);
             // 
+            // pnCad
+            // 
+            this.pnCad.Controls.Add(this.label3);
+            this.pnCad.Controls.Add(this.cbLevelSelect);
+            this.pnCad.Controls.Add(this.label5);
+            this.pnCad.Controls.Add(this.cbDoor);
+            this.pnCad.Location = new System.Drawing.Point(12, 29);
+            this.pnCad.Name = "pnCad";
+            this.pnCad.Size = new System.Drawing.Size(264, 87);
+            this.pnCad.TabIndex = 0;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(11, 11);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(38, 13);
+            this.label12.TabIndex = 52;
+            this.label12.Text = "Game:";
+            // 
+            // cbGame
+            // 
+            this.cbGame.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbGame.FormattingEnabled = true;
+            this.cbGame.Items.AddRange(new object[] {
+            "Generic",
+            "Chip \'n Dale Rescue Rangers"});
+            this.cbGame.Location = new System.Drawing.Point(55, 8);
+            this.cbGame.Name = "cbGame";
+            this.cbGame.Size = new System.Drawing.Size(156, 21);
+            this.cbGame.TabIndex = 51;
+            this.cbGame.SelectedIndexChanged += new System.EventHandler(this.cbGame_SelectedIndexChanged);
+            // 
+            // pnBacks
+            // 
+            this.pnBacks.Controls.Add(this.label11);
+            this.pnBacks.Controls.Add(this.pbBacks);
+            this.pnBacks.Controls.Add(this.editBack);
+            this.pnBacks.Location = new System.Drawing.Point(15, 440);
+            this.pnBacks.Name = "pnBacks";
+            this.pnBacks.Size = new System.Drawing.Size(263, 92);
+            this.pnBacks.TabIndex = 18;
+            // 
             // BlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(668, 484);
-            this.Controls.Add(this.editBack);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.pbBacks);
+            this.ClientSize = new System.Drawing.Size(668, 543);
+            this.Controls.Add(this.pnGeneric);
+            this.Controls.Add(this.cbGame);
+            this.Controls.Add(this.pnBacks);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.pnCad);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.cbDoor);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.paletteMap);
             this.Controls.Add(this.pbActive);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.cbLevelSelect);
             this.Controls.Add(this.mapObjects);
             this.Controls.Add(this.cbSubpalette);
             this.Controls.Add(this.label2);
@@ -360,8 +507,14 @@
             this.Load += new System.EventHandler(this.BlockEdit_Load);
             ((System.ComponentModel.ISupportInitialize)(this.paletteMap)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
+            this.pnGeneric.ResumeLayout(false);
+            this.pnGeneric.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbBacks)).EndInit();
+            this.pnCad.ResumeLayout(false);
+            this.pnCad.PerformLayout();
+            this.pnBacks.ResumeLayout(false);
+            this.pnBacks.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -395,5 +548,18 @@
         private System.Windows.Forms.PictureBox pbBacks;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button editBack;
+        private System.Windows.Forms.Panel pnCad;
+        private System.Windows.Forms.Panel pnGeneric;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox cbPalette;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ComboBox cbVideo;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox cbTileset;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ComboBox cbGame;
+        private System.Windows.Forms.Panel pnBacks;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label16;
     }
 }

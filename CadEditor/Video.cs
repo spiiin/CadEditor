@@ -144,7 +144,7 @@ namespace CadEditor
             int addrPal = Globals.getPalAddr(palId);
             byte[] palette = new byte[Globals.PAL_LEN];
             for (int i = 0; i < Globals.PAL_LEN; i++)
-                palette[i] = Globals.romdata[addrPal + i];
+                palette[i] = (byte) (Globals.romdata[addrPal + i] & 0x3F);
 
             var objStrip1 = makeImageStrip(videoChunk, palette, 0, scale);
             var objStrip2 = makeImageStrip(videoChunk, palette, 1, scale);
@@ -178,15 +178,6 @@ namespace CadEditor
 
         }
 
-        public static byte[] getScreen(int screenIndex)
-        {
-            var result = new byte[SCREEN_SIZE];
-            int beginAddr = 0x10 + screenIndex * 0x40;
-            for (int i = 0; i < SCREEN_SIZE; i++)
-                result[i] = Globals.romdata[beginAddr + i];
-            return result;
-        }
-
         private static bool getBit(byte b, int bit)
         {
             return (b & (1 << bit - 1)) != 0;
@@ -203,7 +194,5 @@ namespace CadEditor
 
         const int CAD_OBJTYPES_COUNT = 16;
         public static Color[] CadObjectTypeColors = new Color[CAD_OBJTYPES_COUNT];
-
-        const int SCREEN_SIZE = 64;
     }
 }

@@ -1,0 +1,9 @@
+<!-- Chip 'n Dale Rescue Rangers (U) [!] -->
+<Config>
+        <pallete     begin='0x1C354' count='32' size="16"/>
+        <videoBack   begin='0x30010' count='8'  size="0x1000"/>
+        <videoObj    begin='0x20010' count='8'  size="0x1000"/>
+        <bigBlocks   begin='0x36F0'  count='8'  size="0x4000"/>
+        <blocks      begin='0x3AF0'  count='8'  size="0x4000"/>
+        <screens     begin='0x10'    count='300'  size="0x40"/>
+</Config>;

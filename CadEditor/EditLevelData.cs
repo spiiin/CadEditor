@@ -208,7 +208,7 @@ namespace CadEditor
 
         bool saveToFile()
         {
-            var romFname = "Chip 'n Dale Rescue Rangers (U) [!].nes";
+            var romFname = OpenFile.FileName;
             int no = cbLevel.SelectedIndex;
             if (no == -1)
                 return false;
@@ -280,6 +280,14 @@ namespace CadEditor
         private void dirty_SelectedIndexChanged(object sender, EventArgs e)
         {
             dirty = true;
+        }
+
+        private void btChangeDoorIndex_Click(object sender, EventArgs e)
+        {
+            var f = new SelectDoorIndex();
+            f.ShowDialog();
+            if (f.getSelectedIndex() != -1)
+                cbStartLoc.SelectedIndex = f.getSelectedIndex();
         }
     }
 }

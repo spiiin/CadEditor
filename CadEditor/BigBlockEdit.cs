@@ -21,10 +21,39 @@ namespace CadEditor
             curTileset = 0;
             curLevel = 0;
             curDoor = -1;
+            curVideo = 0x90;
+            curPallete = 0;
             dirty = false;
+            gameType = GameType.Generic;
+
+            Utils.setCbItemsCount(cbVideoNo, Globals.videoOffset.recCount);
+            Utils.setCbItemsCount(cbPaletteNo, Globals.palOffset.recCount);
+            cbTileset.Items.Clear();
+            for (int i = 0; i < Globals.bigBlocksOffset.recCount; i++)
+            {
+                var str = String.Format("Tileset{0} ({1:X})", i, 0x3000 + i * 0x4000);
+                cbTileset.Items.Add(str);
+            }
             cbTileset.SelectedIndex = 0;
             cbLevel.SelectedIndex = 0;
             cbDoor.SelectedIndex = 0;
+            cbVideoNo.SelectedIndex = 0;
+            cbTileset.SelectedIndex = 0;
+            cbPaletteNo.SelectedIndex = 0;
+            cbGame.SelectedIndex = 0;
+
+            blocksPanel.Controls.Clear();
+            blocksPanel.SuspendLayout();
+            for (int i = 0; i < SMALL_BLOCKS_COUNT; i++)
+            {
+                var but = new Button();
+                but.Size = new Size(32, 32);
+                but.ImageList = smallBlocks;
+                but.ImageIndex = i;
+                but.Click += new EventHandler(buttonObjClick);
+                blocksPanel.Controls.Add(but);
+            }
+            blocksPanel.ResumeLayout();
             reloadLevel();
         }
 
@@ -38,34 +67,39 @@ namespace CadEditor
 
         private void setSmallBlocks()
         {
-            var ld = Globals.levelData[curLevel];
             int backId, palId;
-            if (curDoor < 0)
+
+            if (gameType == GameType.CAD)
             {
-                backId = ld.backId;
-                palId = ld.palId;
+                var ld = Globals.levelData[curLevel];
+                if (curDoor < 0)
+                {
+                    backId = ld.backId;
+                    palId = ld.palId;
+                }
+                else
+                {
+                    DoorData dd = Globals.doorsData[curDoor];
+                    backId = dd.backId;
+                    palId = dd.palId;
+                }
             }
             else
             {
-                DoorData dd = Globals.doorsData[curDoor];
-                backId = dd.backId;
-                palId = dd.palId;
+                backId = curVideo;
+                palId = curPallete;
             }
+
             var im = Video.makeObjectsStrip((byte)backId, (byte)curTileset, (byte)palId, 1, false);
             smallBlocks.Images.Clear();
             smallBlocks.Images.AddStrip(im);
-            blocksPanel.Controls.Clear();
-            blocksPanel.SuspendLayout();
-            for (int i = 0; i < SMALL_BLOCKS_COUNT ; i++)
+            /*for (int i = 0; i < SMALL_BLOCKS_COUNT ; i++)
             {
-                var but = new Button();
-                but.Size = new Size(32,32);
+                var but = (Button)blocksPanel.Controls[i];
                 but.ImageList = smallBlocks;
                 but.ImageIndex = i;
-                but.Click += new EventHandler(buttonObjClick);
-                blocksPanel.Controls.Add(but);
-            }
-            blocksPanel.ResumeLayout();
+            }*/
+            blocksPanel.Invalidate(true);
         }
 
         private void setBigBlocksIndexes()
@@ -114,14 +148,25 @@ namespace CadEditor
 
         private int curActiveBlock;
         private int curTileset;
+
+        //chip and dale
         private int curLevel;
         private int curDoor;
+
+        //generic
+        private int curVideo;
+        private int curPallete;
+
         private bool dirty;
+        private GameType gameType;
 
         private void cbLevelPair_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbLevel.SelectedIndex == -1 || cbTileset.SelectedIndex == -1 || cbDoor.SelectedIndex == -1)
+            if (cbLevel.SelectedIndex == -1 || cbTileset.SelectedIndex == -1 || cbDoor.SelectedIndex == -1 ||
+                cbVideoNo.SelectedIndex == -1 || cbPaletteNo.SelectedIndex == -1 || cbGame.SelectedIndex == -1)
+            {
                 return;
+            }
             if (dirty && sender == cbTileset)
             {
                 DialogResult dr = MessageBox.Show("Tiles was changed. Do you want to save current tileset?", "Save", MessageBoxButtons.YesNoCancel);
@@ -144,8 +189,15 @@ namespace CadEditor
                 }
             }
             curTileset = cbTileset.SelectedIndex;
+
             curLevel = cbLevel.SelectedIndex;
             curDoor = cbDoor.SelectedIndex - 1;
+
+            curVideo = cbVideoNo.SelectedIndex + 0x90;
+            curPallete = cbPaletteNo.SelectedIndex;
+            gameType = cbGame.SelectedIndex == 0 ? GameType.Generic : GameType.CAD;
+            pnGeneric.Visible = gameType == GameType.Generic;
+            pnEditCad.Visible = gameType == GameType.CAD;
             reloadLevel();
         }
 
@@ -167,7 +219,7 @@ namespace CadEditor
             for (int i = 0; i < BIG_BLOCKS_COUNT * 4; i++)
                 Globals.romdata[addr + i] = bigBlockIndexes[i];
 
-            string romFname = "Chip 'n Dale Rescue Rangers (U) [!].nes";
+            string romFname = OpenFile.FileName;
             try
             {
                 using (FileStream f = File.OpenWrite(romFname))
@@ -195,21 +247,5 @@ namespace CadEditor
                     saveToFile();
             }
         }
-    }
-
-
-    struct LevelPairRec
-    {
-        public LevelPairRec(string name, int beginAddr, LevelObjRec l1tiles, LevelObjRec l2tiles)
-        {
-            this.name = name;
-            this.beginAddr = beginAddr;
-            this.l1tiles = l1tiles;
-            this.l2tiles = l2tiles;
-        }
-        public string name;
-        public int beginAddr;
-        public LevelObjRec l1tiles;
-        public LevelObjRec l2tiles;
     }
 }
