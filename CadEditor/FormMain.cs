@@ -48,7 +48,7 @@ namespace CadEditor
             showNeiScreens = true;
             blocksPanel.Controls.Clear();
             blocksPanel.SuspendLayout();
-            for (int i = 0; i < BIG_BLOCKS_COUNT; i++)
+            for (int i = 0; i < Globals.getBigBlocksCount(); i++)
             {
                 var but = new Button();
                 but.Size = new Size(64, 64);
@@ -75,9 +75,10 @@ namespace CadEditor
 
         private void setBigBlocksIndexes()
         {
-            int bigTileIndex = gameType == GameType.Generic ? curActiveBlockNo : Globals.levelData[curActiveLevel].bigBlockId;
+            int bigTileIndex = (Globals.gameType != GameType.CAD) ? curActiveBlockNo : Globals.levelData[curActiveLevel].bigBlockId;
             int bigBlocksAddr  = Globals.getBigTilesAddr((byte) bigTileIndex);
-            for (int i = 0; i < BIG_BLOCKS_COUNT*4; i++)
+            bigBlockIndexes = new byte[Globals.getBigBlocksCount() * 4];
+            for (int i = 0; i < Globals.getBigBlocksCount() * 4; i++)
                 bigBlockIndexes[i] = Globals.romdata[bigBlocksAddr + i];
         }
 
@@ -85,7 +86,7 @@ namespace CadEditor
         {
             int backId, blockId, palId;
 
-            if (GameType.Generic == gameType)
+            if (GameType.CAD != Globals.gameType)
             {
                 backId = curActiveVideoNo; ;
                 blockId = curActiveBigBlockNo;
@@ -113,7 +114,7 @@ namespace CadEditor
             var im = Video.makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, 1, curViewType != MapViewType.Tiles);
             smallBlocks.Images.AddStrip(im);
 
-            for (int i = 0; i < BIG_BLOCKS_COUNT; i++)
+            for (int i = 0; i < Globals.getBigBlocksCount(); i++)
             {
                 var b = new Bitmap(64, 64);
                 using (Graphics g = Graphics.FromImage(b))
@@ -157,7 +158,8 @@ namespace CadEditor
             for (int i = 0; i < SCREEN_SIZE; i++)
             {
                 int index = indexes[i];
-                g.DrawImage(bigBlocks.Images[index], new Rectangle((i % 8 + 1) * 64, i / 8 * 64, 64, 64));
+                int bigBlockNo = Globals.getBigTileNoFromScreen(indexes, i);
+                g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle((i % 8 + 1) * 64, i / 8 * 64, 64, 64));
             }
             if (showNeiScreens && (curActiveScreen > 0))
             {
@@ -167,7 +169,8 @@ namespace CadEditor
                     if (i % 8 == 7)
                     {
                         int index = indexesPrev[i];
-                        g.DrawImage(bigBlocks.Images[index], new Rectangle(0, i / 8 * 64, 64, 64));
+                        int bigBlockNo = Globals.getBigTileNoFromScreen(indexesPrev, i);
+                        g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle(0, i / 8 * 64, 64, 64));
                     }
                 }
             }
@@ -179,7 +182,8 @@ namespace CadEditor
                     if (i % 8 == 0)
                     {
                         int index = indexesNext[i];
-                        g.DrawImage(bigBlocks.Images[index], new Rectangle(9*64, i / 8 * 64, 64, 64));
+                        int bigBlockNo = Globals.getBigTileNoFromScreen(indexesNext, i);
+                        g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle(9 * 64, i / 8 * 64, 64, 64));
                     }
                 }
             }
@@ -189,7 +193,6 @@ namespace CadEditor
         //consts
         const int SCREEN_SIZE = 64;
         const int OBJECTS_COUNT = 96;
-        const int BIG_BLOCKS_COUNT = 256;
 
         //editor globals
         private int curActiveBlock = 0;
@@ -209,12 +212,10 @@ namespace CadEditor
         private bool dirty;
         private bool showNeiScreens;
         private byte[][] screens = null;
-        
-        private byte[] bigBlockIndexes = new byte[BIG_BLOCKS_COUNT * 4];
+
+        private byte[] bigBlockIndexes;
 
         public static bool fileLoaded = false;
-
-        private GameType gameType = GameType.Generic;
 
         private void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
@@ -225,7 +226,7 @@ namespace CadEditor
                 if (curActiveScreen < Globals.screensOffset.recCount - 1)
                 {
                      int index = dy * 8;
-                     screens[curActiveScreen + 1][index] = (byte)curActiveBlock;
+                     Globals.setBigTileToScreen(screens[curActiveScreen + 1], index, curActiveBlock);
                      dirty = true;
                 }
             }
@@ -234,14 +235,14 @@ namespace CadEditor
                 if (curActiveScreen > 0)
                 {
                     int index = dy * 8 + 7;
-                    screens[curActiveScreen - 1][index] = (byte)curActiveBlock;
+                    Globals.setBigTileToScreen(screens[curActiveScreen - 1], index, curActiveBlock);
                     dirty = true;
                 }
             }
             else
             {
                 int index = dy * 8 + dx;
-                screens[curActiveScreen][index] = (byte)curActiveBlock;
+                Globals.setBigTileToScreen(screens[curActiveScreen], index, curActiveBlock);
                 dirty = true;
             }
             mapScreen.Invalidate();
@@ -258,34 +259,19 @@ namespace CadEditor
             //write back tiles
             for (int i = 0; i < Globals.screensOffset.recCount; i++)
             {
-                int addr = 0x10 + i * 0x40;
-                for (int x = 0; x < SCREEN_SIZE; x++)
+                int addr = Globals.screensOffset.beginAddr + i * Globals.screensOffset.recSize;
+                for (int x = 0; x < Globals.screensOffset.recSize; x++)
                     Globals.romdata[addr + x] = screens[i][x];
             }
-            //write to file
-            try
-            {
-                using (FileStream f = File.OpenWrite(romFname))
-                {
-                    f.Write(Globals.romdata, 0, Globals.FILE_SIZE);
-                    f.Seek(0, SeekOrigin.Begin);
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return false;
-            }
-            dirty = false;
-            return true;
+            dirty = !Globals.flushToFile();
+            return !dirty;
         }
 
 
 
         private void cbLevel_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (gameType == GameType.CAD)
+            if (Globals.gameType == GameType.CAD)
             {
                 curActiveLevel = cbLevel.SelectedIndex;
                 curActiveDoor = cbDoor.SelectedIndex - 1;
@@ -372,6 +358,7 @@ namespace CadEditor
 
         private bool openFile()
         {
+            Globals.gameType = GameType.Generic;
             if (!Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
                 return false;
  
@@ -380,7 +367,6 @@ namespace CadEditor
             {
                 Globals.loadData(OpenFile.FileName, OpenFile.ConfigName);
                 fileLoaded = true;
-                gameType = GameType.Generic;
             }
             if (!fileLoaded)
                 return false;
@@ -390,7 +376,7 @@ namespace CadEditor
 
         public void reloadGameType(bool reloadVideo)
         {
-            bool generic = gameType == GameType.Generic;
+            bool generic = Globals.gameType != GameType.CAD;
             pnGeneric.Visible = generic;
             pnCad.Visible = !generic;
             if (reloadVideo)
@@ -407,8 +393,18 @@ namespace CadEditor
 
         private void cbGame_SelectedIndexChanged(object sender, EventArgs e)
         {
-            gameType = cbGame.SelectedIndex == 0 ? GameType.Generic : GameType.CAD;
+            Globals.gameType = cbGame.SelectedIndex == 0 ? GameType.Generic : (cbGame.SelectedIndex == 1) ? GameType.CAD : GameType.DT; 
             reloadGameType(true);
+        }
+
+        private void btVideo_Click(object sender, EventArgs e)
+        {
+            if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
+            {
+                var f = new EditVideo();
+                f.ShowDialog();
+                reloadLevel();
+            }
         }
     }
 

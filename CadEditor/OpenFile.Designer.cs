@@ -71,7 +71,7 @@
             this.tbFileName.Name = "tbFileName";
             this.tbFileName.Size = new System.Drawing.Size(360, 20);
             this.tbFileName.TabIndex = 3;
-            this.tbFileName.Text = "Chip \'n Dale Rescue Rangers (U) [!].nes";
+            this.tbFileName.Text = "Darkwing Duck (U) [!].nes";
             this.tbFileName.Click += new System.EventHandler(this.tbFileName_Click);
             // 
             // tbConfigName

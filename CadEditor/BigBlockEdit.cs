@@ -23,11 +23,12 @@ namespace CadEditor
             curDoor = -1;
             curVideo = 0x90;
             curPallete = 0;
+            curPart = 0;
             dirty = false;
-            gameType = GameType.Generic;
 
             Utils.setCbItemsCount(cbVideoNo, Globals.videoOffset.recCount);
             Utils.setCbItemsCount(cbPaletteNo, Globals.palOffset.recCount);
+            Utils.setCbItemsCount(cbPart, Globals.getBigBlocksCount() / 256);
             cbTileset.Items.Clear();
             for (int i = 0; i < Globals.bigBlocksOffset.recCount; i++)
             {
@@ -40,7 +41,7 @@ namespace CadEditor
             cbVideoNo.SelectedIndex = 0;
             cbTileset.SelectedIndex = 0;
             cbPaletteNo.SelectedIndex = 0;
-            cbGame.SelectedIndex = 0;
+            cbPart.SelectedIndex = 0;
 
             blocksPanel.Controls.Clear();
             blocksPanel.SuspendLayout();
@@ -69,7 +70,7 @@ namespace CadEditor
         {
             int backId, palId;
 
-            if (gameType == GameType.CAD)
+            if (Globals.gameType == GameType.CAD)
             {
                 var ld = Globals.levelData[curLevel];
                 if (curDoor < 0)
@@ -105,37 +106,39 @@ namespace CadEditor
         private void setBigBlocksIndexes()
         {
             var addr = Globals.getBigTilesAddr((byte)curTileset);
-            for (int i = 0; i < BIG_BLOCKS_COUNT * 4; i++)
+            bigBlockIndexes = new byte[Globals.getBigBlocksCount()*4];
+            for (int i = 0; i < Globals.getBigBlocksCount() * 4; i++)
                 bigBlockIndexes[i] = Globals.romdata[addr + i];
         }
 
-        const int BIG_BLOCKS_COUNT = 256;
         const int SMALL_BLOCKS_COUNT = 256;
-        private byte[] bigBlockIndexes = new byte[BIG_BLOCKS_COUNT * 4];
+        private byte[] bigBlockIndexes;
 
         private void mapScreen_Paint(object sender, PaintEventArgs e)
         {
+            int addIndexes = curPart * 256;
             Graphics g = e.Graphics;
-            for (int i = 0; i < BIG_BLOCKS_COUNT; i++)
+            for (int i = 0; i < 256; i++)
             {
                 int xb = i%16;
                 int yb = i/16;
-                g.DrawImage(smallBlocks.Images[bigBlockIndexes[i*4]], new Rectangle(xb*32, yb *32, 16, 16));
-                g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4+1]], new Rectangle(xb * 32 +16, yb * 32, 15, 16));
-                g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4+2]], new Rectangle(xb * 32, yb * 32+16, 16, 15));
-                g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4+3]], new Rectangle(xb * 32+16, yb * 32+16, 15, 15));
+                g.DrawImage(smallBlocks.Images[bigBlockIndexes[addIndexes+i * 4]], new Rectangle(xb * 32, yb * 32, 16, 16));
+                g.DrawImage(smallBlocks.Images[bigBlockIndexes[addIndexes+i * 4 + 1]], new Rectangle(xb * 32 + 16, yb * 32, 15, 16));
+                g.DrawImage(smallBlocks.Images[bigBlockIndexes[addIndexes+i * 4 + 2]], new Rectangle(xb * 32, yb * 32 + 16, 16, 15));
+                g.DrawImage(smallBlocks.Images[bigBlockIndexes[addIndexes+i * 4 + 3]], new Rectangle(xb * 32 + 16, yb * 32 + 16, 15, 15));
             }
         }
 
         private void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
+            int addIndexes = curPart * 256;
             dirty = true;
             int bx = e.X / 32;
             int by = e.Y / 32;
             int dx = (e.X % 32) / 16;
             int dy = (e.Y % 32) / 16;
             int ind = (by * 16 + bx) * 4 + (dy * 2 + dx);
-            bigBlockIndexes[ind] = (byte)curActiveBlock;
+            bigBlockIndexes[addIndexes+ind] = (byte)curActiveBlock;
             mapScreen.Invalidate();
         }
 
@@ -156,14 +159,14 @@ namespace CadEditor
         //generic
         private int curVideo;
         private int curPallete;
+        private int curPart;
 
         private bool dirty;
-        private GameType gameType;
 
         private void cbLevelPair_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbLevel.SelectedIndex == -1 || cbTileset.SelectedIndex == -1 || cbDoor.SelectedIndex == -1 ||
-                cbVideoNo.SelectedIndex == -1 || cbPaletteNo.SelectedIndex == -1 || cbGame.SelectedIndex == -1)
+                cbVideoNo.SelectedIndex == -1 || cbPaletteNo.SelectedIndex == -1 || cbPart.SelectedIndex == -1)
             {
                 return;
             }
@@ -195,9 +198,12 @@ namespace CadEditor
 
             curVideo = cbVideoNo.SelectedIndex + 0x90;
             curPallete = cbPaletteNo.SelectedIndex;
-            gameType = cbGame.SelectedIndex == 0 ? GameType.Generic : GameType.CAD;
-            pnGeneric.Visible = gameType == GameType.Generic;
-            pnEditCad.Visible = gameType == GameType.CAD;
+            curPart = cbPart.SelectedIndex;
+
+            pnGeneric.Visible = Globals.gameType != GameType.CAD;
+            pnEditCad.Visible = Globals.gameType == GameType.CAD;
+            Utils.setCbItemsCount(cbPart, Globals.getBigBlocksCount() / 256);
+            Utils.setCbIndexWithoutUpdateLevel(cbPart, cbLevelPair_SelectedIndexChanged, curPart);
             reloadLevel();
         }
 
@@ -216,26 +222,10 @@ namespace CadEditor
         private bool saveToFile()
         {
             int addr = Globals.getBigTilesAddr((byte)curTileset);
-            for (int i = 0; i < BIG_BLOCKS_COUNT * 4; i++)
+            for (int i = 0; i < Globals.getBigBlocksCount() * 4; i++)
                 Globals.romdata[addr + i] = bigBlockIndexes[i];
-
-            string romFname = OpenFile.FileName;
-            try
-            {
-                using (FileStream f = File.OpenWrite(romFname))
-                {
-                    f.Write(Globals.romdata, 0, Globals.FILE_SIZE);
-                    f.Seek(0, SeekOrigin.Begin);
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return false;
-            }
-            dirty = false;
-            return true;
+            dirty = !Globals.flushToFile();
+            return !dirty;
         }
 
         private void BigBlockEdit_FormClosing(object sender, FormClosingEventArgs e)

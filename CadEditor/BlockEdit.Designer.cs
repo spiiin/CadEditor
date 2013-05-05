@@ -65,8 +65,6 @@
             this.label11 = new System.Windows.Forms.Label();
             this.editBack = new System.Windows.Forms.Button();
             this.pnCad = new System.Windows.Forms.Panel();
-            this.label12 = new System.Windows.Forms.Label();
-            this.cbGame = new System.Windows.Forms.ComboBox();
             this.pnBacks = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.paletteMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
@@ -306,7 +304,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(217, 6);
+            this.button1.Location = new System.Drawing.Point(12, 4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(59, 23);
             this.button1.TabIndex = 0;
@@ -443,28 +441,6 @@
             this.pnCad.Size = new System.Drawing.Size(264, 87);
             this.pnCad.TabIndex = 0;
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(11, 11);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(38, 13);
-            this.label12.TabIndex = 52;
-            this.label12.Text = "Game:";
-            // 
-            // cbGame
-            // 
-            this.cbGame.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbGame.FormattingEnabled = true;
-            this.cbGame.Items.AddRange(new object[] {
-            "Generic",
-            "Chip \'n Dale Rescue Rangers"});
-            this.cbGame.Location = new System.Drawing.Point(55, 8);
-            this.cbGame.Name = "cbGame";
-            this.cbGame.Size = new System.Drawing.Size(156, 21);
-            this.cbGame.TabIndex = 51;
-            this.cbGame.SelectedIndexChanged += new System.EventHandler(this.cbGame_SelectedIndexChanged);
-            // 
             // pnBacks
             // 
             this.pnBacks.Controls.Add(this.label11);
@@ -481,9 +457,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(668, 543);
             this.Controls.Add(this.pnGeneric);
-            this.Controls.Add(this.cbGame);
             this.Controls.Add(this.pnBacks);
-            this.Controls.Add(this.label12);
             this.Controls.Add(this.pnCad);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
@@ -556,8 +530,6 @@
         private System.Windows.Forms.ComboBox cbVideo;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ComboBox cbTileset;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ComboBox cbGame;
         private System.Windows.Forms.Panel pnBacks;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label16;

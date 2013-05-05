@@ -97,7 +97,7 @@ namespace CadEditor
 
         public static Bitmap makeImageStrip(byte[] videoChunk, byte[] pallete, int subPalIndex, int scale)
         {
-            Bitmap res = new Bitmap(16 * CHUNK_COUNT, 16);
+            Bitmap res = new Bitmap(8 * CHUNK_COUNT * scale, 8 * scale); 
             using (Graphics g = Graphics.FromImage(res))
             {
                 for (int i = 0; i < CHUNK_COUNT; i++)
@@ -124,10 +124,7 @@ namespace CadEditor
         //chip and dale specific
         public static Bitmap makeObjectsStrip(byte videoPageId, byte tilesId, byte palId, int scale, bool drawType)
         {
-            byte[] videoChunk = new byte[Globals.VIDEO_PAGE_SIZE];
-            int videoAddr = Globals.getVideoPageAddr(videoPageId);
-            for (int i = 0; i < Globals.VIDEO_PAGE_SIZE; i++)
-                videoChunk[i] = Globals.romdata[videoAddr + i];
+            byte[] videoChunk = Globals.getVideoChunk(videoPageId);
 
             ObjRec[] objects = new ObjRec[256];
             int addr = Globals.getTilesAddr(tilesId);

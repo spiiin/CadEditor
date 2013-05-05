@@ -20,7 +20,9 @@ namespace CadEditor
             {
                 using (FileStream f = File.OpenRead(Filename))
                 {
-                    f.Read(romdata, 0, Globals.FILE_SIZE);
+                    int size = OpenFile.FileSize;
+                    romdata = new byte[size];
+                    f.Read(romdata, 0, size);
                 }
             }
             catch (Exception ex)
@@ -30,7 +32,7 @@ namespace CadEditor
 
             try
             {
-                using (XmlReader reader = XmlReader.Create(ConfigFilename, new XmlReaderSettings()))
+                using (XmlReader reader = XmlTextReader.Create(ConfigFilename, new XmlReaderSettings()))
                 {
                     palOffset.readFromXml(reader, "pallete");
                     videoOffset.readFromXml(reader, "videoBack");
@@ -38,9 +40,17 @@ namespace CadEditor
                     bigBlocksOffset.readFromXml(reader, "bigBlocks");
                     blocksOffset.readFromXml(reader, "blocks");
                     screensOffset.readFromXml(reader, "screens");
+                    bool cad = reader.ReadToFollowing("ChipAndDale");
+                    if (cad)
+                    {
+                        LevelData.ReadOffsetFromXml(reader);
+                        DoorData.ReadOffsetFromXml(reader);
+                        boxesBackOffset.readFromXml(reader, "boxesBacks");
+                        
+                    }
                 }
             }
-            catch (Exception ex)
+            catch (XmlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -57,15 +67,40 @@ namespace CadEditor
             levelRecsCad.Add(new LevelRec(0x10EA1, 45));
             levelRecsCad.Add(new LevelRec(0x10FED, 71));
 
-            levelRecsDwd.Add(new LevelRec(0x10315, 51));
-            levelRecsDwd.Add(new LevelRec(0x10438, 60));
-            levelRecsDwd.Add(new LevelRec(0x10584, 68));
-            levelRecsDwd.Add(new LevelRec(0x106A0, 54));
-            levelRecsDwd.Add(new LevelRec(0x10816, 80));
-            levelRecsDwd.Add(new LevelRec(0x10962, 63));
-            levelRecsDwd.Add(new LevelRec(0x10A89, 58));
+            levelRecsDwd.Add(new LevelRec(0x10315, 51, 17, 4));
+            levelRecsDwd.Add(new LevelRec(0x10438, 60, 17, 4));
+            levelRecsDwd.Add(new LevelRec(0x10584, 68, 17, 4));
+            levelRecsDwd.Add(new LevelRec(0x106A0, 54, 10, 12));
+            levelRecsDwd.Add(new LevelRec(0x10816, 80, 19, 3));
+            levelRecsDwd.Add(new LevelRec(0x10962, 63, 19, 3));
+            levelRecsDwd.Add(new LevelRec(0x10A89, 58, 19, 3));
+
+            levelRecsDt.Add(new LevelRec(0x1B43B, 181, 8, 7));
+            levelRecsDt.Add(new LevelRec(0x1B6CC, 156, 8, 8));
+            levelRecsDt.Add(new LevelRec(0x1B8E8, 126, 8, 6));
+            levelRecsDt.Add(new LevelRec(0x1BAD1, 119, 8, 6));
+            levelRecsDt.Add(new LevelRec(0x1BD70, 182, 8, 6));
  
             reloadLevelParamsData();
+        }
+
+        public static bool flushToFile()
+        {
+            try
+            {
+                using (FileStream f = File.OpenWrite(OpenFile.FileName))
+                {
+                    f.Write(Globals.romdata, 0, OpenFile.FileSize);
+                    f.Seek(0, SeekOrigin.Begin);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+            return true;
         }
 
         public static void reloadLevelParamsData()
@@ -80,6 +115,17 @@ namespace CadEditor
 
         public static int getVideoPageAddr(byte id)
         {
+            if (gameType == GameType.DT)
+            {
+                if (id == 0x90) return 0x4010;
+                if (id == 0x91) return 0x4D10;
+                if (id == 0x92) return 0x5A10;
+                if (id == 0x93) return 0x7D10;
+                if (id == 0x94) return 0x8A10;
+                if (id == 0x95) return 0x9710;
+                return -1;
+            }
+
             if ((id & 0xF0) == 0x90)
                 return videoOffset.beginAddr + videoOffset.recSize * (id & 0x0F);
             else if ((id & 0xF0) == 0x80)
@@ -104,7 +150,46 @@ namespace CadEditor
 
         public static int getBackTileAddr(int levelNo)
         {
-            return 0x1E909 + levelNo * 0x10;
+            return boxesBackOffset.beginAddr + levelNo * boxesBackOffset.recSize;
+        }
+
+        public static int getBigBlocksCount()
+        {
+            return gameType == GameType.DT ? 512 : 256;
+        }
+
+        public static int getLevelWidth(int levelNo)
+        {
+            if (gameType == GameType.Generic)
+                return levelRecsDwd[levelNo].width;
+            if (gameType == GameType.DT)
+                return levelRecsDt[levelNo].width;
+            return levelData[levelNo].getWidth();
+        }
+
+        public static int getLevelHeight(int levelNo)
+        {
+            if (gameType == GameType.Generic)
+                return levelRecsDwd[levelNo].height;
+            if (gameType == GameType.DT)
+                return levelRecsDt[levelNo].height;
+            return levelData[levelNo].getHeight();
+        }
+
+        public static byte[] getVideoChunk(byte videoPageId)
+        {
+            byte[] videoChunk = new byte[Globals.VIDEO_PAGE_SIZE];
+            int videoAddr = Globals.getVideoPageAddr(videoPageId);
+            for (int i = 0; i < Globals.VIDEO_PAGE_SIZE; i++)
+                videoChunk[i] = Globals.romdata[videoAddr + i];
+
+            if (gameType == GameType.DT)
+            {
+                for (int i = 0; i < 16 * 16 * 3; i++)
+                    videoChunk[i] = Globals.romdata[0x4010 + i];
+            }
+
+            return videoChunk;
         }
 
         public static byte[] getScreen(int screenIndex)
@@ -114,6 +199,41 @@ namespace CadEditor
             for (int i = 0; i < screensOffset.recSize; i++)
                 result[i] = Globals.romdata[beginAddr + i];
             return result;
+        }
+
+        public static int getBigTileNoFromScreen(byte[] screenData, int index)
+        {
+            if (gameType == GameType.DT)
+            {
+                int noY = index % 8;
+                int noX = index / 8;
+                byte lineByte = screenData[0x40 + noX];
+                int addValue = (lineByte & (1 << (7 - noY))) != 0 ? 256 : 0;
+                return addValue + screenData[index];
+            }
+            return screenData[index];
+        }
+
+        public static void setBigTileToScreen(byte[] screenData, int index, int value)
+        {
+            if (gameType == GameType.DT)
+            {
+                bool hiPart = value > 0xFF;
+                int noY = index % 8;
+                int noX = index / 8;
+                int lineByte = screenData[0x40 + noX];
+                int mask = 1 << (7 - noY);
+                if (hiPart)
+                    lineByte |= mask;
+                else
+                    lineByte &= ~mask;
+                screenData[index] = (byte)value;
+                screenData[0x40 + noX] = (byte)lineByte;
+            }
+            else
+            {
+                screenData[index] = (byte)value;
+            }
         }
 
         public static List<ScreenRec> buildScreenRecs(int levelNo, bool stopOnDoor)
@@ -147,7 +267,7 @@ namespace CadEditor
             {
                 int curIndex1 = j*width + i;
                 int doorIndex = curLevelLayerData.scroll[curIndex1] & 0x1F;
-                if (doorIndex > 0 && doorIndex != 25 /*hack for last door with no exit*/)
+                if (doorIndex > 0 && doorIndex != DOORS_COUNT /*hack for last door with no exit*/)
                     doorsIndexes.Add(curIndex1);
             }
             List<int> startIndexes = new List<int>();
@@ -155,7 +275,7 @@ namespace CadEditor
             for (int doorInd = 0; doorInd < doorsIndexes.Count; doorInd++)
             {
                 int doorNo = curLevelLayerData.scroll[doorsIndexes[doorInd]] & 0x1F;
-                int curIndex = doorInd == 0 ? getStartLoc(levelNo) : Globals.doorsData[doorNo-1].startLoc;
+                int curIndex = doorInd == 0 ? Globals.levelData[levelNo].startLoc : Globals.doorsData[doorNo - 1].startLoc;
                 if (curIndex >= 0 && curIndex < width * height)
                 {
                     roomInds[curIndex] = doorNo;
@@ -362,20 +482,26 @@ namespace CadEditor
             return -1;
         }
 
-        /*private static int getTeleport(int doorNo)
+        public static int getLayoutAddr(int index)
         {
-            return doorNo == 25 ? -1 : doorsData[doorNo - 1].startLoc;
-        }*/
-
-        //C&D specific
-        private static int getStartLoc(int no)
-        {
-            var n = new[] { 0x23, 0x15, 0x10, 0x10, 0x18, 0x10, 0x20, 0x18, 0x20, 0x10, 0x18 };
-            return n[no];
+            //dwd/dt specific
+            if (GameType.DT == gameType)
+                return layoutAddrsDuckTales[index];
+            else
+                return layoutAddrsDwd[index];
         }
 
-        //DWD specific
-        public static int[] layoutAddrs = 
+        public static int getScrollAddr(int index)
+        {
+            return getLayoutAddr(index) + 508; //dwd specific
+        }
+
+        /*private static int getTeleport(int doorNo)
+        {
+            return doorNo == DOORS_COUNT ? -1 : doorsData[doorNo - 1].startLoc;
+        }*/
+
+        public static int[] layoutAddrsDwd = 
         {
             0x1DFA0, 
             0x1DFE4,
@@ -386,16 +512,25 @@ namespace CadEditor
             0x1E156,
         };
 
+        public static int[] layoutAddrsDuckTales = {
+                                                       0x1CE7B,
+                                                       0x1CEB3,
+                                                       0x1CEF3,
+                                                       0x1CF23,
+                                                       0x1CF53
+                                                   };
+
         public static List<LevelRec> levelRecsCad = new List<LevelRec>();
         public static List<LevelRec> levelRecsDwd = new List<LevelRec>();
+        public static List<LevelRec> levelRecsDt  = new List<LevelRec>();
         public static List<LevelData> levelData = new List<LevelData>(LEVELS_COUNT);
         public static List<DoorData> doorsData = new List<DoorData>(DOORS_COUNT);
 
+        //cad specific
         public static int LEVELS_COUNT = 11;
         public static int DOORS_COUNT = 25;
 
-        public static int FILE_SIZE = 262160;
-        public static byte[] romdata = new byte[FILE_SIZE];
+        public static byte[] romdata;
         public static int CHUNKS_COUNT = 256;
         public static int VIDEO_PAGE_SIZE = 4096;
         public static int OBJECTS_COUNT = 256;
@@ -408,6 +543,9 @@ namespace CadEditor
         public static OffsetRec bigBlocksOffset;
         public static OffsetRec blocksOffset;
         public static OffsetRec screensOffset;
+        public static OffsetRec boxesBackOffset;
+
+        public static GameType gameType = GameType.Generic;
     }
 
     public struct OffsetRec
@@ -423,26 +561,11 @@ namespace CadEditor
         {
             reader.ReadToFollowing(nodeName);
             reader.MoveToAttribute("begin");
-            beginAddr = parseInt(reader.Value);
+            beginAddr = Utils.parseInt(reader.Value);
             reader.MoveToAttribute("count");
-            recCount = parseInt(reader.Value);
+            recCount = Utils.parseInt(reader.Value);
             reader.MoveToAttribute("size");
-            recSize = parseInt(reader.Value);
-        }
-
-        private int parseInt(string value)
-        {
-            int ans = 0;
-            //try hex parsing
-            if ((value.Length > 2) && (value[0] == '0') && ((value[1] == 'x') || (value[1] == 'X')))
-            {
-                var newStr = value.Substring(2);
-                int.TryParse(newStr, NumberStyles.HexNumber, CultureInfo.CurrentCulture, out ans);
-                return ans;
-            }
-            int.TryParse(value, out ans);
-            return ans;
-
+            recSize = Utils.parseInt(reader.Value);
         }
 
         public int beginAddr;
@@ -491,13 +614,17 @@ namespace CadEditor
 
     public struct LevelRec
     {
-        public LevelRec(int objectsBeginAddr, int objCount)
+        public LevelRec(int objectsBeginAddr, int objCount, int width = 0, int height = 0)
         {
             this.objCount = objCount;
             this.objectsBeginAddr = objectsBeginAddr;
+            this.width = width;
+            this.height = height;
         }
         public int objCount;
         public int objectsBeginAddr;
+        public int width;
+        public int height;
     }
 
     public struct ScreenRec
@@ -547,46 +674,47 @@ namespace CadEditor
         static public LevelData readFromFile(byte[] romdata, int no)
         {
             LevelData res = new LevelData();
-            res.objId = romdata[0x1E23D + no];
-            res.backId = romdata[0x1E24C + no];
-            res.palId = romdata[0x1E25B + no];
-            res.palId2 = romdata[0x1E279 + no];
-            res.palBlink = romdata[0x1E288 + no];
-            res.width = romdata[0x1E22E + no];
-            res.height = romdata[0x1E21F + no];
-            res.startLoc = romdata[0x1E210 + no];
-            byte layoutByte1 = romdata[0x1E297 + no];
-            byte layoutByte2 = romdata[0x1E2A6 + no];
-            res.layoutAddr = makeAddrPtr(layoutByte2, layoutByte1);
-            byte scrollByte1 = romdata[0x1E2B5 + no];
-            byte scrollByte2 = romdata[0x1E2C4 + no];
+            res.objId = romdata[LevelRecBaseOffset        + 60  + no];
+            res.backId = romdata[LevelRecBaseOffset       + 75  + no];
+            res.palId = romdata[LevelRecBaseOffset        + 90  + no];
+            res.palId2 = romdata[LevelRecBaseOffset       + 120 + no];
+            res.palBlink = romdata[LevelRecBaseOffset     + 135 + no];
+            res.width = romdata[LevelRecBaseOffset        + 45  + no];
+            res.height = romdata[LevelRecBaseOffset       + 30  + no];
+            res.startLoc = romdata[LevelRecBaseOffset     + 15  + no];
+            byte layoutByte1 = romdata[LevelRecBaseOffset + 150 + no];
+            byte layoutByte2 = romdata[LevelRecBaseOffset + 165 + no];
+            byte scrollByte1 = romdata[LevelRecBaseOffset + 180 + no];
+            byte scrollByte2 = romdata[LevelRecBaseOffset + 195 + no];
+            res.bigBlockId = romdata[LevelRecBaseOffset   + 0   + no];
+            res.musicNo = romdata[LevelRecBaseOffset      + 105 + no];
+            byte dirsByte1 = romdata[LevelRecDirOffset    + 0   + no];
+            byte dirsByte2 = romdata[LevelRecDirOffset    + 15  + no];
+
             res.scrollAddr = makeAddrPtr(scrollByte2, scrollByte1);
-            res.bigBlockId = romdata[0x1E201 + no];
-            res.musicNo = romdata[0x1E26A + no];
-            byte dirsByte1 = romdata[0x10239 + no];
-            byte dirsByte2 = romdata[0x10248 + no];
+            res.layoutAddr = makeAddrPtr(layoutByte2, layoutByte1);
             res.dirsAddr = makeAddrPtr(dirsByte2, dirsByte1);
             return res;
         }
 
         public bool saveToFile(byte[] romdata, int no)
         {
-            romdata[0x1E23D + no] = (byte)objId;
-            romdata[0x1E24C + no] = (byte)backId;
-            romdata[0x1E25B + no] = (byte)palId;
-            romdata[0x1E279 + no] = (byte)palId2;
-            romdata[0x1E288 + no] = (byte)palBlink;
-            romdata[0x1E22E + no] = (byte)width;
-            romdata[0x1E21F + no] = (byte)height;
-            romdata[0x1E210 + no] = (byte)startLoc;
-            romdata[0x1E297 + no] = getLoByte(layoutAddr);
-            romdata[0x1E2A6 + no] = getHiByte(layoutAddr);
-            romdata[0x1E2B5 + no] = getLoByte(scrollAddr);
-            romdata[0x1E2C4 + no] = getHiByte(scrollAddr);
-            romdata[0x1E201 + no] = (byte)bigBlockId;
-            romdata[0x1E26A + no] = (byte)musicNo;
-            romdata[0x10239 + no] = getLoByte(dirsAddr);
-            romdata[0x10248 + no] = getHiByte(dirsAddr);
+            romdata[LevelRecBaseOffset + 60 + no] = (byte)objId;
+            romdata[LevelRecBaseOffset + 75  + no] = (byte)backId;
+            romdata[LevelRecBaseOffset + 90  + no] = (byte)palId;
+            romdata[LevelRecBaseOffset + 120 + no] = (byte)palId2;
+            romdata[LevelRecBaseOffset + 135  + no] = (byte)palBlink;
+            romdata[LevelRecBaseOffset + 45  + no] = (byte)width;
+            romdata[LevelRecBaseOffset + 30  + no] = (byte)height;
+            romdata[LevelRecBaseOffset + 15  + no] = (byte)startLoc;
+            romdata[LevelRecBaseOffset + 150 + no] = getLoByte(layoutAddr);
+            romdata[LevelRecBaseOffset + 165 + no] = getHiByte(layoutAddr);
+            romdata[LevelRecBaseOffset + 180 + no] = getLoByte(scrollAddr);
+            romdata[LevelRecBaseOffset + 195 + no] = getHiByte(scrollAddr);
+            romdata[LevelRecBaseOffset + 0   + no] = (byte)bigBlockId;
+            romdata[LevelRecBaseOffset + 105 + no] = (byte)musicNo;
+            romdata[LevelRecDirOffset  + 0   + no] = getLoByte(dirsAddr);
+            romdata[LevelRecDirOffset  + 15  + no] = getHiByte(dirsAddr);
             Globals.reloadLevelParamsData();
             return true;
         }
@@ -608,17 +736,17 @@ namespace CadEditor
 
         public int getActualScrollAddr()
         {
-            return scrollAddr + 0x10010;
+            return scrollAddr + ScrollPtrAdd;
         }
 
         public int getActualLayoutAddr()
         {
-            return layoutAddr + 0x10010;
+            return layoutAddr + LayoutPtrAdd;
         }
 
         public int getActualDirsAddr()
         {
-            return dirsAddr + 0x8010;
+            return dirsAddr + DirPtrAdd;
         }
 
         public int getWidth()
@@ -655,6 +783,29 @@ namespace CadEditor
         public int musicNo;
         public int dirsAddr;
         //ptr tables 1-5 
+
+        public static int LevelRecBaseOffset;
+        public static int LevelRecDirOffset;
+        public static int LayoutPtrAdd;
+        public static int ScrollPtrAdd;
+        public static int DirPtrAdd;
+
+        public static void ReadOffsetFromXml(XmlReader reader)
+        {
+            reader.ReadToFollowing("LevelRecOffset");
+            LevelRecBaseOffset = Utils.parseInt(readElement(reader, "LevelRecBaseOffset"));
+            LevelRecDirOffset = Utils.parseInt(readElement(reader, "LevelRecDirOffset"));
+            LayoutPtrAdd = Utils.parseInt(readElement(reader, "LayoutPtrAdd"));
+            ScrollPtrAdd = Utils.parseInt(readElement(reader, "ScrollPtrAdd"));
+            DirPtrAdd = Utils.parseInt(readElement(reader, "DirPtrAdd"));
+        }
+
+        private static string readElement(XmlReader reader, string elementName)
+        {
+            reader.ReadToFollowing(elementName);
+            reader.MoveToAttribute("addr");
+            return reader.Value;
+        }
     }
 
     struct DoorData
@@ -662,31 +813,31 @@ namespace CadEditor
         static public DoorData readFromFile(byte[] romdata, int no)
         {
             DoorData res = new DoorData();
-            res.objId = romdata[0x1E6BB + no];
-            res.backId = romdata[0x1E6D3 + no];
-            res.palId = romdata[0x1E6EB + no];
-            res.palId2 = romdata[0x1E703 + no];
-            res.palBlink = romdata[0x1E71B + no];
-            res.startLoc = romdata[0x1E673 + no];
-            res.scrX = romdata[0x1E6A3 + no];
-            res.scrY = romdata[0x1E68B + no];
-            res.playerX = romdata[0x1E74C + no];
-            res.playerY = romdata[0x1E734 + no];
+            res.objId = romdata[DoorRecBaseOffset    + 72  + no];
+            res.backId = romdata[DoorRecBaseOffset   + 96  + no];
+            res.palId = romdata[DoorRecBaseOffset    + 120 + no];
+            res.palId2 = romdata[DoorRecBaseOffset   + 144 + no];
+            res.palBlink = romdata[DoorRecBaseOffset + 168 + no];
+            res.startLoc = romdata[DoorRecBaseOffset + 0   + no];
+            res.scrX = romdata[DoorRecBaseOffset     + 48  + no];
+            res.scrY = romdata[DoorRecBaseOffset     + 24  + no];
+            res.playerX = romdata[DoorRecBaseOffset  + 193 + no];
+            res.playerY = romdata[DoorRecBaseOffset  + 217 + no];
             return res;
         }
 
         public bool saveToFile(byte[] romdata, int no)
         {
-            romdata[0x1E6BB + no] = (byte)objId;
-            romdata[0x1E6D3 + no] = (byte)backId;
-            romdata[0x1E6EB + no] = (byte)palId;
-            romdata[0x1E703 + no] = (byte)palId2;
-            romdata[0x1E71B + no] = (byte)palBlink;
-            romdata[0x1E673 + no] = (byte)startLoc;
-            romdata[0x1E6A3 + no] = (byte)scrX;
-            romdata[0x1E68B + no] = (byte)scrY;
-            romdata[0x1E74C + no] = (byte)playerX;
-            romdata[0x1E734 + no] = (byte)playerY;
+            romdata[DoorRecBaseOffset + 72 + no] = (byte)objId;
+            romdata[DoorRecBaseOffset + 96 + no] = (byte)backId;
+            romdata[DoorRecBaseOffset + 120 + no] = (byte)palId;
+            romdata[DoorRecBaseOffset + 144 + no] = (byte)palId2;
+            romdata[DoorRecBaseOffset + 168 + no] = (byte)palBlink;
+            romdata[DoorRecBaseOffset + 0   + no] = (byte)startLoc;
+            romdata[DoorRecBaseOffset + 48  + no] = (byte)scrX;
+            romdata[DoorRecBaseOffset + 24  + no] = (byte)scrY;
+            romdata[DoorRecBaseOffset + 193 + no] = (byte)playerX;
+            romdata[DoorRecBaseOffset + 217 + no] = (byte)playerY;
             Globals.reloadLevelParamsData();
             return true;
         }
@@ -700,12 +851,27 @@ namespace CadEditor
         public int scrY;
         public int playerX;
         public int playerY;
+
+        public static int DoorRecBaseOffset;
+
+        public static void ReadOffsetFromXml(XmlReader reader)
+        {
+            reader.ReadToFollowing("DoorRecOffset");
+            DoorRecBaseOffset = Utils.parseInt(readElement(reader, "DoorRecBaseOffset"));
+        }
+
+        private static string readElement(XmlReader reader, string elementName)
+        {
+            reader.ReadToFollowing(elementName);
+            reader.MoveToAttribute("addr");
+            return reader.Value;
+        }
     }
 
     public enum GameType
     {
         Generic,
-        CAD
+        CAD,
+        DT
     };
 }
-

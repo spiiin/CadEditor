@@ -6,4 +6,4 @@
         <bigBlocks   begin='0x36F0'  count='8'    size="0x4000"/>
         <blocks      begin='0x3AF0'  count='8'    size="0x4000"/>
         <screens     begin='0x10'    count='300'  size="0x40"/>
-</Config>;
+</Config>

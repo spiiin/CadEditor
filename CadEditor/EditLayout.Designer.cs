@@ -55,13 +55,7 @@
             this.pnGeneric = new System.Windows.Forms.Panel();
             this.cbLayoutNo = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.cbHeight = new System.Windows.Forms.ComboBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.cbWidth = new System.Windows.Forms.ComboBox();
             this.pnCad = new System.Windows.Forms.Panel();
-            this.label12 = new System.Windows.Forms.Label();
-            this.cbGame = new System.Windows.Forms.ComboBox();
             this.pnDoors = new System.Windows.Forms.Panel();
             this.pnIngameScreenOrder = new System.Windows.Forms.Panel();
             this.pnSelectScroll = new System.Windows.Forms.Panel();
@@ -174,7 +168,7 @@
             this.cbShowScrolls.CheckAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.cbShowScrolls.Checked = true;
             this.cbShowScrolls.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbShowScrolls.Location = new System.Drawing.Point(336, 274);
+            this.cbShowScrolls.Location = new System.Drawing.Point(334, 247);
             this.cbShowScrolls.Name = "cbShowScrolls";
             this.cbShowScrolls.Size = new System.Drawing.Size(68, 31);
             this.cbShowScrolls.TabIndex = 21;
@@ -296,13 +290,9 @@
             // 
             this.pnGeneric.Controls.Add(this.cbLayoutNo);
             this.pnGeneric.Controls.Add(this.label13);
-            this.pnGeneric.Controls.Add(this.label11);
-            this.pnGeneric.Controls.Add(this.cbHeight);
-            this.pnGeneric.Controls.Add(this.label10);
-            this.pnGeneric.Controls.Add(this.cbWidth);
-            this.pnGeneric.Location = new System.Drawing.Point(333, 138);
+            this.pnGeneric.Location = new System.Drawing.Point(332, 101);
             this.pnGeneric.Name = "pnGeneric";
-            this.pnGeneric.Size = new System.Drawing.Size(72, 132);
+            this.pnGeneric.Size = new System.Drawing.Size(72, 54);
             this.pnGeneric.TabIndex = 43;
             // 
             // cbLayoutNo
@@ -333,78 +323,6 @@
             this.label13.TabIndex = 54;
             this.label13.Text = "Layout:";
             // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(3, 83);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(38, 13);
-            this.label11.TabIndex = 52;
-            this.label11.Text = "Height";
-            // 
-            // cbHeight
-            // 
-            this.cbHeight.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbHeight.FormattingEnabled = true;
-            this.cbHeight.Items.AddRange(new object[] {
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15"});
-            this.cbHeight.Location = new System.Drawing.Point(4, 99);
-            this.cbHeight.Name = "cbHeight";
-            this.cbHeight.Size = new System.Drawing.Size(64, 21);
-            this.cbHeight.TabIndex = 51;
-            this.cbHeight.SelectedIndexChanged += new System.EventHandler(this.cbWidth_SelectedIndexChanged);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(1, 43);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(38, 13);
-            this.label10.TabIndex = 50;
-            this.label10.Text = "Width:";
-            // 
-            // cbWidth
-            // 
-            this.cbWidth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbWidth.FormattingEnabled = true;
-            this.cbWidth.Items.AddRange(new object[] {
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15"});
-            this.cbWidth.Location = new System.Drawing.Point(5, 59);
-            this.cbWidth.Name = "cbWidth";
-            this.cbWidth.Size = new System.Drawing.Size(64, 21);
-            this.cbWidth.TabIndex = 49;
-            this.cbWidth.SelectedIndexChanged += new System.EventHandler(this.cbWidth_SelectedIndexChanged);
-            // 
             // pnCad
             // 
             this.pnCad.Controls.Add(this.label1);
@@ -414,29 +332,6 @@
             this.pnCad.Name = "pnCad";
             this.pnCad.Size = new System.Drawing.Size(72, 100);
             this.pnCad.TabIndex = 3;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(330, 98);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(38, 13);
-            this.label12.TabIndex = 50;
-            this.label12.Text = "Game:";
-            // 
-            // cbGame
-            // 
-            this.cbGame.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbGame.DropDownWidth = 200;
-            this.cbGame.FormattingEnabled = true;
-            this.cbGame.Items.AddRange(new object[] {
-            "Darkwing Duck",
-            "Chip \'n Dale Rescue Rangers"});
-            this.cbGame.Location = new System.Drawing.Point(333, 114);
-            this.cbGame.Name = "cbGame";
-            this.cbGame.Size = new System.Drawing.Size(66, 21);
-            this.cbGame.TabIndex = 49;
-            this.cbGame.SelectedIndexChanged += new System.EventHandler(this.cbGame_SelectedIndexChanged);
             // 
             // pnDoors
             // 
@@ -476,8 +371,6 @@
             this.Controls.Add(this.pnIngameScreenOrder);
             this.Controls.Add(this.pnGeneric);
             this.Controls.Add(this.pnDoors);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.cbGame);
             this.Controls.Add(this.pnCad);
             this.Controls.Add(this.pnLevelLayout);
             this.Controls.Add(this.cbShowScrolls);
@@ -535,13 +428,7 @@
         private System.Windows.Forms.Panel pnLevelLayout;
         private System.Windows.Forms.PictureBox pbMap;
         private System.Windows.Forms.Panel pnGeneric;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.ComboBox cbHeight;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ComboBox cbWidth;
         private System.Windows.Forms.Panel pnCad;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ComboBox cbGame;
         private System.Windows.Forms.Panel pnDoors;
         private System.Windows.Forms.Panel pnIngameScreenOrder;
         private System.Windows.Forms.ComboBox cbLayoutNo;

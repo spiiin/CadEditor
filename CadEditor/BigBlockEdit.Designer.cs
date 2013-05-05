@@ -38,8 +38,6 @@
             this.pbActive = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.subPalletes = new System.Windows.Forms.ImageList(this.components);
-            this.label10 = new System.Windows.Forms.Label();
-            this.cbGame = new System.Windows.Forms.ComboBox();
             this.pnEditCad = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.cbDoor = new System.Windows.Forms.ComboBox();
@@ -50,6 +48,8 @@
             this.cbPaletteNo = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cbVideoNo = new System.Windows.Forms.ComboBox();
+            this.cbPart = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).BeginInit();
             this.pnEditCad.SuspendLayout();
@@ -140,35 +140,13 @@
             this.subPalletes.ImageSize = new System.Drawing.Size(16, 16);
             this.subPalletes.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(12, 66);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(38, 13);
-            this.label10.TabIndex = 50;
-            this.label10.Text = "Game:";
-            // 
-            // cbGame
-            // 
-            this.cbGame.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbGame.FormattingEnabled = true;
-            this.cbGame.Items.AddRange(new object[] {
-            "Generic",
-            "Chip \'n Dale Rescue Rangers"});
-            this.cbGame.Location = new System.Drawing.Point(15, 82);
-            this.cbGame.Name = "cbGame";
-            this.cbGame.Size = new System.Drawing.Size(248, 21);
-            this.cbGame.TabIndex = 49;
-            this.cbGame.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
-            // 
             // pnEditCad
             // 
             this.pnEditCad.Controls.Add(this.label4);
             this.pnEditCad.Controls.Add(this.cbDoor);
             this.pnEditCad.Controls.Add(this.label2);
             this.pnEditCad.Controls.Add(this.cbLevel);
-            this.pnEditCad.Location = new System.Drawing.Point(12, 114);
+            this.pnEditCad.Location = new System.Drawing.Point(12, 69);
             this.pnEditCad.Name = "pnEditCad";
             this.pnEditCad.Size = new System.Drawing.Size(251, 81);
             this.pnEditCad.TabIndex = 51;
@@ -257,7 +235,7 @@
             this.pnGeneric.Controls.Add(this.cbPaletteNo);
             this.pnGeneric.Controls.Add(this.label7);
             this.pnGeneric.Controls.Add(this.cbVideoNo);
-            this.pnGeneric.Location = new System.Drawing.Point(12, 112);
+            this.pnGeneric.Location = new System.Drawing.Point(12, 69);
             this.pnGeneric.Name = "pnGeneric";
             this.pnGeneric.Size = new System.Drawing.Size(251, 81);
             this.pnGeneric.TabIndex = 54;
@@ -326,15 +304,34 @@
             this.cbVideoNo.TabIndex = 41;
             this.cbVideoNo.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
             // 
+            // cbPart
+            // 
+            this.cbPart.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPart.FormattingEnabled = true;
+            this.cbPart.Location = new System.Drawing.Point(301, 4);
+            this.cbPart.Name = "cbPart";
+            this.cbPart.Size = new System.Drawing.Size(38, 21);
+            this.cbPart.TabIndex = 55;
+            this.cbPart.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(266, 7);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(29, 13);
+            this.label5.TabIndex = 56;
+            this.label5.Text = "Part:";
+            // 
             // BigBlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(792, 550);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.cbPart);
             this.Controls.Add(this.pnGeneric);
             this.Controls.Add(this.pnEditCad);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.cbGame);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.pbActive);
             this.Controls.Add(this.btSave);
@@ -370,8 +367,6 @@
         private System.Windows.Forms.PictureBox pbActive;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ImageList subPalletes;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ComboBox cbGame;
         private System.Windows.Forms.Panel pnEditCad;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbDoor;
@@ -382,5 +377,7 @@
         private System.Windows.Forms.ComboBox cbPaletteNo;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cbVideoNo;
+        private System.Windows.Forms.ComboBox cbPart;
+        private System.Windows.Forms.Label label5;
     }
 }

@@ -76,6 +76,12 @@
     <Compile Include="BoxBackForm.Designer.cs">
       <DependentUpon>BoxBackForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditColor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditColor.Designer.cs">
+      <DependentUpon>EditColor.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditLayout.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +93,12 @@
     </Compile>
     <Compile Include="EditLevelData.Designer.cs">
       <DependentUpon>EditLevelData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditVideo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditVideo.Designer.cs">
+      <DependentUpon>EditVideo.cs</DependentUpon>
     </Compile>
     <Compile Include="EnemyEditor.cs">
       <SubType>Form</SubType>
@@ -126,11 +138,17 @@
     <EmbeddedResource Include="BoxBackForm.resx">
       <DependentUpon>BoxBackForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EditColor.resx">
+      <DependentUpon>EditColor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EditLayout.resx">
       <DependentUpon>EditLayout.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditLevelData.resx">
       <DependentUpon>EditLevelData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditVideo.resx">
+      <DependentUpon>EditVideo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EnemyEditor.resx">
       <DependentUpon>EnemyEditor.cs</DependentUpon>

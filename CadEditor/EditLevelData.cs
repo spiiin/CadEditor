@@ -248,23 +248,8 @@ namespace CadEditor
                 ld.saveToFile(Globals.romdata, no);
             }
 
-            //write to file
-            try
-            {
-                using (FileStream f = File.OpenWrite(romFname))
-                {
-                    f.Write(Globals.romdata, 0, Globals.FILE_SIZE);
-                    f.Seek(0, SeekOrigin.Begin);
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return false;
-            }
-            dirty = false;
-            return true;
+            dirty = !Globals.flushToFile();
+            return !dirty;
         }
 
         private void EditLevelData_FormClosing(object sender, FormClosingEventArgs e)

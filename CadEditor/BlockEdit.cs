@@ -35,7 +35,6 @@ namespace CadEditor
             Utils.setCbIndexWithoutUpdateLevel(cbVideo, VisibleOnlyChange_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbPalette, VisibleOnlyChange_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbSubpalette, cbSubpalette_SelectedIndexChanged);
-            Utils.setCbIndexWithoutUpdateLevel(cbGame, cbGame_SelectedIndexChanged);
 
             updatePanelsVisible();
             reloadLevel();
@@ -47,7 +46,7 @@ namespace CadEditor
             setVideo();
             setVideoImage();
             setObjects();
-            if (gameType == GameType.CAD)
+            if (Globals.gameType == GameType.CAD)
               setBack();
             pbBacks.Refresh();
             if (resetDirty)
@@ -64,7 +63,7 @@ namespace CadEditor
         private void setPal()
         {
             byte palId;
-            if (gameType == GameType.CAD)
+            if (Globals.gameType == GameType.CAD)
             {
                 if (curDoor <= 0)
                     palId = (byte)Globals.levelData[curActiveLevel].palId;
@@ -77,7 +76,7 @@ namespace CadEditor
             }
             int addr = Globals.getPalAddr(palId);
             for (int i = 0; i < Globals.PAL_LEN; i++)
-                palette[i] = Globals.romdata[addr + i];
+                palette[i] = (byte)(Globals.romdata[addr + i] & 0x3F);
 
             //set image for pallete
             var b = new Bitmap(16 * 16, 16);
@@ -106,7 +105,7 @@ namespace CadEditor
 
         private void setObjects()
         {
-            byte bigBlockId = (gameType == GameType.CAD) ? (byte)Globals.levelData[curActiveLevel].bigBlockId : (byte)curActiveBigBlock;
+            byte bigBlockId = (Globals.gameType == GameType.CAD) ? (byte)Globals.levelData[curActiveLevel].bigBlockId : (byte)curActiveBigBlock;
             int addr = Globals.getTilesAddr(bigBlockId);
             for (int i = 0; i < Globals.OBJECTS_COUNT; i++)
             {
@@ -123,9 +122,8 @@ namespace CadEditor
 
         private void setVideo()
         {
-            byte[] videoChunk = new byte[Globals.VIDEO_PAGE_SIZE];
             byte backId;
-            if (gameType == GameType.CAD)
+            if (Globals.gameType == GameType.CAD)
             {
                 if (curDoor <= 0)
                     backId = (byte)Globals.levelData[curActiveLevel].backId;
@@ -136,14 +134,9 @@ namespace CadEditor
             {
                 backId = (byte)curActiveVideo;
             }
-            int videoAddr = Globals.getVideoPageAddr(backId);
-            for (int i = 0; i < Globals.VIDEO_PAGE_SIZE; i++)
-            {
-                videoChunk[i] = Globals.romdata[videoAddr + i];
-            }
             for (int i = 0; i < 4; i++)
             {
-                Bitmap b = Video.makeImageStrip(videoChunk, palette, i, 2);
+                Bitmap b = Video.makeImageStrip(Globals.getVideoChunk(backId), palette, i, 2);
                 videoSprites[i].Images.Clear();
                 videoSprites[i].Images.AddStrip(b);
             }
@@ -158,7 +151,7 @@ namespace CadEditor
                 {
                     int x = i % 16;
                     int y = i / 16;
-                    g.DrawImage(videoSprites[curSubpalIndex].Images[i], new Point(x * 16, y * 16));
+                    g.DrawImage(videoSprites[curSubpalIndex].Images[i], new Rectangle(x * 16, y * 16, 16, 16));
                 }
             }
             mapScreen.Image = b;
@@ -180,7 +173,6 @@ namespace CadEditor
         private ImageList[] videoSprites = new ImageList[4];
         private byte[] curActiveBack = new byte[16];
         private bool dirty;
-        private GameType gameType = GameType.Generic;
 
         private string[] subPalItems = { "1", "2", "3", "4" };
 
@@ -261,10 +253,10 @@ namespace CadEditor
             var obj = objects[index];
             using (Graphics g = Graphics.FromImage(b))
             {
-                g.DrawImage(videoSprites[obj.getSubpallete()].Images[obj.c1], new Point(0, 0));
-                g.DrawImage(videoSprites[obj.getSubpallete()].Images[obj.c2], new Point(16, 0));
-                g.DrawImage(videoSprites[obj.getSubpallete()].Images[obj.c3], new Point(0, 16));
-                g.DrawImage(videoSprites[obj.getSubpallete()].Images[obj.c4], new Point(16, 16));
+                g.DrawImage(videoSprites[obj.getSubpallete()].Images[obj.c1], new Rectangle(0, 0, 16, 16));
+                g.DrawImage(videoSprites[obj.getSubpallete()].Images[obj.c2], new Rectangle(16, 0, 16, 16));
+                g.DrawImage(videoSprites[obj.getSubpallete()].Images[obj.c3], new Rectangle(0, 16, 16, 16));
+                g.DrawImage(videoSprites[obj.getSubpallete()].Images[obj.c4], new Rectangle(16, 16, 16, 16));
             }
             return b;
         }
@@ -281,7 +273,7 @@ namespace CadEditor
         private bool saveToFile()
         {
             byte blockId;
-            if (gameType == GameType.CAD)
+            if (Globals.gameType == GameType.CAD)
                 blockId = (byte)Globals.levelData[curActiveLevel].bigBlockId;
             else
                 blockId = (byte)curActiveBigBlock;
@@ -296,30 +288,15 @@ namespace CadEditor
                 Globals.romdata[addr + 0x400 + i] = objects[i].typeColor;
             }
 
-            if (gameType == GameType.CAD)
+            if (Globals.gameType == GameType.CAD)
             {
                 int backAddr = Globals.getBackTileAddr(curActiveLevel);
                 for (int i = 0; i < 16; i++)
                     Globals.romdata[backAddr + i] = curActiveBack[i];
             }
 
-            string romFname = OpenFile.FileName;
-            try
-            {
-                using (FileStream f = File.OpenWrite(romFname))
-                {
-                    f.Write(Globals.romdata, 0, Globals.FILE_SIZE);
-                    f.Seek(0, SeekOrigin.Begin);
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return false;
-            }
-            dirty = false;
-            return true;
+            dirty = !Globals.flushToFile();
+            return !dirty;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -385,7 +362,7 @@ namespace CadEditor
             //GUI
             mapObjects.Controls.Clear();
             mapObjects.SuspendLayout();
-            var objectTypesCad =
+            var objTypesCad =
                 new[]  {
                     "0 (back)",
                     "1 (collect)",
@@ -413,6 +390,26 @@ namespace CadEditor
                     "3 (block)",
                     "4 (spikes)",
                     "5 (door)",
+                    "6",
+                    "7",
+                    "8",
+                    "9",
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F"
+                };
+
+            var objTypesDt =
+    new[] {
+                    "0 (back)",
+                    "1 (block)",
+                    "2 ()",
+                    "3 ()",
+                    "4 ()",
+                    "5 ()",
                     "6",
                     "7",
                     "8",
@@ -455,7 +452,7 @@ namespace CadEditor
                 fp.Controls.Add(cbColor);
                 //
                 ComboBox cbType = new ComboBox();
-                var objectTypes = gameType == GameType.Generic ? objTypesDw : objectTypesCad;
+                var objectTypes = Globals.gameType == GameType.Generic ? objTypesDw : (Globals.gameType == GameType.CAD) ? objTypesCad : objTypesDt;
                 cbType.Items.AddRange(objectTypes);
                 cbType.Location = new Point(156, 0);
                 cbType.Size = new Size(120, 21);
@@ -526,17 +523,9 @@ namespace CadEditor
             return curActiveLevel;
         }
 
-        private void cbGame_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            gameType = cbGame.SelectedIndex == 0 ? GameType.Generic : GameType.CAD;
-            updatePanelsVisible();
-            preparePanel();
-            reloadLevel();
-        }
-
         private void updatePanelsVisible()
         {
-            bool generic = gameType == GameType.Generic;
+            bool generic = Globals.gameType != GameType.CAD;
             pnCad.Visible = !generic;
             pnGeneric.Visible = generic;
             pnBacks.Visible = !generic;
