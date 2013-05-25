@@ -170,7 +170,7 @@ namespace CadEditor
                     for (int btileId = 0; btileId < Globals.getBigBlocksCount() * 4; btileId++)
                         bigBlockIndexes[btileId] = Globals.romdata[bigBlockAddr + btileId];
 
-                    var im = Video.makeObjectsStrip(backId, blockId, palId, 1, false);
+                    var im = Video.makeObjectsStrip(backId, blockId, palId, 1, MapViewType.Tiles);
                     smallBlocks.Images.AddStrip(im);
 
                     //make big blocks
@@ -352,8 +352,9 @@ namespace CadEditor
         private void updatePanelsVisibility()
         {
             bool generic = Globals.gameType != GameType.CAD;
-            pnDoors.Visible = !generic;
-            pnSelectScroll.Visible = !generic;
+            bool notDt = Globals.gameType != GameType.DT;
+            pnDoors.Visible = notDt;
+            pnSelectScroll.Visible = notDt;
             pnIngameScreenOrder.Visible = !generic;
             pnGeneric.Visible = generic;
             pnCad.Visible = !generic;
@@ -480,4 +481,11 @@ namespace CadEditor
             "0x1CF23 (8x6)",
             "0x1CF53 (8x6)" };
     }
+
+    enum MapDrawMode
+    {
+        Screens,
+        Scrolls,
+        Doors
+    };
 }

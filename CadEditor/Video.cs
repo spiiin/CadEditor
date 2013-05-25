@@ -122,7 +122,7 @@ namespace CadEditor
         }
 
         //chip and dale specific
-        public static Bitmap makeObjectsStrip(byte videoPageId, byte tilesId, byte palId, int scale, bool drawType)
+        public static Bitmap makeObjectsStrip(byte videoPageId, byte tilesId, byte palId, int scale, MapViewType drawType)
         {
             byte[] videoChunk = Globals.getVideoChunk(videoPageId);
 
@@ -162,10 +162,15 @@ namespace CadEditor
                         g2.DrawImage(curStrip, new Rectangle(8 * scale, 0, 8 * scale, 8 * scale), new Rectangle(co.c2 * 8 * scale, 0, 8 * scale, 8 * scale), GraphicsUnit.Pixel);
                         g2.DrawImage(curStrip, new Rectangle(0, 8 * scale, 8 * scale, 8 * scale), new Rectangle(co.c3 * 8 * scale, 0, 8 * scale, 8 * scale), GraphicsUnit.Pixel);
                         g2.DrawImage(curStrip, new Rectangle(8 * scale, 8 * scale, 8 * scale, 8 * scale), new Rectangle(co.c4 * 8 * scale, 0, 8 * scale, 8 * scale), GraphicsUnit.Pixel);
-                        if (drawType)
+                        if (drawType == MapViewType.ObjType)
                         {
                             g2.FillRectangle(new SolidBrush(CadObjectTypeColors[co.getType()]), new Rectangle(0, 0, 16 * scale, 16 * scale));
                             g2.DrawString(String.Format("{0:X}", co.getType()), new Font("Arial", 6), Brushes.White, new Point(0, 0));
+                        }
+                        else if (drawType == MapViewType.ObjNumbers)
+                        {
+                            g2.FillRectangle(new SolidBrush(Color.FromArgb(192, 255, 255, 255)), new Rectangle(0, 0, 16 * scale, 16 * scale));
+                            g2.DrawString(String.Format("{0:X}", i), new Font("Arial", 6), Brushes.Red, new Point(0, 0));
                         }
                     }
                     g.DrawImage(mblock, new Rectangle(i*16*scale, 0, 16*scale, 16*scale));
@@ -192,4 +197,11 @@ namespace CadEditor
         const int CAD_OBJTYPES_COUNT = 16;
         public static Color[] CadObjectTypeColors = new Color[CAD_OBJTYPES_COUNT];
     }
+
+    public enum MapViewType
+    {
+        Tiles,
+        ObjType,
+        ObjNumbers
+    };
 }

@@ -56,6 +56,7 @@
             this.pnGeneric = new System.Windows.Forms.Panel();
             this.cbPlus256 = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.pnCad = new System.Windows.Forms.Panel();
             this.cbLayoutNo = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.cbPaletteNo = new System.Windows.Forms.ComboBox();
@@ -65,10 +66,16 @@
             this.cbBigBlockNo = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cbVideoNo = new System.Windows.Forms.ComboBox();
-            this.pnCad = new System.Windows.Forms.Panel();
             this.pnSelectScreen = new System.Windows.Forms.Panel();
             this.lbScrNo = new System.Windows.Forms.Label();
             this.lbActive = new System.Windows.Forms.Label();
+            this.btDelete = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -191,7 +198,7 @@
             this.lvObjects.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lvObjects.Location = new System.Drawing.Point(711, 17);
             this.lvObjects.Name = "lvObjects";
-            this.lvObjects.Size = new System.Drawing.Size(192, 424);
+            this.lvObjects.Size = new System.Drawing.Size(231, 373);
             this.lvObjects.SmallImageList = this.objectSprites;
             this.lvObjects.TabIndex = 38;
             this.lvObjects.UseCompatibleStateImageBehavior = false;
@@ -217,9 +224,9 @@
             this.cbCoordY.Items.AddRange(new object[] {
             "Tiles",
             "Obj types"});
-            this.cbCoordY.Location = new System.Drawing.Point(850, 441);
+            this.cbCoordY.Location = new System.Drawing.Point(877, 393);
             this.cbCoordY.Name = "cbCoordY";
-            this.cbCoordY.Size = new System.Drawing.Size(53, 21);
+            this.cbCoordY.Size = new System.Drawing.Size(66, 21);
             this.cbCoordY.TabIndex = 42;
             this.cbCoordY.SelectedIndexChanged += new System.EventHandler(this.cbCoordY_SelectedIndexChanged);
             // 
@@ -231,16 +238,16 @@
             this.cbCoordX.Items.AddRange(new object[] {
             "Tiles",
             "Obj types"});
-            this.cbCoordX.Location = new System.Drawing.Point(793, 441);
+            this.cbCoordX.Location = new System.Drawing.Point(805, 393);
             this.cbCoordX.Name = "cbCoordX";
-            this.cbCoordX.Size = new System.Drawing.Size(53, 21);
+            this.cbCoordX.Size = new System.Drawing.Size(66, 21);
             this.cbCoordX.TabIndex = 41;
             this.cbCoordX.SelectedIndexChanged += new System.EventHandler(this.cbCoordX_SelectedIndexChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(711, 444);
+            this.label5.Location = new System.Drawing.Point(712, 396);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(76, 13);
             this.label5.TabIndex = 40;
@@ -248,9 +255,9 @@
             // 
             // btClearObjs
             // 
-            this.btClearObjs.Location = new System.Drawing.Point(711, 495);
+            this.btClearObjs.Location = new System.Drawing.Point(805, 441);
             this.btClearObjs.Name = "btClearObjs";
-            this.btClearObjs.Size = new System.Drawing.Size(192, 36);
+            this.btClearObjs.Size = new System.Drawing.Size(138, 24);
             this.btClearObjs.TabIndex = 39;
             this.btClearObjs.Text = "clear all objects on screen";
             this.btClearObjs.UseVisualStyleBackColor = true;
@@ -286,23 +293,23 @@
             // 
             // cbManualSort
             // 
-            this.cbManualSort.AutoSize = true;
             this.cbManualSort.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbManualSort.Checked = true;
             this.cbManualSort.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbManualSort.Location = new System.Drawing.Point(714, 468);
+            this.cbManualSort.Location = new System.Drawing.Point(855, 383);
             this.cbManualSort.Name = "cbManualSort";
-            this.cbManualSort.Size = new System.Drawing.Size(81, 17);
+            this.cbManualSort.Size = new System.Drawing.Size(87, 18);
             this.cbManualSort.TabIndex = 46;
             this.cbManualSort.Text = "Manual sort";
             this.cbManualSort.UseVisualStyleBackColor = true;
+            this.cbManualSort.Visible = false;
             this.cbManualSort.CheckedChanged += new System.EventHandler(this.cbManualSort_CheckedChanged);
             // 
             // btSortUp
             // 
-            this.btSortUp.Location = new System.Drawing.Point(810, 464);
+            this.btSortUp.Location = new System.Drawing.Point(805, 417);
             this.btSortUp.Name = "btSortUp";
-            this.btSortUp.Size = new System.Drawing.Size(34, 22);
+            this.btSortUp.Size = new System.Drawing.Size(66, 22);
             this.btSortUp.TabIndex = 47;
             this.btSortUp.Text = "↑";
             this.btSortUp.UseVisualStyleBackColor = true;
@@ -310,9 +317,9 @@
             // 
             // btSortDown
             // 
-            this.btSortDown.Location = new System.Drawing.Point(850, 464);
+            this.btSortDown.Location = new System.Drawing.Point(877, 417);
             this.btSortDown.Name = "btSortDown";
-            this.btSortDown.Size = new System.Drawing.Size(34, 22);
+            this.btSortDown.Size = new System.Drawing.Size(66, 22);
             this.btSortDown.TabIndex = 48;
             this.btSortDown.Text = "↓";
             this.btSortDown.UseVisualStyleBackColor = true;
@@ -369,6 +376,15 @@
             this.label11.Size = new System.Drawing.Size(39, 13);
             this.label11.TabIndex = 54;
             this.label11.Text = "Layout";
+            // 
+            // pnCad
+            // 
+            this.pnCad.Controls.Add(this.label6);
+            this.pnCad.Controls.Add(this.cbLevel);
+            this.pnCad.Location = new System.Drawing.Point(2, 43);
+            this.pnCad.Name = "pnCad";
+            this.pnCad.Size = new System.Drawing.Size(175, 50);
+            this.pnCad.TabIndex = 51;
             // 
             // cbLayoutNo
             // 
@@ -509,15 +525,6 @@
             this.cbVideoNo.TabIndex = 41;
             this.cbVideoNo.SelectedIndexChanged += new System.EventHandler(this.cbLevel_SelectedIndexChanged);
             // 
-            // pnCad
-            // 
-            this.pnCad.Controls.Add(this.label6);
-            this.pnCad.Controls.Add(this.cbLevel);
-            this.pnCad.Location = new System.Drawing.Point(2, 43);
-            this.pnCad.Name = "pnCad";
-            this.pnCad.Size = new System.Drawing.Size(175, 50);
-            this.pnCad.TabIndex = 51;
-            // 
             // pnSelectScreen
             // 
             this.pnSelectScreen.Controls.Add(this.lbScrNo);
@@ -550,11 +557,82 @@
             this.lbActive.TabIndex = 55;
             this.lbActive.Text = "()";
             // 
+            // btDelete
+            // 
+            this.btDelete.Enabled = false;
+            this.btDelete.Location = new System.Drawing.Point(712, 441);
+            this.btDelete.Name = "btDelete";
+            this.btDelete.Size = new System.Drawing.Size(87, 24);
+            this.btDelete.TabIndex = 56;
+            this.btDelete.Text = "delete selected";
+            this.btDelete.UseVisualStyleBackColor = true;
+            this.btDelete.Click += new System.EventHandler(this.btDelete_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(715, 468);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(218, 13);
+            this.label7.TabIndex = 57;
+            this.label7.Text = "Press CTRL or SHIFT to select many objects";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(712, 422);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(73, 13);
+            this.label10.TabIndex = 58;
+            this.label10.Text = "Objects order:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(670, 436);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(0, 13);
+            this.label12.TabIndex = 59;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(715, 484);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(181, 13);
+            this.label13.TabIndex = 60;
+            this.label13.Text = "Press DEL to delete selected objects";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(715, 500);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(215, 13);
+            this.label14.TabIndex = 61;
+            this.label14.Text = "Select object in the list for change its coords";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(716, 516);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(180, 13);
+            this.label15.TabIndex = 62;
+            this.label15.Text = "Don\'t forget sort objects in right order";
+            // 
             // EnemyEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(910, 535);
+            this.ClientSize = new System.Drawing.Size(944, 533);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.btDelete);
             this.Controls.Add(this.lbActive);
             this.Controls.Add(this.pnSelectScreen);
             this.Controls.Add(this.pnGeneric);
@@ -633,5 +711,12 @@
         private System.Windows.Forms.Label lbScrNo;
         private System.Windows.Forms.CheckBox cbPlus256;
         private System.Windows.Forms.Label lbActive;
+        private System.Windows.Forms.Button btDelete;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label15;
     }
 }

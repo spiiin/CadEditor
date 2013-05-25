@@ -50,6 +50,8 @@
             this.cbVideoNo = new System.Windows.Forms.ComboBox();
             this.cbPart = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.cbViewType = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).BeginInit();
             this.pnEditCad.SuspendLayout();
@@ -58,7 +60,7 @@
             // 
             // mapScreen
             // 
-            this.mapScreen.Location = new System.Drawing.Point(269, 26);
+            this.mapScreen.Location = new System.Drawing.Point(291, 42);
             this.mapScreen.Name = "mapScreen";
             this.mapScreen.Size = new System.Drawing.Size(512, 512);
             this.mapScreen.TabIndex = 5;
@@ -71,7 +73,7 @@
             this.blocksPanel.AutoScroll = true;
             this.blocksPanel.Location = new System.Drawing.Point(15, 236);
             this.blocksPanel.Name = "blocksPanel";
-            this.blocksPanel.Size = new System.Drawing.Size(251, 302);
+            this.blocksPanel.Size = new System.Drawing.Size(251, 318);
             this.blocksPanel.TabIndex = 7;
             // 
             // cbTileset
@@ -323,11 +325,37 @@
             this.label5.TabIndex = 56;
             this.label5.Text = "Part:";
             // 
+            // cbViewType
+            // 
+            this.cbViewType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbViewType.DropDownWidth = 128;
+            this.cbViewType.FormattingEnabled = true;
+            this.cbViewType.Items.AddRange(new object[] {
+            "Tiles",
+            "Obj types",
+            "Obj numbers"});
+            this.cbViewType.Location = new System.Drawing.Point(12, 169);
+            this.cbViewType.Name = "cbViewType";
+            this.cbViewType.Size = new System.Drawing.Size(64, 21);
+            this.cbViewType.TabIndex = 58;
+            this.cbViewType.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(9, 153);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(56, 13);
+            this.label6.TabIndex = 57;
+            this.label6.Text = "View type:";
+            // 
             // BigBlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(792, 550);
+            this.ClientSize = new System.Drawing.Size(815, 569);
+            this.Controls.Add(this.cbViewType);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cbPart);
             this.Controls.Add(this.pnGeneric);
@@ -379,5 +407,7 @@
         private System.Windows.Forms.ComboBox cbVideoNo;
         private System.Windows.Forms.ComboBox cbPart;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cbViewType;
+        private System.Windows.Forms.Label label6;
     }
 }

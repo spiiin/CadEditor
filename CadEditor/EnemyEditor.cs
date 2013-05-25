@@ -132,7 +132,7 @@ namespace CadEditor
                     for (int btileId = 0; btileId < Globals.getBigBlocksCount() * 4; btileId++)
                         bigBlockIndexes[btileId] = Globals.romdata[bigBlockAddr + btileId];
 
-                    var im = Video.makeObjectsStrip(backId, blockId, palId, 1, false);
+                    var im = Video.makeObjectsStrip(backId, blockId, palId, 1, MapViewType.Tiles);
                     smallBlocks.Images.AddStrip(im);
 
                     //make big blocks
@@ -207,7 +207,7 @@ namespace CadEditor
             for (int btileId = 0; btileId < blockCount * 4; btileId++)
                 bigBlockIndexes[btileId] = Globals.romdata[bigBlockAddr + btileId];
 
-            var im = Video.makeObjectsStrip(backId, blockId, palId, 1, false);
+            var im = Video.makeObjectsStrip(backId, blockId, palId, 1, MapViewType.Tiles);
             smallBlocks.Images.AddStrip(im);
 
             for (int btileId = 0; btileId < blockCount; btileId++)
@@ -254,6 +254,7 @@ namespace CadEditor
             if (reloadObjects)
               setObjects();
             curActiveBlock = 0;
+            btDelete.Enabled = false;
         }
 
         private void cbLevel_SelectedIndexChanged(object sender, EventArgs e)
@@ -383,23 +384,30 @@ namespace CadEditor
            return (obj.type != 0xFF) && (curLevelLayerData.layer[scrNo] == 0);
         }
 
+        private void deleteSelected()
+        {
+            var toRemove = new List<ObjectRec>();
+            for (int i = 0; i < lvObjects.SelectedIndices.Count; i++)
+            {
+                int index = lvObjects.SelectedIndices[i];
+                if (index == -1)
+                    continue;
+                toRemove.Add(objects[index]);
+            }
+            for (int i = 0; i < toRemove.Count; i++)
+                objects.Remove(toRemove[i]);
+            fillObjectsListBox();
+
+            btDelete.Enabled = false;
+            mapScreen.Invalidate();
+            dirty = true;
+        }
+
         private void lbObjects_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)
             {
-                var toRemove = new List<ObjectRec>();
-                for (int i = 0; i < lvObjects.SelectedIndices.Count; i++)
-                {
-                    int index = lvObjects.SelectedIndices[i];
-                    if (index == -1)
-                        continue;
-                    toRemove.Add(objects[index]);
-                }
-                for (int i = 0; i < toRemove.Count; i++)
-                    objects.Remove(toRemove[i]);
-                fillObjectsListBox();
-                mapScreen.Invalidate();
-                dirty = true;
+                deleteSelected();
             }
         }
 
@@ -551,7 +559,7 @@ namespace CadEditor
         {
             int dx = e.X / 64;
             int dy = e.Y / 64;
-            int index = dy * 8 + dx;
+            //int index = dy * 8 + dx;
             dirty = true;
             Point coord = screenNoToCoord();
             byte type = (byte)curActiveBlock;
@@ -677,20 +685,22 @@ namespace CadEditor
 
         private void lvObjects_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lvObjects.SelectedItems.Count != 1)
+            bool selectedZero = lvObjects.SelectedItems.Count == 0;
+            bool selectedOne =  lvObjects.SelectedItems.Count == 1;
+            bool selectedMany = lvObjects.SelectedItems.Count > 1;
+            btDelete.Enabled = !selectedZero;
+            cbCoordX.Enabled = selectedOne;
+            cbCoordY.Enabled = selectedOne;
+            btSortDown.Enabled = false;
+            btSortUp.Enabled = false;
+
+            if (selectedOne)
             {
-                cbCoordX.Enabled = false;
-                cbCoordY.Enabled = false;
-                //btSortDown.Enabled = false;
-                //btSortUp.Enabled = false;
-                return;
+                int index = lvObjects.SelectedItems[0].Index;
+                cbCoordX.SelectedIndex = objects[index].x;
+                cbCoordY.SelectedIndex = objects[index].y;
             }
-            int index = lvObjects.SelectedItems[0].Index;
-            cbCoordX.Enabled = true;
-            cbCoordY.Enabled = true;
-            cbCoordX.SelectedIndex = objects[index].x;
-            cbCoordY.SelectedIndex = objects[index].y;
-            if (lvObjects.SelectedIndices.Count > 0)
+            if (!selectedZero)
             {
                 btSortDown.Enabled = cbManualSort.Checked && lvObjects.SelectedIndices[lvObjects.SelectedIndices.Count - 1] < objects.Count - 1;
                 btSortUp.Enabled = cbManualSort.Checked && lvObjects.SelectedIndices[0] > 0;
@@ -730,8 +740,6 @@ namespace CadEditor
                 objects[ind] = objects[ind - 1];
                 objects[ind - 1] = xchg;
             }
-            btSortUp.Enabled = lvObjects.SelectedIndices[0] > 1;
-            btSortDown.Enabled = true;
             fillObjectsListBox();
             for (int i = 0; i < selInds.Count; i++)
                 lvObjects.Items[selInds[i] - 1].Selected = true;
@@ -750,8 +758,6 @@ namespace CadEditor
                 objects[ind] = objects[ind + 1];
                 objects[ind + 1] = xchg;
             }
-            btSortDown.Enabled = lvObjects.SelectedIndices[lvObjects.SelectedIndices.Count-1] < objects.Count - 3;
-            btSortUp.Enabled = true;
             fillObjectsListBox();
             for (int i = 0; i < selInds.Count; i++)
                 lvObjects.Items[selInds[i] + 1].Selected = true;
@@ -766,6 +772,11 @@ namespace CadEditor
                 btSortDown.Enabled = cbManualSort.Checked && lvObjects.SelectedIndices[lvObjects.SelectedIndices.Count - 1] < objects.Count - 1;
                 btSortUp.Enabled = cbManualSort.Checked && lvObjects.SelectedIndices[0] > 0;
             }
+        }
+
+        private void btDelete_Click(object sender, EventArgs e)
+        {
+            deleteSelected();
         }
 
         private void reloadPictures()

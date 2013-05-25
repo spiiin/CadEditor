@@ -25,6 +25,7 @@ namespace CadEditor
             curPallete = 0;
             curPart = 0;
             dirty = false;
+            curViewType = MapViewType.Tiles;
 
             Utils.setCbItemsCount(cbVideoNo, Globals.videoOffset.recCount);
             Utils.setCbItemsCount(cbPaletteNo, Globals.palOffset.recCount);
@@ -42,6 +43,7 @@ namespace CadEditor
             cbTileset.SelectedIndex = 0;
             cbPaletteNo.SelectedIndex = 0;
             cbPart.SelectedIndex = 0;
+            cbViewType.SelectedIndex = 0;
 
             blocksPanel.Controls.Clear();
             blocksPanel.SuspendLayout();
@@ -55,7 +57,28 @@ namespace CadEditor
                 blocksPanel.Controls.Add(but);
             }
             blocksPanel.ResumeLayout();
+            prepareAxisLabels();
             reloadLevel();
+        }
+
+        private void prepareAxisLabels()
+        {
+            int x = mapScreen.Location.X;
+            int y = mapScreen.Location.Y;
+            for (int i = 0; i < 16; i++)
+            {
+                var l = new Label();
+                l.Size = new System.Drawing.Size(12, 12);
+                l.Location = new Point(x-16, y+10 + i*32);
+                l.Text = String.Format("{0:X}", i);
+                this.Controls.Add(l);
+
+                var l2 = new Label();
+                l2.Size = new System.Drawing.Size(12, 12);
+                l2.Location = new Point(x+8 + i*32, y-16);
+                l2.Text = String.Format("{0:X}", i);
+                this.Controls.Add(l2);
+            }
         }
 
         private void reloadLevel()
@@ -91,7 +114,7 @@ namespace CadEditor
                 palId = curPallete;
             }
 
-            var im = Video.makeObjectsStrip((byte)backId, (byte)curTileset, (byte)palId, 1, false);
+            var im = Video.makeObjectsStrip((byte)backId, (byte)curTileset, (byte)palId, 1, curViewType);
             smallBlocks.Images.Clear();
             smallBlocks.Images.AddStrip(im);
             /*for (int i = 0; i < SMALL_BLOCKS_COUNT ; i++)
@@ -161,12 +184,14 @@ namespace CadEditor
         private int curPallete;
         private int curPart;
 
+        private MapViewType curViewType;
+
         private bool dirty;
 
         private void cbLevelPair_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbLevel.SelectedIndex == -1 || cbTileset.SelectedIndex == -1 || cbDoor.SelectedIndex == -1 ||
-                cbVideoNo.SelectedIndex == -1 || cbPaletteNo.SelectedIndex == -1 || cbPart.SelectedIndex == -1)
+                cbVideoNo.SelectedIndex == -1 || cbPaletteNo.SelectedIndex == -1 || cbPart.SelectedIndex == -1 || cbViewType.SelectedIndex == -1 )
             {
                 return;
             }
@@ -192,6 +217,7 @@ namespace CadEditor
                 }
             }
             curTileset = cbTileset.SelectedIndex;
+            curViewType = (MapViewType)cbViewType.SelectedIndex;
 
             curLevel = cbLevel.SelectedIndex;
             curDoor = cbDoor.SelectedIndex - 1;

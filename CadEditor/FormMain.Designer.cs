@@ -432,10 +432,12 @@
             // cbViewType
             // 
             this.cbViewType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbViewType.DropDownWidth = 128;
             this.cbViewType.FormattingEnabled = true;
             this.cbViewType.Items.AddRange(new object[] {
             "Tiles",
-            "Obj types"});
+            "Obj types",
+            "Obj numbers"});
             this.cbViewType.Location = new System.Drawing.Point(334, 151);
             this.cbViewType.Name = "cbViewType";
             this.cbViewType.Size = new System.Drawing.Size(64, 21);
@@ -519,7 +521,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Text = "CAD Editor v0.9 by spiiin";
+            this.Text = "CAD Editor v1.0 by spiiin";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();

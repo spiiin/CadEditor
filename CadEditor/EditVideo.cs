@@ -17,13 +17,14 @@ namespace CadEditor
 
         private void EditVideo_Load(object sender, EventArgs e)
         {
-            curPal = new byte[16] { 0x0F, 0x20, 0x10, 0x00, 0x0F, 0x1A, 0x27, 0x07, 0x0F, 0x27, 0x17, 0x07, 0x0f, 0x20, 0x10, 0x21 };
             curActiveVideo = 0;
             curSubPal = 0;
             Utils.setCbItemsCount(cbVideoNo, Globals.videoOffset.recCount);
+            Utils.setCbItemsCount(cbPalleteNo, Globals.palOffset.recCount);
             Utils.setCbIndexWithoutUpdateLevel(cbVideoNo, cbVideoNo_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbSubPal, cbVideoNo_SelectedIndexChanged);
-            reloadVideo();
+            //Utils.setCbIndexWithoutUpdateLevel(cbPalleteNo, cbPalleteNo_SelectedIndexChanged);
+            cbPalleteNo.SelectedIndex = 0;
         }
 
         private void setPal()
@@ -56,7 +57,7 @@ namespace CadEditor
         }
 
         private int curActiveVideo = 0;
-        private byte[] curPal;
+        private byte[] curPal = new byte[16];
         private int curSubPal;
 
         private void cbVideoNo_SelectedIndexChanged(object sender, EventArgs e)
@@ -76,6 +77,28 @@ namespace CadEditor
                 curPal[index] = (byte)EditColor.ColorIndex;
                 reloadVideo();
             }
+        }
+
+        private void cbPalleteNo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = cbPalleteNo.SelectedIndex;
+            if (index == -1)
+                return;
+            int palAddress = Globals.getPalAddr((byte)index);
+            for (int i = 0; i < 16; i++)
+                curPal[i] = Globals.romdata[palAddress + i];
+            reloadVideo();
+        }
+
+        private void btSave_Click(object sender, EventArgs e)
+        {
+          int index = cbPalleteNo.SelectedIndex;
+          if (index == -1)
+              return;
+          int palAddress = Globals.getPalAddr((byte)index);
+          for (int i = 0; i < 16; i++)
+              Globals.romdata[palAddress + i] = curPal[i];
+          Globals.flushToFile();
         }
     }
 }

@@ -79,7 +79,17 @@ namespace CadEditor
             int bigBlocksAddr  = Globals.getBigTilesAddr((byte) bigTileIndex);
             bigBlockIndexes = new byte[Globals.getBigBlocksCount() * 4];
             for (int i = 0; i < Globals.getBigBlocksCount() * 4; i++)
+            {
                 bigBlockIndexes[i] = Globals.romdata[bigBlocksAddr + i];
+            }
+            //duck tales version for level 1
+            /*for (int i = 0; i < Globals.getBigBlocksCount(); i++)
+            {
+                bigBlockIndexes[i * 4  ] = Globals.romdata[0x10D4A + i];
+                bigBlockIndexes[i * 4+1] = Globals.romdata[0x10E19 + i];
+                bigBlockIndexes[i * 4+2] = Globals.romdata[0x10EE8 + i];
+                bigBlockIndexes[i * 4+3] = Globals.romdata[0x10FB7 + i];
+            }*/
         }
 
         private void setBlocks()
@@ -111,7 +121,8 @@ namespace CadEditor
             smallBlocks.Images.Clear();
             bigBlocks.Images.Clear();
 
-            var im = Video.makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, 1, curViewType != MapViewType.Tiles);
+            MapViewType smallObjectsType = curViewType == MapViewType.ObjType ? MapViewType.ObjType : MapViewType.Tiles;
+            var im = Video.makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, 1, smallObjectsType);
             smallBlocks.Images.AddStrip(im);
 
             for (int i = 0; i < Globals.getBigBlocksCount(); i++)
@@ -123,6 +134,11 @@ namespace CadEditor
                     g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(31, 0, 32, 32));
                     g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(0, 31, 32, 32));
                     g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(31, 31, 32, 32));
+                    if (curViewType == MapViewType.ObjNumbers)
+                    {
+                        g.FillRectangle(new SolidBrush(Color.FromArgb(192, 255, 255, 255)), new Rectangle(0, 0, 64, 64));
+                        g.DrawString(String.Format("{0:X}", i), new Font("Arial", 16), Brushes.Red, new Point(0, 0));
+                    }
                 }
                 bigBlocks.Images.Add(b);
             }
@@ -283,7 +299,7 @@ namespace CadEditor
                 curActiveBlockNo = cbBlockNo.SelectedIndex;
                 curActivePalleteNo = cbPaletteNo.SelectedIndex;
             }
-            curViewType = cbViewType.SelectedIndex == 1 ? MapViewType.ObjType : MapViewType.Tiles;
+            curViewType = (MapViewType)cbViewType.SelectedIndex;
             reloadLevel();
         }
 
@@ -407,17 +423,4 @@ namespace CadEditor
             }
         }
     }
-
-    enum MapDrawMode 
-    {
-        Screens,
-        Scrolls,
-        Doors
-    };
-
-    enum MapViewType
-    {
-        Tiles,
-        ObjType
-    };
 }

@@ -178,6 +178,25 @@ namespace CadEditor
 
         public static byte[] getVideoChunk(byte videoPageId)
         {
+            //dt2 hack
+            /*try
+            {
+                using (FileStream f = File.OpenRead("videoBack_DT2.bin"))
+                {
+                    var videodata = new byte[0x5000];
+                    f.Read(videodata, 0, 0x5000);
+                    var ans = new byte[0x1000];
+                    int offset = (videoPageId - 0x90)*0x1000;
+                    for (int i = 0; i < ans.Length; i++)
+                        ans[i] = videodata[offset + i];
+                    return ans;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }*/
+            //
             byte[] videoChunk = new byte[Globals.VIDEO_PAGE_SIZE];
             int videoAddr = Globals.getVideoPageAddr(videoPageId);
             for (int i = 0; i < Globals.VIDEO_PAGE_SIZE; i++)

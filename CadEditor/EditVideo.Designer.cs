@@ -35,6 +35,9 @@
             this.pbPal = new System.Windows.Forms.PictureBox();
             this.cbVideoNo = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.cbPalleteNo = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btSave = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbVideo)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPal)).BeginInit();
@@ -50,6 +53,9 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btSave);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.cbPalleteNo);
             this.panel1.Controls.Add(this.cbSubPal);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.pbPal);
@@ -86,7 +92,7 @@
             // 
             // pbPal
             // 
-            this.pbPal.Location = new System.Drawing.Point(6, 92);
+            this.pbPal.Location = new System.Drawing.Point(6, 121);
             this.pbPal.Name = "pbPal";
             this.pbPal.Size = new System.Drawing.Size(128, 128);
             this.pbPal.TabIndex = 2;
@@ -111,6 +117,35 @@
             this.label1.Size = new System.Drawing.Size(98, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Select video block:";
+            // 
+            // cbPalleteNo
+            // 
+            this.cbPalleteNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPalleteNo.FormattingEnabled = true;
+            this.cbPalleteNo.Location = new System.Drawing.Point(67, 94);
+            this.cbPalleteNo.Name = "cbPalleteNo";
+            this.cbPalleteNo.Size = new System.Drawing.Size(67, 21);
+            this.cbPalleteNo.TabIndex = 5;
+            this.cbPalleteNo.SelectedIndexChanged += new System.EventHandler(this.cbPalleteNo_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(10, 97);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(42, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Pallete:";
+            // 
+            // btSave
+            // 
+            this.btSave.Location = new System.Drawing.Point(3, 255);
+            this.btSave.Name = "btSave";
+            this.btSave.Size = new System.Drawing.Size(131, 23);
+            this.btSave.TabIndex = 2;
+            this.btSave.Text = "Save";
+            this.btSave.UseVisualStyleBackColor = true;
+            this.btSave.Click += new System.EventHandler(this.btSave_Click);
             // 
             // EditVideo
             // 
@@ -141,5 +176,8 @@
         private System.Windows.Forms.PictureBox pbPal;
         private System.Windows.Forms.ComboBox cbSubPal;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btSave;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cbPalleteNo;
     }
 }
