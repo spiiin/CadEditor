@@ -50,6 +50,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CSScriptLibrary.v1.1">
+      <HintPath>..\libs\CSScript11\NET 1.1\CSScriptLibrary.v1.1.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -76,6 +79,7 @@
     <Compile Include="BoxBackForm.Designer.cs">
       <DependentUpon>BoxBackForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConfigScript.cs" />
     <Compile Include="EditColor.cs">
       <SubType>Form</SubType>
     </Compile>

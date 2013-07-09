@@ -19,8 +19,8 @@ namespace CadEditor
         {
             curActiveVideo = 0;
             curSubPal = 0;
-            Utils.setCbItemsCount(cbVideoNo, Globals.videoOffset.recCount);
-            Utils.setCbItemsCount(cbPalleteNo, Globals.palOffset.recCount);
+            Utils.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
+            Utils.setCbItemsCount(cbPalleteNo, ConfigScript.palOffset.recCount);
             Utils.setCbIndexWithoutUpdateLevel(cbVideoNo, cbVideoNo_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbSubPal, cbVideoNo_SelectedIndexChanged);
             //Utils.setCbIndexWithoutUpdateLevel(cbPalleteNo, cbPalleteNo_SelectedIndexChanged);
@@ -44,7 +44,7 @@ namespace CadEditor
         {
             setPal();
             byte videoPageId = (byte)(curActiveVideo + 0x90);
-            Bitmap imageStrip = Video.makeImageStrip(Globals.getVideoChunk(videoPageId), curPal, curSubPal, 4);
+            Bitmap imageStrip = Video.makeImageStrip(ConfigScript.getVideoChunk(videoPageId), curPal, curSubPal, 4);
             Bitmap resultVideo = new Bitmap(512, 512);
             using (Graphics g = Graphics.FromImage(resultVideo))
             {

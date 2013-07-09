@@ -8,7 +8,7 @@ using System.Globalization;
 
 namespace CadEditor
 {
-    static class Globals
+    public static class Globals
     {
         static Globals()
         {
@@ -29,28 +29,14 @@ namespace CadEditor
             {
                 MessageBox.Show(ex.Message);
             }
-
+            
             try
             {
-                using (XmlReader reader = XmlTextReader.Create(ConfigFilename, new XmlReaderSettings()))
-                {
-                    palOffset.readFromXml(reader, "pallete");
-                    videoOffset.readFromXml(reader, "videoBack");
-                    videoObjOffset.readFromXml(reader, "videoObj");
-                    bigBlocksOffset.readFromXml(reader, "bigBlocks");
-                    blocksOffset.readFromXml(reader, "blocks");
-                    screensOffset.readFromXml(reader, "screens");
-                    bool cad = reader.ReadToFollowing("ChipAndDale");
-                    if (cad)
-                    {
-                        LevelData.ReadOffsetFromXml(reader);
-                        DoorData.ReadOffsetFromXml(reader);
-                        boxesBackOffset.readFromXml(reader, "boxesBacks");
-                        
-                    }
-                }
+                ConfigScript.LoadFromFile(ConfigFilename);
+                LevelData.LoadOffsetsFromConfig();
+                DoorData.LoadOffsetsFromConfig();
             }
-            catch (XmlException ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -113,49 +99,24 @@ namespace CadEditor
                 doorsData.Add(DoorData.readFromFile(romdata, i));
         }
 
-        public static int getVideoPageAddr(byte id)
+        public static int getTilesAddr(int id)
         {
-            if (gameType == GameType.DT)
-            {
-                if (id == 0x90) return 0x4010;
-                if (id == 0x91) return 0x4D10;
-                if (id == 0x92) return 0x5A10;
-                if (id == 0x93) return 0x7D10;
-                if (id == 0x94) return 0x8A10;
-                if (id == 0x95) return 0x9710;
-                return -1;
-            }
-
-            if ((id & 0xF0) == 0x90)
-                return videoOffset.beginAddr + videoOffset.recSize * (id & 0x0F);
-            else if ((id & 0xF0) == 0x80)
-                return videoObjOffset.beginAddr + videoObjOffset.recSize * (id & 0x0F); 
-            return -1;
+            return ConfigScript.blocksOffset.beginAddr + ConfigScript.blocksOffset.recSize * id;
         }
 
-        public static int getTilesAddr(byte id)
+        public static int getBigTilesAddr(int id)
         {
-            return blocksOffset.beginAddr + blocksOffset.recSize * id;
+            return ConfigScript.bigBlocksOffset.beginAddr + ConfigScript.bigBlocksOffset.recSize * id;
         }
 
-        public static int getBigTilesAddr(byte id)
+        public static int getPalAddr(int palId)
         {
-            return bigBlocksOffset.beginAddr + bigBlocksOffset.recSize * id;
-        }
-
-        public static int getPalAddr(byte palId)
-        {
-            return palOffset.beginAddr + palId * palOffset.recSize;
+            return ConfigScript.palOffset.beginAddr + palId * ConfigScript.palOffset.recSize;
         }
 
         public static int getBackTileAddr(int levelNo)
         {
-            return boxesBackOffset.beginAddr + levelNo * boxesBackOffset.recSize;
-        }
-
-        public static int getBigBlocksCount()
-        {
-            return gameType == GameType.DT ? 512 : 256;
+            return ConfigScript.boxesBackOffset.beginAddr + levelNo * ConfigScript.boxesBackOffset.recSize;
         }
 
         public static int getLevelWidth(int levelNo)
@@ -176,7 +137,7 @@ namespace CadEditor
             return levelData[levelNo].getHeight();
         }
 
-        public static byte[] getVideoChunk(byte videoPageId)
+        public static byte[] getVideoChunkDt2(byte videoPageId)
         {
             //dt2 hack
             /*try
@@ -197,25 +158,14 @@ namespace CadEditor
                 MessageBox.Show(ex.Message);
             }*/
             //
-            byte[] videoChunk = new byte[Globals.VIDEO_PAGE_SIZE];
-            int videoAddr = Globals.getVideoPageAddr(videoPageId);
-            for (int i = 0; i < Globals.VIDEO_PAGE_SIZE; i++)
-                videoChunk[i] = Globals.romdata[videoAddr + i];
-
-            if (gameType == GameType.DT)
-            {
-                for (int i = 0; i < 16 * 16 * 3; i++)
-                    videoChunk[i] = Globals.romdata[0x4010 + i];
-            }
-
-            return videoChunk;
+            return null;
         }
 
         public static byte[] getScreen(int screenIndex)
         {
-            var result = new byte[screensOffset.recSize];
-            int beginAddr = screensOffset.beginAddr + screenIndex * screensOffset.recSize;
-            for (int i = 0; i < screensOffset.recSize; i++)
+            var result = new byte[ConfigScript.screensOffset.recSize];
+            int beginAddr = ConfigScript.screensOffset.beginAddr + screenIndex * ConfigScript.screensOffset.recSize;
+            for (int i = 0; i < ConfigScript.screensOffset.recSize; i++)
                 result[i] = Globals.romdata[beginAddr + i];
             return result;
         }
@@ -556,14 +506,6 @@ namespace CadEditor
         public static int PAL_LEN = 16;
         public static int MAX_SCREEN_LIST_LEN = 64;
 
-        public static OffsetRec palOffset;
-        public static OffsetRec videoOffset;
-        public static OffsetRec videoObjOffset;
-        public static OffsetRec bigBlocksOffset;
-        public static OffsetRec blocksOffset;
-        public static OffsetRec screensOffset;
-        public static OffsetRec boxesBackOffset;
-
         public static GameType gameType = GameType.Generic;
     }
 
@@ -623,6 +565,16 @@ namespace CadEditor
         public int getSubpallete()
         {
             return typeColor & 0x3;
+        }
+
+        public int getSubpalleteForDt2(int parByteNo)
+        {
+            return (typeColor >> parByteNo*2) & 3;
+        }
+
+        public int getTypeForDt2(int no)
+        {
+            return no < 0xA0 ? 0 : 5;
         }
 
         public int getType()
@@ -688,7 +640,7 @@ namespace CadEditor
         public byte[] dirs;
     }
 
-    struct LevelData
+    public struct LevelData
     {
         static public LevelData readFromFile(byte[] romdata, int no)
         {
@@ -809,25 +761,17 @@ namespace CadEditor
         public static int ScrollPtrAdd;
         public static int DirPtrAdd;
 
-        public static void ReadOffsetFromXml(XmlReader reader)
+        public static void LoadOffsetsFromConfig()
         {
-            reader.ReadToFollowing("LevelRecOffset");
-            LevelRecBaseOffset = Utils.parseInt(readElement(reader, "LevelRecBaseOffset"));
-            LevelRecDirOffset = Utils.parseInt(readElement(reader, "LevelRecDirOffset"));
-            LayoutPtrAdd = Utils.parseInt(readElement(reader, "LayoutPtrAdd"));
-            ScrollPtrAdd = Utils.parseInt(readElement(reader, "ScrollPtrAdd"));
-            DirPtrAdd = Utils.parseInt(readElement(reader, "DirPtrAdd"));
-        }
-
-        private static string readElement(XmlReader reader, string elementName)
-        {
-            reader.ReadToFollowing(elementName);
-            reader.MoveToAttribute("addr");
-            return reader.Value;
+            LevelRecBaseOffset = ConfigScript.LevelRecBaseOffset;
+            LevelRecDirOffset = ConfigScript.LevelRecDirOffset;
+            LayoutPtrAdd = ConfigScript.LayoutPtrAdd;
+            ScrollPtrAdd = ConfigScript.ScrollPtrAdd;
+            DirPtrAdd = ConfigScript.DirPtrAdd;
         }
     }
 
-    struct DoorData
+    public struct DoorData
     {
         static public DoorData readFromFile(byte[] romdata, int no)
         {
@@ -873,17 +817,9 @@ namespace CadEditor
 
         public static int DoorRecBaseOffset;
 
-        public static void ReadOffsetFromXml(XmlReader reader)
+        public static void LoadOffsetsFromConfig()
         {
-            reader.ReadToFollowing("DoorRecOffset");
-            DoorRecBaseOffset = Utils.parseInt(readElement(reader, "DoorRecBaseOffset"));
-        }
-
-        private static string readElement(XmlReader reader, string elementName)
-        {
-            reader.ReadToFollowing(elementName);
-            reader.MoveToAttribute("addr");
-            return reader.Value;
+            DoorRecBaseOffset = ConfigScript.DoorRecBaseOffset;
         }
     }
 
@@ -891,6 +827,7 @@ namespace CadEditor
     {
         Generic,
         CAD,
-        DT
+        DT,
+        DT2
     };
 }

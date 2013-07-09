@@ -25,15 +25,15 @@ namespace CadEditor
             }
 
             cbScreenNo.Items.Clear();
-            for (int i = 0; i < Globals.screensOffset.recCount; i++)
+            for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
                 cbScreenNo.Items.Add(String.Format("{0:X}", i+1));
             cbScreenNo.SelectedIndex = 0;
             setScreens();
 
-            Utils.setCbItemsCount(cbVideoNo, Globals.videoOffset.recCount);
-            Utils.setCbItemsCount(cbBigBlockNo, Globals.bigBlocksOffset.recCount);
-            Utils.setCbItemsCount(cbBlockNo, Globals.blocksOffset.recCount);
-            Utils.setCbItemsCount(cbPaletteNo, Globals.palOffset.recCount);
+            Utils.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
+            Utils.setCbItemsCount(cbBigBlockNo, ConfigScript.bigBlocksOffset.recCount);
+            Utils.setCbItemsCount(cbBlockNo, ConfigScript.blocksOffset.recCount);
+            Utils.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
             Utils.setCbIndexWithoutUpdateLevel(cbVideoNo, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbBigBlockNo, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbBlockNo, cbLevel_SelectedIndexChanged);
@@ -46,21 +46,9 @@ namespace CadEditor
 
             dirty = false;
             showNeiScreens = true;
-            blocksPanel.Controls.Clear();
-            blocksPanel.SuspendLayout();
-            for (int i = 0; i < Globals.getBigBlocksCount(); i++)
-            {
-                var but = new Button();
-                but.Size = new Size(64, 64);
-                but.ImageList = bigBlocks;
-                but.ImageIndex = i;
-                but.Click += new EventHandler(buttonBlockClick);
-                blocksPanel.Controls.Add(but);
+            reloadBlocksPanel();
 
-            }
-            blocksPanel.ResumeLayout();
-
-            cbGame.SelectedIndex = 0;
+            cbGame.SelectedIndex = (int)Globals.gameType;
             reloadGameType(false);
             cbLevel_SelectedIndexChanged(null, new EventArgs());
         }
@@ -75,21 +63,8 @@ namespace CadEditor
 
         private void setBigBlocksIndexes()
         {
-            int bigTileIndex = (Globals.gameType != GameType.CAD) ? curActiveBlockNo : Globals.levelData[curActiveLevel].bigBlockId;
-            int bigBlocksAddr  = Globals.getBigTilesAddr((byte) bigTileIndex);
-            bigBlockIndexes = new byte[Globals.getBigBlocksCount() * 4];
-            for (int i = 0; i < Globals.getBigBlocksCount() * 4; i++)
-            {
-                bigBlockIndexes[i] = Globals.romdata[bigBlocksAddr + i];
-            }
-            //duck tales version for level 1
-            /*for (int i = 0; i < Globals.getBigBlocksCount(); i++)
-            {
-                bigBlockIndexes[i * 4  ] = Globals.romdata[0x10D4A + i];
-                bigBlockIndexes[i * 4+1] = Globals.romdata[0x10E19 + i];
-                bigBlockIndexes[i * 4+2] = Globals.romdata[0x10EE8 + i];
-                bigBlockIndexes[i * 4+3] = Globals.romdata[0x10FB7 + i];
-            }*/
+          int bigTileIndex = (Globals.gameType != GameType.CAD) ? curActiveBlockNo : Globals.levelData[curActiveLevel].bigBlockId;
+          bigBlockIndexes = Utils.fillBigBlocks(bigTileIndex);
         }
 
         private void setBlocks()
@@ -125,7 +100,7 @@ namespace CadEditor
             var im = Video.makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, 1, smallObjectsType);
             smallBlocks.Images.AddStrip(im);
 
-            for (int i = 0; i < Globals.getBigBlocksCount(); i++)
+            for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
             {
                 var b = new Bitmap(64, 64);
                 using (Graphics g = Graphics.FromImage(b))
@@ -143,12 +118,30 @@ namespace CadEditor
                 bigBlocks.Images.Add(b);
             }
             curActiveBlock = 0;
+            reloadBlocksPanel();
+        }
+
+        private void reloadBlocksPanel()
+        {
+            blocksPanel.Controls.Clear();
+            blocksPanel.SuspendLayout();
+            for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
+            {
+                var but = new Button();
+                but.Size = new Size(64, 64);
+                but.ImageList = bigBlocks;
+                but.ImageIndex = i;
+                but.Click += new EventHandler(buttonBlockClick);
+                blocksPanel.Controls.Add(but);
+
+            }
+            blocksPanel.ResumeLayout();
         }
 
         private void setScreens()
         {
-            screens = new byte[Globals.screensOffset.recCount][];
-            for (int i = 0; i < Globals.screensOffset.recCount; i++)
+            screens = new byte[ConfigScript.screensOffset.recCount][];
+            for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
               screens[i] = Globals.getScreen(i);
         }
 
@@ -190,7 +183,7 @@ namespace CadEditor
                     }
                 }
             }
-            if (showNeiScreens && (curActiveScreen < Globals.screensOffset.recCount - 1))
+            if (showNeiScreens && (curActiveScreen < ConfigScript.screensOffset.recCount - 1))
             {
                 byte[] indexesNext = screens[curActiveScreen + 1];
                 for (int i = 0; i < SCREEN_SIZE; i++)
@@ -239,7 +232,7 @@ namespace CadEditor
             int dy = e.Y / 64;
             if (dx == 8)
             {
-                if (curActiveScreen < Globals.screensOffset.recCount - 1)
+                if (curActiveScreen < ConfigScript.screensOffset.recCount - 1)
                 {
                      int index = dy * 8;
                      Globals.setBigTileToScreen(screens[curActiveScreen + 1], index, curActiveBlock);
@@ -273,10 +266,10 @@ namespace CadEditor
         {
             var romFname = OpenFile.FileName;
             //write back tiles
-            for (int i = 0; i < Globals.screensOffset.recCount; i++)
+            for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
             {
-                int addr = Globals.screensOffset.beginAddr + i * Globals.screensOffset.recSize;
-                for (int x = 0; x < Globals.screensOffset.recSize; x++)
+                int addr = ConfigScript.screensOffset.beginAddr + i * ConfigScript.screensOffset.recSize;
+                for (int x = 0; x < ConfigScript.screensOffset.recSize; x++)
                     Globals.romdata[addr + x] = screens[i][x];
             }
             dirty = !Globals.flushToFile();
@@ -402,14 +395,19 @@ namespace CadEditor
         private void btOpen_Click(object sender, EventArgs e)
         {
             openFile();
-            cbGame.SelectedIndex = 0; 
+            cbGame.SelectedIndex = (int)Globals.gameType; 
             reloadGameType(false);
             cbLevel_SelectedIndexChanged(null, new EventArgs());
         }
 
         private void cbGame_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Globals.gameType = cbGame.SelectedIndex == 0 ? GameType.Generic : (cbGame.SelectedIndex == 1) ? GameType.CAD : GameType.DT; 
+            Globals.gameType = (GameType)cbGame.SelectedIndex;
+            bool isDt2 = GameType.DT2 == Globals.gameType;
+            btEdit.Enabled = !isDt2;
+            btEditObjs.Enabled = !isDt2;
+            btEditLayout.Enabled = !isDt2;
+            editEnemy.Enabled = !isDt2;
             reloadGameType(true);
         }
 

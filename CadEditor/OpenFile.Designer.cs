@@ -71,7 +71,7 @@
             this.tbFileName.Name = "tbFileName";
             this.tbFileName.Size = new System.Drawing.Size(360, 20);
             this.tbFileName.TabIndex = 3;
-            this.tbFileName.Text = "Darkwing Duck (U) [!].nes";
+            this.tbFileName.Text = "Duck Tales 2 (U) [!].nes";
             this.tbFileName.Click += new System.EventHandler(this.tbFileName_Click);
             // 
             // tbConfigName
@@ -80,7 +80,7 @@
             this.tbConfigName.Name = "tbConfigName";
             this.tbConfigName.Size = new System.Drawing.Size(360, 20);
             this.tbConfigName.TabIndex = 4;
-            this.tbConfigName.Text = "Config.xml";
+            this.tbConfigName.Text = "Settings_DuckTales2.cs";
             this.tbConfigName.Click += new System.EventHandler(this.tbConfigName_Click);
             // 
             // ofOpenDialog

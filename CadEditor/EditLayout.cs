@@ -55,7 +55,7 @@ namespace CadEditor
 
             blocksPanel.Controls.Clear();
             blocksPanel.SuspendLayout();
-            for (int i = 0; i < Globals.screensOffset.recCount; i++)
+            for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
             {
                 var but = new Button();
                 but.Size = new Size(64, 64);
@@ -132,7 +132,7 @@ namespace CadEditor
         {
             screenImages.Images.Clear();
             screenImages.Images.Add(makeBlackScreen(64,64,0));
-            for (int scrNo = 0; scrNo < Globals.screensOffset.recCount; scrNo++)
+            for (int scrNo = 0; scrNo < ConfigScript.screensOffset.recCount; scrNo++)
                 screenImages.Images.Add(makeBlackScreen(64, 64, scrNo + 1));
         }
 
@@ -152,7 +152,7 @@ namespace CadEditor
                     lastDoorNo = sortedScreenList[i].door;
                     smallBlocks.Images.Clear();
                     bigBlocks.Images.Clear();
-                    byte[] bigBlockIndexes = new byte[Globals.getBigBlocksCount() * 4];
+                    byte[] bigBlockIndexes = new byte[ConfigScript.getBigBlocksCount() * 4];
                     //set big blocks
                     byte blockId = (byte)Globals.levelData[curActiveLevel].bigBlockId;
                     byte backId, palId;
@@ -167,14 +167,14 @@ namespace CadEditor
                         palId = (byte)Globals.doorsData[lastDoorNo-1].palId;
                     }
                     int bigBlockAddr = Globals.getBigTilesAddr(blockId);
-                    for (int btileId = 0; btileId < Globals.getBigBlocksCount() * 4; btileId++)
+                    for (int btileId = 0; btileId < ConfigScript.getBigBlocksCount() * 4; btileId++)
                         bigBlockIndexes[btileId] = Globals.romdata[bigBlockAddr + btileId];
 
                     var im = Video.makeObjectsStrip(backId, blockId, palId, 1, MapViewType.Tiles);
                     smallBlocks.Images.AddStrip(im);
 
                     //make big blocks
-                    for (int btileId = 0; btileId < Globals.getBigBlocksCount(); btileId++)
+                    for (int btileId = 0; btileId < ConfigScript.getBigBlocksCount(); btileId++)
                     {
                         var b = new Bitmap(64, 64);
                         using (Graphics g = Graphics.FromImage(b))

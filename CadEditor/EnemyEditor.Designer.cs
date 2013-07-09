@@ -56,7 +56,6 @@
             this.pnGeneric = new System.Windows.Forms.Panel();
             this.cbPlus256 = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.pnCad = new System.Windows.Forms.Panel();
             this.cbLayoutNo = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.cbPaletteNo = new System.Windows.Forms.ComboBox();
@@ -66,6 +65,7 @@
             this.cbBigBlockNo = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cbVideoNo = new System.Windows.Forms.ComboBox();
+            this.pnCad = new System.Windows.Forms.Panel();
             this.pnSelectScreen = new System.Windows.Forms.Panel();
             this.lbScrNo = new System.Windows.Forms.Label();
             this.lbActive = new System.Windows.Forms.Label();
@@ -342,7 +342,6 @@
             // 
             this.pnGeneric.Controls.Add(this.cbPlus256);
             this.pnGeneric.Controls.Add(this.label11);
-            this.pnGeneric.Controls.Add(this.pnCad);
             this.pnGeneric.Controls.Add(this.cbLayoutNo);
             this.pnGeneric.Controls.Add(this.label9);
             this.pnGeneric.Controls.Add(this.cbPaletteNo);
@@ -352,7 +351,7 @@
             this.pnGeneric.Controls.Add(this.cbBigBlockNo);
             this.pnGeneric.Controls.Add(this.label4);
             this.pnGeneric.Controls.Add(this.cbVideoNo);
-            this.pnGeneric.Location = new System.Drawing.Point(9, 17);
+            this.pnGeneric.Location = new System.Drawing.Point(14, 17);
             this.pnGeneric.Name = "pnGeneric";
             this.pnGeneric.Size = new System.Drawing.Size(175, 133);
             this.pnGeneric.TabIndex = 50;
@@ -376,15 +375,6 @@
             this.label11.Size = new System.Drawing.Size(39, 13);
             this.label11.TabIndex = 54;
             this.label11.Text = "Layout";
-            // 
-            // pnCad
-            // 
-            this.pnCad.Controls.Add(this.label6);
-            this.pnCad.Controls.Add(this.cbLevel);
-            this.pnCad.Location = new System.Drawing.Point(2, 43);
-            this.pnCad.Name = "pnCad";
-            this.pnCad.Size = new System.Drawing.Size(175, 50);
-            this.pnCad.TabIndex = 51;
             // 
             // cbLayoutNo
             // 
@@ -525,6 +515,15 @@
             this.cbVideoNo.TabIndex = 41;
             this.cbVideoNo.SelectedIndexChanged += new System.EventHandler(this.cbLevel_SelectedIndexChanged);
             // 
+            // pnCad
+            // 
+            this.pnCad.Controls.Add(this.label6);
+            this.pnCad.Controls.Add(this.cbLevel);
+            this.pnCad.Location = new System.Drawing.Point(17, 12);
+            this.pnCad.Name = "pnCad";
+            this.pnCad.Size = new System.Drawing.Size(175, 50);
+            this.pnCad.TabIndex = 51;
+            // 
             // pnSelectScreen
             // 
             this.pnSelectScreen.Controls.Add(this.lbScrNo);
@@ -628,6 +627,7 @@
             this.ClientSize = new System.Drawing.Size(944, 533);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label14);
+            this.Controls.Add(this.pnCad);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label10);

@@ -27,11 +27,11 @@ namespace CadEditor
             dirty = false;
             curViewType = MapViewType.Tiles;
 
-            Utils.setCbItemsCount(cbVideoNo, Globals.videoOffset.recCount);
-            Utils.setCbItemsCount(cbPaletteNo, Globals.palOffset.recCount);
-            Utils.setCbItemsCount(cbPart, Globals.getBigBlocksCount() / 256);
+            Utils.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
+            Utils.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
+            Utils.setCbItemsCount(cbPart, ConfigScript.getBigBlocksCount() / 256);
             cbTileset.Items.Clear();
-            for (int i = 0; i < Globals.bigBlocksOffset.recCount; i++)
+            for (int i = 0; i < ConfigScript.bigBlocksOffset.recCount; i++)
             {
                 var str = String.Format("Tileset{0} ({1:X})", i, 0x3000 + i * 0x4000);
                 cbTileset.Items.Add(str);
@@ -128,10 +128,7 @@ namespace CadEditor
 
         private void setBigBlocksIndexes()
         {
-            var addr = Globals.getBigTilesAddr((byte)curTileset);
-            bigBlockIndexes = new byte[Globals.getBigBlocksCount()*4];
-            for (int i = 0; i < Globals.getBigBlocksCount() * 4; i++)
-                bigBlockIndexes[i] = Globals.romdata[addr + i];
+            bigBlockIndexes = Utils.fillBigBlocks(curTileset);
         }
 
         const int SMALL_BLOCKS_COUNT = 256;
@@ -228,7 +225,7 @@ namespace CadEditor
 
             pnGeneric.Visible = Globals.gameType != GameType.CAD;
             pnEditCad.Visible = Globals.gameType == GameType.CAD;
-            Utils.setCbItemsCount(cbPart, Globals.getBigBlocksCount() / 256);
+            Utils.setCbItemsCount(cbPart, ConfigScript.getBigBlocksCount() / 256);
             Utils.setCbIndexWithoutUpdateLevel(cbPart, cbLevelPair_SelectedIndexChanged, curPart);
             reloadLevel();
         }
@@ -247,9 +244,7 @@ namespace CadEditor
 
         private bool saveToFile()
         {
-            int addr = Globals.getBigTilesAddr((byte)curTileset);
-            for (int i = 0; i < Globals.getBigBlocksCount() * 4; i++)
-                Globals.romdata[addr + i] = bigBlockIndexes[i];
+            Utils.saveBigBlocks(curTileset, bigBlockIndexes);
             dirty = !Globals.flushToFile();
             return !dirty;
         }

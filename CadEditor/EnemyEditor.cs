@@ -93,8 +93,8 @@ namespace CadEditor
         {
             //!!!duplicate in EditLayout.cs
             int SCREEN_SIZE = 64;
-            scrImages = new Image[Globals.screensOffset.recCount];
-            for (int i = 0; i < Globals.screensOffset.recCount; i++)
+            scrImages = new Image[ConfigScript.screensOffset.recCount];
+            for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
                 scrImages[i] = emptyScreen(512, 512);
 
             bool stopOnDoors = cbStopOnDoors.Checked;
@@ -113,8 +113,8 @@ namespace CadEditor
                 {
                     lastDoorNo = sortedScreenList[i].door;
                     smallBlocks.Images.Clear();
-                    bigBlocks = new Image[Globals.getBigBlocksCount()];
-                    byte[] bigBlockIndexes = new byte[Globals.getBigBlocksCount() * 4];
+                    bigBlocks = new Image[ConfigScript.getBigBlocksCount()];
+                    byte[] bigBlockIndexes = new byte[ConfigScript.getBigBlocksCount() * 4];
                     //set big blocks
                     byte blockId = (byte)Globals.levelData[curActiveLevel].bigBlockId;
                     byte backId, palId;
@@ -129,14 +129,14 @@ namespace CadEditor
                         palId = (byte)Globals.doorsData[lastDoorNo - 1].palId;
                     }
                     int bigBlockAddr = Globals.getBigTilesAddr(blockId);
-                    for (int btileId = 0; btileId < Globals.getBigBlocksCount() * 4; btileId++)
+                    for (int btileId = 0; btileId < ConfigScript.getBigBlocksCount() * 4; btileId++)
                         bigBlockIndexes[btileId] = Globals.romdata[bigBlockAddr + btileId];
 
                     var im = Video.makeObjectsStrip(backId, blockId, palId, 1, MapViewType.Tiles);
                     smallBlocks.Images.AddStrip(im);
 
                     //make big blocks
-                    for (int btileId = 0; btileId < Globals.getBigBlocksCount(); btileId++)
+                    for (int btileId = 0; btileId < ConfigScript.getBigBlocksCount(); btileId++)
                     {
                         var b = new Bitmap(64, 64);
                         using (Graphics g = Graphics.FromImage(b))
@@ -193,7 +193,7 @@ namespace CadEditor
         {
             if (scrNo < 0)
                 return emptyScreen(512, 512);
-            int blockCount = Globals.getBigBlocksCount();
+            int blockCount = ConfigScript.getBigBlocksCount();
             const int SCREEN_SIZE = 64;
             ImageList smallBlocks = new ImageList();
             smallBlocks.ImageSize = new Size(16, 16);
@@ -294,10 +294,10 @@ namespace CadEditor
                 cbCoordY.Items.Add(String.Format("{0:X}", i));
             }
 
-            Utils.setCbItemsCount(cbVideoNo, Globals.videoOffset.recCount);
-            Utils.setCbItemsCount(cbBigBlockNo, Globals.bigBlocksOffset.recCount);
-            Utils.setCbItemsCount(cbBlockNo, Globals.blocksOffset.recCount);
-            Utils.setCbItemsCount(cbPaletteNo, Globals.palOffset.recCount);
+            Utils.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
+            Utils.setCbItemsCount(cbBigBlockNo, ConfigScript.bigBlocksOffset.recCount);
+            Utils.setCbItemsCount(cbBlockNo, ConfigScript.blocksOffset.recCount);
+            Utils.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
             Utils.setCbIndexWithoutUpdateLevel(cbVideoNo, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbBlockNo, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbBigBlockNo, cbLevel_SelectedIndexChanged);
@@ -617,7 +617,7 @@ namespace CadEditor
         private bool saveToFile()
         {
             var romFname = OpenFile.FileName;
-            LevelRec lr = Globals.gameType == GameType.Generic ? Globals.levelRecsDwd[curActiveLayout] : ( Globals.gameType == GameType.Generic) ? Globals.levelRecsDt[curActiveLevel] : Globals.levelRecsCad[curActiveLevel];
+            LevelRec lr = Globals.gameType == GameType.Generic ? Globals.levelRecsDwd[curActiveLayout] : (Globals.gameType == GameType.DT) ? Globals.levelRecsDt[curActiveLayout] : Globals.levelRecsCad[curActiveLevel];
             //write objects
             if (!cbManualSort.Checked)
               sortObjects();

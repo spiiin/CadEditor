@@ -482,7 +482,8 @@
             this.cbGame.Items.AddRange(new object[] {
             "Darkwing Duck",
             "Chip \'n Dale Rescue Rangers",
-            "Duck Tales"});
+            "Duck Tales",
+            "Duck Tales 2"});
             this.cbGame.Location = new System.Drawing.Point(334, 190);
             this.cbGame.Name = "cbGame";
             this.cbGame.Size = new System.Drawing.Size(66, 21);
@@ -521,7 +522,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Text = "CAD Editor v1.0 by spiiin";
+            this.Text = "CAD Editor v1.1 by spiiin";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();

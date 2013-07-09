@@ -26,9 +26,9 @@ namespace CadEditor
             dirty = false;
             preparePanel();
 
-            Utils.setCbItemsCount(cbVideo, Globals.videoObjOffset.recCount);
-            Utils.setCbItemsCount(cbTileset, Globals.blocksOffset.recCount);
-            Utils.setCbItemsCount(cbPalette, Globals.palOffset.recCount);
+            Utils.setCbItemsCount(cbVideo, ConfigScript.videoObjOffset.recCount);
+            Utils.setCbItemsCount(cbTileset, ConfigScript.blocksOffset.recCount);
+            Utils.setCbItemsCount(cbPalette, ConfigScript.palOffset.recCount);
             Utils.setCbIndexWithoutUpdateLevel(cbLevelSelect, cbLevelSelect_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbTileset, cbLevelSelect_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbDoor, VisibleOnlyChange_SelectedIndexChanged);
@@ -136,7 +136,7 @@ namespace CadEditor
             }
             for (int i = 0; i < 4; i++)
             {
-                Bitmap b = Video.makeImageStrip(Globals.getVideoChunk(backId), palette, i, 2);
+                Bitmap b = Video.makeImageStrip(ConfigScript.getVideoChunk(backId), palette, i, 2);
                 videoSprites[i].Images.Clear();
                 videoSprites[i].Images.AddStrip(b);
             }

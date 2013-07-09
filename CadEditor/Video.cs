@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace CadEditor
 {
-    static class Video
+    static public class Video
     {
         static Video()
         {
@@ -102,7 +102,7 @@ namespace CadEditor
             {
                 for (int i = 0; i < CHUNK_COUNT; i++)
                 {
-                    Bitmap onePic = new Bitmap(8, 8);
+                    Bitmap onePic = new Bitmap(8*scale, 8*scale);
                     int beginIndex = 16 * i;
                     for (int line = 0; line < 8; line++)
                     {
@@ -112,7 +112,9 @@ namespace CadEditor
                             bool bitHi = getBit(videoChunk[beginIndex + line+8], 8-pixel);
                             int palIndex = mixBits(bitHi, bitLo);
                             Color c = NesColors[pallete[subPalIndex * 4 +palIndex]];
-                            onePic.SetPixel(pixel, line, c);
+                            for (int scaleFillX = 0; scaleFillX < scale; scaleFillX++)
+                                for (int scaleFillY =0 ; scaleFillY < scale; scaleFillY++)
+                                    onePic.SetPixel(pixel*scale +scaleFillX, line*scale + scaleFillY, c);
                         }
                     }
                     g.DrawImage(onePic, new Rectangle(i * 8 * scale, 0, 8*scale, 8*scale));
@@ -124,7 +126,7 @@ namespace CadEditor
         //chip and dale specific
         public static Bitmap makeObjectsStrip(byte videoPageId, byte tilesId, byte palId, int scale, MapViewType drawType)
         {
-            byte[] videoChunk = Globals.getVideoChunk(videoPageId);
+            byte[] videoChunk = ConfigScript.getVideoChunk(videoPageId);
 
             ObjRec[] objects = new ObjRec[256];
             int addr = Globals.getTilesAddr(tilesId);
@@ -155,7 +157,16 @@ namespace CadEditor
                 {
                     var mblock = new Bitmap(16 * scale, 16 * scale);
                     var co = objects[i];
-                    var curStrip = objStrips[co.getSubpallete()];
+                    Bitmap curStrip;
+                    if (Globals.gameType == GameType.DT2)
+                    {
+                        var objectForColor = objects[i / 4];
+                        curStrip = objStrips[objectForColor.getSubpalleteForDt2(i % 4)];
+                    }
+                    else
+                    {
+                         curStrip = objStrips[co.getSubpallete()];
+                    }
                     using (Graphics g2 = Graphics.FromImage(mblock))
                     {
                         g2.DrawImage(curStrip, new Rectangle(0, 0, 8 * scale, 8 * scale), new Rectangle(co.c1 * 8 * scale, 0, 8 * scale, 8 * scale), GraphicsUnit.Pixel);
@@ -164,8 +175,16 @@ namespace CadEditor
                         g2.DrawImage(curStrip, new Rectangle(8 * scale, 8 * scale, 8 * scale, 8 * scale), new Rectangle(co.c4 * 8 * scale, 0, 8 * scale, 8 * scale), GraphicsUnit.Pixel);
                         if (drawType == MapViewType.ObjType)
                         {
-                            g2.FillRectangle(new SolidBrush(CadObjectTypeColors[co.getType()]), new Rectangle(0, 0, 16 * scale, 16 * scale));
-                            g2.DrawString(String.Format("{0:X}", co.getType()), new Font("Arial", 6), Brushes.White, new Point(0, 0));
+                            if (Globals.gameType == GameType.DT2)
+                            {
+                                g2.FillRectangle(new SolidBrush(CadObjectTypeColors[co.getTypeForDt2(i)]), new Rectangle(0, 0, 16 * scale, 16 * scale));
+                                g2.DrawString(String.Format("{0:X}", co.getTypeForDt2(i)), new Font("Arial", 6), Brushes.White, new Point(0, 0));
+                            }
+                            else
+                            {
+                                g2.FillRectangle(new SolidBrush(CadObjectTypeColors[co.getType()]), new Rectangle(0, 0, 16 * scale, 16 * scale));
+                                g2.DrawString(String.Format("{0:X}", co.getType()), new Font("Arial", 6), Brushes.White, new Point(0, 0));
+                            }
                         }
                         else if (drawType == MapViewType.ObjNumbers)
                         {
