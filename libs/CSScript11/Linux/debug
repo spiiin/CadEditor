@@ -1,0 +1,148 @@
+//css_ref cscs.exe;
+using System;
+using System.IO;
+using System.Text;
+using System.Diagnostics;
+
+class Script
+{
+    static string CSSCRIPT_tempDir = "";
+	
+    static void Main(string[] args)
+    {
+        try
+        {
+            if (args.Length < 1)
+                throw new Exception("No script file specified");
+
+            if (!File.Exists(args[0]))
+                throw new Exception("Cannot find script file \"" + args[0] + "\"");
+
+            CSSCRIPT_tempDir = Path.Combine(Path.GetTempPath(), "CSSCRIPT/Debug");
+            Cleanup(); //do pre-cleanup as post cleanup is too complicated
+
+            //find out file system locations
+            string scriptFile = Path.GetFullPath(args[0]);
+            string tempDir = Path.Combine(CSSCRIPT_tempDir, Process.GetCurrentProcess().Id.ToString());
+
+            string projFile = Path.Combine(tempDir, "DebugScript.csprj");
+            //projFile = IDEProjectTemplate.Replace("template.", ""); //temp
+            string solutionFile = Path.ChangeExtension(projFile, ".sln");
+
+            string projFileContent = projectContentTemplate;
+   
+            //prepare project file
+	    //Mono does not like an absolute path
+            int levels = Path.GetFullPath(tempDir).Split('/').Length;
+	    string includeFile = "";
+            for(int i = 0; i < levels-1; i++)
+		includeFile += "../";
+            includeFile += scriptFile.Substring(1);
+            
+	    string includeStatement = "<Compile Include=\""+includeFile+"\" > \n    <Link>"+Path.GetFileName(scriptFile)+"</Link>\n</Compile>";	
+
+            projFileContent = projFileContent.Replace("$(includes)", includeStatement);
+
+            CSScriptLibrary.ScriptParser parser = new CSScriptLibrary.ScriptParser(scriptFile);
+            StringBuilder sb = new StringBuilder();
+            foreach (string asmName in parser.ReferencedAssemblies)
+                sb.AppendLine("<Reference Include=\"" + asmName + "\" />");
+            projFileContent = projFileContent.Replace("$(references)", sb.ToString());
+            
+            if (!Directory.Exists(tempDir))
+                Directory.CreateDirectory(tempDir);
+
+            Console.WriteLine("Creating project file:" + projFile);
+            File.WriteAllText(projFile, projFileContent);
+            
+	    Console.WriteLine("Creating solution file:" + solutionFile);
+            File.WriteAllText(solutionFile, solutionContentTemplate.Replace("$(project)", projFile));
+
+            //start MoniDevelop
+            Process.Start(solutionFile); //cannot use Wait as it returns even if monodevelop is still running
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Specified file could not be linked to the temp project:\n" + e.Message);
+        }
+    }
+
+    static void Cleanup()
+    {
+        Console.WriteLine("Cleanup...");
+        if (Directory.Exists(CSSCRIPT_tempDir))
+        foreach(string dir in Directory.GetDirectories(CSSCRIPT_tempDir))
+            try
+            {
+                Directory.Delete(dir, true);
+            }
+            catch { }
+    }
+
+    const string solutionContentTemplate = 
+@"Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project(""{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"") = ""DebugScript"", ""$(project)"", ""{B77D2420-7090-420F-849C-DFC353A36B42}""
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B77D2420-7090-420F-849C-DFC353A36B42}.Debug|x86.ActiveCfg = Debug|x86
+		{B77D2420-7090-420F-849C-DFC353A36B42}.Debug|x86.Build.0 = Debug|x86
+		{B77D2420-7090-420F-849C-DFC353A36B42}.Release|x86.ActiveCfg = Release|x86
+		{B77D2420-7090-420F-849C-DFC353A36B42}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Hello.csproj
+	EndGlobalSection
+EndGlobal";
+
+const string projectContentTemplate = 
+@"<?xml version=""1.0"" encoding=""utf-8""?>
+<Project DefaultTargets=""Build"" ToolsVersion=""3.5"" xmlns=""http://schemas.microsoft.com/developer/msbuild/2003"">
+  <PropertyGroup>
+    <Configuration Condition="" '$(Configuration)' == '' "">Debug</Configuration>
+    <Platform Condition="" '$(Platform)' == '' "">x86</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B77D2420-7090-420F-849C-DFC353A36B42}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Hello</RootNamespace>
+    <AssemblyName>Hello</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="" '$(Configuration)|$(Platform)' == 'Debug|x86' "">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <PropertyGroup Condition="" '$(Configuration)|$(Platform)' == 'Release|x86' "">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include=""System"" />
+    $(references)
+  </ItemGroup>
+  <ItemGroup>
+    $(includes)
+  </ItemGroup>
+  <Import Project=""$(MSBuildBinPath)\Microsoft.CSharp.targets"" />
+</Project>";
+
+}
+

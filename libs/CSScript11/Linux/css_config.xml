@@ -1,0 +1,22 @@
+<CSSConfig>
+  <defaultArguments>/c /sconfig /co:/warn:0</defaultArguments>
+  <defaultApartmentState>STA</defaultApartmentState>
+  <reportDetailedErrorInfo>True</reportDetailedErrorInfo>
+  <useAlternativeCompiler>
+  </useAlternativeCompiler>
+  <usePostProcessor>
+  </usePostProcessor>
+  <searchDirs>%CSSCRIPT_DIR%\Lib</searchDirs>
+  <cleanupShellCommand>
+  </cleanupShellCommand>
+  <doCleanupAfterNumberOfRuns>30</doCleanupAfterNumberOfRuns>
+  <hideOptions>HideMostFiles</hideOptions>
+  <hideCompilerWarnings>False</hideCompilerWarnings>
+  <inMemoryAsm>False</inMemoryAsm>
+  <TragetFramework>v4.0</TragetFramework>
+  <defaultRefAssemblies>System.Core; System.Linq;</defaultRefAssemblies>
+  <useSurrogatepHostingProcess>False</useSurrogatepHostingProcess>
+  <openEndDirectiveSyntax>True</openEndDirectiveSyntax>
+  <Precompiler>
+  </Precompiler>
+</CSSConfig>
