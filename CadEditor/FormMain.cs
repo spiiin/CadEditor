@@ -475,9 +475,15 @@ namespace CadEditor
                     return;
                 }
 
+                if (!File.Exists(SaveScreensCount.Filename))
+                {
+                    MessageBox.Show(string.Format("File ({0}) not exists", SaveScreensCount.Filename), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 int screenSize = ConfigScript.screensOffset.recSize;
                 int first = SaveScreensCount.First;
-                var data = Utils.loadDataFromFile("exportedScreens.bin");
+                var data = Utils.loadDataFromFile(SaveScreensCount.Filename);
                 int screenCount = data.Length / screenSize;
                 for (int i = 0; i < screenCount; i++)
                 {
