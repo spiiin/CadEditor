@@ -28,16 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditVideo));
             this.pbVideo = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btSave = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cbPalleteNo = new System.Windows.Forms.ComboBox();
             this.cbSubPal = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.pbPal = new System.Windows.Forms.PictureBox();
             this.cbVideoNo = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.cbPalleteNo = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.btSave = new System.Windows.Forms.Button();
+            this.cbShowNo = new System.Windows.Forms.CheckBox();
+            this.btExport = new System.Windows.Forms.Button();
+            this.btImport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbVideo)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPal)).BeginInit();
@@ -53,6 +57,9 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btImport);
+            this.panel1.Controls.Add(this.btExport);
+            this.panel1.Controls.Add(this.cbShowNo);
             this.panel1.Controls.Add(this.btSave);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.cbPalleteNo);
@@ -65,6 +72,35 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(169, 512);
             this.panel1.TabIndex = 1;
+            // 
+            // btSave
+            // 
+            this.btSave.Location = new System.Drawing.Point(3, 279);
+            this.btSave.Name = "btSave";
+            this.btSave.Size = new System.Drawing.Size(131, 23);
+            this.btSave.TabIndex = 2;
+            this.btSave.Text = "Save";
+            this.btSave.UseVisualStyleBackColor = true;
+            this.btSave.Click += new System.EventHandler(this.btSave_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(10, 97);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(42, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Pallete:";
+            // 
+            // cbPalleteNo
+            // 
+            this.cbPalleteNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPalleteNo.FormattingEnabled = true;
+            this.cbPalleteNo.Location = new System.Drawing.Point(67, 94);
+            this.cbPalleteNo.Name = "cbPalleteNo";
+            this.cbPalleteNo.Size = new System.Drawing.Size(67, 21);
+            this.cbPalleteNo.TabIndex = 5;
+            this.cbPalleteNo.SelectedIndexChanged += new System.EventHandler(this.cbPalleteNo_SelectedIndexChanged);
             // 
             // cbSubPal
             // 
@@ -118,34 +154,35 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Select video block:";
             // 
-            // cbPalleteNo
+            // cbShowNo
             // 
-            this.cbPalleteNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbPalleteNo.FormattingEnabled = true;
-            this.cbPalleteNo.Location = new System.Drawing.Point(67, 94);
-            this.cbPalleteNo.Name = "cbPalleteNo";
-            this.cbPalleteNo.Size = new System.Drawing.Size(67, 21);
-            this.cbPalleteNo.TabIndex = 5;
-            this.cbPalleteNo.SelectedIndexChanged += new System.EventHandler(this.cbPalleteNo_SelectedIndexChanged);
+            this.cbShowNo.Location = new System.Drawing.Point(29, 255);
+            this.cbShowNo.Name = "cbShowNo";
+            this.cbShowNo.Size = new System.Drawing.Size(80, 24);
+            this.cbShowNo.TabIndex = 6;
+            this.cbShowNo.Text = "Show no";
+            this.cbShowNo.UseVisualStyleBackColor = true;
+            this.cbShowNo.CheckedChanged += new System.EventHandler(this.cbShowNo_CheckedChanged);
             // 
-            // label3
+            // btExport
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 97);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(42, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Pallete:";
+            this.btExport.Location = new System.Drawing.Point(3, 308);
+            this.btExport.Name = "btExport";
+            this.btExport.Size = new System.Drawing.Size(131, 23);
+            this.btExport.TabIndex = 7;
+            this.btExport.Text = "Export";
+            this.btExport.UseVisualStyleBackColor = true;
+            this.btExport.Click += new System.EventHandler(this.btExport_Click);
             // 
-            // btSave
+            // btImport
             // 
-            this.btSave.Location = new System.Drawing.Point(3, 255);
-            this.btSave.Name = "btSave";
-            this.btSave.Size = new System.Drawing.Size(131, 23);
-            this.btSave.TabIndex = 2;
-            this.btSave.Text = "Save";
-            this.btSave.UseVisualStyleBackColor = true;
-            this.btSave.Click += new System.EventHandler(this.btSave_Click);
+            this.btImport.Location = new System.Drawing.Point(3, 337);
+            this.btImport.Name = "btImport";
+            this.btImport.Size = new System.Drawing.Size(131, 23);
+            this.btImport.TabIndex = 8;
+            this.btImport.Text = "Import";
+            this.btImport.UseVisualStyleBackColor = true;
+            this.btImport.Click += new System.EventHandler(this.btImport_Click);
             // 
             // EditVideo
             // 
@@ -155,6 +192,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pbVideo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "EditVideo";
             this.Text = "Video Banks Editor";
@@ -179,5 +217,8 @@
         private System.Windows.Forms.Button btSave;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbPalleteNo;
+        private System.Windows.Forms.CheckBox cbShowNo;
+        private System.Windows.Forms.Button btImport;
+        private System.Windows.Forms.Button btExport;
     }
 }

@@ -46,18 +46,23 @@ namespace CadEditor
 
             dirty = false;
             showNeiScreens = true;
-            reloadBlocksPanel();
+            prepareBlocksPanel();
 
             cbGame.SelectedIndex = (int)Globals.gameType;
             reloadGameType(false);
             cbLevel_SelectedIndexChanged(null, new EventArgs());
+
+            bool showImportExport = Globals.gameType != GameType.DT;
+            btImport.Visible = showImportExport;
+            btExport.Visible = showImportExport;
         }
 
-        private void reloadLevel()
+        private void reloadLevel(bool reloadScreens = true)
         {
             setBigBlocksIndexes();
             setBlocks();
-            setScreens();
+            if (reloadScreens)
+              setScreens();
             updateMap();
         }
 
@@ -79,7 +84,7 @@ namespace CadEditor
             }
             else
             {
-                var lr = Globals.levelRecsCad[curActiveLevel];
+                var lr = ConfigScript.getLevelRec(curActiveLevel);
                 blockId = Globals.levelData[curActiveLevel].bigBlockId;
                 if (curActiveDoor < 0)
                 {
@@ -121,7 +126,7 @@ namespace CadEditor
             reloadBlocksPanel();
         }
 
-        private void reloadBlocksPanel()
+        private void prepareBlocksPanel()
         {
             blocksPanel.Controls.Clear();
             blocksPanel.SuspendLayout();
@@ -133,9 +138,18 @@ namespace CadEditor
                 but.ImageIndex = i;
                 but.Click += new EventHandler(buttonBlockClick);
                 blocksPanel.Controls.Add(but);
-
             }
             blocksPanel.ResumeLayout();
+        }
+
+        private void reloadBlocksPanel()
+        {
+            for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
+            {
+                var but = (Button)blocksPanel.Controls[i];
+                but.ImageList = bigBlocks;
+                but.ImageIndex = i;
+            }
         }
 
         private void setScreens()
@@ -403,11 +417,6 @@ namespace CadEditor
         private void cbGame_SelectedIndexChanged(object sender, EventArgs e)
         {
             Globals.gameType = (GameType)cbGame.SelectedIndex;
-            bool isDt2 = GameType.DT2 == Globals.gameType;
-            btEdit.Enabled = !isDt2;
-            btEditObjs.Enabled = !isDt2;
-            btEditLayout.Enabled = !isDt2;
-            editEnemy.Enabled = !isDt2;
             reloadGameType(true);
         }
 
@@ -419,6 +428,65 @@ namespace CadEditor
                 f.ShowDialog();
                 reloadLevel();
             }
+        }
+
+        private void btExport_Click(object sender, EventArgs e)
+        {
+            SaveScreensCount.ExportMode = true;
+            var f = new SaveScreensCount();
+            f.ShowDialog();
+            if (SaveScreensCount.Result)
+            {
+                if (SaveScreensCount.Count <= 0)
+                {
+                    MessageBox.Show("Screens count value must be greater than 0", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                int saveLastIndex = SaveScreensCount.First + SaveScreensCount.Count;
+                if (saveLastIndex > screens.Length)
+                {
+                    MessageBox.Show(string.Format("First screen + Screens Count value ({0}) must be less than Total Screen Count in the game ({1}", saveLastIndex, screens.Length), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                int screenSize = ConfigScript.screensOffset.recSize;
+                int screenCount = SaveScreensCount.Count;
+                int first = SaveScreensCount.First;
+                var data = new byte[screenSize * screenCount];
+                for (int i = 0; i < screenCount; i++)
+                {
+                    Array.Copy(screens[i + first], 0, data, screenSize*i, screenSize);
+                }
+                Utils.saveDataToFile(SaveScreensCount.Filename, data);
+            }
+        }
+
+        private void btImport_Click(object sender, EventArgs e)
+        {
+            SaveScreensCount.ExportMode = false;
+            var f = new SaveScreensCount();
+            f.ShowDialog();
+            if (SaveScreensCount.Result)
+            {
+                int saveLastIndex = SaveScreensCount.First;
+                if (saveLastIndex > screens.Length)
+                {
+                    MessageBox.Show(string.Format("First screen ({0}) must be less than Total Screen Count in the game ({1}", saveLastIndex, screens.Length), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                int screenSize = ConfigScript.screensOffset.recSize;
+                int first = SaveScreensCount.First;
+                var data = Utils.loadDataFromFile("exportedScreens.bin");
+                int screenCount = data.Length / screenSize;
+                for (int i = 0; i < screenCount; i++)
+                {
+                    Array.Copy(data, i * screenSize, screens[first + i], 0, screenSize);
+                }
+                Utils.saveDataToFile(SaveScreensCount.Filename, data);
+            }
+            dirty = true;
+            reloadLevel(false);
         }
     }
 }

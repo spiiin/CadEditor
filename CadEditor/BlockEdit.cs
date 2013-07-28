@@ -5,7 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using System.IO;
 
 namespace CadEditor
 {
@@ -38,6 +37,14 @@ namespace CadEditor
 
             updatePanelsVisible();
             reloadLevel();
+
+            readOnly = Globals.gameType == GameType.DT2;
+            btSave.Enabled = !readOnly;
+            lbReadOnly.Visible = readOnly;
+            btFlipHorizontal.Visible = !readOnly;
+            btFlipVertical.Visible = !readOnly;
+            btImport.Visible = !readOnly;
+            //btExport.Visible = !readOnly;
         }
 
         private void reloadLevel(bool resetDirty = true)
@@ -122,21 +129,10 @@ namespace CadEditor
 
         private void setVideo()
         {
-            byte backId;
-            if (Globals.gameType == GameType.CAD)
-            {
-                if (curDoor <= 0)
-                    backId = (byte)Globals.levelData[curActiveLevel].backId;
-                else
-                    backId = (byte)Globals.doorsData[curDoor - 1].backId;
-            }
-            else
-            {
-                backId = (byte)curActiveVideo;
-            }
+            byte backId = getBackId();
             for (int i = 0; i < 4; i++)
             {
-                Bitmap b = Video.makeImageStrip(ConfigScript.getVideoChunk(backId), palette, i, 2);
+                Bitmap b = Video.makeImageStrip(ConfigScript.getVideoChunk(backId), palette, i, 2, false);
                 videoSprites[i].Images.Clear();
                 videoSprites[i].Images.AddStrip(b);
             }
@@ -173,6 +169,7 @@ namespace CadEditor
         private ImageList[] videoSprites = new ImageList[4];
         private byte[] curActiveBack = new byte[16];
         private bool dirty;
+        private bool readOnly;
 
         private string[] subPalItems = { "1", "2", "3", "4" };
 
@@ -249,6 +246,10 @@ namespace CadEditor
 
         public Image makeObjImage(int index)
         {
+            if (Globals.gameType == GameType.DT2)
+            {
+                return makeObjImageDt2(index);
+            }
             Bitmap b = new Bitmap(32, 32);
             var obj = objects[index];
             using (Graphics g = Graphics.FromImage(b))
@@ -257,6 +258,21 @@ namespace CadEditor
                 g.DrawImage(videoSprites[obj.getSubpallete()].Images[obj.c2], new Rectangle(16, 0, 16, 16));
                 g.DrawImage(videoSprites[obj.getSubpallete()].Images[obj.c3], new Rectangle(0, 16, 16, 16));
                 g.DrawImage(videoSprites[obj.getSubpallete()].Images[obj.c4], new Rectangle(16, 16, 16, 16));
+            }
+            return b;
+        }
+
+        public Image makeObjImageDt2(int index)
+        {
+            Bitmap b = new Bitmap(32, 32);
+            var obj = objects[index];
+            var objectForColor = objects[index / 4];
+            using (Graphics g = Graphics.FromImage(b))
+            {
+                g.DrawImage(videoSprites[objectForColor.getSubpalleteForDt2(index % 4)].Images[obj.c1], new Rectangle(0, 0, 16, 16));
+                g.DrawImage(videoSprites[objectForColor.getSubpalleteForDt2(index % 4)].Images[obj.c2], new Rectangle(16, 0, 16, 16));
+                g.DrawImage(videoSprites[objectForColor.getSubpalleteForDt2(index % 4)].Images[obj.c3], new Rectangle(0, 16, 16, 16));
+                g.DrawImage(videoSprites[objectForColor.getSubpalleteForDt2(index % 4)].Images[obj.c4], new Rectangle(16, 16, 16, 16));
             }
             return b;
         }
@@ -270,14 +286,19 @@ namespace CadEditor
             dirty = true;
         }
 
-        private bool saveToFile()
+        private byte getBlockId()
         {
             byte blockId;
             if (Globals.gameType == GameType.CAD)
                 blockId = (byte)Globals.levelData[curActiveLevel].bigBlockId;
             else
                 blockId = (byte)curActiveBigBlock;
+            return blockId;
+        }
 
+        private bool saveToFile()
+        {
+            byte blockId = getBlockId();
             int addr = Globals.getTilesAddr(blockId);
             for (int i = 0; i < Globals.OBJECTS_COUNT; i++)
             {
@@ -299,7 +320,7 @@ namespace CadEditor
             return !dirty;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btSave_Click(object sender, EventArgs e)
         {
             saveToFile();
         }
@@ -308,7 +329,7 @@ namespace CadEditor
         {
             if (cbLevelSelect.SelectedIndex == -1 || cbTileset.SelectedIndex == -1)
                 return;
-            if (dirty)
+            if (!readOnly && dirty)
             {
                 DialogResult dr = MessageBox.Show("Tiles was changed. Do you want to save current tileset?", "Save", MessageBoxButtons.YesNoCancel);
                 if (dr == DialogResult.Cancel)
@@ -338,7 +359,7 @@ namespace CadEditor
 
         private void BlockEdit_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (dirty)
+            if (!readOnly && dirty)
             {
                 DialogResult dr = MessageBox.Show("Tiles was changed. Do you want to save current tileset?", "Save", MessageBoxButtons.YesNo);
                 if (dr == DialogResult.Yes)
@@ -421,6 +442,26 @@ namespace CadEditor
                     "E",
                     "F"
                 };
+
+            var objTypesDt2 =
+                new[] {
+                    "no",
+                    "no",
+                    "no",
+                    "no",
+                    "no",
+                    "no",
+                    "no",
+                    "no",
+                    "no",
+                    "no",
+                    "no",
+                    "no",
+                    "no",
+                    "no",
+                    "no",
+                    "no"
+                };
             for (int i = 0; i < Globals.OBJECTS_COUNT; i++)
             {
                 Panel fp = new Panel();
@@ -452,7 +493,7 @@ namespace CadEditor
                 fp.Controls.Add(cbColor);
                 //
                 ComboBox cbType = new ComboBox();
-                var objectTypes = Globals.gameType == GameType.Generic ? objTypesDw : (Globals.gameType == GameType.CAD) ? objTypesCad : objTypesDt;
+                var objectTypes = Globals.gameType == GameType.Generic ? objTypesDw : (Globals.gameType == GameType.CAD) ? objTypesCad : (Globals.gameType == GameType.DT) ? objTypesDt : objTypesDt2;
                 cbType.Items.AddRange(objectTypes);
                 cbType.Location = new Point(156, 0);
                 cbType.Size = new Size(120, 21);
@@ -476,6 +517,7 @@ namespace CadEditor
         private void refillPanel()
         {
             //GUI
+            bool isCad = Globals.gameType == GameType.CAD;
             for (int i = 0; i < Globals.OBJECTS_COUNT; i++)
             {
                 Panel p = (Panel)mapObjects.Controls[i];
@@ -489,7 +531,7 @@ namespace CadEditor
                 PictureBox pb2 = (PictureBox)p.Controls[4];
                 pb2.Image = makeObjImage(curActiveBack[i % 16]);
                 int t = objects[i].getType();
-                pb2.Visible = t >= 0x0E || t == 1;
+                pb2.Visible = isCad && (t >= 0x0E || t == 1);
             }
         }
 
@@ -529,6 +571,113 @@ namespace CadEditor
             pnCad.Visible = !generic;
             pnGeneric.Visible = generic;
             pnBacks.Visible = !generic;
+        }
+
+        private void btClear_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure want to clear all blocks?", "Clear", MessageBoxButtons.YesNo)!= DialogResult.Yes)
+              return;
+            for (int i = 0; i < Globals.OBJECTS_COUNT; i++)
+                objects[i] = new ObjRec(0,0,0,0,0);
+            dirty = true;
+            refillPanel();
+        }
+
+        private byte getBackId()
+        {
+            byte backId;
+            if (Globals.gameType == GameType.CAD)
+            {
+                if (curDoor <= 0)
+                    backId = (byte)Globals.levelData[curActiveLevel].backId;
+                else
+                    backId = (byte)Globals.doorsData[curDoor - 1].backId;
+            }
+            else
+            {
+                backId = (byte)curActiveVideo;
+            }
+            return backId;
+        }
+
+        private void btFlipHorizontal_Click(object sender, EventArgs e)
+        {
+            var videoChunk = ConfigScript.getVideoChunk(getBackId());
+            int beginIndex = 16 * curActiveBlock;
+            for (int line = 0; line < 8; line++)
+            {
+                videoChunk[beginIndex + line    ] = Utils.ReverseBits(videoChunk[beginIndex + line]);
+                videoChunk[beginIndex + line + 8] = Utils.ReverseBits(videoChunk[beginIndex + line + 8]); 
+            }
+            ConfigScript.setVideoChunk(getBackId(), videoChunk);
+            reloadLevel(false);
+            dirty = true;
+        }
+
+        private void btFlipVertical_Click(object sender, EventArgs e)
+        {
+            var videoChunk = ConfigScript.getVideoChunk(getBackId());
+            int beginIndex = 16 * curActiveBlock;
+            Utils.Swap(ref videoChunk[beginIndex + 0], ref videoChunk[beginIndex + 7]);
+            Utils.Swap(ref videoChunk[beginIndex + 1], ref videoChunk[beginIndex + 6]);
+            Utils.Swap(ref videoChunk[beginIndex + 2], ref videoChunk[beginIndex + 5]);
+            Utils.Swap(ref videoChunk[beginIndex + 3], ref videoChunk[beginIndex + 4]);
+
+            Utils.Swap(ref videoChunk[beginIndex + 8], ref videoChunk[beginIndex +15]);
+            Utils.Swap(ref videoChunk[beginIndex + 9], ref videoChunk[beginIndex +14]);
+            Utils.Swap(ref videoChunk[beginIndex +10], ref videoChunk[beginIndex +13]);
+            Utils.Swap(ref videoChunk[beginIndex +11], ref videoChunk[beginIndex +12]);
+            ConfigScript.setVideoChunk(getBackId(), videoChunk);
+            reloadLevel(false);
+            dirty = true;
+        }
+
+        private void btExport_Click(object sender, EventArgs e)
+        {
+            var f = new SelectFile();
+            f.Filename = "exportedBlocks.bin";
+            f.ShowDialog();
+            if (!f.Result)
+                return;
+            var fn = f.Filename;
+            byte blockId = getBlockId();
+            var data = new byte[Globals.OBJECTS_COUNT * 5];
+            for (int i = 0; i < Globals.OBJECTS_COUNT; i++)
+            {
+                data[i] = objects[i].c1;
+                data[Globals.OBJECTS_COUNT * 1 + i] = objects[i].c2;
+                data[Globals.OBJECTS_COUNT * 2 + i] = objects[i].c3;
+                data[Globals.OBJECTS_COUNT * 3 + i] = objects[i].c4;
+                data[Globals.OBJECTS_COUNT * 4 + i] = objects[i].typeColor;
+            }
+
+            Utils.saveDataToFile(fn, data);
+        }
+
+        private void btImport_Click(object sender, EventArgs e)
+        {
+            var f = new SelectFile();
+            f.Filename = "exportedBlocks.bin";
+            f.ShowDialog();
+            if (!f.Result)
+                return;
+            var fn = f.Filename;
+            var data = Utils.loadDataFromFile(fn);
+            if (data == null)
+                return;
+
+            byte bigBlockId = (Globals.gameType == GameType.CAD) ? (byte)Globals.levelData[curActiveLevel].bigBlockId : (byte)curActiveBigBlock;
+            int addr = Globals.getTilesAddr(bigBlockId);
+            for (int i = 0; i < Globals.OBJECTS_COUNT; i++)
+            {
+                Globals.romdata[addr + i] = data[i];
+                Globals.romdata[addr + 0x100 + i] = data[i + 0x100];
+                Globals.romdata[addr + 0x200 + i] = data[i + 0x200];
+                Globals.romdata[addr + 0x300 + i] = data[i + 0x300];
+                Globals.romdata[addr + 0x400 + i] = data[i + 0x400];
+            }
+            reloadLevel(false);
+            dirty = true;
         }
     }
 }

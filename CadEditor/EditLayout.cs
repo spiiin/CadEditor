@@ -76,12 +76,13 @@ namespace CadEditor
             cbPaletteNo.SelectedIndex = 0;*/
 
             cbLayoutNo.Items.Clear();
-            var items = Globals.gameType == GameType.DT ? dtTexts : dwdTexts;
-            for (int i = 0; i < items.Length; i++)
-                cbLayoutNo.Items.Add(items[i]);
+            foreach (var lr in ConfigScript.levelRecs)
+                cbLayoutNo.Items.Add(String.Format("0x{0:X} ({1}x{2})", lr.layoutAddr, lr.width, lr.height));
             Utils.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged);
 
             cbLevel.SelectedIndex = 0;
+
+            cbShowScrolls.Visible = (Globals.gameType == GameType.CAD) || (Globals.gameType == GameType.Generic);
         }
 
         private void reloadLevelLayer()
@@ -308,7 +309,7 @@ namespace CadEditor
         private int curActiveBlock = 0;
         private MapDrawMode drawMode = MapDrawMode.Screens;
         private bool dirty = false;
-        private bool showScrolls = true;
+        private bool showScrolls = false;
         private LevelLayerData curLevelLayerData = new LevelLayerData();
 
         private int curActiveLayout = 0;
@@ -342,9 +343,8 @@ namespace CadEditor
 
             updatePanelsVisibility();
             cbLayoutNo.Items.Clear();
-            var items = Globals.gameType == GameType.DT ? dtTexts : dwdTexts;
-            for (int i = 0; i < items.Length; i++)
-                cbLayoutNo.Items.Add(items[i]);
+            foreach (var lr in ConfigScript.levelRecs)
+                cbLayoutNo.Items.Add(String.Format("0x{0:X} ({1}x{2})", lr.layoutAddr, lr.width, lr.height));
             Utils.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged, curActiveLayout);
             reloadLevelLayer();
         }
@@ -352,7 +352,7 @@ namespace CadEditor
         private void updatePanelsVisibility()
         {
             bool generic = Globals.gameType != GameType.CAD;
-            bool notDt = Globals.gameType != GameType.DT;
+            bool notDt = Globals.gameType != GameType.DT && GameType.DT2 != Globals.gameType;
             pnDoors.Visible = notDt;
             pnSelectScroll.Visible = notDt;
             pnIngameScreenOrder.Visible = !generic;
@@ -464,24 +464,7 @@ namespace CadEditor
             var f = new EditLevelData();
             f.ShowDialog();
         }
-
-        private static string[] dwdTexts = {
-            "0x1DFA0 (17x4)",
-            "0x1DFE4 (17x4)",
-            "0x1E028 (17x4)",
-            "0x1E0E4 (10x12)",
-            "0x1E11D (19x3)",
-            "0x1E06C (19x3)",
-            "0x1E156  (19x3)" };
-
-        private static string[] dtTexts = {                                             
-            "0x1CE7B (8x7)",
-            "0x1CEB3 (8x8)",
-            "0x1CEF3 (8x6)",
-            "0x1CF23 (8x6)",
-            "0x1CF53 (8x6)" };
-    }
-
+    }        
     enum MapDrawMode
     {
         Screens,

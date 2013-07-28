@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditLayout));
             this.screenImages = new System.Windows.Forms.ImageList(this.components);
             this.cbLevel = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -166,8 +167,6 @@
             // 
             this.cbShowScrolls.AutoSize = true;
             this.cbShowScrolls.CheckAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.cbShowScrolls.Checked = true;
-            this.cbShowScrolls.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbShowScrolls.Location = new System.Drawing.Point(334, 247);
             this.cbShowScrolls.Name = "cbShowScrolls";
             this.cbShowScrolls.Size = new System.Drawing.Size(68, 31);
@@ -379,6 +378,7 @@
             this.Controls.Add(this.activeBlock);
             this.Controls.Add(this.blocksPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "EditLayout";
             this.Text = "Layout Editor";

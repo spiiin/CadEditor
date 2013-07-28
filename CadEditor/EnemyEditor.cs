@@ -32,6 +32,7 @@ namespace CadEditor
         private Image[] scrImages;
         private List<ObjectRec> objects = new List<ObjectRec>();
         private bool dirty = false;
+        private bool readOnly = false;
 
         const int MAX_SIZE = 64;
         const int OBJECTS_COUNT = 256;
@@ -198,14 +199,13 @@ namespace CadEditor
             ImageList smallBlocks = new ImageList();
             smallBlocks.ImageSize = new Size(16, 16);
             var bigBlocks = new Image[blockCount];
-            byte[] bigBlockIndexes = new byte[blockCount * 4];
+
             byte blockId = (byte)curBigBlockNo;
             byte blockIndexId = (byte)curBlockNo;
             byte backId = (byte)curVideoNo;
             byte palId = (byte)curPaletteNo;
             int bigBlockAddr = Globals.getBigTilesAddr(blockIndexId);
-            for (int btileId = 0; btileId < blockCount * 4; btileId++)
-                bigBlockIndexes[btileId] = Globals.romdata[bigBlockAddr + btileId];
+            byte[] bigBlockIndexes = Utils.fillBigBlocks(blockIndexId);
 
             var im = Video.makeObjectsStrip(backId, blockId, palId, 1, MapViewType.Tiles);
             smallBlocks.Images.AddStrip(im);
@@ -263,23 +263,20 @@ namespace CadEditor
                 return;
             bool realReload = (sender == cbLevel) || (sender == cbLayoutNo);
             bool reloadObjects = realReload;
-            if (realReload)
+            if (!readOnly && realReload)
             {
                 if (!Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
                     return;
             }
            
             curActiveLevel = cbLevel.SelectedIndex;
-            var items = Globals.gameType == GameType.DT ? dtTexts : dwdTexts;
             curActiveLayout = cbLayoutNo.SelectedIndex;
             cbLayoutNo.Items.Clear();
-            for (int i = 0; i < items.Length; i++)
-                cbLayoutNo.Items.Add(items[i]);
+            foreach (var lr in ConfigScript.levelRecs)
+                cbLayoutNo.Items.Add(String.Format("0x{0:X} ({1}x{2})", lr.layoutAddr, lr.width, lr.height));
             Utils.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged, curActiveLayout);
             reloadLevel(reloadObjects);
         }
-
-
 
         private void EnemyEditor_Load(object sender, EventArgs e)
         {
@@ -303,12 +300,15 @@ namespace CadEditor
             Utils.setCbIndexWithoutUpdateLevel(cbBigBlockNo, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbPaletteNo, cbLevel_SelectedIndexChanged);
             cbLayoutNo.Items.Clear();
-            var items = Globals.gameType == GameType.DT ? dtTexts : dwdTexts;
-            for (int i = 0; i < items.Length; i++)
-                cbLayoutNo.Items.Add(items[i]);
+            foreach (var lr in ConfigScript.levelRecs)
+                cbLayoutNo.Items.Add(String.Format("0x{0:X} ({1}x{2})", lr.layoutAddr, lr.width, lr.height));
             Utils.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged);
             cbLevel.SelectedIndex = 0;
             updatePanelsVisibility();
+
+            readOnly = Globals.gameType == GameType.DT2;
+            btSave.Enabled = !readOnly;
+            lbReadOnly.Visible = readOnly;
 
         }
 
@@ -411,66 +411,136 @@ namespace CadEditor
             }
         }
 
-        private void setObjects()
+        private LevelRec getLevelRecForGameType()
+        {
+            return ConfigScript.getLevelRec(curActiveLayout);
+        }
+
+        private void setObjectsDt()
+        {
+            objects.Clear();
+            var lr = getLevelRecForGameType();
+            int objCount = lr.objCount;
+            int addr = lr.objectsBeginAddr;
+            var objLineOffsets = new byte[lr.height];
+            for (int i = 0; i < lr.height; i++)
+            {
+                objLineOffsets[i] = Globals.romdata[addr + i - lr.height];
+            }
+            for (int i = 0; i < objCount; i++)
+            {
+                byte v = Globals.romdata[addr + i];
+                byte sx = Globals.romdata[addr - 3 * objCount + i - lr.height];
+                byte x = Globals.romdata[addr - 2 * objCount + i - lr.height];
+                byte y = Globals.romdata[addr - objCount + i - lr.height];
+                byte sy = convertObjectIndexToScreenYcoord(objLineOffsets, i);
+                var obj = new ObjectRec(v, sx, sy, x, y);
+                objects.Add(obj);
+            }
+        }
+
+        private void setObjectsCadDwd()
         {
             objects.Clear();
             int objCount, addr;
             LevelRec lr;
             if (Globals.gameType == GameType.CAD)
             {
-                lr = Globals.levelRecsCad[curActiveLevel];
+                lr = ConfigScript.getLevelRec(curActiveLevel);
                 objCount = lr.objCount;
                 addr = lr.objectsBeginAddr;
             }
             else
             {
-                lr = Globals.gameType == GameType.DT ? Globals.levelRecsDt[curActiveLayout] : Globals.levelRecsDwd[curActiveLayout];
+                lr = getLevelRecForGameType();
                 objCount = lr.objCount;
                 addr = lr.objectsBeginAddr;
             }
 
-            if (Globals.gameType != GameType.DT)
+            for (int i = 0; i < objCount; i++)
             {
-                for (int i = 0; i < objCount; i++)
+                byte v = Globals.romdata[addr + i];
+                if ((curActiveLevel != 4) || (Globals.gameType == GameType.Generic))
                 {
-                    byte v = Globals.romdata[addr + i];
-                    if ((curActiveLevel != 4) || (Globals.gameType == GameType.Generic))
+                    byte sx, sy, x, y;
+                    if (!ConfigScript.isDwdAdvanceLastLevel())
                     {
-                        byte sx = Globals.romdata[addr - 4 * objCount + i];
-                        byte x = Globals.romdata[addr - 3 * objCount + i];
-                        byte sy = Globals.romdata[addr - 2 * objCount + i];
-                        byte y = Globals.romdata[addr - objCount + i];
-                        var obj = new ObjectRec(v, sx, sy, x, y);
-                        objects.Add(obj);
+                        sx = Globals.romdata[addr - 4 * objCount + i];
+                        x = Globals.romdata[addr - 3 * objCount + i];
+                        sy = Globals.romdata[addr - 2 * objCount + i];
+                        y = Globals.romdata[addr - objCount + i];
                     }
-                    else  //C&D LEVEL D EXCEPTION
+                    else
                     {
-                        byte sx = Globals.romdata[addr - 4 * objCount + 1 + i];
-                        byte x = Globals.romdata[addr - 3 * objCount + 1 + i];
-                        byte sy = Globals.romdata[addr - 2 * objCount + 1 + i];
-                        byte y = Globals.romdata[addr - objCount + i];
-                        var obj = new ObjectRec(v, sx, sy, x, y);
-                        objects.Add(obj);
+                        sx = Globals.romdata[addr + 1 * objCount + i];
+                        x = Globals.romdata[addr + 2 * objCount + i];
+                        sy = Globals.romdata[addr + 3 * objCount + i];
+                        y = Globals.romdata[addr - +4 * objCount + i];
                     }
-                }
-            }
-            else
-            {
-                var objLineOffsets = new byte[lr.height];
-                for (int i = 0; i < lr.height; i++)
-                {
-                    objLineOffsets[i] = Globals.romdata[addr + i - lr.height];
-                }
-                for (int i = 0; i < objCount; i++)
-                {
-                    byte v = Globals.romdata[addr + i];
-                    byte sx = Globals.romdata[addr - 3 * objCount + i - lr.height];
-                    byte x = Globals.romdata[addr - 2 * objCount + i - lr.height];
-                    byte y = Globals.romdata[addr - objCount + i - lr.height];
-                    byte sy = convertObjectIndexToScreenYcoord(objLineOffsets, i);
                     var obj = new ObjectRec(v, sx, sy, x, y);
                     objects.Add(obj);
                 }
+                else  //C&D LEVEL D EXCEPTION
+                {
+                    byte sx = Globals.romdata[addr - 4 * objCount + 1 + i];
+                    byte x = Globals.romdata[addr - 3 * objCount + 1 + i];
+                    byte sy = Globals.romdata[addr - 2 * objCount + 1 + i];
+                    byte y = Globals.romdata[addr - objCount + i];
+                    var obj = new ObjectRec(v, sx, sy, x, y);
+                    objects.Add(obj);
+                }
+            }
+        }
+
+        private void setObjectsDt2()
+        {
+            objects.Clear();
+            var lr = getLevelRecForGameType();
+            int objCount = lr.objCount;
+            int addr = lr.objectsBeginAddr;
+
+            int objectsReaded = 0;
+            int currentHeight = 0;
+            while (objectsReaded < objCount)
+            {
+                byte command = Globals.romdata[addr];
+                if (command == 0xFF)
+                {
+                    currentHeight = Globals.romdata[addr + 1];
+                    if (currentHeight == 0xFF)
+                        break;
+                    addr += 2;
+                }
+                else
+                {
+                    byte v = Globals.romdata[addr + 2];
+                    byte xbyte = Globals.romdata[addr + 0];
+                    byte ybyte = Globals.romdata[addr + 1];
+                    byte sx = (byte)(xbyte >> 5);
+                    byte x = (byte)((xbyte & 0x1F) << 3);
+                    byte sy = (byte)currentHeight;
+                    byte y = ybyte;
+                    var obj = new ObjectRec(v, sx, sy, x, y);
+                    objects.Add(obj);
+                    objectsReaded++;
+                    addr += 3;
+                }
+            }
+        }
+
+        private void setObjects()
+        {
+            if (Globals.gameType == GameType.DT)
+            {
+                setObjectsDt();
+            }
+            else if (Globals.gameType == GameType.DT2)
+            {
+                setObjectsDt2();
+            }
+            else
+            {
+                setObjectsCadDwd();
             }
             
             fillObjectsListBox();
@@ -616,8 +686,10 @@ namespace CadEditor
 
         private bool saveToFile()
         {
+            //todo : add save for duck tales 2
+
             var romFname = OpenFile.FileName;
-            LevelRec lr = Globals.gameType == GameType.Generic ? Globals.levelRecsDwd[curActiveLayout] : (Globals.gameType == GameType.DT) ? Globals.levelRecsDt[curActiveLayout] : Globals.levelRecsCad[curActiveLevel];
+            LevelRec lr = getLevelRecForGameType();
             //write objects
             if (!cbManualSort.Checked)
               sortObjects();
@@ -639,19 +711,41 @@ namespace CadEditor
                     for (int i = 0; i < objects.Count; i++)
                     {
                         var obj = objects[i];
-                        Globals.romdata[addrBase + i] = obj.type;
-                        Globals.romdata[addrBase - 4 * objCount + levelDhack + i] = obj.sx;
-                        Globals.romdata[addrBase - 3 * objCount + levelDhack + i] = obj.x;
-                        Globals.romdata[addrBase - 2 * objCount + levelDhack + i] = obj.sy;
-                        Globals.romdata[addrBase - objCount + i] = obj.y;
+                        if (!ConfigScript.isDwdAdvanceLastLevel())
+                        {
+                            Globals.romdata[addrBase + i] = obj.type;
+                            Globals.romdata[addrBase - 4 * objCount + levelDhack + i] = obj.sx;
+                            Globals.romdata[addrBase - 3 * objCount + levelDhack + i] = obj.x;
+                            Globals.romdata[addrBase - 2 * objCount + levelDhack + i] = obj.sy;
+                            Globals.romdata[addrBase - objCount + i] = obj.y;
+                        }
+                        else
+                        {
+                            Globals.romdata[addrBase + i] = obj.type;
+                            Globals.romdata[addrBase + 1 * objCount + levelDhack + i] = obj.sx;
+                            Globals.romdata[addrBase + 2 * objCount + levelDhack + i] = obj.x;
+                            Globals.romdata[addrBase + 3 * objCount + levelDhack + i] = obj.sy;
+                            Globals.romdata[addrBase + 4 * objCount + i] = obj.y;
+                        }
+
                     }
                     for (int i = objects.Count; i < objCount; i++)
                     {
                         Globals.romdata[addrBase + i] = 0xFF;
-                        Globals.romdata[addrBase - 4 * objCount + levelDhack + i] = 0xFF;
-                        Globals.romdata[addrBase - 3 * objCount + levelDhack + i] = 0xFF;
-                        Globals.romdata[addrBase - 2 * objCount + levelDhack + i] = 0xFF;
-                        Globals.romdata[addrBase - objCount + levelDhack + i] = 0xFF;
+                        if (!ConfigScript.isDwdAdvanceLastLevel())
+                        {
+                            Globals.romdata[addrBase - 4 * objCount + levelDhack + i] = 0xFF;
+                            Globals.romdata[addrBase - 3 * objCount + levelDhack + i] = 0xFF;
+                            Globals.romdata[addrBase - 2 * objCount + levelDhack + i] = 0xFF;
+                            Globals.romdata[addrBase - objCount + levelDhack + i] = 0xFF;
+                        }
+                        else
+                        {
+                            Globals.romdata[addrBase + 1 * objCount + levelDhack + i] = 0xFF;
+                            Globals.romdata[addrBase + 2 * objCount + levelDhack + i] = 0xFF;
+                            Globals.romdata[addrBase + 3 * objCount + levelDhack + i] = 0xFF;
+                            Globals.romdata[addrBase + 4 * objCount + levelDhack + i] = 0xFF;
+                        }
                     }
                 }
                 else
@@ -714,7 +808,7 @@ namespace CadEditor
 
         private void EnemyEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (dirty)
+            if (!readOnly && dirty)
             {
                 DialogResult dr = MessageBox.Show("Level was changed. Do you want to save current level?", "Save", MessageBoxButtons.YesNo);
                 if (dr == DialogResult.Yes)
@@ -781,7 +875,7 @@ namespace CadEditor
 
         private void reloadPictures()
         {
-            var objSpritesDir = Globals.gameType == GameType.Generic ? "obj_sprites_dwd" : (GameType.DT == Globals.gameType) ? "obj_sprites" : "obj_sprites_cad";
+            var objSpritesDir = Globals.gameType == GameType.Generic ? "obj_sprites_dwd" : (GameType.CAD == Globals.gameType) ? "obj_sprites_cad" : "obj_sprites";
             var objSpritesDirGeneric = "obj_sprites";
             var templ = objSpritesDir + "\\object{0}.png";
             var templGeneric = objSpritesDirGeneric + "\\object{0}.png";
@@ -805,22 +899,6 @@ namespace CadEditor
             cbStopOnDoors.Visible = !generic;
             cbManualSort.Visible = !generic;
         }
-
-        public static string[] dwdTexts = {
-            "0x1DFA0 (17x4)",
-            "0x1DFE4 (17x4)",
-            "0x1E028 (17x4)",
-            "0x1E0E4 (10x12)",
-            "0x1E11D (19x3)",
-            "0x1E06C (19x3)",
-            "0x1E156  (19x3)" };
-
-        public static string[] dtTexts = {                                             
-            "0x1CE7B (8x7)",
-            "0x1CEB3 (8x8)",
-            "0x1CEF3 (8x6)",
-            "0x1CF23 (8x6)",
-            "0x1CF53 (8x6)" };
     }
 
     struct ObjectRec

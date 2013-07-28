@@ -28,12 +28,13 @@ namespace CadEditor
             curViewType = MapViewType.Tiles;
 
             Utils.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
+            Utils.setCbItemsCount(cbSmallBlock, ConfigScript.blocksOffset.recCount);
             Utils.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
             Utils.setCbItemsCount(cbPart, ConfigScript.getBigBlocksCount() / 256);
             cbTileset.Items.Clear();
             for (int i = 0; i < ConfigScript.bigBlocksOffset.recCount; i++)
             {
-                var str = String.Format("Tileset{0} ({1:X})", i, 0x3000 + i * 0x4000);
+                var str = String.Format("Tileset{0}", i);
                 cbTileset.Items.Add(str);
             }
             cbTileset.SelectedIndex = 0;
@@ -41,6 +42,7 @@ namespace CadEditor
             cbDoor.SelectedIndex = 0;
             cbVideoNo.SelectedIndex = 0;
             cbTileset.SelectedIndex = 0;
+            cbSmallBlock.SelectedIndex = 0;
             cbPaletteNo.SelectedIndex = 0;
             cbPart.SelectedIndex = 0;
             cbViewType.SelectedIndex = 0;
@@ -59,6 +61,11 @@ namespace CadEditor
             blocksPanel.ResumeLayout();
             prepareAxisLabels();
             reloadLevel();
+
+            readOnly = Globals.gameType == GameType.DT2;
+            btSave.Enabled = !readOnly;
+            lbReadOnly.Visible = readOnly;
+            btImport.Visible = !readOnly;
         }
 
         private void prepareAxisLabels()
@@ -81,11 +88,12 @@ namespace CadEditor
             }
         }
 
-        private void reloadLevel()
+        private void reloadLevel(bool reloadBigBlocks = true)
         {
             curActiveBlock = 0;
             setSmallBlocks();
-            setBigBlocksIndexes();
+            if (reloadBigBlocks)
+              setBigBlocksIndexes();
             mapScreen.Invalidate();
         }
 
@@ -128,7 +136,7 @@ namespace CadEditor
 
         private void setBigBlocksIndexes()
         {
-            bigBlockIndexes = Utils.fillBigBlocks(curTileset);
+            bigBlockIndexes = Utils.fillBigBlocks(curSmallBlockNo);
         }
 
         const int SMALL_BLOCKS_COUNT = 256;
@@ -171,6 +179,7 @@ namespace CadEditor
 
         private int curActiveBlock;
         private int curTileset;
+        private int curSmallBlockNo;
 
         //chip and dale
         private int curLevel;
@@ -184,15 +193,17 @@ namespace CadEditor
         private MapViewType curViewType;
 
         private bool dirty;
+        private bool readOnly;
 
         private void cbLevelPair_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbLevel.SelectedIndex == -1 || cbTileset.SelectedIndex == -1 || cbDoor.SelectedIndex == -1 ||
-                cbVideoNo.SelectedIndex == -1 || cbPaletteNo.SelectedIndex == -1 || cbPart.SelectedIndex == -1 || cbViewType.SelectedIndex == -1 )
+                cbVideoNo.SelectedIndex == -1 || cbPaletteNo.SelectedIndex == -1 || cbPart.SelectedIndex == -1 ||
+                cbViewType.SelectedIndex == -1 || cbSmallBlock.SelectedIndex == -1)
             {
                 return;
             }
-            if (dirty && sender == cbTileset)
+            if (!readOnly && dirty && sender == cbTileset)
             {
                 DialogResult dr = MessageBox.Show("Tiles was changed. Do you want to save current tileset?", "Save", MessageBoxButtons.YesNoCancel);
                 if (dr == DialogResult.Cancel)
@@ -214,6 +225,7 @@ namespace CadEditor
                 }
             }
             curTileset = cbTileset.SelectedIndex;
+            curSmallBlockNo = cbSmallBlock.SelectedIndex;
             curViewType = (MapViewType)cbViewType.SelectedIndex;
 
             curLevel = cbLevel.SelectedIndex;
@@ -251,12 +263,49 @@ namespace CadEditor
 
         private void BigBlockEdit_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (dirty)
+            if (!readOnly && dirty)
             {
                 DialogResult dr = MessageBox.Show("Tiles was changed. Do you want to save current tileset?", "Save", MessageBoxButtons.YesNo);
                 if (dr == DialogResult.Yes)
                     saveToFile();
             }
+        }
+
+        private void btClear_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure want to clear all blocks?", "Clear", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                return;
+            for (int i = 0; i < ConfigScript.getBigBlocksCount() * 4; i++)
+                bigBlockIndexes[i] = 0;
+            dirty = true;
+            mapScreen.Invalidate();
+        }
+
+        private void btExport_Click(object sender, EventArgs e)
+        {
+            //duck tales 2 has other format
+            var f = new SelectFile();
+            f.Filename = "exportedBigBlocks.bin";
+            f.ShowDialog();
+            if (!f.Result)
+                return;
+            var fn = f.Filename;
+            Utils.saveDataToFile(fn, bigBlockIndexes);
+        }
+
+        private void btImport_Click(object sender, EventArgs e)
+        {
+            var f = new SelectFile();
+            f.Filename = "exportedBigBlocks.bin";
+            f.ShowDialog();
+            if (!f.Result)
+                return;
+            var fn = f.Filename;
+            var data = Utils.loadDataFromFile(fn);
+            //duck tales 2 has other format
+            bigBlockIndexes = data;
+            reloadLevel(false);
+            dirty = true;
         }
     }
 }

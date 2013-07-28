@@ -1,4 +1,6 @@
 using CadEditor;
+using System.Collections.Generic;
+
 public class Data
 {
   //--------------------------------------------------------------------------------------------
@@ -11,9 +13,20 @@ public class Data
   public static OffsetRec getBlocksOffset()    { return new OffsetRec(0x7B10 , 3   , 0x4000); }
   public static OffsetRec getScreensOffset()   { return new OffsetRec(0x10058, 300 , 0x48);   }
   public static int getBigBlocksCount()        { return 512; }
+  public static IList<LevelRec> getLevelRecs() { return levelRecsDt; }
   
   public static GetVideoPageAddrFunc getVideoPageAddrFunc() { return getDuckTalesVideoAddress; }
   public static GetVideoChunkFunc    getVideoChunkFunc()    { return getDuckTalesVideoChunk;   }
+  public static SetVideoChunkFunc    setVideoChunkFunc()    { return Utils.setVideoChunk; }
+  
+  public static IList<LevelRec> levelRecsDt = new List<LevelRec>() 
+  {
+    new LevelRec(0x1B43B, 181, 8, 7, 0x1CE7B),
+    new LevelRec(0x1B6CC, 156, 8, 8, 0x1CEB3),
+    new LevelRec(0x1B8E8, 126, 8, 6, 0x1CEF3),
+    new LevelRec(0x1BAD1, 119, 8, 6, 0x1CF23),
+    new LevelRec(0x1BD70, 182, 8, 6, 0x1CF53),
+  };
   
   //--------------------------------------------------------------------------------------------
   //duck tales specific

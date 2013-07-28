@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BlockEdit));
             this.paletteMap = new System.Windows.Forms.PictureBox();
             this.mapScreen = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -53,7 +54,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.pbActive = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btSave = new System.Windows.Forms.Button();
             this.cbDoor = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -66,6 +67,12 @@
             this.editBack = new System.Windows.Forms.Button();
             this.pnCad = new System.Windows.Forms.Panel();
             this.pnBacks = new System.Windows.Forms.Panel();
+            this.lbReadOnly = new System.Windows.Forms.Label();
+            this.btClear = new System.Windows.Forms.Button();
+            this.btFlipHorizontal = new System.Windows.Forms.Button();
+            this.btFlipVertical = new System.Windows.Forms.Button();
+            this.btImport = new System.Windows.Forms.Button();
+            this.btExport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.paletteMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -302,15 +309,15 @@
             this.pbActive.TabIndex = 14;
             this.pbActive.TabStop = false;
             // 
-            // button1
+            // btSave
             // 
-            this.button1.Location = new System.Drawing.Point(12, 4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(59, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "save";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btSave.Location = new System.Drawing.Point(12, 4);
+            this.btSave.Name = "btSave";
+            this.btSave.Size = new System.Drawing.Size(59, 23);
+            this.btSave.TabIndex = 0;
+            this.btSave.Text = "save";
+            this.btSave.UseVisualStyleBackColor = true;
+            this.btSave.Click += new System.EventHandler(this.btSave_Click);
             // 
             // cbDoor
             // 
@@ -446,16 +453,81 @@
             this.pnBacks.Controls.Add(this.label11);
             this.pnBacks.Controls.Add(this.pbBacks);
             this.pnBacks.Controls.Add(this.editBack);
-            this.pnBacks.Location = new System.Drawing.Point(15, 440);
+            this.pnBacks.Location = new System.Drawing.Point(15, 469);
             this.pnBacks.Name = "pnBacks";
             this.pnBacks.Size = new System.Drawing.Size(263, 92);
             this.pnBacks.TabIndex = 18;
+            // 
+            // lbReadOnly
+            // 
+            this.lbReadOnly.AutoSize = true;
+            this.lbReadOnly.Location = new System.Drawing.Point(207, 9);
+            this.lbReadOnly.Name = "lbReadOnly";
+            this.lbReadOnly.Size = new System.Drawing.Size(69, 13);
+            this.lbReadOnly.TabIndex = 22;
+            this.lbReadOnly.Text = "READ ONLY";
+            // 
+            // btClear
+            // 
+            this.btClear.Location = new System.Drawing.Point(585, 485);
+            this.btClear.Name = "btClear";
+            this.btClear.Size = new System.Drawing.Size(75, 23);
+            this.btClear.TabIndex = 23;
+            this.btClear.Text = "Clear all";
+            this.btClear.UseVisualStyleBackColor = true;
+            this.btClear.Click += new System.EventHandler(this.btClear_Click);
+            // 
+            // btFlipHorizontal
+            // 
+            this.btFlipHorizontal.Location = new System.Drawing.Point(15, 440);
+            this.btFlipHorizontal.Name = "btFlipHorizontal";
+            this.btFlipHorizontal.Size = new System.Drawing.Size(75, 23);
+            this.btFlipHorizontal.TabIndex = 0;
+            this.btFlipHorizontal.Text = "Flip horiz-tal";
+            this.btFlipHorizontal.UseVisualStyleBackColor = true;
+            this.btFlipHorizontal.Click += new System.EventHandler(this.btFlipHorizontal_Click);
+            // 
+            // btFlipVertical
+            // 
+            this.btFlipVertical.Location = new System.Drawing.Point(93, 440);
+            this.btFlipVertical.Name = "btFlipVertical";
+            this.btFlipVertical.Size = new System.Drawing.Size(75, 23);
+            this.btFlipVertical.TabIndex = 24;
+            this.btFlipVertical.Text = "Flip vertical";
+            this.btFlipVertical.UseVisualStyleBackColor = true;
+            this.btFlipVertical.Click += new System.EventHandler(this.btFlipVertical_Click);
+            // 
+            // btImport
+            // 
+            this.btImport.Location = new System.Drawing.Point(142, 4);
+            this.btImport.Name = "btImport";
+            this.btImport.Size = new System.Drawing.Size(59, 23);
+            this.btImport.TabIndex = 25;
+            this.btImport.Text = "import";
+            this.btImport.UseVisualStyleBackColor = true;
+            this.btImport.Click += new System.EventHandler(this.btImport_Click);
+            // 
+            // btExport
+            // 
+            this.btExport.Location = new System.Drawing.Point(77, 4);
+            this.btExport.Name = "btExport";
+            this.btExport.Size = new System.Drawing.Size(59, 23);
+            this.btExport.TabIndex = 26;
+            this.btExport.Text = "export";
+            this.btExport.UseVisualStyleBackColor = true;
+            this.btExport.Click += new System.EventHandler(this.btExport_Click);
             // 
             // BlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(668, 543);
+            this.ClientSize = new System.Drawing.Size(668, 564);
+            this.Controls.Add(this.btExport);
+            this.Controls.Add(this.btImport);
+            this.Controls.Add(this.btFlipVertical);
+            this.Controls.Add(this.btFlipHorizontal);
+            this.Controls.Add(this.btClear);
+            this.Controls.Add(this.lbReadOnly);
             this.Controls.Add(this.pnGeneric);
             this.Controls.Add(this.pnBacks);
             this.Controls.Add(this.pnCad);
@@ -464,7 +536,7 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btSave);
             this.Controls.Add(this.paletteMap);
             this.Controls.Add(this.pbActive);
             this.Controls.Add(this.label4);
@@ -474,9 +546,10 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.mapScreen);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "BlockEdit";
-            this.Text = "Block Editor";
+            this.Text = "Blocks Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BlockEdit_FormClosing);
             this.Load += new System.EventHandler(this.BlockEdit_Load);
             ((System.ComponentModel.ISupportInitialize)(this.paletteMap)).EndInit();
@@ -511,7 +584,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox pbActive;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btSave;
         private System.Windows.Forms.ComboBox cbDoor;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
@@ -533,5 +606,11 @@
         private System.Windows.Forms.Panel pnBacks;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label lbReadOnly;
+        private System.Windows.Forms.Button btClear;
+        private System.Windows.Forms.Button btFlipHorizontal;
+        private System.Windows.Forms.Button btFlipVertical;
+        private System.Windows.Forms.Button btImport;
+        private System.Windows.Forms.Button btExport;
     }
 }

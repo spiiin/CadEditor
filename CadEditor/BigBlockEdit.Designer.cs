@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BigBlockEdit));
             this.mapScreen = new System.Windows.Forms.PictureBox();
             this.blocksPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.cbTileset = new System.Windows.Forms.ComboBox();
@@ -44,6 +45,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.cbLevel = new System.Windows.Forms.ComboBox();
             this.pnGeneric = new System.Windows.Forms.Panel();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cbSmallBlock = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.cbPaletteNo = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -52,6 +55,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.cbViewType = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.lbReadOnly = new System.Windows.Forms.Label();
+            this.btClear = new System.Windows.Forms.Button();
+            this.btExport = new System.Windows.Forms.Button();
+            this.btImport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).BeginInit();
             this.pnEditCad.SuspendLayout();
@@ -88,7 +95,7 @@
             "Tileset4 (13000)",
             "Tileset5 (17000)",
             "Tileset6 (1B000)"});
-            this.cbTileset.Location = new System.Drawing.Point(12, 42);
+            this.cbTileset.Location = new System.Drawing.Point(15, 44);
             this.cbTileset.Name = "cbTileset";
             this.cbTileset.Size = new System.Drawing.Size(251, 21);
             this.cbTileset.TabIndex = 8;
@@ -97,7 +104,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 26);
+            this.label1.Location = new System.Drawing.Point(15, 30);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(70, 13);
             this.label1.TabIndex = 9;
@@ -105,9 +112,9 @@
             // 
             // btSave
             // 
-            this.btSave.Location = new System.Drawing.Point(15, 207);
+            this.btSave.Location = new System.Drawing.Point(12, 4);
             this.btSave.Name = "btSave";
-            this.btSave.Size = new System.Drawing.Size(134, 23);
+            this.btSave.Size = new System.Drawing.Size(83, 23);
             this.btSave.TabIndex = 10;
             this.btSave.Text = "Save";
             this.btSave.UseVisualStyleBackColor = true;
@@ -121,7 +128,7 @@
             // 
             // pbActive
             // 
-            this.pbActive.Location = new System.Drawing.Point(231, 198);
+            this.pbActive.Location = new System.Drawing.Point(231, 204);
             this.pbActive.Name = "pbActive";
             this.pbActive.Size = new System.Drawing.Size(32, 32);
             this.pbActive.TabIndex = 13;
@@ -130,7 +137,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(155, 212);
+            this.label3.Location = new System.Drawing.Point(151, 212);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(73, 13);
             this.label3.TabIndex = 14;
@@ -148,7 +155,7 @@
             this.pnEditCad.Controls.Add(this.cbDoor);
             this.pnEditCad.Controls.Add(this.label2);
             this.pnEditCad.Controls.Add(this.cbLevel);
-            this.pnEditCad.Location = new System.Drawing.Point(12, 69);
+            this.pnEditCad.Location = new System.Drawing.Point(12, 71);
             this.pnEditCad.Name = "pnEditCad";
             this.pnEditCad.Size = new System.Drawing.Size(251, 81);
             this.pnEditCad.TabIndex = 51;
@@ -233,19 +240,57 @@
             // 
             // pnGeneric
             // 
+            this.pnGeneric.Controls.Add(this.label8);
+            this.pnGeneric.Controls.Add(this.cbSmallBlock);
             this.pnGeneric.Controls.Add(this.label9);
             this.pnGeneric.Controls.Add(this.cbPaletteNo);
             this.pnGeneric.Controls.Add(this.label7);
             this.pnGeneric.Controls.Add(this.cbVideoNo);
-            this.pnGeneric.Location = new System.Drawing.Point(12, 69);
+            this.pnGeneric.Location = new System.Drawing.Point(12, 81);
             this.pnGeneric.Name = "pnGeneric";
-            this.pnGeneric.Size = new System.Drawing.Size(251, 81);
+            this.pnGeneric.Size = new System.Drawing.Size(251, 117);
             this.pnGeneric.TabIndex = 54;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(3, 43);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(69, 13);
+            this.label8.TabIndex = 50;
+            this.label8.Text = "Small blocks:";
+            // 
+            // cbSmallBlock
+            // 
+            this.cbSmallBlock.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSmallBlock.FormattingEnabled = true;
+            this.cbSmallBlock.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15"});
+            this.cbSmallBlock.Location = new System.Drawing.Point(6, 56);
+            this.cbSmallBlock.Name = "cbSmallBlock";
+            this.cbSmallBlock.Size = new System.Drawing.Size(236, 21);
+            this.cbSmallBlock.TabIndex = 49;
+            this.cbSmallBlock.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(3, 44);
+            this.label9.Location = new System.Drawing.Point(3, 82);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(42, 13);
             this.label9.TabIndex = 48;
@@ -272,7 +317,7 @@
             "13",
             "14",
             "15"});
-            this.cbPaletteNo.Location = new System.Drawing.Point(6, 57);
+            this.cbPaletteNo.Location = new System.Drawing.Point(6, 95);
             this.cbPaletteNo.Name = "cbPaletteNo";
             this.cbPaletteNo.Size = new System.Drawing.Size(236, 21);
             this.cbPaletteNo.TabIndex = 47;
@@ -334,7 +379,7 @@
             "Tiles",
             "Obj types",
             "Obj numbers"});
-            this.cbViewType.Location = new System.Drawing.Point(12, 169);
+            this.cbViewType.Location = new System.Drawing.Point(83, 209);
             this.cbViewType.Name = "cbViewType";
             this.cbViewType.Size = new System.Drawing.Size(64, 21);
             this.cbViewType.TabIndex = 58;
@@ -343,17 +388,60 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(9, 153);
+            this.label6.Location = new System.Drawing.Point(21, 212);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(56, 13);
             this.label6.TabIndex = 57;
             this.label6.Text = "View type:";
+            // 
+            // lbReadOnly
+            // 
+            this.lbReadOnly.AutoSize = true;
+            this.lbReadOnly.Location = new System.Drawing.Point(21, 9);
+            this.lbReadOnly.Name = "lbReadOnly";
+            this.lbReadOnly.Size = new System.Drawing.Size(69, 13);
+            this.lbReadOnly.TabIndex = 23;
+            this.lbReadOnly.Text = "READ ONLY";
+            // 
+            // btClear
+            // 
+            this.btClear.Location = new System.Drawing.Point(345, 2);
+            this.btClear.Name = "btClear";
+            this.btClear.Size = new System.Drawing.Size(75, 23);
+            this.btClear.TabIndex = 59;
+            this.btClear.Text = "Clear all";
+            this.btClear.UseVisualStyleBackColor = true;
+            this.btClear.Click += new System.EventHandler(this.btClear_Click);
+            // 
+            // btExport
+            // 
+            this.btExport.Location = new System.Drawing.Point(96, 4);
+            this.btExport.Name = "btExport";
+            this.btExport.Size = new System.Drawing.Size(83, 23);
+            this.btExport.TabIndex = 60;
+            this.btExport.Text = "Export";
+            this.btExport.UseVisualStyleBackColor = true;
+            this.btExport.Click += new System.EventHandler(this.btExport_Click);
+            // 
+            // btImport
+            // 
+            this.btImport.Location = new System.Drawing.Point(180, 4);
+            this.btImport.Name = "btImport";
+            this.btImport.Size = new System.Drawing.Size(83, 23);
+            this.btImport.TabIndex = 61;
+            this.btImport.Text = "Import";
+            this.btImport.UseVisualStyleBackColor = true;
+            this.btImport.Click += new System.EventHandler(this.btImport_Click);
             // 
             // BigBlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(815, 569);
+            this.Controls.Add(this.btImport);
+            this.Controls.Add(this.btExport);
+            this.Controls.Add(this.btClear);
+            this.Controls.Add(this.lbReadOnly);
             this.Controls.Add(this.cbViewType);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -368,9 +456,10 @@
             this.Controls.Add(this.blocksPanel);
             this.Controls.Add(this.mapScreen);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "BigBlockEdit";
-            this.Text = "Big Blocks Editor";
+            this.Text = "Macro Blocks Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BigBlockEdit_FormClosing);
             this.Load += new System.EventHandler(this.BigBlockEdit_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
@@ -409,5 +498,11 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cbViewType;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox cbSmallBlock;
+        private System.Windows.Forms.Label lbReadOnly;
+        private System.Windows.Forms.Button btClear;
+        private System.Windows.Forms.Button btExport;
+        private System.Windows.Forms.Button btImport;
     }
 }

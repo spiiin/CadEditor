@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.bigBlocks = new System.Windows.Forms.ImageList(this.components);
             this.blocksPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.mapScreen = new System.Windows.Forms.PictureBox();
@@ -50,20 +51,22 @@
             this.label8 = new System.Windows.Forms.Label();
             this.cbBlockNo = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.cbBigBlockNo = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cbVideoNo = new System.Windows.Forms.ComboBox();
             this.pnCad = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.cbDoor = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cbLevel = new System.Windows.Forms.ComboBox();
-            this.cbBigBlockNo = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cbVideoNo = new System.Windows.Forms.ComboBox();
             this.cbViewType = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.pnEditors = new System.Windows.Forms.Panel();
             this.btVideo = new System.Windows.Forms.Button();
             this.cbGame = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.btExport = new System.Windows.Forms.Button();
+            this.btImport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -131,27 +134,27 @@
             // 
             // btEdit
             // 
-            this.btEdit.Location = new System.Drawing.Point(3, 3);
+            this.btEdit.Location = new System.Drawing.Point(3, 0);
             this.btEdit.Name = "btEdit";
-            this.btEdit.Size = new System.Drawing.Size(64, 22);
+            this.btEdit.Size = new System.Drawing.Size(64, 34);
             this.btEdit.TabIndex = 18;
-            this.btEdit.Text = "edit tiles";
+            this.btEdit.Text = "edit macro blocks";
             this.btEdit.UseVisualStyleBackColor = true;
             this.btEdit.Click += new System.EventHandler(this.btEdit_Click);
             // 
             // btEditObjs
             // 
-            this.btEditObjs.Location = new System.Drawing.Point(3, 31);
+            this.btEditObjs.Location = new System.Drawing.Point(3, 33);
             this.btEditObjs.Name = "btEditObjs";
-            this.btEditObjs.Size = new System.Drawing.Size(64, 22);
+            this.btEditObjs.Size = new System.Drawing.Size(64, 34);
             this.btEditObjs.TabIndex = 19;
-            this.btEditObjs.Text = "edit objs";
+            this.btEditObjs.Text = "edit blocks";
             this.btEditObjs.UseVisualStyleBackColor = true;
             this.btEditObjs.Click += new System.EventHandler(this.btEditObjs_Click);
             // 
             // btEditLayout
             // 
-            this.btEditLayout.Location = new System.Drawing.Point(3, 55);
+            this.btEditLayout.Location = new System.Drawing.Point(3, 66);
             this.btEditLayout.Name = "btEditLayout";
             this.btEditLayout.Size = new System.Drawing.Size(64, 22);
             this.btEditLayout.TabIndex = 25;
@@ -180,7 +183,7 @@
             // 
             // editEnemy
             // 
-            this.editEnemy.Location = new System.Drawing.Point(3, 83);
+            this.editEnemy.Location = new System.Drawing.Point(3, 87);
             this.editEnemy.Name = "editEnemy";
             this.editEnemy.Size = new System.Drawing.Size(64, 39);
             this.editEnemy.TabIndex = 31;
@@ -218,7 +221,6 @@
             this.pnGeneric.Controls.Add(this.label8);
             this.pnGeneric.Controls.Add(this.cbBlockNo);
             this.pnGeneric.Controls.Add(this.label5);
-            this.pnGeneric.Controls.Add(this.pnCad);
             this.pnGeneric.Controls.Add(this.cbBigBlockNo);
             this.pnGeneric.Controls.Add(this.label1);
             this.pnGeneric.Controls.Add(this.cbVideoNo);
@@ -298,13 +300,58 @@
             this.label5.TabIndex = 44;
             this.label5.Text = "BigBlock:";
             // 
+            // cbBigBlockNo
+            // 
+            this.cbBigBlockNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBigBlockNo.FormattingEnabled = true;
+            this.cbBigBlockNo.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"});
+            this.cbBigBlockNo.Location = new System.Drawing.Point(6, 59);
+            this.cbBigBlockNo.Name = "cbBigBlockNo";
+            this.cbBigBlockNo.Size = new System.Drawing.Size(64, 21);
+            this.cbBigBlockNo.TabIndex = 43;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(2, 3);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(64, 13);
+            this.label1.TabIndex = 42;
+            this.label1.Text = "VideoBlock:";
+            // 
+            // cbVideoNo
+            // 
+            this.cbVideoNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbVideoNo.FormattingEnabled = true;
+            this.cbVideoNo.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"});
+            this.cbVideoNo.Location = new System.Drawing.Point(5, 19);
+            this.cbVideoNo.Name = "cbVideoNo";
+            this.cbVideoNo.Size = new System.Drawing.Size(64, 21);
+            this.cbVideoNo.TabIndex = 41;
+            // 
             // pnCad
             // 
             this.pnCad.Controls.Add(this.label7);
             this.pnCad.Controls.Add(this.cbDoor);
             this.pnCad.Controls.Add(this.label2);
             this.pnCad.Controls.Add(this.cbLevel);
-            this.pnCad.Location = new System.Drawing.Point(0, 19);
+            this.pnCad.Location = new System.Drawing.Point(334, 228);
             this.pnCad.Name = "pnCad";
             this.pnCad.Size = new System.Drawing.Size(72, 93);
             this.pnCad.TabIndex = 43;
@@ -384,51 +431,6 @@
             this.cbLevel.Size = new System.Drawing.Size(64, 21);
             this.cbLevel.TabIndex = 31;
             // 
-            // cbBigBlockNo
-            // 
-            this.cbBigBlockNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbBigBlockNo.FormattingEnabled = true;
-            this.cbBigBlockNo.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8"});
-            this.cbBigBlockNo.Location = new System.Drawing.Point(6, 59);
-            this.cbBigBlockNo.Name = "cbBigBlockNo";
-            this.cbBigBlockNo.Size = new System.Drawing.Size(64, 21);
-            this.cbBigBlockNo.TabIndex = 43;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(2, 3);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 13);
-            this.label1.TabIndex = 42;
-            this.label1.Text = "VideoBlock:";
-            // 
-            // cbVideoNo
-            // 
-            this.cbVideoNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbVideoNo.FormattingEnabled = true;
-            this.cbVideoNo.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8"});
-            this.cbVideoNo.Location = new System.Drawing.Point(5, 19);
-            this.cbVideoNo.Name = "cbVideoNo";
-            this.cbVideoNo.Size = new System.Drawing.Size(64, 21);
-            this.cbVideoNo.TabIndex = 41;
-            // 
             // cbViewType
             // 
             this.cbViewType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -459,14 +461,14 @@
             this.pnEditors.Controls.Add(this.btEditObjs);
             this.pnEditors.Controls.Add(this.btEditLayout);
             this.pnEditors.Controls.Add(this.editEnemy);
-            this.pnEditors.Location = new System.Drawing.Point(333, 383);
+            this.pnEditors.Location = new System.Drawing.Point(333, 380);
             this.pnEditors.Name = "pnEditors";
-            this.pnEditors.Size = new System.Drawing.Size(72, 160);
+            this.pnEditors.Size = new System.Drawing.Size(72, 164);
             this.pnEditors.TabIndex = 46;
             // 
             // btVideo
             // 
-            this.btVideo.Location = new System.Drawing.Point(3, 124);
+            this.btVideo.Location = new System.Drawing.Point(3, 125);
             this.btVideo.Name = "btVideo";
             this.btVideo.Size = new System.Drawing.Size(64, 34);
             this.btVideo.TabIndex = 32;
@@ -499,16 +501,39 @@
             this.label10.TabIndex = 48;
             this.label10.Text = "Game:";
             // 
+            // btExport
+            // 
+            this.btExport.Location = new System.Drawing.Point(193, 521);
+            this.btExport.Name = "btExport";
+            this.btExport.Size = new System.Drawing.Size(64, 22);
+            this.btExport.TabIndex = 49;
+            this.btExport.Text = "export";
+            this.btExport.UseVisualStyleBackColor = true;
+            this.btExport.Click += new System.EventHandler(this.btExport_Click);
+            // 
+            // btImport
+            // 
+            this.btImport.Location = new System.Drawing.Point(263, 521);
+            this.btImport.Name = "btImport";
+            this.btImport.Size = new System.Drawing.Size(64, 22);
+            this.btImport.TabIndex = 50;
+            this.btImport.Text = "import";
+            this.btImport.UseVisualStyleBackColor = true;
+            this.btImport.Click += new System.EventHandler(this.btImport_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1058, 552);
+            this.Controls.Add(this.btImport);
+            this.Controls.Add(this.btExport);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.cbGame);
             this.Controls.Add(this.pnEditors);
             this.Controls.Add(this.cbViewType);
             this.Controls.Add(this.label4);
+            this.Controls.Add(this.pnCad);
             this.Controls.Add(this.pnGeneric);
             this.Controls.Add(this.btOpen);
             this.Controls.Add(this.cbShowNeighborns);
@@ -520,9 +545,10 @@
             this.Controls.Add(this.mapScreen);
             this.Controls.Add(this.blocksPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Text = "CAD Editor v1.1 by spiiin";
+            this.Text = "CAD Editor v1.3 by spiiin";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
@@ -574,6 +600,8 @@
         private System.Windows.Forms.ComboBox cbGame;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button btVideo;
+        private System.Windows.Forms.Button btExport;
+        private System.Windows.Forms.Button btImport;
     }
 }
 

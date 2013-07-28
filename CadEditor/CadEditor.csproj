@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CadEditor</RootNamespace>
     <AssemblyName>CadEditor</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -50,8 +50,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CSScriptLibrary.v1.1">
-      <HintPath>..\libs\CSScript11\NET 1.1\CSScriptLibrary.v1.1.dll</HintPath>
+    <Reference Include="CSScriptLibrary.v3.5">
+      <HintPath>..\libs\CSScript11\NET 3.5\CSScriptLibrary.v3.5.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -125,11 +125,23 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaveScreensCount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SaveScreensCount.Designer.cs">
+      <DependentUpon>SaveScreensCount.cs</DependentUpon>
+    </Compile>
     <Compile Include="SelectDoorIndex.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SelectDoorIndex.Designer.cs">
       <DependentUpon>SelectDoorIndex.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SelectFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectFile.Designer.cs">
+      <DependentUpon>SelectFile.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils.cs" />
     <Compile Include="Video.cs" />
@@ -173,8 +185,14 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SaveScreensCount.resx">
+      <DependentUpon>SaveScreensCount.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SelectDoorIndex.resx">
       <DependentUpon>SelectDoorIndex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectFile.resx">
+      <DependentUpon>SelectFile.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">

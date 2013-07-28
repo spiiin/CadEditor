@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Xml;
 using System.IO;
 using System.Windows.Forms;
 using System.Globalization;
@@ -40,33 +39,6 @@ namespace CadEditor
             {
                 MessageBox.Show(ex.Message);
             }
-
-            levelRecsCad.Add(new LevelRec(0x10388, 76));
-            levelRecsCad.Add(new LevelRec(0x10456, 31));
-            levelRecsCad.Add(new LevelRec(0x105A1, 73));
-            levelRecsCad.Add(new LevelRec(0x106D1, 57));
-            levelRecsCad.Add(new LevelRec(0x10890, 97));
-            levelRecsCad.Add(new LevelRec(0x10A1D, 74));
-            levelRecsCad.Add(new LevelRec(0x10B0E, 41));
-            levelRecsCad.Add(new LevelRec(0x10C88, 83));
-            levelRecsCad.Add(new LevelRec(0x10DB3, 53));
-            levelRecsCad.Add(new LevelRec(0x10EA1, 45));
-            levelRecsCad.Add(new LevelRec(0x10FED, 71));
-
-            levelRecsDwd.Add(new LevelRec(0x10315, 51, 17, 4));
-            levelRecsDwd.Add(new LevelRec(0x10438, 60, 17, 4));
-            levelRecsDwd.Add(new LevelRec(0x10584, 68, 17, 4));
-            levelRecsDwd.Add(new LevelRec(0x106A0, 54, 10, 12));
-            levelRecsDwd.Add(new LevelRec(0x10816, 80, 19, 3));
-            levelRecsDwd.Add(new LevelRec(0x10962, 63, 19, 3));
-            levelRecsDwd.Add(new LevelRec(0x10A89, 58, 19, 3));
-
-            levelRecsDt.Add(new LevelRec(0x1B43B, 181, 8, 7));
-            levelRecsDt.Add(new LevelRec(0x1B6CC, 156, 8, 8));
-            levelRecsDt.Add(new LevelRec(0x1B8E8, 126, 8, 6));
-            levelRecsDt.Add(new LevelRec(0x1BAD1, 119, 8, 6));
-            levelRecsDt.Add(new LevelRec(0x1BD70, 182, 8, 6));
- 
             reloadLevelParamsData();
         }
 
@@ -121,44 +93,16 @@ namespace CadEditor
 
         public static int getLevelWidth(int levelNo)
         {
-            if (gameType == GameType.Generic)
-                return levelRecsDwd[levelNo].width;
-            if (gameType == GameType.DT)
-                return levelRecsDt[levelNo].width;
+            if (gameType != GameType.CAD)
+                return ConfigScript.getLevelRec(levelNo).width;
             return levelData[levelNo].getWidth();
         }
 
         public static int getLevelHeight(int levelNo)
         {
-            if (gameType == GameType.Generic)
-                return levelRecsDwd[levelNo].height;
-            if (gameType == GameType.DT)
-                return levelRecsDt[levelNo].height;
+            if (gameType != GameType.CAD)
+                return ConfigScript.getLevelRec(levelNo).height;
             return levelData[levelNo].getHeight();
-        }
-
-        public static byte[] getVideoChunkDt2(byte videoPageId)
-        {
-            //dt2 hack
-            /*try
-            {
-                using (FileStream f = File.OpenRead("videoBack_DT2.bin"))
-                {
-                    var videodata = new byte[0x5000];
-                    f.Read(videodata, 0, 0x5000);
-                    var ans = new byte[0x1000];
-                    int offset = (videoPageId - 0x90)*0x1000;
-                    for (int i = 0; i < ans.Length; i++)
-                        ans[i] = videodata[offset + i];
-                    return ans;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }*/
-            //
-            return null;
         }
 
         public static byte[] getScreen(int screenIndex)
@@ -453,11 +397,7 @@ namespace CadEditor
 
         public static int getLayoutAddr(int index)
         {
-            //dwd/dt specific
-            if (GameType.DT == gameType)
-                return layoutAddrsDuckTales[index];
-            else
-                return layoutAddrsDwd[index];
+            return ConfigScript.getLevelRec(index).layoutAddr;
         }
 
         public static int getScrollAddr(int index)
@@ -470,30 +410,8 @@ namespace CadEditor
             return doorNo == DOORS_COUNT ? -1 : doorsData[doorNo - 1].startLoc;
         }*/
 
-        public static int[] layoutAddrsDwd = 
-        {
-            0x1DFA0, 
-            0x1DFE4,
-            0x1E028,
-            0x1E06C,
-            0x1E0E4,
-            0x1E11D,
-            0x1E156,
-        };
-
-        public static int[] layoutAddrsDuckTales = {
-                                                       0x1CE7B,
-                                                       0x1CEB3,
-                                                       0x1CEF3,
-                                                       0x1CF23,
-                                                       0x1CF53
-                                                   };
-
-        public static List<LevelRec> levelRecsCad = new List<LevelRec>();
-        public static List<LevelRec> levelRecsDwd = new List<LevelRec>();
-        public static List<LevelRec> levelRecsDt  = new List<LevelRec>();
-        public static List<LevelData> levelData = new List<LevelData>(LEVELS_COUNT);
-        public static List<DoorData> doorsData = new List<DoorData>(DOORS_COUNT);
+        public static IList<LevelData> levelData = new List<LevelData>(LEVELS_COUNT);
+        public static IList<DoorData> doorsData = new List<DoorData>(DOORS_COUNT);
 
         //cad specific
         public static int LEVELS_COUNT = 11;
@@ -516,17 +434,6 @@ namespace CadEditor
             this.beginAddr = beginAddr;
             this.recCount = recCount;
             this.recSize = recSize;
-        }
-
-        public void readFromXml(XmlReader reader, string nodeName)
-        {
-            reader.ReadToFollowing(nodeName);
-            reader.MoveToAttribute("begin");
-            beginAddr = Utils.parseInt(reader.Value);
-            reader.MoveToAttribute("count");
-            recCount = Utils.parseInt(reader.Value);
-            reader.MoveToAttribute("size");
-            recSize = Utils.parseInt(reader.Value);
         }
 
         public int beginAddr;
@@ -585,17 +492,27 @@ namespace CadEditor
 
     public struct LevelRec
     {
-        public LevelRec(int objectsBeginAddr, int objCount, int width = 0, int height = 0)
+        public LevelRec(int objectBeginAddr, int objCount)
+        {
+            this.objCount = objCount;
+            this.objectsBeginAddr = objectBeginAddr;
+            this.width = 0;
+            this.height = 0;
+            this.layoutAddr = 0;
+        }
+        public LevelRec(int objectsBeginAddr, int objCount, int width = 0, int height = 0, int layoutAddr = 0)
         {
             this.objCount = objCount;
             this.objectsBeginAddr = objectsBeginAddr;
             this.width = width;
             this.height = height;
+            this.layoutAddr = layoutAddr;
         }
         public int objCount;
         public int objectsBeginAddr;
         public int width;
         public int height;
+        public int layoutAddr;
     }
 
     public struct ScreenRec

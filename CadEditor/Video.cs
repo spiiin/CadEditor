@@ -95,26 +95,34 @@ namespace CadEditor
             CadObjectTypeColors[0xF] = Color.FromArgb(196, 0, 255, 255);
         }
 
-        public static Bitmap makeImageStrip(byte[] videoChunk, byte[] pallete, int subPalIndex, int scale)
+        public static Bitmap makeImageStrip(byte[] videoChunk, byte[] pallete, int subPalIndex, int scale, bool scaleAccurate = true)
         {
             Bitmap res = new Bitmap(8 * CHUNK_COUNT * scale, 8 * scale); 
             using (Graphics g = Graphics.FromImage(res))
             {
                 for (int i = 0; i < CHUNK_COUNT; i++)
                 {
-                    Bitmap onePic = new Bitmap(8*scale, 8*scale);
+                    int bitmapScale = scaleAccurate ? scale : 1;
+                    Bitmap onePic = new Bitmap(8*bitmapScale, 8*bitmapScale);
                     int beginIndex = 16 * i;
                     for (int line = 0; line < 8; line++)
                     {
                         for (int pixel = 0; pixel < 8; pixel++)
                         {
-                            bool bitLo = getBit(videoChunk[beginIndex + line], 8-pixel);
-                            bool bitHi = getBit(videoChunk[beginIndex + line+8], 8-pixel);
+                            bool bitLo = Utils.getBit(videoChunk[beginIndex + line], 8-pixel);
+                            bool bitHi = Utils.getBit(videoChunk[beginIndex + line + 8], 8 - pixel);
                             int palIndex = mixBits(bitHi, bitLo);
                             Color c = NesColors[pallete[subPalIndex * 4 +palIndex]];
-                            for (int scaleFillX = 0; scaleFillX < scale; scaleFillX++)
-                                for (int scaleFillY =0 ; scaleFillY < scale; scaleFillY++)
-                                    onePic.SetPixel(pixel*scale +scaleFillX, line*scale + scaleFillY, c);
+                            if (scaleAccurate)
+                            {
+                                for (int scaleFillX = 0; scaleFillX < scale; scaleFillX++)
+                                    for (int scaleFillY = 0; scaleFillY < scale; scaleFillY++)
+                                        onePic.SetPixel(pixel * scale + scaleFillX, line * scale + scaleFillY, c);
+                            }
+                            else
+                            {
+                                onePic.SetPixel(pixel, line, c);
+                            }
                         }
                     }
                     g.DrawImage(onePic, new Rectangle(i * 8 * scale, 0, 8*scale, 8*scale));
@@ -197,11 +205,6 @@ namespace CadEditor
             }
             return res;
 
-        }
-
-        private static bool getBit(byte b, int bit)
-        {
-            return (b & (1 << bit - 1)) != 0;
         }
 
         private static int mixBits(bool hi, bool lo)

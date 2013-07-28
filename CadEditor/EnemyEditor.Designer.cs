@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnemyEditor));
             this.cbLevel = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.mapScreen = new System.Windows.Forms.PictureBox();
@@ -76,6 +77,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
+            this.lbReadOnly = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -283,9 +285,9 @@
             // 
             // btSave
             // 
-            this.btSave.Location = new System.Drawing.Point(12, 487);
+            this.btSave.Location = new System.Drawing.Point(12, 484);
             this.btSave.Name = "btSave";
-            this.btSave.Size = new System.Drawing.Size(64, 22);
+            this.btSave.Size = new System.Drawing.Size(73, 25);
             this.btSave.TabIndex = 45;
             this.btSave.Text = "save";
             this.btSave.UseVisualStyleBackColor = true;
@@ -620,11 +622,21 @@
             this.label15.TabIndex = 62;
             this.label15.Text = "Don\'t forget sort objects in right order";
             // 
+            // lbReadOnly
+            // 
+            this.lbReadOnly.AutoSize = true;
+            this.lbReadOnly.Location = new System.Drawing.Point(13, 490);
+            this.lbReadOnly.Name = "lbReadOnly";
+            this.lbReadOnly.Size = new System.Drawing.Size(69, 13);
+            this.lbReadOnly.TabIndex = 63;
+            this.lbReadOnly.Text = "READ ONLY";
+            // 
             // EnemyEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(944, 533);
+            this.Controls.Add(this.lbReadOnly);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.pnCad);
@@ -651,6 +663,7 @@
             this.Controls.Add(this.objPanel);
             this.Controls.Add(this.mapScreen);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "EnemyEditor";
             this.Text = "Enemy Editor";
@@ -718,5 +731,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label lbReadOnly;
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditColor));
             this.pbColors = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbColors)).BeginInit();
             this.SuspendLayout();
@@ -48,6 +49,7 @@
             this.ClientSize = new System.Drawing.Size(259, 262);
             this.Controls.Add(this.pbColors);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "EditColor";
             this.Text = "Choose Color";

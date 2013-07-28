@@ -29,6 +29,8 @@ namespace CadEditor
                 for (int i = 0; i < Video.NesColors.Length; i++)
                 {
                     g.FillRectangle(new SolidBrush(Video.NesColors[i]), i % 8 * 32, (i / 8) * 32, 32, 32);
+                    if (ShowNo)
+                        g.DrawString(String.Format("{0:X2}",i), new Font("Arial", 6), Brushes.White, new Rectangle(i % 8 * 32, (i / 8) * 32, 32, 32));
                 }
             }
             pbColors.Image = colors;
@@ -42,5 +44,6 @@ namespace CadEditor
         }
 
         public static int ColorIndex;
+        public bool ShowNo;
     }
 }

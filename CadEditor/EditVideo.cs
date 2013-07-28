@@ -25,6 +25,9 @@ namespace CadEditor
             Utils.setCbIndexWithoutUpdateLevel(cbSubPal, cbVideoNo_SelectedIndexChanged);
             //Utils.setCbIndexWithoutUpdateLevel(cbPalleteNo, cbPalleteNo_SelectedIndexChanged);
             cbPalleteNo.SelectedIndex = 0;
+
+            //visibility
+            btImport.Visible = Globals.gameType != GameType.DT2;
         }
 
         private void setPal()
@@ -35,6 +38,8 @@ namespace CadEditor
                 for (int i = 0; i < 16; i++)
                 {
                     g.FillRectangle(new SolidBrush(Video.NesColors[curPal[i]]), i % 4 * 32, (i / 4) * 32, 32, 32);
+                    if (showNo)
+                        g.DrawString(String.Format("{0:X2}", curPal[i]), new Font("Arial", 6), Brushes.White, new Rectangle(i % 4 * 32, (i / 4) * 32, 32, 32));
                 }
             }
             pbPal.Image = palImage;
@@ -59,6 +64,7 @@ namespace CadEditor
         private int curActiveVideo = 0;
         private byte[] curPal = new byte[16];
         private int curSubPal;
+        private bool showNo = false;
 
         private void cbVideoNo_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -70,6 +76,7 @@ namespace CadEditor
         private void pbPal_MouseClick(object sender, MouseEventArgs e)
         {
             var f = new EditColor();
+            f.ShowNo = showNo;
             f.ShowDialog();
             if (EditColor.ColorIndex != -1)
             {
@@ -99,6 +106,43 @@ namespace CadEditor
           for (int i = 0; i < 16; i++)
               Globals.romdata[palAddress + i] = curPal[i];
           Globals.flushToFile();
+        }
+
+        private void cbShowNo_CheckedChanged(object sender, EventArgs e)
+        {
+            showNo = cbShowNo.Checked;
+            setPal();
+        }
+
+        private void btExport_Click(object sender, EventArgs e)
+        {
+            var f = new SelectFile();
+            f.Filename = "exportedVideo.bin";
+            f.ShowDialog();
+            if (!f.Result)
+                return;
+            var fn = f.Filename;
+            byte videoPageId = (byte)(curActiveVideo + 0x90);
+            var data = ConfigScript.getVideoChunk(videoPageId);
+            Utils.saveDataToFile(fn, data);
+        }
+
+        private void btImport_Click(object sender, EventArgs e)
+        {
+            var f = new SelectFile();
+            f.Filename = "exportedVideo.bin";
+            f.ShowDialog();
+            if (!f.Result)
+                return;
+            var fn = f.Filename;
+            var data = Utils.loadDataFromFile(fn);
+            if (data == null)
+                return;
+            byte videoPageId = (byte)(curActiveVideo + 0x90);
+            ConfigScript.setVideoChunk(videoPageId, data);
+
+            //dirty = true;
+            reloadVideo();
         }
     }
 }
