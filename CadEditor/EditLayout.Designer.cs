@@ -60,6 +60,7 @@
             this.pnDoors = new System.Windows.Forms.Panel();
             this.pnIngameScreenOrder = new System.Windows.Forms.Panel();
             this.pnSelectScroll = new System.Windows.Forms.Panel();
+            this.btExport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnLevelLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMap)).BeginInit();
@@ -361,11 +362,22 @@
             this.pnSelectScroll.Size = new System.Drawing.Size(337, 65);
             this.pnSelectScroll.TabIndex = 51;
             // 
+            // btExport
+            // 
+            this.btExport.Location = new System.Drawing.Point(336, 340);
+            this.btExport.Name = "btExport";
+            this.btExport.Size = new System.Drawing.Size(64, 22);
+            this.btExport.TabIndex = 52;
+            this.btExport.Text = "export";
+            this.btExport.UseVisualStyleBackColor = true;
+            this.btExport.Click += new System.EventHandler(this.btExport_Click);
+            // 
             // EditLayout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1081, 533);
+            this.Controls.Add(this.btExport);
             this.Controls.Add(this.pnSelectScroll);
             this.Controls.Add(this.pnIngameScreenOrder);
             this.Controls.Add(this.pnGeneric);
@@ -434,5 +446,6 @@
         private System.Windows.Forms.ComboBox cbLayoutNo;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Panel pnSelectScroll;
+        private System.Windows.Forms.Button btExport;
     }
 }

@@ -96,7 +96,7 @@ namespace CadEditor
             int SCREEN_SIZE = 64;
             scrImages = new Image[ConfigScript.screensOffset.recCount];
             for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
-                scrImages[i] = emptyScreen(512, 512);
+                scrImages[i] = Video.emptyScreen(512, 512);
 
             bool stopOnDoors = cbStopOnDoors.Checked;
             var screenList = Globals.buildScreenRecs(curActiveLevel, stopOnDoors);
@@ -171,17 +171,6 @@ namespace CadEditor
             }
         }
 
-        private Bitmap emptyScreen(int w, int h)
-        {
-            var b = new Bitmap(w, h);
-            using (var g = Graphics.FromImage(b))
-            {
-                g.FillRectangle(Brushes.Black, new Rectangle(0, 0, w, h));
-                g.DrawRectangle(new Pen(Color.Green, w / 32), new Rectangle(0, 0, w, h));
-            }
-            return b;
-        }
-
         private int findStartPosition()
         {
             int w = curLevelLayerData.width;
@@ -192,48 +181,7 @@ namespace CadEditor
         //for generic editor
         private Bitmap makeCurScreen(int scrNo)
         {
-            if (scrNo < 0)
-                return emptyScreen(512, 512);
-            int blockCount = ConfigScript.getBigBlocksCount();
-            const int SCREEN_SIZE = 64;
-            ImageList smallBlocks = new ImageList();
-            smallBlocks.ImageSize = new Size(16, 16);
-            var bigBlocks = new Image[blockCount];
-
-            byte blockId = (byte)curBigBlockNo;
-            byte blockIndexId = (byte)curBlockNo;
-            byte backId = (byte)curVideoNo;
-            byte palId = (byte)curPaletteNo;
-            int bigBlockAddr = Globals.getBigTilesAddr(blockIndexId);
-            byte[] bigBlockIndexes = Utils.fillBigBlocks(blockIndexId);
-
-            var im = Video.makeObjectsStrip(backId, blockId, palId, 1, MapViewType.Tiles);
-            smallBlocks.Images.AddStrip(im);
-
-            for (int btileId = 0; btileId < blockCount; btileId++)
-            {
-                var b = new Bitmap(64, 64);
-                using (Graphics g = Graphics.FromImage(b))
-                {
-                    g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4]], new Rectangle(0, 0, 32, 32));
-                    g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 1]], new Rectangle(31, 0, 32, 32));
-                    g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 2]], new Rectangle(0, 31, 32, 32));
-                    g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 3]], new Rectangle(31, 31, 32, 32));
-                }
-                bigBlocks[btileId] = b;
-            }
-
-            var bitmap = new Bitmap(512, 512);
-            byte[] indexes = Globals.getScreen(scrNo);
-            using (var g = Graphics.FromImage(bitmap))
-            {
-                for (int tileNo = 0; tileNo < SCREEN_SIZE; tileNo++)
-                {
-                    int index = Globals.getBigTileNoFromScreen(indexes, tileNo);
-                    g.DrawImage(bigBlocks[index], new Rectangle(tileNo % 8 * 63, tileNo / 8 * 63, 64, 64));
-                }
-            }
-            return bitmap;
+            return  Video.makeScreen(scrNo, curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo);
         }
 
         private void setBackImage()

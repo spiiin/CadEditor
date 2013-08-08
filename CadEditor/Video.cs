@@ -207,6 +207,78 @@ namespace CadEditor
 
         }
 
+        public static Bitmap emptyScreen(int w, int h, bool withBorder = true)
+        {
+            var b = new Bitmap(w, h);
+            using (var g = Graphics.FromImage(b))
+            {
+                g.FillRectangle(Brushes.Black, new Rectangle(0, 0, w, h));
+                if (withBorder)
+                  g.DrawRectangle(new Pen(Color.Green, w / 32), new Rectangle(0, 0, w, h));
+            }
+            return b;
+        }
+
+        //make capcom screen image
+        //size predefined 512x512
+        public static Bitmap makeScreen(int scrNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, bool withBigTileBorders = true)
+        {
+            if (scrNo < 0)
+                return emptyScreen(512, 512);
+            int blockCount = ConfigScript.getBigBlocksCount();
+            const int SCREEN_SIZE = 64;
+            var smallBlocks = new System.Windows.Forms.ImageList();
+            smallBlocks.ImageSize = new Size(withBigTileBorders ? 16 : 32, withBigTileBorders ? 16 :32);
+            var bigBlocks = new Image[blockCount];
+
+            byte blockId = (byte)bigBlockNo;
+            byte blockIndexId = (byte)blockNo;
+            byte backId = (byte)videoNo;
+            byte palId = (byte)palleteNo;
+            byte[] bigBlockIndexes = Utils.fillBigBlocks(blockIndexId);
+
+            var im = Video.makeObjectsStrip(backId, blockId, palId, withBigTileBorders ? 1 : 2, MapViewType.Tiles);
+            smallBlocks.Images.AddStrip(im);
+
+            for (int btileId = 0; btileId < blockCount; btileId++)
+            {
+                var b = new Bitmap(64, 64);
+                using (Graphics g = Graphics.FromImage(b))
+                {
+                    if (withBigTileBorders)
+                    {
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4]], new Rectangle(0, 0, 32, 32));
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 1]], new Rectangle(31, 0, 32, 32));
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 2]], new Rectangle(0, 31, 32, 32));
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 3]], new Rectangle(31, 31, 32, 32));
+                    }
+                    else
+                    {
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4]], new Rectangle(0, 0, 32, 32));
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 1]], new Rectangle(32, 0, 32, 32));
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 2]], new Rectangle(0, 32, 32, 32));
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 3]], new Rectangle(32, 32, 32, 32));
+                    }
+                }
+                bigBlocks[btileId] = b;
+            }
+
+            var bitmap = new Bitmap(512, 512);
+            byte[] indexes = Globals.getScreen(scrNo);
+            using (var g = Graphics.FromImage(bitmap))
+            {
+                for (int tileNo = 0; tileNo < SCREEN_SIZE; tileNo++)
+                {
+                    int index = Globals.getBigTileNoFromScreen(indexes, tileNo);
+                    if (withBigTileBorders)
+                      g.DrawImage(bigBlocks[index], new Rectangle(tileNo % 8 * 63, tileNo / 8 * 63, 64, 64));
+                    else
+                      g.DrawImage(bigBlocks[index], new Rectangle(tileNo % 8 * 64, tileNo / 8 * 64, 64, 64));
+                }
+            }
+            return bitmap;
+        }
+
         private static int mixBits(bool hi, bool lo)
         {
             return (hi?1:0) << 1 |(lo?1:0);

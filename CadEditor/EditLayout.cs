@@ -83,6 +83,7 @@ namespace CadEditor
             cbLevel.SelectedIndex = 0;
 
             cbShowScrolls.Visible = (Globals.gameType == GameType.CAD) || (Globals.gameType == GameType.Generic);
+            btExport.Visible = false; //only for test for now
         }
 
         private void reloadLevelLayer()
@@ -463,6 +464,36 @@ namespace CadEditor
         {
             var f = new EditLevelData();
             f.ShowDialog();
+        }
+
+        private Bitmap makeLevelImage()
+        {
+            var answer = new Bitmap(curWidth*512, curHeight*512);
+            using (var g = Graphics.FromImage(answer))
+            {
+                for (int w = 0; w < curWidth; w++)
+                {
+                    for (int h = 0; h < curHeight; h++)
+                    {
+                        int scrNo = curLevelLayerData.layer[h*curWidth + w] - 1;
+                        Bitmap scr = scrNo >= 0 ? Video.makeScreen(scrNo, 0x90, 0, 0, 0, false) : Video.emptyScreen(512,512,false);
+                        g.DrawImage(scr, new Point(w*512,h*512));
+                    }
+                }
+            }
+            return answer;
+        }
+
+        private void btExport_Click(object sender, EventArgs e)
+        {
+            var f = new SelectFile();
+            f.Filename = "level.png";
+            f.ShowDialog();
+            if (!f.Result)
+                return;
+            var fn = f.Filename;
+            Bitmap levelImage = makeLevelImage();
+            levelImage.Save(fn);
         }
     }        
     enum MapDrawMode
