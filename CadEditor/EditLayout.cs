@@ -138,26 +138,21 @@ namespace CadEditor
                 screenImages.Images.Add(makeBlackScreen(64, 64, scrNo + 1));
         }
 
+        //C&D specific
         private void previewScreens(List<ScreenRec> screenList)
         {
             makeScreens();
             var sortedScreenList = new List<ScreenRec>(screenList);
             sortedScreenList.Sort((r1, r2) => { return r1.door > r2.door ? 1 : r1.door < r2.door ? -1 : 0; });
             int lastDoorNo = -1;
-            ImageList smallBlocks = new ImageList();
-            ImageList bigBlocks = new ImageList();
             int levelNo = curActiveLevel;
+            byte blockId = (byte)Globals.levelData[curActiveLevel].bigBlockId;
+            byte backId = 0, palId = 0;
             for (int i = 0; i < sortedScreenList.Count; i++)
             {
                 if (lastDoorNo != sortedScreenList[i].door)
                 {
                     lastDoorNo = sortedScreenList[i].door;
-                    smallBlocks.Images.Clear();
-                    bigBlocks.Images.Clear();
-                    byte[] bigBlockIndexes = new byte[ConfigScript.getBigBlocksCount() * 4];
-                    //set big blocks
-                    byte blockId = (byte)Globals.levelData[curActiveLevel].bigBlockId;
-                    byte backId, palId;
                     if (lastDoorNo == 0)
                     {
                         backId = (byte)Globals.levelData[curActiveLevel].backId;
@@ -168,54 +163,20 @@ namespace CadEditor
                         backId = (byte)Globals.doorsData[lastDoorNo-1].backId;
                         palId = (byte)Globals.doorsData[lastDoorNo-1].palId;
                     }
-                    int bigBlockAddr = Globals.getBigTilesAddr(blockId);
-                    for (int btileId = 0; btileId < ConfigScript.getBigBlocksCount() * 4; btileId++)
-                        bigBlockIndexes[btileId] = Globals.romdata[bigBlockAddr + btileId];
-
-                    var im = Video.makeObjectsStrip(backId, blockId, palId, 1, MapViewType.Tiles);
-                    smallBlocks.Images.AddStrip(im);
-
-                    //make big blocks
-                    for (int btileId = 0; btileId < ConfigScript.getBigBlocksCount(); btileId++)
-                    {
-                        var b = new Bitmap(64, 64);
-                        using (Graphics g = Graphics.FromImage(b))
-                        {
-                            g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4]], new Rectangle(0, 0, 32, 32));
-                            g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 1]], new Rectangle(31, 0, 32, 32));
-                            g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 2]], new Rectangle(0, 31, 32, 32));
-                            g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 3]], new Rectangle(31, 31, 32, 32));
-                        }
-                        bigBlocks.Images.Add(b);
-                    }
                 }
                 int scrNo = sortedScreenList[i].no;
-                if (scrNo != 0)
+                int levelEHadd = (curActiveLevel == 5 || curActiveLevel == 8) ? 256 : 0; //level E & H hack
+                int realScrNo = scrNo - 1 + levelEHadd;
+                if (scrNo != 0) 
                 {
-                    byte[] indexes;
-                    //level E & H hack
-                    if (curActiveLevel == 5 || curActiveLevel == 8)
-                        indexes = Globals.getScreen(256 + scrNo - 1);
-                    else
-                        indexes = Globals.getScreen(scrNo - 1);
-                    Bitmap bitmap = new Bitmap(512, 512);
+                    Bitmap bitmap = bitmap = Video.makeScreen(realScrNo, backId, blockId, blockId, palId, false);
                     using (var g = Graphics.FromImage(bitmap))
-                    {
-                        for (int tileNo = 0; tileNo < SCREEN_SIZE; tileNo++)
-                        {
-                            int index = indexes[tileNo];
-                            g.DrawImage(bigBlocks.Images[index], new Rectangle(tileNo % 8 * 63, tileNo / 8 * 63, 64, 64));
-                        }
                         g.DrawString(String.Format("{0:X}", scrNo), new Font("Arial", 64), Brushes.White, new Point(0, 0));
-                    }
                     Bitmap convertedSize = new Bitmap(64, 64);
                     using (var g = Graphics.FromImage(convertedSize))
                         g.DrawImage(bitmap, new Rectangle(0, 0, 64, 64));
-                    //level E & H hack
-                    if (curActiveLevel == 5 || curActiveLevel == 8)
-                        screenImages.Images[scrNo + 256] = convertedSize;
-                    else
-                        screenImages.Images[scrNo] = convertedSize;
+
+                    screenImages.Images[scrNo + levelEHadd] = convertedSize;
                 }
             }
         }
