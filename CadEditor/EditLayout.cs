@@ -66,14 +66,15 @@ namespace CadEditor
 
             }
             blocksPanel.ResumeLayout();
-            /*Utils.setCbItemsCount(cbVideoNo, Globals.videoOffset.recCount);
-            Utils.setCbItemsCount(cbBigBlockNo, Globals.bigBlocksOffset.recCount);
-            Utils.setCbItemsCount(cbBlockNo, Globals.blocksOffset.recCount);
-            Utils.setCbItemsCount(cbPaletteNo, Globals.palOffset.recCount);
+
+            Utils.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
+            Utils.setCbItemsCount(cbBigBlockNo, ConfigScript.bigBlocksOffset.recCount);
+            Utils.setCbItemsCount(cbBlockNo, ConfigScript.blocksOffset.recCount);
+            Utils.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
             cbVideoNo.SelectedIndex = 0;
             cbBigBlockNo.SelectedIndex = 0;
             cbBlockNo.SelectedIndex = 0;
-            cbPaletteNo.SelectedIndex = 0;*/
+            cbPaletteNo.SelectedIndex = 0;
 
             cbLayoutNo.Items.Clear();
             foreach (var lr in ConfigScript.levelRecs)
@@ -83,7 +84,8 @@ namespace CadEditor
             cbLevel.SelectedIndex = 0;
 
             cbShowScrolls.Visible = (Globals.gameType == GameType.CAD) || (Globals.gameType == GameType.Generic);
-            btExport.Visible = false; //only for test for now
+            btExport.Visible = 
+            pnParamGeneric.Visible = Globals.gameType != GameType.CAD;
         }
 
         private void reloadLevelLayer()
@@ -275,10 +277,13 @@ namespace CadEditor
         private LevelLayerData curLevelLayerData = new LevelLayerData();
 
         private int curActiveLayout = 0;
-        /*private int curVideoNo = 0;
+
+        //for export params
+        private int curVideoNo = 0;
         private int curBigBlockNo = 0;
         private int curBlockNo = 0;
-        private int curPaletteNo = 0;*/
+        private int curPalleteNo = 0;
+
         private int curWidth = 1;
         private int curHeight = 1;
         
@@ -292,10 +297,6 @@ namespace CadEditor
             curActiveLevel = cbLevel.SelectedIndex;
 
             curActiveLayout = cbLayoutNo.SelectedIndex;
-            /*curVideoNo = cbVideoNo.SelectedIndex;
-            curBigBlockNo = cbBigBlockNo.SelectedIndex;
-            curBlockNo = cbBlockNo.SelectedIndex;
-            curPaletteNo = cbPaletteNo.SelectedIndex;*/
             curWidth = Globals.getLevelWidth(curActiveLayout);
             curHeight = Globals.getLevelHeight(curActiveLayout);
 
@@ -437,7 +438,7 @@ namespace CadEditor
                     for (int h = 0; h < curHeight; h++)
                     {
                         int scrNo = curLevelLayerData.layer[h*curWidth + w] - 1;
-                        Bitmap scr = scrNo >= 0 ? Video.makeScreen(scrNo, 0x90, 0, 0, 0, false) : Video.emptyScreen(512,512,false);
+                        Bitmap scr = scrNo >= 0 ? Video.makeScreen(scrNo, curVideoNo, curBigBlockNo, curBlockNo, curPalleteNo, false) : Video.emptyScreen(512,512,false);
                         g.DrawImage(scr, new Point(w*512,h*512));
                     }
                 }
@@ -455,6 +456,14 @@ namespace CadEditor
             var fn = f.Filename;
             Bitmap levelImage = makeLevelImage();
             levelImage.Save(fn);
+        }
+
+        private void cbVideoNo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            curVideoNo = cbVideoNo.SelectedIndex + 0x90;
+            curBigBlockNo = cbBigBlockNo.SelectedIndex;
+            curBlockNo = cbBlockNo.SelectedIndex;
+            curPalleteNo = cbPaletteNo.SelectedIndex;
         }
     }        
     enum MapDrawMode
