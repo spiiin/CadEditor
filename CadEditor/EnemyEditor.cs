@@ -93,7 +93,6 @@ namespace CadEditor
         private void makeScreens()
         {
             //!!!duplicate in EditLayout.cs
-            int SCREEN_SIZE = 64;
             scrImages = new Image[ConfigScript.screensOffset.recCount];
             for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
                 scrImages[i] = Video.emptyScreen(512, 512);
@@ -104,21 +103,15 @@ namespace CadEditor
             var sortedScreenList = new List<ScreenRec>(screenList);
             sortedScreenList.Sort((r1, r2) => { return r1.door > r2.door ? 1 : r1.door < r2.door ? -1 : 0; });
             int lastDoorNo = -1;
-            ImageList smallBlocks = new ImageList();
-            smallBlocks.ImageSize = new Size(16, 16);
-            Image[] bigBlocks = null;
             int levelNo = curActiveLevel;
+
+            byte blockId = (byte)Globals.levelData[curActiveLevel].bigBlockId;
+            byte backId = 0, palId = 0;
             for (int i = 0; i < sortedScreenList.Count; i++)
             {
                 if (lastDoorNo != sortedScreenList[i].door)
                 {
                     lastDoorNo = sortedScreenList[i].door;
-                    smallBlocks.Images.Clear();
-                    bigBlocks = new Image[ConfigScript.getBigBlocksCount()];
-                    byte[] bigBlockIndexes = new byte[ConfigScript.getBigBlocksCount() * 4];
-                    //set big blocks
-                    byte blockId = (byte)Globals.levelData[curActiveLevel].bigBlockId;
-                    byte backId, palId;
                     if (lastDoorNo == 0)
                     {
                         backId = (byte)Globals.levelData[curActiveLevel].backId;
@@ -129,45 +122,11 @@ namespace CadEditor
                         backId = (byte)Globals.doorsData[lastDoorNo - 1].backId;
                         palId = (byte)Globals.doorsData[lastDoorNo - 1].palId;
                     }
-                    int bigBlockAddr = Globals.getBigTilesAddr(blockId);
-                    for (int btileId = 0; btileId < ConfigScript.getBigBlocksCount() * 4; btileId++)
-                        bigBlockIndexes[btileId] = Globals.romdata[bigBlockAddr + btileId];
-
-                    var im = Video.makeObjectsStrip(backId, blockId, palId, 1, MapViewType.Tiles);
-                    smallBlocks.Images.AddStrip(im);
-
-                    //make big blocks
-                    for (int btileId = 0; btileId < ConfigScript.getBigBlocksCount(); btileId++)
-                    {
-                        var b = new Bitmap(64, 64);
-                        using (Graphics g = Graphics.FromImage(b))
-                        {
-                            g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4]], new Rectangle(0, 0, 32, 32));
-                            g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 1]], new Rectangle(31, 0, 32, 32));
-                            g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 2]], new Rectangle(0, 31, 32, 32));
-                            g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 3]], new Rectangle(31, 31, 32, 32));
-                        }
-                        bigBlocks[btileId] = b;
-                    }
                 }
                 int scrNo = sortedScreenList[i].no;
-                byte[] indexes;
-                //level E & H hack
-                if (curActiveLevel == 5 || curActiveLevel==8)
-                    indexes = Globals.getScreen(256 + scrNo-1);
-                else
-                    indexes = Globals.getScreen(scrNo - 1);
-
-                Bitmap bitmap = new Bitmap(512, 512);
-                using (var g = Graphics.FromImage(bitmap))
-                {
-                    for (int tileNo = 0; tileNo < SCREEN_SIZE; tileNo++)
-                    {
-                        int index = indexes[tileNo];
-                        g.DrawImage(bigBlocks[index], new Rectangle(tileNo % 8 * 63, tileNo / 8 * 63, 64, 64));
-                    }
-                }
-                scrImages[scrNo] = bitmap;
+                int addEH = (curActiveLevel == 5 || curActiveLevel==8) ? 256 : 0;
+                int realScrNo = scrNo - 1 + addEH;
+                scrImages[scrNo] = Video.makeScreen(realScrNo, backId, blockId, blockId, palId);
             }
         }
 
