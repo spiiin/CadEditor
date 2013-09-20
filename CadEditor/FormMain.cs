@@ -46,6 +46,7 @@ namespace CadEditor
 
             dirty = false;
             showNeiScreens = true;
+            showAxis = true;
             prepareBlocksPanel();
 
             cbGame.SelectedIndex = (int)Globals.gameType;
@@ -102,18 +103,22 @@ namespace CadEditor
             bigBlocks.Images.Clear();
 
             MapViewType smallObjectsType = curViewType == MapViewType.ObjType ? MapViewType.ObjType : MapViewType.Tiles;
-            var im = Video.makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, 1, smallObjectsType);
+
+            int smallBlockScaleFactor = showAxis ? 1 : 2;
+            var im = Video.makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsType);
+            smallBlocks.ImageSize = new System.Drawing.Size(16*smallBlockScaleFactor, 16*smallBlockScaleFactor);
             smallBlocks.Images.AddStrip(im);
 
+            int bbRectPos = showAxis ? 31 : 32;
             for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
             {
                 var b = new Bitmap(64, 64);
                 using (Graphics g = Graphics.FromImage(b))
                 {
                     g.DrawImage(smallBlocks.Images[bigBlockIndexes[i*4]], new Rectangle(0, 0, 32, 32));
-                    g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(31, 0, 32, 32));
-                    g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(0, 31, 32, 32));
-                    g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(31, 31, 32, 32));
+                    g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(bbRectPos, 0, 32, 32));
+                    g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(0, bbRectPos, 32, 32));
+                    g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPos, bbRectPos, 32, 32));
                     if (curViewType == MapViewType.ObjNumbers)
                     {
                         g.FillRectangle(new SolidBrush(Color.FromArgb(192, 255, 255, 255)), new Rectangle(0, 0, 64, 64));
@@ -234,6 +239,7 @@ namespace CadEditor
         MapViewType curViewType = MapViewType.ObjType;
         private bool dirty;
         private bool showNeiScreens;
+        private bool showAxis;
         private byte[][] screens = null;
 
         private byte[] bigBlockIndexes;
@@ -493,6 +499,25 @@ namespace CadEditor
             }
             dirty = true;
             reloadLevel(false);
+        }
+
+        private void cbShowAxis_CheckedChanged(object sender, EventArgs e)
+        {
+            showAxis = cbShowAxis.Checked;
+            reloadLevel(false);
+            //mapScreen.Invalidate();
+        }
+
+        private void btHex_Click(object sender, EventArgs e)
+        {
+            if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
+            {
+                var f = new EditHexEditor();
+                f.setHighlightZone(ConfigScript.screensOffset.beginAddr + ConfigScript.screensOffset.recSize * curActiveScreen, ConfigScript.screensOffset.recSize);
+                f.ShowDialog();
+                reloadLevel();
+            }
+            
         }
     }
 }

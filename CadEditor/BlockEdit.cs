@@ -17,6 +17,7 @@ namespace CadEditor
 
         private void BlockEdit_Load(object sender, EventArgs e)
         {
+            showAxis = true;
             cbSubpalette.DrawItem += new DrawItemEventHandler(cbSubpalette_DrawItemEvent);
             videoSprites[0] = videoSprites1;
             videoSprites[1] = videoSprites2;
@@ -132,7 +133,7 @@ namespace CadEditor
             byte backId = getBackId();
             for (int i = 0; i < 4; i++)
             {
-                Bitmap b = Video.makeImageStrip(ConfigScript.getVideoChunk(backId), palette, i, 2, false);
+                Bitmap b = Video.makeImageStrip(ConfigScript.getVideoChunk(backId), palette, i, 2, !showAxis);
                 videoSprites[i].Images.Clear();
                 videoSprites[i].Images.AddStrip(b);
             }
@@ -170,6 +171,7 @@ namespace CadEditor
         private byte[] curActiveBack = new byte[16];
         private bool dirty;
         private bool readOnly;
+        private bool showAxis;
 
         private string[] subPalItems = { "1", "2", "3", "4" };
 
@@ -678,6 +680,12 @@ namespace CadEditor
             }
             reloadLevel(false);
             dirty = true;
+        }
+
+        private void cbShowAxis_CheckedChanged(object sender, EventArgs e)
+        {
+            showAxis = cbShowAxis.Checked;
+            reloadLevel(false);
         }
     }
 }

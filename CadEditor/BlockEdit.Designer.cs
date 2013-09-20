@@ -73,6 +73,7 @@
             this.btFlipVertical = new System.Windows.Forms.Button();
             this.btImport = new System.Windows.Forms.Button();
             this.btExport = new System.Windows.Forms.Button();
+            this.cbShowAxis = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.paletteMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -517,11 +518,26 @@
             this.btExport.UseVisualStyleBackColor = true;
             this.btExport.Click += new System.EventHandler(this.btExport_Click);
             // 
+            // cbShowAxis
+            // 
+            this.cbShowAxis.AutoSize = true;
+            this.cbShowAxis.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbShowAxis.Checked = true;
+            this.cbShowAxis.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbShowAxis.Location = new System.Drawing.Point(505, 489);
+            this.cbShowAxis.Name = "cbShowAxis";
+            this.cbShowAxis.Size = new System.Drawing.Size(74, 17);
+            this.cbShowAxis.TabIndex = 27;
+            this.cbShowAxis.Text = "Show axis";
+            this.cbShowAxis.UseVisualStyleBackColor = true;
+            this.cbShowAxis.CheckedChanged += new System.EventHandler(this.cbShowAxis_CheckedChanged);
+            // 
             // BlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(668, 564);
+            this.Controls.Add(this.cbShowAxis);
             this.Controls.Add(this.btExport);
             this.Controls.Add(this.btImport);
             this.Controls.Add(this.btFlipVertical);
@@ -612,5 +628,6 @@
         private System.Windows.Forms.Button btFlipVertical;
         private System.Windows.Forms.Button btImport;
         private System.Windows.Forms.Button btExport;
+        private System.Windows.Forms.CheckBox cbShowAxis;
     }
 }
