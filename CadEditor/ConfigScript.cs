@@ -43,7 +43,13 @@ namespace CadEditor
             //temp hack
             if (Globals.gameType == GameType.Generic)
             {
-                dwdAdvanceLastLevel = (bool)asm.Invoke("*.isDwdAdvanceLastLevel");
+                try
+                {
+                    dwdAdvanceLastLevel = (bool)asm.Invoke("*.isDwdAdvanceLastLevel");
+                }
+                catch (Exception e)
+                {
+                }
             }
         }
 
@@ -92,7 +98,7 @@ namespace CadEditor
         public static int bigBlocksCount;
 
         //temp hack
-        public static bool dwdAdvanceLastLevel;
+        public static bool dwdAdvanceLastLevel = false;
 
         public static IList<LevelRec> levelRecs;
 

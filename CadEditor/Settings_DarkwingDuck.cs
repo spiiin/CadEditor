@@ -51,5 +51,5 @@ public class Data
     new LevelRec(0x10A89, 58, 19, 3,  0x1E156),  
   };
   //temp hack
-  public static bool isDwdAdvanceLastLevel() { return false; }
+  //public static bool isDwdAdvanceLastLevel() { return false; }
 }
