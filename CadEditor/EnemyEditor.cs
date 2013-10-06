@@ -732,36 +732,48 @@ namespace CadEditor
 
         private void btSortUp_Click(object sender, EventArgs e)
         {
-            var selInds = new List<int>();
-            for (int i = 0; i < lvObjects.SelectedIndices.Count; i++)
+            bool canMoveUp = true;
+            int repeatCount = (Control.ModifierKeys == Keys.Shift) ? 10 : 1;
+            for (int count = 0; count < repeatCount && canMoveUp; count++)
             {
-                int ind = lvObjects.SelectedIndices[i];
-                selInds.Add(ind);
-                var xchg = objects[ind];
-                objects[ind] = objects[ind - 1];
-                objects[ind - 1] = xchg;
+                var selInds = new List<int>();
+                for (int i = 0; i < lvObjects.SelectedIndices.Count; i++)
+                {
+                    int ind = lvObjects.SelectedIndices[i];
+                    selInds.Add(ind);
+                    var xchg = objects[ind];
+                    objects[ind] = objects[ind - 1];
+                    objects[ind - 1] = xchg;
+                }
+                fillObjectsListBox();
+                for (int i = 0; i < selInds.Count; i++)
+                    lvObjects.Items[selInds[i] - 1].Selected = true;
+                canMoveUp = lvObjects.SelectedIndices[0] > 0;
             }
-            fillObjectsListBox();
-            for (int i = 0; i < selInds.Count; i++)
-                lvObjects.Items[selInds[i] - 1].Selected = true;
-            lvObjects.Select();
             dirty = true;
+            lvObjects.Select();
         }
 
         private void btSortDown_Click(object sender, EventArgs e)
         {
-            var selInds = new List<int>();
-            for (int i = lvObjects.SelectedIndices.Count-1; i >=0 ; i--)
+            bool canMoveDown = true;
+            int repeatCount = (Control.ModifierKeys == Keys.Shift) ? 10 : 1;
+            for (int count = 0; count < repeatCount && canMoveDown; count++)
             {
-                int ind = lvObjects.SelectedIndices[i];
-                selInds.Add(ind);
-                var xchg = objects[ind];
-                objects[ind] = objects[ind + 1];
-                objects[ind + 1] = xchg;
+                var selInds = new List<int>();
+                for (int i = lvObjects.SelectedIndices.Count - 1; i >= 0; i--)
+                {
+                    int ind = lvObjects.SelectedIndices[i];
+                    selInds.Add(ind);
+                    var xchg = objects[ind];
+                    objects[ind] = objects[ind + 1];
+                    objects[ind + 1] = xchg;
+                }
+                fillObjectsListBox();
+                for (int i = 0; i < selInds.Count; i++)
+                    lvObjects.Items[selInds[i] + 1].Selected = true;
+                canMoveDown = lvObjects.SelectedIndices[lvObjects.SelectedIndices.Count - 1] < objects.Count - 1;
             }
-            fillObjectsListBox();
-            for (int i = 0; i < selInds.Count; i++)
-                lvObjects.Items[selInds[i] + 1].Selected = true;
             lvObjects.Select();
             dirty = true;
         }

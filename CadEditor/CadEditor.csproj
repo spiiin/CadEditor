@@ -50,6 +50,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Be.Windows.Forms.HexBox, Version=1.5.0.33056, Culture=neutral, PublicKeyToken=e0e5adf0ebc99863, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\BeHexEditor150\Be.Windows.Forms.HexBox.dll</HintPath>
+    </Reference>
     <Reference Include="CSScriptLibrary.v3.5">
       <HintPath>..\libs\CSScript11\NET 3.5\CSScriptLibrary.v3.5.dll</HintPath>
     </Reference>
@@ -85,6 +89,12 @@
     </Compile>
     <Compile Include="EditColor.Designer.cs">
       <DependentUpon>EditColor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditHexEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditHexEditor.Designer.cs">
+      <DependentUpon>EditHexEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="EditLayout.cs">
       <SubType>Form</SubType>
@@ -156,6 +166,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditColor.resx">
       <DependentUpon>EditColor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditHexEditor.resx">
+      <DependentUpon>EditHexEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditLayout.resx">
       <DependentUpon>EditLayout.cs</DependentUpon>
