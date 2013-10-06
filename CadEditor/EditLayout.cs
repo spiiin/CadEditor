@@ -240,6 +240,15 @@ namespace CadEditor
             }
         }
 
+        private void changeScroll(int index)
+        {
+            var scrollByteArray = new byte[]{ 0x42, 0x42, 0x43, 0x03, 0x00, 0xC0, 0xC0, 0x41 };
+            if (Globals.gameType == GameType.CAD)
+                curLevelLayerData.scroll[index] = (byte)((curActiveBlock << 5) | (curLevelLayerData.scroll[index] & 0x01F));
+            else
+                curLevelLayerData.scroll[index] = scrollByteArray[curActiveBlock];
+        }
+
         private void pb_MouseUp(object sender, MouseEventArgs e)
         {
             int dx = e.X / 64;
@@ -262,9 +271,9 @@ namespace CadEditor
                 if (drawMode == MapDrawMode.Screens)
                     curLevelLayerData.layer[index] = (byte)(curActiveBlock & 0xFF);
                 else if (drawMode == MapDrawMode.Scrolls)
-                    curLevelLayerData.scroll[index] = (byte)((curActiveBlock << 5) | (curLevelLayerData.scroll[index] & 0x01F));
+                    changeScroll(index);
                 else if (drawMode == MapDrawMode.Doors)
-                    curLevelLayerData.scroll[index] = (byte)((curActiveBlock &0x1F) | (curLevelLayerData.scroll[index] & 0xE0));
+                    curLevelLayerData.scroll[index] = (byte)((curActiveBlock & 0x1F) | (curLevelLayerData.scroll[index] & 0xE0));
             }
             pbMap.Invalidate();
         }
