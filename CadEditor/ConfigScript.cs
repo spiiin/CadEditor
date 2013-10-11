@@ -29,6 +29,12 @@ namespace CadEditor
             getVideoChunkFunc = (GetVideoChunkFunc)asm.Invoke("*.getVideoChunkFunc");
             setVideoChunkFunc = (SetVideoChunkFunc)asm.Invoke("*.setVideoChunkFunc");
 
+            isBigBlockEditorEnabled = callFromScript(asm, "*.isBigBlockEditorEnabled", true);
+            isBlockEditorEnabled = callFromScript(asm, "*.isBlockEditorEnable", true);
+            isLayoutEditorEnabled = callFromScript(asm, "*.isLayoutEditorEnabled", true);
+            isEnemyEditorEnabled = callFromScript(asm, "*.isEnemyEditorEnabled", true);
+            isVideoEditorEnabled = callFromScript(asm, "*.isVideoEditorEnabled", true);
+
             if (Globals.gameType == GameType.CAD)
             {
                 boxesBackOffset = (OffsetRec)asm.Invoke("*.getBoxesBackOffset");
@@ -47,7 +53,7 @@ namespace CadEditor
                 {
                     dwdAdvanceLastLevel = (bool)asm.Invoke("*.isDwdAdvanceLastLevel");
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                 }
             }
@@ -85,6 +91,18 @@ namespace CadEditor
         {
             return dwdAdvanceLastLevel;
         }
+       
+        public static T callFromScript<T>(AsmHelper script, string funcName, T defaultValue = default(T), params object[] funcParams)
+        {
+            try
+            {
+                return (T)script.Invoke(funcName, funcParams);
+            }
+            catch (Exception) //all exception catch...
+            {
+                return defaultValue;
+            }
+        }
 
         //public static GameType gameType;
 
@@ -105,6 +123,12 @@ namespace CadEditor
         public static GetVideoPageAddrFunc getVideoPageAddrFunc;
         public static GetVideoChunkFunc getVideoChunkFunc;
         public static SetVideoChunkFunc setVideoChunkFunc;
+
+        public static bool isBigBlockEditorEnabled;
+        public static bool isBlockEditorEnabled;
+        public static bool isLayoutEditorEnabled;
+        public static bool isEnemyEditorEnabled;
+        public static bool isVideoEditorEnabled;
 
         //chip and dale specific
         public static int LevelRecBaseOffset;

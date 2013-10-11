@@ -56,6 +56,12 @@ namespace CadEditor
             bool showImportExport = Globals.gameType != GameType.DT;
             btImport.Visible = showImportExport;
             btExport.Visible = showImportExport;
+
+            btEdit.Enabled = ConfigScript.isBigBlockEditorEnabled;
+            btEditObjs.Enabled = ConfigScript.isBlockEditorEnabled;
+            btEditLayout.Enabled = ConfigScript.isLayoutEditorEnabled;
+            btEditEnemy.Enabled = ConfigScript.isEnemyEditorEnabled;
+            btVideo.Enabled = ConfigScript.isVideoEditorEnabled;
         }
 
         private void reloadLevel(bool reloadScreens = true)

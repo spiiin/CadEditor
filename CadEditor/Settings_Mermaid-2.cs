@@ -53,4 +53,10 @@ public class Data
         videoChunk[i] = Globals.romdata[0xC010 + i];
     return videoChunk;
   }
+  
+  public static bool isBigBlockEditorEnabled() { return true;  }
+  public static bool isBlockEditorEnabled()    { return true;  }
+  public static bool isLayoutEditorEnabled()   { return false; }
+  public static bool isEnemyEditorEnabled()    { return false; }
+  public static bool isVideoEditorEnabled()    { return false; }
 }

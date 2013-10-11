@@ -44,6 +44,10 @@ public class Data
   {
     new LevelRec(0x10000, 1, 8, 4,  0x41510), 
   };
-  //temp hack
-  public static bool isDwdAdvanceLastLevel() { return false; }
+  
+  public static bool isBigBlockEditorEnabled() { return true;  }
+  public static bool isBlockEditorEnabled()    { return true;  }
+  public static bool isLayoutEditorEnabled()   { return false; }
+  public static bool isEnemyEditorEnabled()    { return false; }
+  public static bool isVideoEditorEnabled()    { return false; }
 }

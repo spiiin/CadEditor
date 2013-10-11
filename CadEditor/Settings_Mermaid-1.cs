@@ -44,4 +44,9 @@ public class Data
   {
     new LevelRec(0x10000, 1, 8, 8,  0x1DAA8), 
   };
+  public static bool isBigBlockEditorEnabled() { return true;  }
+  public static bool isBlockEditorEnabled()    { return true;  }
+  public static bool isLayoutEditorEnabled()   { return false; }
+  public static bool isEnemyEditorEnabled()    { return false; }
+  public static bool isVideoEditorEnabled()    { return false; }
 }
