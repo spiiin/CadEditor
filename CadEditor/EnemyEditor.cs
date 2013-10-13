@@ -752,6 +752,9 @@ namespace CadEditor
             }
             dirty = true;
             lvObjects.Select();
+            int firstInd = lvObjects.SelectedIndices[0];
+            lvObjects.Items[firstInd].Focused = true;
+            lvObjects.TopItem = lvObjects.Items[firstInd];
         }
 
         private void btSortDown_Click(object sender, EventArgs e)
@@ -776,6 +779,9 @@ namespace CadEditor
             }
             lvObjects.Select();
             dirty = true;
+            int firstInd = lvObjects.SelectedIndices[0];
+            lvObjects.Items[firstInd].Focused = true;
+            lvObjects.TopItem = lvObjects.Items[firstInd];
         }
 
         private void cbManualSort_CheckedChanged(object sender, EventArgs e)

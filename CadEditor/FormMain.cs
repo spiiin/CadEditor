@@ -334,7 +334,7 @@ namespace CadEditor
             if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
             {
                 var b = new BigBlockEdit();
-                b.ShowDialog();
+                b.Show();
                 reloadLevel();
             }
         }
@@ -350,7 +350,7 @@ namespace CadEditor
             if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
             {
                 var b = new BlockEdit();
-                b.ShowDialog();
+                b.Show();
                 reloadLevel();
             }
         }
@@ -361,7 +361,7 @@ namespace CadEditor
             if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
             {
                 var f = new EditLayout();
-                f.ShowDialog();
+                f.Show();
                 reloadLevel();
             }
         }
@@ -371,7 +371,7 @@ namespace CadEditor
             if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
             {
                 var f = new EnemyEditor();
-                f.ShowDialog();
+                f.Show();
                 reloadLevel();
             }
         }
@@ -437,7 +437,7 @@ namespace CadEditor
             if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
             {
                 var f = new EditVideo();
-                f.ShowDialog();
+                f.Show();
                 reloadLevel();
             }
         }
