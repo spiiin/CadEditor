@@ -30,7 +30,7 @@ namespace CadEditor
             Utils.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
             Utils.setCbItemsCount(cbSmallBlock, ConfigScript.blocksOffset.recCount);
             Utils.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
-            Utils.setCbItemsCount(cbPart, ConfigScript.getBigBlocksCount() / 256);
+            Utils.setCbItemsCount(cbPart, Math.Max(ConfigScript.getBigBlocksCount() / 256, 1));
             cbTileset.Items.Clear();
             for (int i = 0; i < ConfigScript.bigBlocksOffset.recCount; i++)
             {
@@ -146,7 +146,8 @@ namespace CadEditor
         {
             int addIndexes = curPart * 256;
             Graphics g = e.Graphics;
-            for (int i = 0; i < 256; i++)
+            int btc = Math.Min(ConfigScript.getBigBlocksCount(), 256);
+            for (int i = 0; i < btc; i++)
             {
                 int xb = i%16;
                 int yb = i/16;
@@ -237,7 +238,7 @@ namespace CadEditor
 
             pnGeneric.Visible = Globals.gameType != GameType.CAD;
             pnEditCad.Visible = Globals.gameType == GameType.CAD;
-            Utils.setCbItemsCount(cbPart, ConfigScript.getBigBlocksCount() / 256);
+            Utils.setCbItemsCount(cbPart, Math.Max(ConfigScript.getBigBlocksCount() / 256, 1));
             Utils.setCbIndexWithoutUpdateLevel(cbPart, cbLevelPair_SelectedIndexChanged, curPart);
             reloadLevel();
         }

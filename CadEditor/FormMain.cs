@@ -133,6 +133,11 @@ namespace CadEditor
                 }
                 bigBlocks.Images.Add(b);
             }
+            //tt add
+            for (int i = ConfigScript.getBigBlocksCount(); i < 256; i++)
+            {
+                bigBlocks.Images.Add(Video.emptyScreen(64,64));
+            }
             curActiveBlock = 0;
             reloadBlocksPanel();
         }

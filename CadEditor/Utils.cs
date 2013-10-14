@@ -94,6 +94,19 @@ namespace CadEditor
         public static byte[] fillBigBlocks(int bigTileIndex)
         {
             byte[] bigBlockIndexes = new byte[ConfigScript.getBigBlocksCount() * 4];
+            //tt version
+            /*var bigBlocksAddr1 = Globals.getBigTilesAddr(bigTileIndex);
+            int btc = ConfigScript.getBigBlocksCount();
+            for (int i = 0; i < btc; i++)
+            {
+                bigBlockIndexes[i*4+0] = Globals.romdata[bigBlocksAddr1 + btc*0 + i];
+                bigBlockIndexes[i*4+1] = Globals.romdata[bigBlocksAddr1 + btc*1 + i];
+                bigBlockIndexes[i*4+2] = Globals.romdata[bigBlocksAddr1 + btc*2 + i];
+                bigBlockIndexes[i*4+3] = Globals.romdata[bigBlocksAddr1 + btc*3 + i];
+            }
+            return bigBlockIndexes;*/
+            //tt version end
+
             if (GameType.DT2 != Globals.gameType)
             {
                 var bigBlocksAddr = Globals.getBigTilesAddr(bigTileIndex);
