@@ -20,6 +20,8 @@ public class Data
   public static SetVideoChunkFunc    setVideoChunkFunc()    { return Utils.setVideoChunk; }
   public static GetBigBlocksFunc     getBigBlocksFunc()     { return Utils.getBigBlocksCapcomDefault;}
   public static SetBigBlocksFunc     setBigBlocksFunc()     { return Utils.setBigBlocksCapcomDefault;}
+  public static GetPalFunc           getPalFunc()           { return Utils.getPalleteLinear;}
+  public static SetPalFunc           setPalFunc()           { return Utils.setPalleteLinear;}
   
   public static IList<LevelRec> levelRecsDt = new List<LevelRec>() 
   {

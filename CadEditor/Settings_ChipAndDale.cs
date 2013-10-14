@@ -15,6 +15,8 @@ public class Data
   public static GetVideoPageAddrFunc getVideoPageAddrFunc() { return Utils.getChrAddress; }
   public static GetVideoChunkFunc    getVideoChunkFunc()    { return Utils.getVideoChunk; }
   public static SetVideoChunkFunc    setVideoChunkFunc()    { return Utils.setVideoChunk; }
+  public static GetPalFunc           getPalFunc()           { return Utils.getPalleteLinear;}
+  public static SetPalFunc           setPalFunc()           { return Utils.setPalleteLinear;}
   
   public static int getBigBlocksCount()        { return 256; }
   public static IList<LevelRec> getLevelRecs() { return levelRecsCad; }

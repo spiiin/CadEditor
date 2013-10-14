@@ -91,9 +91,7 @@ namespace CadEditor
             int index = cbPalleteNo.SelectedIndex;
             if (index == -1)
                 return;
-            int palAddress = Globals.getPalAddr((byte)index);
-            for (int i = 0; i < 16; i++)
-                curPal[i] = Globals.romdata[palAddress + i];
+            curPal = ConfigScript.getPal(index);
             reloadVideo();
         }
 
@@ -102,9 +100,7 @@ namespace CadEditor
           int index = cbPalleteNo.SelectedIndex;
           if (index == -1)
               return;
-          int palAddress = Globals.getPalAddr((byte)index);
-          for (int i = 0; i < 16; i++)
-              Globals.romdata[palAddress + i] = curPal[i];
+          ConfigScript.setPal(index, curPal);
           Globals.flushToFile();
         }
 

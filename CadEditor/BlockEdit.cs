@@ -82,10 +82,7 @@ namespace CadEditor
             {
                 palId = (byte)curActivePal;
             }
-            int addr = Globals.getPalAddr(palId);
-            for (int i = 0; i < Globals.PAL_LEN; i++)
-                palette[i] = (byte)(Globals.romdata[addr + i] & 0x3F);
-
+            palette = ConfigScript.getPal(palId);
             //set image for pallete
             var b = new Bitmap(16 * 16, 16);
             using (Graphics g = Graphics.FromImage(b))

@@ -10,6 +10,8 @@ namespace CadEditor
     public delegate void   SetVideoChunkFunc(int videoPageId, byte[] videoChunk);
     public delegate byte[] GetBigBlocksFunc(int bigBlockId);
     public delegate void   SetBigBlocksFunc(int bigTileIndex, byte[] bigBlockIndexes);
+    public delegate byte[] GetPalFunc(int palId);
+    public delegate void   SetPalFunc(int palId, byte[] pallete);
 
     class ConfigScript
     {
@@ -32,6 +34,8 @@ namespace CadEditor
             setVideoChunkFunc = (SetVideoChunkFunc)asm.Invoke("*.setVideoChunkFunc");
             getBigBlocksFunc = (GetBigBlocksFunc)asm.Invoke("*.getBigBlocksFunc");
             setBigBlocksFunc = (SetBigBlocksFunc)asm.Invoke("*.setBigBlocksFunc");
+            getPalFunc = (GetPalFunc)asm.Invoke("*.getPalFunc");
+            setPalFunc = (SetPalFunc)asm.Invoke("*.setPalFunc");
 
             isBigBlockEditorEnabled = callFromScript(asm, "*.isBigBlockEditorEnabled", true);
             isBlockEditorEnabled = callFromScript(asm, "*.isBlockEditorEnable", true);
@@ -90,6 +94,17 @@ namespace CadEditor
             setBigBlocksFunc(bigTileIndex, bigBlockIndexes);
         }
 
+        public static byte[] getPal(int palId)
+        {
+            return getPalFunc(palId);
+        }
+
+
+        public static void setPal(int palId, byte[] pallete)
+        {
+            setPalFunc(palId, pallete);
+        }
+
         public static int getBigBlocksCount()
         {
             return bigBlocksCount;
@@ -139,6 +154,8 @@ namespace CadEditor
         public static SetVideoChunkFunc setVideoChunkFunc;
         public static GetBigBlocksFunc getBigBlocksFunc;
         public static SetBigBlocksFunc setBigBlocksFunc;
+        public static GetPalFunc getPalFunc;
+        public static SetPalFunc setPalFunc;
 
         public static bool isBigBlockEditorEnabled;
         public static bool isBlockEditorEnabled;

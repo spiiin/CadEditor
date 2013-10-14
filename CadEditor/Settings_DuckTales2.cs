@@ -22,6 +22,8 @@ public class Data
   public static SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   public static GetBigBlocksFunc     getBigBlocksFunc()     { return getBigBlocksDt2;}
   public static SetBigBlocksFunc     setBigBlocksFunc()     { return null;}
+  public static GetPalFunc           getPalFunc()           { return Utils.getPalleteLinear;}
+  public static SetPalFunc           setPalFunc()           { return Utils.setPalleteLinear;}
   
   public static IList<LevelRec> levelRecsDt2 = new List<LevelRec>() 
   {

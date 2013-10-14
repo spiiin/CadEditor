@@ -107,6 +107,22 @@ namespace CadEditor
                 Globals.romdata[addr + i] = bigBlockIndexes[i];
         }
 
+        public static byte[] getPalleteLinear(int palIndex)
+        {
+            var palette = new byte[Globals.PAL_LEN];
+            int addr = ConfigScript.palOffset.beginAddr + palIndex * ConfigScript.palOffset.recSize;
+            for (int i = 0; i < Globals.PAL_LEN; i++)
+                palette[i] = (byte)(Globals.romdata[addr + i] & 0x3F);
+            return palette;
+        }
+
+        public static void setPalleteLinear(int palIndex, byte[] pallete)
+        {
+            int addr = ConfigScript.palOffset.beginAddr + palIndex * ConfigScript.palOffset.recSize;
+            for (int i = 0; i < 16; i++)
+                Globals.romdata[addr + i] = pallete[i];
+        }
+
         public static bool getBit(byte b, int bit)
         {
             return (b & (1 << bit - 1)) != 0;

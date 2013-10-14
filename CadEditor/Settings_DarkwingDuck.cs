@@ -10,6 +10,8 @@ public class Data
   //public delegate void SetVideoChunkFunc(int videoPageId, byte[] videoChunk);
   //public delegate byte[] GetBigBlocksFunc(int bigBlockId);
   //public delegate void   SetBigBlocksFunc(int bigTileIndex, byte[] bigBlockIndexes);
+  //public delegate byte[] GetPalFunc(int palId);
+  //public delegate void   SetPalFunc(int palId, byte[] pallete);
   /*public struct LevelRec
   {
       public LevelRec(int objectsBeginAddr, int objCount, int width = 0, int height = 0, int layoutAddr = 0)
@@ -43,6 +45,8 @@ public class Data
   public static SetVideoChunkFunc    setVideoChunkFunc()    { return Utils.setVideoChunk; }
   public static GetBigBlocksFunc     getBigBlocksFunc()     { return Utils.getBigBlocksCapcomDefault;}
   public static SetBigBlocksFunc     setBigBlocksFunc()     { return Utils.setBigBlocksCapcomDefault;}
+  public static GetPalFunc     getPalFunc()     { return Utils.getPalleteLinear;}
+  public static SetPalFunc     setPalFunc()     { return Utils.setPalleteLinear;}
   
   public static IList<LevelRec> levelRecsDwd = new List<LevelRec>() 
   {

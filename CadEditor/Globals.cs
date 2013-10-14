@@ -81,10 +81,10 @@ namespace CadEditor
             return ConfigScript.bigBlocksOffset.beginAddr + ConfigScript.bigBlocksOffset.recSize * id;
         }
 
-        public static int getPalAddr(int palId)
+        /*public static int getPalAddr(int palId)
         {
             return ConfigScript.palOffset.beginAddr + palId * ConfigScript.palOffset.recSize;
-        }
+        }*/
 
         public static int getBackTileAddr(int levelNo)
         {
