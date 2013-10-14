@@ -136,7 +136,7 @@ namespace CadEditor
 
         private void setBigBlocksIndexes()
         {
-            bigBlockIndexes = Utils.fillBigBlocks(curSmallBlockNo);
+            bigBlockIndexes = ConfigScript.getBigBlocks(curSmallBlockNo);
         }
 
         const int SMALL_BLOCKS_COUNT = 256;
@@ -257,7 +257,7 @@ namespace CadEditor
 
         private bool saveToFile()
         {
-            Utils.saveBigBlocks(curTileset, bigBlockIndexes);
+            ConfigScript.setBigBlocks(curTileset, bigBlockIndexes);
             dirty = !Globals.flushToFile();
             return !dirty;
         }

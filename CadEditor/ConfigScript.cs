@@ -5,9 +5,11 @@ using CSScriptLibrary;
 
 namespace CadEditor
 {
-    public delegate int GetVideoPageAddrFunc(int videoPageId);
+    public delegate int   GetVideoPageAddrFunc(int videoPageId);
     public delegate byte[] GetVideoChunkFunc(int videoPageId);
-    public delegate void SetVideoChunkFunc(int videoPageId, byte[] videoChunk);
+    public delegate void   SetVideoChunkFunc(int videoPageId, byte[] videoChunk);
+    public delegate byte[] GetBigBlocksFunc(int bigBlockId);
+    public delegate void   SetBigBlocksFunc(int bigTileIndex, byte[] bigBlockIndexes);
 
     class ConfigScript
     {
@@ -28,6 +30,8 @@ namespace CadEditor
             getVideoPageAddrFunc = (GetVideoPageAddrFunc)asm.Invoke("*.getVideoPageAddrFunc");
             getVideoChunkFunc = (GetVideoChunkFunc)asm.Invoke("*.getVideoChunkFunc");
             setVideoChunkFunc = (SetVideoChunkFunc)asm.Invoke("*.setVideoChunkFunc");
+            getBigBlocksFunc = (GetBigBlocksFunc)asm.Invoke("*.getBigBlocksFunc");
+            setBigBlocksFunc = (SetBigBlocksFunc)asm.Invoke("*.setBigBlocksFunc");
 
             isBigBlockEditorEnabled = callFromScript(asm, "*.isBigBlockEditorEnabled", true);
             isBlockEditorEnabled = callFromScript(asm, "*.isBlockEditorEnable", true);
@@ -74,6 +78,16 @@ namespace CadEditor
         public static void setVideoChunk(int videoPageId, byte[] videoChunk)
         {
            setVideoChunkFunc(videoPageId, videoChunk);
+        }
+
+        public static byte[] getBigBlocks(int bigBlockId)
+        {
+            return getBigBlocksFunc(bigBlockId);
+        }
+
+        public static void setBigBlocks(int bigTileIndex, byte[] bigBlockIndexes)
+        {
+            setBigBlocksFunc(bigTileIndex, bigBlockIndexes);
         }
 
         public static int getBigBlocksCount()
@@ -123,6 +137,8 @@ namespace CadEditor
         public static GetVideoPageAddrFunc getVideoPageAddrFunc;
         public static GetVideoChunkFunc getVideoChunkFunc;
         public static SetVideoChunkFunc setVideoChunkFunc;
+        public static GetBigBlocksFunc getBigBlocksFunc;
+        public static SetBigBlocksFunc setBigBlocksFunc;
 
         public static bool isBigBlockEditorEnabled;
         public static bool isBlockEditorEnabled;

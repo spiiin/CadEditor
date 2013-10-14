@@ -76,7 +76,7 @@ namespace CadEditor
         private void setBigBlocksIndexes()
         {
           int bigTileIndex = (Globals.gameType != GameType.CAD) ? curActiveBlockNo : Globals.levelData[curActiveLevel].bigBlockId;
-          bigBlockIndexes = Utils.fillBigBlocks(bigTileIndex);
+          bigBlockIndexes = ConfigScript.getBigBlocks(bigTileIndex);
         }
 
         private void setBlocks()

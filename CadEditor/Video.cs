@@ -143,8 +143,8 @@ namespace CadEditor
                 byte c1 = Globals.romdata[addr + i];
                 byte c2 = Globals.romdata[addr + 0x100 + i];
                 byte c3 = Globals.romdata[addr + 0x200 + i];
-                /*byte c3 = Globals.romdata[addr + 0x100 + i]; //tt version
-                byte c2 = Globals.romdata[addr + 0x200 + i];*/
+                //byte c3 = Globals.romdata[addr + 0x100 + i]; //tt version
+                //byte c2 = Globals.romdata[addr + 0x200 + i];
                 byte c4 = Globals.romdata[addr + 0x300 + i];
                 byte typeColor = Globals.romdata[addr + 0x400 + i];
                 objects[i] = new ObjRec(c1, c2, c3, c4, typeColor);
@@ -154,10 +154,10 @@ namespace CadEditor
             byte[] palette = new byte[Globals.PAL_LEN];
             for (int i = 0; i < Globals.PAL_LEN; i++)
                 palette[i] = (byte) (Globals.romdata[addrPal + i] & 0x3F);
-            /*palette = new byte[] { 
+           /*palette = new byte[] { 
                 0x31, 0x0f, 0x27, 0x2a, 0x31, 0x0f, 0x27, 0x2a,
                 0x31, 0x0f, 0x37, 0x17, 0x31, 0x0f, 0x20, 0x38
-              };*/ //tt test pallete
+              }; *///tt test pallete
 
             var objStrip1 = makeImageStrip(videoChunk, palette, 0, scale);
             var objStrip2 = makeImageStrip(videoChunk, palette, 1, scale);
@@ -241,7 +241,7 @@ namespace CadEditor
             byte blockIndexId = (byte)blockNo;
             byte backId = (byte)videoNo;
             byte palId = (byte)palleteNo;
-            byte[] bigBlockIndexes = Utils.fillBigBlocks(blockIndexId);
+            byte[] bigBlockIndexes = ConfigScript.getBigBlocks(blockIndexId);
 
             var im = Video.makeObjectsStrip(backId, blockId, palId, withBigTileBorders ? 1 : 2, MapViewType.Tiles);
             smallBlocks.Images.AddStrip(im);

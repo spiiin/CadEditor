@@ -40,6 +40,8 @@ public class Data
   public static GetVideoPageAddrFunc getVideoPageAddrFunc() { return Utils.getChrAddress; }
   public static GetVideoChunkFunc    getVideoChunkFunc()    { return Utils.getVideoChunk; }
   public static SetVideoChunkFunc    setVideoChunkFunc()    { return Utils.setVideoChunk; }
+  public static GetBigBlocksFunc     getBigBlocksFunc()     { return Utils.getBigBlocksCapcomDefault;}
+  public static SetBigBlocksFunc     setBigBlocksFunc()     { return Utils.setBigBlocksCapcomDefault;}
   
   public static IList<LevelRec> levelRecsDwd = new List<LevelRec>() 
   {
