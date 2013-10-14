@@ -141,10 +141,10 @@ namespace CadEditor
             for (int i = 0; i < Globals.OBJECTS_COUNT; i++)
             {
                 byte c1 = Globals.romdata[addr + i];
-                //byte c2 = Globals.romdata[addr + 0x100 + i];
-                //byte c3 = Globals.romdata[addr + 0x200 + i];
-                byte c3 = Globals.romdata[addr + 0x100 + i]; //tt version
-                byte c2 = Globals.romdata[addr + 0x200 + i];
+                byte c2 = Globals.romdata[addr + 0x100 + i];
+                byte c3 = Globals.romdata[addr + 0x200 + i];
+                //byte c3 = Globals.romdata[addr + 0x100 + i]; //tt version
+                //byte c2 = Globals.romdata[addr + 0x200 + i];
                 byte c4 = Globals.romdata[addr + 0x300 + i];
                 byte typeColor = Globals.romdata[addr + 0x400 + i];
                 objects[i] = new ObjRec(c1, c2, c3, c4, typeColor);
