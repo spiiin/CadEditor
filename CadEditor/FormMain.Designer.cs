@@ -201,7 +201,7 @@
             // 
             // cbShowNeighborns
             // 
-            this.cbShowNeighborns.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.cbShowNeighborns.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbShowNeighborns.AutoSize = true;
             this.cbShowNeighborns.Checked = true;
             this.cbShowNeighborns.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -533,7 +533,7 @@
             // 
             // cbShowAxis
             // 
-            this.cbShowAxis.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.cbShowAxis.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbShowAxis.AutoSize = true;
             this.cbShowAxis.Checked = true;
             this.cbShowAxis.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -547,7 +547,7 @@
             // 
             // btHex
             // 
-            this.btHex.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btHex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btHex.Location = new System.Drawing.Point(754, 526);
             this.btHex.Name = "btHex";
             this.btHex.Size = new System.Drawing.Size(96, 22);
