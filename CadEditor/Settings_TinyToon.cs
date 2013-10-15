@@ -15,6 +15,8 @@ public class Data
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x1F1CB , 1  , 0x440);  }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x470F, 11 ,   48);   }
   public int getBigBlocksCount()        { return 0x40; }
+  public int getScreenWidth()           { return 8; }
+  public int getScreenHeight()          { return 6; }
   public IList<LevelRec> getLevelRecs() { return levelRecsTT; }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getTinyToonVideoAddress; }

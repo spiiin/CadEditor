@@ -107,7 +107,7 @@ namespace CadEditor
             for (int i = 0; i < ConfigScript.screensOffset.recSize; i++)
                 result[i] = Globals.romdata[beginAddr + i];
             for (int i = ConfigScript.screensOffset.recSize; i < 64; i++)
-                result[i] = 0;
+                result[i] = 0; //need this?
             return result;
         }
 

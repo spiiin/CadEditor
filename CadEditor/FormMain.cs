@@ -62,6 +62,8 @@ namespace CadEditor
             btEditLayout.Enabled = ConfigScript.isLayoutEditorEnabled;
             btEditEnemy.Enabled = ConfigScript.isEnemyEditorEnabled;
             btVideo.Enabled = ConfigScript.isVideoEditorEnabled;
+
+            mapScreen.Size = new Size((ConfigScript.getScreenWidth()+2)*64, ConfigScript.getScreenHeight()*64);
         }
 
         private void reloadLevel(bool reloadScreens = true)
@@ -215,48 +217,47 @@ namespace CadEditor
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
+            int WIDTH = ConfigScript.getScreenWidth();
+            int HEIGHT = ConfigScript.getScreenHeight();
+            int SIZE = WIDTH * HEIGHT;
             if (!fileLoaded)
                 return;
             byte[] indexes = screens[curActiveScreen];
             var g = e.Graphics;
-            for (int i = 0; i < SCREEN_SIZE; i++)
+            for (int i = 0; i < SIZE; i++)
             {
                 int index = indexes[i];
                 int bigBlockNo = Globals.getBigTileNoFromScreen(indexes, i);
-                g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle((i % 8 + 1) * 64, i / 8 * 64, 64, 64));
+                g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle((i % WIDTH + 1) * 64, i / WIDTH * 64, 64, 64));
             }
             if (showNeiScreens && (curActiveScreen > 0))
             {
                 byte[] indexesPrev = screens[curActiveScreen - 1];
-                for (int i = 0; i < SCREEN_SIZE; i++)
+                for (int i = 0; i < SIZE; i++)
                 {
-                    if (i % 8 == 7)
+                    if (i % WIDTH == WIDTH-1)
                     {
                         int index = indexesPrev[i];
                         int bigBlockNo = Globals.getBigTileNoFromScreen(indexesPrev, i);
-                        g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle(0, i / 8 * 64, 64, 64));
+                        g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle(0, i / WIDTH * 64, 64, 64));
                     }
                 }
             }
             if (showNeiScreens && (curActiveScreen < ConfigScript.screensOffset.recCount - 1))
             {
                 byte[] indexesNext = screens[curActiveScreen + 1];
-                for (int i = 0; i < SCREEN_SIZE; i++)
+                for (int i = 0; i < SIZE; i++)
                 {
-                    if (i % 8 == 0)
+                    if (i % WIDTH == 0)
                     {
                         int index = indexesNext[i];
                         int bigBlockNo = Globals.getBigTileNoFromScreen(indexesNext, i);
-                        g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle(9 * 64, i / 8 * 64, 64, 64));
+                        g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle((WIDTH + 1) * 64, i / WIDTH * 64, 64, 64));
                     }
                 }
             }
-            g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(64, 0, 512, 512));
+            g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(64, 0, 64*WIDTH, 64*HEIGHT));
         }
-
-        //consts
-        const int SCREEN_SIZE = 64;
-        const int OBJECTS_COUNT = 96;
 
         //editor globals
         private int curActiveBlock = 0;
@@ -284,29 +285,31 @@ namespace CadEditor
 
         private void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
+            int WIDTH  = ConfigScript.getScreenWidth();
+            int HEIGHT = ConfigScript.getScreenHeight();
             int dx = e.X / 64 - 1;
             int dy = e.Y / 64;
-            if (dx == 8)
+            if (dx == WIDTH)
             {
                 if (curActiveScreen < ConfigScript.screensOffset.recCount - 1)
                 {
-                     int index = dy * 8;
-                     Globals.setBigTileToScreen(screens[curActiveScreen + 1], index, curActiveBlock);
-                     dirty = true;
+                    int index = dy * WIDTH;
+                    Globals.setBigTileToScreen(screens[curActiveScreen + 1], index, curActiveBlock);
+                    dirty = true;
                 }
             }
             else if (dx == -1)
             {
                 if (curActiveScreen > 0)
                 {
-                    int index = dy * 8 + 7;
+                    int index = dy * WIDTH + (WIDTH-1);
                     Globals.setBigTileToScreen(screens[curActiveScreen - 1], index, curActiveBlock);
                     dirty = true;
                 }
             }
             else
             {
-                int index = dy * 8 + dx;
+                int index = dy * WIDTH + dx;
                 Globals.setBigTileToScreen(screens[curActiveScreen], index, curActiveBlock);
                 dirty = true;
             }

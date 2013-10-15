@@ -73,11 +73,13 @@
             this.smallBlocks2 = new System.Windows.Forms.ImageList(this.components);
             this.smallBlocks3 = new System.Windows.Forms.ImageList(this.components);
             this.smallBlocks4 = new System.Windows.Forms.ImageList(this.components);
+            this.pnView = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
             this.pnCad.SuspendLayout();
             this.pnEditors.SuspendLayout();
+            this.pnView.SuspendLayout();
             this.SuspendLayout();
             // 
             // bigBlocks
@@ -96,7 +98,7 @@
             // 
             // mapScreen
             // 
-            this.mapScreen.Location = new System.Drawing.Point(404, 12);
+            this.mapScreen.Location = new System.Drawing.Point(0, 0);
             this.mapScreen.Name = "mapScreen";
             this.mapScreen.Size = new System.Drawing.Size(640, 512);
             this.mapScreen.TabIndex = 4;
@@ -199,6 +201,7 @@
             // 
             // cbShowNeighborns
             // 
+            this.cbShowNeighborns.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.cbShowNeighborns.AutoSize = true;
             this.cbShowNeighborns.Checked = true;
             this.cbShowNeighborns.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -530,6 +533,7 @@
             // 
             // cbShowAxis
             // 
+            this.cbShowAxis.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.cbShowAxis.AutoSize = true;
             this.cbShowAxis.Checked = true;
             this.cbShowAxis.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -543,6 +547,7 @@
             // 
             // btHex
             // 
+            this.btHex.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btHex.Location = new System.Drawing.Point(754, 526);
             this.btHex.Name = "btHex";
             this.btHex.Size = new System.Drawing.Size(96, 22);
@@ -575,11 +580,24 @@
             this.smallBlocks4.ImageSize = new System.Drawing.Size(16, 16);
             this.smallBlocks4.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // pnView
+            // 
+            this.pnView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnView.AutoScroll = true;
+            this.pnView.Controls.Add(this.mapScreen);
+            this.pnView.Location = new System.Drawing.Point(412, 12);
+            this.pnView.Name = "pnView";
+            this.pnView.Size = new System.Drawing.Size(640, 512);
+            this.pnView.TabIndex = 53;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1058, 552);
+            this.Controls.Add(this.pnView);
             this.Controls.Add(this.btHex);
             this.Controls.Add(this.cbShowAxis);
             this.Controls.Add(this.btImport);
@@ -598,9 +616,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btSave);
             this.Controls.Add(this.activeBlock);
-            this.Controls.Add(this.mapScreen);
             this.Controls.Add(this.blocksPanel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormMain";
@@ -614,6 +630,7 @@
             this.pnCad.ResumeLayout(false);
             this.pnCad.PerformLayout();
             this.pnEditors.ResumeLayout(false);
+            this.pnView.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -664,6 +681,7 @@
         private System.Windows.Forms.ImageList smallBlocks2;
         private System.Windows.Forms.ImageList smallBlocks3;
         private System.Windows.Forms.ImageList smallBlocks4;
+        private System.Windows.Forms.Panel pnView;
     }
 }
 
