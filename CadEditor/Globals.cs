@@ -407,6 +407,16 @@ namespace CadEditor
             return doorNo == DOORS_COUNT ? -1 : doorsData[doorNo - 1].startLoc;
         }*/
 
+        public static byte[] getTTSmallBlocksColorBytes(int bigTileIndex)
+        {
+            int btc = ConfigScript.getBigBlocksCount();
+            var colorBytes = new byte[btc];
+            int addr = Globals.getBigTilesAddr(bigTileIndex);
+            for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
+                colorBytes[i] = Globals.romdata[addr + btc * 4 + i];
+            return colorBytes;
+        }
+
         public static IList<LevelData> levelData = new List<LevelData>(LEVELS_COUNT);
         public static IList<DoorData> doorsData = new List<DoorData>(DOORS_COUNT);
 
@@ -742,6 +752,7 @@ namespace CadEditor
         Generic,
         CAD,
         DT,
-        DT2
+        DT2,
+        TT
     };
 }

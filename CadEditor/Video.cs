@@ -131,7 +131,7 @@ namespace CadEditor
             return res;
         }
 
-        public static Bitmap makeObjectsStrip(byte videoPageId, byte tilesId, byte palId, int scale, MapViewType drawType)
+        public static Bitmap makeObjectsStrip(byte videoPageId, byte tilesId, byte palId, int scale, MapViewType drawType, int constantSubpal = -1)
         {
             byte[] videoChunk = ConfigScript.getVideoChunk(videoPageId);
 
@@ -140,10 +140,17 @@ namespace CadEditor
             for (int i = 0; i < Globals.OBJECTS_COUNT; i++)
             {
                 byte c1 = Globals.romdata[addr + i];
-                byte c2 = Globals.romdata[addr + 0x100 + i];
-                byte c3 = Globals.romdata[addr + 0x200 + i];
-                //byte c3 = Globals.romdata[addr + 0x100 + i]; //tt version
-                //byte c2 = Globals.romdata[addr + 0x200 + i];
+                byte c2, c3;
+                if (Globals.gameType != GameType.TT)
+                {
+                    c2 = Globals.romdata[addr + 0x100 + i];
+                    c3 = Globals.romdata[addr + 0x200 + i];
+                }
+                else
+                {
+                    c3 = Globals.romdata[addr + 0x100 + i]; //tt version
+                    c2 = Globals.romdata[addr + 0x200 + i];
+                }
                 byte c4 = Globals.romdata[addr + 0x300 + i];
                 byte typeColor = Globals.romdata[addr + 0x400 + i];
                 objects[i] = new ObjRec(c1, c2, c3, c4, typeColor);
@@ -162,15 +169,23 @@ namespace CadEditor
                     var mblock = new Bitmap(16 * scale, 16 * scale);
                     var co = objects[i];
                     Bitmap curStrip;
-                    if (Globals.gameType == GameType.DT2)
+                    if (constantSubpal == -1)
                     {
-                        var objectForColor = objects[i / 4];
-                        curStrip = objStrips[objectForColor.getSubpalleteForDt2(i % 4)];
+                        if (Globals.gameType == GameType.DT2)
+                        {
+                            var objectForColor = objects[i / 4];
+                            curStrip = objStrips[objectForColor.getSubpalleteForDt2(i % 4)];
+                        }
+                        else
+                        {
+                            curStrip = objStrips[co.getSubpallete()];
+                        }
                     }
                     else
                     {
-                         curStrip = objStrips[co.getSubpallete()];
+                        curStrip = objStrips[constantSubpal];
                     }
+
                     using (Graphics g2 = Graphics.FromImage(mblock))
                     {
                         g2.DrawImage(curStrip, new Rectangle(0, 0, 8 * scale, 8 * scale), new Rectangle(co.c1 * 8 * scale, 0, 8 * scale, 8 * scale), GraphicsUnit.Pixel);

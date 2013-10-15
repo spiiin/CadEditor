@@ -69,6 +69,10 @@
             this.btImport = new System.Windows.Forms.Button();
             this.cbShowAxis = new System.Windows.Forms.CheckBox();
             this.btHex = new System.Windows.Forms.Button();
+            this.smallBlocks1 = new System.Windows.Forms.ImageList(this.components);
+            this.smallBlocks2 = new System.Windows.Forms.ImageList(this.components);
+            this.smallBlocks3 = new System.Windows.Forms.ImageList(this.components);
+            this.smallBlocks4 = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -484,10 +488,11 @@
             this.cbGame.DropDownWidth = 200;
             this.cbGame.FormattingEnabled = true;
             this.cbGame.Items.AddRange(new object[] {
-            "Darkwing Duck",
+            "Capcom Generic",
             "Chip \'n Dale Rescue Rangers",
             "Duck Tales",
-            "Duck Tales 2"});
+            "Duck Tales 2",
+            "Tiny Toon"});
             this.cbGame.Location = new System.Drawing.Point(334, 190);
             this.cbGame.Name = "cbGame";
             this.cbGame.Size = new System.Drawing.Size(66, 21);
@@ -545,6 +550,30 @@
             this.btHex.Text = "open hex editor";
             this.btHex.UseVisualStyleBackColor = true;
             this.btHex.Click += new System.EventHandler(this.btHex_Click);
+            // 
+            // smallBlocks1
+            // 
+            this.smallBlocks1.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
+            this.smallBlocks1.ImageSize = new System.Drawing.Size(16, 16);
+            this.smallBlocks1.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // smallBlocks2
+            // 
+            this.smallBlocks2.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
+            this.smallBlocks2.ImageSize = new System.Drawing.Size(16, 16);
+            this.smallBlocks2.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // smallBlocks3
+            // 
+            this.smallBlocks3.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
+            this.smallBlocks3.ImageSize = new System.Drawing.Size(16, 16);
+            this.smallBlocks3.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // smallBlocks4
+            // 
+            this.smallBlocks4.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
+            this.smallBlocks4.ImageSize = new System.Drawing.Size(16, 16);
+            this.smallBlocks4.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // FormMain
             // 
@@ -631,6 +660,10 @@
         private System.Windows.Forms.Button btImport;
         private System.Windows.Forms.CheckBox cbShowAxis;
         private System.Windows.Forms.Button btHex;
+        private System.Windows.Forms.ImageList smallBlocks1;
+        private System.Windows.Forms.ImageList smallBlocks2;
+        private System.Windows.Forms.ImageList smallBlocks3;
+        private System.Windows.Forms.ImageList smallBlocks4;
     }
 }
 

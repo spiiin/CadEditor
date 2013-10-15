@@ -115,16 +115,41 @@ namespace CadEditor
             smallBlocks.ImageSize = new System.Drawing.Size(16*smallBlockScaleFactor, 16*smallBlockScaleFactor);
             smallBlocks.Images.AddStrip(im);
 
+            //tt version hardcode
+            ImageList[] smallBlocksAll = null;
+            byte[] smallBlocksColorBytes = null;
+            if (GameType.TT == Globals.gameType)
+            {
+                smallBlocksAll = new[] { smallBlocks1, smallBlocks2, smallBlocks3, smallBlocks4 };
+                for (int i = 0; i < 4; i++)
+                {
+                    smallBlocksAll[i].ImageSize = new System.Drawing.Size(16 * smallBlockScaleFactor, 16 * smallBlockScaleFactor);
+                    smallBlocksAll[i].Images.AddStrip(Video.makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsType, i));
+                }
+                smallBlocksColorBytes = Globals.getTTSmallBlocksColorBytes(blockId);
+            }
+
             int bbRectPos = showAxis ? 31 : 32;
             for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
             {
                 var b = new Bitmap(64, 64);
                 using (Graphics g = Graphics.FromImage(b))
                 {
-                    g.DrawImage(smallBlocks.Images[bigBlockIndexes[i*4]], new Rectangle(0, 0, 32, 32));
-                    g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(bbRectPos, 0, 32, 32));
-                    g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(0, bbRectPos, 32, 32));
-                    g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPos, bbRectPos, 32, 32));
+                    if (Globals.gameType != GameType.TT)
+                    {
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4]], new Rectangle(0, 0, 32, 32));
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(bbRectPos, 0, 32, 32));
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(0, bbRectPos, 32, 32));
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPos, bbRectPos, 32, 32));
+                    }
+                    else
+                    {
+                        int scb = smallBlocksColorBytes[i];
+                        g.DrawImage(smallBlocksAll[scb>>  0 & 0x3].Images[bigBlockIndexes[i * 4]], new Rectangle(0, 0, 32, 32));
+                        g.DrawImage(smallBlocksAll[scb >> 2 & 0x3].Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(bbRectPos, 0, 32, 32));
+                        g.DrawImage(smallBlocksAll[scb >> 4 & 0x3].Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(0, bbRectPos, 32, 32));
+                        g.DrawImage(smallBlocksAll[scb >> 6 & 0x3].Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPos, bbRectPos, 32, 32));   
+                    }
                     if (curViewType == MapViewType.ObjNumbers)
                     {
                         g.FillRectangle(new SolidBrush(Color.FromArgb(192, 255, 255, 255)), new Rectangle(0, 0, 64, 64));
