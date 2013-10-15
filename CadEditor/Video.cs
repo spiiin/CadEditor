@@ -131,7 +131,6 @@ namespace CadEditor
             return res;
         }
 
-        //chip and dale specific
         public static Bitmap makeObjectsStrip(byte videoPageId, byte tilesId, byte palId, int scale, MapViewType drawType)
         {
             byte[] videoChunk = ConfigScript.getVideoChunk(videoPageId);

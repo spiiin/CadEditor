@@ -18,40 +18,41 @@ namespace CadEditor
         public static void LoadFromFile(string fileName)
         {
             var asm = new AsmHelper(CSScript.Load(fileName));
+            var data = asm.CreateObject("Data");
 
-            Globals.gameType = (GameType)asm.Invoke("*.getGameType");
-            palOffset = (OffsetRec)asm.Invoke("*.getPalOffset");
-            videoOffset = (OffsetRec)asm.Invoke("*.getVideoOffset");
-            videoObjOffset = (OffsetRec)asm.Invoke("*.getVideoObjOffset");
-            bigBlocksOffset = (OffsetRec)asm.Invoke("*.getBigBlocksOffset");
-            blocksOffset = (OffsetRec)asm.Invoke("*.getBlocksOffset");
-            screensOffset = (OffsetRec)asm.Invoke("*.getScreensOffset");
-            bigBlocksCount = (int)asm.Invoke("*.getBigBlocksCount");
-            levelRecs = (IList<LevelRec>)asm.Invoke("*.getLevelRecs");
+            Globals.gameType = (GameType)asm.InvokeInst(data,"*.getGameType");
+            palOffset = (OffsetRec)asm.InvokeInst(data,"*.getPalOffset");
+            videoOffset = (OffsetRec)asm.InvokeInst(data, "*.getVideoOffset");
+            videoObjOffset = (OffsetRec)asm.InvokeInst(data, "*.getVideoObjOffset");
+            bigBlocksOffset = (OffsetRec)asm.InvokeInst(data, "*.getBigBlocksOffset");
+            blocksOffset = (OffsetRec)asm.InvokeInst(data, "*.getBlocksOffset");
+            screensOffset = (OffsetRec)asm.InvokeInst(data, "*.getScreensOffset");
+            bigBlocksCount = (int)asm.InvokeInst(data,"*.getBigBlocksCount");
+            levelRecs = (IList<LevelRec>)asm.InvokeInst(data,"*.getLevelRecs");
 
-            getVideoPageAddrFunc = (GetVideoPageAddrFunc)asm.Invoke("*.getVideoPageAddrFunc");
-            getVideoChunkFunc = (GetVideoChunkFunc)asm.Invoke("*.getVideoChunkFunc");
-            setVideoChunkFunc = (SetVideoChunkFunc)asm.Invoke("*.setVideoChunkFunc");
-            getBigBlocksFunc = (GetBigBlocksFunc)asm.Invoke("*.getBigBlocksFunc");
-            setBigBlocksFunc = (SetBigBlocksFunc)asm.Invoke("*.setBigBlocksFunc");
-            getPalFunc = (GetPalFunc)asm.Invoke("*.getPalFunc");
-            setPalFunc = (SetPalFunc)asm.Invoke("*.setPalFunc");
+            getVideoPageAddrFunc = (GetVideoPageAddrFunc)asm.InvokeInst(data, "*.getVideoPageAddrFunc");
+            getVideoChunkFunc = (GetVideoChunkFunc)asm.InvokeInst(data, "*.getVideoChunkFunc");
+            setVideoChunkFunc = (SetVideoChunkFunc)asm.InvokeInst(data, "*.setVideoChunkFunc");
+            getBigBlocksFunc = (GetBigBlocksFunc)asm.InvokeInst(data, "*.getBigBlocksFunc");
+            setBigBlocksFunc = (SetBigBlocksFunc)asm.InvokeInst(data, "*.setBigBlocksFunc");
+            getPalFunc = (GetPalFunc)asm.InvokeInst(data, "*.getPalFunc");
+            setPalFunc = (SetPalFunc)asm.InvokeInst(data, "*.setPalFunc");
 
-            isBigBlockEditorEnabled = callFromScript(asm, "*.isBigBlockEditorEnabled", true);
-            isBlockEditorEnabled = callFromScript(asm, "*.isBlockEditorEnable", true);
-            isLayoutEditorEnabled = callFromScript(asm, "*.isLayoutEditorEnabled", true);
-            isEnemyEditorEnabled = callFromScript(asm, "*.isEnemyEditorEnabled", true);
-            isVideoEditorEnabled = callFromScript(asm, "*.isVideoEditorEnabled", true);
+            isBigBlockEditorEnabled = callFromScript(asm, data, "*.isBigBlockEditorEnabled", true);
+            isBlockEditorEnabled = callFromScript(asm, data, "*.isBlockEditorEnable", true);
+            isLayoutEditorEnabled = callFromScript(asm, data, "*.isLayoutEditorEnabled", true);
+            isEnemyEditorEnabled = callFromScript(asm, data, "*.isEnemyEditorEnabled", true);
+            isVideoEditorEnabled = callFromScript(asm, data, "*.isVideoEditorEnabled", true);
 
             if (Globals.gameType == GameType.CAD)
             {
-                boxesBackOffset = (OffsetRec)asm.Invoke("*.getBoxesBackOffset");
-                LevelRecBaseOffset = (int)asm.Invoke("*.getLevelRecBaseOffset");
-                LevelRecDirOffset = (int)asm.Invoke("*.getLevelRecDirOffset");
-                LayoutPtrAdd = (int)asm.Invoke("*.getLayoutPtrAdd");
-                ScrollPtrAdd = (int)asm.Invoke("*.getScrollPtrAdd");
-                DirPtrAdd = (int)asm.Invoke("*.getDirPtrAdd");
-                DoorRecBaseOffset = (int)asm.Invoke("*.getDoorRecBaseOffset");
+                boxesBackOffset = (OffsetRec)asm.InvokeInst(data, "*.getBoxesBackOffset");
+                LevelRecBaseOffset = (int)asm.InvokeInst(data, "*.getLevelRecBaseOffset");
+                LevelRecDirOffset = (int)asm.InvokeInst(data, "*.getLevelRecDirOffset");
+                LayoutPtrAdd = (int)asm.InvokeInst(data, "*.getLayoutPtrAdd");
+                ScrollPtrAdd = (int)asm.InvokeInst(data, "*.getScrollPtrAdd");
+                DirPtrAdd = (int)asm.InvokeInst(data, "*.getDirPtrAdd");
+                DoorRecBaseOffset = (int)asm.InvokeInst(data, "*.getDoorRecBaseOffset");
             }
 
             //temp hack
@@ -59,7 +60,7 @@ namespace CadEditor
             {
                 try
                 {
-                    dwdAdvanceLastLevel = (bool)asm.Invoke("*.isDwdAdvanceLastLevel");
+                    dwdAdvanceLastLevel = (bool)asm.InvokeInst(data,"*.isDwdAdvanceLastLevel");
                 }
                 catch (Exception)
                 {
@@ -121,11 +122,11 @@ namespace CadEditor
             return dwdAdvanceLastLevel;
         }
        
-        public static T callFromScript<T>(AsmHelper script, string funcName, T defaultValue = default(T), params object[] funcParams)
+        public static T callFromScript<T>(AsmHelper script, object data, string funcName, T defaultValue = default(T), params object[] funcParams)
         {
             try
             {
-                return (T)script.Invoke(funcName, funcParams);
+                return (T)script.InvokeInst(data, funcName, funcParams);
             }
             catch (Exception) //all exception catch...
             {
