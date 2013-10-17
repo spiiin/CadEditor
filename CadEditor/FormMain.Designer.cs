@@ -148,7 +148,7 @@
             this.btEdit.TabIndex = 18;
             this.btEdit.Text = "edit macro blocks";
             this.btEdit.UseVisualStyleBackColor = true;
-            this.btEdit.Click += new System.EventHandler(this.btEdit_Click);
+            this.btEdit.Click += new System.EventHandler(this.btSubeditor_Click);
             // 
             // btEditObjs
             // 
@@ -158,7 +158,7 @@
             this.btEditObjs.TabIndex = 19;
             this.btEditObjs.Text = "edit blocks";
             this.btEditObjs.UseVisualStyleBackColor = true;
-            this.btEditObjs.Click += new System.EventHandler(this.btEditObjs_Click);
+            this.btEditObjs.Click += new System.EventHandler(this.btSubeditor_Click);
             // 
             // btEditLayout
             // 
@@ -168,7 +168,7 @@
             this.btEditLayout.TabIndex = 25;
             this.btEditLayout.Text = "edit layout";
             this.btEditLayout.UseVisualStyleBackColor = true;
-            this.btEditLayout.Click += new System.EventHandler(this.btEditLayout_Click);
+            this.btEditLayout.Click += new System.EventHandler(this.btSubeditor_Click);
             // 
             // label6
             // 
@@ -197,7 +197,7 @@
             this.btEditEnemy.TabIndex = 31;
             this.btEditEnemy.Text = "edit enemies";
             this.btEditEnemy.UseVisualStyleBackColor = true;
-            this.btEditEnemy.Click += new System.EventHandler(this.editEnemy_Click);
+            this.btEditEnemy.Click += new System.EventHandler(this.btSubeditor_Click);
             // 
             // cbShowNeighborns
             // 
@@ -483,7 +483,7 @@
             this.btVideo.TabIndex = 32;
             this.btVideo.Text = "view video";
             this.btVideo.UseVisualStyleBackColor = true;
-            this.btVideo.Click += new System.EventHandler(this.btVideo_Click);
+            this.btVideo.Click += new System.EventHandler(this.btSubeditor_Click);
             // 
             // cbGame
             // 

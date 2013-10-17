@@ -64,6 +64,14 @@ namespace CadEditor
             btVideo.Enabled = ConfigScript.isVideoEditorEnabled;
 
             mapScreen.Size = new Size((ConfigScript.getScreenWidth()+2)*64, ConfigScript.getScreenHeight()*64);
+
+            subeditorsDict = new Dictionary<Button, Func<Form>> { 
+                 { btEdit,           ()=>{ return new BigBlockEdit();} },
+                 { btEditObjs,       ()=>{ return new BlockEdit();}    },
+                 { btEditLayout,     ()=>{ return new EditLayout();}   },
+                 { btEditEnemy,      ()=>{ return new EnemyEditor();}  },
+                 { btVideo,          ()=>{ return new EditVideo();}    },
+            };
         }
 
         private void reloadLevel(bool reloadScreens = true)
@@ -283,6 +291,8 @@ namespace CadEditor
 
         public static bool fileLoaded = false;
 
+        private Dictionary<Button, Func<Form>> subeditorsDict;
+
         private void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
             int WIDTH  = ConfigScript.getScreenWidth();
@@ -362,51 +372,16 @@ namespace CadEditor
             cbLevel.SelectedIndexChanged += cbLevel_SelectedIndexChanged;
         }
 
-        private void btEdit_Click(object sender, EventArgs e)
-        {
-            if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
-            {
-                var b = new BigBlockEdit();
-                b.Show();
-                reloadLevel();
-            }
-        }
-
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
                 e.Cancel = true;
         }
 
-        private void btEditObjs_Click(object sender, EventArgs e)
+        private void btSubeditor_Click(object sender, EventArgs e)
         {
-            if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
-            {
-                var b = new BlockEdit();
-                b.Show();
-                reloadLevel();
-            }
-        }
-
-
-        private void btEditLayout_Click(object sender, EventArgs e)
-        {
-            if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
-            {
-                var f = new EditLayout();
-                f.Show();
-                reloadLevel();
-            }
-        }
-
-        private void editEnemy_Click(object sender, EventArgs e)
-        {
-            if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
-            {
-                var f = new EnemyEditor();
-                f.Show();
-                reloadLevel();
-            }
+            var button = (Button)sender;
+            subeditorOpen(subeditorsDict[button](), button);
         }
 
         private void cbScreenNo_SelectedIndexChanged(object sender, EventArgs e)
@@ -463,16 +438,6 @@ namespace CadEditor
         {
             Globals.gameType = (GameType)cbGame.SelectedIndex;
             reloadGameType(true);
-        }
-
-        private void btVideo_Click(object sender, EventArgs e)
-        {
-            if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
-            {
-                var f = new EditVideo();
-                f.Show();
-                reloadLevel();
-            }
         }
 
         private void btExport_Click(object sender, EventArgs e)
@@ -557,6 +522,26 @@ namespace CadEditor
                 reloadLevel();
             }
             
+        }
+
+        private FormClosedEventHandler subeditorClosed(Button enabledAfterCloseButton)
+        {
+            return delegate(object sender, FormClosedEventArgs e) 
+            { 
+                enabledAfterCloseButton.Enabled = true;
+                reloadLevel();
+            };
+
+        }
+
+        private void subeditorOpen(Form f, Button b)
+        {
+            if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
+            {
+                b.Enabled = false;
+                f.Show();
+                f.FormClosed += subeditorClosed(b);
+            }
         }
     }
 }
