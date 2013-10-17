@@ -133,6 +133,7 @@ namespace CadEditor
                 smallBlocksAll = new[] { smallBlocks1, smallBlocks2, smallBlocks3, smallBlocks4 };
                 for (int i = 0; i < 4; i++)
                 {
+                    smallBlocksAll[i].Images.Clear();
                     smallBlocksAll[i].ImageSize = new System.Drawing.Size(16 * smallBlockScaleFactor, 16 * smallBlockScaleFactor);
                     smallBlocksAll[i].Images.AddStrip(Video.makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsType, i));
                 }
