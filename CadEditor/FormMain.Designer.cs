@@ -90,6 +90,8 @@
             // 
             // blocksPanel
             // 
+            this.blocksPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.blocksPanel.AutoScroll = true;
             this.blocksPanel.Location = new System.Drawing.Point(12, 12);
             this.blocksPanel.Name = "blocksPanel";
@@ -117,6 +119,7 @@
             // 
             // btSave
             // 
+            this.btSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btSave.Location = new System.Drawing.Point(12, 521);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(64, 22);
@@ -215,6 +218,7 @@
             // 
             // btOpen
             // 
+            this.btOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btOpen.Location = new System.Drawing.Point(82, 521);
             this.btOpen.Name = "btOpen";
             this.btOpen.Size = new System.Drawing.Size(63, 22);
@@ -513,6 +517,7 @@
             // 
             // btExport
             // 
+            this.btExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btExport.Location = new System.Drawing.Point(193, 521);
             this.btExport.Name = "btExport";
             this.btExport.Size = new System.Drawing.Size(64, 22);
@@ -523,6 +528,7 @@
             // 
             // btImport
             // 
+            this.btImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btImport.Location = new System.Drawing.Point(263, 521);
             this.btImport.Name = "btImport";
             this.btImport.Size = new System.Drawing.Size(64, 22);
@@ -620,7 +626,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Text = "CAD Editor v1.6 by spiiin";
+            this.Text = "CAD Editor v1.7 by spiiin";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
