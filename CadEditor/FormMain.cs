@@ -91,6 +91,14 @@ namespace CadEditor
 
         private void setBlocks()
         {
+            if (ConfigScript.usePicturesInstedBlocks)
+            {
+                bigBlocks.Images.Clear();
+                bigBlocks.Images.AddStrip(Image.FromFile(ConfigScript.blocksPicturesFilename));
+                for (int i = bigBlocks.Images.Count; i < 256; i++)
+                    bigBlocks.Images.Add(Video.emptyScreen(64, 64));
+                return;
+            }
             int backId, blockId, palId;
 
             if (GameType.CAD != Globals.gameType)

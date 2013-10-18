@@ -41,10 +41,13 @@ namespace CadEditor
             setPalFunc = (SetPalFunc)asm.InvokeInst(data, "*.setPalFunc");
 
             isBigBlockEditorEnabled = callFromScript(asm, data, "*.isBigBlockEditorEnabled", true);
-            isBlockEditorEnabled = callFromScript(asm, data, "*.isBlockEditorEnable", true);
+            isBlockEditorEnabled = callFromScript(asm, data, "*.isBlockEditorEnabled", true);
             isLayoutEditorEnabled = callFromScript(asm, data, "*.isLayoutEditorEnabled", true);
             isEnemyEditorEnabled = callFromScript(asm, data, "*.isEnemyEditorEnabled", true);
             isVideoEditorEnabled = callFromScript(asm, data, "*.isVideoEditorEnabled", true);
+
+            blocksPicturesFilename = callFromScript(asm, data, "getBlocksFilename", "");
+            usePicturesInstedBlocks = blocksPicturesFilename != "";
 
             if (Globals.gameType == GameType.CAD)
             {
@@ -177,6 +180,9 @@ namespace CadEditor
         public static bool isLayoutEditorEnabled;
         public static bool isEnemyEditorEnabled;
         public static bool isVideoEditorEnabled;
+
+        public static bool usePicturesInstedBlocks;
+        public static string blocksPicturesFilename;
 
         //chip and dale specific
         public static int LevelRecBaseOffset;
