@@ -232,20 +232,36 @@ namespace CadEditor
             curActiveBlock = index;
         }
 
+        private Rectangle getVisibleRectangle(Control c)
+        {
+            Rectangle rect = c.RectangleToScreen(c.ClientRectangle);
+            while (c != null)
+            {
+                rect = Rectangle.Intersect(rect, c.RectangleToScreen(c.ClientRectangle));
+                c = c.Parent;
+            }
+            rect = mapScreen.RectangleToClient(rect);
+            return rect;
+        }
+
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
+
             int WIDTH = ConfigScript.getScreenWidth();
             int HEIGHT = ConfigScript.getScreenHeight();
             int SIZE = WIDTH * HEIGHT;
             if (!fileLoaded)
                 return;
             byte[] indexes = screens[curActiveScreen];
+            var visibleRect = getVisibleRectangle(pnView);
             var g = e.Graphics;
             for (int i = 0; i < SIZE; i++)
             {
                 int index = indexes[i];
                 int bigBlockNo = Globals.getBigTileNoFromScreen(indexes, i);
-                g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle((i % WIDTH + 1) * 64, i / WIDTH * 64, 64, 64));
+                var tileRect =  new Rectangle((i % WIDTH + 1) * 64, i / WIDTH * 64, 64, 64);
+                if ((visibleRect.Contains(tileRect)) || (visibleRect.IntersectsWith(tileRect)))
+                  g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
             }
             if (showNeiScreens && (curActiveScreen > 0))
             {
