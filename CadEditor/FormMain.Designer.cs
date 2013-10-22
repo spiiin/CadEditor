@@ -63,8 +63,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.pnEditors = new System.Windows.Forms.Panel();
             this.btVideo = new System.Windows.Forms.Button();
-            this.cbGame = new System.Windows.Forms.ComboBox();
-            this.label10 = new System.Windows.Forms.Label();
             this.btExport = new System.Windows.Forms.Button();
             this.btImport = new System.Windows.Forms.Button();
             this.cbShowAxis = new System.Windows.Forms.CheckBox();
@@ -237,7 +235,7 @@
             this.pnGeneric.Controls.Add(this.cbBigBlockNo);
             this.pnGeneric.Controls.Add(this.label1);
             this.pnGeneric.Controls.Add(this.cbVideoNo);
-            this.pnGeneric.Location = new System.Drawing.Point(333, 217);
+            this.pnGeneric.Location = new System.Drawing.Point(332, 178);
             this.pnGeneric.Name = "pnGeneric";
             this.pnGeneric.Size = new System.Drawing.Size(72, 162);
             this.pnGeneric.TabIndex = 42;
@@ -364,7 +362,7 @@
             this.pnCad.Controls.Add(this.cbDoor);
             this.pnCad.Controls.Add(this.label2);
             this.pnCad.Controls.Add(this.cbLevel);
-            this.pnCad.Location = new System.Drawing.Point(334, 228);
+            this.pnCad.Location = new System.Drawing.Point(332, 178);
             this.pnCad.Name = "pnCad";
             this.pnCad.Size = new System.Drawing.Size(72, 93);
             this.pnCad.TabIndex = 43;
@@ -489,32 +487,6 @@
             this.btVideo.UseVisualStyleBackColor = true;
             this.btVideo.Click += new System.EventHandler(this.btSubeditor_Click);
             // 
-            // cbGame
-            // 
-            this.cbGame.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbGame.DropDownWidth = 200;
-            this.cbGame.FormattingEnabled = true;
-            this.cbGame.Items.AddRange(new object[] {
-            "Capcom Generic",
-            "Chip \'n Dale Rescue Rangers",
-            "Duck Tales",
-            "Duck Tales 2",
-            "Tiny Toon"});
-            this.cbGame.Location = new System.Drawing.Point(334, 190);
-            this.cbGame.Name = "cbGame";
-            this.cbGame.Size = new System.Drawing.Size(66, 21);
-            this.cbGame.TabIndex = 47;
-            this.cbGame.SelectedIndexChanged += new System.EventHandler(this.cbGame_SelectedIndexChanged);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(331, 174);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(38, 13);
-            this.label10.TabIndex = 48;
-            this.label10.Text = "Game:";
-            // 
             // btExport
             // 
             this.btExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -603,17 +575,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1058, 552);
+            this.Controls.Add(this.pnCad);
             this.Controls.Add(this.pnView);
             this.Controls.Add(this.btHex);
             this.Controls.Add(this.cbShowAxis);
             this.Controls.Add(this.btImport);
             this.Controls.Add(this.btExport);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.cbGame);
             this.Controls.Add(this.pnEditors);
             this.Controls.Add(this.cbViewType);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.pnCad);
             this.Controls.Add(this.pnGeneric);
             this.Controls.Add(this.btOpen);
             this.Controls.Add(this.cbShowNeighborns);
@@ -676,8 +646,6 @@
         private System.Windows.Forms.ComboBox cbViewType;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel pnEditors;
-        private System.Windows.Forms.ComboBox cbGame;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button btVideo;
         private System.Windows.Forms.Button btExport;
         private System.Windows.Forms.Button btImport;

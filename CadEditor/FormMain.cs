@@ -42,16 +42,14 @@ namespace CadEditor
             Utils.setCbIndexWithoutUpdateLevel(cbLevel, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbDoor, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbViewType, cbLevel_SelectedIndexChanged);
-            Utils.setCbIndexWithoutUpdateLevel(cbGame, cbGame_SelectedIndexChanged);
 
             dirty = false;
             showNeiScreens = true;
             showAxis = true;
             prepareBlocksPanel();
 
-            cbGame.SelectedIndex = (int)Globals.gameType;
-            reloadGameType(false);
-            cbLevel_SelectedIndexChanged(null, new EventArgs());
+            reloadGameType();
+            changeLevelIndex();
 
             bool showImportExport = Globals.gameType != GameType.DT;
             btImport.Visible = showImportExport;
@@ -74,10 +72,10 @@ namespace CadEditor
             };
         }
 
-        private void reloadLevel(bool reloadScreens = true)
+        private void reloadLevel(bool reloadScreens = true, bool reloadBlockPanel = false)
         {
             setBigBlocksIndexes();
-            setBlocks();
+            setBlocks(reloadBlockPanel);
             if (reloadScreens)
               setScreens();
             updateMap();
@@ -89,7 +87,7 @@ namespace CadEditor
           bigBlockIndexes = ConfigScript.getBigBlocks(bigTileIndex);
         }
 
-        private void setBlocks()
+        private void setBlocks(bool needToRefillBlockPanel)
         {
             if (ConfigScript.usePicturesInstedBlocks)
             {
@@ -183,7 +181,11 @@ namespace CadEditor
                 bigBlocks.Images.Add(Video.emptyScreen(64,64));
             }
             curActiveBlock = 0;
-            reloadBlocksPanel();
+
+            if (needToRefillBlockPanel)
+                prepareBlocksPanel();
+            else
+                reloadBlocksPanel();
         }
 
         private void prepareBlocksPanel()
@@ -374,6 +376,11 @@ namespace CadEditor
 
         private void cbLevel_SelectedIndexChanged(object sender, EventArgs e)
         {
+            changeLevelIndex();
+        }
+
+        private void changeLevelIndex(bool reloadObjectsPanel = false)
+        {
             if (Globals.gameType == GameType.CAD)
             {
                 curActiveLevel = cbLevel.SelectedIndex;
@@ -387,7 +394,7 @@ namespace CadEditor
                 curActivePalleteNo = cbPaletteNo.SelectedIndex;
             }
             curViewType = (MapViewType)cbViewType.SelectedIndex;
-            reloadLevel();
+            reloadLevel(true, reloadObjectsPanel);
         }
 
         private void returnCbLevelIndex()
@@ -442,27 +449,18 @@ namespace CadEditor
             
         }
 
-        public void reloadGameType(bool reloadVideo)
+        public void reloadGameType()
         {
             bool generic = Globals.gameType != GameType.CAD;
             pnGeneric.Visible = generic;
             pnCad.Visible = !generic;
-            if (reloadVideo)
-              cbLevel_SelectedIndexChanged(null, new EventArgs());
         }
 
         private void btOpen_Click(object sender, EventArgs e)
         {
             openFile();
-            cbGame.SelectedIndex = (int)Globals.gameType; 
-            reloadGameType(false);
-            cbLevel_SelectedIndexChanged(null, new EventArgs());
-        }
-
-        private void cbGame_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Globals.gameType = (GameType)cbGame.SelectedIndex;
-            reloadGameType(true);
+            reloadGameType();
+            changeLevelIndex(true);
         }
 
         private void btExport_Click(object sender, EventArgs e)
