@@ -489,6 +489,8 @@ namespace CadEditor
 
         private void btClearObjs_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("Do you really want to delete all objects at screen?", "Confirm", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                return;
             List<ObjectRec> toRemove = new List<ObjectRec>();
             for (int i = 0; i < objects.Count; i++)
             {
