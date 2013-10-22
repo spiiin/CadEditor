@@ -70,6 +70,7 @@ namespace CadEditor
                 curBigBlockNo = cbBigBlockNo.SelectedIndex;
                 curBlockNo = cbBlockNo.SelectedIndex;
                 curPaletteNo = cbPaletteNo.SelectedIndex;
+                curActiveScreen = cbScreenNo.SelectedIndex;
 
                 int layoutAddr = Globals.getLayoutAddr(curActiveLayout);
                 int width = curWidth;
@@ -544,10 +545,11 @@ namespace CadEditor
             byte x = (byte)(e.X / 2);
             byte y = (byte)(e.Y / 2);
             var obj = new ObjectRec(type, sx, sy, x, y);
-            objects.Add(obj);
 
-            String ans = String.Format("{0} <{1}>", obj.ToString(), curActiveScreen);
-            lvObjects.Items.Add(new ListViewItem(ans, obj.type));
+            int insertPos = lvObjects.SelectedItems.Count > 0 ? lvObjects.SelectedIndices[0]+1 : lvObjects.Items.Count;
+            objects.Insert(insertPos, obj);
+
+            lvObjects.Items.Insert(insertPos, new ListViewItem(makeStringForObject(obj), obj.type));
             mapScreen.Invalidate();
         }
 
