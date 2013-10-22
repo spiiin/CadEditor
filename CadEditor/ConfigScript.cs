@@ -45,6 +45,7 @@ namespace CadEditor
             isLayoutEditorEnabled = callFromScript(asm, data, "*.isLayoutEditorEnabled", true);
             isEnemyEditorEnabled = callFromScript(asm, data, "*.isEnemyEditorEnabled", true);
             isVideoEditorEnabled = callFromScript(asm, data, "*.isVideoEditorEnabled", true);
+            objTypesPicturesDir = callFromScript(asm, data, "*.getObjTypesPicturesDir", "obj_sprites");
 
             blocksPicturesFilename = callFromScript(asm, data, "getBlocksFilename", "");
             usePicturesInstedBlocks = blocksPicturesFilename != "";
@@ -136,6 +137,11 @@ namespace CadEditor
         {
             return screenHeight;
         }
+
+        public static string getObjTypesPicturesDir()
+        {
+            return objTypesPicturesDir;
+        }
        
         public static T callFromScript<T>(AsmHelper script, object data, string funcName, T defaultValue = default(T), params object[] funcParams)
         {
@@ -183,6 +189,7 @@ namespace CadEditor
 
         public static bool usePicturesInstedBlocks;
         public static string blocksPicturesFilename;
+        public static string objTypesPicturesDir;
 
         //chip and dale specific
         public static int LevelRecBaseOffset;

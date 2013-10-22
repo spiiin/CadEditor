@@ -804,7 +804,7 @@ namespace CadEditor
 
         private void reloadPictures()
         {
-            var objSpritesDir = Globals.gameType == GameType.Generic ? "obj_sprites_dwd" : (GameType.CAD == Globals.gameType) ? "obj_sprites_cad" : "obj_sprites";
+            var objSpritesDir = ConfigScript.getObjTypesPicturesDir();
             var objSpritesDirGeneric = "obj_sprites";
             var templ = objSpritesDir + "\\object{0}.png";
             var templGeneric = objSpritesDirGeneric + "\\object{0}.png";

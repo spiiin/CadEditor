@@ -11,6 +11,8 @@ public class Data:CapcomBase
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x20010   , 300 , 0x40);   }
   public IList<LevelRec> getLevelRecs() { return levelRecsDwd; }
   
+  public string getObjTypesPicturesDir() { return "obj_sprites_dwd"; }
+  
   public IList<LevelRec> levelRecsDwd = new List<LevelRec>() 
   {
     new LevelRec(0x30410, 128, 17, 4,  0x1C394), 

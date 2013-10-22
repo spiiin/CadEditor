@@ -13,6 +13,8 @@ public class Data:CapcomBase
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x10   , 300 , 0x40);   }
   public IList<LevelRec> getLevelRecs() { return levelRecsCad; }
   
+  public string getObjTypesPicturesDir() { return "obj_sprites_cad"; }
+  
   //chip and dale specific
   public OffsetRec getBoxesBackOffset() { return new OffsetRec(0x1E909, 11  , 16);     }
   public int getLevelRecBaseOffset() { return 0x1E201; }
