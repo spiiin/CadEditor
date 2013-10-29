@@ -61,7 +61,7 @@ namespace CadEditor
             btEditEnemy.Enabled = ConfigScript.isEnemyEditorEnabled;
             btVideo.Enabled = ConfigScript.isVideoEditorEnabled;
 
-            mapScreen.Size = new Size((ConfigScript.getScreenWidth()+2)*64, ConfigScript.getScreenHeight()*64);
+            mapScreen.Size = new Size((ConfigScript.getScreenWidth() + 2) * 32 * curScale, ConfigScript.getScreenHeight() * 32 * curScale);
 
             subeditorsDict = new Dictionary<Button, Func<Form>> { 
                  { btEdit,           ()=>{ return new BigBlockEdit();} },
@@ -251,6 +251,7 @@ namespace CadEditor
 
             int WIDTH = ConfigScript.getScreenWidth();
             int HEIGHT = ConfigScript.getScreenHeight();
+            int TILE_SIZE = 32 * curScale;
             int SIZE = WIDTH * HEIGHT;
             if (!fileLoaded)
                 return;
@@ -261,7 +262,7 @@ namespace CadEditor
             {
                 int index = indexes[i];
                 int bigBlockNo = Globals.getBigTileNoFromScreen(indexes, i);
-                var tileRect =  new Rectangle((i % WIDTH + 1) * 64, i / WIDTH * 64, 64, 64);
+                var tileRect = new Rectangle((i % WIDTH + 1) * TILE_SIZE, i / WIDTH * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 if ((visibleRect.Contains(tileRect)) || (visibleRect.IntersectsWith(tileRect)))
                   g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
             }
@@ -274,7 +275,7 @@ namespace CadEditor
                     {
                         int index = indexesPrev[i];
                         int bigBlockNo = Globals.getBigTileNoFromScreen(indexesPrev, i);
-                        g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle(0, i / WIDTH * 64, 64, 64));
+                        g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle(0, i / WIDTH * TILE_SIZE, TILE_SIZE, TILE_SIZE));
                     }
                 }
             }
@@ -287,11 +288,11 @@ namespace CadEditor
                     {
                         int index = indexesNext[i];
                         int bigBlockNo = Globals.getBigTileNoFromScreen(indexesNext, i);
-                        g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle((WIDTH + 1) * 64, i / WIDTH * 64, 64, 64));
+                        g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle((WIDTH + 1) * TILE_SIZE, i / WIDTH * TILE_SIZE, TILE_SIZE, TILE_SIZE));
                     }
                 }
             }
-            g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(64, 0, 64*WIDTH, 64*HEIGHT));
+            g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(TILE_SIZE, 0, TILE_SIZE * WIDTH, TILE_SIZE * HEIGHT));
         }
 
         //editor globals
@@ -307,6 +308,7 @@ namespace CadEditor
         private int curActiveBlockNo = 0;
         private int curActivePalleteNo = 0;
 
+        private int curScale = 2;
 
         MapViewType curViewType = MapViewType.ObjType;
         private bool dirty;
@@ -324,8 +326,8 @@ namespace CadEditor
         {
             int WIDTH  = ConfigScript.getScreenWidth();
             int HEIGHT = ConfigScript.getScreenHeight();
-            int dx = e.X / 64 - 1;
-            int dy = e.Y / 64;
+            int dx = e.X / (32 * curScale) - 1;
+            int dy = e.Y / (32 * curScale);
             if (dx == WIDTH)
             {
                 if (curActiveScreen < ConfigScript.screensOffset.recCount - 1)
