@@ -154,6 +154,11 @@ namespace CadEditor
                 {
                     if (Globals.gameType != GameType.TT)
                     {
+                        //3 eyes version
+                        /*g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 0]], new Rectangle(0, 0, 32, 32));
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(bbRectPos, 0, 32, 32));
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(0, bbRectPos, 32, 32));
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPos, bbRectPos, 32, 32));*/
                         g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4]], new Rectangle(0, 0, 32, 32));
                         g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(bbRectPos, 0, 32, 32));
                         g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(0, bbRectPos, 32, 32));

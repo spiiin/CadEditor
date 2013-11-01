@@ -153,6 +153,12 @@ namespace CadEditor
                 }
                 byte c4 = Globals.romdata[addr + 0x300 + i];
                 byte typeColor = Globals.romdata[addr + 0x400 + i];
+                //3 eyes version
+                /*byte c1 = Globals.romdata[addr + 4 * i + 0];
+                byte c2 = Globals.romdata[addr + 4 * i + 1];
+                byte c3 = Globals.romdata[addr + 4 * i + 2];
+                byte c4 = Globals.romdata[addr + 4 * i + 3];
+                byte typeColor = Globals.romdata[0x14C1C + i];*/
                 objects[i] = new ObjRec(c1, c2, c3, c4, typeColor);
             }
             byte[] palette = ConfigScript.getPal(palId);
