@@ -27,7 +27,6 @@ namespace CadEditor
             bigBlocksOffset = (OffsetRec)asm.InvokeInst(data, "*.getBigBlocksOffset");
             blocksOffset = (OffsetRec)asm.InvokeInst(data, "*.getBlocksOffset");
             screensOffset = (OffsetRec)asm.InvokeInst(data, "*.getScreensOffset");
-            bigBlocksCount = (int)asm.InvokeInst(data,"*.getBigBlocksCount");
             screenWidth = (int)asm.InvokeInst(data, "*.getScreenWidth");
             screenHeight = (int)asm.InvokeInst(data, "*.getScreenHeight");
             levelRecs = (IList<LevelRec>)asm.InvokeInst(data,"*.getLevelRecs");
@@ -46,6 +45,9 @@ namespace CadEditor
             isEnemyEditorEnabled = callFromScript(asm, data, "*.isEnemyEditorEnabled", true);
             isVideoEditorEnabled = callFromScript(asm, data, "*.isVideoEditorEnabled", true);
             objTypesPicturesDir = callFromScript(asm, data, "*.getObjTypesPicturesDir", "obj_sprites");
+
+            bigBlocksCount = callFromScript(asm, data, "*.getBigBlocksCount", 256);
+            blocksCount    = callFromScript(asm, data, "*.getBlocksCount"   , 256);
 
             blocksPicturesFilename = callFromScript(asm, data, "getBlocksFilename", "");
             usePicturesInstedBlocks = blocksPicturesFilename != "";
@@ -119,6 +121,11 @@ namespace CadEditor
             return bigBlocksCount;
         }
 
+        public static int getBlocksCount()
+        {
+            return blocksCount;
+        }
+
         public static LevelRec getLevelRec(int i)
         {
             return levelRecs[i];
@@ -172,6 +179,7 @@ namespace CadEditor
         public static OffsetRec screensOffset;
         public static OffsetRec boxesBackOffset;
         public static int bigBlocksCount;
+        public static int blocksCount;
         public static int screenWidth;
         public static int screenHeight;
 

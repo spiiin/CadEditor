@@ -427,7 +427,6 @@ namespace CadEditor
         public static byte[] romdata;
         public static int CHUNKS_COUNT = 256;
         public static int VIDEO_PAGE_SIZE = 4096;
-        public static int OBJECTS_COUNT = 256;
         public static int PAL_LEN = 16;
         public static int MAX_SCREEN_LIST_LEN = 64;
 

@@ -135,42 +135,19 @@ namespace CadEditor
         {
             byte[] videoChunk = ConfigScript.getVideoChunk(videoPageId);
 
-            ObjRec[] objects = new ObjRec[256];
-            int addr = Globals.getTilesAddr(tilesId);
-            for (int i = 0; i < Globals.OBJECTS_COUNT; i++)
-            {
-                byte c1 = Globals.romdata[addr + i];
-                byte c2, c3;
-                if (Globals.gameType != GameType.TT)
-                {
-                    c2 = Globals.romdata[addr + 0x100 + i];
-                    c3 = Globals.romdata[addr + 0x200 + i];
-                }
-                else
-                {
-                    c3 = Globals.romdata[addr + 0x100 + i]; //tt version
-                    c2 = Globals.romdata[addr + 0x200 + i];
-                }
-                byte c4 = Globals.romdata[addr + 0x300 + i];
-                byte typeColor = Globals.romdata[addr + 0x400 + i];
-                //3 eyes version
-                /*byte c1 = Globals.romdata[addr + 4 * i + 0];
-                byte c2 = Globals.romdata[addr + 4 * i + 1];
-                byte c3 = Globals.romdata[addr + 4 * i + 2];
-                byte c4 = Globals.romdata[addr + 4 * i + 3];
-                byte typeColor = Globals.romdata[0x14C1C + i];*/
-                objects[i] = new ObjRec(c1, c2, c3, c4, typeColor);
-            }
+            int blocksCount = ConfigScript.getBlocksCount();
+            ObjRec[] objects = Utils.readFromAlignedArrays(Globals.romdata, Globals.getTilesAddr(tilesId), blocksCount);
+            
             byte[] palette = ConfigScript.getPal(palId);
             var objStrip1 = makeImageStrip(videoChunk, palette, 0, scale);
             var objStrip2 = makeImageStrip(videoChunk, palette, 1, scale);
             var objStrip3 = makeImageStrip(videoChunk, palette, 2, scale);
             var objStrip4 = makeImageStrip(videoChunk, palette, 3, scale);
             var objStrips = new[] { objStrip1, objStrip2, objStrip3, objStrip4 };
-            Bitmap res = new Bitmap(16 * Globals.OBJECTS_COUNT * scale, 16 * scale);
+            Bitmap res = new Bitmap(16 * blocksCount * scale, 16 * scale);
             using (Graphics g = Graphics.FromImage(res))
             {
-                for (int i = 0; i < 256; i++)
+                for (int i = 0; i < blocksCount; i++)
                 {
                     var mblock = new Bitmap(16 * scale, 16 * scale);
                     var co = objects[i];

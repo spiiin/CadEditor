@@ -111,17 +111,7 @@ namespace CadEditor
         private void setObjects()
         {
             byte bigBlockId = (Globals.gameType == GameType.CAD) ? (byte)Globals.levelData[curActiveLevel].bigBlockId : (byte)curActiveBigBlock;
-            int addr = Globals.getTilesAddr(bigBlockId);
-            for (int i = 0; i < Globals.OBJECTS_COUNT; i++)
-            {
-                byte c1 = Globals.romdata[addr + i];
-                byte c2 = Globals.romdata[addr + 0x100 + i];
-                byte c3 = Globals.romdata[addr + 0x200 + i];
-                byte c4 = Globals.romdata[addr + 0x300 + i];
-                byte typeColor = Globals.romdata[addr + 0x400 + i];
-                objects[i] = new ObjRec(c1, c2, c3, c4, typeColor);
-            }
-
+            objects = Utils.readFromAlignedArrays(Globals.romdata, Globals.getTilesAddr(bigBlockId), ConfigScript.getBlocksCount());
             refillPanel();
         }
 
@@ -299,7 +289,7 @@ namespace CadEditor
         {
             byte blockId = getBlockId();
             int addr = Globals.getTilesAddr(blockId);
-            for (int i = 0; i < Globals.OBJECTS_COUNT; i++)
+            for (int i = 0; i < ConfigScript.getBlocksCount(); i++)
             {
                 Globals.romdata[addr + i] = objects[i].c1;
                 Globals.romdata[addr + 0x100 + i] = objects[i].c2;
@@ -382,7 +372,7 @@ namespace CadEditor
             //GUI
             mapObjects.Controls.Clear();
             mapObjects.SuspendLayout();
-            for (int i = 0; i < Globals.OBJECTS_COUNT; i++)
+            for (int i = 0; i < ConfigScript.getBlocksCount(); i++)
             {
                 Panel fp = new Panel();
                 fp.Size = new Size(mapObjects.Width - 25, 32);
@@ -438,7 +428,7 @@ namespace CadEditor
         {
             //GUI
             bool isCad = Globals.gameType == GameType.CAD;
-            for (int i = 0; i < Globals.OBJECTS_COUNT; i++)
+            for (int i = 0; i < ConfigScript.getBlocksCount(); i++)
             {
                 Panel p = (Panel)mapObjects.Controls[i];
                 PictureBox pb = (PictureBox)p.Controls[1];
@@ -497,7 +487,7 @@ namespace CadEditor
         {
             if (MessageBox.Show("Are you sure want to clear all blocks?", "Clear", MessageBoxButtons.YesNo)!= DialogResult.Yes)
               return;
-            for (int i = 0; i < Globals.OBJECTS_COUNT; i++)
+            for (int i = 0; i < ConfigScript.getBlocksCount(); i++)
                 objects[i] = new ObjRec(0,0,0,0,0);
             dirty = true;
             refillPanel();
@@ -561,14 +551,15 @@ namespace CadEditor
                 return;
             var fn = f.Filename;
             byte blockId = getBlockId();
-            var data = new byte[Globals.OBJECTS_COUNT * 5];
-            for (int i = 0; i < Globals.OBJECTS_COUNT; i++)
+            int blocksCount = ConfigScript.getBlocksCount();
+            var data = new byte[blocksCount * 5];
+            for (int i = 0; i < blocksCount; i++)
             {
                 data[i] = objects[i].c1;
-                data[Globals.OBJECTS_COUNT * 1 + i] = objects[i].c2;
-                data[Globals.OBJECTS_COUNT * 2 + i] = objects[i].c3;
-                data[Globals.OBJECTS_COUNT * 3 + i] = objects[i].c4;
-                data[Globals.OBJECTS_COUNT * 4 + i] = objects[i].typeColor;
+                data[blocksCount * 1 + i] = objects[i].c2;
+                data[blocksCount * 2 + i] = objects[i].c3;
+                data[blocksCount * 3 + i] = objects[i].c4;
+                data[blocksCount * 4 + i] = objects[i].typeColor;
             }
 
             Utils.saveDataToFile(fn, data);
@@ -588,7 +579,7 @@ namespace CadEditor
 
             byte bigBlockId = (Globals.gameType == GameType.CAD) ? (byte)Globals.levelData[curActiveLevel].bigBlockId : (byte)curActiveBigBlock;
             int addr = Globals.getTilesAddr(bigBlockId);
-            for (int i = 0; i < Globals.OBJECTS_COUNT; i++)
+            for (int i = 0; i < ConfigScript.getBlocksCount(); i++)
             {
                 Globals.romdata[addr + i] = data[i];
                 Globals.romdata[addr + 0x100 + i] = data[i + 0x100];
