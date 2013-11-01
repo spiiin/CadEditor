@@ -30,11 +30,23 @@ namespace CadEditor
             {
                 Globals.loadData(OpenFile.FileName, OpenFile.ConfigName);
                 fileLoaded = true;
+                resetControls();
             }
 
+            subeditorsDict = new Dictionary<Button, Func<Form>> { 
+                 { btEdit,           ()=>{ return new BigBlockEdit();} },
+                 { btEditObjs,       ()=>{ return new BlockEdit();}    },
+                 { btEditLayout,     ()=>{ return new EditLayout();}   },
+                 { btEditEnemy,      ()=>{ return new EnemyEditor();}  },
+                 { btVideo,          ()=>{ return new EditVideo();}    },
+            };
+        }
+
+        private void resetControls()
+        {
             cbScreenNo.Items.Clear();
             for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
-                cbScreenNo.Items.Add(String.Format("{0:X}", i+1));
+                cbScreenNo.Items.Add(String.Format("{0:X}", i + 1));
             cbScreenNo.SelectedIndex = 0;
             setScreens();
 
@@ -70,14 +82,6 @@ namespace CadEditor
             btVideo.Enabled = ConfigScript.isVideoEditorEnabled;
 
             mapScreen.Size = new Size((ConfigScript.getScreenWidth() + 2) * 32 * curScale, ConfigScript.getScreenHeight() * 32 * curScale);
-
-            subeditorsDict = new Dictionary<Button, Func<Form>> { 
-                 { btEdit,           ()=>{ return new BigBlockEdit();} },
-                 { btEditObjs,       ()=>{ return new BlockEdit();}    },
-                 { btEditLayout,     ()=>{ return new EditLayout();}   },
-                 { btEditEnemy,      ()=>{ return new EnemyEditor();}  },
-                 { btVideo,          ()=>{ return new EditVideo();}    },
-            };
         }
 
         private void reloadLevel(bool reloadScreens = true, bool reloadBlockPanel = false)
@@ -460,6 +464,7 @@ namespace CadEditor
             }
             if (!fileLoaded)
                 return false;
+            resetControls();
             return true;
             
         }
