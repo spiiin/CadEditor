@@ -23,7 +23,7 @@ public class Data
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getTinyToonVideoChunk;   }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   public GetBigBlocksFunc     getBigBlocksFunc()     { return getBigBlocksTT;}
-  public SetBigBlocksFunc     setBigBlocksFunc()     { return null;}
+  public SetBigBlocksFunc     setBigBlocksFunc()     { return setBigBlocksTT;}
   public GetPalFunc           getPalFunc()           { return getPalleteLevel_2_1;}
   public SetPalFunc           setPalFunc()           { return null;}
   
@@ -63,16 +63,13 @@ public class Data
   {
     byte[] bigBlockIndexes = new byte[getBigBlocksCount() * 4];
     var bigBlocksAddr = Globals.getBigTilesAddr(bigTileIndex);
-    int btc = getBigBlocksCount();
-    for (int i = 0; i < btc; i++)
-    {
-      bigBlockIndexes[i*4+0] = Globals.romdata[bigBlocksAddr + btc*0 + i];
-      bigBlockIndexes[i*4+1] = Globals.romdata[bigBlocksAddr + btc*1 + i];
-      bigBlockIndexes[i*4+2] = Globals.romdata[bigBlocksAddr + btc*2 + i];
-      bigBlockIndexes[i*4+3] = Globals.romdata[bigBlocksAddr + btc*3 + i];
-      // BLOCK_COLOR_BYTE_ARRAY[i] = Globals.romdata[bigBlocksAddr + btc*4 + i];
-    }
-    return bigBlockIndexes;
+    return Utils.readDataFromAlignedArrays(Globals.romdata, bigBlocksAddr, getBigBlocksCount());
+  }
+  
+  public void setBigBlocksTT(int bigTileIndex, byte[] bigBlockIndexes)
+  {
+    var bigBlocksAddr = Globals.getBigTilesAddr(bigTileIndex);
+    Utils.writeDataToAlignedArrays(bigBlockIndexes, Globals.romdata, bigBlocksAddr, getBigBlocksCount());
   }
   
   public byte[] getPalleteLevel_2_1(int palId)

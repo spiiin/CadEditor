@@ -91,22 +91,6 @@ namespace CadEditor
                 Globals.romdata[videoAddr + i] = videoChunk[i];
         }
 
-        public static byte[] getBigBlocksCapcomDefault(int bigTileIndex)
-        {
-            byte[] bigBlockIndexes = new byte[ConfigScript.getBigBlocksCount() * 4];
-            var bigBlocksAddr = Globals.getBigTilesAddr(bigTileIndex);
-            for (int i = 0; i < ConfigScript.getBigBlocksCount() * 4; i++)
-                bigBlockIndexes[i] = Globals.romdata[bigBlocksAddr + i];
-            return bigBlockIndexes;
-        }
-
-        public static void setBigBlocksCapcomDefault(int bigTileIndex, byte[] bigBlockIndexes)
-        {
-            int addr = Globals.getBigTilesAddr(bigTileIndex);
-            for (int i = 0; i < ConfigScript.getBigBlocksCount() * 4; i++)
-                Globals.romdata[addr + i] = bigBlockIndexes[i];
-        }
-
         public static byte[] getPalleteLinear(int palIndex)
         {
             var palette = new byte[Globals.PAL_LEN];
@@ -212,7 +196,7 @@ namespace CadEditor
             return data;
         }
 
-        public static ObjRec[] readFromAlignedArrays(byte[] romdata, int addr, int count)
+        public static ObjRec[] readBlocksFromAlignedArrays(byte[] romdata, int addr, int count)
         {
             var objects = new ObjRec[count];
             for (int i = 0; i < count; i++)
@@ -246,7 +230,49 @@ namespace CadEditor
             return objects;
         }
 
-        public static void writeToAlignedArrays(ObjRec[] objects, byte[] romdata, int addr, int count)
+        public static byte[] getBigBlocksCapcomDefault(int bigTileIndex)
+        {
+            byte[] bigBlockIndexes = new byte[ConfigScript.getBigBlocksCount() * 4];
+            var bigBlocksAddr = Globals.getBigTilesAddr(bigTileIndex);
+            for (int i = 0; i < ConfigScript.getBigBlocksCount() * 4; i++)
+                bigBlockIndexes[i] = Globals.romdata[bigBlocksAddr + i];
+            return bigBlockIndexes;
+        }
+
+        public static void setBigBlocksCapcomDefault(int bigTileIndex, byte[] bigBlockIndexes)
+        {
+            int addr = Globals.getBigTilesAddr(bigTileIndex);
+            for (int i = 0; i < ConfigScript.getBigBlocksCount() * 4; i++)
+                Globals.romdata[addr + i] = bigBlockIndexes[i];
+        }
+
+        public static byte[] readDataFromAlignedArrays(byte[] romdata, int addr, int count)
+        {
+            byte[] data = new byte[count * 4];
+            for (int i = 0; i < count; i++)
+            {
+                data[i * 4 + 0] = Globals.romdata[addr + count * 0 + i];
+                data[i * 4 + 1] = Globals.romdata[addr + count * 1 + i];
+                data[i * 4 + 2] = Globals.romdata[addr + count * 2 + i];
+                data[i * 4 + 3] = Globals.romdata[addr + count * 3 + i];
+                //data[i *4 + 4] = Globals.romdata[addr + count*4 + i]; // for tt
+            }
+            return data;
+        }
+
+        public static void writeDataToAlignedArrays(byte[] data, byte[] romdata, int addr, int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                Globals.romdata[addr + count * 0 + i] = data[i * 4 + 0];
+                Globals.romdata[addr + count * 1 + i] = data[i * 4 + 1];
+                Globals.romdata[addr + count * 2 + i] = data[i * 4 + 2];
+                Globals.romdata[addr + count * 3 + i] = data[i * 4 + 3];
+                //Globals.romdata[addr + count*4 + i] = data[i *4 + 4]; // for tt
+            }
+        }
+
+        public static void writeBlocksToAlignedArrays(ObjRec[] objects, byte[] romdata, int addr, int count)
         {
             for (int i = 0; i < count; i++)
             {

@@ -111,7 +111,7 @@ namespace CadEditor
         private void setObjects()
         {
             byte bigBlockId = (Globals.gameType == GameType.CAD) ? (byte)Globals.levelData[curActiveLevel].bigBlockId : (byte)curActiveBigBlock;
-            objects = Utils.readFromAlignedArrays(Globals.romdata, Globals.getTilesAddr(bigBlockId), ConfigScript.getBlocksCount());
+            objects = Utils.readBlocksFromAlignedArrays(Globals.romdata, Globals.getTilesAddr(bigBlockId), ConfigScript.getBlocksCount());
             refillPanel();
         }
 
@@ -288,7 +288,7 @@ namespace CadEditor
         private bool saveToFile()
         {
             byte blockId = getBlockId();
-            Utils.writeToAlignedArrays(objects, Globals.romdata, Globals.getTilesAddr(blockId), ConfigScript.getBlocksCount());
+            Utils.writeBlocksToAlignedArrays(objects, Globals.romdata, Globals.getTilesAddr(blockId), ConfigScript.getBlocksCount());
             if (Globals.gameType == GameType.CAD)
             {
                 int backAddr = Globals.getBackTileAddr(curActiveLevel);

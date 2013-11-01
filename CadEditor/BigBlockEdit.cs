@@ -167,7 +167,9 @@ namespace CadEditor
             int dx = (e.X % 32) / 16;
             int dy = (e.Y % 32) / 16;
             int ind = (by * 16 + bx) * 4 + (dy * 2 + dx);
-            bigBlockIndexes[addIndexes+ind] = (byte)curActiveBlock;
+            int actualIndex = addIndexes + ind;
+            if (actualIndex < bigBlockIndexes.Length)
+              bigBlockIndexes[actualIndex] = (byte)curActiveBlock;
             mapScreen.Invalidate();
         }
 
