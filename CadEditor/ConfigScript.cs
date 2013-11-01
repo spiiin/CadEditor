@@ -50,6 +50,8 @@ namespace CadEditor
             blocksPicturesFilename = callFromScript(asm, data, "getBlocksFilename", "");
             usePicturesInstedBlocks = blocksPicturesFilename != "";
 
+            blockTypeNames = callFromScript(asm, data, "getBlockTypeNames", defaultBlockTypeNames);
+
             if (Globals.gameType == GameType.CAD)
             {
                 boxesBackOffset = (OffsetRec)asm.InvokeInst(data, "*.getBoxesBackOffset");
@@ -142,6 +144,11 @@ namespace CadEditor
         {
             return objTypesPicturesDir;
         }
+
+        public static string[] getBlockTypeNames()
+        {
+            return blockTypeNames;
+        }
        
         public static T callFromScript<T>(AsmHelper script, object data, string funcName, T defaultValue = default(T), params object[] funcParams)
         {
@@ -190,6 +197,9 @@ namespace CadEditor
         public static bool usePicturesInstedBlocks;
         public static string blocksPicturesFilename;
         public static string objTypesPicturesDir;
+
+        public static string[] blockTypeNames;
+        public static string[] defaultBlockTypeNames = new[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F" };
 
         //chip and dale specific
         public static int LevelRecBaseOffset;

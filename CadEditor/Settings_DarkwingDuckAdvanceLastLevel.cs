@@ -10,6 +10,7 @@ public class Data:CapcomBase
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x27AF0 , 1   , 0x4000); }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x20010   , 300 , 0x40);   }
   public IList<LevelRec> getLevelRecs() { return levelRecsDwd; }
+  public string[] getBlockTypeNames()   { return objTypesDwd;  }
   
   public string getObjTypesPicturesDir() { return "obj_sprites_dwd"; }
   
@@ -19,4 +20,10 @@ public class Data:CapcomBase
   };
   //temp hack
   public bool isDwdAdvanceLastLevel() { return true; }
+  
+  string[] objTypesDwd =
+  new[] {
+      "0 (back)","1 (hook)","2 (platform)","3 (block)","4 (spikes)","5 (door)",
+      "6","7","8","9","A","B","C","D","E","F"
+  };
 }

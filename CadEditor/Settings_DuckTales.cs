@@ -15,6 +15,7 @@ public class Data:CapcomBase
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x10058, 300 , 0x48);   }
 
   public IList<LevelRec> getLevelRecs() { return levelRecsDt; }
+  public string[] getBlockTypeNames()   { return objTypesDt;  }
   
   public override GetVideoPageAddrFunc getVideoPageAddrFunc() { return getDuckTalesVideoAddress; }
   public override GetVideoChunkFunc    getVideoChunkFunc()    { return getDuckTalesVideoChunk;   }
@@ -26,6 +27,11 @@ public class Data:CapcomBase
     new LevelRec(0x1B8E8, 126, 8, 6, 0x1CEF3),
     new LevelRec(0x1BAD1, 119, 8, 6, 0x1CF23),
     new LevelRec(0x1BD70, 182, 8, 6, 0x1CF53),
+  };
+  
+  string[] objTypesDt = new[] {
+    "0 (back)","1 (block)","2 ()","3 ()","4 ()","5 ()","6","7",
+    "8","9","A","B","C","D","E","F"
   };
   
   //--------------------------------------------------------------------------------------------

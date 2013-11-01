@@ -382,85 +382,6 @@ namespace CadEditor
             //GUI
             mapObjects.Controls.Clear();
             mapObjects.SuspendLayout();
-            var objTypesCad =
-                new[]  {
-                    "0 (back)",
-                    "1 (collect)",
-                    "2 (platform)",
-                    "3 (block)",
-                    "4 (spikes)",
-                    "5 (door)",
-                    "6 (mask)",
-                    "7 (? block and go up)",
-                    "8 (? block and go down)",
-                    "9 (? block and go down)",
-                    "A (Block)",
-                    "B (Pit)",
-                    "C (Block)",
-                    "D (Block)",
-                    "E (throwable stone)",
-                    "F (throwable box)"
-                };
-
-            var objTypesDw =
-                new[] {
-                    "0 (back)",
-                    "1 (hook)",
-                    "2 (platform)",
-                    "3 (block)",
-                    "4 (spikes)",
-                    "5 (door)",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "A",
-                    "B",
-                    "C",
-                    "D",
-                    "E",
-                    "F"
-                };
-
-            var objTypesDt =
-    new[] {
-                    "0 (back)",
-                    "1 (block)",
-                    "2 ()",
-                    "3 ()",
-                    "4 ()",
-                    "5 ()",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "A",
-                    "B",
-                    "C",
-                    "D",
-                    "E",
-                    "F"
-                };
-
-            var objTypesDt2 =
-                new[] {
-                    "no",
-                    "no",
-                    "no",
-                    "no",
-                    "no",
-                    "no",
-                    "no",
-                    "no",
-                    "no",
-                    "no",
-                    "no",
-                    "no",
-                    "no",
-                    "no",
-                    "no",
-                    "no"
-                };
             for (int i = 0; i < Globals.OBJECTS_COUNT; i++)
             {
                 Panel fp = new Panel();
@@ -492,7 +413,7 @@ namespace CadEditor
                 fp.Controls.Add(cbColor);
                 //
                 ComboBox cbType = new ComboBox();
-                var objectTypes = Globals.gameType == GameType.Generic ? objTypesDw : (Globals.gameType == GameType.CAD) ? objTypesCad : (Globals.gameType == GameType.DT) ? objTypesDt : objTypesDt2;
+                var objectTypes = ConfigScript.getBlockTypeNames();
                 cbType.Items.AddRange(objectTypes);
                 cbType.Location = new Point(156, 0);
                 cbType.Size = new Size(120, 21);

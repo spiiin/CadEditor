@@ -12,6 +12,7 @@ public class Data:CapcomBase
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x3AF0 , 8   , 0x4000); }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x10   , 300 , 0x40);   }
   public IList<LevelRec> getLevelRecs() { return levelRecsCad; }
+  public string[] getBlockTypeNames()   { return objTypesCad;  }
   
   public string getObjTypesPicturesDir() { return "obj_sprites_cad"; }
   
@@ -38,4 +39,24 @@ public class Data:CapcomBase
     new LevelRec(0x10EA1, 45),
     new LevelRec(0x10FED, 71),
   };
+  
+  string[] objTypesCad =
+    new[]  {
+        "0 (back)",
+        "1 (collect)",
+        "2 (platform)",
+        "3 (block)",
+        "4 (spikes)",
+        "5 (door)",
+        "6 (mask)",
+        "7 (? block and go up)",
+        "8 (? block and go down)",
+        "9 (? block and go down)",
+        "A (Block)",
+        "B (Pit)",
+        "C (Block)",
+        "D (Block)",
+        "E (throwable stone)",
+        "F (throwable box)"
+    };
 }
