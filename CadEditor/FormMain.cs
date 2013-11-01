@@ -18,10 +18,18 @@ namespace CadEditor
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (!openFile())
+            if (OpenFile.FileName == "" || OpenFile.ConfigName == "")
             {
-                Close();
-                return;
+                if (!openFile())
+                {
+                    Close();
+                    return;
+                }
+            }
+            else
+            {
+                Globals.loadData(OpenFile.FileName, OpenFile.ConfigName);
+                fileLoaded = true;
             }
 
             cbScreenNo.Items.Clear();
