@@ -288,23 +288,13 @@ namespace CadEditor
         private bool saveToFile()
         {
             byte blockId = getBlockId();
-            int addr = Globals.getTilesAddr(blockId);
-            for (int i = 0; i < ConfigScript.getBlocksCount(); i++)
-            {
-                Globals.romdata[addr + i] = objects[i].c1;
-                Globals.romdata[addr + 0x100 + i] = objects[i].c2;
-                Globals.romdata[addr + 0x200 + i] = objects[i].c3;
-                Globals.romdata[addr + 0x300 + i] = objects[i].c4;
-                Globals.romdata[addr + 0x400 + i] = objects[i].typeColor;
-            }
-
+            Utils.writeToAlignedArrays(objects, Globals.romdata, Globals.getTilesAddr(blockId), ConfigScript.getBlocksCount());
             if (Globals.gameType == GameType.CAD)
             {
                 int backAddr = Globals.getBackTileAddr(curActiveLevel);
                 for (int i = 0; i < 16; i++)
                     Globals.romdata[backAddr + i] = curActiveBack[i];
             }
-
             dirty = !Globals.flushToFile();
             return !dirty;
         }
