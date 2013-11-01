@@ -8,6 +8,8 @@ namespace CadEditor
     public delegate int   GetVideoPageAddrFunc(int videoPageId);
     public delegate byte[] GetVideoChunkFunc(int videoPageId);
     public delegate void   SetVideoChunkFunc(int videoPageId, byte[] videoChunk);
+    public delegate ObjRec[] GetBlocksFunc(int blockId);
+    public delegate void   SetBlocksFunc(int blockIndex, ObjRec[] blocksData);
     public delegate byte[] GetBigBlocksFunc(int bigBlockId);
     public delegate void   SetBigBlocksFunc(int bigTileIndex, byte[] bigBlockIndexes);
     public delegate byte[] GetPalFunc(int palId);
@@ -36,6 +38,8 @@ namespace CadEditor
             setVideoChunkFunc = (SetVideoChunkFunc)asm.InvokeInst(data, "*.setVideoChunkFunc");
             getBigBlocksFunc = (GetBigBlocksFunc)asm.InvokeInst(data, "*.getBigBlocksFunc");
             setBigBlocksFunc = (SetBigBlocksFunc)asm.InvokeInst(data, "*.setBigBlocksFunc");
+            getBlocksFunc = callFromScript<GetBlocksFunc>(asm,data,"*.getBlocksFunc", null);
+            setBlocksFunc = callFromScript<SetBlocksFunc>(asm, data, "*.setBlocksFunc", null);
             getPalFunc = (GetPalFunc)asm.InvokeInst(data, "*.getPalFunc");
             setPalFunc = (SetPalFunc)asm.InvokeInst(data, "*.setPalFunc");
 
@@ -103,6 +107,16 @@ namespace CadEditor
         public static void setBigBlocks(int bigTileIndex, byte[] bigBlockIndexes)
         {
             setBigBlocksFunc(bigTileIndex, bigBlockIndexes);
+        }
+
+        public static ObjRec[] getBlocks(int bigBlockId)
+        {
+            return getBlocksFunc(bigBlockId);
+        }
+
+        public static void setBlocks(int bIndex, ObjRec[] blocks)
+        {
+            setBlocksFunc(bIndex, blocks);
         }
 
         public static byte[] getPal(int palId)
@@ -193,6 +207,8 @@ namespace CadEditor
         public static SetVideoChunkFunc setVideoChunkFunc;
         public static GetBigBlocksFunc getBigBlocksFunc;
         public static SetBigBlocksFunc setBigBlocksFunc;
+        public static GetBlocksFunc getBlocksFunc;
+        public static SetBlocksFunc setBlocksFunc;
         public static GetPalFunc getPalFunc;
         public static SetPalFunc setPalFunc;
 

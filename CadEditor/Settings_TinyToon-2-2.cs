@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System;
 using System.Windows.Forms;
+//css_include Settings_TinyToon-Utils.cs;
 
 public class Data
 {
@@ -24,6 +25,8 @@ public class Data
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   public GetBigBlocksFunc     getBigBlocksFunc()     { return getBigBlocksTT;}
   public SetBigBlocksFunc     setBigBlocksFunc()     { return setBigBlocksTT;}
+  public GetBlocksFunc        getBlocksFunc()        { return TinyToonUtils.getBlocks;}
+  public SetBlocksFunc        setBlocksFunc()        { return TinyToonUtils.setBlocks;}
   public GetPalFunc           getPalFunc()           { return getPalleteLevel_2_1;}
   public SetPalFunc           setPalFunc()           { return null;}
   

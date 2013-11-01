@@ -196,29 +196,18 @@ namespace CadEditor
             return data;
         }
 
+        //capcom version
         public static ObjRec[] readBlocksFromAlignedArrays(byte[] romdata, int addr, int count)
         {
             var objects = new ObjRec[count];
             for (int i = 0; i < count; i++)
             {
                 byte c1, c2, c3, c4, typeColor;
-                if (Globals.gameType != GameType.TT)
-                {
-                    c1 = romdata[addr + i];
-                    c2 = romdata[addr + count*1 + i];
-                    c3 = romdata[addr + count*2 + i];
-                    c4 = romdata[addr + count*3 + i];
-                    typeColor = romdata[addr + count*4 + i]; //sometime non-sense
-                }
-                else
-                {
-                    c1 = romdata[addr + i];
-                    c3 = romdata[addr + count*1 + i]; //tt version
-                    c2 = romdata[addr + count*2 + i];
-                    c4 = romdata[addr + count*3 + i];
-                    typeColor = 0;
-                }
-
+                c1 = romdata[addr + i];
+                c3 = romdata[addr + count*1 + i]; //tt version
+                c2 = romdata[addr + count*2 + i];
+                c4 = romdata[addr + count*3 + i];
+                typeColor = 0;
                 //3 eyes version
                 /*byte c1 = Globals.romdata[addr + 4 * i + 0];
                 byte c2 = Globals.romdata[addr + 4 * i + 1];
@@ -228,6 +217,26 @@ namespace CadEditor
                 objects[i] = new ObjRec(c1, c2, c3, c4, typeColor);
             }
             return objects;
+        }
+
+        public static void writeBlocksToAlignedArrays(ObjRec[] objects, byte[] romdata, int addr, int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                var obj = objects[i];
+                romdata[addr + i] = obj.c1;
+                romdata[addr + count * 1 + i] = obj.c2;
+                romdata[addr + count * 2 + i] = obj.c3;
+                romdata[addr + count * 3 + i] = obj.c4;
+                romdata[addr + count * 4 + i] = obj.typeColor;
+
+                //3 eyes version
+                /*byte c1 = Globals.romdata[addr + 4 * i + 0];
+                byte c2 = Globals.romdata[addr + 4 * i + 1];
+                byte c3 = Globals.romdata[addr + 4 * i + 2];
+                byte c4 = Globals.romdata[addr + 4 * i + 3];
+                byte typeColor = Globals.romdata[0x14C1C + i];*/
+            }
         }
 
         public static byte[] getBigBlocksCapcomDefault(int bigTileIndex)
@@ -269,37 +278,6 @@ namespace CadEditor
                 Globals.romdata[addr + count * 2 + i] = data[i * 4 + 2];
                 Globals.romdata[addr + count * 3 + i] = data[i * 4 + 3];
                 //Globals.romdata[addr + count*4 + i] = data[i *4 + 4]; // for tt
-            }
-        }
-
-        public static void writeBlocksToAlignedArrays(ObjRec[] objects, byte[] romdata, int addr, int count)
-        {
-            for (int i = 0; i < count; i++)
-            {
-                var obj = objects[i];
-                
-                if (Globals.gameType != GameType.TT)
-                {
-                    romdata[addr + i] = obj.c1;
-                    romdata[addr + count * 1 + i] = obj.c2;
-                    romdata[addr + count * 2 + i] = obj.c3;
-                    romdata[addr + count * 3 + i] = obj.c4;
-                    romdata[addr + count * 4 + i] = obj.typeColor;
-                }
-                else
-                {
-                    romdata[addr + i] = obj.c1;
-                    romdata[addr + count * 1 + i] = obj.c3;
-                    romdata[addr + count * 2 + i] = obj.c2;
-                    romdata[addr + count * 3 + i] = obj.c4;
-                }
-                
-                //3 eyes version
-                /*byte c1 = Globals.romdata[addr + 4 * i + 0];
-                byte c2 = Globals.romdata[addr + 4 * i + 1];
-                byte c3 = Globals.romdata[addr + 4 * i + 2];
-                byte c4 = Globals.romdata[addr + 4 * i + 3];
-                byte typeColor = Globals.romdata[0x14C1C + i];*/
             }
         }
     }

@@ -136,7 +136,7 @@ namespace CadEditor
             byte[] videoChunk = ConfigScript.getVideoChunk(videoPageId);
 
             int blocksCount = ConfigScript.getBlocksCount();
-            ObjRec[] objects = Utils.readBlocksFromAlignedArrays(Globals.romdata, Globals.getTilesAddr(tilesId), blocksCount);
+            ObjRec[] objects = ConfigScript.getBlocks(tilesId);
             
             byte[] palette = ConfigScript.getPal(palId);
             var objStrip1 = makeImageStrip(videoChunk, palette, 0, scale);
