@@ -204,10 +204,10 @@ namespace CadEditor
             {
                 byte c1, c2, c3, c4, typeColor;
                 c1 = romdata[addr + i];
-                c3 = romdata[addr + count*1 + i]; //tt version
-                c2 = romdata[addr + count*2 + i];
+                c2 = romdata[addr + count*1 + i];
+                c3 = romdata[addr + count*2 + i];
                 c4 = romdata[addr + count*3 + i];
-                typeColor = 0;
+                typeColor = romdata[addr + count * 4 + i];
                 //3 eyes version
                 /*byte c1 = Globals.romdata[addr + 4 * i + 0];
                 byte c2 = Globals.romdata[addr + 4 * i + 1];
@@ -215,6 +215,28 @@ namespace CadEditor
                 byte c4 = Globals.romdata[addr + 4 * i + 3];
                 byte typeColor = Globals.romdata[0x14C1C + i];*/
                 objects[i] = new ObjRec(c1, c2, c3, c4, typeColor);
+            }
+            return objects;
+        }
+        
+        public static ObjRec[] readBlocksFromUnalignedArrays(byte[] romdata, int addr1, int addr2, int addr3, int addr4, int addr5, int count)
+        {
+            var objects = new ObjRec[count];
+            for (int i = 0; i < count; i++)
+            {
+                byte c1, c2, c3, c4, typeColor;
+                c1 = romdata[addr1 + i];
+                c2 = romdata[addr2 + i];
+                c3 = romdata[addr3 + i];
+                c4 = romdata[addr4 + i];
+                typeColor = romdata[addr5 + i]; ;
+                //3 eyes version
+                /*byte c1 = Globals.romdata[addr + 4 * i + 0];
+                byte c2 = Globals.romdata[addr + 4 * i + 1];
+                byte c3 = Globals.romdata[addr + 4 * i + 2];
+                byte c4 = Globals.romdata[addr + 4 * i + 3];
+                byte typeColor = Globals.romdata[0x14C1C + i];
+                objects[i] = new ObjRec(c1, c2, c3, c4, typeColor);*/
             }
             return objects;
         }
@@ -229,6 +251,26 @@ namespace CadEditor
                 romdata[addr + count * 2 + i] = obj.c3;
                 romdata[addr + count * 3 + i] = obj.c4;
                 romdata[addr + count * 4 + i] = obj.typeColor;
+
+                //3 eyes version
+                /*byte c1 = Globals.romdata[addr + 4 * i + 0];
+                byte c2 = Globals.romdata[addr + 4 * i + 1];
+                byte c3 = Globals.romdata[addr + 4 * i + 2];
+                byte c4 = Globals.romdata[addr + 4 * i + 3];
+                byte typeColor = Globals.romdata[0x14C1C + i];*/
+            }
+        }
+
+        public static void writeBlocksToUnalignedArrays(ObjRec[] objects, byte[] romdata, int addr1, int addr2, int addr3, int addr4, int addr5, int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                var obj = objects[i];
+                romdata[addr1 + i] = obj.c1;
+                romdata[addr2 + i] = obj.c2;
+                romdata[addr3 + i] = obj.c3;
+                romdata[addr4 + i] = obj.c4;
+                romdata[addr5 + i] = obj.typeColor;
 
                 //3 eyes version
                 /*byte c1 = Globals.romdata[addr + 4 * i + 0];
