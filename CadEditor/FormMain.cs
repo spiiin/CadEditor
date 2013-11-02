@@ -81,7 +81,10 @@ namespace CadEditor
             btEditEnemy.Enabled = ConfigScript.isEnemyEditorEnabled;
             btVideo.Enabled = ConfigScript.isVideoEditorEnabled;
 
-            mapScreen.Size = new Size((ConfigScript.getScreenWidth() + 2) * 32 * curScale, ConfigScript.getScreenHeight() * 32 * curScale);
+            if (ConfigScript.getScreenVertical())
+              mapScreen.Size = new Size(ConfigScript.getScreenHeight() * 32 * curScale, (ConfigScript.getScreenWidth() + 2) * 32 * curScale);
+            else
+              mapScreen.Size = new Size((ConfigScript.getScreenWidth() + 2) * 32 * curScale, ConfigScript.getScreenHeight() * 32 * curScale);
         }
 
         private void reloadLevel(bool reloadScreens = true, bool reloadBlockPanel = false)
@@ -283,7 +286,12 @@ namespace CadEditor
             {
                 int index = indexes[i];
                 int bigBlockNo = Globals.getBigTileNoFromScreen(indexes, i);
-                var tileRect = new Rectangle((i % WIDTH + 1) * TILE_SIZE, i / WIDTH * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                Rectangle tileRect;
+                if (ConfigScript.getScreenVertical())
+                  tileRect = new Rectangle(i / WIDTH * TILE_SIZE, (i % WIDTH + 1) * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                else
+                  tileRect  = new Rectangle((i % WIDTH + 1) * TILE_SIZE, i / WIDTH * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+
                 if ((visibleRect.Contains(tileRect)) || (visibleRect.IntersectsWith(tileRect)))
                   g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
             }
@@ -313,7 +321,10 @@ namespace CadEditor
                     }
                 }
             }
-            g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(TILE_SIZE, 0, TILE_SIZE * WIDTH, TILE_SIZE * HEIGHT));
+            if (ConfigScript.getScreenVertical())
+              g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(0, TILE_SIZE, TILE_SIZE * HEIGHT, TILE_SIZE * WIDTH));
+            else
+              g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(TILE_SIZE, 0, TILE_SIZE * WIDTH, TILE_SIZE * HEIGHT));
         }
 
         //editor globals
@@ -347,8 +358,18 @@ namespace CadEditor
         {
             int WIDTH  = ConfigScript.getScreenWidth();
             int HEIGHT = ConfigScript.getScreenHeight();
-            int dx = e.X / (32 * curScale) - 1;
-            int dy = e.Y / (32 * curScale);
+            int dx, dy;
+            if (ConfigScript.getScreenVertical())
+            {
+                dy = e.X / (32 * curScale);
+                dx = e.Y / (32 * curScale) - 1;
+            }
+            else
+            {
+                dx = e.X / (32 * curScale) - 1;
+                dy = e.Y / (32 * curScale);
+            }
+
             if (dx == WIDTH)
             {
                 if (curActiveScreen < ConfigScript.screensOffset.recCount - 1)

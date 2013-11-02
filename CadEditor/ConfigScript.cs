@@ -31,6 +31,7 @@ namespace CadEditor
             screensOffset = (OffsetRec)asm.InvokeInst(data, "*.getScreensOffset");
             screenWidth = (int)asm.InvokeInst(data, "*.getScreenWidth");
             screenHeight = (int)asm.InvokeInst(data, "*.getScreenHeight");
+            screenVertical = callFromScript(asm, data, "*.getScreenVertical", false);
             levelRecs = (IList<LevelRec>)asm.InvokeInst(data,"*.getLevelRecs");
 
             getVideoPageAddrFunc = (GetVideoPageAddrFunc)asm.InvokeInst(data, "*.getVideoPageAddrFunc");
@@ -170,6 +171,11 @@ namespace CadEditor
         {
             return blockTypeNames;
         }
+
+        public static bool getScreenVertical()
+        {
+            return screenVertical;
+        }
        
         public static T callFromScript<T>(AsmHelper script, object data, string funcName, T defaultValue = default(T), params object[] funcParams)
         {
@@ -196,6 +202,7 @@ namespace CadEditor
         public static int blocksCount;
         public static int screenWidth;
         public static int screenHeight;
+        public static bool screenVertical;
 
         //temp hack
         public static bool dwdAdvanceLastLevel = false;
