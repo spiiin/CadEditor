@@ -42,7 +42,7 @@ namespace CadEditor
             };
         }
 
-        private void resetControls(bool reloadLevel = true)
+        private void resetControls()
         {
             cbScreenNo.Items.Clear();
             for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
@@ -68,11 +68,8 @@ namespace CadEditor
             showAxis = true;
             prepareBlocksPanel();
 
-            if (reloadLevel)
-            {
-                reloadGameType();
-                changeLevelIndex();
-            }
+            reloadGameType();
+            changeLevelIndex();
 
             bool showImportExport = Globals.gameType != GameType.DT;
             btImport.Visible = showImportExport;
@@ -96,7 +93,6 @@ namespace CadEditor
             setBlocks(reloadBlockPanel);
             if (reloadScreens)
               setScreens();
-            resetControls(false);
             updateMap();
         }
 
@@ -138,6 +134,10 @@ namespace CadEditor
                         bigBlocks.Images[i] = im1;
                     }
                 }
+                if (needToRefillBlockPanel)
+                    prepareBlocksPanel();
+                else
+                    reloadBlocksPanel();
                 return;
             }
             int backId, blockId, palId;
@@ -450,7 +450,7 @@ namespace CadEditor
 
         private void cbLevel_SelectedIndexChanged(object sender, EventArgs e)
         {
-            changeLevelIndex();
+            changeLevelIndex(sender == cbScale);
         }
 
         private void changeLevelIndex(bool reloadObjectsPanel = false)
@@ -517,10 +517,10 @@ namespace CadEditor
             {
                 Globals.loadData(OpenFile.FileName, OpenFile.ConfigName);
                 fileLoaded = true;
+                resetControls();
             }
             if (!fileLoaded)
                 return false;
-            resetControls();
             return true;
             
         }
