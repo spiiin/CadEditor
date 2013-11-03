@@ -42,7 +42,7 @@ namespace CadEditor
             };
         }
 
-        private void resetControls()
+        private void resetControls(bool reloadLevel = true)
         {
             cbScreenNo.Items.Clear();
             for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
@@ -62,14 +62,17 @@ namespace CadEditor
             Utils.setCbIndexWithoutUpdateLevel(cbLevel, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbDoor, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbViewType, cbLevel_SelectedIndexChanged);
-
+            Utils.setCbIndexWithoutUpdateLevel(cbScale, cbLevel_SelectedIndexChanged, 1);
             dirty = false;
             showNeiScreens = true;
             showAxis = true;
             prepareBlocksPanel();
 
-            reloadGameType();
-            changeLevelIndex();
+            if (reloadLevel)
+            {
+                reloadGameType();
+                changeLevelIndex();
+            }
 
             bool showImportExport = Globals.gameType != GameType.DT;
             btImport.Visible = showImportExport;
@@ -93,6 +96,7 @@ namespace CadEditor
             setBlocks(reloadBlockPanel);
             if (reloadScreens)
               setScreens();
+            resetControls(false);
             updateMap();
         }
 
@@ -102,21 +106,35 @@ namespace CadEditor
           bigBlockIndexes = ConfigScript.getBigBlocks(bigTileIndex);
         }
 
+
+        private Image ResizeBitmap(Image sourceBMP, int width, int height)
+        {
+            Image result = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(result))
+                g.DrawImage(sourceBMP, 0, 0, width, height);
+            return result;
+        }
+
+
         private void setBlocks(bool needToRefillBlockPanel)
         {
+            bigBlocks.Images.Clear();
+            smallBlocks.Images.Clear();
+            bigBlocks.ImageSize = new Size(curButtonScale * 32, curButtonScale * 32);
             if (ConfigScript.usePicturesInstedBlocks)
             {
-                bigBlocks.Images.Clear();
-                bigBlocks.Images.AddStrip(Image.FromFile(ConfigScript.blocksPicturesFilename));
+                var imSrc = Image.FromFile(ConfigScript.blocksPicturesFilename);
+                var imResized = ResizeBitmap(imSrc, curButtonScale * 32 * ConfigScript.getBigBlocksCount(), curButtonScale * 32);
+                bigBlocks.Images.AddStrip(imResized);
                 for (int i = bigBlocks.Images.Count; i < 256; i++)
-                    bigBlocks.Images.Add(Video.emptyScreen(64, 64));
+                    bigBlocks.Images.Add(Video.emptyScreen(32*curButtonScale, 32*curButtonScale));
                 if (showAxis)
                 {
                     for (int i = 0; i < 256; i++)
                     {
                         var im1 = bigBlocks.Images[i];
                         using (var g = Graphics.FromImage(im1))
-                            g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), new Rectangle(0, 0, 64, 64));
+                            g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), new Rectangle(0, 0, 32*curButtonScale, 32*curButtonScale));
                         bigBlocks.Images[i] = im1;
                     }
                 }
@@ -146,12 +164,9 @@ namespace CadEditor
                 }
             }
 
-            smallBlocks.Images.Clear();
-            bigBlocks.Images.Clear();
-
             MapViewType smallObjectsType = curViewType == MapViewType.ObjType ? MapViewType.ObjType : MapViewType.Tiles;
 
-            int smallBlockScaleFactor = 2;
+            int smallBlockScaleFactor = curButtonScale;
             var im = Video.makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsType);
             smallBlocks.ImageSize = new System.Drawing.Size(16*smallBlockScaleFactor, 16*smallBlockScaleFactor);
             smallBlocks.Images.AddStrip(im);
@@ -171,51 +186,52 @@ namespace CadEditor
                 smallBlocksColorBytes = Globals.getTTSmallBlocksColorBytes(blockId);
             }
 
-            int bbRectPos = 32;
+            int bbRectPos = 16*curButtonScale;
+            int bbRectSize = 16 * curButtonScale;
             for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
             {
-                var b = new Bitmap(64, 64);
+                var b = new Bitmap(32*curButtonScale, 32*curButtonScale);
                 using (Graphics g = Graphics.FromImage(b))
                 {
                     if (Globals.gameType == GameType.TT)
                     {
                         int scb = smallBlocksColorBytes[i];
-                        g.DrawImage(smallBlocksAll[scb >> 0 & 0x3].Images[bigBlockIndexes[i * 4]], new Rectangle(0, 0, 32, 32));
-                        g.DrawImage(smallBlocksAll[scb >> 2 & 0x3].Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(bbRectPos, 0, 32, 32));
-                        g.DrawImage(smallBlocksAll[scb >> 4 & 0x3].Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(0, bbRectPos, 32, 32));
-                        g.DrawImage(smallBlocksAll[scb >> 6 & 0x3].Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPos, bbRectPos, 32, 32));   
+                        g.DrawImage(smallBlocksAll[scb >> 0 & 0x3].Images[bigBlockIndexes[i * 4]], new Rectangle(0, 0, bbRectSize, bbRectSize));
+                        g.DrawImage(smallBlocksAll[scb >> 2 & 0x3].Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(bbRectPos, 0, bbRectSize, bbRectSize));
+                        g.DrawImage(smallBlocksAll[scb >> 4 & 0x3].Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(0, bbRectPos, bbRectSize, bbRectSize));
+                        g.DrawImage(smallBlocksAll[scb >> 6 & 0x3].Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPos, bbRectPos, bbRectSize, bbRectSize));   
 
                     }
                     else if (Globals.gameType == GameType._3E)
                     {
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 0]], new Rectangle(0, 0, 32, 32));
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(bbRectPos, 0, 32, 32));
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(0, bbRectPos, 32, 32));
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPos, bbRectPos, 32, 32));
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 0]], new Rectangle(0, 0, bbRectSize, bbRectSize));
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(bbRectPos, 0, bbRectSize, bbRectSize));
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(0, bbRectPos, bbRectSize, bbRectSize));
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPos, bbRectPos, bbRectSize, bbRectSize));
                     }
                     else
                     {
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4]], new Rectangle(0, 0, 32, 32));
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(bbRectPos, 0, 32, 32));
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(0, bbRectPos, 32, 32));
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPos, bbRectPos, 32, 32)); 
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4]], new Rectangle(0, 0, bbRectSize, bbRectSize));
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(bbRectPos, 0, bbRectSize, bbRectSize));
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(0, bbRectPos, bbRectSize, bbRectSize));
+                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPos, bbRectPos, bbRectSize, bbRectSize)); 
                     }
 
                     if (curViewType == MapViewType.ObjNumbers)
                     {
-                        g.FillRectangle(new SolidBrush(Color.FromArgb(192, 255, 255, 255)), new Rectangle(0, 0, 64, 64));
+                        g.FillRectangle(new SolidBrush(Color.FromArgb(192, 255, 255, 255)), new Rectangle(0, 0, bbRectSize * 2, bbRectSize*2));
                         g.DrawString(String.Format("{0:X}", i), new Font("Arial", 16), Brushes.Red, new Point(0, 0));
                     }
 
                     if (showAxis)
-                        g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), new Rectangle(0, 0, 64, 64));
+                        g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), new Rectangle(0, 0, bbRectSize*2, bbRectSize*2));
                 }
                 bigBlocks.Images.Add(b);
             }
             //tt add
             for (int i = ConfigScript.getBigBlocksCount(); i < 256; i++)
             {
-                bigBlocks.Images.Add(Video.emptyScreen(64,64));
+                bigBlocks.Images.Add(Video.emptyScreen(32*curButtonScale,32*curButtonScale));
             }
             curActiveBlock = 0;
 
@@ -232,7 +248,7 @@ namespace CadEditor
             for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
             {
                 var but = new Button();
-                but.Size = new Size(64, 64);
+                but.Size = new Size(32*curButtonScale, 32*curButtonScale);
                 but.ImageList = bigBlocks;
                 but.ImageIndex = i;
                 but.Click += new EventHandler(buttonBlockClick);
@@ -354,6 +370,7 @@ namespace CadEditor
         private int curActivePalleteNo = 0;
 
         private int curScale = 2;
+        private int curButtonScale = 2;
 
         MapViewType curViewType = MapViewType.ObjType;
         private bool dirty;
@@ -451,6 +468,7 @@ namespace CadEditor
                 curActivePalleteNo = cbPaletteNo.SelectedIndex;
             }
             curViewType = (MapViewType)cbViewType.SelectedIndex;
+            curScale = curButtonScale = cbScale.SelectedIndex + 1;
             reloadLevel(true, reloadObjectsPanel);
         }
 

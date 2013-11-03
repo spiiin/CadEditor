@@ -72,6 +72,8 @@
             this.smallBlocks3 = new System.Windows.Forms.ImageList(this.components);
             this.smallBlocks4 = new System.Windows.Forms.ImageList(this.components);
             this.pnView = new System.Windows.Forms.Panel();
+            this.cbScale = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -526,7 +528,7 @@
             // btHex
             // 
             this.btHex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btHex.Location = new System.Drawing.Point(754, 526);
+            this.btHex.Location = new System.Drawing.Point(684, 526);
             this.btHex.Name = "btHex";
             this.btHex.Size = new System.Drawing.Size(96, 22);
             this.btHex.TabIndex = 52;
@@ -570,11 +572,37 @@
             this.pnView.Size = new System.Drawing.Size(640, 512);
             this.pnView.TabIndex = 53;
             // 
+            // cbScale
+            // 
+            this.cbScale.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbScale.DropDownWidth = 128;
+            this.cbScale.FormattingEnabled = true;
+            this.cbScale.Items.AddRange(new object[] {
+            "1",
+            "2"});
+            this.cbScale.Location = new System.Drawing.Point(454, 528);
+            this.cbScale.Name = "cbScale";
+            this.cbScale.Size = new System.Drawing.Size(29, 21);
+            this.cbScale.TabIndex = 54;
+            // 
+            // label10
+            // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(411, 531);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(37, 13);
+            this.label10.TabIndex = 55;
+            this.label10.Text = "Scale:";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1058, 552);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.cbScale);
             this.Controls.Add(this.pnCad);
             this.Controls.Add(this.pnView);
             this.Controls.Add(this.btHex);
@@ -656,6 +684,8 @@
         private System.Windows.Forms.ImageList smallBlocks3;
         private System.Windows.Forms.ImageList smallBlocks4;
         private System.Windows.Forms.Panel pnView;
+        private System.Windows.Forms.ComboBox cbScale;
+        private System.Windows.Forms.Label label10;
     }
 }
 
