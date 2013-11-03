@@ -110,6 +110,16 @@ namespace CadEditor
                 bigBlocks.Images.AddStrip(Image.FromFile(ConfigScript.blocksPicturesFilename));
                 for (int i = bigBlocks.Images.Count; i < 256; i++)
                     bigBlocks.Images.Add(Video.emptyScreen(64, 64));
+                if (showAxis)
+                {
+                    for (int i = 0; i < 256; i++)
+                    {
+                        var im1 = bigBlocks.Images[i];
+                        using (var g = Graphics.FromImage(im1))
+                            g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), new Rectangle(0, 0, 64, 64));
+                        bigBlocks.Images[i] = im1;
+                    }
+                }
                 return;
             }
             int backId, blockId, palId;
@@ -141,7 +151,7 @@ namespace CadEditor
 
             MapViewType smallObjectsType = curViewType == MapViewType.ObjType ? MapViewType.ObjType : MapViewType.Tiles;
 
-            int smallBlockScaleFactor = showAxis ? 1 : 2;
+            int smallBlockScaleFactor = 2;
             var im = Video.makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsType);
             smallBlocks.ImageSize = new System.Drawing.Size(16*smallBlockScaleFactor, 16*smallBlockScaleFactor);
             smallBlocks.Images.AddStrip(im);
@@ -161,7 +171,7 @@ namespace CadEditor
                 smallBlocksColorBytes = Globals.getTTSmallBlocksColorBytes(blockId);
             }
 
-            int bbRectPos = showAxis ? 31 : 32;
+            int bbRectPos = 32;
             for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
             {
                 var b = new Bitmap(64, 64);
@@ -196,6 +206,9 @@ namespace CadEditor
                         g.FillRectangle(new SolidBrush(Color.FromArgb(192, 255, 255, 255)), new Rectangle(0, 0, 64, 64));
                         g.DrawString(String.Format("{0:X}", i), new Font("Arial", 16), Brushes.Red, new Point(0, 0));
                     }
+
+                    if (showAxis)
+                        g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), new Rectangle(0, 0, 64, 64));
                 }
                 bigBlocks.Images.Add(b);
             }
