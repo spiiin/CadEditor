@@ -574,7 +574,7 @@
             // 
             // cbScale
             // 
-            this.cbScale.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbScale.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbScale.DropDownWidth = 128;
             this.cbScale.FormattingEnabled = true;
@@ -588,7 +588,7 @@
             // 
             // label10
             // 
-            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(411, 531);
             this.label10.Name = "label10";
