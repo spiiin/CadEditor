@@ -95,7 +95,7 @@
             this.blocksPanel.AutoScroll = true;
             this.blocksPanel.Location = new System.Drawing.Point(12, 12);
             this.blocksPanel.Name = "blocksPanel";
-            this.blocksPanel.Size = new System.Drawing.Size(316, 503);
+            this.blocksPanel.Size = new System.Drawing.Size(324, 503);
             this.blocksPanel.TabIndex = 2;
             // 
             // mapScreen
@@ -111,7 +111,7 @@
             // activeBlock
             // 
             this.activeBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.activeBlock.Location = new System.Drawing.Point(334, 28);
+            this.activeBlock.Location = new System.Drawing.Point(339, 28);
             this.activeBlock.Name = "activeBlock";
             this.activeBlock.Size = new System.Drawing.Size(64, 64);
             this.activeBlock.TabIndex = 5;
@@ -131,7 +131,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(334, 12);
+            this.label3.Location = new System.Drawing.Point(339, 12);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(40, 13);
             this.label3.TabIndex = 16;
@@ -176,7 +176,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(331, 95);
+            this.label6.Location = new System.Drawing.Point(336, 95);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(61, 13);
             this.label6.TabIndex = 26;
@@ -186,7 +186,7 @@
             // 
             this.cbScreenNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbScreenNo.FormattingEnabled = true;
-            this.cbScreenNo.Location = new System.Drawing.Point(334, 111);
+            this.cbScreenNo.Location = new System.Drawing.Point(339, 111);
             this.cbScreenNo.Name = "cbScreenNo";
             this.cbScreenNo.Size = new System.Drawing.Size(64, 21);
             this.cbScreenNo.TabIndex = 27;
@@ -237,7 +237,7 @@
             this.pnGeneric.Controls.Add(this.cbBigBlockNo);
             this.pnGeneric.Controls.Add(this.label1);
             this.pnGeneric.Controls.Add(this.cbVideoNo);
-            this.pnGeneric.Location = new System.Drawing.Point(332, 178);
+            this.pnGeneric.Location = new System.Drawing.Point(337, 178);
             this.pnGeneric.Name = "pnGeneric";
             this.pnGeneric.Size = new System.Drawing.Size(72, 162);
             this.pnGeneric.TabIndex = 42;
@@ -364,7 +364,7 @@
             this.pnCad.Controls.Add(this.cbDoor);
             this.pnCad.Controls.Add(this.label2);
             this.pnCad.Controls.Add(this.cbLevel);
-            this.pnCad.Location = new System.Drawing.Point(332, 178);
+            this.pnCad.Location = new System.Drawing.Point(337, 178);
             this.pnCad.Name = "pnCad";
             this.pnCad.Size = new System.Drawing.Size(72, 93);
             this.pnCad.TabIndex = 43;
@@ -453,7 +453,7 @@
             "Tiles",
             "Obj types",
             "Obj numbers"});
-            this.cbViewType.Location = new System.Drawing.Point(334, 151);
+            this.cbViewType.Location = new System.Drawing.Point(339, 151);
             this.cbViewType.Name = "cbViewType";
             this.cbViewType.Size = new System.Drawing.Size(64, 21);
             this.cbViewType.TabIndex = 45;
@@ -461,7 +461,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(331, 135);
+            this.label4.Location = new System.Drawing.Point(336, 135);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(56, 13);
             this.label4.TabIndex = 44;
@@ -474,7 +474,7 @@
             this.pnEditors.Controls.Add(this.btEditObjs);
             this.pnEditors.Controls.Add(this.btEditLayout);
             this.pnEditors.Controls.Add(this.btEditEnemy);
-            this.pnEditors.Location = new System.Drawing.Point(333, 380);
+            this.pnEditors.Location = new System.Drawing.Point(338, 380);
             this.pnEditors.Name = "pnEditors";
             this.pnEditors.Size = new System.Drawing.Size(72, 164);
             this.pnEditors.TabIndex = 46;

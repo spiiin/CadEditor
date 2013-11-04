@@ -277,7 +277,7 @@ namespace CadEditor
             for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
             {
                 var but = new Button();
-                but.Size = new Size(blockWidth*curButtonScale, blockHeight*curButtonScale);
+                but.Size = new Size(blockWidth*curButtonScale+1, blockHeight*curButtonScale+1);
                 but.ImageList = bigBlocks;
                 but.ImageIndex = i;
                 but.Click += new EventHandler(buttonBlockClick);
