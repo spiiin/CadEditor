@@ -120,6 +120,8 @@ namespace CadEditor
             bigBlocks.Images.Clear();
             smallBlocks.Images.Clear();
             bigBlocks.ImageSize = new Size(curButtonScale * blockWidth, curButtonScale * blockHeight);
+
+            //if using pictures
             if (ConfigScript.usePicturesInstedBlocks)
             {
                 var imSrc = Image.FromFile(ConfigScript.blocksPicturesFilename);
@@ -137,12 +139,34 @@ namespace CadEditor
                         bigBlocks.Images[i] = im1;
                     }
                 }
+
+                if (curViewType == MapViewType.ObjNumbers)
+                {
+                    int _bbRectPosX = (blockWidth / 2) * curButtonScale;
+                    int _bbRectSizeX = (blockWidth / 2) * curButtonScale;
+                    int _bbRectPosY = (blockHeight / 2) * curButtonScale;
+                    int _bbRectSizeY = (blockHeight / 2) * curButtonScale;
+                    for (int i = 0; i < 256; i++)
+                    {
+                        var im1 = bigBlocks.Images[i];
+                        using (var g = Graphics.FromImage(im1))
+                        {
+                            g.FillRectangle(new SolidBrush(Color.FromArgb(192, 255, 255, 255)), new Rectangle(0, 0, _bbRectSizeX * 2, _bbRectSizeY * 2));
+                            g.DrawString(String.Format("{0:X}", i), new Font("Arial", 16), Brushes.Red, new Point(0, 0));
+                        }
+                        bigBlocks.Images[i] = im1;
+                    }
+                    
+                }
+
                 if (needToRefillBlockPanel)
                     prepareBlocksPanel();
                 else
                     reloadBlocksPanel();
                 return;
             }
+
+            //read blocks from file
             int backId, blockId, palId;
 
             if (GameType.CAD != Globals.gameType)
