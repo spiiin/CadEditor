@@ -55,6 +55,7 @@ namespace CadEditor
             blocksCount    = callFromScript(asm, data, "*.getBlocksCount"   , 256);
 
             blocksPicturesFilename = callFromScript(asm, data, "getBlocksFilename", "");
+            blocksPicturesWidth = callFromScript(asm, data, "getPictureBlocksWidth", 32); 
             usePicturesInstedBlocks = blocksPicturesFilename != "";
 
             blockTypeNames = callFromScript(asm, data, "getBlockTypeNames", defaultBlockTypeNames);
@@ -176,7 +177,11 @@ namespace CadEditor
         {
             return screenVertical;
         }
-       
+
+        public static int getBlocksPicturesWidth()
+        {
+            return blocksPicturesWidth;
+        }
         public static T callFromScript<T>(AsmHelper script, object data, string funcName, T defaultValue = default(T), params object[] funcParams)
         {
             try
@@ -227,6 +232,7 @@ namespace CadEditor
 
         public static bool usePicturesInstedBlocks;
         public static string blocksPicturesFilename;
+        public static int blocksPicturesWidth;
         public static string objTypesPicturesDir;
 
         public static string[] blockTypeNames;

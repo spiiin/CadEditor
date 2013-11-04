@@ -580,8 +580,10 @@
             this.cbScale.FormattingEnabled = true;
             this.cbScale.Items.AddRange(new object[] {
             "1",
-            "2"});
-            this.cbScale.Location = new System.Drawing.Point(454, 528);
+            "2",
+            "3",
+            "4"});
+            this.cbScale.Location = new System.Drawing.Point(495, 527);
             this.cbScale.Name = "cbScale";
             this.cbScale.Size = new System.Drawing.Size(29, 21);
             this.cbScale.TabIndex = 54;
@@ -590,7 +592,7 @@
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(411, 531);
+            this.label10.Location = new System.Drawing.Point(452, 530);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(37, 13);
             this.label10.TabIndex = 55;
