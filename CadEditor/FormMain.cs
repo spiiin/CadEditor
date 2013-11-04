@@ -482,6 +482,8 @@ namespace CadEditor
 
         private void cbLevel_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (!Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
+                return;
             bool senderIsScale = sender == cbScale;
             changeLevelIndex(senderIsScale);
             if (senderIsScale)
