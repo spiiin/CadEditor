@@ -92,45 +92,9 @@ namespace CadEditor
             }
         }
 
-        //for CAD editor only
-        private void makeScreens()
+        private void makeScreensCad()
         {
-            //!!!duplicate in EditLayout.cs
-            scrImages = new Image[ConfigScript.screensOffset.recCount];
-            for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
-                scrImages[i] = Video.emptyScreen(512, 512);
-
-            bool stopOnDoors = cbStopOnDoors.Checked;
-            var screenList = Globals.buildScreenRecs(curActiveLevel, stopOnDoors);
-
-            var sortedScreenList = new List<ScreenRec>(screenList);
-            sortedScreenList.Sort((r1, r2) => { return r1.door > r2.door ? 1 : r1.door < r2.door ? -1 : 0; });
-            int lastDoorNo = -1;
-            int levelNo = curActiveLevel;
-
-            byte blockId = (byte)Globals.levelData[curActiveLevel].bigBlockId;
-            byte backId = 0, palId = 0;
-            for (int i = 0; i < sortedScreenList.Count; i++)
-            {
-                if (lastDoorNo != sortedScreenList[i].door)
-                {
-                    lastDoorNo = sortedScreenList[i].door;
-                    if (lastDoorNo == 0)
-                    {
-                        backId = (byte)Globals.levelData[curActiveLevel].backId;
-                        palId = (byte)Globals.levelData[curActiveLevel].palId;
-                    }
-                    else
-                    {
-                        backId = (byte)Globals.doorsData[lastDoorNo - 1].backId;
-                        palId = (byte)Globals.doorsData[lastDoorNo - 1].palId;
-                    }
-                }
-                int scrNo = sortedScreenList[i].no;
-                int addEH = (curActiveLevel == 5 || curActiveLevel==8) ? 256 : 0;
-                int realScrNo = scrNo - 1 + addEH;
-                scrImages[scrNo] = Video.makeScreen(realScrNo, backId, blockId, blockId, palId);
-            }
+            scrImages = Globals.makeScreensCad(curActiveLevel, cbStopOnDoors.Checked);
         }
 
         private int findStartPosition()
@@ -158,7 +122,7 @@ namespace CadEditor
         private void reloadLevel(bool reloadObjects)
         {
             if (Globals.gameType == GameType.CAD)
-                makeScreens();
+                makeScreensCad();
             reloadLevelLayerData(reloadObjects);
             setBackImage();
             if (reloadObjects)

@@ -5,6 +5,8 @@ using System.IO;
 using System.Windows.Forms;
 using System.Globalization;
 
+using System.Drawing;
+
 namespace CadEditor
 {
     public static class Globals
@@ -306,42 +308,45 @@ namespace CadEditor
             return upsort;
         }
 
-        /*public static List<ScreenRec> buildScreenRecsForObjects(int levelNo)
+        //for CAD editor only
+        public static Image[] makeScreensCad(int levelNo, bool stopOnDoors)
         {
-            //preload
-            var lr = Globals.levelData[levelNo];
-            int width = lr.getWidth();
-            int height = lr.getHeight();
-            byte[] layer = new byte[width * height];
-            byte[] scroll = new byte[width * height];
-            byte[] dirs = new byte[height];
-            for (int i = 0; i < width * height; i++)
+            //!!!duplicate in EditLayout.cs
+            Image[] scrImages = new Image[ConfigScript.screensOffset.recCount];
+            for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
+                scrImages[i] = Video.emptyScreen(512, 512);
+
+            var screenList = Globals.buildScreenRecs(levelNo, stopOnDoors);
+
+            var sortedScreenList = new List<ScreenRec>(screenList);
+            sortedScreenList.Sort((r1, r2) => { return r1.door > r2.door ? 1 : r1.door < r2.door ? -1 : 0; });
+            int lastDoorNo = -1;
+
+            byte blockId = (byte)Globals.levelData[levelNo].bigBlockId;
+            byte backId = 0, palId = 0;
+            for (int i = 0; i < sortedScreenList.Count; i++)
             {
-                layer[i] = Globals.romdata[lr.getActualLayoutAddr() + i];
-                scroll[i] = Globals.romdata[lr.getActualScrollAddr() + i];
-            }
-            for (int i = 0; i < height; i++)
-            {
-                dirs[i] = Globals.romdata[lr.getActualDirsAddr() + i];
-            }
-            LevelLayerData curLevelLayerData = new LevelLayerData(width, height, layer, scroll, dirs);
-            List<ScreenRec> res = new List<ScreenRec>();
-            for (int y = height - 1; y >= 0; y--)
-            {
-                if (dirs[y] == 0)
+                if (lastDoorNo != sortedScreenList[i].door)
                 {
-                    for (int x = 0; x < width; x++)
-                        res.Add(new ScreenRec(layer[y * width + x], (byte)x, (byte)y, 0, false));
+                    lastDoorNo = sortedScreenList[i].door;
+                    if (lastDoorNo == 0)
+                    {
+                        backId = (byte)Globals.levelData[levelNo].backId;
+                        palId = (byte)Globals.levelData[levelNo].palId;
+                    }
+                    else
+                    {
+                        backId = (byte)Globals.doorsData[lastDoorNo - 1].backId;
+                        palId = (byte)Globals.doorsData[lastDoorNo - 1].palId;
+                    }
                 }
-                else
-                {
-                    for (int x = width-1; x >= 0; x--)
-                        res.Add(new ScreenRec(layer[y * width + x], (byte)x, (byte)y, 0, true));
-                }
+                int scrNo = sortedScreenList[i].no;
+                int addEH = (levelNo == 5 || levelNo == 8) ? 256 : 0; //hack
+                int realScrNo = scrNo - 1 + addEH;
+                scrImages[scrNo] = Video.makeScreen(realScrNo, backId, blockId, blockId, palId);
             }
-            
-            return res;
-        }*/
+            return scrImages;
+        }
 
         private static int getNextDoor(LevelLayerData curLevelLayerData, int curIndex)
         {

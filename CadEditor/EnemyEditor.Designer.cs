@@ -635,7 +635,7 @@
             this.pnTools.Controls.Add(this.cbTool);
             this.pnTools.Location = new System.Drawing.Point(9, 240);
             this.pnTools.Name = "pnTools";
-            this.pnTools.Size = new System.Drawing.Size(178, 50);
+            this.pnTools.Size = new System.Drawing.Size(178, 30);
             this.pnTools.TabIndex = 52;
             // 
             // label16

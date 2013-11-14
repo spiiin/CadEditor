@@ -384,6 +384,19 @@ namespace CadEditor
               g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(0, TILE_SIZE_Y, TILE_SIZE_X * HEIGHT, TILE_SIZE_Y * WIDTH));
             else
               g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(TILE_SIZE_X, 0, TILE_SIZE_X * WIDTH, TILE_SIZE_Y * HEIGHT));
+
+            //debug: jungle book draw enemies
+            /*for (int i = 0; i < 48; i++)
+            {
+                byte x = Globals.romdata[0x16775 + i];
+                byte y = Globals.romdata[0x167A5 + i];
+                byte b1 = Globals.romdata[0x167d5 + i];
+                byte b2 = Globals.romdata[0x16805 + i];
+                var rect = new Rectangle(x * 64 + 64+16, y * 64 - 32, 32, 32);
+                g.DrawRectangle(new Pen(Color.Green, 4.0f), rect);
+                g.DrawString(String.Format("{0:X}", b1), new Font("Arial", 8), Brushes.Red, rect);
+                g.DrawString(String.Format("{0:X}", b2), new Font("Arial", 8), Brushes.Red, rect.X, rect.Y+16);
+            }*/
         }
 
         //editor globals
