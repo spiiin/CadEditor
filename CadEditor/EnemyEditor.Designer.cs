@@ -81,6 +81,9 @@
             this.pnTools = new System.Windows.Forms.Panel();
             this.label16 = new System.Windows.Forms.Label();
             this.cbTool = new System.Windows.Forms.ComboBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.cbObjType = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -230,11 +233,11 @@
             this.cbCoordY.Items.AddRange(new object[] {
             "Tiles",
             "Obj types"});
-            this.cbCoordY.Location = new System.Drawing.Point(877, 393);
+            this.cbCoordY.Location = new System.Drawing.Point(892, 393);
             this.cbCoordY.Name = "cbCoordY";
-            this.cbCoordY.Size = new System.Drawing.Size(66, 21);
+            this.cbCoordY.Size = new System.Drawing.Size(46, 21);
             this.cbCoordY.TabIndex = 42;
-            this.cbCoordY.SelectedIndexChanged += new System.EventHandler(this.cbCoordY_SelectedIndexChanged);
+            this.cbCoordY.SelectedIndexChanged += new System.EventHandler(this.cbCoordX_SelectedIndexChanged);
             // 
             // cbCoordX
             // 
@@ -244,9 +247,9 @@
             this.cbCoordX.Items.AddRange(new object[] {
             "Tiles",
             "Obj types"});
-            this.cbCoordX.Location = new System.Drawing.Point(805, 393);
+            this.cbCoordX.Location = new System.Drawing.Point(817, 393);
             this.cbCoordX.Name = "cbCoordX";
-            this.cbCoordX.Size = new System.Drawing.Size(66, 21);
+            this.cbCoordX.Size = new System.Drawing.Size(46, 21);
             this.cbCoordX.TabIndex = 41;
             this.cbCoordX.SelectedIndexChanged += new System.EventHandler(this.cbCoordX_SelectedIndexChanged);
             // 
@@ -255,9 +258,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(712, 396);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(76, 13);
+            this.label5.Size = new System.Drawing.Size(34, 13);
             this.label5.TabIndex = 40;
-            this.label5.Text = "Object coords:";
+            this.label5.Text = "Type:";
             // 
             // btClearObjs
             // 
@@ -667,11 +670,46 @@
             this.cbTool.TabIndex = 29;
             this.cbTool.SelectedIndexChanged += new System.EventHandler(this.cbTool_SelectedIndexChanged);
             // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(794, 396);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(17, 13);
+            this.label17.TabIndex = 64;
+            this.label17.Text = "X:";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(869, 396);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(17, 13);
+            this.label18.TabIndex = 65;
+            this.label18.Text = "Y:";
+            // 
+            // cbObjType
+            // 
+            this.cbObjType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbObjType.Enabled = false;
+            this.cbObjType.FormattingEnabled = true;
+            this.cbObjType.Items.AddRange(new object[] {
+            "Tiles",
+            "Obj types"});
+            this.cbObjType.Location = new System.Drawing.Point(742, 393);
+            this.cbObjType.Name = "cbObjType";
+            this.cbObjType.Size = new System.Drawing.Size(46, 21);
+            this.cbObjType.TabIndex = 66;
+            this.cbObjType.SelectedIndexChanged += new System.EventHandler(this.cbCoordX_SelectedIndexChanged);
+            // 
             // EnemyEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(944, 533);
+            this.Controls.Add(this.cbObjType);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.label17);
             this.Controls.Add(this.pnTools);
             this.Controls.Add(this.lbReadOnly);
             this.Controls.Add(this.label15);
@@ -774,5 +812,8 @@
         private System.Windows.Forms.Panel pnTools;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.ComboBox cbTool;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.ComboBox cbObjType;
     }
 }

@@ -195,10 +195,12 @@ namespace CadEditor
 
             cbCoordX.Items.Clear();
             cbCoordY.Items.Clear();
+            cbObjType.Items.Clear();
             for (int i = 0; i < 256; i++)
             {
                 cbCoordX.Items.Add(String.Format("{0:X}", i));
                 cbCoordY.Items.Add(String.Format("{0:X}", i));
+                cbObjType.Items.Add(String.Format("{0:X}", i));
             }
 
             Utils.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
@@ -473,6 +475,7 @@ namespace CadEditor
                 lvObjects.Items.Add(new ListViewItem(makeStringForObject(objects[i]), objects[i].type));
             cbCoordX.Enabled = false;
             cbCoordY.Enabled = false;
+            cbObjType.Enabled = false;
         }
 
         private int coordToScreenNo(ObjectRec obj)
@@ -617,19 +620,10 @@ namespace CadEditor
             int index = lvObjects.SelectedItems[0].Index;
             var obj = objects[index];
             obj.x = (byte)cbCoordX.SelectedIndex;
-            objects[index] = obj;
-            lvObjects.SelectedItems[0].Text = makeStringForObject(obj);
-            mapScreen.Invalidate();
-        }
-
-        private void cbCoordY_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (lvObjects.SelectedItems.Count != 1)
-                return;
-            int index = lvObjects.SelectedItems[0].Index;
-            var obj = objects[index];
             obj.y = (byte)cbCoordY.SelectedIndex;
+            obj.type = (byte)cbObjType.SelectedIndex;
             objects[index] = obj;
+            lvObjects.SelectedItems[0].ImageIndex = obj.type;
             lvObjects.SelectedItems[0].Text = makeStringForObject(obj);
             mapScreen.Invalidate();
         }
@@ -735,14 +729,16 @@ namespace CadEditor
             btDelete.Enabled = !selectedZero;
             cbCoordX.Enabled = selectedOne;
             cbCoordY.Enabled = selectedOne;
+            cbObjType.Enabled = selectedOne;
             btSortDown.Enabled = false;
             btSortUp.Enabled = false;
 
             if (selectedOne)
             {
                 int index = lvObjects.SelectedItems[0].Index;
-                cbCoordX.SelectedIndex = objects[index].x;
-                cbCoordY.SelectedIndex = objects[index].y;
+                Utils.setCbIndexWithoutUpdateLevel(cbCoordX, cbCoordX_SelectedIndexChanged, objects[index].x);
+                Utils.setCbIndexWithoutUpdateLevel(cbCoordY, cbCoordX_SelectedIndexChanged, objects[index].y);
+                Utils.setCbIndexWithoutUpdateLevel(cbObjType, cbCoordX_SelectedIndexChanged, objects[index].type);
             }
             if (!selectedZero)
             {
