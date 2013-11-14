@@ -23,26 +23,26 @@ namespace CadEditor
             var data = asm.CreateObject("Data");
 
             Globals.gameType = (GameType)asm.InvokeInst(data,"*.getGameType");
-            palOffset = (OffsetRec)asm.InvokeInst(data,"*.getPalOffset");
-            videoOffset = (OffsetRec)asm.InvokeInst(data, "*.getVideoOffset");
-            videoObjOffset = (OffsetRec)asm.InvokeInst(data, "*.getVideoObjOffset");
-            bigBlocksOffset = (OffsetRec)asm.InvokeInst(data, "*.getBigBlocksOffset");
-            blocksOffset = (OffsetRec)asm.InvokeInst(data, "*.getBlocksOffset");
-            screensOffset = (OffsetRec)asm.InvokeInst(data, "*.getScreensOffset");
-            screenWidth = (int)asm.InvokeInst(data, "*.getScreenWidth");
-            screenHeight = (int)asm.InvokeInst(data, "*.getScreenHeight");
+            palOffset = callFromScript(asm, data,"*.getPalOffset", new OffsetRec(0,1,0));
+            videoOffset = callFromScript(asm, data, "*.getVideoOffset", new OffsetRec(0, 1, 0));
+            videoObjOffset = callFromScript(asm, data, "*.getVideoObjOffset", new OffsetRec(0, 1, 0));
+            bigBlocksOffset = callFromScript(asm, data, "*.getBigBlocksOffset", new OffsetRec(0, 1, 0));
+            blocksOffset = callFromScript(asm, data, "*.getBlocksOffset", new OffsetRec(0, 1, 0));
+            screensOffset = callFromScript(asm, data, "*.getScreensOffset", new OffsetRec(0, 1, 0));
+            screenWidth = callFromScript(asm, data, "*.getScreenWidth", 8);
+            screenHeight = callFromScript(asm, data, "*.getScreenHeight", 8);
             screenVertical = callFromScript(asm, data, "*.getScreenVertical", false);
-            levelRecs = (IList<LevelRec>)asm.InvokeInst(data,"*.getLevelRecs");
+            levelRecs = callFromScript(asm, data,"*.getLevelRecs", new List<LevelRec>());
 
-            getVideoPageAddrFunc = (GetVideoPageAddrFunc)asm.InvokeInst(data, "*.getVideoPageAddrFunc");
-            getVideoChunkFunc = (GetVideoChunkFunc)asm.InvokeInst(data, "*.getVideoChunkFunc");
-            setVideoChunkFunc = (SetVideoChunkFunc)asm.InvokeInst(data, "*.setVideoChunkFunc");
-            getBigBlocksFunc = (GetBigBlocksFunc)asm.InvokeInst(data, "*.getBigBlocksFunc");
-            setBigBlocksFunc = (SetBigBlocksFunc)asm.InvokeInst(data, "*.setBigBlocksFunc");
-            getBlocksFunc = callFromScript<GetBlocksFunc>(asm,data,"*.getBlocksFunc", null);
-            setBlocksFunc = callFromScript<SetBlocksFunc>(asm, data, "*.setBlocksFunc", null);
-            getPalFunc = (GetPalFunc)asm.InvokeInst(data, "*.getPalFunc");
-            setPalFunc = (SetPalFunc)asm.InvokeInst(data, "*.setPalFunc");
+            getVideoPageAddrFunc = callFromScript <GetVideoPageAddrFunc>(asm, data, "*.getVideoPageAddrFunc");
+            getVideoChunkFunc = callFromScript<GetVideoChunkFunc>(asm, data, "*.getVideoChunkFunc");
+            setVideoChunkFunc = callFromScript<SetVideoChunkFunc>(asm, data, "*.setVideoChunkFunc");
+            getBigBlocksFunc = callFromScript<GetBigBlocksFunc>(asm, data, "*.getBigBlocksFunc");
+            setBigBlocksFunc = callFromScript<SetBigBlocksFunc>(asm, data, "*.setBigBlocksFunc");
+            getBlocksFunc = callFromScript<GetBlocksFunc>(asm,data,"*.getBlocksFunc");
+            setBlocksFunc = callFromScript<SetBlocksFunc>(asm, data, "*.setBlocksFunc");
+            getPalFunc = callFromScript<GetPalFunc>(asm, data, "*.getPalFunc");
+            setPalFunc = callFromScript<SetPalFunc>(asm, data, "*.setPalFunc");
 
             isBigBlockEditorEnabled = callFromScript(asm, data, "*.isBigBlockEditorEnabled", true);
             isBlockEditorEnabled = callFromScript(asm, data, "*.isBlockEditorEnabled", true);
@@ -93,7 +93,7 @@ namespace CadEditor
 
         public static byte[] getVideoChunk(int videoPageId)
         {
-            return getVideoChunkFunc(videoPageId);
+            return (getVideoChunkFunc ?? (_=>null))(videoPageId);
         }
 
         public static void setVideoChunk(int videoPageId, byte[] videoChunk)
@@ -103,7 +103,7 @@ namespace CadEditor
 
         public static byte[] getBigBlocks(int bigBlockId)
         {
-            return getBigBlocksFunc(bigBlockId);
+            return (getBigBlocksFunc ?? (_ => null))(bigBlockId);
         }
 
         public static void setBigBlocks(int bigTileIndex, byte[] bigBlockIndexes)
@@ -113,7 +113,7 @@ namespace CadEditor
 
         public static ObjRec[] getBlocks(int bigBlockId)
         {
-            return getBlocksFunc(bigBlockId);
+            return (getBlocksFunc ?? (_ => null))(bigBlockId);
         }
 
         public static void setBlocks(int bIndex, ObjRec[] blocks)
@@ -123,7 +123,7 @@ namespace CadEditor
 
         public static byte[] getPal(int palId)
         {
-            return getPalFunc(palId);
+            return (getPalFunc ?? (_ => null))(palId);
         }
 
 
