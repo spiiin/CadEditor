@@ -28,6 +28,8 @@ namespace CadEditor
         private int curWidth = 1;
         private int curHeight = 1;
 
+        private ToolType curTool = ToolType.Create;
+
         private LevelLayerData curLevelLayerData = new LevelLayerData();
         private Image[] scrImages;
         private List<ObjectRec> objects = new List<ObjectRec>();
@@ -207,6 +209,7 @@ namespace CadEditor
             Utils.setCbIndexWithoutUpdateLevel(cbBlockNo, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbBigBlockNo, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbPaletteNo, cbLevel_SelectedIndexChanged);
+            Utils.setCbIndexWithoutUpdateLevel(cbTool, cbTool_SelectedIndexChanged);
             cbLayoutNo.Items.Clear();
             foreach (var lr in ConfigScript.levelRecs)
                 cbLayoutNo.Items.Add(String.Format("0x{0:X} ({1}x{2})", lr.layoutAddr, lr.width, lr.height));
@@ -540,24 +543,58 @@ namespace CadEditor
             int dx = e.X / 64;
             int dy = e.Y / 64;
             //int index = dy * 8 + dx;
-            dirty = true;
             Point coord = screenNoToCoord();
             byte type = (byte)curActiveBlock;
             byte sx = (byte)coord.X, sy = (byte)coord.Y;
             byte x = (byte)(e.X / 2);
             byte y = (byte)(e.Y / 2);
-            var obj = new ObjectRec(type, sx, sy, x, y);
 
-            int insertPos = lvObjects.SelectedItems.Count > 0 ? lvObjects.SelectedIndices[0]+1 : lvObjects.Items.Count;
-            objects.Insert(insertPos, obj);
+            if (curTool == ToolType.Create)
+            {
+                dirty = true;
+                var obj = new ObjectRec(type, sx, sy, x, y);
 
-            lvObjects.Items.Insert(insertPos, new ListViewItem(makeStringForObject(obj), obj.type));
+                int insertPos = lvObjects.SelectedItems.Count > 0 ? lvObjects.SelectedIndices[0] + 1 : lvObjects.Items.Count;
+                objects.Insert(insertPos, obj);
+
+                lvObjects.Items.Insert(insertPos, new ListViewItem(makeStringForObject(obj), obj.type));
+            }
+            else if (curTool == ToolType.Select)
+            {
+                if (Control.ModifierKeys != Keys.Shift && Control.ModifierKeys != Keys.Control)
+                    lvObjects.SelectedItems.Clear();
+                for (int i = 0; i < objects.Count; i++)
+                {
+                    var obj = objects[i];
+                    if ((obj.sx == sx) && (obj.sy == sy) && (Math.Abs(obj.x - x) < 8) && (Math.Abs(obj.y - y) < 8))
+                        lvObjects.Items[i].Selected = !lvObjects.Items[i].Selected;
+                }
+                lvObjects.Select();
+            }
+            else if (curTool == ToolType.Delete)
+            {
+                for (int i = 0; i < objects.Count; i++)
+                {
+                    var obj = objects[i];
+                    if ((obj.sx == sx) && (obj.sy == sy) && (Math.Abs(obj.x - x) < 8) && (Math.Abs(obj.y - y) < 8))
+                    {
+                        if (MessageBox.Show("Do you really want to delete object?", "Confirm", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                            return;
+                        dirty = true;
+                        objects.RemoveAt(i);
+                        fillObjectsListBox();
+                        break;
+                    }
+                }
+                lvObjects.Select();
+            }
             mapScreen.Invalidate();
         }
 
         private void mapScreen_Paint(object sender, PaintEventArgs e)
         {
             var g = e.Graphics;
+            var selectedInds = lvObjects.SelectedIndices;
             for (int i = 0; i < objects.Count; i++)
             {
                 var curObject = objects[i];
@@ -567,6 +604,8 @@ namespace CadEditor
                     int x = curObject.x, y = curObject.y;
                     if (curObject.type < objectSprites.Images.Count)
                         g.DrawImage(objectSprites.Images[curObject.type], new Point(x * 2 - 8, y * 2 - 8));
+                    if (selectedInds.Contains(i))
+                        g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle(x * 2 - 8, y * 2 - 8, 16, 16));
                 }
             }
         }
@@ -710,6 +749,8 @@ namespace CadEditor
                 btSortDown.Enabled = cbManualSort.Checked && lvObjects.SelectedIndices[lvObjects.SelectedIndices.Count - 1] < objects.Count - 1;
                 btSortUp.Enabled = cbManualSort.Checked && lvObjects.SelectedIndices[0] > 0;
             }
+
+            mapScreen.Invalidate();
         }
 
         private void btSave_Click(object sender, EventArgs e)
@@ -828,6 +869,11 @@ namespace CadEditor
             cbStopOnDoors.Visible = !generic;
             cbManualSort.Visible = !generic;
         }
+
+        private void cbTool_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            curTool = (ToolType)cbTool.SelectedIndex;
+        }
     }
 
     struct ObjectRec
@@ -851,5 +897,12 @@ namespace CadEditor
             String formatStr = (type > 15) ? "{0:X} : ({1:X}:{2:X})" : "0{0:X} : ({1:X}:{2:X})";
             return String.Format(formatStr, type, sx << 8 | x, sy << 8 | y);
         }
+    }
+
+    enum ToolType
+    {
+        Create,
+        Select,
+        Delete
     }
 }

@@ -78,11 +78,15 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.lbReadOnly = new System.Windows.Forms.Label();
+            this.pnTools = new System.Windows.Forms.Panel();
+            this.label16 = new System.Windows.Forms.Label();
+            this.cbTool = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
             this.pnCad.SuspendLayout();
             this.pnSelectScreen.SuspendLayout();
+            this.pnTools.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbLevel
@@ -631,11 +635,44 @@
             this.lbReadOnly.TabIndex = 63;
             this.lbReadOnly.Text = "READ ONLY";
             // 
+            // pnTools
+            // 
+            this.pnTools.Controls.Add(this.label16);
+            this.pnTools.Controls.Add(this.cbTool);
+            this.pnTools.Location = new System.Drawing.Point(9, 240);
+            this.pnTools.Name = "pnTools";
+            this.pnTools.Size = new System.Drawing.Size(178, 50);
+            this.pnTools.TabIndex = 52;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(9, 6);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(31, 13);
+            this.label16.TabIndex = 28;
+            this.label16.Text = "Tool:";
+            // 
+            // cbTool
+            // 
+            this.cbTool.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTool.FormattingEnabled = true;
+            this.cbTool.Items.AddRange(new object[] {
+            "Create",
+            "Select",
+            "Delete"});
+            this.cbTool.Location = new System.Drawing.Point(48, 3);
+            this.cbTool.Name = "cbTool";
+            this.cbTool.Size = new System.Drawing.Size(124, 21);
+            this.cbTool.TabIndex = 29;
+            this.cbTool.SelectedIndexChanged += new System.EventHandler(this.cbTool_SelectedIndexChanged);
+            // 
             // EnemyEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(944, 533);
+            this.Controls.Add(this.pnTools);
             this.Controls.Add(this.lbReadOnly);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label14);
@@ -677,6 +714,8 @@
             this.pnCad.PerformLayout();
             this.pnSelectScreen.ResumeLayout(false);
             this.pnSelectScreen.PerformLayout();
+            this.pnTools.ResumeLayout(false);
+            this.pnTools.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -732,5 +771,8 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label lbReadOnly;
+        private System.Windows.Forms.Panel pnTools;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.ComboBox cbTool;
     }
 }
