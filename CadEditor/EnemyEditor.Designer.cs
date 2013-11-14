@@ -75,7 +75,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.lbReadOnly = new System.Windows.Forms.Label();
             this.pnTools = new System.Windows.Forms.Panel();
@@ -84,6 +83,7 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.cbObjType = new System.Windows.Forms.ComboBox();
+            this.lbObjectsCount = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -579,7 +579,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(715, 468);
+            this.label7.Location = new System.Drawing.Point(714, 490);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(218, 13);
             this.label7.TabIndex = 57;
@@ -605,20 +605,11 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(715, 484);
+            this.label13.Location = new System.Drawing.Point(715, 503);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(181, 13);
             this.label13.TabIndex = 60;
             this.label13.Text = "Press DEL to delete selected objects";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(715, 500);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(215, 13);
-            this.label14.TabIndex = 61;
-            this.label14.Text = "Select object in the list for change its coords";
             // 
             // label15
             // 
@@ -702,18 +693,27 @@
             this.cbObjType.TabIndex = 66;
             this.cbObjType.SelectedIndexChanged += new System.EventHandler(this.cbCoordX_SelectedIndexChanged);
             // 
+            // lbObjectsCount
+            // 
+            this.lbObjectsCount.AutoSize = true;
+            this.lbObjectsCount.Location = new System.Drawing.Point(714, 468);
+            this.lbObjectsCount.Name = "lbObjectsCount";
+            this.lbObjectsCount.Size = new System.Drawing.Size(96, 13);
+            this.lbObjectsCount.TabIndex = 67;
+            this.lbObjectsCount.Text = "Objects count: 0/0";
+            // 
             // EnemyEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(944, 533);
+            this.Controls.Add(this.lbObjectsCount);
             this.Controls.Add(this.cbObjType);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.pnTools);
             this.Controls.Add(this.lbReadOnly);
             this.Controls.Add(this.label15);
-            this.Controls.Add(this.label14);
             this.Controls.Add(this.pnCad);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
@@ -806,7 +806,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label lbReadOnly;
         private System.Windows.Forms.Panel pnTools;
@@ -815,5 +814,6 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ComboBox cbObjType;
+        private System.Windows.Forms.Label lbObjectsCount;
     }
 }

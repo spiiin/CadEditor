@@ -476,6 +476,7 @@ namespace CadEditor
             cbCoordX.Enabled = false;
             cbCoordY.Enabled = false;
             cbObjType.Enabled = false;
+            lbObjectsCount.Text = String.Format("Objects count: {0}/{1}", lvObjects.Items.Count, getLevelRecForGameType().objCount);
         }
 
         private int coordToScreenNo(ObjectRec obj)
@@ -561,6 +562,7 @@ namespace CadEditor
                 objects.Insert(insertPos, obj);
 
                 lvObjects.Items.Insert(insertPos, new ListViewItem(makeStringForObject(obj), obj.type));
+                lbObjectsCount.Text = String.Format("Objects count: {0}/{1}", lvObjects.Items.Count, getLevelRecForGameType().objCount);
             }
             else if (curTool == ToolType.Select)
             {
