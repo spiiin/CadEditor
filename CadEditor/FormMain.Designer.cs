@@ -74,6 +74,7 @@
             this.pnView = new System.Windows.Forms.Panel();
             this.cbScale = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.lbCoords = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -107,6 +108,8 @@
             this.mapScreen.TabStop = false;
             this.mapScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             this.mapScreen.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseClick);
+            this.mapScreen.MouseLeave += new System.EventHandler(this.mapScreen_MouseLeave);
+            this.mapScreen.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseMove);
             // 
             // activeBlock
             // 
@@ -598,11 +601,22 @@
             this.label10.TabIndex = 55;
             this.label10.Text = "Scale:";
             // 
+            // lbCoords
+            // 
+            this.lbCoords.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lbCoords.AutoSize = true;
+            this.lbCoords.Location = new System.Drawing.Point(530, 530);
+            this.lbCoords.Name = "lbCoords";
+            this.lbCoords.Size = new System.Drawing.Size(64, 13);
+            this.lbCoords.TabIndex = 56;
+            this.lbCoords.Text = "Coords:(0,0)";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1058, 552);
+            this.Controls.Add(this.lbCoords);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.cbScale);
             this.Controls.Add(this.pnCad);
@@ -688,6 +702,7 @@
         private System.Windows.Forms.Panel pnView;
         private System.Windows.Forms.ComboBox cbScale;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label lbCoords;
     }
 }
 

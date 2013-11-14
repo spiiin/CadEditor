@@ -697,5 +697,26 @@ namespace CadEditor
                 f.FormClosed += subeditorClosed(b);
             }
         }
+
+        private void mapScreen_MouseMove(object sender, MouseEventArgs e)
+        {
+            int dx, dy;
+            if (ConfigScript.getScreenVertical())
+            {
+                dy = e.X / (blockWidth * curScale);
+                dx = e.Y / (blockHeight * curScale) - 1;
+            }
+            else
+            {
+                dx = e.X / (blockWidth * curScale) - 1;
+                dy = e.Y / (blockHeight * curScale);
+            }
+            lbCoords.Text = String.Format("Coords:({0},{1})", dx, dy);
+        }
+
+        private void mapScreen_MouseLeave(object sender, EventArgs e)
+        {
+            lbCoords.Text = "Coords:()";
+        }
     }
 }
