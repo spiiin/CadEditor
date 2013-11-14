@@ -576,7 +576,7 @@ namespace CadEditor
             }
             else if (curTool == ToolType.Delete)
             {
-                for (int i = 0; i < objects.Count; i++)
+                for (int i = objects.Count - 1; i >= 0; i--)
                 {
                     var obj = objects[i];
                     if ((obj.sx == sx) && (obj.sy == sy) && (Math.Abs(obj.x - x) < 8) && (Math.Abs(obj.y - y) < 8))
