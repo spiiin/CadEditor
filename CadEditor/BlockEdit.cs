@@ -39,7 +39,7 @@ namespace CadEditor
             updatePanelsVisible();
             reloadLevel();
 
-            readOnly = Globals.gameType == GameType.DT2;
+            readOnly = false; //must be read from config
             btSave.Enabled = !readOnly;
             lbReadOnly.Visible = readOnly;
             btFlipHorizontal.Visible = !readOnly;
@@ -400,7 +400,8 @@ namespace CadEditor
                 cbType.Size = new Size(120, 21);
                 cbType.Tag = i;
                 cbType.DropDownStyle = ComboBoxStyle.DropDownList;
-                cbType.SelectedIndexChanged += cbType_SelectedIndexChanged;
+                if (Globals.gameType != GameType.DT2)
+                  cbType.SelectedIndexChanged += cbType_SelectedIndexChanged;
                 fp.Controls.Add(cbType);
                 //
                 PictureBox pb2 = new PictureBox();
