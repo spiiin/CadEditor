@@ -62,7 +62,7 @@ namespace CadEditor
             prepareAxisLabels();
             reloadLevel();
 
-            readOnly = Globals.gameType == GameType.DT2;
+            readOnly = false; //must be read from config
             btSave.Enabled = !readOnly;
             lbReadOnly.Visible = readOnly;
             btImport.Visible = !readOnly;

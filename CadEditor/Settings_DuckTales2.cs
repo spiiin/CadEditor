@@ -21,7 +21,7 @@ public class Data:CapcomBase
   public override GetVideoChunkFunc    getVideoChunkFunc()    { return getDuckTalesVideoChunk;   }
   public override SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   public override GetBigBlocksFunc     getBigBlocksFunc()     { return getBigBlocksDt2;}
-  public override SetBigBlocksFunc     setBigBlocksFunc()     { return null;}
+  public override SetBigBlocksFunc     setBigBlocksFunc()     { return setBigBlocksDt2;}
   
   public IList<LevelRec> levelRecsDt2 = new List<LevelRec>() 
   {
@@ -68,60 +68,40 @@ public class Data:CapcomBase
     return null;
   }
   
+  public int getBigBlocksCountForLevel(int levelNo)
+  {
+    int[] bigBlocksCount = {207,195,169,176,209,209};
+    return bigBlocksCount[levelNo];
+  }
+  
+  public int[] getBigBlocksPtrsForLevel(int levelNo)
+  {
+    int[][] levelPointers = { 
+     new int[]{0x10D4A, 0x10E19, 0x10EE8, 0x10FB7},  //ptrs for level 1
+     new int[]{0x11086, 0x11149, 0x1120C, 0x112CF},  //ptrs for level 2
+     new int[]{0x11392, 0x1143B, 0x114E4, 0x1158D},  //ptrs for level 3
+     new int[]{0x11636, 0x116E6, 0x11796, 0x11846},  //ptrs for level 4
+     new int[]{0x118F6, 0x119C7, 0x11A98, 0x11B69},  //ptrs for level 5
+     new int[]{0x118F6, 0x119C7, 0x11A98, 0x11B69}   //ptrs for level 6 (same as 5)
+    };
+    return levelPointers[levelNo];
+  }
+  
   public byte[] getBigBlocksDt2(int bigTileIndex)
   {
-    byte[] bigBlockIndexes = new byte[getBigBlocksCount() * 4];
-    if (bigTileIndex == 0)
-    {
-      for (int i = 0; i < getBigBlocksCount(); i++)
-      {
-          bigBlockIndexes[i * 4 + 0] = Globals.romdata[0x10D4A + i];
-          bigBlockIndexes[i * 4 + 1] = Globals.romdata[0x10E19 + i];
-          bigBlockIndexes[i * 4 + 2] = Globals.romdata[0x10EE8 + i];
-          bigBlockIndexes[i * 4 + 3] = Globals.romdata[0x10FB7 + i];
-      }
-    }
-    else if (bigTileIndex == 1)
-    {
-      for (int i = 0; i < getBigBlocksCount(); i++)
-      {
-          bigBlockIndexes[i * 4 + 0] = Globals.romdata[0x11086 + i];
-          bigBlockIndexes[i * 4 + 1] = Globals.romdata[0x11149 + i];
-          bigBlockIndexes[i * 4 + 2] = Globals.romdata[0x1120C + i];
-          bigBlockIndexes[i * 4 + 3] = Globals.romdata[0x112CF + i];
-      }
-    }
-    else if (bigTileIndex == 2)
-    {
-      for (int i = 0; i < getBigBlocksCount(); i++)
-      {
-          bigBlockIndexes[i * 4 + 0] = Globals.romdata[0x11392 + i];
-          bigBlockIndexes[i * 4 + 1] = Globals.romdata[0x1143B + i];
-          bigBlockIndexes[i * 4 + 2] = Globals.romdata[0x114E4 + i];
-          bigBlockIndexes[i * 4 + 3] = Globals.romdata[0x1158D + i];
-      }
-    }
-    else if (bigTileIndex == 3)
-    {
-      for (int i = 0; i < getBigBlocksCount(); i++)
-      {
-          bigBlockIndexes[i * 4 + 0] = Globals.romdata[0x11636 + i];
-          bigBlockIndexes[i * 4 + 1] = Globals.romdata[0x116E6 + i];
-          bigBlockIndexes[i * 4 + 2] = Globals.romdata[0x11796 + i];
-          bigBlockIndexes[i * 4 + 3] = Globals.romdata[0x11846 + i];
-      }
-    }
-    else if (bigTileIndex == 4)
-    {
-      for (int i = 0; i < getBigBlocksCount(); i++)
-      {
-          bigBlockIndexes[i * 4 + 0] = Globals.romdata[0x118F6 + i];
-          bigBlockIndexes[i * 4 + 1] = Globals.romdata[0x119C7 + i];
-          bigBlockIndexes[i * 4 + 2] = Globals.romdata[0x11A98 + i];
-          bigBlockIndexes[i * 4 + 3] = Globals.romdata[0x11B69 + i];
-      }
-    }
+    int[] addrPointers = getBigBlocksPtrsForLevel(bigTileIndex);
+    int blocksCount = getBigBlocksCountForLevel(bigTileIndex);
+    byte[] bigBlockIndexes = new byte[getBigBlocksCount()*4];
+    byte[] tempIndexes = Utils.readDataFromUnalignedArrays(Globals.romdata, addrPointers[0], addrPointers[1], addrPointers[2], addrPointers[3], blocksCount);
+    Array.Copy(tempIndexes, bigBlockIndexes, blocksCount*4);    
     return bigBlockIndexes;
+  }
+  
+  public void setBigBlocksDt2(int bigTileIndex, byte[] data)
+  {
+    int[] addrPointers = getBigBlocksPtrsForLevel(bigTileIndex);
+    int blocksCount = getBigBlocksCountForLevel(bigTileIndex);
+    Utils.writeDataToUnalignedArrays(data, Globals.romdata, addrPointers[0], addrPointers[1], addrPointers[2], addrPointers[3], blocksCount); 
   }
   //--------------------------------------------------------------------------------------------
 }

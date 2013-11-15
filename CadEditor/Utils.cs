@@ -295,5 +295,29 @@ namespace CadEditor
                 //Globals.romdata[addr + count*4 + i] = data[i *4 + 4]; // for tt
             }
         }
+
+        public static byte[] readDataFromUnalignedArrays(byte[] romdata, int addr1, int addr2, int addr3, int addr4, int count)
+        {
+            byte[] data = new byte[count * 4];
+            for (int i = 0; i < count; i++)
+            {
+                data[i * 4 + 0] = Globals.romdata[addr1 + i];
+                data[i * 4 + 1] = Globals.romdata[addr2 + i];
+                data[i * 4 + 2] = Globals.romdata[addr3 + i];
+                data[i * 4 + 3] = Globals.romdata[addr4 + i];
+            }
+            return data;
+        }
+
+        public static void writeDataToUnalignedArrays(byte[] data, byte[] romdata, int addr1, int addr2, int addr3, int addr4, int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                Globals.romdata[addr1 + i] = data[i * 4 + 0];
+                Globals.romdata[addr2 + i] = data[i * 4 + 1];
+                Globals.romdata[addr3 + i] = data[i * 4 + 2];
+                Globals.romdata[addr4 + i] = data[i * 4 + 3];
+            }
+        }
     }
 }
