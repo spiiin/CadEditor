@@ -389,7 +389,8 @@ namespace CadEditor
                 cbColor.DrawItem += new DrawItemEventHandler(cbSubpalette_DrawItemEvent);
                 cbColor.Items.AddRange(subPalItems);
                 cbColor.DropDownStyle = ComboBoxStyle.DropDownList;
-                cbColor.SelectedIndexChanged += cbColor_SelectedIndexChanged;
+                if (Globals.gameType != GameType.DT2)
+                  cbColor.SelectedIndexChanged += cbColor_SelectedIndexChanged;
                 fp.Controls.Add(cbColor);
                 //
                 ComboBox cbType = new ComboBox();

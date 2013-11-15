@@ -7,21 +7,15 @@ using System.Windows.Forms;
 public class Data
 {
   public GameType getGameType()  { return GameType._3E; }
-  
-  public OffsetRec getPalOffset()       { return new OffsetRec(0xB1F0, 16, 16);        }
-  public OffsetRec getVideoOffset()     { return new OffsetRec(0x4D10 , 1   , 0xD00);  }
-  public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x4D10 , 1   , 0xD00);  }
-  public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x147F8, 1   , 0x4000); }//153
-  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x14660 , 1  , 0x440);  }//102
-  public OffsetRec getScreensOffset()   { return new OffsetRec(0x14A5C , 7  , 64);     }
-  public int getBigBlocksCount()        { return 256; }
-  public int getBlocksCount()           { return 256; }
+  public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x147F8,  1  , 0x4000);  }//153
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x14660 , 1  , 0x440);   }//102
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0x14A5C , 7  , 64);      }
+  public int getBigBlocksCount()        { return 153; }
+  public int getBlocksCount()           { return 102; }
   public int getScreenWidth()           { return 8; }
   public int getScreenHeight()          { return 8; }
-  public IList<LevelRec> getLevelRecs() { return levelRecsTT; }
   
-  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getTinyToonVideoAddress; }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return getTinyToonVideoChunk;   }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChunk;   }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   public GetBigBlocksFunc     getBigBlocksFunc()     { return Utils.getBigBlocksCapcomDefault;}
   public SetBigBlocksFunc     setBigBlocksFunc()     { return Utils.setBigBlocksCapcomDefault;}
@@ -30,17 +24,7 @@ public class Data
   public GetPalFunc           getPalFunc()           { return getPalleteLevel_1_1;}
   public SetPalFunc           setPalFunc()           { return null;}
   
-  public IList<LevelRec> levelRecsTT = new List<LevelRec>() 
-  {
-    new LevelRec(0x0, 1, 8, 6, 0x0),
-  };
-  
-  public int getTinyToonVideoAddress(int id)
-  {
-    return -1;
-  }
-  
-  public byte[] getTinyToonVideoChunk(int videoPageId)
+  public byte[] getVideoChunk(int videoPageId)
   {
     try
     {

@@ -15,12 +15,20 @@ namespace CadEditor
     public delegate byte[] GetPalFunc(int palId);
     public delegate void   SetPalFunc(int palId, byte[] pallete);
 
-    class ConfigScript
+    public class ConfigScript
     {
         public static void LoadFromFile(string fileName)
         {
             var asm = new AsmHelper(CSScript.Load(fileName));
-            var data = asm.CreateObject("Data");
+            object data;
+            try
+            {
+                data = asm.CreateObject("Data");
+            }
+            catch (Exception)
+            {
+                return;
+            }
 
             Globals.gameType = (GameType)asm.InvokeInst(data,"*.getGameType");
             palOffset = callFromScript(asm, data,"*.getPalOffset", new OffsetRec(0,1,0));
@@ -182,6 +190,7 @@ namespace CadEditor
         {
             return blocksPicturesWidth;
         }
+
         public static T callFromScript<T>(AsmHelper script, object data, string funcName, T defaultValue = default(T), params object[] funcParams)
         {
             try
