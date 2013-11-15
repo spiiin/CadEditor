@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing;
 using CSScriptLibrary;
 
 namespace CadEditor
@@ -14,6 +15,7 @@ namespace CadEditor
     public delegate void   SetBigBlocksFunc(int bigTileIndex, byte[] bigBlockIndexes);
     public delegate byte[] GetPalFunc(int palId);
     public delegate void   SetPalFunc(int palId, byte[] pallete);
+    public delegate void   RenderToMainScreenFunc(Graphics g, int curScale);
 
     public class ConfigScript
     {
@@ -51,6 +53,7 @@ namespace CadEditor
             setBlocksFunc = callFromScript<SetBlocksFunc>(asm, data, "*.setBlocksFunc");
             getPalFunc = callFromScript<GetPalFunc>(asm, data, "*.getPalFunc");
             setPalFunc = callFromScript<SetPalFunc>(asm, data, "*.setPalFunc");
+            renderToMainScreenFunc = callFromScript<RenderToMainScreenFunc>(asm, data, "*.getRenderToMainScreenFunc");
 
             isBigBlockEditorEnabled = callFromScript(asm, data, "*.isBigBlockEditorEnabled", true);
             isBlockEditorEnabled = callFromScript(asm, data, "*.isBlockEditorEnabled", true);
@@ -138,6 +141,12 @@ namespace CadEditor
         public static void setPal(int palId, byte[] pallete)
         {
             setPalFunc(palId, pallete);
+        }
+
+        public static void renderToMainScreen(Graphics g, int scale)
+        {
+            if (renderToMainScreenFunc!=null)
+                renderToMainScreenFunc(g, scale);
         }
 
         public static int getBigBlocksCount()
@@ -232,6 +241,7 @@ namespace CadEditor
         public static SetBlocksFunc setBlocksFunc;
         public static GetPalFunc getPalFunc;
         public static SetPalFunc setPalFunc;
+        public static RenderToMainScreenFunc renderToMainScreenFunc;
 
         public static bool isBigBlockEditorEnabled;
         public static bool isBlockEditorEnabled;
