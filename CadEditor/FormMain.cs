@@ -354,7 +354,7 @@ namespace CadEditor
                 if ((visibleRect.Contains(tileRect)) || (visibleRect.IntersectsWith(tileRect)))
                   g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
             }
-            if (showNeiScreens && (curActiveScreen > 0))
+            if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen > 0))
             {
                 byte[] indexesPrev = screens[curActiveScreen - 1];
                 for (int i = 0; i < SIZE; i++)
@@ -367,7 +367,7 @@ namespace CadEditor
                     }
                 }
             }
-            if (showNeiScreens && (curActiveScreen < ConfigScript.screensOffset.recCount - 1))
+            if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen < ConfigScript.screensOffset.recCount - 1))
             {
                 byte[] indexesNext = screens[curActiveScreen + 1];
                 for (int i = 0; i < SIZE; i++)
