@@ -32,13 +32,39 @@ namespace CadEditor
         }
 
         public string Filename;
+        public bool ShowExportParams;
         public bool Result;
 
         private void SelectFile_Load(object sender, EventArgs e)
         {
             tbFileName.Text = Filename;
             ofOpenDialog.FileName = Filename;
+            cbExportType.SelectedIndex = 0;
             Result = false;
+
+            lbExportType.Visible = cbExportType.Visible = ShowExportParams;
         }
+
+        private void cbExportType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var exts = new Dictionary<ExportType, String> { {ExportType.Binary,".bin"}, {ExportType.Picture,".png"} };
+            exportType = (ExportType)cbExportType.SelectedIndex;
+            Filename = System.IO.Path.ChangeExtension(Filename, exts[exportType]);
+            tbFileName.Text = Filename;
+            ofOpenDialog.FileName = Filename;
+        }
+
+        public ExportType getExportType()
+        {
+            return exportType;
+        }
+
+        ExportType exportType;
+    }
+
+    public enum ExportType
+    {
+        Binary,
+        Picture,
     }
 }

@@ -33,13 +33,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btSelect = new System.Windows.Forms.Button();
             this.ofOpenDialog = new System.Windows.Forms.OpenFileDialog();
+            this.cbExportType = new System.Windows.Forms.ComboBox();
+            this.lbExportType = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // tbFileName
             // 
-            this.tbFileName.Location = new System.Drawing.Point(73, 6);
+            this.tbFileName.Location = new System.Drawing.Point(81, 6);
             this.tbFileName.Name = "tbFileName";
-            this.tbFileName.Size = new System.Drawing.Size(214, 20);
+            this.tbFileName.Size = new System.Drawing.Size(206, 20);
             this.tbFileName.TabIndex = 10;
             this.tbFileName.Text = "exportedScreens.bin";
             this.tbFileName.Click += new System.EventHandler(this.tbFileName_Click);
@@ -55,7 +57,7 @@
             // 
             // btSelect
             // 
-            this.btSelect.Location = new System.Drawing.Point(12, 35);
+            this.btSelect.Location = new System.Drawing.Point(12, 64);
             this.btSelect.Name = "btSelect";
             this.btSelect.Size = new System.Drawing.Size(275, 23);
             this.btSelect.TabIndex = 12;
@@ -68,11 +70,35 @@
             this.ofOpenDialog.CheckFileExists = false;
             this.ofOpenDialog.FileName = "openFileDialog1";
             // 
+            // cbExportType
+            // 
+            this.cbExportType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbExportType.FormattingEnabled = true;
+            this.cbExportType.Items.AddRange(new object[] {
+            "Binary",
+            "Picture"});
+            this.cbExportType.Location = new System.Drawing.Point(81, 32);
+            this.cbExportType.Name = "cbExportType";
+            this.cbExportType.Size = new System.Drawing.Size(206, 21);
+            this.cbExportType.TabIndex = 13;
+            this.cbExportType.SelectedIndexChanged += new System.EventHandler(this.cbExportType_SelectedIndexChanged);
+            // 
+            // lbExportType
+            // 
+            this.lbExportType.AutoSize = true;
+            this.lbExportType.Location = new System.Drawing.Point(12, 35);
+            this.lbExportType.Name = "lbExportType";
+            this.lbExportType.Size = new System.Drawing.Size(63, 13);
+            this.lbExportType.TabIndex = 14;
+            this.lbExportType.Text = "Export type:";
+            // 
             // SelectFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(299, 70);
+            this.ClientSize = new System.Drawing.Size(299, 99);
+            this.Controls.Add(this.lbExportType);
+            this.Controls.Add(this.cbExportType);
             this.Controls.Add(this.btSelect);
             this.Controls.Add(this.tbFileName);
             this.Controls.Add(this.label1);
@@ -93,5 +119,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btSelect;
         private System.Windows.Forms.OpenFileDialog ofOpenDialog;
+        private System.Windows.Forms.ComboBox cbExportType;
+        private System.Windows.Forms.Label lbExportType;
     }
 }

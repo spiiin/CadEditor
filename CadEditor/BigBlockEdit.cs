@@ -289,11 +289,41 @@ namespace CadEditor
             //duck tales 2 has other format
             var f = new SelectFile();
             f.Filename = "exportedBigBlocks.bin";
+            f.ShowExportParams = true;
             f.ShowDialog();
             if (!f.Result)
                 return;
             var fn = f.Filename;
-            Utils.saveDataToFile(fn, bigBlockIndexes);
+            if (f.getExportType() == ExportType.Binary)
+            {
+                Utils.saveDataToFile(fn, bigBlockIndexes);
+            }
+            else
+            {
+                Bitmap result = new Bitmap(64*256, 64); //need some hack for duck tales 1
+                using (Graphics g = Graphics.FromImage(result))
+                {
+                    for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
+                    {
+                        Bitmap b;
+                        switch (Globals.gameType)
+                        {
+                            //todo: write code to export blocks for TinyToon
+                            /*case GameType.TT:
+                                b = Video.makeBigBlockTT(i, 64, 64, bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
+                                break;*/
+                            case GameType._3E:
+                                b = Video.makeBigBlock3E(i, 64, 64, bigBlockIndexes, smallBlocks);
+                                break;
+                            default:
+                                b = Video.makeBigBlock(i, 64, 64, bigBlockIndexes, smallBlocks);
+                                break;
+                        }
+                        g.DrawImage(b, new Point(64 * i, 0));
+                    }
+                }
+                result.Save(fn);
+            }
         }
 
         private void btImport_Click(object sender, EventArgs e)

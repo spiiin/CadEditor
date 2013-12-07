@@ -538,6 +538,7 @@ namespace CadEditor
         {
             var f = new SelectFile();
             f.Filename = "exportedBlocks.bin";
+            //f.ShowExportParams = true;
             f.ShowDialog();
             if (!f.Result)
                 return;
