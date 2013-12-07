@@ -1,9 +1,0 @@
-<!--Duck Tales (U) [!].nes -->
-<Config>
-        <pallete     begin='0x3E2F' count='10'   size="16"/>
-        <videoBack   begin='0x4D10'  count='6'    size="0xD00"/> <!--non sense for duck tales, rom has no CHR-ROM-->
-        <videoObj    begin='0x4D10'  count='6'    size="0xD00"/> <!--non sense for duck tales, rom has no CHR-ROM-->
-        <bigBlocks   begin='0x7310'  count='3'    size="0x4000"/>
-        <blocks      begin='0x1008A'  count='3'    size="0x440"/>
-        <screens     begin='0x11d5a' count='300'  size="0x40"/>
-</Config>
