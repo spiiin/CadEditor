@@ -273,6 +273,77 @@ namespace CadEditor
             return bitmap;
         }
 
+#region Render Functions
+        public static Bitmap makeBigBlock(int i, int width, int height, byte[] bigBlockIndexes, System.Windows.Forms.ImageList smallBlocks)
+        {
+            int bbRectPosX = width / 2;
+            int bbRectSizeX = width / 2;
+            int bbRectPosY = height / 2;
+            int bbRectSizeY = height / 2; 
+            var b = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(b))
+            {
+                    g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
+                    g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
+                    g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
+                    g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY)); 
+            }
+            return b;
+        }
+
+        public static Bitmap makeBigBlock3E(int i, int width, int height, byte[] bigBlockIndexes, System.Windows.Forms.ImageList smallBlocks)
+        {
+            int bbRectPosX = width / 2;
+            int bbRectSizeX = width / 2;
+            int bbRectPosY = height / 2;
+            int bbRectSizeY = height / 2;
+            var b = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(b))
+            {
+                g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 0]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));
+            }
+            return b;
+        }
+
+        public static Bitmap makeBigBlockTT(int i, int width, int height, byte[] bigBlockIndexes, System.Windows.Forms.ImageList[] smallBlocksAll, byte[] smallBlocksColorBytes)
+        {
+            int bbRectPosX = width / 2;
+            int bbRectSizeX = width / 2;
+            int bbRectPosY = height / 2;
+            int bbRectSizeY = height / 2;
+            var b = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(b))
+            {
+                int scb = smallBlocksColorBytes[i];
+                g.DrawImage(smallBlocksAll[scb >> 0 & 0x3].Images[bigBlockIndexes[i * 4]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocksAll[scb >> 2 & 0x3].Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocksAll[scb >> 4 & 0x3].Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocksAll[scb >> 6 & 0x3].Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));   
+            }
+            return b;
+        }
+
+        public static Bitmap addAxisRectangle(Bitmap source)
+        {
+            using (Graphics g = Graphics.FromImage(source))
+                g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), new Rectangle(0, 0, source.Width, source.Height));
+            return source;
+        }
+
+        public static Bitmap addObjNumber(Bitmap source, int no)
+        {
+            using (Graphics g = Graphics.FromImage(source))
+            {
+                g.FillRectangle(new SolidBrush(Color.FromArgb(192, 255, 255, 255)), new Rectangle(0, 0, source.Width, source.Height));
+                g.DrawString(String.Format("{0:X}", no), new Font("Arial", 16), Brushes.Red, new Point(0, 0));
+            }
+            return source;
+        }
+#endregion
+
         private static int mixBits(bool hi, bool lo)
         {
             return (hi?1:0) << 1 |(lo?1:0);

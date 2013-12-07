@@ -219,42 +219,23 @@ namespace CadEditor
             int bbRectSizeY = (blockHeight/2) * curButtonScale; 
             for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
             {
-                var b = new Bitmap(blockWidth*curButtonScale, blockHeight*curButtonScale);
-                using (Graphics g = Graphics.FromImage(b))
+                Bitmap b;
+                switch (Globals.gameType)
                 {
-                    if (Globals.gameType == GameType.TT)
-                    {
-                        int scb = smallBlocksColorBytes[i];
-                        g.DrawImage(smallBlocksAll[scb >> 0 & 0x3].Images[bigBlockIndexes[i * 4]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
-                        g.DrawImage(smallBlocksAll[scb >> 2 & 0x3].Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
-                        g.DrawImage(smallBlocksAll[scb >> 4 & 0x3].Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
-                        g.DrawImage(smallBlocksAll[scb >> 6 & 0x3].Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));   
-
-                    }
-                    else if (Globals.gameType == GameType._3E)
-                    {
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 0]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));
-                    }
-                    else
-                    {
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY)); 
-                    }
-
-                    if (curViewType == MapViewType.ObjNumbers)
-                    {
-                        g.FillRectangle(new SolidBrush(Color.FromArgb(192, 255, 255, 255)), new Rectangle(0, 0, bbRectSizeX * 2, bbRectSizeY*2));
-                        g.DrawString(String.Format("{0:X}", i), new Font("Arial", 16), Brushes.Red, new Point(0, 0));
-                    }
-
-                    if (showAxis)
-                        g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), new Rectangle(0, 0, bbRectSizeX*2, bbRectSizeY*2));
-                }
+                    case GameType.TT:
+                        b = Video.makeBigBlockTT(i, blockWidth * curButtonScale, blockHeight * curButtonScale, bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
+                        break;
+                    case GameType._3E:
+                        b = Video.makeBigBlock3E(i, blockWidth * curButtonScale, blockHeight * curButtonScale, bigBlockIndexes, smallBlocks);
+                        break;
+                    default:
+                        b = Video.makeBigBlock(i, blockWidth * curButtonScale, blockHeight * curButtonScale, bigBlockIndexes, smallBlocks);
+                        break;
+                } 
+                if (curViewType == MapViewType.ObjNumbers) 
+                    b = Video.addObjNumber(b, i);
+                if (showAxis)
+                    b = Video.addAxisRectangle(b);
                 bigBlocks.Images.Add(b);
             }
             //tt add
