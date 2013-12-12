@@ -75,6 +75,7 @@
             this.cbScale = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.lbCoords = new System.Windows.Forms.Label();
+            this.btEditMap = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -472,14 +473,15 @@
             // 
             // pnEditors
             // 
+            this.pnEditors.Controls.Add(this.btEditMap);
             this.pnEditors.Controls.Add(this.btVideo);
             this.pnEditors.Controls.Add(this.btEdit);
             this.pnEditors.Controls.Add(this.btEditObjs);
             this.pnEditors.Controls.Add(this.btEditLayout);
             this.pnEditors.Controls.Add(this.btEditEnemy);
-            this.pnEditors.Location = new System.Drawing.Point(338, 380);
+            this.pnEditors.Location = new System.Drawing.Point(338, 346);
             this.pnEditors.Name = "pnEditors";
-            this.pnEditors.Size = new System.Drawing.Size(72, 164);
+            this.pnEditors.Size = new System.Drawing.Size(72, 198);
             this.pnEditors.TabIndex = 46;
             // 
             // btVideo
@@ -611,6 +613,17 @@
             this.lbCoords.TabIndex = 56;
             this.lbCoords.Text = "Coords:(0,0)";
             // 
+            // btEditMap
+            // 
+            this.btEditMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btEditMap.Location = new System.Drawing.Point(3, 161);
+            this.btEditMap.Name = "btEditMap";
+            this.btEditMap.Size = new System.Drawing.Size(62, 22);
+            this.btEditMap.TabIndex = 57;
+            this.btEditMap.Text = "edit map";
+            this.btEditMap.UseVisualStyleBackColor = true;
+            this.btEditMap.Click += new System.EventHandler(this.btSubeditor_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -640,7 +653,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Text = "CAD Editor v2.0 by spiiin";
+            this.Text = "CAD Editor v2.0 by spiiin (special dwd-map version)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
@@ -703,6 +716,7 @@
         private System.Windows.Forms.ComboBox cbScale;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label lbCoords;
+        private System.Windows.Forms.Button btEditMap;
     }
 }
 

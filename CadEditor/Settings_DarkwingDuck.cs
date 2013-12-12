@@ -12,6 +12,7 @@ public class Data : CapcomBase
   public IList<LevelRec> getLevelRecs() { return levelRecsDwd; }
   public string[] getBlockTypeNames()   { return objTypesDwd;  }
   public string   getObjTypesPicturesDir() { return "obj_sprites_dwd"; }
+  public bool isMapEditorEnabled()      { return true; }
   public IList<LevelRec> levelRecsDwd = new List<LevelRec>() 
   {
     new LevelRec(0x10315, 51, 17, 4,  0x1DFA0),

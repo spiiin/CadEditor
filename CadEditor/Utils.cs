@@ -319,5 +319,11 @@ namespace CadEditor
                 Globals.romdata[addr4 + i] = data[i * 4 + 3];
             }
         }
+
+        //
+        public static int readWord(byte[] data, int addr)
+        {
+            return data[addr] << 8 | data[addr + 1];
+        }
     }
 }

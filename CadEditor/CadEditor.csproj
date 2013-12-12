@@ -14,6 +14,7 @@
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,12 +27,11 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -108,6 +108,12 @@
     <Compile Include="EditLevelData.Designer.cs">
       <DependentUpon>EditLevelData.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditMap.Designer.cs">
+      <DependentUpon>EditMap.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditVideo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -175,6 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditLevelData.resx">
       <DependentUpon>EditLevelData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditMap.resx">
+      <DependentUpon>EditMap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditVideo.resx">
       <DependentUpon>EditVideo.cs</DependentUpon>

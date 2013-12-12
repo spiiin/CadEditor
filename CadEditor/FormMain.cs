@@ -39,6 +39,7 @@ namespace CadEditor
                  { btEditLayout,     ()=>{ return new EditLayout();}   },
                  { btEditEnemy,      ()=>{ return new EnemyEditor();}  },
                  { btVideo,          ()=>{ return new EditVideo();}    },
+                 { btEditMap,        ()=>{ return new EditMap();}    },
             };
         }
 
@@ -83,6 +84,7 @@ namespace CadEditor
             btEditLayout.Enabled = ConfigScript.isLayoutEditorEnabled;
             btEditEnemy.Enabled = ConfigScript.isEnemyEditorEnabled;
             btVideo.Enabled = ConfigScript.isVideoEditorEnabled;
+            btEditMap.Enabled = ConfigScript.isMapEditorEnabled;
 
             if (ConfigScript.getScreenVertical())
                 mapScreen.Size = new Size(ConfigScript.getScreenHeight() * blockWidth * curScale, (ConfigScript.getScreenWidth() + 2) * blockHeight * curScale);
@@ -216,7 +218,8 @@ namespace CadEditor
             int bbRectPosX = (blockWidth/2)*curButtonScale;
             int bbRectSizeX = (blockWidth / 2) * curButtonScale;
             int bbRectPosY = (blockHeight /2) * curButtonScale;
-            int bbRectSizeY = (blockHeight/2) * curButtonScale; 
+            int bbRectSizeY = (blockHeight/2) * curButtonScale;
+
             for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
             {
                 Bitmap b;

@@ -60,6 +60,7 @@ namespace CadEditor
             isLayoutEditorEnabled = callFromScript(asm, data, "*.isLayoutEditorEnabled", true);
             isEnemyEditorEnabled = callFromScript(asm, data, "*.isEnemyEditorEnabled", true);
             isVideoEditorEnabled = callFromScript(asm, data, "*.isVideoEditorEnabled", true);
+            isMapEditorEnabled = callFromScript(asm, data, "*.isMapEditorEnabled", false); //specific for dwd
             objTypesPicturesDir = callFromScript(asm, data, "*.getObjTypesPicturesDir", "obj_sprites");
 
             bigBlocksCount = callFromScript(asm, data, "*.getBigBlocksCount", 256);
@@ -248,6 +249,7 @@ namespace CadEditor
         public static bool isLayoutEditorEnabled;
         public static bool isEnemyEditorEnabled;
         public static bool isVideoEditorEnabled;
+        public static bool isMapEditorEnabled;
 
         public static bool usePicturesInstedBlocks;
         public static string blocksPicturesFilename;
