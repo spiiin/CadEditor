@@ -32,6 +32,7 @@
             this.blocksPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.btSave = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.cbShowAxis = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             this.SuspendLayout();
             // 
@@ -76,11 +77,26 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "*to file map.bin";
             // 
+            // cbShowAxis
+            // 
+            this.cbShowAxis.AutoSize = true;
+            this.cbShowAxis.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbShowAxis.Checked = true;
+            this.cbShowAxis.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbShowAxis.Location = new System.Drawing.Point(174, 478);
+            this.cbShowAxis.Name = "cbShowAxis";
+            this.cbShowAxis.Size = new System.Drawing.Size(75, 17);
+            this.cbShowAxis.TabIndex = 9;
+            this.cbShowAxis.Text = "Show Axis";
+            this.cbShowAxis.UseVisualStyleBackColor = true;
+            this.cbShowAxis.CheckedChanged += new System.EventHandler(this.cbShowAxis_CheckedChanged);
+            // 
             // EditMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(844, 504);
+            this.Controls.Add(this.cbShowAxis);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btSave);
             this.Controls.Add(this.blocksPanel);
@@ -100,5 +116,6 @@
         private System.Windows.Forms.FlowLayoutPanel blocksPanel;
         private System.Windows.Forms.Button btSave;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox cbShowAxis;
     }
 }

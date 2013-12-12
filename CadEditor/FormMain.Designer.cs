@@ -62,6 +62,7 @@
             this.cbViewType = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.pnEditors = new System.Windows.Forms.Panel();
+            this.btEditMap = new System.Windows.Forms.Button();
             this.btVideo = new System.Windows.Forms.Button();
             this.btExport = new System.Windows.Forms.Button();
             this.btImport = new System.Windows.Forms.Button();
@@ -75,7 +76,6 @@
             this.cbScale = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.lbCoords = new System.Windows.Forms.Label();
-            this.btEditMap = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -484,6 +484,17 @@
             this.pnEditors.Size = new System.Drawing.Size(72, 198);
             this.pnEditors.TabIndex = 46;
             // 
+            // btEditMap
+            // 
+            this.btEditMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btEditMap.Location = new System.Drawing.Point(3, 161);
+            this.btEditMap.Name = "btEditMap";
+            this.btEditMap.Size = new System.Drawing.Size(62, 22);
+            this.btEditMap.TabIndex = 57;
+            this.btEditMap.Text = "edit map";
+            this.btEditMap.UseVisualStyleBackColor = true;
+            this.btEditMap.Click += new System.EventHandler(this.btSubeditor_Click);
+            // 
             // btVideo
             // 
             this.btVideo.Location = new System.Drawing.Point(3, 125);
@@ -613,17 +624,6 @@
             this.lbCoords.TabIndex = 56;
             this.lbCoords.Text = "Coords:(0,0)";
             // 
-            // btEditMap
-            // 
-            this.btEditMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btEditMap.Location = new System.Drawing.Point(3, 161);
-            this.btEditMap.Name = "btEditMap";
-            this.btEditMap.Size = new System.Drawing.Size(62, 22);
-            this.btEditMap.TabIndex = 57;
-            this.btEditMap.Text = "edit map";
-            this.btEditMap.UseVisualStyleBackColor = true;
-            this.btEditMap.Click += new System.EventHandler(this.btSubeditor_Click);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -653,7 +653,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Text = "CAD Editor v2.0 by spiiin (special dwd-map version)";
+            this.Text = "CAD Editor v2.0 by spiiin";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();

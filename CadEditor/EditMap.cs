@@ -152,6 +152,7 @@ namespace CadEditor
         int curActiveBlock = 0;
         ImageList[] videos;
         byte[] mapData;
+        bool showAxis = true;
 
         private void mapScreen_Paint(object sender, PaintEventArgs e)
         {
@@ -163,6 +164,15 @@ namespace CadEditor
                 int colorByte = mapData[0x3C0 + x / 4 + 8* (y / 4)];
                 int subPal = (colorByte >> (x%4/2*2 + y%4/2*4))& 0x03;
                 g.DrawImage(videos[subPal].Images[mapData[i]], new Point(x * 16, y * 16));
+            }
+
+            //add axis
+            if (showAxis)
+            {
+                for (int x = 0; x < 32; x++)
+                    g.DrawLine(new Pen(Color.White, 1.0f), new Point(x * 32, 0), new Point(x * 32, 32 * 30));
+                for (int y = 0; y < 30; y++)
+                    g.DrawLine(new Pen(Color.White, 1.0f), new Point(0, y * 32), new Point(32 * 32, y * 32));
             }
         }
 
@@ -191,6 +201,12 @@ namespace CadEditor
         private void btSave_Click(object sender, EventArgs e)
         {
             saveMap();
+        }
+
+        private void cbShowAxis_CheckedChanged(object sender, EventArgs e)
+        {
+            showAxis = cbShowAxis.Checked;
+            mapScreen.Invalidate();
         }
     }
 }
