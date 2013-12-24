@@ -33,6 +33,8 @@
             this.btSave = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.cbShowAxis = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cbScreenNo = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             this.SuspendLayout();
             // 
@@ -91,11 +93,41 @@
             this.cbShowAxis.UseVisualStyleBackColor = true;
             this.cbShowAxis.CheckedChanged += new System.EventHandler(this.cbShowAxis_CheckedChanged);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(256, 12);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(59, 13);
+            this.label7.TabIndex = 44;
+            this.label7.Text = "Screen no:";
+            // 
+            // cbScreenNo
+            // 
+            this.cbScreenNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbScreenNo.FormattingEnabled = true;
+            this.cbScreenNo.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"});
+            this.cbScreenNo.Location = new System.Drawing.Point(259, 28);
+            this.cbScreenNo.Name = "cbScreenNo";
+            this.cbScreenNo.Size = new System.Drawing.Size(52, 21);
+            this.cbScreenNo.TabIndex = 43;
+            this.cbScreenNo.SelectedIndexChanged += new System.EventHandler(this.cbVideoNo_SelectedIndexChanged);
+            // 
             // EditMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(844, 504);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.cbScreenNo);
             this.Controls.Add(this.cbShowAxis);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btSave);
@@ -117,5 +149,7 @@
         private System.Windows.Forms.Button btSave;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox cbShowAxis;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cbScreenNo;
     }
 }

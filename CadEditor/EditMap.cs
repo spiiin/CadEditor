@@ -17,7 +17,7 @@ namespace CadEditor
             InitializeComponent();
         }
 
-        private void EditMap_Load(object sender, EventArgs e)
+        private void reloadAllData()
         {
             mapData = new byte[1024];
             setPal();
@@ -35,16 +35,24 @@ namespace CadEditor
             reloadMap();
         }
 
+        private void EditMap_Load(object sender, EventArgs e)
+        {
+            Utils.setCbItemsCount(cbScreenNo, screensInfo.Length);
+            cbScreenNo.SelectedIndex = 0;
+            //reloadAllData();
+        }
+
         private void setPal()
         {
             curPal = new byte[16];
             for (int i = 0; i < 16; i++)
-                curPal[i] = Globals.romdata[0x8E6E + i];
+                curPal[i] = Globals.romdata[curActivePalAddr + i];
+            curPal[0] = curPal[4] = curPal[8] = curPal[12] = 0x0F;
         }
 
         private void reloadMap()
         {
-            int romAddr = 0x83FC;
+            int romAddr = curActiveDataAddr;
             while (Globals.romdata[romAddr] != 0xFF)
             {
                 int videoAddr = Utils.readWord(Globals.romdata, romAddr) - 0x2000;
@@ -143,11 +151,12 @@ namespace CadEditor
         private void buttonBlockClick(Object button, EventArgs e)
         {
             int index = ((Button)button).ImageIndex;
-            //activeBlock.Image =
             curActiveBlock = index;
         }
 
         byte[] curPal;
+        int curActiveDataAddr = 0;
+        int curActivePalAddr = 0;
         int curActiveVideo = 10;
         int curActiveBlock = 0;
         ImageList[] videos;
@@ -208,5 +217,27 @@ namespace CadEditor
             showAxis = cbShowAxis.Checked;
             mapScreen.Invalidate();
         }
+
+        private void cbVideoNo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ScreenInfo si = screensInfo[cbScreenNo.SelectedIndex];
+            curActiveVideo = si.videoNo;
+            curActiveDataAddr = si.dataAddr;
+            curActivePalAddr = si.palAddr;
+            reloadAllData();
+        }
+
+        struct ScreenInfo
+        {
+            public int dataAddr;
+            public int palAddr;
+            public int videoNo;
+        }
+
+        ScreenInfo[] screensInfo = new ScreenInfo[]
+        { 
+            new ScreenInfo(){ dataAddr = 0x80B1, palAddr = 0x1C43D, videoNo = 9 },
+            new ScreenInfo(){ dataAddr = 0x83FC, palAddr = 0x8E6E , videoNo = 10 } 
+        };
     }
 }
