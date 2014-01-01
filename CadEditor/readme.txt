@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 [RUS]
 Редактор уровней для игр [NES].
-Версия 2.0
+Версия 2.1
 -------------------------------------------------------------------------------
 Поддерживаемые игры:
   редактор экранов/макроблоков/блоков/списков врагов:
@@ -31,6 +31,17 @@
     Shatterhand (Tokkyuu Shirei Solbrain)           (1 уровень)
     Contra Force                                    (1 уровень)
     Little Nemo                                     (1 уровень)
+    Shadow of the Ninja                             (1 уровень)
+    Ninja Gaiden                                    (1 уровень)
+    Super C                                         (1 уровень)
+    Captain America                                 (1 уровень)
+    Monster in My Pocket                            (1 уровень)
+    Batman                                          (1 уровень)
+    Adventures Island 2                             (1 уровень)
+    Adventures Island 3                             (1 уровень)
+редактор экранов картинками (Sega)
+    Contra Hard Corps                               (1 уровень)
+    Tiny Toon Adventures: Buster's Hidden Treasure  (1 уровень)
 ------------------------------------------------------------------------------- 
 !!! Рекомендуется копировать файл с промежуточным результатом в отдельную папку
     и проверять на работоспособность почаще!
@@ -262,6 +273,20 @@ v2.0
   Shatterhand (Tokkyuu Shirei Solbrain), уровень 1.
   Contra Force, уровень 1.
   Little Nemo, уровень 1.
+  
+v2.1
+- Редактор карты и титульного экрана для Darkwing Duck.
+- Конфиги для игр (по 1 уровню):
+    Shadow of the Ninja
+    Ninja Gaiden       
+    Super C            
+    Captain America    
+    Monster in My Pocket
+    Batman             
+    Adventures Island 2
+    Adventures Island 3
+- Редактор экранов, дампы и конфиги для сеговских игр Tiny Toon Adventures и Contra Hard Corps (по 1 уровню).
+- Возможность экспортировать макроблоки как картинки.
 
 -------------------------------------------------------------------------------
 Благодарности: 
@@ -271,7 +296,7 @@ v2.0
   Roket   - тестирование, рисование иконок.
   EmsiD   - рисование иконок, создание хака Darkwing Duck New Levels.
   Matrixz - документация к megaman 4.
-  Mefisto - идеи по развитию редактора, тестирование.
+  Mefisto - идеи по развитию редактора, тестирование, написание компрессоров для сеговских игр.
   Ti_     - помощь с дизассеблированием, конфиги для игр Contra Force, Jungle Book, Little Nemo, Battletoads, Battletoads & Double Dragon, Shatterhand, Tom & Jerry, Ninja Cats
   
 -------------------------------------------------------------------------------
