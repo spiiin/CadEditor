@@ -290,7 +290,7 @@ namespace CadEditor
 
         private LevelRec getLevelRecForGameType()
         {
-            return ConfigScript.getLevelRec(curActiveLayout);
+            return ConfigScript.getLevelRec(GameType.CAD == Globals.gameType ? curActiveLevel : curActiveLayout);
         }
 
         private void setObjectsDt()
@@ -320,19 +320,9 @@ namespace CadEditor
         {
             objects.Clear();
             int objCount, addr;
-            LevelRec lr;
-            if (Globals.gameType == GameType.CAD)
-            {
-                lr = ConfigScript.getLevelRec(curActiveLevel);
-                objCount = lr.objCount;
-                addr = lr.objectsBeginAddr;
-            }
-            else
-            {
-                lr = getLevelRecForGameType();
-                objCount = lr.objCount;
-                addr = lr.objectsBeginAddr;
-            }
+            LevelRec lr = getLevelRecForGameType();
+            objCount = lr.objCount;
+            addr = lr.objectsBeginAddr;
 
             for (int i = 0; i < objCount; i++)
             {
