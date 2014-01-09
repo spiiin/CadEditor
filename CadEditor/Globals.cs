@@ -105,9 +105,10 @@ namespace CadEditor
         public static byte[] getScreen(int screenIndex)
         {
             var result = new byte[Math.Max(64, ConfigScript.screensOffset.recSize)];
-            int beginAddr = ConfigScript.screensOffset.beginAddr + screenIndex * ConfigScript.screensOffset.recSize;
+            int dataStride = ConfigScript.getScreenDataStride();
+            int beginAddr = ConfigScript.screensOffset.beginAddr + screenIndex * ConfigScript.screensOffset.recSize * dataStride;
             for (int i = 0; i < ConfigScript.screensOffset.recSize; i++)
-                result[i] = Globals.romdata[beginAddr + i];
+                result[i] = Globals.romdata[beginAddr + i*dataStride];
             for (int i = ConfigScript.screensOffset.recSize; i < 64; i++)
                 result[i] = 0; //need this?
             return result;

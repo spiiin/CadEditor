@@ -455,11 +455,12 @@ namespace CadEditor
         {
             var romFname = OpenFile.FileName;
             //write back tiles
+            int dataStride = ConfigScript.getScreenDataStride();
             for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
             {
-                int addr = ConfigScript.screensOffset.beginAddr + i * ConfigScript.screensOffset.recSize;
+                int addr = ConfigScript.screensOffset.beginAddr + i * ConfigScript.screensOffset.recSize * dataStride;
                 for (int x = 0; x < ConfigScript.screensOffset.recSize; x++)
-                    Globals.romdata[addr + x] = screens[i][x];
+                    Globals.romdata[addr + x * dataStride] = screens[i][x];
             }
             dirty = !Globals.flushToFile();
             return !dirty;

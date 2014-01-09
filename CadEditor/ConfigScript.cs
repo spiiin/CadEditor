@@ -42,6 +42,7 @@ namespace CadEditor
             screenWidth = callFromScript(asm, data, "*.getScreenWidth", 8);
             screenHeight = callFromScript(asm, data, "*.getScreenHeight", 8);
             screenVertical = callFromScript(asm, data, "*.getScreenVertical", false);
+            screenDataStride = callFromScript(asm, data, "*.getScreenDataStride", 1);
             levelRecs = callFromScript(asm, data,"*.getLevelRecs", new List<LevelRec>());
 
             getVideoPageAddrFunc = callFromScript <GetVideoPageAddrFunc>(asm, data, "*.getVideoPageAddrFunc");
@@ -196,6 +197,11 @@ namespace CadEditor
             return screenVertical;
         }
 
+        public static int getScreenDataStride()
+        {
+            return screenDataStride;
+        }
+
         public static int getBlocksPicturesWidth()
         {
             return blocksPicturesWidth;
@@ -227,6 +233,7 @@ namespace CadEditor
         public static int screenWidth;
         public static int screenHeight;
         public static bool screenVertical;
+        public static int screenDataStride;
 
         //temp hack
         public static bool dwdAdvanceLastLevel = false;
