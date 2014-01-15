@@ -107,6 +107,8 @@ namespace CadEditor
         //for generic editor
         private Bitmap makeCurScreen(int scrNo)
         {
+            if (Globals.gameType == GameType.LM)
+                scrNo = (scrNo + 1) % 256;
             return  Video.makeScreen(scrNo, curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo);
         }
 
@@ -395,6 +397,24 @@ namespace CadEditor
             }
         }
 
+        private void setObjectsLm()
+        {
+            objects.Clear();
+            var lr = getLevelRecForGameType();
+            int objCount = lr.objCount;
+            int addr = lr.objectsBeginAddr;
+            for (int i = 0; i < objCount; i++)
+            {
+                byte v =  Globals.romdata[addr + i];
+                byte sx = Globals.romdata[addr - 3 * objCount + i];
+                byte x =  Globals.romdata[addr - 2 * objCount + i];
+                byte y =  Globals.romdata[addr - 1 * objCount + i];
+                byte sy = 0;
+                var obj = new ObjectRec(v, sx, sy, x, y);
+                objects.Add(obj);
+            }
+        }
+
         private void setObjects()
         {
             if (Globals.gameType == GameType.DT)
@@ -404,6 +424,10 @@ namespace CadEditor
             else if (Globals.gameType == GameType.DT2)
             {
                 setObjectsDt2();
+            }
+            else if (Globals.gameType == GameType.LM)
+            {
+                setObjectsLm();
             }
             else
             {
@@ -608,26 +632,47 @@ namespace CadEditor
             {
                 if (Globals.gameType != GameType.DT)
                 {
-                    for (int i = 0; i < objects.Count; i++)
+                    if (Globals.gameType == GameType.LM)
                     {
-                        var obj = objects[i];
-                        if (!ConfigScript.isDwdAdvanceLastLevel())
+                        for (int i = 0; i < objects.Count; i++)
                         {
+                            var obj = objects[i];
                             Globals.romdata[addrBase + i] = obj.type;
-                            Globals.romdata[addrBase - 4 * objCount + levelDhack + i] = obj.sx;
-                            Globals.romdata[addrBase - 3 * objCount + levelDhack + i] = obj.x;
-                            Globals.romdata[addrBase - 2 * objCount + levelDhack + i] = obj.sy;
-                            Globals.romdata[addrBase - objCount + i] = obj.y;
+                            Globals.romdata[addrBase - 1 * objCount + i] = obj.y;
+                            Globals.romdata[addrBase - 2 * objCount + i] = obj.x;
+                            Globals.romdata[addrBase - 3 * objCount + i] = obj.sx;
                         }
-                        else
+                        for (int i = objects.Count; i < objCount; i++)
                         {
-                            Globals.romdata[addrBase + i] = obj.type;
-                            Globals.romdata[addrBase + 1 * objCount + levelDhack + i] = obj.sx;
-                            Globals.romdata[addrBase + 2 * objCount + levelDhack + i] = obj.x;
-                            Globals.romdata[addrBase + 3 * objCount + levelDhack + i] = obj.sy;
-                            Globals.romdata[addrBase + 4 * objCount + i] = obj.y;
+                            Globals.romdata[addrBase + i] = 0xFF;
+                            Globals.romdata[addrBase - 1 * objCount + i] = 0xFF;
+                            Globals.romdata[addrBase - 2 * objCount + i] = 0xFF;
+                            Globals.romdata[addrBase - 3 * objCount + i] = 0xFF;
                         }
-
+                    }
+                    else
+                    {
+                    //generic version
+                        for (int i = 0; i < objects.Count; i++)
+                        {
+                            var obj = objects[i];
+                            if (!ConfigScript.isDwdAdvanceLastLevel())
+                            {
+                                Globals.romdata[addrBase + i] = obj.type;
+                                Globals.romdata[addrBase - 4 * objCount + levelDhack + i] = obj.sx;
+                                Globals.romdata[addrBase - 3 * objCount + levelDhack + i] = obj.x;
+                                Globals.romdata[addrBase - 2 * objCount + levelDhack + i] = obj.sy;
+                                Globals.romdata[addrBase - objCount + i] = obj.y;
+                            }
+                            else
+                            {
+                                Globals.romdata[addrBase + i] = obj.type;
+                                Globals.romdata[addrBase + 1 * objCount + levelDhack + i] = obj.sx;
+                                Globals.romdata[addrBase + 2 * objCount + levelDhack + i] = obj.x;
+                                Globals.romdata[addrBase + 3 * objCount + levelDhack + i] = obj.sy;
+                                Globals.romdata[addrBase + 4 * objCount + i] = obj.y;
+                            }
+                        }
                     }
                     for (int i = objects.Count; i < objCount; i++)
                     {

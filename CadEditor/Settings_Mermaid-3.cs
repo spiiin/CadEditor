@@ -3,6 +3,7 @@ using System.Collections.Generic;
 //css_include Settings_CapcomBase.cs;
 public class Data:CapcomBase
 {
+  public override GameType getGameType(){ return GameType.LM; }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x1DB53, 32  , 16);  }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0xD810, 1 , 0xD00); }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0xD810, 1 , 0xD00); }
@@ -14,7 +15,7 @@ public class Data:CapcomBase
   
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
-    new LevelRec(0x10000, 1, 8, 8,  0x1DACD), 
+    new LevelRec(0x139FD, 51, 20, 1,  0x1DACD), 
   };
   
   public byte[] getLMVideoChunk(int videoPageId)
@@ -28,7 +29,7 @@ public class Data:CapcomBase
   
   public bool isBigBlockEditorEnabled() { return true;  }
   public bool isBlockEditorEnabled()    { return true;  }
-  public bool isLayoutEditorEnabled()   { return false; }
-  public bool isEnemyEditorEnabled()    { return false; }
+  public bool isLayoutEditorEnabled()   { return true; }
+  public bool isEnemyEditorEnabled()    { return true; }
   public bool isVideoEditorEnabled()    { return false; }
 }
