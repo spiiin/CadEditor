@@ -78,8 +78,16 @@ namespace CadEditor
                 int width = curWidth;
                 int height = curHeight;
                 byte[] layer = new byte[width * height];
-                for (int i = 0; i < width * height; i++)
-                    layer[i] = Globals.romdata[layoutAddr + i];
+                if (Globals.gameType != GameType.TT)
+                {
+                    for (int i = 0; i < width * height; i++)
+                        layer[i] = Globals.romdata[layoutAddr + i];
+                }
+                else
+                {
+                    for (int i = 0; i < width * height; i++)
+                        layer[i] = (byte)(i+1);
+                }
                 curLevelLayerData = new LevelLayerData(width, height, layer, null, null);
             }
 
@@ -162,12 +170,12 @@ namespace CadEditor
             cbCoordX.Items.Clear();
             cbCoordY.Items.Clear();
             cbObjType.Items.Clear();
-            for (int i = 0; i < 256; i++)
-            {
+            for (int i = 0; i < ConfigScript.getScreenWidth()*32; i++)
                 cbCoordX.Items.Add(String.Format("{0:X}", i));
+            for (int i = 0; i < ConfigScript.getScreenHeight()*32; i++)
                 cbCoordY.Items.Add(String.Format("{0:X}", i));
+            for (int i = 0; i < 256; i++)
                 cbObjType.Items.Add(String.Format("{0:X}", i));
-            }
 
             Utils.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
             Utils.setCbItemsCount(cbBigBlockNo, ConfigScript.bigBlocksOffset.recCount);
@@ -188,6 +196,11 @@ namespace CadEditor
             readOnly = Globals.gameType == GameType.DT2;
             btSave.Enabled = !readOnly;
             lbReadOnly.Visible = readOnly;
+
+            if (ConfigScript.getScreenVertical())
+                mapScreen.Size = new Size(ConfigScript.getScreenHeight() *64, (ConfigScript.getScreenWidth() + 2) * 64);
+            else
+                mapScreen.Size = new Size((ConfigScript.getScreenWidth() + 2) * 64, ConfigScript.getScreenHeight() * 64);
 
         }
 
@@ -415,6 +428,26 @@ namespace CadEditor
             }
         }
 
+        private void setObjectsTT()
+        {
+            objects.Clear();
+            var lr = getLevelRecForGameType();
+            int objCount = lr.objCount;
+            int addr = lr.objectsBeginAddr;
+            for (int i = 0; i < objCount; i++)
+            {
+                int v =  Globals.romdata[addr + i * 3 + 0];
+                int xx = Globals.romdata[addr + i * 3 + 1];
+                int yy = Globals.romdata[addr + i * 3 + 2];
+                int sx = (byte)(xx >> 4);
+                int sy = 0;
+                int x = (byte)((xx & 0x0F) * 16);
+                int y = yy * 16;
+                var obj = new ObjectRec(v, sx, sy, x, y);
+                objects.Add(obj);
+            }
+        }
+
         private void setObjects()
         {
             if (Globals.gameType == GameType.DT)
@@ -428,6 +461,10 @@ namespace CadEditor
             else if (Globals.gameType == GameType.LM)
             {
                 setObjectsLm();
+            }
+            else if (Globals.gameType == GameType.TT)
+            {
+                setObjectsTT();
             }
             else
             {
@@ -526,10 +563,10 @@ namespace CadEditor
             int dy = e.Y / 64;
             //int index = dy * 8 + dx;
             Point coord = screenNoToCoord();
-            byte type = (byte)curActiveBlock;
-            byte sx = (byte)coord.X, sy = (byte)coord.Y;
-            byte x = (byte)(e.X / 2);
-            byte y = (byte)(e.Y / 2);
+            int type = curActiveBlock;
+            int sx = coord.X, sy = coord.Y;
+            int x = e.X / 2;
+            int y = e.Y / 2;
 
             if (curTool == ToolType.Create)
             {
@@ -637,10 +674,10 @@ namespace CadEditor
                         for (int i = 0; i < objects.Count; i++)
                         {
                             var obj = objects[i];
-                            Globals.romdata[addrBase + i] = obj.type;
-                            Globals.romdata[addrBase - 1 * objCount + i] = obj.y;
-                            Globals.romdata[addrBase - 2 * objCount + i] = obj.x;
-                            Globals.romdata[addrBase - 3 * objCount + i] = obj.sx;
+                            Globals.romdata[addrBase + i] = (byte)obj.type;
+                            Globals.romdata[addrBase - 1 * objCount + i] = (byte)obj.y;
+                            Globals.romdata[addrBase - 2 * objCount + i] = (byte)obj.x;
+                            Globals.romdata[addrBase - 3 * objCount + i] = (byte)obj.sx;
                         }
                         for (int i = objects.Count; i < objCount; i++)
                         {
@@ -650,58 +687,75 @@ namespace CadEditor
                             Globals.romdata[addrBase - 3 * objCount + i] = 0xFF;
                         }
                     }
+                    else if (Globals.gameType == GameType.TT)
+                    {
+                        for (int i = 0; i < objects.Count; i++)
+                        {
+                            var obj = objects[i];
+                            Globals.romdata[addrBase + i * 3 + 0] = (byte)obj.type;
+                            Globals.romdata[addrBase + i * 3 + 1] = (byte)((obj.x / 16) | (obj.sx << 4));
+                            Globals.romdata[addrBase + i * 3 + 2] = (byte)((obj.y / 16) | (obj.sy << 4));
+                        }
+                        for (int i = objects.Count; i < objCount; i++)
+                        {
+                            Globals.romdata[addrBase + i * 3 + 0] = 0xFF;
+                            Globals.romdata[addrBase + i * 3 + 1] = 0xFF;
+                            Globals.romdata[addrBase + i * 3 + 2] = 0xFF;
+                        }
+                    }
                     else
                     {
-                    //generic version
+                        //generic version
                         for (int i = 0; i < objects.Count; i++)
                         {
                             var obj = objects[i];
                             if (!ConfigScript.isDwdAdvanceLastLevel())
                             {
-                                Globals.romdata[addrBase + i] = obj.type;
-                                Globals.romdata[addrBase - 4 * objCount + levelDhack + i] = obj.sx;
-                                Globals.romdata[addrBase - 3 * objCount + levelDhack + i] = obj.x;
-                                Globals.romdata[addrBase - 2 * objCount + levelDhack + i] = obj.sy;
-                                Globals.romdata[addrBase - objCount + i] = obj.y;
+                                Globals.romdata[addrBase + i] = (byte)obj.type;
+                                Globals.romdata[addrBase - 4 * objCount + levelDhack + i] = (byte)obj.sx;
+                                Globals.romdata[addrBase - 3 * objCount + levelDhack + i] = (byte)obj.x;
+                                Globals.romdata[addrBase - 2 * objCount + levelDhack + i] = (byte)obj.sy;
+                                Globals.romdata[addrBase - objCount + i] = (byte)obj.y;
                             }
                             else
                             {
-                                Globals.romdata[addrBase + i] = obj.type;
-                                Globals.romdata[addrBase + 1 * objCount + levelDhack + i] = obj.sx;
-                                Globals.romdata[addrBase + 2 * objCount + levelDhack + i] = obj.x;
-                                Globals.romdata[addrBase + 3 * objCount + levelDhack + i] = obj.sy;
-                                Globals.romdata[addrBase + 4 * objCount + i] = obj.y;
+                                Globals.romdata[addrBase + i] = (byte)obj.type;
+                                Globals.romdata[addrBase + 1 * objCount + levelDhack + i] = (byte)obj.sx;
+                                Globals.romdata[addrBase + 2 * objCount + levelDhack + i] = (byte)obj.x;
+                                Globals.romdata[addrBase + 3 * objCount + levelDhack + i] = (byte)obj.sy;
+                                Globals.romdata[addrBase + 4 * objCount + i] = (byte)obj.y;
                             }
                         }
-                    }
-                    for (int i = objects.Count; i < objCount; i++)
-                    {
-                        Globals.romdata[addrBase + i] = 0xFF;
-                        if (!ConfigScript.isDwdAdvanceLastLevel())
+                        for (int i = objects.Count; i < objCount; i++)
                         {
-                            Globals.romdata[addrBase - 4 * objCount + levelDhack + i] = 0xFF;
-                            Globals.romdata[addrBase - 3 * objCount + levelDhack + i] = 0xFF;
-                            Globals.romdata[addrBase - 2 * objCount + levelDhack + i] = 0xFF;
-                            Globals.romdata[addrBase - objCount + levelDhack + i] = 0xFF;
-                        }
-                        else
-                        {
-                            Globals.romdata[addrBase + 1 * objCount + levelDhack + i] = 0xFF;
-                            Globals.romdata[addrBase + 2 * objCount + levelDhack + i] = 0xFF;
-                            Globals.romdata[addrBase + 3 * objCount + levelDhack + i] = 0xFF;
-                            Globals.romdata[addrBase + 4 * objCount + levelDhack + i] = 0xFF;
+                            Globals.romdata[addrBase + i] = 0xFF;
+                            if (!ConfigScript.isDwdAdvanceLastLevel())
+                            {
+                                Globals.romdata[addrBase - 4 * objCount + levelDhack + i] = 0xFF;
+                                Globals.romdata[addrBase - 3 * objCount + levelDhack + i] = 0xFF;
+                                Globals.romdata[addrBase - 2 * objCount + levelDhack + i] = 0xFF;
+                                Globals.romdata[addrBase - objCount + levelDhack + i] = 0xFF;
+                            }
+                            else
+                            {
+                                Globals.romdata[addrBase + 1 * objCount + levelDhack + i] = 0xFF;
+                                Globals.romdata[addrBase + 2 * objCount + levelDhack + i] = 0xFF;
+                                Globals.romdata[addrBase + 3 * objCount + levelDhack + i] = 0xFF;
+                                Globals.romdata[addrBase + 4 * objCount + levelDhack + i] = 0xFF;
+                            }
                         }
                     }
                 }
                 else
                 {
+                    //dt version
                     for (int i = 0; i < objects.Count; i++)
                     {
                         var obj = objects[i];
-                        Globals.romdata[addrBase + i] = obj.type;
-                        Globals.romdata[addrBase - 3 * objCount + i - lr.height] = obj.sx;
-                        Globals.romdata[addrBase - 2 * objCount + i - lr.height] = obj.x;
-                        Globals.romdata[addrBase - 1 * objCount + i - lr.height] = obj.y;
+                        Globals.romdata[addrBase + i] = (byte)obj.type;
+                        Globals.romdata[addrBase - 3 * objCount + i - lr.height] = (byte)obj.sx;
+                        Globals.romdata[addrBase - 2 * objCount + i - lr.height] = (byte)obj.x;
+                        Globals.romdata[addrBase - 1 * objCount + i - lr.height] = (byte)obj.y;
                     }
                     for (int i = objects.Count; i < objCount; i++)
                     {
@@ -875,7 +929,7 @@ namespace CadEditor
 
     struct ObjectRec
     {
-        public ObjectRec(byte type, byte sx, byte sy, byte x, byte y)
+        public ObjectRec(int type, int sx, int sy, int x, int y)
         {
             this.type = type;
             this.sx = sx;
@@ -883,11 +937,11 @@ namespace CadEditor
             this.x = x;
             this.y = y;
         }
-        public byte type;
-        public byte x;
-        public byte y;
-        public byte sx;
-        public byte sy;
+        public int type;
+        public int x;
+        public int y;
+        public int sx;
+        public int sy;
 
         public override String ToString()
         {

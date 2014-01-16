@@ -32,7 +32,7 @@ public class Data
   
   public IList<LevelRec> levelRecsTT = new List<LevelRec>() 
   {
-    new LevelRec(0x0, 1, 8, 6, 0x0),
+    new LevelRec(0x14333, 15, 11, 1, 0x0),
   };
   
   public int getTinyToonVideoAddress(int id)
@@ -89,7 +89,7 @@ public class Data
   public bool isBigBlockEditorEnabled() { return true;  }
   public bool isBlockEditorEnabled()    { return true;  }
   public bool isLayoutEditorEnabled()   { return false; }
-  public bool isEnemyEditorEnabled()    { return false; }
+  public bool isEnemyEditorEnabled()    { return true; }
   public bool isVideoEditorEnabled()    { return true; }
   //--------------------------------------------------------------------------------------------
 }

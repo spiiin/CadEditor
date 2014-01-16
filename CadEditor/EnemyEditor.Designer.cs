@@ -84,12 +84,14 @@
             this.label18 = new System.Windows.Forms.Label();
             this.cbObjType = new System.Windows.Forms.ComboBox();
             this.lbObjectsCount = new System.Windows.Forms.Label();
+            this.pnView = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
             this.pnCad.SuspendLayout();
             this.pnSelectScreen.SuspendLayout();
             this.pnTools.SuspendLayout();
+            this.pnView.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbLevel
@@ -125,7 +127,7 @@
             // 
             // mapScreen
             // 
-            this.mapScreen.Location = new System.Drawing.Point(193, 17);
+            this.mapScreen.Location = new System.Drawing.Point(0, 0);
             this.mapScreen.Name = "mapScreen";
             this.mapScreen.Size = new System.Drawing.Size(512, 512);
             this.mapScreen.TabIndex = 30;
@@ -702,11 +704,21 @@
             this.lbObjectsCount.TabIndex = 67;
             this.lbObjectsCount.Text = "Objects count: 0/0";
             // 
+            // pnView
+            // 
+            this.pnView.AutoScroll = true;
+            this.pnView.Controls.Add(this.mapScreen);
+            this.pnView.Location = new System.Drawing.Point(198, 17);
+            this.pnView.Name = "pnView";
+            this.pnView.Size = new System.Drawing.Size(512, 512);
+            this.pnView.TabIndex = 68;
+            // 
             // EnemyEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(944, 533);
+            this.Controls.Add(this.pnView);
             this.Controls.Add(this.lbObjectsCount);
             this.Controls.Add(this.cbObjType);
             this.Controls.Add(this.label18);
@@ -736,7 +748,6 @@
             this.Controls.Add(this.btClearObjs);
             this.Controls.Add(this.lvObjects);
             this.Controls.Add(this.objPanel);
-            this.Controls.Add(this.mapScreen);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -754,6 +765,7 @@
             this.pnSelectScreen.PerformLayout();
             this.pnTools.ResumeLayout(false);
             this.pnTools.PerformLayout();
+            this.pnView.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -815,5 +827,6 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ComboBox cbObjType;
         private System.Windows.Forms.Label lbObjectsCount;
+        private System.Windows.Forms.Panel pnView;
     }
 }
