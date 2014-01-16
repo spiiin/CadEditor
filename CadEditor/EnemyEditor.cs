@@ -439,9 +439,9 @@ namespace CadEditor
                 int v =  Globals.romdata[addr + i * 3 + 0];
                 int xx = Globals.romdata[addr + i * 3 + 1];
                 int yy = Globals.romdata[addr + i * 3 + 2];
-                int sx = (byte)(xx >> 4);
+                int sx = xx >> 4;
                 int sy = 0;
-                int x = (byte)((xx & 0x0F) * 16);
+                int x = (xx & 0x0F) * 16;
                 int y = yy * 16;
                 var obj = new ObjectRec(v, sx, sy, x, y);
                 objects.Add(obj);
@@ -636,9 +636,9 @@ namespace CadEditor
                 return;
             int index = lvObjects.SelectedItems[0].Index;
             var obj = objects[index];
-            obj.x = (byte)cbCoordX.SelectedIndex;
-            obj.y = (byte)cbCoordY.SelectedIndex;
-            obj.type = (byte)cbObjType.SelectedIndex;
+            obj.x = cbCoordX.SelectedIndex;
+            obj.y = cbCoordY.SelectedIndex;
+            obj.type = cbObjType.SelectedIndex;
             objects[index] = obj;
             lvObjects.SelectedItems[0].ImageIndex = obj.type;
             lvObjects.SelectedItems[0].Text = makeStringForObject(obj);
