@@ -32,7 +32,7 @@ public class Data
   
   public IList<LevelRec> levelRecsTT = new List<LevelRec>() 
   {
-    new LevelRec(0x0, 1, 8, 6, 0x0),
+    new LevelRec(0x14643, 1, 1, 1, 0x0), //wrong ptr?
   };
   
   public int getTinyToonVideoAddress(int id)
