@@ -49,7 +49,7 @@ namespace CadEditor
             for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
                 cbScreenNo.Items.Add(String.Format("{0:X}", i + 1));
             cbScreenNo.SelectedIndex = 0;
-            setScreens();
+            Utils.setScreens(screens);
 
             blockWidth = ConfigScript.getBlocksPicturesWidth();
             blockHeight = 32;
@@ -97,7 +97,7 @@ namespace CadEditor
             setBigBlocksIndexes();
             setBlocks(reloadBlockPanel);
             if (reloadScreens)
-              setScreens();
+              Utils.setScreens(screens);
             updateMap();
         }
 
@@ -232,12 +232,7 @@ namespace CadEditor
             }
         }
 
-        private void setScreens()
-        {
-            screens = new byte[ConfigScript.screensOffset.recCount][];
-            for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
-              screens[i] = Globals.getScreen(i);
-        }
+
 
         private void updateMap()
         {

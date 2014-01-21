@@ -394,5 +394,12 @@ namespace CadEditor
                 }
             }
         }
+
+        public static void setScreens(byte[][] screens)
+        {
+            screens = new byte[ConfigScript.screensOffset.recCount][];
+            for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
+                screens[i] = Globals.getScreen(i);
+        }
     }
 }

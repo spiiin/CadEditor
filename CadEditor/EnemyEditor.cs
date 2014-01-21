@@ -42,14 +42,6 @@ namespace CadEditor
         //render back
         private byte[][] screens = null;
 
-
-        private void setScreens()
-        {
-            screens = new byte[ConfigScript.screensOffset.recCount][];
-            for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
-                screens[i] = Globals.getScreen(i);
-        }
-
         private void reloadLevelLayerData(bool resetScreenPos)
         {
             if (Globals.gameType == GameType.CAD)
@@ -180,7 +172,7 @@ namespace CadEditor
         {
             if (ConfigScript.usePicturesInstedBlocks)
             {
-                setScreens();
+                Utils.setScreens(screens);
                 Utils.setBlocks(bigBlocks);
             }
 
@@ -633,9 +625,9 @@ namespace CadEditor
             mapScreen.Invalidate();
         }
 
-        private void paintBack(object sender, PaintEventArgs e)
+        private void paintBack(Graphics g)
         {
-             int WIDTH = ConfigScript.getScreenWidth();
+            int WIDTH = ConfigScript.getScreenWidth();
             int HEIGHT = ConfigScript.getScreenHeight();
             int curScale = 2;
             int TILE_SIZE_X = 32 * curScale;
@@ -643,7 +635,6 @@ namespace CadEditor
             int SIZE = WIDTH * HEIGHT;
             byte[] indexes = screens[curActiveScreen];
             var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
-            var g = e.Graphics;
             for (int i = 0; i < SIZE; i++)
             {
                 int index = indexes[i];
@@ -665,7 +656,7 @@ namespace CadEditor
         private void mapScreen_Paint(object sender, PaintEventArgs e)
         {
             if (ConfigScript.usePicturesInstedBlocks)
-              paintBack(sender, e);
+              paintBack(e.Graphics);
             var g = e.Graphics;
             var selectedInds = lvObjects.SelectedIndices;
             for (int i = 0; i < objects.Count; i++)
