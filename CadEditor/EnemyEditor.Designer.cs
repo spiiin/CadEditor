@@ -40,10 +40,19 @@
             this.cbScreenNo = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.objPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.lvObjects = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.objectSprites = new System.Windows.Forms.ImageList(this.components);
+            this.cbCoordY = new System.Windows.Forms.ComboBox();
+            this.cbCoordX = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.btClearObjs = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.activeBlock = new System.Windows.Forms.PictureBox();
             this.btSave = new System.Windows.Forms.Button();
+            this.cbManualSort = new System.Windows.Forms.CheckBox();
+            this.btSortUp = new System.Windows.Forms.Button();
+            this.btSortDown = new System.Windows.Forms.Button();
             this.cbStopOnDoors = new System.Windows.Forms.CheckBox();
             this.pnGeneric = new System.Windows.Forms.Panel();
             this.cbPlus256 = new System.Windows.Forms.CheckBox();
@@ -61,37 +70,24 @@
             this.pnSelectScreen = new System.Windows.Forms.Panel();
             this.lbScrNo = new System.Windows.Forms.Label();
             this.lbActive = new System.Windows.Forms.Label();
+            this.btDelete = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.lbReadOnly = new System.Windows.Forms.Label();
             this.pnTools = new System.Windows.Forms.Panel();
             this.label16 = new System.Windows.Forms.Label();
             this.cbTool = new System.Windows.Forms.ComboBox();
-            this.pnView = new System.Windows.Forms.Panel();
-            this.smallBlocks = new System.Windows.Forms.ImageList(this.components);
-            this.bigBlocks = new System.Windows.Forms.ImageList(this.components);
-            this.smallBlocks1 = new System.Windows.Forms.ImageList(this.components);
-            this.smallBlocks2 = new System.Windows.Forms.ImageList(this.components);
-            this.smallBlocks3 = new System.Windows.Forms.ImageList(this.components);
-            this.smallBlocks4 = new System.Windows.Forms.ImageList(this.components);
-            this.pnEnemyList = new System.Windows.Forms.Panel();
-            this.lbObjectsCount = new System.Windows.Forms.Label();
-            this.cbObjType = new System.Windows.Forms.ComboBox();
-            this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.btDelete = new System.Windows.Forms.Button();
-            this.btSortDown = new System.Windows.Forms.Button();
-            this.btSortUp = new System.Windows.Forms.Button();
-            this.cbManualSort = new System.Windows.Forms.CheckBox();
-            this.cbCoordY = new System.Windows.Forms.ComboBox();
-            this.cbCoordX = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.btClearObjs = new System.Windows.Forms.Button();
-            this.lvObjects = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label18 = new System.Windows.Forms.Label();
+            this.cbObjType = new System.Windows.Forms.ComboBox();
+            this.lbObjectsCount = new System.Windows.Forms.Label();
+            this.pnView = new System.Windows.Forms.Panel();
+            this.bigBlocks = new System.Windows.Forms.ImageList(this.components);
+            this.pnObjectList = new System.Windows.Forms.Panel();
+            this.pnObjects = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -99,7 +95,8 @@
             this.pnSelectScreen.SuspendLayout();
             this.pnTools.SuspendLayout();
             this.pnView.SuspendLayout();
-            this.pnEnemyList.SuspendLayout();
+            this.pnObjectList.SuspendLayout();
+            this.pnObjects.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbLevel
@@ -204,11 +201,36 @@
             // 
             // objPanel
             // 
+            this.objPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.objPanel.AutoScroll = true;
-            this.objPanel.Location = new System.Drawing.Point(12, 294);
+            this.objPanel.Location = new System.Drawing.Point(-2, 267);
             this.objPanel.Name = "objPanel";
-            this.objPanel.Size = new System.Drawing.Size(172, 177);
+            this.objPanel.Size = new System.Drawing.Size(172, 195);
             this.objPanel.TabIndex = 37;
+            // 
+            // lvObjects
+            // 
+            this.lvObjects.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvObjects.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.lvObjects.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lvObjects.Location = new System.Drawing.Point(0, 0);
+            this.lvObjects.Name = "lvObjects";
+            this.lvObjects.Size = new System.Drawing.Size(231, 373);
+            this.lvObjects.SmallImageList = this.objectSprites;
+            this.lvObjects.TabIndex = 38;
+            this.lvObjects.UseCompatibleStateImageBehavior = false;
+            this.lvObjects.View = System.Windows.Forms.View.Details;
+            this.lvObjects.SelectedIndexChanged += new System.EventHandler(this.lvObjects_SelectedIndexChanged);
+            this.lvObjects.KeyUp += new System.Windows.Forms.KeyEventHandler(this.lbObjects_KeyUp);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Width = 170;
             // 
             // objectSprites
             // 
@@ -216,10 +238,67 @@
             this.objectSprites.ImageSize = new System.Drawing.Size(16, 16);
             this.objectSprites.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // cbCoordY
+            // 
+            this.cbCoordY.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbCoordY.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCoordY.Enabled = false;
+            this.cbCoordY.FormattingEnabled = true;
+            this.cbCoordY.Items.AddRange(new object[] {
+            "Tiles",
+            "Obj types"});
+            this.cbCoordY.Location = new System.Drawing.Point(184, 378);
+            this.cbCoordY.Name = "cbCoordY";
+            this.cbCoordY.Size = new System.Drawing.Size(46, 21);
+            this.cbCoordY.TabIndex = 42;
+            this.cbCoordY.SelectedIndexChanged += new System.EventHandler(this.cbCoordX_SelectedIndexChanged);
+            // 
+            // cbCoordX
+            // 
+            this.cbCoordX.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbCoordX.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCoordX.Enabled = false;
+            this.cbCoordX.FormattingEnabled = true;
+            this.cbCoordX.Items.AddRange(new object[] {
+            "Tiles",
+            "Obj types"});
+            this.cbCoordX.Location = new System.Drawing.Point(109, 378);
+            this.cbCoordX.Name = "cbCoordX";
+            this.cbCoordX.Size = new System.Drawing.Size(46, 21);
+            this.cbCoordX.TabIndex = 41;
+            this.cbCoordX.SelectedIndexChanged += new System.EventHandler(this.cbCoordX_SelectedIndexChanged);
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(4, 381);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(34, 13);
+            this.label5.TabIndex = 40;
+            this.label5.Text = "Type:";
+            // 
+            // btClearObjs
+            // 
+            this.btClearObjs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btClearObjs.Location = new System.Drawing.Point(97, 426);
+            this.btClearObjs.Name = "btClearObjs";
+            this.btClearObjs.Size = new System.Drawing.Size(138, 24);
+            this.btClearObjs.TabIndex = 39;
+            this.btClearObjs.Text = "clear all objects on screen";
+            this.btClearObjs.UseVisualStyleBackColor = true;
+            this.btClearObjs.Click += new System.EventHandler(this.btClearObjs_Click);
+            // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(105, 477);
+            this.label3.Location = new System.Drawing.Point(91, 468);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(40, 13);
             this.label3.TabIndex = 44;
@@ -227,8 +306,10 @@
             // 
             // activeBlock
             // 
+            this.activeBlock.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.activeBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.activeBlock.Location = new System.Drawing.Point(151, 477);
+            this.activeBlock.Location = new System.Drawing.Point(137, 468);
             this.activeBlock.Name = "activeBlock";
             this.activeBlock.Size = new System.Drawing.Size(32, 32);
             this.activeBlock.TabIndex = 43;
@@ -236,7 +317,9 @@
             // 
             // btSave
             // 
-            this.btSave.Location = new System.Drawing.Point(12, 484);
+            this.btSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btSave.Location = new System.Drawing.Point(-2, 475);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(73, 25);
             this.btSave.TabIndex = 45;
@@ -244,13 +327,55 @@
             this.btSave.UseVisualStyleBackColor = true;
             this.btSave.Click += new System.EventHandler(this.btSave_Click);
             // 
+            // cbManualSort
+            // 
+            this.cbManualSort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbManualSort.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbManualSort.Checked = true;
+            this.cbManualSort.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbManualSort.Location = new System.Drawing.Point(147, 368);
+            this.cbManualSort.Name = "cbManualSort";
+            this.cbManualSort.Size = new System.Drawing.Size(87, 18);
+            this.cbManualSort.TabIndex = 46;
+            this.cbManualSort.Text = "Manual sort";
+            this.cbManualSort.UseVisualStyleBackColor = true;
+            this.cbManualSort.Visible = false;
+            this.cbManualSort.CheckedChanged += new System.EventHandler(this.cbManualSort_CheckedChanged);
+            // 
+            // btSortUp
+            // 
+            this.btSortUp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btSortUp.Location = new System.Drawing.Point(97, 402);
+            this.btSortUp.Name = "btSortUp";
+            this.btSortUp.Size = new System.Drawing.Size(66, 22);
+            this.btSortUp.TabIndex = 47;
+            this.btSortUp.Text = "↑";
+            this.btSortUp.UseVisualStyleBackColor = true;
+            this.btSortUp.Click += new System.EventHandler(this.btSortUp_Click);
+            // 
+            // btSortDown
+            // 
+            this.btSortDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btSortDown.Location = new System.Drawing.Point(169, 402);
+            this.btSortDown.Name = "btSortDown";
+            this.btSortDown.Size = new System.Drawing.Size(66, 22);
+            this.btSortDown.TabIndex = 48;
+            this.btSortDown.Text = "↓";
+            this.btSortDown.UseVisualStyleBackColor = true;
+            this.btSortDown.Click += new System.EventHandler(this.btSortDown_Click);
+            // 
             // cbStopOnDoors
             // 
+            this.cbStopOnDoors.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbStopOnDoors.AutoSize = true;
             this.cbStopOnDoors.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbStopOnDoors.Checked = true;
             this.cbStopOnDoors.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbStopOnDoors.Location = new System.Drawing.Point(12, 515);
+            this.cbStopOnDoors.Location = new System.Drawing.Point(-2, 506);
             this.cbStopOnDoors.Name = "cbStopOnDoors";
             this.cbStopOnDoors.Size = new System.Drawing.Size(156, 17);
             this.cbStopOnDoors.TabIndex = 49;
@@ -259,6 +384,8 @@
             // 
             // pnGeneric
             // 
+            this.pnGeneric.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnGeneric.Controls.Add(this.cbPlus256);
             this.pnGeneric.Controls.Add(this.label11);
             this.pnGeneric.Controls.Add(this.cbLayoutNo);
@@ -270,7 +397,7 @@
             this.pnGeneric.Controls.Add(this.cbBigBlockNo);
             this.pnGeneric.Controls.Add(this.label4);
             this.pnGeneric.Controls.Add(this.cbVideoNo);
-            this.pnGeneric.Location = new System.Drawing.Point(14, 17);
+            this.pnGeneric.Location = new System.Drawing.Point(0, 8);
             this.pnGeneric.Name = "pnGeneric";
             this.pnGeneric.Size = new System.Drawing.Size(175, 133);
             this.pnGeneric.TabIndex = 50;
@@ -436,15 +563,19 @@
             // 
             // pnCad
             // 
+            this.pnCad.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnCad.Controls.Add(this.label6);
             this.pnCad.Controls.Add(this.cbLevel);
-            this.pnCad.Location = new System.Drawing.Point(17, 12);
+            this.pnCad.Location = new System.Drawing.Point(3, 3);
             this.pnCad.Name = "pnCad";
             this.pnCad.Size = new System.Drawing.Size(175, 50);
             this.pnCad.TabIndex = 51;
             // 
             // pnSelectScreen
             // 
+            this.pnSelectScreen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnSelectScreen.Controls.Add(this.lbScrNo);
             this.pnSelectScreen.Controls.Add(this.label1);
             this.pnSelectScreen.Controls.Add(this.btLeft);
@@ -452,7 +583,7 @@
             this.pnSelectScreen.Controls.Add(this.btUp);
             this.pnSelectScreen.Controls.Add(this.btDown);
             this.pnSelectScreen.Controls.Add(this.cbScreenNo);
-            this.pnSelectScreen.Location = new System.Drawing.Point(9, 156);
+            this.pnSelectScreen.Location = new System.Drawing.Point(-5, 147);
             this.pnSelectScreen.Name = "pnSelectScreen";
             this.pnSelectScreen.Size = new System.Drawing.Size(178, 78);
             this.pnSelectScreen.TabIndex = 52;
@@ -468,12 +599,49 @@
             // 
             // lbActive
             // 
+            this.lbActive.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lbActive.AutoSize = true;
-            this.lbActive.Location = new System.Drawing.Point(105, 492);
+            this.lbActive.Location = new System.Drawing.Point(91, 483);
             this.lbActive.Name = "lbActive";
             this.lbActive.Size = new System.Drawing.Size(13, 13);
             this.lbActive.TabIndex = 55;
             this.lbActive.Text = "()";
+            // 
+            // btDelete
+            // 
+            this.btDelete.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btDelete.Enabled = false;
+            this.btDelete.Location = new System.Drawing.Point(4, 426);
+            this.btDelete.Name = "btDelete";
+            this.btDelete.Size = new System.Drawing.Size(87, 24);
+            this.btDelete.TabIndex = 56;
+            this.btDelete.Text = "delete selected";
+            this.btDelete.UseVisualStyleBackColor = true;
+            this.btDelete.Click += new System.EventHandler(this.btDelete_Click);
+            // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 475);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(218, 13);
+            this.label7.TabIndex = 57;
+            this.label7.Text = "Press CTRL or SHIFT to select many objects";
+            // 
+            // label10
+            // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(4, 407);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(73, 13);
+            this.label10.TabIndex = 58;
+            this.label10.Text = "Objects order:";
             // 
             // label12
             // 
@@ -483,10 +651,34 @@
             this.label12.Size = new System.Drawing.Size(0, 13);
             this.label12.TabIndex = 59;
             // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(7, 488);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(181, 13);
+            this.label13.TabIndex = 60;
+            this.label13.Text = "Press DEL to delete selected objects";
+            // 
+            // label15
+            // 
+            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(8, 501);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(180, 13);
+            this.label15.TabIndex = 62;
+            this.label15.Text = "Don\'t forget sort objects in right order";
+            // 
             // lbReadOnly
             // 
+            this.lbReadOnly.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lbReadOnly.AutoSize = true;
-            this.lbReadOnly.Location = new System.Drawing.Point(13, 490);
+            this.lbReadOnly.Location = new System.Drawing.Point(-1, 481);
             this.lbReadOnly.Name = "lbReadOnly";
             this.lbReadOnly.Size = new System.Drawing.Size(69, 13);
             this.lbReadOnly.TabIndex = 63;
@@ -494,9 +686,11 @@
             // 
             // pnTools
             // 
+            this.pnTools.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnTools.Controls.Add(this.label16);
             this.pnTools.Controls.Add(this.cbTool);
-            this.pnTools.Location = new System.Drawing.Point(9, 240);
+            this.pnTools.Location = new System.Drawing.Point(-5, 231);
             this.pnTools.Name = "pnTools";
             this.pnTools.Size = new System.Drawing.Size(178, 30);
             this.pnTools.TabIndex = 52;
@@ -524,6 +718,55 @@
             this.cbTool.TabIndex = 29;
             this.cbTool.SelectedIndexChanged += new System.EventHandler(this.cbTool_SelectedIndexChanged);
             // 
+            // label17
+            // 
+            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(86, 381);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(17, 13);
+            this.label17.TabIndex = 64;
+            this.label17.Text = "X:";
+            // 
+            // label18
+            // 
+            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(161, 381);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(17, 13);
+            this.label18.TabIndex = 65;
+            this.label18.Text = "Y:";
+            // 
+            // cbObjType
+            // 
+            this.cbObjType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbObjType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbObjType.Enabled = false;
+            this.cbObjType.FormattingEnabled = true;
+            this.cbObjType.Items.AddRange(new object[] {
+            "Tiles",
+            "Obj types"});
+            this.cbObjType.Location = new System.Drawing.Point(34, 378);
+            this.cbObjType.Name = "cbObjType";
+            this.cbObjType.Size = new System.Drawing.Size(46, 21);
+            this.cbObjType.TabIndex = 66;
+            this.cbObjType.SelectedIndexChanged += new System.EventHandler(this.cbCoordX_SelectedIndexChanged);
+            // 
+            // lbObjectsCount
+            // 
+            this.lbObjectsCount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbObjectsCount.AutoSize = true;
+            this.lbObjectsCount.Location = new System.Drawing.Point(6, 453);
+            this.lbObjectsCount.Name = "lbObjectsCount";
+            this.lbObjectsCount.Size = new System.Drawing.Size(96, 13);
+            this.lbObjectsCount.TabIndex = 67;
+            this.lbObjectsCount.Text = "Objects count: 0/0";
+            // 
             // pnView
             // 
             this.pnView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -536,300 +779,67 @@
             this.pnView.Size = new System.Drawing.Size(512, 512);
             this.pnView.TabIndex = 68;
             // 
-            // smallBlocks
-            // 
-            this.smallBlocks.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
-            this.smallBlocks.ImageSize = new System.Drawing.Size(16, 16);
-            this.smallBlocks.TransparentColor = System.Drawing.Color.Transparent;
-            // 
             // bigBlocks
             // 
             this.bigBlocks.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
             this.bigBlocks.ImageSize = new System.Drawing.Size(64, 64);
             this.bigBlocks.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // smallBlocks1
+            // pnObjectList
             // 
-            this.smallBlocks1.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
-            this.smallBlocks1.ImageSize = new System.Drawing.Size(16, 16);
-            this.smallBlocks1.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // smallBlocks2
-            // 
-            this.smallBlocks2.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
-            this.smallBlocks2.ImageSize = new System.Drawing.Size(16, 16);
-            this.smallBlocks2.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // smallBlocks3
-            // 
-            this.smallBlocks3.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
-            this.smallBlocks3.ImageSize = new System.Drawing.Size(16, 16);
-            this.smallBlocks3.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // smallBlocks4
-            // 
-            this.smallBlocks4.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
-            this.smallBlocks4.ImageSize = new System.Drawing.Size(16, 16);
-            this.smallBlocks4.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // pnEnemyList
-            // 
-            this.pnEnemyList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.pnObjectList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnEnemyList.Controls.Add(this.lbObjectsCount);
-            this.pnEnemyList.Controls.Add(this.cbObjType);
-            this.pnEnemyList.Controls.Add(this.label18);
-            this.pnEnemyList.Controls.Add(this.label17);
-            this.pnEnemyList.Controls.Add(this.label15);
-            this.pnEnemyList.Controls.Add(this.label13);
-            this.pnEnemyList.Controls.Add(this.label10);
-            this.pnEnemyList.Controls.Add(this.label7);
-            this.pnEnemyList.Controls.Add(this.btDelete);
-            this.pnEnemyList.Controls.Add(this.btSortDown);
-            this.pnEnemyList.Controls.Add(this.btSortUp);
-            this.pnEnemyList.Controls.Add(this.cbManualSort);
-            this.pnEnemyList.Controls.Add(this.cbCoordY);
-            this.pnEnemyList.Controls.Add(this.cbCoordX);
-            this.pnEnemyList.Controls.Add(this.label5);
-            this.pnEnemyList.Controls.Add(this.btClearObjs);
-            this.pnEnemyList.Controls.Add(this.lvObjects);
-            this.pnEnemyList.Location = new System.Drawing.Point(716, 12);
-            this.pnEnemyList.Name = "pnEnemyList";
-            this.pnEnemyList.Size = new System.Drawing.Size(232, 514);
-            this.pnEnemyList.TabIndex = 31;
+            this.pnObjectList.Controls.Add(this.lvObjects);
+            this.pnObjectList.Controls.Add(this.lbObjectsCount);
+            this.pnObjectList.Controls.Add(this.btClearObjs);
+            this.pnObjectList.Controls.Add(this.cbObjType);
+            this.pnObjectList.Controls.Add(this.label5);
+            this.pnObjectList.Controls.Add(this.label18);
+            this.pnObjectList.Controls.Add(this.cbCoordX);
+            this.pnObjectList.Controls.Add(this.label17);
+            this.pnObjectList.Controls.Add(this.cbCoordY);
+            this.pnObjectList.Controls.Add(this.cbManualSort);
+            this.pnObjectList.Controls.Add(this.btSortUp);
+            this.pnObjectList.Controls.Add(this.label15);
+            this.pnObjectList.Controls.Add(this.btSortDown);
+            this.pnObjectList.Controls.Add(this.btDelete);
+            this.pnObjectList.Controls.Add(this.label13);
+            this.pnObjectList.Controls.Add(this.label7);
+            this.pnObjectList.Controls.Add(this.label10);
+            this.pnObjectList.Location = new System.Drawing.Point(716, 12);
+            this.pnObjectList.Name = "pnObjectList";
+            this.pnObjectList.Size = new System.Drawing.Size(232, 520);
+            this.pnObjectList.TabIndex = 31;
             // 
-            // lbObjectsCount
+            // pnObjects
             // 
-            this.lbObjectsCount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbObjectsCount.AutoSize = true;
-            this.lbObjectsCount.Location = new System.Drawing.Point(3, 452);
-            this.lbObjectsCount.Name = "lbObjectsCount";
-            this.lbObjectsCount.Size = new System.Drawing.Size(96, 13);
-            this.lbObjectsCount.TabIndex = 84;
-            this.lbObjectsCount.Text = "Objects count: 0/0";
-            // 
-            // cbObjType
-            // 
-            this.cbObjType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbObjType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbObjType.Enabled = false;
-            this.cbObjType.FormattingEnabled = true;
-            this.cbObjType.Items.AddRange(new object[] {
-            "Tiles",
-            "Obj types"});
-            this.cbObjType.Location = new System.Drawing.Point(31, 377);
-            this.cbObjType.Name = "cbObjType";
-            this.cbObjType.Size = new System.Drawing.Size(46, 21);
-            this.cbObjType.TabIndex = 83;
-            // 
-            // label18
-            // 
-            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(158, 380);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(17, 13);
-            this.label18.TabIndex = 82;
-            this.label18.Text = "Y:";
-            // 
-            // label17
-            // 
-            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(83, 380);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(17, 13);
-            this.label17.TabIndex = 81;
-            this.label17.Text = "X:";
-            // 
-            // label15
-            // 
-            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(5, 500);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(180, 13);
-            this.label15.TabIndex = 80;
-            this.label15.Text = "Don\'t forget sort objects in right order";
-            // 
-            // label13
-            // 
-            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(4, 487);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(181, 13);
-            this.label13.TabIndex = 79;
-            this.label13.Text = "Press DEL to delete selected objects";
-            // 
-            // label10
-            // 
-            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(1, 406);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(73, 13);
-            this.label10.TabIndex = 78;
-            this.label10.Text = "Objects order:";
-            // 
-            // label7
-            // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 474);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(218, 13);
-            this.label7.TabIndex = 77;
-            this.label7.Text = "Press CTRL or SHIFT to select many objects";
-            // 
-            // btDelete
-            // 
-            this.btDelete.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btDelete.Enabled = false;
-            this.btDelete.Location = new System.Drawing.Point(1, 425);
-            this.btDelete.Name = "btDelete";
-            this.btDelete.Size = new System.Drawing.Size(87, 24);
-            this.btDelete.TabIndex = 76;
-            this.btDelete.Text = "delete selected";
-            this.btDelete.UseVisualStyleBackColor = true;
-            // 
-            // btSortDown
-            // 
-            this.btSortDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSortDown.Location = new System.Drawing.Point(166, 401);
-            this.btSortDown.Name = "btSortDown";
-            this.btSortDown.Size = new System.Drawing.Size(66, 22);
-            this.btSortDown.TabIndex = 75;
-            this.btSortDown.Text = "↓";
-            this.btSortDown.UseVisualStyleBackColor = true;
-            // 
-            // btSortUp
-            // 
-            this.btSortUp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSortUp.Location = new System.Drawing.Point(94, 401);
-            this.btSortUp.Name = "btSortUp";
-            this.btSortUp.Size = new System.Drawing.Size(66, 22);
-            this.btSortUp.TabIndex = 74;
-            this.btSortUp.Text = "↑";
-            this.btSortUp.UseVisualStyleBackColor = true;
-            // 
-            // cbManualSort
-            // 
-            this.cbManualSort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbManualSort.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbManualSort.Checked = true;
-            this.cbManualSort.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbManualSort.Location = new System.Drawing.Point(144, 367);
-            this.cbManualSort.Name = "cbManualSort";
-            this.cbManualSort.Size = new System.Drawing.Size(87, 18);
-            this.cbManualSort.TabIndex = 73;
-            this.cbManualSort.Text = "Manual sort";
-            this.cbManualSort.UseVisualStyleBackColor = true;
-            this.cbManualSort.Visible = false;
-            // 
-            // cbCoordY
-            // 
-            this.cbCoordY.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbCoordY.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbCoordY.Enabled = false;
-            this.cbCoordY.FormattingEnabled = true;
-            this.cbCoordY.Items.AddRange(new object[] {
-            "Tiles",
-            "Obj types"});
-            this.cbCoordY.Location = new System.Drawing.Point(181, 377);
-            this.cbCoordY.Name = "cbCoordY";
-            this.cbCoordY.Size = new System.Drawing.Size(46, 21);
-            this.cbCoordY.TabIndex = 72;
-            // 
-            // cbCoordX
-            // 
-            this.cbCoordX.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbCoordX.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbCoordX.Enabled = false;
-            this.cbCoordX.FormattingEnabled = true;
-            this.cbCoordX.Items.AddRange(new object[] {
-            "Tiles",
-            "Obj types"});
-            this.cbCoordX.Location = new System.Drawing.Point(106, 377);
-            this.cbCoordX.Name = "cbCoordX";
-            this.cbCoordX.Size = new System.Drawing.Size(46, 21);
-            this.cbCoordX.TabIndex = 71;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(1, 380);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(34, 13);
-            this.label5.TabIndex = 70;
-            this.label5.Text = "Type:";
-            // 
-            // btClearObjs
-            // 
-            this.btClearObjs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btClearObjs.Location = new System.Drawing.Point(94, 425);
-            this.btClearObjs.Name = "btClearObjs";
-            this.btClearObjs.Size = new System.Drawing.Size(138, 24);
-            this.btClearObjs.TabIndex = 69;
-            this.btClearObjs.Text = "clear all objects on screen";
-            this.btClearObjs.UseVisualStyleBackColor = true;
-            // 
-            // lvObjects
-            // 
-            this.lvObjects.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvObjects.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1});
-            this.lvObjects.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.lvObjects.Location = new System.Drawing.Point(0, 1);
-            this.lvObjects.Name = "lvObjects";
-            this.lvObjects.Size = new System.Drawing.Size(231, 373);
-            this.lvObjects.SmallImageList = this.objectSprites;
-            this.lvObjects.TabIndex = 68;
-            this.lvObjects.UseCompatibleStateImageBehavior = false;
-            this.lvObjects.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Width = 170;
+            this.pnObjects.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.pnObjects.Controls.Add(this.pnCad);
+            this.pnObjects.Controls.Add(this.objPanel);
+            this.pnObjects.Controls.Add(this.pnTools);
+            this.pnObjects.Controls.Add(this.activeBlock);
+            this.pnObjects.Controls.Add(this.lbReadOnly);
+            this.pnObjects.Controls.Add(this.label3);
+            this.pnObjects.Controls.Add(this.btSave);
+            this.pnObjects.Controls.Add(this.cbStopOnDoors);
+            this.pnObjects.Controls.Add(this.lbActive);
+            this.pnObjects.Controls.Add(this.pnGeneric);
+            this.pnObjects.Controls.Add(this.pnSelectScreen);
+            this.pnObjects.Location = new System.Drawing.Point(9, 6);
+            this.pnObjects.Name = "pnObjects";
+            this.pnObjects.Size = new System.Drawing.Size(183, 526);
+            this.pnObjects.TabIndex = 31;
             // 
             // EnemyEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(944, 533);
-            this.Controls.Add(this.pnEnemyList);
+            this.Controls.Add(this.pnObjects);
+            this.Controls.Add(this.pnObjectList);
             this.Controls.Add(this.pnView);
-            this.Controls.Add(this.pnTools);
-            this.Controls.Add(this.lbReadOnly);
-            this.Controls.Add(this.pnCad);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.lbActive);
-            this.Controls.Add(this.pnSelectScreen);
-            this.Controls.Add(this.pnGeneric);
-            this.Controls.Add(this.cbStopOnDoors);
-            this.Controls.Add(this.btSave);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.activeBlock);
-            this.Controls.Add(this.objPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "EnemyEditor";
@@ -847,8 +857,10 @@
             this.pnTools.ResumeLayout(false);
             this.pnTools.PerformLayout();
             this.pnView.ResumeLayout(false);
-            this.pnEnemyList.ResumeLayout(false);
-            this.pnEnemyList.PerformLayout();
+            this.pnObjectList.ResumeLayout(false);
+            this.pnObjectList.PerformLayout();
+            this.pnObjects.ResumeLayout(false);
+            this.pnObjects.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -866,10 +878,19 @@
         private System.Windows.Forms.ComboBox cbScreenNo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.FlowLayoutPanel objPanel;
+        private System.Windows.Forms.ListView lvObjects;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ComboBox cbCoordY;
+        private System.Windows.Forms.ComboBox cbCoordX;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btClearObjs;
         private System.Windows.Forms.ImageList objectSprites;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox activeBlock;
         private System.Windows.Forms.Button btSave;
+        private System.Windows.Forms.CheckBox cbManualSort;
+        private System.Windows.Forms.Button btSortUp;
+        private System.Windows.Forms.Button btSortDown;
         private System.Windows.Forms.CheckBox cbStopOnDoors;
         private System.Windows.Forms.Panel pnGeneric;
         private System.Windows.Forms.Label label11;
@@ -887,36 +908,23 @@
         private System.Windows.Forms.Label lbScrNo;
         private System.Windows.Forms.CheckBox cbPlus256;
         private System.Windows.Forms.Label lbActive;
+        private System.Windows.Forms.Button btDelete;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label lbReadOnly;
         private System.Windows.Forms.Panel pnTools;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.ComboBox cbTool;
-        private System.Windows.Forms.Panel pnView;
-        private System.Windows.Forms.ImageList smallBlocks;
-        private System.Windows.Forms.ImageList bigBlocks;
-        private System.Windows.Forms.ImageList smallBlocks1;
-        private System.Windows.Forms.ImageList smallBlocks2;
-        private System.Windows.Forms.ImageList smallBlocks3;
-        private System.Windows.Forms.ImageList smallBlocks4;
-        private System.Windows.Forms.Panel pnEnemyList;
-        private System.Windows.Forms.Label lbObjectsCount;
-        private System.Windows.Forms.ComboBox cbObjType;
-        private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button btDelete;
-        private System.Windows.Forms.Button btSortDown;
-        private System.Windows.Forms.Button btSortUp;
-        private System.Windows.Forms.CheckBox cbManualSort;
-        private System.Windows.Forms.ComboBox cbCoordY;
-        private System.Windows.Forms.ComboBox cbCoordX;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button btClearObjs;
-        private System.Windows.Forms.ListView lvObjects;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.ComboBox cbObjType;
+        private System.Windows.Forms.Label lbObjectsCount;
+        private System.Windows.Forms.Panel pnView;
+        private System.Windows.Forms.ImageList bigBlocks;
+        private System.Windows.Forms.Panel pnObjectList;
+        private System.Windows.Forms.Panel pnObjects;
     }
 }

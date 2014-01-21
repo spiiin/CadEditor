@@ -346,5 +346,53 @@ namespace CadEditor
             rect = insideControl.RectangleToClient(rect);
             return rect;
         }
+
+        public static void setBlocks(ImageList bigBlocks, int curButtonScale = 2, int blockWidth = 32, int blockHeight = 32, MapViewType curDrawType = MapViewType.Tiles, bool showAxis = true)
+        {
+            MapViewType curViewType = MapViewType.Tiles;
+
+            bigBlocks.Images.Clear();
+            //smallBlocks.Images.Clear();
+            bigBlocks.ImageSize = new Size(curButtonScale * blockWidth, curButtonScale * blockHeight);
+
+            //if using pictures
+            if (ConfigScript.usePicturesInstedBlocks)
+            {
+                var imSrc = Image.FromFile(ConfigScript.blocksPicturesFilename);
+                var imResized = Utils.ResizeBitmap(imSrc, curButtonScale * blockWidth * ConfigScript.getBigBlocksCount(), curButtonScale * blockHeight);
+                bigBlocks.Images.AddStrip(imResized);
+                for (int i = bigBlocks.Images.Count; i < 256; i++)
+                    bigBlocks.Images.Add(Video.emptyScreen(blockWidth * curButtonScale, blockHeight * curButtonScale));
+                if (showAxis)
+                {
+                    for (int i = 0; i < 256; i++)
+                    {
+                        var im1 = bigBlocks.Images[i];
+                        using (var g = Graphics.FromImage(im1))
+                            g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), new Rectangle(0, 0, blockWidth * curButtonScale, blockHeight * curButtonScale));
+                        bigBlocks.Images[i] = im1;
+                    }
+                }
+
+                if (curViewType == MapViewType.ObjNumbers)
+                {
+                    int _bbRectPosX = (blockWidth / 2) * curButtonScale;
+                    int _bbRectSizeX = (blockWidth / 2) * curButtonScale;
+                    int _bbRectPosY = (blockHeight / 2) * curButtonScale;
+                    int _bbRectSizeY = (blockHeight / 2) * curButtonScale;
+                    for (int i = 0; i < 256; i++)
+                    {
+                        var im1 = bigBlocks.Images[i];
+                        using (var g = Graphics.FromImage(im1))
+                        {
+                            g.FillRectangle(new SolidBrush(Color.FromArgb(192, 255, 255, 255)), new Rectangle(0, 0, _bbRectSizeX * 2, _bbRectSizeY * 2));
+                            g.DrawString(String.Format("{0:X}", i), new Font("Arial", 16), Brushes.Red, new Point(0, 0));
+                        }
+                        bigBlocks.Images[i] = im1;
+                    }
+
+                }
+            }
+        }
     }
 }
