@@ -173,7 +173,8 @@ namespace CadEditor
             if (ConfigScript.usePicturesInstedBlocks)
             {
                 screens = Utils.setScreens();
-                Utils.setBlocks(bigBlocks);
+                //bigBlocks.ImageSize = new Size(2 * ConfigScript.getBlocksPicturesWidth(), 2 * 32);
+                Utils.setBlocks(bigBlocks /*, 2, ConfigScript.getBlocksPicturesWidth()*/);
             }
 
             reloadPictures();
