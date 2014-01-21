@@ -590,6 +590,8 @@ namespace CadEditor
 
             if (curTool == ToolType.Create)
             {
+                if (x > cbCoordX.Items.Count || y > cbCoordY.Items.Count)
+                    return;
                 dirty = true;
                 var obj = new ObjectRec(type, sx, sy, x, y);
 
