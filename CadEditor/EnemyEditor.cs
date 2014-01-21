@@ -39,6 +39,17 @@ namespace CadEditor
         const int MAX_SIZE = 64;
         const int OBJECTS_COUNT = 256;
 
+        //render back
+        private byte[][] screens = null;
+
+
+        private void setScreens()
+        {
+            screens = new byte[ConfigScript.screensOffset.recCount][];
+            for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
+                screens[i] = Globals.getScreen(i);
+        }
+
         private void reloadLevelLayerData(bool resetScreenPos)
         {
             if (Globals.gameType == GameType.CAD)
@@ -98,6 +109,9 @@ namespace CadEditor
                     cbScreenNo.Items.Add(String.Format("{0:X}", i));
                 cbScreenNo.SelectedIndex = findStartPosition();
             }
+
+            setScreens();
+            setBlocks(true);
         }
 
         private void makeScreensCad()
@@ -122,11 +136,14 @@ namespace CadEditor
 
         private void setBackImage()
         {
-            int scrNo = curLevelLayerData.layer[curActiveScreen];
-            if (Globals.gameType != GameType.CAD && cbPlus256.Checked)
-                scrNo += 256;
-            lbScrNo.Text = String.Format("({0:X})", scrNo);
-            mapScreen.Image = (Globals.gameType != GameType.CAD) ? makeCurScreen(scrNo-1) :  scrImages[scrNo];
+            if (!ConfigScript.usePicturesInstedBlocks)
+            {
+                int scrNo = curLevelLayerData.layer[curActiveScreen];
+                if (Globals.gameType != GameType.CAD && cbPlus256.Checked)
+                    scrNo += 256;
+                lbScrNo.Text = String.Format("({0:X})", scrNo);
+                mapScreen.Image = (Globals.gameType != GameType.CAD) ? makeCurScreen(scrNo - 1) : scrImages[scrNo];
+            }
         }
 
         private void reloadLevel(bool reloadObjects)
@@ -164,6 +181,12 @@ namespace CadEditor
 
         private void EnemyEditor_Load(object sender, EventArgs e)
         {
+            if (ConfigScript.usePicturesInstedBlocks)
+            {
+                setScreens();
+                setBlocks(true);
+            }
+
             reloadPictures();
             fillObjPanel();
 
@@ -611,8 +634,98 @@ namespace CadEditor
             mapScreen.Invalidate();
         }
 
+        //copy of FormMain for Pictures
+        private void setBlocks(bool needToRefillBlockPanel)
+        {
+            int curButtonScale = 2;
+            int blockWidth = 32;
+            int blockHeight = 32;
+            bool showAxis = true;
+            MapViewType curViewType = MapViewType.Tiles;
+
+            bigBlocks.Images.Clear();
+            //smallBlocks.Images.Clear();
+            bigBlocks.ImageSize = new Size(curButtonScale * blockWidth, curButtonScale * blockHeight);
+
+            //if using pictures
+            if (ConfigScript.usePicturesInstedBlocks)
+            {
+                var imSrc = Image.FromFile(ConfigScript.blocksPicturesFilename);
+                var imResized = Utils.ResizeBitmap(imSrc, curButtonScale * blockWidth * ConfigScript.getBigBlocksCount(), curButtonScale * blockHeight);
+                bigBlocks.Images.AddStrip(imResized);
+                for (int i = bigBlocks.Images.Count; i < 256; i++)
+                    bigBlocks.Images.Add(Video.emptyScreen(blockWidth * curButtonScale, blockHeight * curButtonScale));
+                if (showAxis)
+                {
+                    for (int i = 0; i < 256; i++)
+                    {
+                        var im1 = bigBlocks.Images[i];
+                        using (var g = Graphics.FromImage(im1))
+                            g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), new Rectangle(0, 0, blockWidth * curButtonScale, blockHeight * curButtonScale));
+                        bigBlocks.Images[i] = im1;
+                    }
+                }
+
+                if (curViewType == MapViewType.ObjNumbers)
+                {
+                    int _bbRectPosX = (blockWidth / 2) * curButtonScale;
+                    int _bbRectSizeX = (blockWidth / 2) * curButtonScale;
+                    int _bbRectPosY = (blockHeight / 2) * curButtonScale;
+                    int _bbRectSizeY = (blockHeight / 2) * curButtonScale;
+                    for (int i = 0; i < 256; i++)
+                    {
+                        var im1 = bigBlocks.Images[i];
+                        using (var g = Graphics.FromImage(im1))
+                        {
+                            g.FillRectangle(new SolidBrush(Color.FromArgb(192, 255, 255, 255)), new Rectangle(0, 0, _bbRectSizeX * 2, _bbRectSizeY * 2));
+                            g.DrawString(String.Format("{0:X}", i), new Font("Arial", 16), Brushes.Red, new Point(0, 0));
+                        }
+                        bigBlocks.Images[i] = im1;
+                    }
+
+                }
+
+                /*if (needToRefillBlockPanel)
+                    prepareBlocksPanel();
+                else
+                    reloadBlocksPanel();*/
+                return;
+            }
+        }
+
+        private void paintBack(object sender, PaintEventArgs e)
+        {
+             int WIDTH = ConfigScript.getScreenWidth();
+            int HEIGHT = ConfigScript.getScreenHeight();
+            int curScale = 2;
+            int TILE_SIZE_X = 32 * curScale;
+            int TILE_SIZE_Y = 32 * curScale;
+            int SIZE = WIDTH * HEIGHT;
+            byte[] indexes = screens[curActiveScreen];
+            var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
+            var g = e.Graphics;
+            for (int i = 0; i < SIZE; i++)
+            {
+                int index = indexes[i];
+                int bigBlockNo = Globals.getBigTileNoFromScreen(indexes, i);
+                Rectangle tileRect;
+                if (ConfigScript.getScreenVertical())
+                  tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X, (i % WIDTH + 1) * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
+                else
+                  tileRect  = new Rectangle((i % WIDTH + 1) * TILE_SIZE_X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
+
+                if ((visibleRect.Contains(tileRect)) || (visibleRect.IntersectsWith(tileRect)))
+                  g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
+            }
+ 
+            //Additional rendering
+            ConfigScript.renderToMainScreen(g, curScale);
+        }
+
         private void mapScreen_Paint(object sender, PaintEventArgs e)
         {
+            if (ConfigScript.usePicturesInstedBlocks)
+              paintBack(sender, e);
             var g = e.Graphics;
             var selectedInds = lvObjects.SelectedIndices;
             for (int i = 0; i < objects.Count; i++)

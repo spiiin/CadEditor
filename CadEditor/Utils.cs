@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Globalization;
 using System.IO;
+using System.Drawing;
 
 namespace CadEditor
 {
@@ -324,6 +325,26 @@ namespace CadEditor
         public static int readWord(byte[] data, int addr)
         {
             return data[addr] << 8 | data[addr + 1];
+        }
+
+        public static Image ResizeBitmap(Image sourceBMP, int width, int height)
+        {
+            Image result = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(result))
+                g.DrawImage(sourceBMP, 0, 0, width, height);
+            return result;
+        }
+
+        public static Rectangle getVisibleRectangle(Control panel, Control insideControl)
+        {
+            Rectangle rect = panel.RectangleToScreen(panel.ClientRectangle);
+            while (panel != null)
+            {
+                rect = Rectangle.Intersect(rect, panel.RectangleToScreen(panel.ClientRectangle));
+                panel = panel.Parent;
+            }
+            rect = insideControl.RectangleToClient(rect);
+            return rect;
         }
     }
 }

@@ -107,16 +107,6 @@ namespace CadEditor
           bigBlockIndexes = ConfigScript.getBigBlocks(bigTileIndex);
         }
 
-
-        private Image ResizeBitmap(Image sourceBMP, int width, int height)
-        {
-            Image result = new Bitmap(width, height);
-            using (Graphics g = Graphics.FromImage(result))
-                g.DrawImage(sourceBMP, 0, 0, width, height);
-            return result;
-        }
-
-
         private void setBlocks(bool needToRefillBlockPanel)
         {
             bigBlocks.Images.Clear();
@@ -127,7 +117,7 @@ namespace CadEditor
             if (ConfigScript.usePicturesInstedBlocks)
             {
                 var imSrc = Image.FromFile(ConfigScript.blocksPicturesFilename);
-                var imResized = ResizeBitmap(imSrc, curButtonScale * blockWidth * ConfigScript.getBigBlocksCount(), curButtonScale * blockHeight);
+                var imResized = Utils.ResizeBitmap(imSrc, curButtonScale * blockWidth * ConfigScript.getBigBlocksCount(), curButtonScale * blockHeight);
                 bigBlocks.Images.AddStrip(imResized);
                 for (int i = bigBlocks.Images.Count; i < 256; i++)
                     bigBlocks.Images.Add(Video.emptyScreen(blockWidth*curButtonScale, blockHeight*curButtonScale));
@@ -300,18 +290,6 @@ namespace CadEditor
             curActiveBlock = index;
         }
 
-        private Rectangle getVisibleRectangle(Control c)
-        {
-            Rectangle rect = c.RectangleToScreen(c.ClientRectangle);
-            while (c != null)
-            {
-                rect = Rectangle.Intersect(rect, c.RectangleToScreen(c.ClientRectangle));
-                c = c.Parent;
-            }
-            rect = mapScreen.RectangleToClient(rect);
-            return rect;
-        }
-
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
 
@@ -323,7 +301,7 @@ namespace CadEditor
             if (!fileLoaded)
                 return;
             byte[] indexes = screens[curActiveScreen];
-            var visibleRect = getVisibleRectangle(pnView);
+            var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
             var g = e.Graphics;
             for (int i = 0; i < SIZE; i++)
             {
