@@ -49,7 +49,7 @@ namespace CadEditor
             for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
                 cbScreenNo.Items.Add(String.Format("{0:X}", i + 1));
             cbScreenNo.SelectedIndex = 0;
-            Utils.setScreens(screens);
+            screens = Utils.setScreens();
 
             blockWidth = ConfigScript.getBlocksPicturesWidth();
             blockHeight = 32;
@@ -97,7 +97,7 @@ namespace CadEditor
             setBigBlocksIndexes();
             setBlocks(reloadBlockPanel);
             if (reloadScreens)
-              Utils.setScreens(screens);
+                screens = Utils.setScreens();
             updateMap();
         }
 
@@ -117,6 +117,10 @@ namespace CadEditor
             if (ConfigScript.usePicturesInstedBlocks)
             {
                 Utils.setBlocks(bigBlocks, curButtonScale, blockWidth, blockHeight, curViewType, showAxis);
+                if (needToRefillBlockPanel)
+                    prepareBlocksPanel();
+                else
+                    reloadBlocksPanel();
                 return;
             }
 

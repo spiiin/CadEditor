@@ -172,7 +172,7 @@ namespace CadEditor
         {
             if (ConfigScript.usePicturesInstedBlocks)
             {
-                Utils.setScreens(screens);
+                screens = Utils.setScreens();
                 Utils.setBlocks(bigBlocks);
             }
 
