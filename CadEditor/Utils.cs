@@ -8,11 +8,19 @@ namespace CadEditor
 {
     public static class Utils
     {
-        public static void setCbItemsCount(ComboBox cb, int count, int first = 0)
+        public static void setCbItemsCount(ComboBox cb, int count, int first = 0, bool inHex = false)
         {
             cb.Items.Clear();
-            for (int i = 0; i < count; i++)
-                cb.Items.Add(first + i);
+            if (!inHex)
+            {
+                for (int i = 0; i < count; i++)
+                    cb.Items.Add(first + i);
+            }
+            else
+            {
+                for (int i = 0; i < count; i++)
+                    cb.Items.Add(String.Format("{0:X}", i));
+            }
         }
 
         public static void setCbIndexWithoutUpdateLevel(ComboBox cb, EventHandler ev, int index = 0)

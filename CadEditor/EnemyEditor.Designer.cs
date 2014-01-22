@@ -88,6 +88,9 @@
             this.bigBlocks = new System.Windows.Forms.ImageList(this.components);
             this.pnObjectList = new System.Windows.Forms.Panel();
             this.pnObjects = new System.Windows.Forms.Panel();
+            this.pnAddData = new System.Windows.Forms.Panel();
+            this.cbD1 = new System.Windows.Forms.ComboBox();
+            this.lbD1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -97,6 +100,7 @@
             this.pnView.SuspendLayout();
             this.pnObjectList.SuspendLayout();
             this.pnObjects.SuspendLayout();
+            this.pnAddData.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbLevel
@@ -207,7 +211,7 @@
             this.objPanel.AutoScroll = true;
             this.objPanel.Location = new System.Drawing.Point(-2, 267);
             this.objPanel.Name = "objPanel";
-            this.objPanel.Size = new System.Drawing.Size(172, 195);
+            this.objPanel.Size = new System.Drawing.Size(172, 209);
             this.objPanel.TabIndex = 37;
             // 
             // lvObjects
@@ -220,7 +224,7 @@
             this.lvObjects.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lvObjects.Location = new System.Drawing.Point(0, 0);
             this.lvObjects.Name = "lvObjects";
-            this.lvObjects.Size = new System.Drawing.Size(231, 373);
+            this.lvObjects.Size = new System.Drawing.Size(231, 376);
             this.lvObjects.SmallImageList = this.objectSprites;
             this.lvObjects.TabIndex = 38;
             this.lvObjects.UseCompatibleStateImageBehavior = false;
@@ -248,7 +252,7 @@
             this.cbCoordY.Items.AddRange(new object[] {
             "Tiles",
             "Obj types"});
-            this.cbCoordY.Location = new System.Drawing.Point(184, 378);
+            this.cbCoordY.Location = new System.Drawing.Point(183, 382);
             this.cbCoordY.Name = "cbCoordY";
             this.cbCoordY.Size = new System.Drawing.Size(46, 21);
             this.cbCoordY.TabIndex = 42;
@@ -264,7 +268,7 @@
             this.cbCoordX.Items.AddRange(new object[] {
             "Tiles",
             "Obj types"});
-            this.cbCoordX.Location = new System.Drawing.Point(109, 378);
+            this.cbCoordX.Location = new System.Drawing.Point(108, 382);
             this.cbCoordX.Name = "cbCoordX";
             this.cbCoordX.Size = new System.Drawing.Size(46, 21);
             this.cbCoordX.TabIndex = 41;
@@ -275,7 +279,7 @@
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(4, 381);
+            this.label5.Location = new System.Drawing.Point(3, 385);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(34, 13);
             this.label5.TabIndex = 40;
@@ -285,7 +289,7 @@
             // 
             this.btClearObjs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btClearObjs.Location = new System.Drawing.Point(97, 426);
+            this.btClearObjs.Location = new System.Drawing.Point(96, 456);
             this.btClearObjs.Name = "btClearObjs";
             this.btClearObjs.Size = new System.Drawing.Size(138, 24);
             this.btClearObjs.TabIndex = 39;
@@ -298,7 +302,7 @@
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(91, 468);
+            this.label3.Location = new System.Drawing.Point(91, 482);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(40, 13);
             this.label3.TabIndex = 44;
@@ -309,7 +313,7 @@
             this.activeBlock.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.activeBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.activeBlock.Location = new System.Drawing.Point(137, 468);
+            this.activeBlock.Location = new System.Drawing.Point(137, 482);
             this.activeBlock.Name = "activeBlock";
             this.activeBlock.Size = new System.Drawing.Size(32, 32);
             this.activeBlock.TabIndex = 43;
@@ -319,7 +323,7 @@
             // 
             this.btSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSave.Location = new System.Drawing.Point(-2, 475);
+            this.btSave.Location = new System.Drawing.Point(-2, 489);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(73, 25);
             this.btSave.TabIndex = 45;
@@ -334,9 +338,9 @@
             this.cbManualSort.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbManualSort.Checked = true;
             this.cbManualSort.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbManualSort.Location = new System.Drawing.Point(147, 368);
+            this.cbManualSort.Location = new System.Drawing.Point(108, 358);
             this.cbManualSort.Name = "cbManualSort";
-            this.cbManualSort.Size = new System.Drawing.Size(87, 18);
+            this.cbManualSort.Size = new System.Drawing.Size(90, 18);
             this.cbManualSort.TabIndex = 46;
             this.cbManualSort.Text = "Manual sort";
             this.cbManualSort.UseVisualStyleBackColor = true;
@@ -347,7 +351,7 @@
             // 
             this.btSortUp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSortUp.Location = new System.Drawing.Point(97, 402);
+            this.btSortUp.Location = new System.Drawing.Point(96, 432);
             this.btSortUp.Name = "btSortUp";
             this.btSortUp.Size = new System.Drawing.Size(66, 22);
             this.btSortUp.TabIndex = 47;
@@ -359,7 +363,7 @@
             // 
             this.btSortDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSortDown.Location = new System.Drawing.Point(169, 402);
+            this.btSortDown.Location = new System.Drawing.Point(168, 432);
             this.btSortDown.Name = "btSortDown";
             this.btSortDown.Size = new System.Drawing.Size(66, 22);
             this.btSortDown.TabIndex = 48;
@@ -375,7 +379,7 @@
             this.cbStopOnDoors.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbStopOnDoors.Checked = true;
             this.cbStopOnDoors.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbStopOnDoors.Location = new System.Drawing.Point(-2, 506);
+            this.cbStopOnDoors.Location = new System.Drawing.Point(-2, 520);
             this.cbStopOnDoors.Name = "cbStopOnDoors";
             this.cbStopOnDoors.Size = new System.Drawing.Size(156, 17);
             this.cbStopOnDoors.TabIndex = 49;
@@ -602,7 +606,7 @@
             this.lbActive.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbActive.AutoSize = true;
-            this.lbActive.Location = new System.Drawing.Point(91, 483);
+            this.lbActive.Location = new System.Drawing.Point(91, 497);
             this.lbActive.Name = "lbActive";
             this.lbActive.Size = new System.Drawing.Size(13, 13);
             this.lbActive.TabIndex = 55;
@@ -613,7 +617,7 @@
             this.btDelete.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btDelete.Enabled = false;
-            this.btDelete.Location = new System.Drawing.Point(4, 426);
+            this.btDelete.Location = new System.Drawing.Point(3, 456);
             this.btDelete.Name = "btDelete";
             this.btDelete.Size = new System.Drawing.Size(87, 24);
             this.btDelete.TabIndex = 56;
@@ -626,7 +630,7 @@
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 475);
+            this.label7.Location = new System.Drawing.Point(5, 505);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(218, 13);
             this.label7.TabIndex = 57;
@@ -637,7 +641,7 @@
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(4, 407);
+            this.label10.Location = new System.Drawing.Point(3, 437);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(73, 13);
             this.label10.TabIndex = 58;
@@ -656,7 +660,7 @@
             this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(7, 488);
+            this.label13.Location = new System.Drawing.Point(6, 518);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(181, 13);
             this.label13.TabIndex = 60;
@@ -667,7 +671,7 @@
             this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(8, 501);
+            this.label15.Location = new System.Drawing.Point(8, 541);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(180, 13);
             this.label15.TabIndex = 62;
@@ -678,7 +682,7 @@
             this.lbReadOnly.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbReadOnly.AutoSize = true;
-            this.lbReadOnly.Location = new System.Drawing.Point(-1, 481);
+            this.lbReadOnly.Location = new System.Drawing.Point(-1, 495);
             this.lbReadOnly.Name = "lbReadOnly";
             this.lbReadOnly.Size = new System.Drawing.Size(69, 13);
             this.lbReadOnly.TabIndex = 63;
@@ -723,7 +727,7 @@
             this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(86, 381);
+            this.label17.Location = new System.Drawing.Point(85, 385);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(17, 13);
             this.label17.TabIndex = 64;
@@ -734,7 +738,7 @@
             this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(161, 381);
+            this.label18.Location = new System.Drawing.Point(160, 385);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(17, 13);
             this.label18.TabIndex = 65;
@@ -750,7 +754,7 @@
             this.cbObjType.Items.AddRange(new object[] {
             "Tiles",
             "Obj types"});
-            this.cbObjType.Location = new System.Drawing.Point(34, 378);
+            this.cbObjType.Location = new System.Drawing.Point(33, 382);
             this.cbObjType.Name = "cbObjType";
             this.cbObjType.Size = new System.Drawing.Size(46, 21);
             this.cbObjType.TabIndex = 66;
@@ -761,7 +765,7 @@
             this.lbObjectsCount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbObjectsCount.AutoSize = true;
-            this.lbObjectsCount.Location = new System.Drawing.Point(6, 453);
+            this.lbObjectsCount.Location = new System.Drawing.Point(5, 483);
             this.lbObjectsCount.Name = "lbObjectsCount";
             this.lbObjectsCount.Size = new System.Drawing.Size(96, 13);
             this.lbObjectsCount.TabIndex = 67;
@@ -776,7 +780,7 @@
             this.pnView.Controls.Add(this.mapScreen);
             this.pnView.Location = new System.Drawing.Point(198, 17);
             this.pnView.Name = "pnView";
-            this.pnView.Size = new System.Drawing.Size(512, 512);
+            this.pnView.Size = new System.Drawing.Size(512, 526);
             this.pnView.TabIndex = 68;
             // 
             // bigBlocks
@@ -789,7 +793,7 @@
             // 
             this.pnObjectList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnObjectList.Controls.Add(this.lvObjects);
+            this.pnObjectList.Controls.Add(this.pnAddData);
             this.pnObjectList.Controls.Add(this.lbObjectsCount);
             this.pnObjectList.Controls.Add(this.btClearObjs);
             this.pnObjectList.Controls.Add(this.cbObjType);
@@ -806,9 +810,10 @@
             this.pnObjectList.Controls.Add(this.label13);
             this.pnObjectList.Controls.Add(this.label7);
             this.pnObjectList.Controls.Add(this.label10);
+            this.pnObjectList.Controls.Add(this.lvObjects);
             this.pnObjectList.Location = new System.Drawing.Point(716, 12);
             this.pnObjectList.Name = "pnObjectList";
-            this.pnObjectList.Size = new System.Drawing.Size(232, 520);
+            this.pnObjectList.Size = new System.Drawing.Size(232, 534);
             this.pnObjectList.TabIndex = 31;
             // 
             // pnObjects
@@ -828,14 +833,50 @@
             this.pnObjects.Controls.Add(this.pnSelectScreen);
             this.pnObjects.Location = new System.Drawing.Point(9, 6);
             this.pnObjects.Name = "pnObjects";
-            this.pnObjects.Size = new System.Drawing.Size(183, 526);
+            this.pnObjects.Size = new System.Drawing.Size(183, 540);
             this.pnObjects.TabIndex = 31;
+            // 
+            // pnAddData
+            // 
+            this.pnAddData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnAddData.Controls.Add(this.cbD1);
+            this.pnAddData.Controls.Add(this.lbD1);
+            this.pnAddData.Location = new System.Drawing.Point(0, 402);
+            this.pnAddData.Name = "pnAddData";
+            this.pnAddData.Size = new System.Drawing.Size(229, 24);
+            this.pnAddData.TabIndex = 68;
+            // 
+            // cbD1
+            // 
+            this.cbD1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbD1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbD1.Enabled = false;
+            this.cbD1.FormattingEnabled = true;
+            this.cbD1.Items.AddRange(new object[] {
+            "\\"});
+            this.cbD1.Location = new System.Drawing.Point(33, 3);
+            this.cbD1.Name = "cbD1";
+            this.cbD1.Size = new System.Drawing.Size(46, 21);
+            this.cbD1.TabIndex = 69;
+            // 
+            // lbD1
+            // 
+            this.lbD1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbD1.AutoSize = true;
+            this.lbD1.Location = new System.Drawing.Point(3, 6);
+            this.lbD1.Name = "lbD1";
+            this.lbD1.Size = new System.Drawing.Size(24, 13);
+            this.lbD1.TabIndex = 68;
+            this.lbD1.Text = "D1:";
             // 
             // EnemyEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(944, 533);
+            this.ClientSize = new System.Drawing.Size(944, 547);
             this.Controls.Add(this.pnObjects);
             this.Controls.Add(this.pnObjectList);
             this.Controls.Add(this.pnView);
@@ -861,6 +902,8 @@
             this.pnObjectList.PerformLayout();
             this.pnObjects.ResumeLayout(false);
             this.pnObjects.PerformLayout();
+            this.pnAddData.ResumeLayout(false);
+            this.pnAddData.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -926,5 +969,8 @@
         private System.Windows.Forms.ImageList bigBlocks;
         private System.Windows.Forms.Panel pnObjectList;
         private System.Windows.Forms.Panel pnObjects;
+        private System.Windows.Forms.Panel pnAddData;
+        private System.Windows.Forms.ComboBox cbD1;
+        private System.Windows.Forms.Label lbD1;
     }
 }

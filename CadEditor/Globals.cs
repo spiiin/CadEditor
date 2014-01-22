@@ -754,6 +754,12 @@ namespace CadEditor
 
     public struct ObjectRec
     {
+        public ObjectRec(int type, int sx, int sy, int x, int y, Dictionary<String, int> additionalData)
+            :this(type, sx, sy, x,y)
+        {
+            this.additionalData = additionalData;
+        }
+         
         public ObjectRec(int type, int sx, int sy, int x, int y)
         {
             this.type = type;
@@ -761,12 +767,14 @@ namespace CadEditor
             this.sy = sy;
             this.x = x;
             this.y = y;
+            this.additionalData = null;
         }
         public int type;
         public int x;
         public int y;
         public int sx;
         public int sy;
+        public Dictionary<String, int> additionalData;
 
         public override String ToString()
         {

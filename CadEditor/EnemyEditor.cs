@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Linq;
 
 namespace CadEditor
 {
@@ -180,15 +181,12 @@ namespace CadEditor
             reloadPictures();
             fillObjPanel();
 
-            cbCoordX.Items.Clear();
-            cbCoordY.Items.Clear();
-            cbObjType.Items.Clear();
-            for (int i = 0; i < ConfigScript.getScreenWidth()*32; i++)
-                cbCoordX.Items.Add(String.Format("{0:X}", i));
-            for (int i = 0; i < ConfigScript.getScreenHeight()*32; i++)
-                cbCoordY.Items.Add(String.Format("{0:X}", i));
-            for (int i = 0; i < 256; i++)
-                cbObjType.Items.Add(String.Format("{0:X}", i));
+            int coordXCount = (ConfigScript.getMaxObjCoordX() != -1) ? ConfigScript.getMaxObjCoordX() : ConfigScript.getScreenWidth() * 32;
+            int coordYCount = (ConfigScript.getMaxObjCoordY() != -1) ? ConfigScript.getMaxObjCoordY() : ConfigScript.getScreenHeight() * 32;
+            int objType = (ConfigScript.getMaxObjType() != -1) ? ConfigScript.getMaxObjType() : 256;
+            Utils.setCbItemsCount(cbCoordX, coordXCount, 0, true);
+            Utils.setCbItemsCount(cbCoordY, coordYCount, 0, true);
+            Utils.setCbItemsCount(cbObjType, objType, 0, true);
 
             Utils.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
             Utils.setCbItemsCount(cbBigBlockNo, ConfigScript.bigBlocksOffset.recCount);
@@ -324,7 +322,21 @@ namespace CadEditor
         private void setObjects()
         {
             objects = ConfigScript.getObjects(Globals.gameType == GameType.CAD ? curActiveLevel : curActiveLayout);
+            updateAddDataVisible();
             fillObjectsListBox();
+        }
+
+        public void updateAddDataVisible()
+        {
+            pnAddData.Visible = objects.Count > 0 && objects[0].additionalData != null;
+            if (pnAddData.Visible)
+            {
+                var firstKey = objects[0].additionalData.Keys.First();
+                lbD1.Text = firstKey;
+                cbD1.Tag = firstKey;
+                Utils.setCbItemsCount(cbD1, 256, 0, true);
+                cbD1.SelectedIndexChanged += cbCoordX_SelectedIndexChanged;
+            }
         }
 
         private void fillObjectsListBox()
@@ -515,6 +527,11 @@ namespace CadEditor
             obj.x = cbCoordX.SelectedIndex;
             obj.y = cbCoordY.SelectedIndex;
             obj.type = cbObjType.SelectedIndex;
+            if (obj.additionalData != null)
+            {
+                var key = (string)cbD1.Tag;
+                objects[index].additionalData[key] = cbD1.SelectedIndex;
+            }
             objects[index] = obj;
             lvObjects.SelectedItems[0].ImageIndex = obj.type;
             lvObjects.SelectedItems[0].Text = makeStringForObject(obj);
@@ -569,6 +586,11 @@ namespace CadEditor
                 Utils.setCbIndexWithoutUpdateLevel(cbCoordX, cbCoordX_SelectedIndexChanged, objects[index].x);
                 Utils.setCbIndexWithoutUpdateLevel(cbCoordY, cbCoordX_SelectedIndexChanged, objects[index].y);
                 Utils.setCbIndexWithoutUpdateLevel(cbObjType, cbCoordX_SelectedIndexChanged, objects[index].type);
+                if (objects[index].additionalData != null)
+                {
+                    Utils.setCbIndexWithoutUpdateLevel(cbD1, cbCoordX_SelectedIndexChanged, objects[index].additionalData.Values.First());
+                    cbD1.Enabled = true;
+                }
             }
             if (!selectedZero)
             {

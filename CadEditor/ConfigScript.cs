@@ -47,6 +47,10 @@ namespace CadEditor
             screenDataStride = callFromScript(asm, data, "*.getScreenDataStride", 1);
             levelRecs = callFromScript(asm, data,"*.getLevelRecs", new List<LevelRec>());
 
+            maxObjCoordX = callFromScript(asm, data, "*.getMaxObjCoordX", -1);
+            maxObjCoordY = callFromScript(asm, data, "*.getMaxObjCoordY", -1);
+            maxObjType = callFromScript(asm, data, "*.getMaxObjType", -1);
+
             getVideoPageAddrFunc = callFromScript <GetVideoPageAddrFunc>(asm, data, "*.getVideoPageAddrFunc");
             getVideoChunkFunc = callFromScript<GetVideoChunkFunc>(asm, data, "*.getVideoChunkFunc");
             setVideoChunkFunc = callFromScript<SetVideoChunkFunc>(asm, data, "*.setVideoChunkFunc");
@@ -179,6 +183,21 @@ namespace CadEditor
             return screenHeight;
         }
 
+        public static int getMaxObjCoordX()
+        {
+            return maxObjCoordX;
+        }
+
+        public static int getMaxObjCoordY()
+        {
+            return maxObjCoordY;
+        }
+
+        public static int getMaxObjType()
+        {
+            return maxObjType;
+        }
+
         public static string getObjTypesPicturesDir()
         {
             return objTypesPicturesDir;
@@ -231,6 +250,10 @@ namespace CadEditor
         public static int screenHeight;
         public static bool screenVertical;
         public static int screenDataStride;
+
+        public static int maxObjCoordX;
+        public static int maxObjCoordY;
+        public static int maxObjType;
 
         public static IList<LevelRec> levelRecs;
 
