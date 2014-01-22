@@ -12,6 +12,8 @@ public class Data:CapcomBase
   public IList<LevelRec> getLevelRecs() { return levelRecsDwd; }
   public string[] getBlockTypeNames()   { return objTypesDwd;  }
   public bool isMapEditorEnabled()      { return true; }
+  public GetObjectsFunc getObjectsFunc() { return getObjectsDwdAdvanceLastLevel; }
+  public SetObjectsFunc setObjectsFunc() { return setObjectsDwdAdvanceLastLevel; }
   
   public string getObjTypesPicturesDir() { return "obj_sprites_dwd"; }
   
@@ -19,12 +21,54 @@ public class Data:CapcomBase
   {
     new LevelRec(0x30410, 128, 17, 4,  0x1C394), 
   };
-  //temp hack
-  public bool isDwdAdvanceLastLevel() { return true; }
   
   string[] objTypesDwd =
   new[] {
       "0 (back)","1 (hook)","2 (platform)","3 (block)","4 (spikes)","5 (door)",
       "6","7","8","9","A","B","C","D","E","F"
   };
+  
+  public List<ObjectRec> getObjectsDwdAdvanceLastLevel(int levelNo)
+  {
+      LevelRec lr = ConfigScript.getLevelRec(levelNo);
+      int objCount = lr.objCount, addr = lr.objectsBeginAddr;
+      var objects = new List<ObjectRec>();
+      for (int i = 0; i < objCount; i++)
+      {
+          byte v = Globals.romdata[addr + i];
+          byte sx, sy, x, y;
+          sx = Globals.romdata[addr + 1 * objCount + i];
+          x = Globals.romdata[addr + 2 * objCount + i];
+          sy = Globals.romdata[addr + 3 * objCount + i];
+          y = Globals.romdata[addr - +4 * objCount + i];
+          var obj = new ObjectRec(v, sx, sy, x, y);
+          objects.Add(obj);
+      }
+      return objects;
+  }
+
+  public bool setObjectsDwdAdvanceLastLevel(int levelNo, List<ObjectRec> objects)
+  {
+      LevelRec lr = ConfigScript.getLevelRec(levelNo);
+      int addrBase = lr.objectsBeginAddr;
+      int objCount = lr.objCount;
+      for (int i = 0; i < objects.Count; i++)
+      {
+          var obj = objects[i];
+          Globals.romdata[addrBase + i] = (byte)obj.type;
+          Globals.romdata[addrBase + 1 * objCount + i] = (byte)obj.sx;
+          Globals.romdata[addrBase + 2 * objCount + i] = (byte)obj.x;
+          Globals.romdata[addrBase + 3 * objCount + i] = (byte)obj.sy;
+          Globals.romdata[addrBase + 4 * objCount + i] = (byte)obj.y;
+      }
+      for (int i = objects.Count; i < objCount; i++)
+      {
+          Globals.romdata[addrBase + i] = 0xFF;
+          Globals.romdata[addrBase + 1 * objCount + i] = 0xFF;
+          Globals.romdata[addrBase + 2 * objCount + i] = 0xFF;
+          Globals.romdata[addrBase + 3 * objCount + i] = 0xFF;
+          Globals.romdata[addrBase + 4 * objCount + i] = 0xFF;
+      }
+      return true;
+  }
 }

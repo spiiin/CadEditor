@@ -14,8 +14,10 @@ public class Data:CapcomBase
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x7B10 , 3   , 0x4000); }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x10058, 300 , 0x48);   }
 
-  public IList<LevelRec> getLevelRecs() { return levelRecsDt; }
-  public string[] getBlockTypeNames()   { return objTypesDt;  }
+  public IList<LevelRec> getLevelRecs()  { return levelRecsDt; }
+  public string[] getBlockTypeNames()    { return objTypesDt;  }
+  public GetObjectsFunc getObjectsFunc() { return getObjectsDt; }
+  public SetObjectsFunc setObjectsFunc() { return setObjectsDt; }
   
   public override GetVideoPageAddrFunc getVideoPageAddrFunc() { return getDuckTalesVideoAddress; }
   public override GetVideoChunkFunc    getVideoChunkFunc()    { return getDuckTalesVideoChunk;   }
@@ -55,6 +57,62 @@ public class Data:CapcomBase
     for (int i = 0; i < 16 * 16 * 3; i++)
         videoChunk[i] = Globals.romdata[0x4010 + i];
     return videoChunk;
+  }
+  
+  //convert object index to screen Y coord
+  private byte convertObjectIndexToScreenYcoord(byte[] objLineOffsets, int index)
+  {
+      for (int i = 1; i < objLineOffsets.Length; i++)
+          if (index < objLineOffsets[i])
+              return (byte)(i-1);
+      return (byte)(objLineOffsets.Length - 1);
+  }
+  
+  public List<ObjectRec> getObjectsDt(int levelNo)
+  {
+    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    int objCount = lr.objCount, addr = lr.objectsBeginAddr;
+    var objects = new List<ObjectRec>();
+    var objLineOffsets = new byte[lr.height];
+    for (int i = 0; i < lr.height; i++)
+    {
+        objLineOffsets[i] = Globals.romdata[addr + i - lr.height];
+    }
+    for (int i = 0; i < objCount; i++)
+    {
+        byte v = Globals.romdata[addr + i];
+        byte sx = Globals.romdata[addr - 3 * objCount + i - lr.height];
+        byte x = Globals.romdata[addr - 2 * objCount + i - lr.height];
+        byte y = Globals.romdata[addr - objCount + i - lr.height];
+        byte sy = convertObjectIndexToScreenYcoord(objLineOffsets, i);
+        var obj = new ObjectRec(v, sx, sy, x, y);
+        objects.Add(obj);
+    }
+    return objects;
+  }
+
+  public bool setObjectsDt(int levelNo, List<ObjectRec> objects)
+  {
+    //todo: add save sy coord to objLineOffsets array
+    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    int addrBase = lr.objectsBeginAddr;
+    int objCount = lr.objCount;
+    for (int i = 0; i < objects.Count; i++)
+    {
+        var obj = objects[i];
+        Globals.romdata[addrBase + i] = (byte)obj.type;
+        Globals.romdata[addrBase - 3 * objCount + i - lr.height] = (byte)obj.sx;
+        Globals.romdata[addrBase - 2 * objCount + i - lr.height] = (byte)obj.x;
+        Globals.romdata[addrBase - 1 * objCount + i - lr.height] = (byte)obj.y;
+    }
+    for (int i = objects.Count; i < objCount; i++)
+    {
+        Globals.romdata[addrBase + i] = 0xFF;
+        Globals.romdata[addrBase - 3 * objCount + i - lr.height] = 0xFF;
+        Globals.romdata[addrBase - 2 * objCount + i - lr.height] = 0xFF;
+        Globals.romdata[addrBase - 1 * objCount + i - lr.height] = 0xFF;
+    }
+    return true;
   }
   //--------------------------------------------------------------------------------------------
 }

@@ -321,179 +321,10 @@ namespace CadEditor
             return ConfigScript.getLevelRec(GameType.CAD == Globals.gameType ? curActiveLevel : curActiveLayout);
         }
 
-        private void setObjectsDt()
-        {
-            objects.Clear();
-            var lr = getLevelRecForGameType();
-            int objCount = lr.objCount;
-            int addr = lr.objectsBeginAddr;
-            var objLineOffsets = new byte[lr.height];
-            for (int i = 0; i < lr.height; i++)
-            {
-                objLineOffsets[i] = Globals.romdata[addr + i - lr.height];
-            }
-            for (int i = 0; i < objCount; i++)
-            {
-                byte v = Globals.romdata[addr + i];
-                byte sx = Globals.romdata[addr - 3 * objCount + i - lr.height];
-                byte x = Globals.romdata[addr - 2 * objCount + i - lr.height];
-                byte y = Globals.romdata[addr - objCount + i - lr.height];
-                byte sy = convertObjectIndexToScreenYcoord(objLineOffsets, i);
-                var obj = new ObjectRec(v, sx, sy, x, y);
-                objects.Add(obj);
-            }
-        }
-
-        private void setObjectsCadDwd()
-        {
-            objects.Clear();
-            int objCount, addr;
-            LevelRec lr = getLevelRecForGameType();
-            objCount = lr.objCount;
-            addr = lr.objectsBeginAddr;
-
-            for (int i = 0; i < objCount; i++)
-            {
-                byte v = Globals.romdata[addr + i];
-                if ((curActiveLevel != 4) || (Globals.gameType == GameType.Generic))
-                {
-                    byte sx, sy, x, y;
-                    if (!ConfigScript.isDwdAdvanceLastLevel())
-                    {
-                        sx = Globals.romdata[addr - 4 * objCount + i];
-                        x = Globals.romdata[addr - 3 * objCount + i];
-                        sy = Globals.romdata[addr - 2 * objCount + i];
-                        y = Globals.romdata[addr - objCount + i];
-                    }
-                    else
-                    {
-                        sx = Globals.romdata[addr + 1 * objCount + i];
-                        x = Globals.romdata[addr + 2 * objCount + i];
-                        sy = Globals.romdata[addr + 3 * objCount + i];
-                        y = Globals.romdata[addr - +4 * objCount + i];
-                    }
-                    var obj = new ObjectRec(v, sx, sy, x, y);
-                    objects.Add(obj);
-                }
-                else  //C&D LEVEL D EXCEPTION
-                {
-                    byte sx = Globals.romdata[addr - 4 * objCount + 1 + i];
-                    byte x = Globals.romdata[addr - 3 * objCount + 1 + i];
-                    byte sy = Globals.romdata[addr - 2 * objCount + 1 + i];
-                    byte y = Globals.romdata[addr - objCount + i];
-                    var obj = new ObjectRec(v, sx, sy, x, y);
-                    objects.Add(obj);
-                }
-            }
-        }
-
-        private void setObjectsDt2()
-        {
-            objects.Clear();
-            var lr = getLevelRecForGameType();
-            int objCount = lr.objCount;
-            int addr = lr.objectsBeginAddr;
-
-            int objectsReaded = 0;
-            int currentHeight = 0;
-            while (objectsReaded < objCount)
-            {
-                byte command = Globals.romdata[addr];
-                if (command == 0xFF)
-                {
-                    currentHeight = Globals.romdata[addr + 1];
-                    if (currentHeight == 0xFF)
-                        break;
-                    addr += 2;
-                }
-                else
-                {
-                    byte v = Globals.romdata[addr + 2];
-                    byte xbyte = Globals.romdata[addr + 0];
-                    byte ybyte = Globals.romdata[addr + 1];
-                    byte sx = (byte)(xbyte >> 5);
-                    byte x = (byte)((xbyte & 0x1F) << 3);
-                    byte sy = (byte)currentHeight;
-                    byte y = ybyte;
-                    var obj = new ObjectRec(v, sx, sy, x, y);
-                    objects.Add(obj);
-                    objectsReaded++;
-                    addr += 3;
-                }
-            }
-        }
-
-        private void setObjectsLm()
-        {
-            objects.Clear();
-            var lr = getLevelRecForGameType();
-            int objCount = lr.objCount;
-            int addr = lr.objectsBeginAddr;
-            for (int i = 0; i < objCount; i++)
-            {
-                byte v =  Globals.romdata[addr + i];
-                byte sx = Globals.romdata[addr - 3 * objCount + i];
-                byte x =  Globals.romdata[addr - 2 * objCount + i];
-                byte y =  Globals.romdata[addr - 1 * objCount + i];
-                byte sy = 0;
-                var obj = new ObjectRec(v, sx, sy, x, y);
-                objects.Add(obj);
-            }
-        }
-
-        private void setObjectsTT()
-        {
-            objects.Clear();
-            var lr = getLevelRecForGameType();
-            int objCount = lr.objCount;
-            int addr = lr.objectsBeginAddr;
-            for (int i = 0; i < objCount; i++)
-            {
-                int v =  Globals.romdata[addr + i * 3 + 0];
-                int xx = Globals.romdata[addr + i * 3 + 1];
-                int yy = Globals.romdata[addr + i * 3 + 2];
-                int sx = xx >> 4;
-                int sy = 0;
-                int x = (xx & 0x0F) * 16;
-                int y = yy * 16;
-                var obj = new ObjectRec(v, sx, sy, x, y);
-                objects.Add(obj);
-            }
-        }
-
         private void setObjects()
         {
-            if (Globals.gameType == GameType.DT)
-            {
-                setObjectsDt();
-            }
-            else if (Globals.gameType == GameType.DT2)
-            {
-                setObjectsDt2();
-            }
-            else if (Globals.gameType == GameType.LM)
-            {
-                setObjectsLm();
-            }
-            else if (Globals.gameType == GameType.TT)
-            {
-                setObjectsTT();
-            }
-            else
-            {
-                setObjectsCadDwd();
-            }
-            
+            objects = ConfigScript.getObjects(Globals.gameType == GameType.CAD ? curActiveLevel : curActiveLayout);
             fillObjectsListBox();
-        }
-
-        //duck tales specific function - convert object index to screen Y coord
-        private byte convertObjectIndexToScreenYcoord(byte[] objLineOffsets, int index)
-        {
-            for (int i = 1; i < objLineOffsets.Length; i++)
-                if (index < objLineOffsets[i])
-                    return (byte)(i-1);
-            return (byte)(objLineOffsets.Length - 1);
         }
 
         private void fillObjectsListBox()
@@ -692,8 +523,6 @@ namespace CadEditor
 
         private bool saveToFile()
         {
-            //todo : add save for duck tales 2
-
             var romFname = OpenFile.FileName;
             LevelRec lr = getLevelRecForGameType();
             //write objects
@@ -708,108 +537,9 @@ namespace CadEditor
                 MessageBox.Show(String.Format("Too many objects in level ({0}). Maximum: {1}", objects.Count, lr.objCount));
                 return false;
             }
-            //level D hack (for C&D)
-            int levelDhack = (curActiveLevel == 4 && Globals.gameType == GameType.CAD) ? 1 : 0;
             try
             {
-                if (Globals.gameType != GameType.DT)
-                {
-                    if (Globals.gameType == GameType.LM)
-                    {
-                        for (int i = 0; i < objects.Count; i++)
-                        {
-                            var obj = objects[i];
-                            Globals.romdata[addrBase + i] = (byte)obj.type;
-                            Globals.romdata[addrBase - 1 * objCount + i] = (byte)obj.y;
-                            Globals.romdata[addrBase - 2 * objCount + i] = (byte)obj.x;
-                            Globals.romdata[addrBase - 3 * objCount + i] = (byte)obj.sx;
-                        }
-                        for (int i = objects.Count; i < objCount; i++)
-                        {
-                            Globals.romdata[addrBase + i] = 0xFF;
-                            Globals.romdata[addrBase - 1 * objCount + i] = 0xFF;
-                            Globals.romdata[addrBase - 2 * objCount + i] = 0xFF;
-                            Globals.romdata[addrBase - 3 * objCount + i] = 0xFF;
-                        }
-                    }
-                    else if (Globals.gameType == GameType.TT)
-                    {
-                        for (int i = 0; i < objects.Count; i++)
-                        {
-                            var obj = objects[i];
-                            Globals.romdata[addrBase + i * 3 + 0] = (byte)obj.type;
-                            Globals.romdata[addrBase + i * 3 + 1] = (byte)((obj.x / 16) | (obj.sx << 4));
-                            Globals.romdata[addrBase + i * 3 + 2] = (byte)((obj.y / 16) | (obj.sy << 4));
-                        }
-                        for (int i = objects.Count; i < objCount; i++)
-                        {
-                            Globals.romdata[addrBase + i * 3 + 0] = 0xFF;
-                            Globals.romdata[addrBase + i * 3 + 1] = 0xFF;
-                            Globals.romdata[addrBase + i * 3 + 2] = 0xFF;
-                        }
-                    }
-                    else
-                    {
-                        //generic version
-                        for (int i = 0; i < objects.Count; i++)
-                        {
-                            var obj = objects[i];
-                            if (!ConfigScript.isDwdAdvanceLastLevel())
-                            {
-                                Globals.romdata[addrBase + i] = (byte)obj.type;
-                                Globals.romdata[addrBase - 4 * objCount + levelDhack + i] = (byte)obj.sx;
-                                Globals.romdata[addrBase - 3 * objCount + levelDhack + i] = (byte)obj.x;
-                                Globals.romdata[addrBase - 2 * objCount + levelDhack + i] = (byte)obj.sy;
-                                Globals.romdata[addrBase - objCount + i] = (byte)obj.y;
-                            }
-                            else
-                            {
-                                Globals.romdata[addrBase + i] = (byte)obj.type;
-                                Globals.romdata[addrBase + 1 * objCount + levelDhack + i] = (byte)obj.sx;
-                                Globals.romdata[addrBase + 2 * objCount + levelDhack + i] = (byte)obj.x;
-                                Globals.romdata[addrBase + 3 * objCount + levelDhack + i] = (byte)obj.sy;
-                                Globals.romdata[addrBase + 4 * objCount + i] = (byte)obj.y;
-                            }
-                        }
-                        for (int i = objects.Count; i < objCount; i++)
-                        {
-                            Globals.romdata[addrBase + i] = 0xFF;
-                            if (!ConfigScript.isDwdAdvanceLastLevel())
-                            {
-                                Globals.romdata[addrBase - 4 * objCount + levelDhack + i] = 0xFF;
-                                Globals.romdata[addrBase - 3 * objCount + levelDhack + i] = 0xFF;
-                                Globals.romdata[addrBase - 2 * objCount + levelDhack + i] = 0xFF;
-                                Globals.romdata[addrBase - objCount + levelDhack + i] = 0xFF;
-                            }
-                            else
-                            {
-                                Globals.romdata[addrBase + 1 * objCount + levelDhack + i] = 0xFF;
-                                Globals.romdata[addrBase + 2 * objCount + levelDhack + i] = 0xFF;
-                                Globals.romdata[addrBase + 3 * objCount + levelDhack + i] = 0xFF;
-                                Globals.romdata[addrBase + 4 * objCount + levelDhack + i] = 0xFF;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    //dt version
-                    for (int i = 0; i < objects.Count; i++)
-                    {
-                        var obj = objects[i];
-                        Globals.romdata[addrBase + i] = (byte)obj.type;
-                        Globals.romdata[addrBase - 3 * objCount + i - lr.height] = (byte)obj.sx;
-                        Globals.romdata[addrBase - 2 * objCount + i - lr.height] = (byte)obj.x;
-                        Globals.romdata[addrBase - 1 * objCount + i - lr.height] = (byte)obj.y;
-                    }
-                    for (int i = objects.Count; i < objCount; i++)
-                    {
-                        Globals.romdata[addrBase + i] = 0xFF;
-                        Globals.romdata[addrBase - 3 * objCount + i - lr.height] = 0xFF;
-                        Globals.romdata[addrBase - 2 * objCount + i - lr.height] = 0xFF;
-                        Globals.romdata[addrBase - 1 * objCount + i - lr.height] = 0xFF;
-                    }
-                }
+                ConfigScript.setObjects(Globals.gameType == GameType.CAD ? curActiveLevel : curActiveLayout, objects);
             }
             catch (IndexOutOfRangeException ex)
             {
@@ -969,29 +699,6 @@ namespace CadEditor
         private void cbTool_SelectedIndexChanged(object sender, EventArgs e)
         {
             curTool = (ToolType)cbTool.SelectedIndex;
-        }
-    }
-
-    struct ObjectRec
-    {
-        public ObjectRec(int type, int sx, int sy, int x, int y)
-        {
-            this.type = type;
-            this.sx = sx;
-            this.sy = sy;
-            this.x = x;
-            this.y = y;
-        }
-        public int type;
-        public int x;
-        public int y;
-        public int sx;
-        public int sy;
-
-        public override String ToString()
-        {
-            String formatStr = (type > 15) ? "{0:X} : ({1:X}:{2:X})" : "0{0:X} : ({1:X}:{2:X})";
-            return String.Format(formatStr, type, sx << 8 | x, sy << 8 | y);
         }
     }
 

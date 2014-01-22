@@ -22,6 +22,8 @@ public class Data:CapcomBase
   public override SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   public override GetBigBlocksFunc     getBigBlocksFunc()     { return getBigBlocksDt2;}
   public override SetBigBlocksFunc     setBigBlocksFunc()     { return setBigBlocksDt2;}
+  public GetObjectsFunc getObjectsFunc() { return getObjectsDt2; }
+  public SetObjectsFunc setObjectsFunc() { return setObjectsDt2; }
   
   public IList<LevelRec> levelRecsDt2 = new List<LevelRec>() 
   {
@@ -102,6 +104,48 @@ public class Data:CapcomBase
     int[] addrPointers = getBigBlocksPtrsForLevel(bigTileIndex);
     int blocksCount = getBigBlocksCountForLevel(bigTileIndex);
     Utils.writeDataToUnalignedArrays(data, Globals.romdata, addrPointers[0], addrPointers[1], addrPointers[2], addrPointers[3], blocksCount); 
+  }
+  
+  public List<ObjectRec> getObjectsDt2(int levelNo)
+  {
+    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    int objCount = lr.objCount, addr = lr.objectsBeginAddr;
+    var objects = new List<ObjectRec>();
+
+    int objectsReaded = 0;
+    int currentHeight = 0;
+    while (objectsReaded < objCount)
+    {
+        byte command = Globals.romdata[addr];
+        if (command == 0xFF)
+        {
+            currentHeight = Globals.romdata[addr + 1];
+            if (currentHeight == 0xFF)
+                break;
+            addr += 2;
+        }
+        else
+        {
+            byte v = Globals.romdata[addr + 2];
+            byte xbyte = Globals.romdata[addr + 0];
+            byte ybyte = Globals.romdata[addr + 1];
+            byte sx = (byte)(xbyte >> 5);
+            byte x = (byte)((xbyte & 0x1F) << 3);
+            byte sy = (byte)currentHeight;
+            byte y = ybyte;
+            var obj = new ObjectRec(v, sx, sy, x, y);
+            objects.Add(obj);
+            objectsReaded++;
+            addr += 3;
+        }
+    }
+    return objects;
+  }
+  
+  public bool setObjectsDt2(int levelNo, List<ObjectRec> objects)
+  {
+    //todo : add save for duck tales 2
+    return true;
   }
   //--------------------------------------------------------------------------------------------
 }

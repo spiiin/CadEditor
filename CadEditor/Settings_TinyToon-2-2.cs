@@ -29,6 +29,8 @@ public class Data
   public SetBlocksFunc        setBlocksFunc()        { return TinyToonUtils.setBlocks;}
   public GetPalFunc           getPalFunc()           { return getPalleteLevel_2_1;}
   public SetPalFunc           setPalFunc()           { return null;}
+  public GetObjectsFunc getObjectsFunc() { return TinyToonUtils.getObjectsTT; }
+  public SetObjectsFunc setObjectsFunc() { return TinyToonUtils.setObjectsTT; }
   
   public IList<LevelRec> levelRecsTT = new List<LevelRec>() 
   {

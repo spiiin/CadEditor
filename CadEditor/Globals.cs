@@ -752,6 +752,29 @@ namespace CadEditor
         }
     }
 
+    public struct ObjectRec
+    {
+        public ObjectRec(int type, int sx, int sy, int x, int y)
+        {
+            this.type = type;
+            this.sx = sx;
+            this.sy = sy;
+            this.x = x;
+            this.y = y;
+        }
+        public int type;
+        public int x;
+        public int y;
+        public int sx;
+        public int sy;
+
+        public override String ToString()
+        {
+            String formatStr = (type > 15) ? "{0:X} : ({1:X}:{2:X})" : "0{0:X} : ({1:X}:{2:X})";
+            return String.Format(formatStr, type, sx << 8 | x, sy << 8 | y);
+        }
+    }
+
     public enum GameType
     {
         Generic,

@@ -1,10 +1,11 @@
 using CadEditor;
 using System;
 using System.Drawing;
+using System.Collections.Generic;
 
 public class Data 
 { 
-  public GameType getGameType()                             { return GameType.Generic; }
+  public GameType getGameType()                             { return GameType.TT; }
   public OffsetRec getScreensOffset()                       { return new OffsetRec(90441   , 1 , 16*96);   }
   public int getScreenWidth()                               { return 96; }
   public int getScreenHeight()                              { return 16; }
@@ -14,8 +15,14 @@ public class Data
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return false; }
   public bool isLayoutEditorEnabled()   { return false; }
-  public bool isEnemyEditorEnabled()    { return false; }
+  public bool isEnemyEditorEnabled()    { return true; }
   public bool isVideoEditorEnabled()    { return false; }
+  public IList<LevelRec> getLevelRecs() { return levelRecsJB; }
+  
+  public IList<LevelRec> levelRecsJB = new List<LevelRec>() 
+  {
+    new LevelRec(0x0, 0, 1, 1, 0x0),
+  };
   
   public void renderObjects(Graphics g, int curScale)
   {

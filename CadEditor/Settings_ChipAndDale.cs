@@ -14,6 +14,9 @@ public class Data:CapcomBase
   public IList<LevelRec> getLevelRecs() { return levelRecsCad; }
   public string[] getBlockTypeNames()   { return objTypesCad;  }
   
+  public GetObjectsFunc getObjectsFunc() { return getObjectsCad; }
+  public SetObjectsFunc setObjectsFunc() { return setObjectsCad; }
+  
   public string getObjTypesPicturesDir() { return "obj_sprites_cad"; }
   
   //chip and dale specific
@@ -59,4 +62,70 @@ public class Data:CapcomBase
         "E (throwable stone)",
         "F (throwable box)"
     };
+    
+    public List<ObjectRec> getObjectsCad(int levelNo)
+    {
+      LevelRec lr = ConfigScript.getLevelRec(levelNo);
+      int objCount = lr.objCount, addr = lr.objectsBeginAddr;
+      var objects = new List<ObjectRec>();
+      for (int i = 0; i < objCount; i++)
+      {
+          byte v = Globals.romdata[addr + i];
+          if (levelNo != 4)
+          {
+              byte sx, sy, x, y;
+              sx = Globals.romdata[addr - 4 * objCount + i];
+              x  = Globals.romdata[addr - 3 * objCount + i];
+              sy = Globals.romdata[addr - 2 * objCount + i];
+              y  = Globals.romdata[addr - objCount + i];
+              var obj = new ObjectRec(v, sx, sy, x, y);
+              objects.Add(obj);
+          }
+          else  //C&D LEVEL D EXCEPTION, unaligned pointers
+          {
+              byte sx = Globals.romdata[addr - 4 * objCount + 1 + i];
+              byte x  = Globals.romdata[addr - 3 * objCount + 1 + i];
+              byte sy = Globals.romdata[addr - 2 * objCount + 1 + i];
+              byte y  = Globals.romdata[addr - objCount + i];
+              var obj = new ObjectRec(v, sx, sy, x, y);
+              objects.Add(obj);
+          }
+      }
+      return objects;
+    }
+    
+    public bool setObjectsCad(int levelNo, List<ObjectRec> objects)
+    {
+      LevelRec lr = ConfigScript.getLevelRec(levelNo);
+      int levelDhack = (levelNo == 4) ? 1 : 0;
+      int addrBase = lr.objectsBeginAddr;
+      int objCount = lr.objCount;
+      try
+      {
+          for (int i = 0; i < objects.Count; i++)
+          {
+              var obj = objects[i];
+              Globals.romdata[addrBase + i] = (byte)obj.type;
+              Globals.romdata[addrBase - 4 * objCount + levelDhack + i] = (byte)obj.sx;
+              Globals.romdata[addrBase - 3 * objCount + levelDhack + i] = (byte)obj.x;
+              Globals.romdata[addrBase - 2 * objCount + levelDhack + i] = (byte)obj.sy;
+              Globals.romdata[addrBase - objCount + i] = (byte)obj.y;
+
+          }
+          for (int i = objects.Count; i < objCount; i++)
+          {
+              Globals.romdata[addrBase + i] = 0xFF;
+              Globals.romdata[addrBase - 4 * objCount + levelDhack + i] = 0xFF;
+              Globals.romdata[addrBase - 3 * objCount + levelDhack + i] = 0xFF;
+              Globals.romdata[addrBase - 2 * objCount + levelDhack + i] = 0xFF;
+              Globals.romdata[addrBase - objCount + levelDhack + i] = 0xFF;
+          }
+          return true;
+      
+      }
+      catch (System.IndexOutOfRangeException ex)
+      {
+          return false;
+      }
+    }
 }

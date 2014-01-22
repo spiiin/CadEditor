@@ -50,5 +50,46 @@ public static class TinyToonUtils
       romdata[addr + count * 3 + i] = obj.c4;
     }
   }
+  
+  public static List<ObjectRec> getObjectsTT(int levelNo)
+  {
+    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    int objCount = lr.objCount, addr = lr.objectsBeginAddr;
+    var objects = new List<ObjectRec>();
+    for (int i = 0; i < objCount; i++)
+    {
+        int v = Globals.romdata[addr + i * 3 + 0];
+        int xx = Globals.romdata[addr + i * 3 + 1];
+        int yy = Globals.romdata[addr + i * 3 + 2];
+        int sx = xx >> 4;
+        int sy = 0;
+        int x = (xx & 0x0F) * 16;
+        int y = yy * 16;
+        var obj = new ObjectRec(v, sx, sy, x, y);
+        objects.Add(obj);
+    }
+    return objects;
+  }
+
+  public static bool setObjectsTT(int levelNo, List<ObjectRec> objects)
+  {
+    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    int addrBase = lr.objectsBeginAddr;
+    int objCount = lr.objCount;
+    for (int i = 0; i < objects.Count; i++)
+    {
+        var obj = objects[i];
+        Globals.romdata[addrBase + i * 3 + 0] = (byte)obj.type;
+        Globals.romdata[addrBase + i * 3 + 1] = (byte)((obj.x / 16) | (obj.sx << 4));
+        Globals.romdata[addrBase + i * 3 + 2] = (byte)((obj.y / 16) | (obj.sy << 4));
+    }
+    for (int i = objects.Count; i < objCount; i++)
+    {
+        Globals.romdata[addrBase + i * 3 + 0] = 0xFF;
+        Globals.romdata[addrBase + i * 3 + 1] = 0xFF;
+        Globals.romdata[addrBase + i * 3 + 2] = 0xFF;
+    }
+    return true;
+  }
   //--------------------------------------------------------------------------------------------------------------
 }

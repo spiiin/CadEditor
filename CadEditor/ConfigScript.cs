@@ -15,6 +15,8 @@ namespace CadEditor
     public delegate void   SetBigBlocksFunc(int bigTileIndex, byte[] bigBlockIndexes);
     public delegate byte[] GetPalFunc(int palId);
     public delegate void   SetPalFunc(int palId, byte[] pallete);
+    public delegate List<ObjectRec> GetObjectsFunc(int levelNo);
+    public delegate bool            SetObjectsFunc(int levelNo, List<ObjectRec> objects); 
     public delegate void   RenderToMainScreenFunc(Graphics g, int curScale);
 
     public class ConfigScript
@@ -54,6 +56,9 @@ namespace CadEditor
             setBlocksFunc = callFromScript<SetBlocksFunc>(asm, data, "*.setBlocksFunc");
             getPalFunc = callFromScript<GetPalFunc>(asm, data, "*.getPalFunc");
             setPalFunc = callFromScript<SetPalFunc>(asm, data, "*.setPalFunc");
+            getObjectsFunc = callFromScript<GetObjectsFunc>(asm, data, "*.getObjectsFunc");
+            setObjectsFunc = callFromScript<SetObjectsFunc>(asm, data, "*.setObjectsFunc");
+
             renderToMainScreenFunc = callFromScript<RenderToMainScreenFunc>(asm, data, "*.getRenderToMainScreenFunc");
 
             isBigBlockEditorEnabled = callFromScript(asm, data, "*.isBigBlockEditorEnabled", true);
@@ -82,18 +87,6 @@ namespace CadEditor
                 ScrollPtrAdd = (int)asm.InvokeInst(data, "*.getScrollPtrAdd");
                 DirPtrAdd = (int)asm.InvokeInst(data, "*.getDirPtrAdd");
                 DoorRecBaseOffset = (int)asm.InvokeInst(data, "*.getDoorRecBaseOffset");
-            }
-
-            //temp hack
-            if (Globals.gameType == GameType.Generic)
-            {
-                try
-                {
-                    dwdAdvanceLastLevel = (bool)asm.InvokeInst(data,"*.isDwdAdvanceLastLevel");
-                }
-                catch (Exception)
-                {
-                }
             }
         }
 
@@ -145,6 +138,16 @@ namespace CadEditor
             setPalFunc(palId, pallete);
         }
 
+        public static List<ObjectRec> getObjects(int levelNo)
+        {
+            return (getObjectsFunc ?? (_ => null))(levelNo);
+        }
+
+        public static void setObjects(int levelNo, List<ObjectRec> objects)
+        {
+            setObjectsFunc(levelNo, objects);
+        }
+
         public static void renderToMainScreen(Graphics g, int scale)
         {
             if (renderToMainScreenFunc!=null)
@@ -164,12 +167,6 @@ namespace CadEditor
         public static LevelRec getLevelRec(int i)
         {
             return levelRecs[i];
-        }
-
-        //
-        public static bool isDwdAdvanceLastLevel()
-        {
-            return dwdAdvanceLastLevel;
         }
 
         public static int getScreenWidth()
@@ -235,9 +232,6 @@ namespace CadEditor
         public static bool screenVertical;
         public static int screenDataStride;
 
-        //temp hack
-        public static bool dwdAdvanceLastLevel = false;
-
         public static IList<LevelRec> levelRecs;
 
         public static GetVideoPageAddrFunc getVideoPageAddrFunc;
@@ -249,6 +243,8 @@ namespace CadEditor
         public static SetBlocksFunc setBlocksFunc;
         public static GetPalFunc getPalFunc;
         public static SetPalFunc setPalFunc;
+        public static GetObjectsFunc getObjectsFunc;
+        public static SetObjectsFunc setObjectsFunc;
         public static RenderToMainScreenFunc renderToMainScreenFunc;
 
         public static bool isBigBlockEditorEnabled;

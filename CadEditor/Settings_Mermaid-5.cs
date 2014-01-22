@@ -1,6 +1,7 @@
 using CadEditor;
 using System.Collections.Generic;
 //css_include Settings_CapcomBase.cs;
+//css_include Settings_Mermaid-Utils.cs;
 public class Data:CapcomBase
 {
   public override GameType getGameType(){ return GameType.LM; }
@@ -11,7 +12,8 @@ public class Data:CapcomBase
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x2410,  1 , 0x4000); }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x5250, 32 , 0x40);   }
   public IList<LevelRec> getLevelRecs() { return levelRecs; }
-  
+  public GetObjectsFunc getObjectsFunc() { return MermaidUtils.getObjectsLM; }
+  public SetObjectsFunc setObjectsFunc() { return MermaidUtils.setObjectsLM; }
   public override GetVideoChunkFunc    getVideoChunkFunc()    { return getLMVideoChunk; }
   
   public IList<LevelRec> levelRecs = new List<LevelRec>() 

@@ -19,6 +19,8 @@ public class Data
   public int getScreenWidth()           { return 8; }
   public int getScreenHeight()          { return 6; }
   public IList<LevelRec> getLevelRecs() { return levelRecsTT; }
+  public GetObjectsFunc getObjectsFunc() { return TinyToonUtils.getObjectsTT; }
+  public SetObjectsFunc setObjectsFunc() { return TinyToonUtils.setObjectsTT; }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getTinyToonVideoAddress; }
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getTinyToonVideoChunk;   }
