@@ -19,6 +19,7 @@ namespace CadEditor
     public delegate List<ObjectRec> GetObjectsFunc(int levelNo);
     public delegate bool            SetObjectsFunc(int levelNo, List<ObjectRec> objects); 
     public delegate void            SortObjectsFunc(int levelNo, List<ObjectRec> objects);
+    public delegate LevelLayerData  GetLayoutFunc(int levelNo);
 
     public class ConfigScript
     {
@@ -67,6 +68,7 @@ namespace CadEditor
             getObjectsFunc = callFromScript<GetObjectsFunc>(asm, data, "*.getObjectsFunc");
             setObjectsFunc = callFromScript<SetObjectsFunc>(asm, data, "*.setObjectsFunc");
             sortObjectsFunc = callFromScript<SortObjectsFunc>(asm, data, "*.sortObjectsFunc");
+            getLayoutFunc = callFromScript<GetLayoutFunc>(asm, data, "*.getLayoutFunc");
 
             renderToMainScreenFunc = callFromScript<RenderToMainScreenFunc>(asm, data, "*.getRenderToMainScreenFunc");
 
@@ -160,6 +162,11 @@ namespace CadEditor
         public static void sortObjects(int levelNo, List<ObjectRec> objects)
         {
             sortObjectsFunc(levelNo, objects);
+        }
+
+        public static LevelLayerData getLayout(int levelNo)
+        {
+            return getLayoutFunc(levelNo);
         }
 
         public static void renderToMainScreen(Graphics g, int scale)
@@ -297,6 +304,7 @@ namespace CadEditor
         public static GetObjectsFunc getObjectsFunc;
         public static SetObjectsFunc setObjectsFunc;
         public static SortObjectsFunc sortObjectsFunc;
+        public static GetLayoutFunc getLayoutFunc;
         public static RenderToMainScreenFunc renderToMainScreenFunc;
 
         public static bool isBigBlockEditorEnabled;

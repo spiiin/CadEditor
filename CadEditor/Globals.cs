@@ -546,7 +546,7 @@ namespace CadEditor
         public int door;
     }
 
-    struct LevelLayerData
+    public struct LevelLayerData
     {
         public LevelLayerData(int width, int height, byte[] layer, byte[] scroll, byte[] dirs)
         {
@@ -555,6 +555,15 @@ namespace CadEditor
             this.layer = layer;
             this.scroll = scroll;
             this.dirs = dirs;
+        }
+
+        public LevelLayerData(int width, int height, byte[] layer)
+        {
+            this.width = width;
+            this.height = height;
+            this.layer = layer;
+            this.scroll = null;
+            this.dirs = null;
         }
 
         public byte getDirForIndex(int index)

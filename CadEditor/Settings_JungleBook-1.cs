@@ -19,13 +19,14 @@ public class Data
   public bool isVideoEditorEnabled()    { return false; }
   public IList<LevelRec> getLevelRecs() { return levelRecsJB; }
   
-  public GetObjectsFunc getObjectsFunc()   { return getObjectsJungleBook; }
-  public SetObjectsFunc setObjectsFunc()   { return setObjectsJungleBook; }
+  public GetObjectsFunc getObjectsFunc()   { return getObjectsJungleBook;  }
+  public SetObjectsFunc setObjectsFunc()   { return setObjectsJungleBook;  }
   public SortObjectsFunc sortObjectsFunc() { return sortObjectsJungleBook; }
-  public int getMinObjCoordX()           { return (0+1)*32+16; }
-  public int getMinObjCoordY()           { return (0)*32+16; }
+  public GetLayoutFunc getLayoutFunc()     { return getLayoutJungleBook;   } 
+  public int getMinObjCoordX()           { return 16; }
+  public int getMinObjCoordY()           { return 16; }
   public int getMinObjType()             { return 0;          }
-  public int getMaxObjCoordX()           { return (96+1)*32+16; }
+  public int getMaxObjCoordX()           { return (96)*32+16; }
   public int getMaxObjCoordY()           { return (17)*32+16; }
   public int getMaxObjType()             { return 256;          }
   
@@ -58,8 +59,8 @@ public class Data
     {
         byte x    = Globals.romdata[0x16775 + i];
         byte y    = Globals.romdata[0x167A5 + i];
-        int realx = (x+1)* 32 + 16;
-        int realy = (y)* 32 + 16;
+        int realx = x* 32 + 16;
+        int realy = y* 32 + 16;
         byte v    = Globals.romdata[0x167D5 + i];
         byte data = Globals.romdata[0x16805 + i];
         var dataDict = new Dictionary<string,int>();
@@ -77,7 +78,7 @@ public class Data
     for (int i = 0; i < objects.Count; i++)
     {
         var obj = objects[i];
-        byte x = (byte)((obj.x - 16) /32 - 1);
+        byte x = (byte)((obj.x - 16) /32);
         byte y = (byte)((obj.y - 16) /32);
         Globals.romdata[0x167D5 + i] = (byte)obj.type;
         Globals.romdata[0x16805 + i] = (byte)obj.additionalData["data"];
@@ -97,5 +98,12 @@ public class Data
   public void sortObjectsJungleBook(int levelNo, List<ObjectRec> objects)
   {
     objects.Sort((o1, o2) => { return o1.x > o2.x ? 1 : o1.x < o2.x ? -1 : o1.y < o2.y ? -1 : o1.y > o2.y ? 1 : 0; });
+  }
+  
+  LevelLayerData getLayoutJungleBook(int levelNo)
+  {
+    byte[] layer = new byte[1];
+    layer[0] = 0;
+    return new LevelLayerData(1, 1, layer);
   }
 }

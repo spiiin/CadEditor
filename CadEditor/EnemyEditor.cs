@@ -45,54 +45,61 @@ namespace CadEditor
 
         private void reloadLevelLayerData(bool resetScreenPos)
         {
-            if (Globals.gameType == GameType.CAD)
+            if (ConfigScript.getLayoutFunc != null)
             {
-                var lr = Globals.levelData[curActiveLevel];
-                int layoutAddr = lr.getActualLayoutAddr();
-                int scrollAddr = lr.getActualScrollAddr();
-                int dirAddr = lr.getActualDirsAddr();
-                int width = lr.getWidth();
-                int height = lr.getHeight();
-                byte[] layer = new byte[width * height];
-                byte[] scroll = new byte[width * height];
-                byte[] dirs = new byte[height];
-                for (int i = 0; i < width * height; i++)
-                {
-                    layer[i] = Globals.romdata[layoutAddr + i];
-                    scroll[i] = Globals.romdata[scrollAddr + i];
-                }
-                for (int i = 0; i < height; i++)
-                {
-                    dirs[i] = Globals.romdata[dirAddr + i];
-                }
-                curLevelLayerData = new LevelLayerData(width, height, layer, scroll, dirs);
+                curLevelLayerData = ConfigScript.getLayout(curActiveLayout);
             }
             else
             {
-                curWidth = Globals.getLevelWidth(curActiveLayout);
-                curHeight = Globals.getLevelHeight(curActiveLayout);
-                curActiveLayout = cbLayoutNo.SelectedIndex;
-                curVideoNo = cbVideoNo.SelectedIndex + 0x90;
-                curBigBlockNo = cbBigBlockNo.SelectedIndex;
-                curBlockNo = cbBlockNo.SelectedIndex;
-                curPaletteNo = cbPaletteNo.SelectedIndex;
-                curActiveScreen = cbScreenNo.SelectedIndex;
-
-                int layoutAddr = Globals.getLayoutAddr(curActiveLayout);
-                int width = curWidth;
-                int height = curHeight;
-                byte[] layer = new byte[width * height];
-                if (Globals.gameType != GameType.TT)
+                if (Globals.gameType == GameType.CAD)
                 {
+                    var lr = Globals.levelData[curActiveLevel];
+                    int layoutAddr = lr.getActualLayoutAddr();
+                    int scrollAddr = lr.getActualScrollAddr();
+                    int dirAddr = lr.getActualDirsAddr();
+                    int width = lr.getWidth();
+                    int height = lr.getHeight();
+                    byte[] layer = new byte[width * height];
+                    byte[] scroll = new byte[width * height];
+                    byte[] dirs = new byte[height];
                     for (int i = 0; i < width * height; i++)
+                    {
                         layer[i] = Globals.romdata[layoutAddr + i];
+                        scroll[i] = Globals.romdata[scrollAddr + i];
+                    }
+                    for (int i = 0; i < height; i++)
+                    {
+                        dirs[i] = Globals.romdata[dirAddr + i];
+                    }
+                    curLevelLayerData = new LevelLayerData(width, height, layer, scroll, dirs);
                 }
                 else
                 {
-                    for (int i = 0; i < width * height; i++)
-                        layer[i] = (byte)(i+1);
+                    curWidth = Globals.getLevelWidth(curActiveLayout);
+                    curHeight = Globals.getLevelHeight(curActiveLayout);
+                    curActiveLayout = cbLayoutNo.SelectedIndex;
+                    curVideoNo = cbVideoNo.SelectedIndex + 0x90;
+                    curBigBlockNo = cbBigBlockNo.SelectedIndex;
+                    curBlockNo = cbBlockNo.SelectedIndex;
+                    curPaletteNo = cbPaletteNo.SelectedIndex;
+                    curActiveScreen = cbScreenNo.SelectedIndex;
+
+                    int layoutAddr = Globals.getLayoutAddr(curActiveLayout);
+                    int width = curWidth;
+                    int height = curHeight;
+                    byte[] layer = new byte[width * height];
+                    if (Globals.gameType != GameType.TT)
+                    {
+                        for (int i = 0; i < width * height; i++)
+                            layer[i] = Globals.romdata[layoutAddr + i];
+                    }
+                    else
+                    {
+                        for (int i = 0; i < width * height; i++)
+                            layer[i] = (byte)(i + 1);
+                    }
+                    curLevelLayerData = new LevelLayerData(width, height, layer, null, null);
                 }
-                curLevelLayerData = new LevelLayerData(width, height, layer, null, null);
             }
 
             if (resetScreenPos)
@@ -487,7 +494,7 @@ namespace CadEditor
             int TILE_SIZE_X = 32 * curScale;
             int TILE_SIZE_Y = 32 * curScale;
             int SIZE = WIDTH * HEIGHT;
-            byte[] indexes = screens[curActiveScreen];
+            byte[] indexes = screens[curLevelLayerData.layer[curActiveScreen]];
             var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
             for (int i = 0; i < SIZE; i++)
             {
@@ -495,9 +502,9 @@ namespace CadEditor
                 int bigBlockNo = Globals.getBigTileNoFromScreen(indexes, i);
                 Rectangle tileRect;
                 if (ConfigScript.getScreenVertical())
-                  tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X, (i % WIDTH + 1) * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
+                  tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X, (i % WIDTH) * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
                 else
-                  tileRect  = new Rectangle((i % WIDTH + 1) * TILE_SIZE_X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
+                  tileRect  = new Rectangle((i % WIDTH) * TILE_SIZE_X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
 
                 if ((visibleRect.Contains(tileRect)) || (visibleRect.IntersectsWith(tileRect)))
                   g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
@@ -610,7 +617,7 @@ namespace CadEditor
                         cbD1.Enabled = true;
                     }
                 }
-                catch (ArgumentOutOfRangeException ex)
+                catch (ArgumentOutOfRangeException)
                 {
                     cbCoordX.Enabled = false;
                     cbCoordY.Enabled = false;
