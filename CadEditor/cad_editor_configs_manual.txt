@@ -1,0 +1,100 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+Небольшая справка по конфигам для CadEditor.
+
+Настройки вводились в тот момент, когда они были нужны для какой-нибудь конкретной игры, остальное (то, что было общим для всех игр) закодировано в программе, но в случае необходимости также будет вынесено в конфиги.
+
+Редактор экранов сейчас поддерживает 2 основных режима работы - построение уровня так, как это делается в самой игре и из предварительно заготовленных картинок. Подробнее про оба способа ниже.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+Первый "честный" способ - редактору нужно указать, откуда нужно брать набор данных, из которых игра строит уровень. Почти все игры NES, Sega и Snes используют один и тот же метод построения уровня. Уровень описывается прямоугольными (чаще просто квадратными) блоками. Это блоки могут быть тайлами видеопамяти или сами состоять из блоков меньшего размера. Стандартная для NES иерархия блоков - раскладка уровней (хранит номера экранов) -> игровой экран -> макроблоки -> блоки -> тайлы видеопамяти. Отдельные части могут быть пропущены (например, во многих играх нету понятия раскладки и весь уровень состоит из одного большого экрана; или отсутствует понятие макроблока и экраны строятся сразу из блоков). В случае, если один из уровней иерархии пропущен, в настройках можно просто пропустить его. Вместе с блоком часто сохраняется дополнительная информация, такая как его цвет или проходимость для игрока.
+В редакторе таким способом описаны уровни из игр Chip & Dale, Darkwing Duck, Duck Tales, Duck Tales 2, Little Mermaid, Tale Spin, Tiny Toon, Three Eyes Story, Megaman 4.
+
+Первая группа опций в конфиге предназначена для описания массивов данных для блоков различных уровней (эти опции используются только для тех конфигов, которые строят уровень по первому способу, для конфигов с предварительно подготовленными картинками блоков они не нужны).
+
+1-й способ передать редактору данные о блоках, в том случае, когда они описаны в виде последовательных массивов данных, передать указатели на них:
+(строки кода, которые считывают данные из конфига - то что в кавычках, это имя функции из конфига).
+  palOffset = callFromScript(asm, data,"*.getPalOffset", new OffsetRec(0,1,0));
+  videoOffset = callFromScript(asm, data, "*.getVideoOffset", new OffsetRec(0, 1, 0));
+  videoObjOffset = callFromScript(asm, data, "*.getVideoObjOffset", new OffsetRec(0, 1, 0));
+  bigBlocksOffset = callFromScript(asm, data, "*.getBigBlocksOffset", new OffsetRec(0, 1, 0));
+  blocksOffset = callFromScript(asm, data, "*.getBlocksOffset", new OffsetRec(0, 1, 0));
+  screensOffset = callFromScript(asm, data, "*.getScreensOffset", new OffsetRec(0, 1, 0));
+  
+набор функций get*Offset позволяет передать структуру типа OffsetRec, которая описывает начальный адрес массива данных, количество массивов и их размер и количество (количество массивов соответствует количеству уровней в игре, если конфиг описывает только один уровень, то второй параметр будет всегда равен единице).
+
+2-й способ передачи данных редактору используются в том случае, когда данные хранятся нестандартно, например, в сжатом виде или разбросаны по разным частям памяти. В этом случае нужно написать в конфиге свои функции загрузки данных (на языке C#) и передать редактору указатели на эти функции.
+
+  getVideoPageAddrFunc = callFromScript <GetVideoPageAddrFunc>(asm, data, "*.getVideoPageAddrFunc");
+  getVideoChunkFunc = callFromScript<GetVideoChunkFunc>(asm, data, "*.getVideoChunkFunc");
+  setVideoChunkFunc = callFromScript<SetVideoChunkFunc>(asm, data, "*.setVideoChunkFunc");
+  getBigBlocksFunc = callFromScript<GetBigBlocksFunc>(asm, data, "*.getBigBlocksFunc");
+  setBigBlocksFunc = callFromScript<SetBigBlocksFunc>(asm, data, "*.setBigBlocksFunc");
+  getBlocksFunc = callFromScript<GetBlocksFunc>(asm,data,"*.getBlocksFunc");
+  setBlocksFunc = callFromScript<SetBlocksFunc>(asm, data, "*.setBlocksFunc");
+  getPalFunc = callFromScript<GetPalFunc>(asm, data, "*.getPalFunc");
+  setPalFunc = callFromScript<SetPalFunc>(asm, data, "*.setPalFunc");
+  renderToMainScreenFunc = callFromScript<RenderToMainScreenFunc>(asm, data, "*.getRenderToMainScreenFunc");
+  
+В качестве примера можно посмотреть конфиг от Duck Tales 2, там переписаны функции доступа к видеопамяти, она загружается из дампов, так как внутри рома видеопамять сжата алгоритмом RLE, и функции загрузки макроблоков (BigBlocks), потому что они составляются из 4х массивов, каждый из которых описывает отдельные части блоков. Вообще, данные о блоках в подавляющем большинстве игр описываются тремя способами - либо последовательным массивом данным, либо несколькими массивами одинакового размера, либо несколькими массивами, которые лежат в разных частях рома и доступ к ним происходит через указатели. Внутри редактора предусмотрена библиотека для загрузки всех трех типов (но пока нет документации к ней =\ ).
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+Второй способ создания конфига - заготовить картинки уже составленных блоков, и отрисовать уровень или игровой экран ими. Этот способ намного более простой и с помощью него подключены почти все игры. Опции, которые существуют для настройки редактора по такому случаю:
+
+  blocksPicturesFilename = callFromScript(asm, data, "getBlocksFilename", "");    //имя файла с набором картинок
+  blocksPicturesWidth = callFromScript(asm, data, "getPictureBlocksWidth", 32);   //размер в ширину одного блока (для прямоугольных блоков)
+  
+  screenWidth = callFromScript(asm, data, "*.getScreenWidth", 8);                 //размер одного экрана уровня в длину 
+  screenHeight = callFromScript(asm, data, "*.getScreenHeight", 8);               //и в ширину
+  screenVertical = callFromScript(asm, data, "*.getScreenVertical", false);       //описывают ли данные экран справа налево или сверху вниз
+  screenDataStride = callFromScript(asm, data, "*.getScreenDataStride", 1);       //шаг в байтах между данными экрана (для 16-битных игр может быть 1 или 2).
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Для редактора врагов существуют опции:
+
+  levelRecs = callFromScript(asm, data,"*.getLevelRecs", new List<LevelRec>());  //описание списка наборов врагов - стартовый адрес списка и количество записей. 
+  
+  getObjectsFunc = callFromScript<GetObjectsFunc>(asm, data, "*.getObjectsFunc");    //функция для загрузки объектов из рома.
+  setObjectsFunc = callFromScript<SetObjectsFunc>(asm, data, "*.setObjectsFunc");    //функция для сохранения объектов в ром.
+  sortObjectsFunc = callFromScript<SortObjectsFunc>(asm, data, "*.sortObjectsFunc"); //функция для сортировки объектов перед сохранением (стоит использовать, если можно однозначно расставить объекты алгоритмом, например, если движок требует расстановки объектов слева-направо или сверху-вниз, пример в конфиге для Jungle Book).
+  getLayoutFunc = callFromScript<GetLayoutFunc>(asm, data, "*.getLayoutFunc");       //функция для составления уровня из заготовленных экранов. необходимо передать длину, ширину уровня и массив с номерами экранов, которые составят прямоугольное описание уровня.
+  
+Дополнительно возможно указать минимальное и максимальное значение координат объектов на экране уровня (в системе координат редактора):
+
+  minObjCoordX = callFromScript(asm, data, "*.getMinObjCoordX", 0);
+  minObjCoordY = callFromScript(asm, data, "*.getMinObjCoordY", 0);
+  minObjType   = callFromScript(asm, data, "*.getMinObjType"  , 0);
+  maxObjCoordX = callFromScript(asm, data, "*.getMaxObjCoordX", -1); //по умолчанию ConfigScript.getScreenWidth() * 32
+  maxObjCoordY = callFromScript(asm, data, "*.getMaxObjCoordY", -1); //по умолчанию ConfigScript.getScreenHeight() * 32;
+  maxObjType   = callFromScript(asm, data, "*.getMaxObjType"  , -1); //по умолчанию 256
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+Оставшиеся опции:
+
+Позволяют отключить для пользователя те редакторы, которые не поддерживаются игрой, что он не мог поломать редактор:
+  isBigBlockEditorEnabled = callFromScript(asm, data, "*.isBigBlockEditorEnabled", true);
+  isBlockEditorEnabled = callFromScript(asm, data, "*.isBlockEditorEnabled", true);
+  isLayoutEditorEnabled = callFromScript(asm, data, "*.isLayoutEditorEnabled", true);
+  isEnemyEditorEnabled = callFromScript(asm, data, "*.isEnemyEditorEnabled", true);
+  isVideoEditorEnabled = callFromScript(asm, data, "*.isVideoEditorEnabled", true);
+  isMapEditorEnabled = callFromScript(asm, data, "*.isMapEditorEnabled", false); //specific for dwd
+  objTypesPicturesDir = callFromScript(asm, data, "*.getObjTypesPicturesDir", "obj_sprites");
+
+Позволяют ограничить число игровых макроблоков и блоков (на случай, если в игре они идут последовательно и их меньше 256, чтобы пользователь редактируя один уровень случайно не перерисовал блоки соседнего):
+  bigBlocksCount = callFromScript(asm, data, "*.getBigBlocksCount", 256);
+  blocksCount    = callFromScript(asm, data, "*.getBlocksCount"   , 256);
+  
+Подсказка по типам блоков, чтобы вместо цифр высвечивались строки с названием типов (например: провал/шипы/стена/фон):
+  blockTypeNames = callFromScript(asm, data, "getBlockTypeNames", defaultBlockTypeNames);
+
+Специфические для игр Chip & Dale опции настройки дверей переходов, для других игр не имеют смысла:
+  if (Globals.gameType == GameType.CAD)
+  {
+      boxesBackOffset = (OffsetRec)asm.InvokeInst(data, "*.getBoxesBackOffset");
+      LevelRecBaseOffset = (int)asm.InvokeInst(data, "*.getLevelRecBaseOffset");
+      LevelRecDirOffset = (int)asm.InvokeInst(data, "*.getLevelRecDirOffset");
+      LayoutPtrAdd = (int)asm.InvokeInst(data, "*.getLayoutPtrAdd");
+      ScrollPtrAdd = (int)asm.InvokeInst(data, "*.getScrollPtrAdd");
+      DirPtrAdd = (int)asm.InvokeInst(data, "*.getDirPtrAdd");
+      DoorRecBaseOffset = (int)asm.InvokeInst(data, "*.getDoorRecBaseOffset");
+  }
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
