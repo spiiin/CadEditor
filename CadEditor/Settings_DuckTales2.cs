@@ -23,7 +23,7 @@ public class Data:CapcomBase
   public override GetBigBlocksFunc     getBigBlocksFunc()     { return getBigBlocksDt2;}
   public override SetBigBlocksFunc     setBigBlocksFunc()     { return setBigBlocksDt2;}
   public GetObjectsFunc getObjectsFunc() { return getObjectsDt2; }
-  public SetObjectsFunc setObjectsFunc() { return setObjectsDt2; }
+  public SetObjectsFunc setObjectsFunc() { return null; }
   
   public IList<LevelRec> levelRecsDt2 = new List<LevelRec>() 
   {
@@ -142,10 +142,10 @@ public class Data:CapcomBase
     return objects;
   }
   
-  public bool setObjectsDt2(int levelNo, List<ObjectRec> objects)
+  /*public bool setObjectsDt2(int levelNo, List<ObjectRec> objects)
   {
     //todo : add save for duck tales 2
     return true;
-  }
+  }*/
   //--------------------------------------------------------------------------------------------
 }

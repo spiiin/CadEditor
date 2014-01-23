@@ -15,9 +15,10 @@ namespace CadEditor
     public delegate void   SetBigBlocksFunc(int bigTileIndex, byte[] bigBlockIndexes);
     public delegate byte[] GetPalFunc(int palId);
     public delegate void   SetPalFunc(int palId, byte[] pallete);
+    public delegate void   RenderToMainScreenFunc(Graphics g, int curScale);
     public delegate List<ObjectRec> GetObjectsFunc(int levelNo);
     public delegate bool            SetObjectsFunc(int levelNo, List<ObjectRec> objects); 
-    public delegate void   RenderToMainScreenFunc(Graphics g, int curScale);
+    public delegate void            SortObjectsFunc(int levelNo, List<ObjectRec> objects);
 
     public class ConfigScript
     {
@@ -47,9 +48,12 @@ namespace CadEditor
             screenDataStride = callFromScript(asm, data, "*.getScreenDataStride", 1);
             levelRecs = callFromScript(asm, data,"*.getLevelRecs", new List<LevelRec>());
 
-            maxObjCoordX = callFromScript(asm, data, "*.getMaxObjCoordX", -1);
-            maxObjCoordY = callFromScript(asm, data, "*.getMaxObjCoordY", -1);
-            maxObjType = callFromScript(asm, data, "*.getMaxObjType", -1);
+            minObjCoordX = callFromScript(asm, data, "*.getMinObjCoordX", 0);
+            minObjCoordY = callFromScript(asm, data, "*.getMinObjCoordY", 0);
+            minObjType   = callFromScript(asm, data, "*.getMinObjType"  , 0);
+            maxObjCoordX = callFromScript(asm, data, "*.getMaxObjCoordX", -1); //ConfigScript.getScreenWidth() * 32
+            maxObjCoordY = callFromScript(asm, data, "*.getMaxObjCoordY", -1); //ConfigScript.getScreenHeight() * 32;
+            maxObjType   = callFromScript(asm, data, "*.getMaxObjType"  , -1); //256
 
             getVideoPageAddrFunc = callFromScript <GetVideoPageAddrFunc>(asm, data, "*.getVideoPageAddrFunc");
             getVideoChunkFunc = callFromScript<GetVideoChunkFunc>(asm, data, "*.getVideoChunkFunc");
@@ -62,6 +66,7 @@ namespace CadEditor
             setPalFunc = callFromScript<SetPalFunc>(asm, data, "*.setPalFunc");
             getObjectsFunc = callFromScript<GetObjectsFunc>(asm, data, "*.getObjectsFunc");
             setObjectsFunc = callFromScript<SetObjectsFunc>(asm, data, "*.setObjectsFunc");
+            sortObjectsFunc = callFromScript<SortObjectsFunc>(asm, data, "*.sortObjectsFunc");
 
             renderToMainScreenFunc = callFromScript<RenderToMainScreenFunc>(asm, data, "*.getRenderToMainScreenFunc");
 
@@ -151,6 +156,11 @@ namespace CadEditor
         {
             setObjectsFunc(levelNo, objects);
         }
+        
+        public static void sortObjects(int levelNo, List<ObjectRec> objects)
+        {
+            sortObjectsFunc(levelNo, objects);
+        }
 
         public static void renderToMainScreen(Graphics g, int scale)
         {
@@ -196,6 +206,21 @@ namespace CadEditor
         public static int getMaxObjType()
         {
             return maxObjType;
+        }
+
+        public static int getMinObjCoordX()
+        {
+            return minObjCoordX;
+        }
+
+        public static int getMinObjCoordY()
+        {
+            return minObjCoordY;
+        }
+
+        public static int getMinObjType()
+        {
+            return minObjType;
         }
 
         public static string getObjTypesPicturesDir()
@@ -251,6 +276,9 @@ namespace CadEditor
         public static bool screenVertical;
         public static int screenDataStride;
 
+        public static int minObjCoordX;
+        public static int minObjCoordY;
+        public static int minObjType;
         public static int maxObjCoordX;
         public static int maxObjCoordY;
         public static int maxObjType;
@@ -268,6 +296,7 @@ namespace CadEditor
         public static SetPalFunc setPalFunc;
         public static GetObjectsFunc getObjectsFunc;
         public static SetObjectsFunc setObjectsFunc;
+        public static SortObjectsFunc sortObjectsFunc;
         public static RenderToMainScreenFunc renderToMainScreenFunc;
 
         public static bool isBigBlockEditorEnabled;

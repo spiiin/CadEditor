@@ -19,7 +19,7 @@ namespace CadEditor
             else
             {
                 for (int i = 0; i < count; i++)
-                    cb.Items.Add(String.Format("{0:X}", i));
+                    cb.Items.Add(String.Format("{0:X}", first+i));
             }
         }
 

@@ -184,9 +184,12 @@ namespace CadEditor
             int coordXCount = (ConfigScript.getMaxObjCoordX() != -1) ? ConfigScript.getMaxObjCoordX() : ConfigScript.getScreenWidth() * 32;
             int coordYCount = (ConfigScript.getMaxObjCoordY() != -1) ? ConfigScript.getMaxObjCoordY() : ConfigScript.getScreenHeight() * 32;
             int objType = (ConfigScript.getMaxObjType() != -1) ? ConfigScript.getMaxObjType() : 256;
-            Utils.setCbItemsCount(cbCoordX, coordXCount, 0, true);
-            Utils.setCbItemsCount(cbCoordY, coordYCount, 0, true);
-            Utils.setCbItemsCount(cbObjType, objType, 0, true);
+            int minCoordX = ConfigScript.getMinObjCoordX();
+            int minCoordY = ConfigScript.getMinObjCoordY();
+            int minObjType = ConfigScript.getMinObjType();
+            Utils.setCbItemsCount(cbCoordX, coordXCount - minCoordX, minCoordX, true);
+            Utils.setCbItemsCount(cbCoordY, coordYCount - minCoordY, minCoordY, true);
+            Utils.setCbItemsCount(cbObjType, objType - minObjType, minObjType, true);
 
             Utils.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
             Utils.setCbItemsCount(cbBigBlockNo, ConfigScript.bigBlocksOffset.recCount);
@@ -204,9 +207,11 @@ namespace CadEditor
             cbLevel.SelectedIndex = 0;
             updatePanelsVisibility();
 
-            readOnly = Globals.gameType == GameType.DT2;
+            readOnly = ConfigScript.setObjectsFunc == null;
             btSave.Enabled = !readOnly;
             lbReadOnly.Visible = readOnly;
+
+            btSort.Visible = ConfigScript.sortObjectsFunc != null;
 
             if (ConfigScript.getScreenVertical())
                 mapScreen.Size = new Size(ConfigScript.getScreenHeight() *64, (ConfigScript.getScreenWidth() + 2) * 64);
@@ -426,7 +431,12 @@ namespace CadEditor
 
             if (curTool == ToolType.Create)
             {
-                if (x > cbCoordX.Items.Count || y > cbCoordY.Items.Count)
+                int coordXCount = (ConfigScript.getMaxObjCoordX() != -1) ? ConfigScript.getMaxObjCoordX() : ConfigScript.getScreenWidth() * 32;
+                int coordYCount = (ConfigScript.getMaxObjCoordY() != -1) ? ConfigScript.getMaxObjCoordY() : ConfigScript.getScreenHeight() * 32;
+                int minCoordX = ConfigScript.getMinObjCoordX();
+                int minCoordY = ConfigScript.getMinObjCoordY();
+
+                if (x >= coordXCount || y >= coordYCount|| x < minCoordX || y < minCoordY)
                     return;
                 dirty = true;
                 var obj = new ObjectRec(type, sx, sy, x, y);
@@ -524,9 +534,12 @@ namespace CadEditor
                 return;
             int index = lvObjects.SelectedItems[0].Index;
             var obj = objects[index];
-            obj.x = cbCoordX.SelectedIndex;
-            obj.y = cbCoordY.SelectedIndex;
-            obj.type = cbObjType.SelectedIndex;
+            int minCoordX = ConfigScript.getMinObjCoordX();
+            int minCoordY = ConfigScript.getMinObjCoordY();
+            int minObjType = ConfigScript.getMinObjType();
+            obj.x = cbCoordX.SelectedIndex + minCoordX;
+            obj.y = cbCoordY.SelectedIndex + minCoordY;
+            obj.type = cbObjType.SelectedIndex + minObjType;
             if (obj.additionalData != null)
             {
                 var key = (string)cbD1.Tag;
@@ -583,13 +596,29 @@ namespace CadEditor
             if (selectedOne)
             {
                 int index = lvObjects.SelectedItems[0].Index;
-                Utils.setCbIndexWithoutUpdateLevel(cbCoordX, cbCoordX_SelectedIndexChanged, objects[index].x);
-                Utils.setCbIndexWithoutUpdateLevel(cbCoordY, cbCoordX_SelectedIndexChanged, objects[index].y);
-                Utils.setCbIndexWithoutUpdateLevel(cbObjType, cbCoordX_SelectedIndexChanged, objects[index].type);
-                if (objects[index].additionalData != null)
+                int minCoordX = ConfigScript.getMinObjCoordX();
+                int minCoordY = ConfigScript.getMinObjCoordY();
+                int minObjType = ConfigScript.getMinObjType();
+                try
                 {
-                    Utils.setCbIndexWithoutUpdateLevel(cbD1, cbCoordX_SelectedIndexChanged, objects[index].additionalData.Values.First());
-                    cbD1.Enabled = true;
+                    Utils.setCbIndexWithoutUpdateLevel(cbCoordX, cbCoordX_SelectedIndexChanged, objects[index].x - minCoordX);
+                    Utils.setCbIndexWithoutUpdateLevel(cbCoordY, cbCoordX_SelectedIndexChanged, objects[index].y - minCoordY);
+                    Utils.setCbIndexWithoutUpdateLevel(cbObjType, cbCoordX_SelectedIndexChanged, objects[index].type - minObjType);
+                    if (objects[index].additionalData != null)
+                    {
+                        Utils.setCbIndexWithoutUpdateLevel(cbD1, cbCoordX_SelectedIndexChanged, objects[index].additionalData.Values.First());
+                        cbD1.Enabled = true;
+                    }
+                }
+                catch (ArgumentOutOfRangeException ex)
+                {
+                    cbCoordX.Enabled = false;
+                    cbCoordY.Enabled = false;
+                    cbObjType.Enabled = false;
+                    if (objects[index].additionalData != null)
+                    {
+                        cbD1.Enabled = false;
+                    }
                 }
             }
             if (!selectedZero)
@@ -721,6 +750,12 @@ namespace CadEditor
         private void cbTool_SelectedIndexChanged(object sender, EventArgs e)
         {
             curTool = (ToolType)cbTool.SelectedIndex;
+        }
+
+        private void btSort_Click(object sender, EventArgs e)
+        {
+            ConfigScript.sortObjects(Globals.gameType == GameType.CAD ? curActiveLevel : curActiveLayout, objects);
+            fillObjectsListBox();
         }
     }
 

@@ -87,10 +87,11 @@
             this.pnView = new System.Windows.Forms.Panel();
             this.bigBlocks = new System.Windows.Forms.ImageList(this.components);
             this.pnObjectList = new System.Windows.Forms.Panel();
-            this.pnObjects = new System.Windows.Forms.Panel();
             this.pnAddData = new System.Windows.Forms.Panel();
             this.cbD1 = new System.Windows.Forms.ComboBox();
             this.lbD1 = new System.Windows.Forms.Label();
+            this.pnObjects = new System.Windows.Forms.Panel();
+            this.btSort = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -99,8 +100,8 @@
             this.pnTools.SuspendLayout();
             this.pnView.SuspendLayout();
             this.pnObjectList.SuspendLayout();
-            this.pnObjects.SuspendLayout();
             this.pnAddData.SuspendLayout();
+            this.pnObjects.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbLevel
@@ -247,6 +248,7 @@
             this.cbCoordY.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cbCoordY.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCoordY.DropDownWidth = 100;
             this.cbCoordY.Enabled = false;
             this.cbCoordY.FormattingEnabled = true;
             this.cbCoordY.Items.AddRange(new object[] {
@@ -263,6 +265,7 @@
             this.cbCoordX.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cbCoordX.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCoordX.DropDownWidth = 100;
             this.cbCoordX.Enabled = false;
             this.cbCoordX.FormattingEnabled = true;
             this.cbCoordX.Items.AddRange(new object[] {
@@ -749,6 +752,7 @@
             this.cbObjType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cbObjType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbObjType.DropDownWidth = 100;
             this.cbObjType.Enabled = false;
             this.cbObjType.FormattingEnabled = true;
             this.cbObjType.Items.AddRange(new object[] {
@@ -765,7 +769,7 @@
             this.lbObjectsCount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbObjectsCount.AutoSize = true;
-            this.lbObjectsCount.Location = new System.Drawing.Point(5, 483);
+            this.lbObjectsCount.Location = new System.Drawing.Point(6, 483);
             this.lbObjectsCount.Name = "lbObjectsCount";
             this.lbObjectsCount.Size = new System.Drawing.Size(96, 13);
             this.lbObjectsCount.TabIndex = 67;
@@ -793,6 +797,7 @@
             // 
             this.pnObjectList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnObjectList.Controls.Add(this.btSort);
             this.pnObjectList.Controls.Add(this.pnAddData);
             this.pnObjectList.Controls.Add(this.lbObjectsCount);
             this.pnObjectList.Controls.Add(this.btClearObjs);
@@ -816,6 +821,43 @@
             this.pnObjectList.Size = new System.Drawing.Size(232, 534);
             this.pnObjectList.TabIndex = 31;
             // 
+            // pnAddData
+            // 
+            this.pnAddData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnAddData.Controls.Add(this.cbD1);
+            this.pnAddData.Controls.Add(this.lbD1);
+            this.pnAddData.Location = new System.Drawing.Point(0, 402);
+            this.pnAddData.Name = "pnAddData";
+            this.pnAddData.Size = new System.Drawing.Size(229, 24);
+            this.pnAddData.TabIndex = 68;
+            // 
+            // cbD1
+            // 
+            this.cbD1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbD1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbD1.DropDownWidth = 100;
+            this.cbD1.Enabled = false;
+            this.cbD1.FormattingEnabled = true;
+            this.cbD1.Items.AddRange(new object[] {
+            "\\"});
+            this.cbD1.Location = new System.Drawing.Point(33, 3);
+            this.cbD1.Name = "cbD1";
+            this.cbD1.Size = new System.Drawing.Size(46, 21);
+            this.cbD1.TabIndex = 69;
+            // 
+            // lbD1
+            // 
+            this.lbD1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbD1.AutoSize = true;
+            this.lbD1.Location = new System.Drawing.Point(3, 6);
+            this.lbD1.Name = "lbD1";
+            this.lbD1.Size = new System.Drawing.Size(24, 13);
+            this.lbD1.TabIndex = 68;
+            this.lbD1.Text = "D1:";
+            // 
             // pnObjects
             // 
             this.pnObjects.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -836,41 +878,17 @@
             this.pnObjects.Size = new System.Drawing.Size(183, 540);
             this.pnObjects.TabIndex = 31;
             // 
-            // pnAddData
+            // btSort
             // 
-            this.pnAddData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.btSort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnAddData.Controls.Add(this.cbD1);
-            this.pnAddData.Controls.Add(this.lbD1);
-            this.pnAddData.Location = new System.Drawing.Point(0, 402);
-            this.pnAddData.Name = "pnAddData";
-            this.pnAddData.Size = new System.Drawing.Size(229, 24);
-            this.pnAddData.TabIndex = 68;
-            // 
-            // cbD1
-            // 
-            this.cbD1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbD1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbD1.Enabled = false;
-            this.cbD1.FormattingEnabled = true;
-            this.cbD1.Items.AddRange(new object[] {
-            "\\"});
-            this.cbD1.Location = new System.Drawing.Point(33, 3);
-            this.cbD1.Name = "cbD1";
-            this.cbD1.Size = new System.Drawing.Size(46, 21);
-            this.cbD1.TabIndex = 69;
-            // 
-            // lbD1
-            // 
-            this.lbD1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbD1.AutoSize = true;
-            this.lbD1.Location = new System.Drawing.Point(3, 6);
-            this.lbD1.Name = "lbD1";
-            this.lbD1.Size = new System.Drawing.Size(24, 13);
-            this.lbD1.TabIndex = 68;
-            this.lbD1.Text = "D1:";
+            this.btSort.Location = new System.Drawing.Point(132, 477);
+            this.btSort.Name = "btSort";
+            this.btSort.Size = new System.Drawing.Size(97, 24);
+            this.btSort.TabIndex = 69;
+            this.btSort.Text = "autosort objects";
+            this.btSort.UseVisualStyleBackColor = true;
+            this.btSort.Click += new System.EventHandler(this.btSort_Click);
             // 
             // EnemyEditor
             // 
@@ -900,10 +918,10 @@
             this.pnView.ResumeLayout(false);
             this.pnObjectList.ResumeLayout(false);
             this.pnObjectList.PerformLayout();
-            this.pnObjects.ResumeLayout(false);
-            this.pnObjects.PerformLayout();
             this.pnAddData.ResumeLayout(false);
             this.pnAddData.PerformLayout();
+            this.pnObjects.ResumeLayout(false);
+            this.pnObjects.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -972,5 +990,6 @@
         private System.Windows.Forms.Panel pnAddData;
         private System.Windows.Forms.ComboBox cbD1;
         private System.Windows.Forms.Label lbD1;
+        private System.Windows.Forms.Button btSort;
     }
 }
