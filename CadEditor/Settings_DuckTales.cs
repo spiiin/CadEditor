@@ -19,6 +19,8 @@ public class Data:CapcomBase
   public GetObjectsFunc getObjectsFunc() { return getObjectsDt; }
   public SetObjectsFunc setObjectsFunc() { return setObjectsDt; }
   
+  public string getObjTypesPicturesDir() { return "obj_sprites_dt_1"; }
+  
   public override GetVideoPageAddrFunc getVideoPageAddrFunc() { return getDuckTalesVideoAddress; }
   public override GetVideoChunkFunc    getVideoChunkFunc()    { return getDuckTalesVideoChunk;   }
   
