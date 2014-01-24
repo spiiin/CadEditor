@@ -18,11 +18,11 @@
   редактор экранов картинками:
     Jungle Book                                     (1-9 уровни + редактор объектов 1 уровня)
     Chip & Dale 2                                   (1-1 уровни + редактор объектов 1 уровня)
+    Flintstones: The Rescue of Dino & Hoppy         (1 уровень  + редактор объектов 1 уровня)
     Ninja Cat (Cattou Ninden Teyandee)              (все уровни)
     Battletoads & Double Dragon - The Ultimate Team (5 уровень)
     Battletoads                                     (1 уровень)
     Tom & Jerry                                     (1 уровень)
-    Flintstones: The Rescue of Dino & Hoppy         (1 уровень)
     Flintstones: The Surprise at Dinosaur Peak!     (1 уровень)
     New Ghostbusters 2                              (1 уровень)
     Power Blade 2                                   (1 уровень)
@@ -298,7 +298,7 @@ v2.2
 
 v2.3
 - Обобщенные редактор объектов (новые опции для описания в конфигах).
-- Редакторы объектов для Jungle Book (уровень 1) и Chip & Dale 2 (уровень 1-1).
+- Редакторы объектов для Jungle Book (уровень 1), Chip & Dale 2 (уровень 1-1) и Flintstones : Rescue of Dino & Hoppy (1 уровень).
 - Конфиги для 1 уровня игр Sega QuackShot.
 
 -------------------------------------------------------------------------------
