@@ -37,15 +37,26 @@ namespace CadEditor
                 var str = String.Format("Tileset{0}", i);
                 cbTileset.Items.Add(str);
             }
-            cbTileset.SelectedIndex = 0;
             cbLevel.SelectedIndex = 0;
             cbDoor.SelectedIndex = 0;
-            cbVideoNo.SelectedIndex = 0;
-            cbTileset.SelectedIndex = 0;
-            cbSmallBlock.SelectedIndex = 0;
-            cbPaletteNo.SelectedIndex = 0;
-            cbPart.SelectedIndex = 0;
-            cbViewType.SelectedIndex = 0;
+            if (Globals.gameType != GameType.CAD)
+            {
+                cbTileset.SelectedIndex = formMain.CurActiveBigBlockNo;
+                cbVideoNo.SelectedIndex = formMain.CurActiveVideoNo - 0x90;
+                cbSmallBlock.SelectedIndex = formMain.CurActiveBlockNo;
+                cbPaletteNo.SelectedIndex = formMain.CurActivePalleteNo;
+                cbPart.SelectedIndex = 0;
+                cbViewType.SelectedIndex = (int)formMain.CurActiveViewType;
+            }
+            else
+            {
+                cbTileset.SelectedIndex = 0;
+                cbVideoNo.SelectedIndex = 0;
+                cbSmallBlock.SelectedIndex = 0;
+                cbPaletteNo.SelectedIndex = 0;
+                cbPart.SelectedIndex = 0;
+                cbViewType.SelectedIndex = 0;
+            }
 
             blocksPanel.Controls.Clear();
             blocksPanel.SuspendLayout();
@@ -66,6 +77,9 @@ namespace CadEditor
             btSave.Enabled = !readOnly;
             lbReadOnly.Visible = readOnly;
             btImport.Visible = !readOnly;
+
+            pnGeneric.Visible = Globals.gameType != GameType.CAD;
+            pnEditCad.Visible = Globals.gameType == GameType.CAD;
         }
 
         private void prepareAxisLabels()
@@ -198,6 +212,8 @@ namespace CadEditor
         private bool dirty;
         private bool readOnly;
 
+        private FormMain formMain;
+
         private void cbLevelPair_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbLevel.SelectedIndex == -1 || cbTileset.SelectedIndex == -1 || cbDoor.SelectedIndex == -1 ||
@@ -237,9 +253,6 @@ namespace CadEditor
             curVideo = cbVideoNo.SelectedIndex + 0x90;
             curPallete = cbPaletteNo.SelectedIndex;
             curPart = cbPart.SelectedIndex;
-
-            pnGeneric.Visible = Globals.gameType != GameType.CAD;
-            pnEditCad.Visible = Globals.gameType == GameType.CAD;
             Utils.setCbItemsCount(cbPart, Math.Max(ConfigScript.getBigBlocksCount() / 256, 1));
             Utils.setCbIndexWithoutUpdateLevel(cbPart, cbLevelPair_SelectedIndexChanged, curPart);
             reloadLevel();
@@ -339,6 +352,11 @@ namespace CadEditor
             bigBlockIndexes = data;
             reloadLevel(false);
             dirty = true;
+        }
+
+        public void setFormMain(FormMain f)
+        {
+            formMain = f;
         }
     }
 }

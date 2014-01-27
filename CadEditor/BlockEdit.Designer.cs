@@ -544,9 +544,7 @@
             this.Controls.Add(this.btFlipHorizontal);
             this.Controls.Add(this.btClear);
             this.Controls.Add(this.lbReadOnly);
-            this.Controls.Add(this.pnGeneric);
             this.Controls.Add(this.pnBacks);
-            this.Controls.Add(this.pnCad);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
@@ -561,6 +559,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.mapScreen);
+            this.Controls.Add(this.pnGeneric);
+            this.Controls.Add(this.pnCad);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;

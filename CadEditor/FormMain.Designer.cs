@@ -239,8 +239,8 @@
             this.pnGeneric.Controls.Add(this.cbBlockNo);
             this.pnGeneric.Controls.Add(this.label5);
             this.pnGeneric.Controls.Add(this.cbBigBlockNo);
-            this.pnGeneric.Controls.Add(this.label1);
             this.pnGeneric.Controls.Add(this.cbVideoNo);
+            this.pnGeneric.Controls.Add(this.label1);
             this.pnGeneric.Location = new System.Drawing.Point(337, 178);
             this.pnGeneric.Name = "pnGeneric";
             this.pnGeneric.Size = new System.Drawing.Size(72, 162);
@@ -632,7 +632,6 @@
             this.Controls.Add(this.lbCoords);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.cbScale);
-            this.Controls.Add(this.pnCad);
             this.Controls.Add(this.pnView);
             this.Controls.Add(this.btHex);
             this.Controls.Add(this.cbShowAxis);
@@ -650,6 +649,7 @@
             this.Controls.Add(this.btSave);
             this.Controls.Add(this.activeBlock);
             this.Controls.Add(this.blocksPanel);
+            this.Controls.Add(this.pnCad);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormMain";

@@ -37,6 +37,8 @@ namespace CadEditor
         private bool dirty = false;
         private bool readOnly = false;
 
+        private FormMain formMain;
+
         const int MAX_SIZE = 64;
         const int OBJECTS_COUNT = 256;
 
@@ -204,11 +206,14 @@ namespace CadEditor
             Utils.setCbItemsCount(cbBigBlockNo, ConfigScript.bigBlocksOffset.recCount);
             Utils.setCbItemsCount(cbBlockNo, ConfigScript.blocksOffset.recCount);
             Utils.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
-            Utils.setCbIndexWithoutUpdateLevel(cbVideoNo, cbLevel_SelectedIndexChanged);
-            Utils.setCbIndexWithoutUpdateLevel(cbBlockNo, cbLevel_SelectedIndexChanged);
-            Utils.setCbIndexWithoutUpdateLevel(cbBigBlockNo, cbLevel_SelectedIndexChanged);
-            Utils.setCbIndexWithoutUpdateLevel(cbPaletteNo, cbLevel_SelectedIndexChanged);
-            Utils.setCbIndexWithoutUpdateLevel(cbTool, cbTool_SelectedIndexChanged);
+            if (Globals.gameType != GameType.CAD)
+            {
+                Utils.setCbIndexWithoutUpdateLevel(cbVideoNo, cbLevel_SelectedIndexChanged, formMain.CurActiveVideoNo - 0x90);
+                Utils.setCbIndexWithoutUpdateLevel(cbBlockNo, cbLevel_SelectedIndexChanged, formMain.CurActiveBlockNo);
+                Utils.setCbIndexWithoutUpdateLevel(cbBigBlockNo, cbLevel_SelectedIndexChanged, formMain.CurActiveBigBlockNo);
+                Utils.setCbIndexWithoutUpdateLevel(cbPaletteNo, cbLevel_SelectedIndexChanged, formMain.CurActivePalleteNo);
+                Utils.setCbIndexWithoutUpdateLevel(cbTool, cbTool_SelectedIndexChanged);
+            }
             cbLayoutNo.Items.Clear();
             foreach (var lr in ConfigScript.levelRecs)
                 cbLayoutNo.Items.Add(String.Format("0x{0:X} ({1}x{2})", lr.layoutAddr, lr.width, lr.height));
@@ -828,7 +833,14 @@ namespace CadEditor
             }
             mapScreen.Invalidate();
         }
+
+        public void setFormMain(FormMain f)
+        {
+            formMain = f;
+        }
     }
+
+
 
     enum ToolType
     {

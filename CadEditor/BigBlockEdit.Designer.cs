@@ -155,7 +155,7 @@
             this.pnEditCad.Controls.Add(this.cbDoor);
             this.pnEditCad.Controls.Add(this.label2);
             this.pnEditCad.Controls.Add(this.cbLevel);
-            this.pnEditCad.Location = new System.Drawing.Point(12, 71);
+            this.pnEditCad.Location = new System.Drawing.Point(15, 71);
             this.pnEditCad.Name = "pnEditCad";
             this.pnEditCad.Size = new System.Drawing.Size(251, 81);
             this.pnEditCad.TabIndex = 51;
@@ -246,7 +246,7 @@
             this.pnGeneric.Controls.Add(this.cbPaletteNo);
             this.pnGeneric.Controls.Add(this.label7);
             this.pnGeneric.Controls.Add(this.cbVideoNo);
-            this.pnGeneric.Location = new System.Drawing.Point(12, 81);
+            this.pnGeneric.Location = new System.Drawing.Point(15, 81);
             this.pnGeneric.Name = "pnGeneric";
             this.pnGeneric.Size = new System.Drawing.Size(251, 117);
             this.pnGeneric.TabIndex = 54;
@@ -326,7 +326,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(2, 3);
+            this.label7.Location = new System.Drawing.Point(8, 3);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(64, 13);
             this.label7.TabIndex = 42;
@@ -442,12 +442,12 @@
             this.Controls.Add(this.btExport);
             this.Controls.Add(this.btClear);
             this.Controls.Add(this.lbReadOnly);
+            this.Controls.Add(this.pnGeneric);
             this.Controls.Add(this.cbViewType);
             this.Controls.Add(this.label6);
+            this.Controls.Add(this.pnEditCad);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cbPart);
-            this.Controls.Add(this.pnGeneric);
-            this.Controls.Add(this.pnEditCad);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.pbActive);
             this.Controls.Add(this.btSave);

@@ -34,10 +34,10 @@ namespace CadEditor
             }
 
             subeditorsDict = new Dictionary<Button, Func<Form>> { 
-                 { btEdit,           ()=>{ return new BigBlockEdit();} },
-                 { btEditObjs,       ()=>{ return new BlockEdit();}    },
+                 { btEdit,           ()=>{ var f = new BigBlockEdit(); f.setFormMain(this); return f;} },
+                 { btEditObjs,       ()=>{ var f = new BlockEdit();    f.setFormMain(this); return f;} },
                  { btEditLayout,     ()=>{ return new EditLayout();}   },
-                 { btEditEnemy,      ()=>{ return new EnemyEditor();}  },
+                 { btEditEnemy,      ()=>{ var f = new EnemyEditor();  f.setFormMain(this); return f;}  },
                  { btVideo,          ()=>{ return new EditVideo();}    },
                  { btEditMap,        ()=>{ return new EditMap();}    },
             };
@@ -631,6 +631,41 @@ namespace CadEditor
         private void mapScreen_MouseLeave(object sender, EventArgs e)
         {
             lbCoords.Text = "Coords:()";
+        }
+
+        public int CurActiveLevelCad
+        {
+           get { return curActiveLevel; }
+        }
+
+        public int CurActiveDoorCad
+        {
+             get { return curActiveDoor; }
+        }
+
+        public int CurActiveVideoNo
+        {
+            get { return curActiveVideoNo; }
+        }
+
+        public int CurActiveBlockNo
+        {
+            get { return curActiveBlockNo; }
+        }
+
+        public int CurActiveBigBlockNo
+        {
+            get { return curActiveBigBlockNo; }
+        }
+
+        public int CurActivePalleteNo
+        {
+            get { return curActivePalleteNo; }
+        }
+
+        public MapViewType CurActiveViewType
+        {
+            get { return curViewType; } 
         }
     }
 }

@@ -25,15 +25,20 @@ namespace CadEditor
             videoSprites[3] = videoSprites4;
             dirty = false;
             preparePanel();
-
             Utils.setCbItemsCount(cbVideo, ConfigScript.videoObjOffset.recCount);
             Utils.setCbItemsCount(cbTileset, ConfigScript.blocksOffset.recCount);
             Utils.setCbItemsCount(cbPalette, ConfigScript.palOffset.recCount);
             Utils.setCbIndexWithoutUpdateLevel(cbLevelSelect, cbLevelSelect_SelectedIndexChanged);
-            Utils.setCbIndexWithoutUpdateLevel(cbTileset, cbLevelSelect_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbDoor, VisibleOnlyChange_SelectedIndexChanged);
-            Utils.setCbIndexWithoutUpdateLevel(cbVideo, VisibleOnlyChange_SelectedIndexChanged);
-            Utils.setCbIndexWithoutUpdateLevel(cbPalette, VisibleOnlyChange_SelectedIndexChanged);
+            if (Globals.gameType != GameType.CAD)
+            {
+                Utils.setCbIndexWithoutUpdateLevel(cbTileset, cbLevelSelect_SelectedIndexChanged, formMain.CurActiveBigBlockNo);
+                Utils.setCbIndexWithoutUpdateLevel(cbVideo, VisibleOnlyChange_SelectedIndexChanged, formMain.CurActiveVideoNo - 0x90);
+                Utils.setCbIndexWithoutUpdateLevel(cbPalette, VisibleOnlyChange_SelectedIndexChanged, formMain.CurActivePalleteNo);
+                curActiveBigBlock = formMain.CurActiveBigBlockNo;
+                curActiveVideo = formMain.CurActiveVideoNo;
+                curActivePal = formMain.CurActivePalleteNo;
+            };
             Utils.setCbIndexWithoutUpdateLevel(cbSubpalette, cbSubpalette_SelectedIndexChanged);
 
             updatePanelsVisible();
@@ -161,6 +166,8 @@ namespace CadEditor
         private bool showAxis;
 
         private string[] subPalItems = { "1", "2", "3", "4" };
+
+        private FormMain formMain;
 
         private void cbSubpalette_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -588,6 +595,11 @@ namespace CadEditor
         {
             showAxis = cbShowAxis.Checked;
             reloadLevel(false);
+        }
+
+        public void setFormMain(FormMain f)
+        {
+            formMain = f;
         }
     }
 }
