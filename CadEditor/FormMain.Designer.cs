@@ -35,7 +35,7 @@
             this.mapScreen = new System.Windows.Forms.PictureBox();
             this.activeBlock = new System.Windows.Forms.PictureBox();
             this.btSave = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lbActiveBlock = new System.Windows.Forms.Label();
             this.smallBlocks = new System.Windows.Forms.ImageList(this.components);
             this.btEdit = new System.Windows.Forms.Button();
             this.btEditObjs = new System.Windows.Forms.Button();
@@ -132,14 +132,14 @@
             this.btSave.UseVisualStyleBackColor = true;
             this.btSave.Click += new System.EventHandler(this.btSave_Click);
             // 
-            // label3
+            // lbActiveBlock
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(339, 12);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(40, 13);
-            this.label3.TabIndex = 16;
-            this.label3.Text = "Active:";
+            this.lbActiveBlock.AutoSize = true;
+            this.lbActiveBlock.Location = new System.Drawing.Point(339, 12);
+            this.lbActiveBlock.Name = "lbActiveBlock";
+            this.lbActiveBlock.Size = new System.Drawing.Size(49, 13);
+            this.lbActiveBlock.TabIndex = 16;
+            this.lbActiveBlock.Text = "Active: ()";
             // 
             // smallBlocks
             // 
@@ -645,7 +645,7 @@
             this.Controls.Add(this.cbShowNeighborns);
             this.Controls.Add(this.cbScreenNo);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lbActiveBlock);
             this.Controls.Add(this.btSave);
             this.Controls.Add(this.activeBlock);
             this.Controls.Add(this.blocksPanel);
@@ -675,7 +675,7 @@
         private System.Windows.Forms.PictureBox mapScreen;
         private System.Windows.Forms.PictureBox activeBlock;
         private System.Windows.Forms.Button btSave;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lbActiveBlock;
         private System.Windows.Forms.ImageList bigBlocks;
         private System.Windows.Forms.ImageList smallBlocks;
         private System.Windows.Forms.Button btEdit;

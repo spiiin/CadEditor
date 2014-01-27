@@ -249,6 +249,7 @@ namespace CadEditor
             int index = ((Button)button).ImageIndex;
             activeBlock.Image = bigBlocks.Images[index];
             curActiveBlock = index;
+            lbActiveBlock.Text = String.Format("Label: ({0:X})", index);
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -356,6 +357,17 @@ namespace CadEditor
             {
                 dx = e.X / (blockWidth * curScale) - 1;
                 dy = e.Y / (blockHeight * curScale);
+            }
+
+            if (e.Button == MouseButtons.Right)
+            {
+                if (dx == WIDTH || dx == -1)
+                    return;
+                int index = dy * WIDTH + dx;
+                curActiveBlock = Globals.getBigTileNoFromScreen(screens[curActiveScreen], index);
+                activeBlock.Image = bigBlocks.Images[curActiveBlock];
+                lbActiveBlock.Text = String.Format("Label: {0:X}", curActiveBlock);
+                return;
             }
 
             if (dx == WIDTH)
