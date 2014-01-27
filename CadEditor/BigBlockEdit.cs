@@ -136,7 +136,7 @@ namespace CadEditor
 
         private void setBigBlocksIndexes()
         {
-            bigBlockIndexes = ConfigScript.getBigBlocks(curSmallBlockNo);
+            bigBlockIndexes = ConfigScript.getBigBlocks(Globals.gameType == GameType.CAD ? curTileset : curSmallBlockNo);
         }
 
         const int SMALL_BLOCKS_COUNT = 256;
