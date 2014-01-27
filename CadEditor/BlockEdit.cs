@@ -32,10 +32,10 @@ namespace CadEditor
             Utils.setCbIndexWithoutUpdateLevel(cbDoor, VisibleOnlyChange_SelectedIndexChanged);
             if (Globals.gameType != GameType.CAD)
             {
-                Utils.setCbIndexWithoutUpdateLevel(cbTileset, cbLevelSelect_SelectedIndexChanged, formMain.CurActiveBigBlockNo);
+                Utils.setCbIndexWithoutUpdateLevel(cbTileset, cbLevelSelect_SelectedIndexChanged, formMain.CurActiveBigBlockNo);  //small blocks no?
                 Utils.setCbIndexWithoutUpdateLevel(cbVideo, VisibleOnlyChange_SelectedIndexChanged, formMain.CurActiveVideoNo - 0x90);
                 Utils.setCbIndexWithoutUpdateLevel(cbPalette, VisibleOnlyChange_SelectedIndexChanged, formMain.CurActivePalleteNo);
-                curActiveBigBlock = formMain.CurActiveBigBlockNo;
+                curActiveBigBlock = formMain.CurActiveBigBlockNo; //small blocks no?
                 curActiveVideo = formMain.CurActiveVideoNo;
                 curActivePal = formMain.CurActivePalleteNo;
             };
