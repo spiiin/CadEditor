@@ -40,6 +40,8 @@ namespace CadEditor
         const int MAX_SIZE = 64;
         const int OBJECTS_COUNT = 256;
 
+        bool objectDragged = false;
+
         //render back
         private byte[][] screens = null;
 
@@ -425,67 +427,6 @@ namespace CadEditor
             return new Point(curActiveScreen % width, curActiveScreen / width);
         }
 
-        private void mapScreen_MouseClick(object sender, MouseEventArgs e)
-        {
-            int dx = e.X / 64;
-            int dy = e.Y / 64;
-            //int index = dy * 8 + dx;
-            Point coord = screenNoToCoord();
-            int type = curActiveBlock;
-            int sx = coord.X, sy = coord.Y;
-            int x = e.X / 2;
-            int y = e.Y / 2;
-
-            if (curTool == ToolType.Create)
-            {
-                int coordXCount = (ConfigScript.getMaxObjCoordX() != -1) ? ConfigScript.getMaxObjCoordX() : ConfigScript.getScreenWidth() * 32;
-                int coordYCount = (ConfigScript.getMaxObjCoordY() != -1) ? ConfigScript.getMaxObjCoordY() : ConfigScript.getScreenHeight() * 32;
-                int minCoordX = ConfigScript.getMinObjCoordX();
-                int minCoordY = ConfigScript.getMinObjCoordY();
-
-                if (x >= coordXCount || y >= coordYCount|| x < minCoordX || y < minCoordY)
-                    return;
-                dirty = true;
-                var obj = new ObjectRec(type, sx, sy, x, y);
-
-                int insertPos = lvObjects.SelectedItems.Count > 0 ? lvObjects.SelectedIndices[0] + 1 : lvObjects.Items.Count;
-                objects.Insert(insertPos, obj);
-
-                lvObjects.Items.Insert(insertPos, new ListViewItem(makeStringForObject(obj), obj.type));
-                lbObjectsCount.Text = String.Format("Objects count: {0}/{1}", lvObjects.Items.Count, getLevelRecForGameType().objCount);
-            }
-            else if (curTool == ToolType.Select)
-            {
-                if (Control.ModifierKeys != Keys.Shift && Control.ModifierKeys != Keys.Control)
-                    lvObjects.SelectedItems.Clear();
-                for (int i = 0; i < objects.Count; i++)
-                {
-                    var obj = objects[i];
-                    if ((obj.sx == sx) && (obj.sy == sy) && (Math.Abs(obj.x - x) < 8) && (Math.Abs(obj.y - y) < 8))
-                        lvObjects.Items[i].Selected = !lvObjects.Items[i].Selected;
-                }
-                lvObjects.Select();
-            }
-            else if (curTool == ToolType.Delete)
-            {
-                for (int i = objects.Count - 1; i >= 0; i--)
-                {
-                    var obj = objects[i];
-                    if ((obj.sx == sx) && (obj.sy == sy) && (Math.Abs(obj.x - x) < 8) && (Math.Abs(obj.y - y) < 8))
-                    {
-                        if (MessageBox.Show("Do you really want to delete object?", "Confirm", MessageBoxButtons.YesNo) != DialogResult.Yes)
-                            return;
-                        dirty = true;
-                        objects.RemoveAt(i);
-                        fillObjectsListBox();
-                        break;
-                    }
-                }
-                lvObjects.Select();
-            }
-            mapScreen.Invalidate();
-        }
-
         private void paintBack(Graphics g)
         {
             int WIDTH = ConfigScript.getScreenWidth();
@@ -763,6 +704,129 @@ namespace CadEditor
         {
             ConfigScript.sortObjects(Globals.gameType == GameType.CAD ? curActiveLevel : curActiveLayout, objects);
             fillObjectsListBox();
+        }
+
+        private void mapScreen_MouseDown(object sender, MouseEventArgs e)
+        {
+            int dx = e.X / 64;
+            int dy = e.Y / 64;
+            //int index = dy * 8 + dx;
+            Point coord = screenNoToCoord();
+            int type = curActiveBlock;
+            int sx = coord.X, sy = coord.Y;
+            int x = e.X / 2;
+            int y = e.Y / 2;
+            if (curTool == ToolType.Select)
+            {
+                if (Control.ModifierKeys != Keys.Shift && Control.ModifierKeys != Keys.Control)
+                    lvObjects.SelectedItems.Clear();
+                for (int i = 0; i < objects.Count; i++)
+                {
+                    var obj = objects[i];
+                    if ((obj.sx == sx) && (obj.sy == sy) && (Math.Abs(obj.x - x) < 8) && (Math.Abs(obj.y - y) < 8))
+                        lvObjects.Items[i].Selected = !lvObjects.Items[i].Selected;
+                }
+                lvObjects.Select();
+            }
+            objectDragged = true;
+        }
+
+        private void mapScreen_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!objectDragged)
+                return;
+            Point coord = screenNoToCoord();
+           // int sx = coord.X, sy = coord.Y;
+            int x = e.X / 2;
+            int y = e.Y / 2;
+
+            int coordXCount = (ConfigScript.getMaxObjCoordX() != -1) ? ConfigScript.getMaxObjCoordX() : ConfigScript.getScreenWidth() * 32;
+            int coordYCount = (ConfigScript.getMaxObjCoordY() != -1) ? ConfigScript.getMaxObjCoordY() : ConfigScript.getScreenHeight() * 32;
+            int minCoordX = ConfigScript.getMinObjCoordX();
+            int minCoordY = ConfigScript.getMinObjCoordY();
+            if (x >= coordXCount || y >= coordYCount || x < minCoordX || y < minCoordY)
+                return;
+
+            if (curTool == ToolType.Select)
+            {
+                for (int i = 0; i < lvObjects.SelectedIndices.Count; i++)
+                {
+                    var obj = objects[lvObjects.SelectedIndices[i]];
+                    obj.x = x;
+                    obj.y = y;
+                    objects[lvObjects.SelectedIndices[i]] = obj;
+                }
+            }
+            dirty = true;
+            mapScreen.Invalidate();
+        }
+
+        private void mapScreen_MouseUp(object sender, MouseEventArgs e)
+        {
+            dragEnd();
+        }
+
+        private void mapScreen_MouseLeave(object sender, EventArgs e)
+        {
+            dragEnd();
+        }
+
+        private void dragEnd()
+        {
+            if (curTool == ToolType.Select)
+            {
+                objectDragged = false;
+                lvObjects_SelectedIndexChanged(lvObjects, new EventArgs());
+            }
+        }
+
+        private void mapScreen_MouseClick(object sender, MouseEventArgs e)
+        {
+            int dx = e.X / 64;
+            int dy = e.Y / 64;
+            //int index = dy * 8 + dx;
+            Point coord = screenNoToCoord();
+            int type = curActiveBlock;
+            int sx = coord.X, sy = coord.Y;
+            int x = e.X / 2;
+            int y = e.Y / 2;
+
+            if (curTool == ToolType.Create)
+            {
+                int coordXCount = (ConfigScript.getMaxObjCoordX() != -1) ? ConfigScript.getMaxObjCoordX() : ConfigScript.getScreenWidth() * 32;
+                int coordYCount = (ConfigScript.getMaxObjCoordY() != -1) ? ConfigScript.getMaxObjCoordY() : ConfigScript.getScreenHeight() * 32;
+                int minCoordX = ConfigScript.getMinObjCoordX();
+                int minCoordY = ConfigScript.getMinObjCoordY();
+
+                if (x >= coordXCount || y >= coordYCount || x < minCoordX || y < minCoordY)
+                    return;
+                dirty = true;
+                var obj = new ObjectRec(type, sx, sy, x, y);
+
+                int insertPos = lvObjects.SelectedItems.Count > 0 ? lvObjects.SelectedIndices[0] + 1 : lvObjects.Items.Count;
+                objects.Insert(insertPos, obj);
+
+                lvObjects.Items.Insert(insertPos, new ListViewItem(makeStringForObject(obj), obj.type));
+                lbObjectsCount.Text = String.Format("Objects count: {0}/{1}", lvObjects.Items.Count, getLevelRecForGameType().objCount);
+            }
+            else if (curTool == ToolType.Delete)
+            {
+                for (int i = objects.Count - 1; i >= 0; i--)
+                {
+                    var obj = objects[i];
+                    if ((obj.sx == sx) && (obj.sy == sy) && (Math.Abs(obj.x - x) < 8) && (Math.Abs(obj.y - y) < 8))
+                    {
+                        if (MessageBox.Show("Do you really want to delete object?", "Confirm", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                            return;
+                        dirty = true;
+                        objects.RemoveAt(i);
+                        fillObjectsListBox();
+                        break;
+                    }
+                }
+                lvObjects.Select();
+            }
+            mapScreen.Invalidate();
         }
     }
 

@@ -87,11 +87,11 @@
             this.pnView = new System.Windows.Forms.Panel();
             this.bigBlocks = new System.Windows.Forms.ImageList(this.components);
             this.pnObjectList = new System.Windows.Forms.Panel();
+            this.btSort = new System.Windows.Forms.Button();
             this.pnAddData = new System.Windows.Forms.Panel();
             this.cbD1 = new System.Windows.Forms.ComboBox();
             this.lbD1 = new System.Windows.Forms.Label();
             this.pnObjects = new System.Windows.Forms.Panel();
-            this.btSort = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -144,6 +144,10 @@
             this.mapScreen.TabStop = false;
             this.mapScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.mapScreen_Paint);
             this.mapScreen.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseClick);
+            this.mapScreen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseDown);
+            this.mapScreen.MouseLeave += new System.EventHandler(this.mapScreen_MouseLeave);
+            this.mapScreen.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseMove);
+            this.mapScreen.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseUp);
             // 
             // btLeft
             // 
@@ -821,6 +825,18 @@
             this.pnObjectList.Size = new System.Drawing.Size(232, 534);
             this.pnObjectList.TabIndex = 31;
             // 
+            // btSort
+            // 
+            this.btSort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btSort.Location = new System.Drawing.Point(132, 477);
+            this.btSort.Name = "btSort";
+            this.btSort.Size = new System.Drawing.Size(97, 24);
+            this.btSort.TabIndex = 69;
+            this.btSort.Text = "autosort objects";
+            this.btSort.UseVisualStyleBackColor = true;
+            this.btSort.Click += new System.EventHandler(this.btSort_Click);
+            // 
             // pnAddData
             // 
             this.pnAddData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -877,18 +893,6 @@
             this.pnObjects.Name = "pnObjects";
             this.pnObjects.Size = new System.Drawing.Size(183, 540);
             this.pnObjects.TabIndex = 31;
-            // 
-            // btSort
-            // 
-            this.btSort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSort.Location = new System.Drawing.Point(132, 477);
-            this.btSort.Name = "btSort";
-            this.btSort.Size = new System.Drawing.Size(97, 24);
-            this.btSort.TabIndex = 69;
-            this.btSort.Text = "autosort objects";
-            this.btSort.UseVisualStyleBackColor = true;
-            this.btSort.Click += new System.EventHandler(this.btSort_Click);
             // 
             // EnemyEditor
             // 
