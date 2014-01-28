@@ -9,7 +9,7 @@ public class Data
   public OffsetRec getScreensOffset()                       { return new OffsetRec(90441 - 96   , 1 , 17*96);   }
   public int getScreenWidth()                               { return 96; }
   public int getScreenHeight()                              { return 17; }
-  public string getBlocksFilename()                         { return "settings_jungle_book\jungle_book_1.png"; }
+  public string getBlocksFilename()                         { return "settings_jungle_book/jungle_book_1.png"; }
   //public RenderToMainScreenFunc getRenderToMainScreenFunc() { return renderObjects; }
   
   public bool isBigBlockEditorEnabled() { return false; }
