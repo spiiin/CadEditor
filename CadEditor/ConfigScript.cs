@@ -31,6 +31,7 @@ namespace CadEditor
                 object data = asm.CreateObject("Config");
                 romName = callFromScript(asm, data, "*.getFileName", "");
                 cfgName = callFromScript(asm, data, "*.getConfigName", "");
+                nesColors = callFromScript<Color[]>(asm, data, "*.getNesColors", null);
             }
             catch (Exception)
             {
@@ -275,7 +276,7 @@ namespace CadEditor
             {
                 return (T)script.InvokeInst(data, funcName, funcParams);
             }
-            catch (Exception) //all exception catch...
+            catch (Exception ex) //all exception catch...
             {
                 return defaultValue;
             }
@@ -345,7 +346,8 @@ namespace CadEditor
         public static int DoorRecBaseOffset;
 
         //global editor settings
-        public static string romName;
-        public static string cfgName;
+        public static string  romName;
+        public static string  cfgName;
+        public static Color[] nesColors;
     }
 }

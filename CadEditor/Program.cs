@@ -13,6 +13,7 @@ namespace CadEditor
             try
             {
                 ConfigScript.LoadGlobalsFromFile("Config.cs");
+                Video.updateColorsFromConfig();
             }
             catch (Exception)
             {

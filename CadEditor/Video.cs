@@ -96,6 +96,12 @@ namespace CadEditor
             CadObjectTypeColors[0xF] = Color.FromArgb(196, 0, 255, 255);
         }
 
+        public static void updateColorsFromConfig()
+        {
+            if (ConfigScript.nesColors != null)
+                NesColors = ConfigScript.nesColors;
+        }
+
         public static Bitmap makeImageStrip(byte[] videoChunk, byte[] pallete, int subPalIndex, int scale, bool scaleAccurate = true)
         {
             Bitmap res = new Bitmap(8 * CHUNK_COUNT * scale, 8 * scale); 
