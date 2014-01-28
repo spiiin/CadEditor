@@ -232,10 +232,11 @@ namespace CadEditor
 
             btSort.Visible = ConfigScript.sortObjectsFunc != null;
 
+            int blockWidth = ConfigScript.getBlocksPicturesWidth();
             if (ConfigScript.getScreenVertical())
-                mapScreen.Size = new Size(ConfigScript.getScreenHeight() *64, (ConfigScript.getScreenWidth() + 2) * 64);
+                mapScreen.Size = new Size(ConfigScript.getScreenHeight() * blockWidth * 2, (ConfigScript.getScreenWidth() + 2) * 64);
             else
-                mapScreen.Size = new Size((ConfigScript.getScreenWidth() + 2) * 64, ConfigScript.getScreenHeight() * 64);
+                mapScreen.Size = new Size((ConfigScript.getScreenWidth() + 2) * blockWidth * 2, ConfigScript.getScreenHeight() * 64);
 
         }
 
@@ -455,7 +456,8 @@ namespace CadEditor
             int WIDTH = ConfigScript.getScreenWidth();
             int HEIGHT = ConfigScript.getScreenHeight();
             int curScale = 2;
-            int TILE_SIZE_X = 32 * curScale;
+            int blockWidth = ConfigScript.getBlocksPicturesWidth();
+            int TILE_SIZE_X = blockWidth * curScale;
             int TILE_SIZE_Y = 32 * curScale;
             int SIZE = WIDTH * HEIGHT;
             byte[] indexes = screens[curLevelLayerData.layer[curActiveScreen]];

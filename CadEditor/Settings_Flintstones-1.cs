@@ -35,6 +35,7 @@ public class Data
     return new LevelLayerData(1, 1, layer);
   }
   
+  //addrs saved in ram at D7-D9-DC-DC
   public List<ObjectRec> getObjects(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
