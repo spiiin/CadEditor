@@ -50,6 +50,7 @@ public class Data
     }
   }*/
   
+   //addrs saved in ram at 7B-7D-7F-81
   public List<ObjectRec> getObjectsJungleBook(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
