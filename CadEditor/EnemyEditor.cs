@@ -38,6 +38,8 @@ namespace CadEditor
         private bool readOnly = false;
 
         private FormMain formMain;
+        ComboBox[] cbDatas;
+        Label[] lbDatas;
 
         const int MAX_SIZE = 64;
         const int OBJECTS_COUNT = 256;
@@ -188,6 +190,9 @@ namespace CadEditor
                 //bigBlocks.ImageSize = new Size(2 * ConfigScript.getBlocksPicturesWidth(), 2 * 32);
                 Utils.setBlocks(bigBlocks /*, 2, ConfigScript.getBlocksPicturesWidth()*/);
             }
+
+            cbDatas = new ComboBox[] { cbD0, cbD1, cbD2, cbD3, cbD4, cbD5 };
+            lbDatas = new Label[]    { lbD0, lbD1, lbD2, lbD3, lbD4, lbD5 };
 
             reloadPictures();
             fillObjPanel();
@@ -350,11 +355,24 @@ namespace CadEditor
             pnAddData.Visible = objects.Count > 0 && objects[0].additionalData != null;
             if (pnAddData.Visible)
             {
-                var firstKey = objects[0].additionalData.Keys.First();
-                lbD1.Text = firstKey;
-                cbD1.Tag = firstKey;
-                Utils.setCbItemsCount(cbD1, 256, 0, true);
-                cbD1.SelectedIndexChanged += cbCoordX_SelectedIndexChanged;
+                int addDataCount = 0;
+                foreach (var addData in objects[0].additionalData)
+                {
+                    var key = addData.Key;
+                    lbDatas[addDataCount].Text = key;
+                    cbDatas[addDataCount].Tag = key;
+                    Utils.setCbItemsCount(cbDatas[addDataCount], 256, 0, true);
+                    cbDatas[addDataCount].SelectedIndexChanged += cbCoordX_SelectedIndexChanged;
+                    cbDatas[addDataCount].Visible = true;
+                    lbDatas[addDataCount].Visible = true;
+                    if (++addDataCount == cbDatas.Length)
+                        break;
+                }
+                for (int i = addDataCount; i < cbDatas.Length; i++ )
+                {
+                    cbDatas[i].Visible = false;
+                    lbDatas[i].Visible = false;
+                }
             }
         }
 
@@ -495,8 +513,14 @@ namespace CadEditor
             obj.type = cbObjType.SelectedIndex + minObjType;
             if (obj.additionalData != null)
             {
-                var key = (string)cbD1.Tag;
-                objects[index].additionalData[key] = cbD1.SelectedIndex;
+                foreach (var cb in cbDatas)
+                {
+                    if (cb.Visible)  //enable
+                    {
+                        var key = (string)cb.Tag;
+                        objects[index].additionalData[key] = cb.SelectedIndex;
+                    }
+                }
             }
             objects[index] = obj;
             lvObjects.SelectedItems[0].ImageIndex = obj.type;
@@ -559,8 +583,15 @@ namespace CadEditor
                     Utils.setCbIndexWithoutUpdateLevel(cbObjType, cbCoordX_SelectedIndexChanged, objects[index].type - minObjType);
                     if (objects[index].additionalData != null)
                     {
-                        Utils.setCbIndexWithoutUpdateLevel(cbD1, cbCoordX_SelectedIndexChanged, objects[index].additionalData.Values.First());
-                        cbD1.Enabled = true;
+                        int addDataCount = 0;
+                        foreach (var addData in objects[index].additionalData)
+                        {
+                   
+                            Utils.setCbIndexWithoutUpdateLevel(cbDatas[addDataCount], cbCoordX_SelectedIndexChanged, addData.Value);
+                            cbDatas[addDataCount].Enabled = true;
+                            if (++addDataCount == cbDatas.Length)
+                                break;
+                        }
                     }
                 }
                 catch (ArgumentOutOfRangeException)
@@ -570,7 +601,8 @@ namespace CadEditor
                     cbObjType.Enabled = false;
                     if (objects[index].additionalData != null)
                     {
-                        cbD1.Enabled = false;
+                        foreach (var cb in cbDatas)
+                          cb.Enabled = false;
                     }
                 }
             }
