@@ -52,8 +52,8 @@
             this.cbBlockNo = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.cbBigBlockNo = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.cbVideoNo = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.pnCad = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.cbDoor = new System.Windows.Forms.ComboBox();
@@ -335,15 +335,6 @@
             this.cbBigBlockNo.Size = new System.Drawing.Size(64, 21);
             this.cbBigBlockNo.TabIndex = 43;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(2, 3);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 13);
-            this.label1.TabIndex = 42;
-            this.label1.Text = "VideoBlock:";
-            // 
             // cbVideoNo
             // 
             this.cbVideoNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -361,6 +352,15 @@
             this.cbVideoNo.Name = "cbVideoNo";
             this.cbVideoNo.Size = new System.Drawing.Size(64, 21);
             this.cbVideoNo.TabIndex = 41;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(2, 3);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(64, 13);
+            this.label1.TabIndex = 42;
+            this.label1.Text = "VideoBlock:";
             // 
             // pnCad
             // 
@@ -653,7 +653,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Text = "CAD Editor v2.3 by spiiin";
+            this.Text = "CAD Editor v2.4 by spiiin";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
