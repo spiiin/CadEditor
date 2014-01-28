@@ -23,6 +23,20 @@ namespace CadEditor
 
     public class ConfigScript
     {
+        public static void LoadGlobalsFromFile(string fileName)
+        {
+            try
+            {
+                var asm = new AsmHelper(CSScript.Load(fileName));
+                object data = asm.CreateObject("Config");
+                romName = callFromScript(asm, data, "*.getFileName", "");
+                cfgName = callFromScript(asm, data, "*.getConfigName", "");
+            }
+            catch (Exception)
+            {
+            }
+        }
+
         public static void LoadFromFile(string fileName)
         {
             var asm = new AsmHelper(CSScript.Load(fileName));
@@ -329,5 +343,9 @@ namespace CadEditor
         public static int ScrollPtrAdd;
         public static int DirPtrAdd;
         public static int DoorRecBaseOffset;
+
+        //global editor settings
+        public static string romName;
+        public static string cfgName;
     }
 }

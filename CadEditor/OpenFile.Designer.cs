@@ -72,7 +72,6 @@
             this.tbFileName.Name = "tbFileName";
             this.tbFileName.Size = new System.Drawing.Size(360, 20);
             this.tbFileName.TabIndex = 3;
-            this.tbFileName.Text = "Darkwing Duck (U) [!].nes";
             this.tbFileName.Click += new System.EventHandler(this.tbFileName_Click);
             // 
             // tbConfigName
@@ -81,7 +80,6 @@
             this.tbConfigName.Name = "tbConfigName";
             this.tbConfigName.Size = new System.Drawing.Size(360, 20);
             this.tbConfigName.TabIndex = 4;
-            this.tbConfigName.Text = "Settings_DarkwingDuck.cs";
             this.tbConfigName.Click += new System.EventHandler(this.tbConfigName_Click);
             // 
             // ofOpenDialog

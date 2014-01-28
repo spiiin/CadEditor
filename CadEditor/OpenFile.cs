@@ -53,6 +53,11 @@ namespace CadEditor
 
         private void OpenFile_Load(object sender, EventArgs e)
         {
+            if (FileName == "")
+                tbFileName.Text = ConfigScript.romName;
+            if (ConfigName == "")
+                tbConfigName.Text = ConfigScript.cfgName;
+
             ofOpenDialog.InitialDirectory = Environment.CurrentDirectory;
             if (FileName != "")
                 tbFileName.Text = FileName;
