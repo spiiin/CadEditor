@@ -4,8 +4,8 @@ using System.Drawing;
 
 public class Config
 {
-  public string getFileName()   { return "Darkwing Duck (U) [!].nes"; }
-  public string getConfigName() { return "Settings_DarkwingDuck.cs"; }
+  public string getFileName()   { return "Little Nemo - The Dream Master (U) [!].nes"; }
+  public string getConfigName() { return "Settings_LittleNemo-1.cs"; }
   public Color[] getNesColors()
   {
     var NesColors = new Color[0x40];
