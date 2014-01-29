@@ -398,6 +398,7 @@ namespace CadEditor
                 cbColor.DropDownStyle = ComboBoxStyle.DropDownList;
                 if (Globals.gameType != GameType.DT2)
                   cbColor.SelectedIndexChanged += cbColor_SelectedIndexChanged;
+                cbColor.Enabled = Globals.gameType != GameType.DT2;
                 fp.Controls.Add(cbColor);
                 //
                 ComboBox cbType = new ComboBox();
@@ -409,6 +410,7 @@ namespace CadEditor
                 cbType.DropDownStyle = ComboBoxStyle.DropDownList;
                 if (Globals.gameType != GameType.DT2)
                   cbType.SelectedIndexChanged += cbType_SelectedIndexChanged;
+                cbType.Enabled = Globals.gameType != GameType.DT2;
                 fp.Controls.Add(cbType);
                 //
                 PictureBox pb2 = new PictureBox();
