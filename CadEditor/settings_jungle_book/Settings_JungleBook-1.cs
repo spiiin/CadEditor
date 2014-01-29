@@ -50,7 +50,7 @@ public class Data
     }
   }*/
   
-   //addrs saved in ram at 7B-7D-7F-81
+  //addrs saved in ram at 77-79-7E-81
   public List<ObjectRec> getObjectsJungleBook(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
@@ -58,12 +58,12 @@ public class Data
     var objects = new List<ObjectRec>();
     for (int i = 0; i < objCount; i++)
     {
-        byte x    = Globals.romdata[0x16775 + i];
         byte y    = Globals.romdata[0x167A5 + i];
+        byte x    = Globals.romdata[0x16775 + i];
+        byte data = Globals.romdata[0x16805 + i];
+        byte v    = Globals.romdata[0x167D5 + i];
         int realx = x* 32 + 16;
         int realy = y* 32 + 16;
-        byte v    = Globals.romdata[0x167D5 + i];
-        byte data = Globals.romdata[0x16805 + i];
         var dataDict = new Dictionary<string,int>();
         dataDict["data"] = data;
         var obj = new ObjectRec(v, 0, 0, realx, realy, dataDict);
