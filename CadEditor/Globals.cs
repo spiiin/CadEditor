@@ -63,14 +63,29 @@ namespace CadEditor
 
         public static bool flushToFile()
         {
-            string saveFile = OpenFile.DumpName != "" ? OpenFile.DumpName : OpenFile.FileName;
-            int fileSize = OpenFile.DumpSize != 0 ? OpenFile.DumpSize: OpenFile.FileSize;
-            var arrayToSave = Globals.dumpdata != null ? Globals.dumpdata : Globals.romdata;
+            if (OpenFile.DumpName != "")
+            {
+                try
+                {
+                    using (FileStream f = File.OpenWrite(OpenFile.DumpName))
+                    {
+                        f.Write(Globals.dumpdata, 0, OpenFile.DumpSize);
+                        f.Seek(0, SeekOrigin.Begin);
+
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+            }
             try
             {
-                using (FileStream f = File.OpenWrite(saveFile))
+                using (FileStream f = File.OpenWrite(OpenFile.FileName))
                 {
-                    f.Write(arrayToSave, 0, fileSize);
+                    f.Write(Globals.romdata, 0, OpenFile.FileSize);
                     f.Seek(0, SeekOrigin.Begin);
 
                 }

@@ -335,6 +335,35 @@ namespace CadEditor
             return data[addr] << 8 | data[addr + 1];
         }
 
+        public static int readWordLE(byte[] data, int addr)
+        {
+            return data[addr+1] << 8 | data[addr];
+        }
+
+        public static int readInt(byte[] data, int addr)
+        {
+            return data[addr] << 24 | data[addr + 1] << 16 | data[addr + 2] << 8 | data[addr + 3];
+        }
+
+        public static int readIntLE(byte[] data, int addr)
+        {
+            return data[addr + 3] << 24 | data[addr + 2] << 16 | data[addr + 1] << 8 | data[addr];
+        }
+
+        public static void writeWord(byte[] data, int addr, int word)
+        {
+            data[addr]     = (byte)(word >> 8);
+            data[addr + 1] = (byte)(word & 0xFF);
+        }
+
+        public static void writeInt(byte[] data, int addr, int word)
+        {
+            data[addr + 0] = (byte)(word >> 24);
+            data[addr + 1] = (byte)((word&0x00FF0000) >> 16);
+            data[addr + 2] = (byte)((word&0x0000FF00) >> 8 );
+            data[addr + 3] = (byte)(word & 0xFF);
+        }
+
         public static Image ResizeBitmap(Image sourceBMP, int width, int height)
         {
             Image result = new Bitmap(width, height);
