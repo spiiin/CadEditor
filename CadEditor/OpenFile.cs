@@ -32,10 +32,21 @@ namespace CadEditor
             }
         }
 
+        private void tbDumpName_Click(object sender, EventArgs e)
+        {
+            if (ofOpenDialog.ShowDialog() == DialogResult.OK)
+            {
+                tbDumpName.Text = ofOpenDialog.FileName;
+            }
+        }
+
         private void btOpen_Click(object sender, EventArgs e)
         {
             FileName = tbFileName.Text;
             FileSize= (int)new FileInfo(FileName).Length;
+            DumpName = tbDumpName.Text;
+            if (DumpName != "")
+              DumpSize = (int)new FileInfo(DumpName).Length;
             ConfigName = tbConfigName.Text;
             DialogResult = DialogResult.OK;
             Close();
@@ -47,14 +58,20 @@ namespace CadEditor
             Close();
         }
 
-        public static string FileName="";
+        public static string FileName = "";
+        public static string DumpName = "";
         public static string ConfigName="";
         public static int FileSize = 0;
+        public static int DumpSize = 0;
 
         private void OpenFile_Load(object sender, EventArgs e)
         {
+            tbDumpName.Enabled = ConfigScript.showDumpFileField;
+            lbDumpName.Enabled = ConfigScript.showDumpFileField;
             if (FileName == "")
                 tbFileName.Text = ConfigScript.romName;
+            if (DumpName == "")
+                tbDumpName.Text = ConfigScript.dumpName;
             if (ConfigName == "")
                 tbConfigName.Text = ConfigScript.cfgName;
 
@@ -63,6 +80,8 @@ namespace CadEditor
                 tbFileName.Text = FileName;
             if (ConfigName != "")
                 tbConfigName.Text = ConfigName;
+            if (DumpName != "")
+                tbDumpName.Text = DumpName;
         }
     }
 }

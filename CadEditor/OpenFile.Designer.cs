@@ -36,11 +36,13 @@
             this.tbConfigName = new System.Windows.Forms.TextBox();
             this.ofOpenDialog = new System.Windows.Forms.OpenFileDialog();
             this.btClose = new System.Windows.Forms.Button();
+            this.tbDumpName = new System.Windows.Forms.TextBox();
+            this.lbDumpName = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btOpen
             // 
-            this.btOpen.Location = new System.Drawing.Point(15, 92);
+            this.btOpen.Location = new System.Drawing.Point(12, 115);
             this.btOpen.Name = "btOpen";
             this.btOpen.Size = new System.Drawing.Size(222, 23);
             this.btOpen.TabIndex = 0;
@@ -60,7 +62,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 67);
+            this.label2.Location = new System.Drawing.Point(12, 86);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 13);
             this.label2.TabIndex = 2;
@@ -76,7 +78,7 @@
             // 
             // tbConfigName
             // 
-            this.tbConfigName.Location = new System.Drawing.Point(98, 60);
+            this.tbConfigName.Location = new System.Drawing.Point(98, 79);
             this.tbConfigName.Name = "tbConfigName";
             this.tbConfigName.Size = new System.Drawing.Size(360, 20);
             this.tbConfigName.TabIndex = 4;
@@ -88,7 +90,7 @@
             // 
             // btClose
             // 
-            this.btClose.Location = new System.Drawing.Point(243, 92);
+            this.btClose.Location = new System.Drawing.Point(240, 115);
             this.btClose.Name = "btClose";
             this.btClose.Size = new System.Drawing.Size(215, 23);
             this.btClose.TabIndex = 5;
@@ -96,11 +98,30 @@
             this.btClose.UseVisualStyleBackColor = true;
             this.btClose.Click += new System.EventHandler(this.btClose_Click);
             // 
+            // tbDumpName
+            // 
+            this.tbDumpName.Location = new System.Drawing.Point(98, 52);
+            this.tbDumpName.Name = "tbDumpName";
+            this.tbDumpName.Size = new System.Drawing.Size(360, 20);
+            this.tbDumpName.TabIndex = 7;
+            this.tbDumpName.Click += new System.EventHandler(this.tbDumpName_Click);
+            // 
+            // lbDumpName
+            // 
+            this.lbDumpName.AutoSize = true;
+            this.lbDumpName.Location = new System.Drawing.Point(12, 55);
+            this.lbDumpName.Name = "lbDumpName";
+            this.lbDumpName.Size = new System.Drawing.Size(83, 13);
+            this.lbDumpName.TabIndex = 6;
+            this.lbDumpName.Text = "Dump file name:";
+            // 
             // OpenFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(470, 127);
+            this.ClientSize = new System.Drawing.Size(470, 150);
+            this.Controls.Add(this.tbDumpName);
+            this.Controls.Add(this.lbDumpName);
             this.Controls.Add(this.btClose);
             this.Controls.Add(this.tbConfigName);
             this.Controls.Add(this.tbFileName);
@@ -127,5 +148,7 @@
         private System.Windows.Forms.TextBox tbConfigName;
         private System.Windows.Forms.OpenFileDialog ofOpenDialog;
         private System.Windows.Forms.Button btClose;
+        private System.Windows.Forms.TextBox tbDumpName;
+        private System.Windows.Forms.Label lbDumpName;
     }
 }

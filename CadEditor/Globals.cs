@@ -15,7 +15,7 @@ namespace CadEditor
         {
         }
 
-        public static void loadData(string Filename, string ConfigFilename)
+        public static void loadData(string Filename, string Dumpfile, string ConfigFilename)
         {
             try
             {
@@ -24,6 +24,23 @@ namespace CadEditor
                     int size = OpenFile.FileSize;
                     romdata = new byte[size];
                     f.Read(romdata, 0, size);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            try
+            {
+                if (Dumpfile != "")
+                {
+                    using (FileStream f = File.OpenRead(Dumpfile))
+                    {
+                        int size = OpenFile.DumpSize;
+                        dumpdata = new byte[size];
+                        f.Read(dumpdata, 0, size);
+                    }
                 }
             }
             catch (Exception ex)
@@ -46,11 +63,14 @@ namespace CadEditor
 
         public static bool flushToFile()
         {
+            string saveFile = OpenFile.DumpName != "" ? OpenFile.DumpName : OpenFile.FileName;
+            int fileSize = OpenFile.DumpSize != 0 ? OpenFile.DumpSize: OpenFile.FileSize;
+            var arrayToSave = Globals.dumpdata != null ? Globals.dumpdata : Globals.romdata;
             try
             {
-                using (FileStream f = File.OpenWrite(OpenFile.FileName))
+                using (FileStream f = File.OpenWrite(saveFile))
                 {
-                    f.Write(Globals.romdata, 0, OpenFile.FileSize);
+                    f.Write(arrayToSave, 0, fileSize);
                     f.Seek(0, SeekOrigin.Begin);
 
                 }
@@ -105,10 +125,11 @@ namespace CadEditor
         public static byte[] getScreen(int screenIndex)
         {
             var result = new byte[Math.Max(64, ConfigScript.screensOffset.recSize)];
+            var arrayWithData = Globals.dumpdata != null ? Globals.dumpdata : Globals.romdata;
             int dataStride = ConfigScript.getScreenDataStride();
             int beginAddr = ConfigScript.screensOffset.beginAddr + screenIndex * ConfigScript.screensOffset.recSize * dataStride;
             for (int i = 0; i < ConfigScript.screensOffset.recSize; i++)
-                result[i] = Globals.romdata[beginAddr + i*dataStride];
+                result[i] = arrayWithData[beginAddr + i*dataStride];
             for (int i = ConfigScript.screensOffset.recSize; i < 64; i++)
                 result[i] = 0; //need this?
             return result;
@@ -431,6 +452,7 @@ namespace CadEditor
         public static int DOORS_COUNT = 25;
 
         public static byte[] romdata;
+        public static byte[] dumpdata;
         public static int CHUNKS_COUNT = 256;
         public static int VIDEO_PAGE_SIZE = 4096;
         public static int PAL_LEN = 16;

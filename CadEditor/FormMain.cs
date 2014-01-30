@@ -28,7 +28,7 @@ namespace CadEditor
             }
             else
             {
-                Globals.loadData(OpenFile.FileName, OpenFile.ConfigName);
+                Globals.loadData(OpenFile.FileName, OpenFile.DumpName, OpenFile.ConfigName);
                 fileLoaded = true;
                 resetControls();
             }
@@ -404,14 +404,14 @@ namespace CadEditor
 
         private bool saveToFile()
         {
-            var romFname = OpenFile.FileName;
+            var arrayToSave = Globals.dumpdata != null ? Globals.dumpdata : Globals.romdata;
             //write back tiles
             int dataStride = ConfigScript.getScreenDataStride();
             for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
             {
                 int addr = ConfigScript.screensOffset.beginAddr + i * ConfigScript.screensOffset.recSize * dataStride;
                 for (int x = 0; x < ConfigScript.screensOffset.recSize; x++)
-                    Globals.romdata[addr + x * dataStride] = screens[i][x];
+                    arrayToSave[addr + x * dataStride] = screens[i][x];
             }
             dirty = !Globals.flushToFile();
             return !dirty;
@@ -496,7 +496,7 @@ namespace CadEditor
             var f = new OpenFile();
             if (f.ShowDialog() == DialogResult.OK)
             {
-                Globals.loadData(OpenFile.FileName, OpenFile.ConfigName);
+                Globals.loadData(OpenFile.FileName, OpenFile.DumpName, OpenFile.ConfigName);
                 fileLoaded = true;
                 resetControls();
             }
