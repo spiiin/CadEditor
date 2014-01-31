@@ -12,18 +12,21 @@ namespace CadEditor
         {
             try
             {
-                ConfigScript.LoadGlobalsFromFile("Config.cs");
+                var globalConfigName = "Config.cs";   
+                if (args.Length == 1)
+                    globalConfigName = args[2];
+                ConfigScript.LoadGlobalsFromFile(globalConfigName);
                 Video.updateColorsFromConfig();
             }
             catch (Exception)
             {
                 //pass
             }
-            if (args.Length == 2)
+            if (args.Length >=2)
             {
                 OpenFile.FileName   = args[0];
                 OpenFile.ConfigName = args[1];
-                OpenFile.FileSize = (int)new FileInfo(OpenFile.FileName).Length;
+                OpenFile.FileSize = (int)new FileInfo(OpenFile.FileName).Length;             
             }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
