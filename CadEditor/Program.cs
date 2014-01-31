@@ -14,7 +14,7 @@ namespace CadEditor
             {
                 var globalConfigName = "Config.cs";   
                 if (args.Length == 1)
-                    globalConfigName = args[2];
+                    globalConfigName = args[0];
                 ConfigScript.LoadGlobalsFromFile(globalConfigName);
                 Video.updateColorsFromConfig();
             }
