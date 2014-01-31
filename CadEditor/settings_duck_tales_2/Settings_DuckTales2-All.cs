@@ -20,6 +20,7 @@ public class Data:CapcomBase
   public override GetVideoPageAddrFunc getVideoPageAddrFunc() { return getDuckTalesVideoAddress; }
   public override GetVideoChunkFunc    getVideoChunkFunc()    { return getDuckTalesVideoChunk;   }
   public override SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
+  public override SetBlocksFunc        setBlocksFunc()        { return setBlocksDt2;}
   public override GetBigBlocksFunc     getBigBlocksFunc()     { return getBigBlocksDt2;}
   public override SetBigBlocksFunc     setBigBlocksFunc()     { return setBigBlocksDt2;}
   public GetObjectsFunc getObjectsFunc() { return getObjectsDt2; }
@@ -147,5 +148,23 @@ public class Data:CapcomBase
     //todo : add save for duck tales 2
     return true;
   }*/
+  
+  public void setBlocksDt2(int blockIndex, ObjRec[] objects)
+  {
+    int addr = Globals.getTilesAddr(blockIndex);
+    int count = getBlocksCount();
+    for (int i = 0; i < count; i++)
+    {
+        var obj = objects[i];
+        Globals.romdata[addr + i] = obj.c1;
+        Globals.romdata[addr + count * 1 + i] = obj.c2;
+        Globals.romdata[addr + count * 2 + i] = obj.c3;
+        Globals.romdata[addr + count * 3 + i] = obj.c4;
+    }
+    for (int i = 0; i < count/4; i++)
+    {
+        Globals.romdata[addr + count * 4 + i] = objects[i].typeColor;
+    }
+  }
   //--------------------------------------------------------------------------------------------
 }

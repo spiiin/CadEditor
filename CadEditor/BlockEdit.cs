@@ -228,6 +228,16 @@ namespace CadEditor
             dirty = true;
         }
 
+        void cbColor_SelectedIndexChangedDt2(object sender, EventArgs e)
+        {
+            ComboBox cb = (ComboBox)sender;
+            PictureBox pb = (PictureBox)cb.Tag;
+            int index = (int)pb.Tag;
+            objects[index / 4].setSubpalleteForDt2(index % 4, cb.SelectedIndex);
+            pb.Image = makeObjImageDt2((int)pb.Tag);
+            dirty = true;
+        }
+
         void cbType_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
@@ -397,8 +407,9 @@ namespace CadEditor
                 cbColor.Items.AddRange(subPalItems);
                 cbColor.DropDownStyle = ComboBoxStyle.DropDownList;
                 if (Globals.gameType != GameType.DT2)
-                  cbColor.SelectedIndexChanged += cbColor_SelectedIndexChanged;
-                cbColor.Enabled = Globals.gameType != GameType.DT2;
+                    cbColor.SelectedIndexChanged += cbColor_SelectedIndexChanged;
+                else
+                    cbColor.SelectedIndexChanged += cbColor_SelectedIndexChangedDt2;
                 fp.Controls.Add(cbColor);
                 //
                 ComboBox cbType = new ComboBox();
@@ -435,7 +446,7 @@ namespace CadEditor
                 PictureBox pb = (PictureBox)p.Controls[1];
                 pb.Image = makeObjImage(i);
                 ComboBox cbColor = (ComboBox)p.Controls[2];
-                cbColor.SelectedIndex = objects[i].getSubpallete();
+                cbColor.SelectedIndex = Globals.gameType == GameType.DT2 ? objects[i/4].getSubpalleteForDt2(i%4) : objects[i].getSubpallete();
                 ComboBox cbType = (ComboBox)p.Controls[3];
                 cbType.SelectedIndex = objects[i].getType();
 

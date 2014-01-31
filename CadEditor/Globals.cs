@@ -528,6 +528,11 @@ namespace CadEditor
             return (typeColor >> parByteNo*2) & 3;
         }
 
+        public void setSubpalleteForDt2(int parByteNo, int color)
+        {
+            typeColor = (byte)((typeColor & (~(3 << parByteNo * 2))) | (color << parByteNo * 2)); 
+        }
+
         public int getTypeForDt2(int no)
         {
             return no < 0xA0 ? 0 : 5;
