@@ -4,8 +4,10 @@ using System.Drawing;
 
 public class Config
 {
-  public string getFileName()   { return "Little Nemo - The Dream Master (U) [!].nes"; }
-  public string getConfigName() { return "Settings_LittleNemo-1.cs"; }
+  public string getFileName()      { return ""; }
+  public string getDumpName()      { return ""; }
+  public string getConfigName()    { return ""; }
+  public bool showDumpFileField()  { return false;  }
   public Color[] getNesColors()
   {
     var NesColors = new Color[0x40];
