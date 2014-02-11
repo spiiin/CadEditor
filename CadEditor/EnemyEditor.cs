@@ -47,7 +47,7 @@ namespace CadEditor
         bool objectDragged = false;
 
         //render back
-        private byte[][] screens = null;
+        private int[][] screens = null;
 
         private void reloadLevelLayerData(bool resetScreenPos)
         {
@@ -460,7 +460,7 @@ namespace CadEditor
             int TILE_SIZE_X = blockWidth * curScale;
             int TILE_SIZE_Y = 32 * curScale;
             int SIZE = WIDTH * HEIGHT;
-            byte[] indexes = screens[curLevelLayerData.layer[curActiveScreen]];
+            int[] indexes = screens[curLevelLayerData.layer[curActiveScreen]];
             var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
             for (int i = 0; i < SIZE; i++)
             {

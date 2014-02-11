@@ -137,33 +137,42 @@ namespace CadEditor
             return levelData[levelNo].getHeight();
         }
 
-        public static byte[] getScreen(int screenIndex)
+        public static int[] getScreen(int screenIndex)
         {
-            var result = new byte[Math.Max(64, ConfigScript.screensOffset.recSize)];
+            var result = new int[Math.Max(64, ConfigScript.screensOffset.recSize)];
             var arrayWithData = Globals.dumpdata != null ? Globals.dumpdata : Globals.romdata;
             int dataStride = ConfigScript.getScreenDataStride();
-            int beginAddr = ConfigScript.screensOffset.beginAddr + screenIndex * ConfigScript.screensOffset.recSize * dataStride;
-            for (int i = 0; i < ConfigScript.screensOffset.recSize; i++)
-                result[i] = arrayWithData[beginAddr + i*dataStride];
-            for (int i = ConfigScript.screensOffset.recSize; i < 64; i++)
-                result[i] = 0; //need this?
+            int wordLen = ConfigScript.getWordLen();
+            int beginAddr = ConfigScript.screensOffset.beginAddr + screenIndex * ConfigScript.screensOffset.recSize * dataStride * wordLen;
+            if (wordLen == 1)
+            {
+                for (int i = 0; i < ConfigScript.screensOffset.recSize; i++)
+                    result[i] = arrayWithData[beginAddr + i * dataStride];
+                for (int i = ConfigScript.screensOffset.recSize; i < 64; i++)
+                    result[i] = 0; //need this?
+            }
+            else if (wordLen == 2)
+            {
+                for (int i = 0; i < ConfigScript.screensOffset.recSize; i++)
+                    result[i] = Utils.readWord(arrayWithData, beginAddr + i * (dataStride * wordLen));
+            }
             return result;
         }
 
-        public static int getBigTileNoFromScreen(byte[] screenData, int index)
+        public static int getBigTileNoFromScreen(int[] screenData, int index)
         {
             if (gameType == GameType.DT)
             {
                 int noY = index % 8;
                 int noX = index / 8;
-                byte lineByte = screenData[0x40 + noX];
+                int lineByte = screenData[0x40 + noX];
                 int addValue = (lineByte & (1 << (7 - noY))) != 0 ? 256 : 0;
                 return addValue + screenData[index];
             }
             return screenData[index];
         }
 
-        public static void setBigTileToScreen(byte[] screenData, int index, int value)
+        public static void setBigTileToScreen(int[] screenData, int index, int value)
         {
             if (gameType == GameType.DT)
             {

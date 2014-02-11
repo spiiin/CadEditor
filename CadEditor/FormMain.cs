@@ -262,7 +262,7 @@ namespace CadEditor
             int SIZE = WIDTH * HEIGHT;
             if (!fileLoaded)
                 return;
-            byte[] indexes = screens[curActiveScreen];
+            int[] indexes = screens[curActiveScreen];
             var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
             var g = e.Graphics;
             for (int i = 0; i < SIZE; i++)
@@ -280,7 +280,7 @@ namespace CadEditor
             }
             if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen > 0))
             {
-                byte[] indexesPrev = screens[curActiveScreen - 1];
+                int[] indexesPrev = screens[curActiveScreen - 1];
                 for (int i = 0; i < SIZE; i++)
                 {
                     if (i % WIDTH == WIDTH-1)
@@ -293,7 +293,7 @@ namespace CadEditor
             }
             if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen < ConfigScript.screensOffset.recCount - 1))
             {
-                byte[] indexesNext = screens[curActiveScreen + 1];
+                int[] indexesNext = screens[curActiveScreen + 1];
                 for (int i = 0; i < SIZE; i++)
                 {
                     if (i % WIDTH == 0)
@@ -335,7 +335,7 @@ namespace CadEditor
         private bool dirty;
         private bool showNeiScreens;
         private bool showAxis;
-        private byte[][] screens = null;
+        private int[][] screens = null;
 
         private byte[] bigBlockIndexes;
 
@@ -405,13 +405,22 @@ namespace CadEditor
         private bool saveToFile()
         {
             var arrayToSave = Globals.dumpdata != null ? Globals.dumpdata : Globals.romdata;
+            int wordLen = ConfigScript.getWordLen();
             //write back tiles
             int dataStride = ConfigScript.getScreenDataStride();
             for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
             {
-                int addr = ConfigScript.screensOffset.beginAddr + i * ConfigScript.screensOffset.recSize * dataStride;
-                for (int x = 0; x < ConfigScript.screensOffset.recSize; x++)
-                    arrayToSave[addr + x * dataStride] = screens[i][x];
+                int addr = ConfigScript.screensOffset.beginAddr + i * ConfigScript.screensOffset.recSize * (dataStride * wordLen);
+                if (wordLen == 1)
+                {
+                    for (int x = 0; x < ConfigScript.screensOffset.recSize; x++)
+                        arrayToSave[addr + x * dataStride] = (byte)screens[i][x];
+                }
+                else if (wordLen == 2)
+                {
+                    for (int x = 0; x < ConfigScript.screensOffset.recSize; x++)
+                        Utils.writeWord(arrayToSave, addr + x * (dataStride * wordLen), screens[i][x]);
+                }
             }
             dirty = !Globals.flushToFile();
             return !dirty;

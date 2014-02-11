@@ -395,9 +395,24 @@ namespace CadEditor
             //if using pictures
             if (ConfigScript.usePicturesInstedBlocks)
             {
-                var imSrc = Image.FromFile(ConfigScript.blocksPicturesFilename);
-                var imResized = Utils.ResizeBitmap(imSrc, curButtonScale * blockWidth * ConfigScript.getBigBlocksCount(), curButtonScale * blockHeight);
-                bigBlocks.Images.AddStrip(imResized);
+                if (ConfigScript.blocksPicturesFilename != "")
+                {
+                    var imSrc = Image.FromFile(ConfigScript.blocksPicturesFilename);
+                    var imResized = Utils.ResizeBitmap(imSrc, curButtonScale * blockWidth * ConfigScript.getBigBlocksCount(), curButtonScale * blockHeight);
+                    bigBlocks.Images.AddStrip(imResized);
+                }
+                if (ConfigScript.blocksPicturesFilenames != null)
+                {
+                    for (int i = 0; i < ConfigScript.blocksPicturesFilenames.Length; i++)
+                    {
+                        var fname = ConfigScript.blocksPicturesFilenames[i];
+                        var imSrc = Image.FromFile(fname);
+                        //WARNING!!! blockWidth param scale not supported for blocksPicturesFilenames
+                        //var imResized = Utils.ResizeBitmap(imSrc, curButtonScale * blockWidth * ConfigScript.getBigBlocksCount(), curButtonScale * blockHeight);
+                        var imResized = imSrc;
+                        bigBlocks.Images.AddStrip(imResized);
+                    }
+                }
                 for (int i = bigBlocks.Images.Count; i < 256; i++)
                     bigBlocks.Images.Add(Video.emptyScreen(blockWidth * curButtonScale, blockHeight * curButtonScale));
                 if (showAxis)
@@ -432,9 +447,9 @@ namespace CadEditor
             }
         }
 
-        public static byte[][] setScreens()
+        public static int[][] setScreens()
         {
-            byte[][]screens = new byte[ConfigScript.screensOffset.recCount][];
+            int[][]screens = new int[ConfigScript.screensOffset.recCount][];
             for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
                 screens[i] = Globals.getScreen(i);
             return screens;

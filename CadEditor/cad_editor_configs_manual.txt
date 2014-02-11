@@ -40,13 +40,15 @@
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 Второй способ создания конфига - заготовить картинки уже составленных блоков, и отрисовать уровень или игровой экран ими. Этот способ намного более простой и с помощью него подключены почти все игры. Опции, которые существуют для настройки редактора по такому случаю:
 
-  blocksPicturesFilename = callFromScript(asm, data, "getBlocksFilename", "");    //имя файла с набором картинок
-  blocksPicturesWidth = callFromScript(asm, data, "getPictureBlocksWidth", 32);   //размер в ширину одного блока (для прямоугольных блоков)
+  blocksPicturesFilename = callFromScript(asm, data, "getBlocksFilename", "");        //имя файла с набором картинок
+  blocksPicturesFilenames = callFromScript(asm, data, "getBlocksFilenames", null);    //массив с набором имён файлов картинок (нужен, если длина файла с картинками настолько большая, что невозможно сохранить их в одном файле).
+  blocksPicturesWidth = callFromScript(asm, data, "getPictureBlocksWidth", 32);       //размер в ширину одного блока (для прямоугольных блоков)
   
-  screenWidth = callFromScript(asm, data, "*.getScreenWidth", 8);                 //размер одного экрана уровня в длину 
-  screenHeight = callFromScript(asm, data, "*.getScreenHeight", 8);               //и в ширину
-  screenVertical = callFromScript(asm, data, "*.getScreenVertical", false);       //описывают ли данные экран справа налево или сверху вниз
-  screenDataStride = callFromScript(asm, data, "*.getScreenDataStride", 1);       //шаг в байтах между данными экрана (для 16-битных игр может быть 1 или 2).
+  screenWidth = callFromScript(asm, data, "*.getScreenWidth", 8);                    //размер одного экрана уровня в длину 
+  screenHeight = callFromScript(asm, data, "*.getScreenHeight", 8);                  //и в ширину
+  screenVertical = callFromScript(asm, data, "*.getScreenVertical", false);          //описывают ли данные экран справа налево или сверху вниз
+  screenDataStride = callFromScript(asm, data, "*.getScreenDataStride", 1);          //шаг в байтах между данными экрана (для 16-битных игр может быть 1 или 2).
+  wordLen = callFromScript(asm, data, "*.getWordLen", 1);                            //размер одного слова в описании экрана (для 16-битных игр может быть 1 или 2).
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Для редактора врагов существуют опции:

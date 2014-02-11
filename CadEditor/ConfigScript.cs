@@ -64,6 +64,7 @@ namespace CadEditor
             screenHeight = callFromScript(asm, data, "*.getScreenHeight", 8);
             screenVertical = callFromScript(asm, data, "*.getScreenVertical", false);
             screenDataStride = callFromScript(asm, data, "*.getScreenDataStride", 1);
+            wordLen = callFromScript(asm, data, "*.getWordLen", 1);
             levelRecs = callFromScript(asm, data,"*.getLevelRecs", new List<LevelRec>());
 
             minObjCoordX = callFromScript(asm, data, "*.getMinObjCoordX", 0);
@@ -100,9 +101,10 @@ namespace CadEditor
             bigBlocksCount = callFromScript(asm, data, "*.getBigBlocksCount", 256);
             blocksCount    = callFromScript(asm, data, "*.getBlocksCount"   , 256);
 
-            blocksPicturesFilename = callFromScript(asm, data, "getBlocksFilename", "");
+            blocksPicturesFilename  = callFromScript(asm, data, "getBlocksFilename", "");
+            blocksPicturesFilenames = callFromScript<string[]>(asm, data, "getBlocksFilenames", null);
             blocksPicturesWidth = callFromScript(asm, data, "getPictureBlocksWidth", 32); 
-            usePicturesInstedBlocks = blocksPicturesFilename != "";
+            usePicturesInstedBlocks = blocksPicturesFilename != "" || blocksPicturesFilenames != null;
 
             blockTypeNames = callFromScript(asm, data, "getBlockTypeNames", defaultBlockTypeNames);
 
@@ -267,6 +269,11 @@ namespace CadEditor
             return screenDataStride;
         }
 
+        public static int getWordLen()
+        {
+            return wordLen;
+        }
+
         public static int getBlocksPicturesWidth()
         {
             return blocksPicturesWidth;
@@ -299,6 +306,7 @@ namespace CadEditor
         public static int screenHeight;
         public static bool screenVertical;
         public static int screenDataStride;
+        public static int wordLen;
 
         public static int minObjCoordX;
         public static int minObjCoordY;
@@ -333,6 +341,7 @@ namespace CadEditor
 
         public static bool usePicturesInstedBlocks;
         public static string blocksPicturesFilename;
+        public static string[] blocksPicturesFilenames;
         public static int blocksPicturesWidth;
         public static string objTypesPicturesDir;
 
