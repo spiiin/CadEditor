@@ -66,7 +66,6 @@ namespace CadEditor
             Utils.setCbIndexWithoutUpdateLevel(cbLevel, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbDoor, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbViewType, cbLevel_SelectedIndexChanged);
-            Utils.setCbIndexWithoutUpdateLevel(cbScale, cbLevel_SelectedIndexChanged, 1);
             dirty = false; updateSaveVisibility();
             showNeiScreens = true;
             showAxis = true;
@@ -438,7 +437,7 @@ namespace CadEditor
                 return;
             }
             updateSaveVisibility();
-            bool senderIsScale = sender == cbScale;
+            bool senderIsScale = sender == bttScale;
             changeLevelIndex(senderIsScale);
             if (senderIsScale)
             {
@@ -464,7 +463,6 @@ namespace CadEditor
                 curActivePalleteNo = cbPaletteNo.SelectedIndex;
             }
             curViewType = (MapViewType)cbViewType.SelectedIndex;
-            curScale = curButtonScale = cbScale.SelectedIndex + 1;
             reloadLevel(true, reloadObjectsPanel);
         }
 
@@ -501,7 +499,7 @@ namespace CadEditor
 
         private void cbShowNeighborns_CheckedChanged(object sender, EventArgs e)
         {
-            showNeiScreens = cbShowNeighborns.Checked;
+            showNeiScreens = bttShowNei.Checked;
             mapScreen.Invalidate();
         }
 
@@ -616,7 +614,7 @@ namespace CadEditor
 
         private void cbShowAxis_CheckedChanged(object sender, EventArgs e)
         {
-            showAxis = cbShowAxis.Checked;
+            showAxis = bttAxis.Checked;
             reloadLevel(false);
             //mapScreen.Invalidate();
         }
@@ -709,6 +707,12 @@ namespace CadEditor
         public MapViewType CurActiveViewType
         {
             get { return curViewType; } 
+        }
+
+        private void bttScale_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            curScale= bttScale.DropDownItems.IndexOf(e.ClickedItem)+1;
+            cbLevel_SelectedIndexChanged(bttScale, new EventArgs());
         }
     }
 }

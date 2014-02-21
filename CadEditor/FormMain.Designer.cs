@@ -38,7 +38,6 @@
             this.smallBlocks = new System.Windows.Forms.ImageList(this.components);
             this.label6 = new System.Windows.Forms.Label();
             this.cbScreenNo = new System.Windows.Forms.ComboBox();
-            this.cbShowNeighborns = new System.Windows.Forms.CheckBox();
             this.pnGeneric = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
             this.cbPaletteNo = new System.Windows.Forms.ComboBox();
@@ -55,15 +54,11 @@
             this.cbLevel = new System.Windows.Forms.ComboBox();
             this.cbViewType = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.cbShowAxis = new System.Windows.Forms.CheckBox();
-            this.btHex = new System.Windows.Forms.Button();
             this.smallBlocks1 = new System.Windows.Forms.ImageList(this.components);
             this.smallBlocks2 = new System.Windows.Forms.ImageList(this.components);
             this.smallBlocks3 = new System.Windows.Forms.ImageList(this.components);
             this.smallBlocks4 = new System.Windows.Forms.ImageList(this.components);
             this.pnView = new System.Windows.Forms.Panel();
-            this.cbScale = new System.Windows.Forms.ComboBox();
-            this.label10 = new System.Windows.Forms.Label();
             this.lbCoords = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.bttOpen = new System.Windows.Forms.ToolStripButton();
@@ -80,7 +75,16 @@
             this.bttMap = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pnElements = new System.Windows.Forms.Panel();
-            this.pnBottom = new System.Windows.Forms.Panel();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.bttScale = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.bttShowNei = new System.Windows.Forms.ToolStripButton();
+            this.bttAxis = new System.Windows.Forms.ToolStripButton();
+            this.x3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.x4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.bttHex = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -91,7 +95,6 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.pnElements.SuspendLayout();
-            this.pnBottom.SuspendLayout();
             this.SuspendLayout();
             // 
             // bigBlocks
@@ -110,7 +113,7 @@
             this.blocksPanel.Location = new System.Drawing.Point(3, 3);
             this.blocksPanel.Margin = new System.Windows.Forms.Padding(0);
             this.blocksPanel.Name = "blocksPanel";
-            this.blocksPanel.Size = new System.Drawing.Size(289, 592);
+            this.blocksPanel.Size = new System.Drawing.Size(289, 515);
             this.blocksPanel.TabIndex = 2;
             // 
             // mapScreen
@@ -167,20 +170,6 @@
             this.cbScreenNo.Size = new System.Drawing.Size(64, 21);
             this.cbScreenNo.TabIndex = 27;
             this.cbScreenNo.SelectedIndexChanged += new System.EventHandler(this.cbScreenNo_SelectedIndexChanged);
-            // 
-            // cbShowNeighborns
-            // 
-            this.cbShowNeighborns.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cbShowNeighborns.AutoSize = true;
-            this.cbShowNeighborns.Checked = true;
-            this.cbShowNeighborns.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbShowNeighborns.Location = new System.Drawing.Point(334, 6);
-            this.cbShowNeighborns.Name = "cbShowNeighborns";
-            this.cbShowNeighborns.Size = new System.Drawing.Size(108, 17);
-            this.cbShowNeighborns.TabIndex = 32;
-            this.cbShowNeighborns.Text = "Show neighborns";
-            this.cbShowNeighborns.UseVisualStyleBackColor = true;
-            this.cbShowNeighborns.CheckedChanged += new System.EventHandler(this.cbShowNeighborns_CheckedChanged);
             // 
             // pnGeneric
             // 
@@ -422,31 +411,6 @@
             this.label4.TabIndex = 44;
             this.label4.Text = "View type:";
             // 
-            // cbShowAxis
-            // 
-            this.cbShowAxis.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cbShowAxis.AutoSize = true;
-            this.cbShowAxis.Checked = true;
-            this.cbShowAxis.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbShowAxis.Location = new System.Drawing.Point(254, 7);
-            this.cbShowAxis.Name = "cbShowAxis";
-            this.cbShowAxis.Size = new System.Drawing.Size(74, 17);
-            this.cbShowAxis.TabIndex = 51;
-            this.cbShowAxis.Text = "Show axis";
-            this.cbShowAxis.UseVisualStyleBackColor = true;
-            this.cbShowAxis.CheckedChanged += new System.EventHandler(this.cbShowAxis_CheckedChanged);
-            // 
-            // btHex
-            // 
-            this.btHex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btHex.Location = new System.Drawing.Point(152, 2);
-            this.btHex.Name = "btHex";
-            this.btHex.Size = new System.Drawing.Size(96, 26);
-            this.btHex.TabIndex = 52;
-            this.btHex.Text = "open hex editor";
-            this.btHex.UseVisualStyleBackColor = true;
-            this.btHex.Click += new System.EventHandler(this.btHex_Click);
-            // 
             // smallBlocks1
             // 
             this.smallBlocks1.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
@@ -480,40 +444,15 @@
             this.pnView.Controls.Add(this.mapScreen);
             this.pnView.Location = new System.Drawing.Point(3, 2);
             this.pnView.Name = "pnView";
-            this.pnView.Size = new System.Drawing.Size(687, 518);
+            this.pnView.Size = new System.Drawing.Size(687, 516);
             this.pnView.TabIndex = 53;
-            // 
-            // cbScale
-            // 
-            this.cbScale.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cbScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbScale.DropDownWidth = 128;
-            this.cbScale.FormattingEnabled = true;
-            this.cbScale.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4"});
-            this.cbScale.Location = new System.Drawing.Point(46, 4);
-            this.cbScale.Name = "cbScale";
-            this.cbScale.Size = new System.Drawing.Size(29, 21);
-            this.cbScale.TabIndex = 54;
-            // 
-            // label10
-            // 
-            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(4, 8);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(37, 13);
-            this.label10.TabIndex = 55;
-            this.label10.Text = "Scale:";
             // 
             // lbCoords
             // 
-            this.lbCoords.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lbCoords.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lbCoords.AutoSize = true;
-            this.lbCoords.Location = new System.Drawing.Point(82, 8);
+            this.lbCoords.Location = new System.Drawing.Point(5, 496);
             this.lbCoords.Name = "lbCoords";
             this.lbCoords.Size = new System.Drawing.Size(64, 13);
             this.lbCoords.TabIndex = 56;
@@ -533,7 +472,13 @@
             this.bttEnemies,
             this.bttLayout,
             this.bttVideo,
-            this.bttMap});
+            this.bttMap,
+            this.bttHex,
+            this.toolStripSeparator3,
+            this.bttShowNei,
+            this.bttAxis,
+            this.toolStripSeparator4,
+            this.bttScale});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1073, 25);
@@ -667,9 +612,8 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.pnBottom);
             this.splitContainer1.Panel2.Controls.Add(this.pnView);
-            this.splitContainer1.Size = new System.Drawing.Size(1071, 564);
+            this.splitContainer1.Size = new System.Drawing.Size(1071, 520);
             this.splitContainer1.SplitterDistance = 373;
             this.splitContainer1.TabIndex = 5;
             // 
@@ -677,6 +621,7 @@
             // 
             this.pnElements.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnElements.Controls.Add(this.lbCoords);
             this.pnElements.Controls.Add(this.lbActiveBlock);
             this.pnElements.Controls.Add(this.label4);
             this.pnElements.Controls.Add(this.activeBlock);
@@ -687,29 +632,99 @@
             this.pnElements.Controls.Add(this.pnCad);
             this.pnElements.Location = new System.Drawing.Point(297, 3);
             this.pnElements.Name = "pnElements";
-            this.pnElements.Size = new System.Drawing.Size(77, 560);
+            this.pnElements.Size = new System.Drawing.Size(77, 515);
             this.pnElements.TabIndex = 5;
             // 
-            // pnBottom
+            // toolStripSeparator3
             // 
-            this.pnBottom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnBottom.Controls.Add(this.cbShowAxis);
-            this.pnBottom.Controls.Add(this.cbShowNeighborns);
-            this.pnBottom.Controls.Add(this.cbScale);
-            this.pnBottom.Controls.Add(this.lbCoords);
-            this.pnBottom.Controls.Add(this.btHex);
-            this.pnBottom.Controls.Add(this.label10);
-            this.pnBottom.Location = new System.Drawing.Point(6, 530);
-            this.pnBottom.Name = "pnBottom";
-            this.pnBottom.Size = new System.Drawing.Size(681, 31);
-            this.pnBottom.TabIndex = 5;
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // bttScale
+            // 
+            this.bttScale.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttScale.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem2,
+            this.toolStripMenuItem3,
+            this.x3ToolStripMenuItem,
+            this.x4ToolStripMenuItem});
+            this.bttScale.Image = ((System.Drawing.Image)(resources.GetObject("bttScale.Image")));
+            this.bttScale.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttScale.Name = "bttScale";
+            this.bttScale.Size = new System.Drawing.Size(32, 22);
+            this.bttScale.Text = "Scale";
+            this.bttScale.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.bttScale_DropDownItemClicked);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem2.Text = "x1";
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem3.Text = "x2";
+            // 
+            // bttShowNei
+            // 
+            this.bttShowNei.Checked = true;
+            this.bttShowNei.CheckOnClick = true;
+            this.bttShowNei.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.bttShowNei.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttShowNei.Image = ((System.Drawing.Image)(resources.GetObject("bttShowNei.Image")));
+            this.bttShowNei.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttShowNei.Name = "bttShowNei";
+            this.bttShowNei.Size = new System.Drawing.Size(23, 22);
+            this.bttShowNei.Text = "Show neighborns screens ";
+            this.bttShowNei.CheckedChanged += new System.EventHandler(this.cbShowNeighborns_CheckedChanged);
+            // 
+            // bttAxis
+            // 
+            this.bttAxis.Checked = true;
+            this.bttAxis.CheckOnClick = true;
+            this.bttAxis.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.bttAxis.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttAxis.Image = ((System.Drawing.Image)(resources.GetObject("bttAxis.Image")));
+            this.bttAxis.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttAxis.Name = "bttAxis";
+            this.bttAxis.Size = new System.Drawing.Size(23, 22);
+            this.bttAxis.Text = "Axis";
+            this.bttAxis.CheckedChanged += new System.EventHandler(this.cbShowAxis_CheckedChanged);
+            // 
+            // x3ToolStripMenuItem
+            // 
+            this.x3ToolStripMenuItem.Name = "x3ToolStripMenuItem";
+            this.x3ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.x3ToolStripMenuItem.Text = "x3";
+            // 
+            // x4ToolStripMenuItem
+            // 
+            this.x4ToolStripMenuItem.Name = "x4ToolStripMenuItem";
+            this.x4ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.x4ToolStripMenuItem.Text = "x4";
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // bttHex
+            // 
+            this.bttHex.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttHex.Image = ((System.Drawing.Image)(resources.GetObject("bttHex.Image")));
+            this.bttHex.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttHex.Name = "bttHex";
+            this.bttHex.Size = new System.Drawing.Size(23, 22);
+            this.bttHex.Text = "Hex Editor";
+            this.bttHex.Click += new System.EventHandler(this.btHex_Click);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1073, 592);
+            this.ClientSize = new System.Drawing.Size(1073, 548);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -732,8 +747,6 @@
             this.splitContainer1.ResumeLayout(false);
             this.pnElements.ResumeLayout(false);
             this.pnElements.PerformLayout();
-            this.pnBottom.ResumeLayout(false);
-            this.pnBottom.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -749,7 +762,6 @@
         private System.Windows.Forms.ImageList smallBlocks;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cbScreenNo;
-        private System.Windows.Forms.CheckBox cbShowNeighborns;
         private System.Windows.Forms.Panel pnGeneric;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox cbPaletteNo;
@@ -766,15 +778,11 @@
         private System.Windows.Forms.ComboBox cbLevel;
         private System.Windows.Forms.ComboBox cbViewType;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.CheckBox cbShowAxis;
-        private System.Windows.Forms.Button btHex;
         private System.Windows.Forms.ImageList smallBlocks1;
         private System.Windows.Forms.ImageList smallBlocks2;
         private System.Windows.Forms.ImageList smallBlocks3;
         private System.Windows.Forms.ImageList smallBlocks4;
         private System.Windows.Forms.Panel pnView;
-        private System.Windows.Forms.ComboBox cbScale;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label lbCoords;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton bttOpen;
@@ -791,7 +799,16 @@
         private System.Windows.Forms.ToolStripButton bttMap;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Panel pnElements;
-        private System.Windows.Forms.Panel pnBottom;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripSplitButton bttScale;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripButton bttShowNei;
+        private System.Windows.Forms.ToolStripButton bttAxis;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem x3ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem x4ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton bttHex;
     }
 }
 
