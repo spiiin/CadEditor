@@ -67,7 +67,7 @@ namespace CadEditor
             Utils.setCbIndexWithoutUpdateLevel(cbDoor, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbViewType, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbScale, cbLevel_SelectedIndexChanged, 1);
-            dirty = false; bttSave.Enabled = dirty;
+            dirty = false; updateSaveVisibility();
             showNeiScreens = true;
             showAxis = true;
             prepareBlocksPanel();
@@ -378,7 +378,7 @@ namespace CadEditor
                 {
                     int index = dy * WIDTH;
                     Globals.setBigTileToScreen(screens[curActiveScreen + 1], index, curActiveBlock);
-                    dirty = true; bttSave.Enabled = dirty;
+                    dirty = true; updateSaveVisibility();
                 }
             }
             else if (dx == -1)
@@ -387,14 +387,14 @@ namespace CadEditor
                 {
                     int index = dy * WIDTH + (WIDTH-1);
                     Globals.setBigTileToScreen(screens[curActiveScreen - 1], index, curActiveBlock);
-                    dirty = true; bttSave.Enabled = dirty;
+                    dirty = true; updateSaveVisibility();
                 }
             }
             else
             {
                 int index = dy * WIDTH + dx;
                 Globals.setBigTileToScreen(screens[curActiveScreen], index, curActiveBlock);
-                dirty = true; bttSave.Enabled = dirty;
+                dirty = true; updateSaveVisibility();
             }
             mapScreen.Invalidate();
         }
@@ -424,7 +424,7 @@ namespace CadEditor
                         Utils.writeWord(arrayToSave, addr + x * (dataStride * wordLen), screens[i][x]);
                 }
             }
-            dirty = !Globals.flushToFile(); bttSave.Enabled = dirty;
+            dirty = !Globals.flushToFile(); updateSaveVisibility();
             return !dirty;
         }
 
@@ -434,9 +434,10 @@ namespace CadEditor
         {
             if (!Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
             {
-                bttSave.Enabled = dirty;
+                updateSaveVisibility();
                 return;
             }
+            updateSaveVisibility();
             bool senderIsScale = sender == cbScale;
             changeLevelIndex(senderIsScale);
             if (senderIsScale)
@@ -478,7 +479,7 @@ namespace CadEditor
         {
             if (!Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
             {
-                bttSave.Enabled = dirty;
+                updateSaveVisibility();
                 e.Cancel = true;
             }
         }
@@ -509,10 +510,10 @@ namespace CadEditor
             Globals.gameType = GameType.Generic;
             if (!Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
             {
-                bttSave.Enabled = dirty;
+                updateSaveVisibility();
                 return false;
             }
- 
+            updateSaveVisibility();
             var f = new OpenFile();
             if (f.ShowDialog() == DialogResult.OK)
             {
@@ -604,8 +605,13 @@ namespace CadEditor
                 Utils.saveDataToFile(SaveScreensCount.Filename, data);
             }
             dirty = true;
-            bttSave.Enabled = dirty;
+            updateSaveVisibility();
             reloadLevel(false);
+        }
+
+        private void updateSaveVisibility()
+        {
+            bttSave.Enabled = dirty;
         }
 
         private void cbShowAxis_CheckedChanged(object sender, EventArgs e)
@@ -619,7 +625,7 @@ namespace CadEditor
         {
             if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
             {
-                bttSave.Enabled = dirty;
+                updateSaveVisibility();
                 var f = new EditHexEditor();
                 f.setHighlightZone(ConfigScript.screensOffset.beginAddr + ConfigScript.screensOffset.recSize * curActiveScreen, ConfigScript.screensOffset.recSize);
                 f.ShowDialog();
@@ -642,7 +648,7 @@ namespace CadEditor
         {
             if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
             {
-                bttSave.Enabled = dirty;
+                updateSaveVisibility();
                 b.Enabled = false;
                 f.Show();
                 f.FormClosed += subeditorClosed(b);
