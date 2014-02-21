@@ -33,13 +33,13 @@ namespace CadEditor
                 resetControls();
             }
 
-            subeditorsDict = new Dictionary<Button, Func<Form>> { 
-                 { btEdit,           ()=>{ var f = new BigBlockEdit(); f.setFormMain(this); return f;} },
-                 { btEditObjs,       ()=>{ var f = new BlockEdit();    f.setFormMain(this); return f;} },
-                 { btEditLayout,     ()=>{ return new EditLayout();}   },
-                 { btEditEnemy,      ()=>{ var f = new EnemyEditor();  f.setFormMain(this); return f;}  },
-                 { btVideo,          ()=>{ return new EditVideo();}    },
-                 { btEditMap,        ()=>{ return new EditMap();}    },
+            subeditorsDict = new Dictionary<ToolStripButton, Func<Form>> { 
+                 { bttBigBlocks,           ()=>{ var f = new BigBlockEdit(); f.setFormMain(this); return f;} },
+                 { bttBlocks,       ()=>{ var f = new BlockEdit();    f.setFormMain(this); return f;} },
+                 { bttLayout,     ()=>{ return new EditLayout();}   },
+                 { bttEnemies,      ()=>{ var f = new EnemyEditor();  f.setFormMain(this); return f;}  },
+                 { bttVideo,          ()=>{ return new EditVideo();}    },
+                 { bttMap,        ()=>{ return new EditMap();}    },
             };
         }
 
@@ -76,15 +76,15 @@ namespace CadEditor
             changeLevelIndex();
 
             bool showImportExport = Globals.gameType != GameType.DT;
-            btImport.Visible = showImportExport;
-            btExport.Visible = showImportExport;
+            bttImport.Visible = showImportExport;
+            bttExport.Visible = showImportExport;
 
-            btEdit.Enabled = ConfigScript.isBigBlockEditorEnabled;
-            btEditObjs.Enabled = ConfigScript.isBlockEditorEnabled;
-            btEditLayout.Enabled = ConfigScript.isLayoutEditorEnabled;
-            btEditEnemy.Enabled = ConfigScript.isEnemyEditorEnabled;
-            btVideo.Enabled = ConfigScript.isVideoEditorEnabled;
-            btEditMap.Enabled = ConfigScript.isMapEditorEnabled;
+            bttBigBlocks.Enabled = ConfigScript.isBigBlockEditorEnabled;
+            bttBlocks.Enabled = ConfigScript.isBlockEditorEnabled;
+            bttLayout.Enabled = ConfigScript.isLayoutEditorEnabled;
+            bttEnemies.Enabled = ConfigScript.isEnemyEditorEnabled;
+            bttVideo.Enabled = ConfigScript.isVideoEditorEnabled;
+            bttMap.Enabled = ConfigScript.isMapEditorEnabled;
 
             if (ConfigScript.getScreenVertical())
                 mapScreen.Size = new Size(ConfigScript.getScreenHeight() * blockWidth * curScale, (ConfigScript.getScreenWidth() + 2) * blockHeight * curScale);
@@ -341,7 +341,7 @@ namespace CadEditor
 
         public static bool fileLoaded = false;
 
-        private Dictionary<Button, Func<Form>> subeditorsDict;
+        private Dictionary<ToolStripButton, Func<Form>> subeditorsDict;
 
         private void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
@@ -477,7 +477,7 @@ namespace CadEditor
 
         private void btSubeditor_Click(object sender, EventArgs e)
         {
-            var button = (Button)sender;
+            var button = (ToolStripButton)sender;
             subeditorOpen(subeditorsDict[button](), button);
         }
 
@@ -533,6 +533,7 @@ namespace CadEditor
         {
             SaveScreensCount.ExportMode = true;
             var f = new SaveScreensCount();
+            f.Text = "Export";
             f.ShowDialog();
             if (SaveScreensCount.Result)
             {
@@ -564,6 +565,7 @@ namespace CadEditor
         {
             SaveScreensCount.ExportMode = false;
             var f = new SaveScreensCount();
+            f.Text = "Import";
             f.ShowDialog();
             if (SaveScreensCount.Result)
             {
@@ -613,7 +615,7 @@ namespace CadEditor
             
         }
 
-        private FormClosedEventHandler subeditorClosed(Button enabledAfterCloseButton)
+        private FormClosedEventHandler subeditorClosed(ToolStripButton enabledAfterCloseButton)
         {
             return delegate(object sender, FormClosedEventArgs e) 
             { 
@@ -623,7 +625,7 @@ namespace CadEditor
 
         }
 
-        private void subeditorOpen(Form f, Button b)
+        private void subeditorOpen(Form f, ToolStripButton b)
         {
             if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
             {
