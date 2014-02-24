@@ -85,6 +85,7 @@
             this.x4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pnElements = new System.Windows.Forms.Panel();
+            this.bttShowBrush = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -479,6 +480,7 @@
             this.toolStripSeparator3,
             this.bttShowNei,
             this.bttAxis,
+            this.bttShowBrush,
             this.toolStripSeparator4,
             this.bttScale});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -722,6 +724,19 @@
             this.pnElements.Size = new System.Drawing.Size(77, 515);
             this.pnElements.TabIndex = 5;
             // 
+            // bttShowBrush
+            // 
+            this.bttShowBrush.Checked = true;
+            this.bttShowBrush.CheckOnClick = true;
+            this.bttShowBrush.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.bttShowBrush.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttShowBrush.Image = ((System.Drawing.Image)(resources.GetObject("bttShowBrush.Image")));
+            this.bttShowBrush.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttShowBrush.Name = "bttShowBrush";
+            this.bttShowBrush.Size = new System.Drawing.Size(23, 22);
+            this.bttShowBrush.Text = "Show active element";
+            this.bttShowBrush.CheckedChanged += new System.EventHandler(this.bttShowBrush_CheckedChanged);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -811,6 +826,7 @@
         private System.Windows.Forms.ToolStripMenuItem x3ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem x4ToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton bttHex;
+        private System.Windows.Forms.ToolStripButton bttShowBrush;
     }
 }
 

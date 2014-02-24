@@ -69,6 +69,7 @@ namespace CadEditor
             dirty = false; updateSaveVisibility();
             showNeiScreens = true;
             showAxis = true;
+            showBrush = true;
             prepareBlocksPanel();
 
             reloadGameType();
@@ -313,7 +314,7 @@ namespace CadEditor
             //Additional rendering
             ConfigScript.renderToMainScreen(g, curScale);
 
-            if (curActiveBlock != -1 && (curDx != OUTSIDE || curDy != OUTSIDE))
+            if (showBrush && curActiveBlock != -1 && (curDx != OUTSIDE || curDy != OUTSIDE))
             {
                 if (!ConfigScript.getScreenVertical())
                     g.DrawImage(bigBlocks.Images[curActiveBlock], (curDx +1)* TILE_SIZE_X, curDy * TILE_SIZE_Y);
@@ -344,6 +345,7 @@ namespace CadEditor
         private bool dirty;
         private bool showNeiScreens;
         private bool showAxis;
+        private bool showBrush;
         private int[][] screens = null;
 
         private byte[] bigBlockIndexes;
@@ -668,6 +670,12 @@ namespace CadEditor
             //mapScreen.Invalidate();
         }
 
+        private void bttShowBrush_CheckedChanged(object sender, EventArgs e)
+        {
+            showBrush = bttShowBrush.Checked;
+            reloadLevel(false);
+        }
+
         private void btHex_Click(object sender, EventArgs e)
         {
             if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
@@ -688,7 +696,6 @@ namespace CadEditor
                 enabledAfterCloseButton.Enabled = true;
                 reloadLevel();
             };
-
         }
 
         private void subeditorOpen(Form f, ToolStripButton b)
