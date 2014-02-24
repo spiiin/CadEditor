@@ -37,8 +37,9 @@
   редактор раскладок картинками:
     Argos No Senshi                                 (все уровни)
     Fist of The Nortstar                            (3 уровня)
-редактор экранов картинками (Sega)
+редактор экранов картинками (Sega/GBA)
     Zombies Ate My Neighbors                        (1 уровень + редактор объектов 1 уровня)
     Contra Hard Corps                               (1 уровень)
     Tiny Toon Adventures: Buster's Hidden Treasure  (1 уровень)
     QuackShot                                       (1 уровень)
+    Final Fantasy Tactics Advance                   (1 уровень)
