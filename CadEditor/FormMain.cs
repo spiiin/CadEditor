@@ -34,12 +34,12 @@ namespace CadEditor
             }
 
             subeditorsDict = new Dictionary<ToolStripButton, Func<Form>> { 
-                 { bttBigBlocks,           ()=>{ var f = new BigBlockEdit(); f.setFormMain(this); return f;} },
+                 { bttBigBlocks,    ()=>{ var f = new BigBlockEdit(); f.setFormMain(this); return f;} },
                  { bttBlocks,       ()=>{ var f = new BlockEdit();    f.setFormMain(this); return f;} },
-                 { bttLayout,     ()=>{ return new EditLayout();}   },
+                 { bttLayout,       ()=>{ return new EditLayout();}   },
                  { bttEnemies,      ()=>{ var f = new EnemyEditor();  f.setFormMain(this); return f;}  },
-                 { bttVideo,          ()=>{ return new EditVideo();}    },
-                 { bttMap,        ()=>{ return new EditMap();}    },
+                 { bttVideo,        ()=>{ return new EditVideo();}    },
+                 { bttMap,          ()=>{ return new EditMap();}    },
             };
         }
 
@@ -312,6 +312,14 @@ namespace CadEditor
 
             //Additional rendering
             ConfigScript.renderToMainScreen(g, curScale);
+
+            if (curActiveBlock != -1 && curDx != OUTSIDE || curDy != OUTSIDE)
+            {
+                if (!ConfigScript.getScreenVertical())
+                    g.DrawImage(bigBlocks.Images[curActiveBlock], (curDx +1)* TILE_SIZE_X, curDy * TILE_SIZE_Y);
+                else
+                    g.DrawImage(bigBlocks.Images[curActiveBlock], curDy * TILE_SIZE_X, (curDx+1) * TILE_SIZE_Y);
+            }
         }
 
         //editor globals
@@ -341,6 +349,10 @@ namespace CadEditor
         private byte[] bigBlockIndexes;
 
         public static bool fileLoaded = false;
+
+        const int OUTSIDE = -10;
+        int curDx = OUTSIDE;
+        int curDy = OUTSIDE;
 
         private Dictionary<ToolStripButton, Func<Form>> subeditorsDict;
 
@@ -666,12 +678,21 @@ namespace CadEditor
                 dx = e.X / (blockWidth * curScale) - 1;
                 dy = e.Y / (blockHeight * curScale);
             }
+            if (curDx != dx || curDy != dy)
+            {
+                curDx = dx;
+                curDy = dy;
+                mapScreen.Invalidate();
+            }
             lbCoords.Text = String.Format("Coords:({0},{1})", dx, dy);
         }
 
         private void mapScreen_MouseLeave(object sender, EventArgs e)
         {
             lbCoords.Text = "Coords:()";
+            curDx = OUTSIDE;
+            curDy = OUTSIDE;
+            mapScreen.Invalidate();
         }
 
         public int CurActiveLevelCad
