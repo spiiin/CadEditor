@@ -73,18 +73,18 @@
             this.bttLayout = new System.Windows.Forms.ToolStripButton();
             this.bttVideo = new System.Windows.Forms.ToolStripButton();
             this.bttMap = new System.Windows.Forms.ToolStripButton();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.pnElements = new System.Windows.Forms.Panel();
+            this.bttHex = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.bttShowNei = new System.Windows.Forms.ToolStripButton();
+            this.bttAxis = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.bttScale = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.bttShowNei = new System.Windows.Forms.ToolStripButton();
-            this.bttAxis = new System.Windows.Forms.ToolStripButton();
             this.x3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.x4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.bttHex = new System.Windows.Forms.ToolStripButton();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.pnElements = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -125,8 +125,10 @@
             this.mapScreen.TabStop = false;
             this.mapScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             this.mapScreen.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseClick);
+            this.mapScreen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseDown);
             this.mapScreen.MouseLeave += new System.EventHandler(this.mapScreen_MouseLeave);
             this.mapScreen.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseMove);
+            this.mapScreen.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseUp);
             // 
             // activeBlock
             // 
@@ -595,6 +597,91 @@
             this.bttMap.Text = "Edit Map";
             this.bttMap.Click += new System.EventHandler(this.btSubeditor_Click);
             // 
+            // bttHex
+            // 
+            this.bttHex.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttHex.Image = ((System.Drawing.Image)(resources.GetObject("bttHex.Image")));
+            this.bttHex.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttHex.Name = "bttHex";
+            this.bttHex.Size = new System.Drawing.Size(23, 22);
+            this.bttHex.Text = "Hex Editor";
+            this.bttHex.Click += new System.EventHandler(this.btHex_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // bttShowNei
+            // 
+            this.bttShowNei.Checked = true;
+            this.bttShowNei.CheckOnClick = true;
+            this.bttShowNei.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.bttShowNei.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttShowNei.Image = ((System.Drawing.Image)(resources.GetObject("bttShowNei.Image")));
+            this.bttShowNei.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttShowNei.Name = "bttShowNei";
+            this.bttShowNei.Size = new System.Drawing.Size(23, 22);
+            this.bttShowNei.Text = "Show neighborns screens ";
+            this.bttShowNei.CheckedChanged += new System.EventHandler(this.cbShowNeighborns_CheckedChanged);
+            // 
+            // bttAxis
+            // 
+            this.bttAxis.Checked = true;
+            this.bttAxis.CheckOnClick = true;
+            this.bttAxis.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.bttAxis.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttAxis.Image = ((System.Drawing.Image)(resources.GetObject("bttAxis.Image")));
+            this.bttAxis.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttAxis.Name = "bttAxis";
+            this.bttAxis.Size = new System.Drawing.Size(23, 22);
+            this.bttAxis.Text = "Axis";
+            this.bttAxis.CheckedChanged += new System.EventHandler(this.cbShowAxis_CheckedChanged);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // bttScale
+            // 
+            this.bttScale.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttScale.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem2,
+            this.toolStripMenuItem3,
+            this.x3ToolStripMenuItem,
+            this.x4ToolStripMenuItem});
+            this.bttScale.Image = ((System.Drawing.Image)(resources.GetObject("bttScale.Image")));
+            this.bttScale.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttScale.Name = "bttScale";
+            this.bttScale.Size = new System.Drawing.Size(32, 22);
+            this.bttScale.Text = "Scale";
+            this.bttScale.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.bttScale_DropDownItemClicked);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(85, 22);
+            this.toolStripMenuItem2.Text = "x1";
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(85, 22);
+            this.toolStripMenuItem3.Text = "x2";
+            // 
+            // x3ToolStripMenuItem
+            // 
+            this.x3ToolStripMenuItem.Name = "x3ToolStripMenuItem";
+            this.x3ToolStripMenuItem.Size = new System.Drawing.Size(85, 22);
+            this.x3ToolStripMenuItem.Text = "x3";
+            // 
+            // x4ToolStripMenuItem
+            // 
+            this.x4ToolStripMenuItem.Name = "x4ToolStripMenuItem";
+            this.x4ToolStripMenuItem.Size = new System.Drawing.Size(85, 22);
+            this.x4ToolStripMenuItem.Text = "x4";
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -634,91 +721,6 @@
             this.pnElements.Name = "pnElements";
             this.pnElements.Size = new System.Drawing.Size(77, 515);
             this.pnElements.TabIndex = 5;
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-            // 
-            // bttScale
-            // 
-            this.bttScale.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttScale.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3,
-            this.x3ToolStripMenuItem,
-            this.x4ToolStripMenuItem});
-            this.bttScale.Image = ((System.Drawing.Image)(resources.GetObject("bttScale.Image")));
-            this.bttScale.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttScale.Name = "bttScale";
-            this.bttScale.Size = new System.Drawing.Size(32, 22);
-            this.bttScale.Text = "Scale";
-            this.bttScale.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.bttScale_DropDownItemClicked);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem2.Text = "x1";
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem3.Text = "x2";
-            // 
-            // bttShowNei
-            // 
-            this.bttShowNei.Checked = true;
-            this.bttShowNei.CheckOnClick = true;
-            this.bttShowNei.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.bttShowNei.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttShowNei.Image = ((System.Drawing.Image)(resources.GetObject("bttShowNei.Image")));
-            this.bttShowNei.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttShowNei.Name = "bttShowNei";
-            this.bttShowNei.Size = new System.Drawing.Size(23, 22);
-            this.bttShowNei.Text = "Show neighborns screens ";
-            this.bttShowNei.CheckedChanged += new System.EventHandler(this.cbShowNeighborns_CheckedChanged);
-            // 
-            // bttAxis
-            // 
-            this.bttAxis.Checked = true;
-            this.bttAxis.CheckOnClick = true;
-            this.bttAxis.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.bttAxis.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttAxis.Image = ((System.Drawing.Image)(resources.GetObject("bttAxis.Image")));
-            this.bttAxis.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttAxis.Name = "bttAxis";
-            this.bttAxis.Size = new System.Drawing.Size(23, 22);
-            this.bttAxis.Text = "Axis";
-            this.bttAxis.CheckedChanged += new System.EventHandler(this.cbShowAxis_CheckedChanged);
-            // 
-            // x3ToolStripMenuItem
-            // 
-            this.x3ToolStripMenuItem.Name = "x3ToolStripMenuItem";
-            this.x3ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.x3ToolStripMenuItem.Text = "x3";
-            // 
-            // x4ToolStripMenuItem
-            // 
-            this.x4ToolStripMenuItem.Name = "x4ToolStripMenuItem";
-            this.x4ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.x4ToolStripMenuItem.Text = "x4";
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
-            // 
-            // bttHex
-            // 
-            this.bttHex.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttHex.Image = ((System.Drawing.Image)(resources.GetObject("bttHex.Image")));
-            this.bttHex.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttHex.Name = "bttHex";
-            this.bttHex.Size = new System.Drawing.Size(23, 22);
-            this.bttHex.Text = "Hex Editor";
-            this.bttHex.Click += new System.EventHandler(this.btHex_Click);
             // 
             // FormMain
             // 

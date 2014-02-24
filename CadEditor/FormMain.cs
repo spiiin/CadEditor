@@ -313,7 +313,7 @@ namespace CadEditor
             //Additional rendering
             ConfigScript.renderToMainScreen(g, curScale);
 
-            if (curActiveBlock != -1 && curDx != OUTSIDE || curDy != OUTSIDE)
+            if (curActiveBlock != -1 && (curDx != OUTSIDE || curDy != OUTSIDE))
             {
                 if (!ConfigScript.getScreenVertical())
                     g.DrawImage(bigBlocks.Images[curActiveBlock], (curDx +1)* TILE_SIZE_X, curDy * TILE_SIZE_Y);
@@ -353,12 +353,13 @@ namespace CadEditor
         const int OUTSIDE = -10;
         int curDx = OUTSIDE;
         int curDy = OUTSIDE;
+        bool curClicked = false;
 
         private Dictionary<ToolStripButton, Func<Form>> subeditorsDict;
 
         private void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
-            int WIDTH  = ConfigScript.getScreenWidth();
+            int WIDTH = ConfigScript.getScreenWidth();
             int HEIGHT = ConfigScript.getScreenHeight();
             int dx, dy;
             if (ConfigScript.getScreenVertical())
@@ -382,31 +383,67 @@ namespace CadEditor
                 lbActiveBlock.Text = String.Format("Label: {0:X}", curActiveBlock);
                 return;
             }
+        }
 
-            if (dx == WIDTH)
+        private void mapScreen_MouseMove(object sender, MouseEventArgs e)
+        {
+            int WIDTH = ConfigScript.getScreenWidth();
+            int HEIGHT = ConfigScript.getScreenHeight();
+            int dx, dy;
+            if (ConfigScript.getScreenVertical())
             {
-                if (curActiveScreen < ConfigScript.screensOffset.recCount - 1)
-                {
-                    int index = dy * WIDTH;
-                    Globals.setBigTileToScreen(screens[curActiveScreen + 1], index, curActiveBlock);
-                    dirty = true; updateSaveVisibility();
-                }
-            }
-            else if (dx == -1)
-            {
-                if (curActiveScreen > 0)
-                {
-                    int index = dy * WIDTH + (WIDTH-1);
-                    Globals.setBigTileToScreen(screens[curActiveScreen - 1], index, curActiveBlock);
-                    dirty = true; updateSaveVisibility();
-                }
+                dy = e.X / (blockWidth * curScale);
+                dx = e.Y / (blockHeight * curScale) - 1;
             }
             else
             {
-                int index = dy * WIDTH + dx;
-                Globals.setBigTileToScreen(screens[curActiveScreen], index, curActiveBlock);
-                dirty = true; updateSaveVisibility();
+                dx = e.X / (blockWidth * curScale) - 1;
+                dy = e.Y / (blockHeight * curScale);
             }
+            lbCoords.Text = String.Format("Coords:({0},{1})", dx, dy);
+
+            bool curDeltaChanged = curDx != dx || curDy != dy;
+            if (curDeltaChanged)
+            {
+                curDx = dx;
+                curDy = dy;
+            }
+            if (curClicked)
+            {
+                if (dx == WIDTH)
+                {
+                    if (curActiveScreen < ConfigScript.screensOffset.recCount - 1)
+                    {
+                        int index = dy * WIDTH;
+                        Globals.setBigTileToScreen(screens[curActiveScreen + 1], index, curActiveBlock);
+                        dirty = true; updateSaveVisibility();
+                    }
+                }
+                else if (dx == -1)
+                {
+                    if (curActiveScreen > 0)
+                    {
+                        int index = dy * WIDTH + (WIDTH - 1);
+                        Globals.setBigTileToScreen(screens[curActiveScreen - 1], index, curActiveBlock);
+                        dirty = true; updateSaveVisibility();
+                    }
+                }
+                else
+                {
+                    int index = dy * WIDTH + dx;
+                    Globals.setBigTileToScreen(screens[curActiveScreen], index, curActiveBlock);
+                    dirty = true; updateSaveVisibility();
+                }
+            }
+            mapScreen.Invalidate();
+        }
+
+        private void mapScreen_MouseLeave(object sender, EventArgs e)
+        {
+            lbCoords.Text = "Coords:()";
+            curDx = OUTSIDE;
+            curDy = OUTSIDE;
+            curClicked = false;
             mapScreen.Invalidate();
         }
 
@@ -665,36 +702,6 @@ namespace CadEditor
             }
         }
 
-        private void mapScreen_MouseMove(object sender, MouseEventArgs e)
-        {
-            int dx, dy;
-            if (ConfigScript.getScreenVertical())
-            {
-                dy = e.X / (blockWidth * curScale);
-                dx = e.Y / (blockHeight * curScale) - 1;
-            }
-            else
-            {
-                dx = e.X / (blockWidth * curScale) - 1;
-                dy = e.Y / (blockHeight * curScale);
-            }
-            if (curDx != dx || curDy != dy)
-            {
-                curDx = dx;
-                curDy = dy;
-                mapScreen.Invalidate();
-            }
-            lbCoords.Text = String.Format("Coords:({0},{1})", dx, dy);
-        }
-
-        private void mapScreen_MouseLeave(object sender, EventArgs e)
-        {
-            lbCoords.Text = "Coords:()";
-            curDx = OUTSIDE;
-            curDy = OUTSIDE;
-            mapScreen.Invalidate();
-        }
-
         public int CurActiveLevelCad
         {
            get { return curActiveLevel; }
@@ -734,6 +741,20 @@ namespace CadEditor
         {
             curScale= bttScale.DropDownItems.IndexOf(e.ClickedItem)+1;
             cbLevel_SelectedIndexChanged(bttScale, new EventArgs());
+        }
+
+        private void mapScreen_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                curClicked = true;
+                mapScreen_MouseMove(sender, e);
+            }
+        }
+
+        private void mapScreen_MouseUp(object sender, MouseEventArgs e)
+        {
+            curClicked = false;
         }
     }
 }
