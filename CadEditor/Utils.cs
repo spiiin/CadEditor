@@ -356,6 +356,12 @@ namespace CadEditor
             data[addr + 1] = (byte)(word & 0xFF);
         }
 
+        public static void writeWordLE(byte[] data, int addr, int word)
+        {
+            data[addr+1] = (byte)(word >> 8);
+            data[addr] = (byte)(word & 0xFF);
+        }
+
         public static void writeInt(byte[] data, int addr, int word)
         {
             data[addr + 0] = (byte)(word >> 24);
@@ -386,7 +392,7 @@ namespace CadEditor
 
         public static void setBlocks(ImageList bigBlocks, int curButtonScale = 2, int blockWidth = 32, int blockHeight = 32, MapViewType curDrawType = MapViewType.Tiles, bool showAxis = true)
         {
-            MapViewType curViewType = MapViewType.Tiles;
+            MapViewType curViewType = curDrawType;
 
             bigBlocks.Images.Clear();
             //smallBlocks.Images.Clear();
