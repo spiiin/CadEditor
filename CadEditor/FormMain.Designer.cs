@@ -77,6 +77,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.bttShowNei = new System.Windows.Forms.ToolStripButton();
             this.bttAxis = new System.Windows.Forms.ToolStripButton();
+            this.bttShowBrush = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.bttScale = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,7 +86,6 @@
             this.x4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pnElements = new System.Windows.Forms.Panel();
-            this.bttShowBrush = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -640,6 +640,19 @@
             this.bttAxis.Text = "Axis";
             this.bttAxis.CheckedChanged += new System.EventHandler(this.cbShowAxis_CheckedChanged);
             // 
+            // bttShowBrush
+            // 
+            this.bttShowBrush.Checked = true;
+            this.bttShowBrush.CheckOnClick = true;
+            this.bttShowBrush.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.bttShowBrush.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttShowBrush.Image = ((System.Drawing.Image)(resources.GetObject("bttShowBrush.Image")));
+            this.bttShowBrush.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttShowBrush.Name = "bttShowBrush";
+            this.bttShowBrush.Size = new System.Drawing.Size(23, 22);
+            this.bttShowBrush.Text = "Show active element";
+            this.bttShowBrush.CheckedChanged += new System.EventHandler(this.bttShowBrush_CheckedChanged);
+            // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
@@ -723,19 +736,6 @@
             this.pnElements.Name = "pnElements";
             this.pnElements.Size = new System.Drawing.Size(77, 515);
             this.pnElements.TabIndex = 5;
-            // 
-            // bttShowBrush
-            // 
-            this.bttShowBrush.Checked = true;
-            this.bttShowBrush.CheckOnClick = true;
-            this.bttShowBrush.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.bttShowBrush.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttShowBrush.Image = ((System.Drawing.Image)(resources.GetObject("bttShowBrush.Image")));
-            this.bttShowBrush.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttShowBrush.Name = "bttShowBrush";
-            this.bttShowBrush.Size = new System.Drawing.Size(23, 22);
-            this.bttShowBrush.Text = "Show active element";
-            this.bttShowBrush.CheckedChanged += new System.EventHandler(this.bttShowBrush_CheckedChanged);
             // 
             // FormMain
             // 

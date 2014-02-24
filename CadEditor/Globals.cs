@@ -143,6 +143,7 @@ namespace CadEditor
             var arrayWithData = Globals.dumpdata != null ? Globals.dumpdata : Globals.romdata;
             int dataStride = ConfigScript.getScreenDataStride();
             int wordLen = ConfigScript.getWordLen();
+            bool littleEndian = ConfigScript.isLittleEndian();
             int beginAddr = ConfigScript.screensOffset.beginAddr + screenIndex * ConfigScript.screensOffset.recSize * dataStride * wordLen;
             if (wordLen == 1)
             {
@@ -153,8 +154,16 @@ namespace CadEditor
             }
             else if (wordLen == 2)
             {
-                for (int i = 0; i < ConfigScript.screensOffset.recSize; i++)
-                    result[i] = Utils.readWord(arrayWithData, beginAddr + i * (dataStride * wordLen));
+                if (littleEndian)
+                {
+                    for (int i = 0; i < ConfigScript.screensOffset.recSize; i++)
+                        result[i] = Utils.readWordLE(arrayWithData, beginAddr + i * (dataStride * wordLen));
+                }
+                else
+                {
+                    for (int i = 0; i < ConfigScript.screensOffset.recSize; i++)
+                        result[i] = Utils.readWord(arrayWithData, beginAddr + i * (dataStride * wordLen));
+                }
             }
             return result;
         }
@@ -190,7 +199,7 @@ namespace CadEditor
             }
             else
             {
-                screenData[index] = (byte)value;
+                screenData[index] = value;
             }
         }
 

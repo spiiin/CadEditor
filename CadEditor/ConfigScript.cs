@@ -65,6 +65,7 @@ namespace CadEditor
             screenVertical = callFromScript(asm, data, "*.getScreenVertical", false);
             screenDataStride = callFromScript(asm, data, "*.getScreenDataStride", 1);
             wordLen = callFromScript(asm, data, "*.getWordLen", 1);
+            littleEndian = callFromScript(asm, data, "*.isLittleEndian", false);
             levelRecs = callFromScript(asm, data,"*.getLevelRecs", new List<LevelRec>());
 
             minObjCoordX = callFromScript(asm, data, "*.getMinObjCoordX", 0);
@@ -274,6 +275,11 @@ namespace CadEditor
             return wordLen;
         }
 
+        public static bool isLittleEndian()
+        {
+            return littleEndian;
+        }
+
         public static int getBlocksPicturesWidth()
         {
             return blocksPicturesWidth;
@@ -307,6 +313,7 @@ namespace CadEditor
         public static bool screenVertical;
         public static int screenDataStride;
         public static int wordLen;
+        public static bool littleEndian;
 
         public static int minObjCoordX;
         public static int minObjCoordY;

@@ -153,7 +153,7 @@ namespace CadEditor
 
             int smallBlockScaleFactor = curButtonScale;
             var im = Video.makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsType);
-            smallBlocks.ImageSize = new System.Drawing.Size(16*smallBlockScaleFactor, 16*smallBlockScaleFactor);
+            smallBlocks.ImageSize = new Size(16*smallBlockScaleFactor, 16*smallBlockScaleFactor);
             smallBlocks.Images.AddStrip(im);
 
             //tt version hardcode
@@ -278,7 +278,10 @@ namespace CadEditor
                   tileRect  = new Rectangle((i % WIDTH + 1) * TILE_SIZE_X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
 
                 if ((visibleRect.Contains(tileRect)) || (visibleRect.IntersectsWith(tileRect)))
-                  g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
+                {
+                    if (bigBlockNo < bigBlocks.Images.Count)
+                      g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
+                }
             }
             if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen > 0))
             {
@@ -289,7 +292,8 @@ namespace CadEditor
                     {
                         int index = indexesPrev[i];
                         int bigBlockNo = Globals.getBigTileNoFromScreen(indexesPrev, i);
-                        g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle(0, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y));
+                        if (bigBlockNo < bigBlocks.Images.Count)
+                          g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle(0, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y));
                     }
                 }
             }
@@ -302,7 +306,8 @@ namespace CadEditor
                     {
                         int index = indexesNext[i];
                         int bigBlockNo = Globals.getBigTileNoFromScreen(indexesNext, i);
-                        g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle((WIDTH + 1) * TILE_SIZE_X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y));
+                        if (bigBlockNo < bigBlocks.Images.Count)
+                          g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle((WIDTH + 1) * TILE_SIZE_X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y));
                     }
                 }
             }
@@ -458,6 +463,7 @@ namespace CadEditor
         {
             var arrayToSave = Globals.dumpdata != null ? Globals.dumpdata : Globals.romdata;
             int wordLen = ConfigScript.getWordLen();
+            bool littleEndian = ConfigScript.isLittleEndian();
             //write back tiles
             int dataStride = ConfigScript.getScreenDataStride();
             for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
@@ -470,8 +476,16 @@ namespace CadEditor
                 }
                 else if (wordLen == 2)
                 {
-                    for (int x = 0; x < ConfigScript.screensOffset.recSize; x++)
-                        Utils.writeWord(arrayToSave, addr + x * (dataStride * wordLen), screens[i][x]);
+                    if (littleEndian)
+                    {
+                        for (int x = 0; x < ConfigScript.screensOffset.recSize; x++)
+                            Utils.writeWordLE(arrayToSave, addr + x * (dataStride * wordLen), screens[i][x]);
+                    }
+                    else
+                    {
+                        for (int x = 0; x < ConfigScript.screensOffset.recSize; x++)
+                            Utils.writeWord(arrayToSave, addr + x * (dataStride * wordLen), screens[i][x]);
+                    }
                 }
             }
             dirty = !Globals.flushToFile(); updateSaveVisibility();
@@ -746,7 +760,7 @@ namespace CadEditor
 
         private void bttScale_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            curScale= bttScale.DropDownItems.IndexOf(e.ClickedItem)+1;
+            curScale = curButtonScale = bttScale.DropDownItems.IndexOf(e.ClickedItem)+1;
             cbLevel_SelectedIndexChanged(bttScale, new EventArgs());
         }
 
