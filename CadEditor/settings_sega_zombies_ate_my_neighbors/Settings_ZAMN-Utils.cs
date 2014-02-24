@@ -185,6 +185,40 @@ public static class ZamnUtils
     return true;
   }
   
+  public static List<ObjectRec> getItemsFromArray(byte[] romdata, int baseAddr, int objCount)
+  {
+    var objects = new List<ObjectRec>();
+    const int ITEM_REC_LEN = 6;
+    for (int i = 0; i < objCount; i++)
+    {
+        int x           = Utils.readWord(romdata, baseAddr + i * ITEM_REC_LEN + 0);
+        int y           = Utils.readWord(romdata, baseAddr + i * ITEM_REC_LEN + 2);
+        int t           = Utils.readWord(romdata, baseAddr + i * ITEM_REC_LEN + 4);
+        var obj = new ObjectRec(t, 0, 0, x/2, y/2);
+        objects.Add(obj);
+    }
+    return objects;
+  }
+  
+  public static bool setItemsToArray(List<ObjectRec> objects, byte[] romdata, int baseAddr, int objCount)
+  {
+    const int ITEM_REC_LEN = 6;
+    for (int i = 0; i < objects.Count; i++)
+    {
+        var obj = objects[i];
+        Utils.writeWord(romdata, baseAddr + i * ITEM_REC_LEN + 0, obj.x*2);
+        Utils.writeWord(romdata, baseAddr + i * ITEM_REC_LEN + 2, obj.y*2);
+        Utils.writeWord(romdata, baseAddr + i * ITEM_REC_LEN + 4, obj.type);
+    }
+    for (int i = objects.Count; i < objCount; i++)
+    {
+        Utils.writeWord(romdata, baseAddr + i * ITEM_REC_LEN + 0, 0x00);
+        Utils.writeWord(romdata, baseAddr + i * ITEM_REC_LEN + 2, 0x00);
+        Utils.writeWord(romdata, baseAddr + i * ITEM_REC_LEN + 4, 0x00);
+    }
+    return true;
+  }
+  
   //-----------------------------------------------------------------------------------------------
   public static List<ObjectRec> getVictimsFromRom(int levelNo)
   {
@@ -252,6 +286,41 @@ public static class ZamnUtils
     byte[] data = new byte[objCount * ENEMY_REC_LEN];
     setEnemiesToArray(objects, data, baseAddr, objCount);
     Utils.saveDataToFile("settings_sega_zombies_ate_my_neighbors/enemies.bin", data);
+    return true;
+  }
+  
+  public static List<ObjectRec> getItemsFromRom(int levelNo)
+  {
+    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    int baseAddr = lr.objectsBeginAddr;
+    int objCount = lr.objCount;
+    return getItemsFromArray(Globals.romdata, baseAddr, objCount);
+  }
+  
+  public static List<ObjectRec> getItemsFromFile(int levelNo)
+  {
+    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    byte[] data = Utils.loadDataFromFile("settings_sega_zombies_ate_my_neighbors/items.bin");
+    return getItemsFromArray(data, 0, lr.objCount);
+  }
+  
+  public static bool setItemsToRom(int levelNo, List<ObjectRec> objects)
+  {
+    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    int baseAddr = lr.objectsBeginAddr;
+    int objCount = lr.objCount;
+    return setItemsToArray(objects, Globals.romdata, baseAddr, objCount);
+  }
+  
+  public static bool setItemsToFile(int levelNo, List<ObjectRec> objects)
+  {
+    const int ITEMS_REC_LEN = 6;
+    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    int baseAddr = 0;
+    int objCount = lr.objCount;
+    byte[] data = new byte[objCount * ITEMS_REC_LEN];
+    setItemsToArray(objects, data, baseAddr, objCount);
+    Utils.saveDataToFile("settings_sega_zombies_ate_my_neighbors/items.bin", data);
     return true;
   }
   
