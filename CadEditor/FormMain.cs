@@ -87,9 +87,9 @@ namespace CadEditor
             bttMap.Enabled = ConfigScript.isMapEditorEnabled;
 
             if (ConfigScript.getScreenVertical())
-                mapScreen.Size = new Size(ConfigScript.getScreenHeight() * blockWidth * curScale, (ConfigScript.getScreenWidth() + 2) * blockHeight * curScale);
+                mapScreen.Size = new Size((int)(ConfigScript.getScreenHeight() * blockWidth * curScale), (int)((ConfigScript.getScreenWidth() + 2) * blockHeight * curScale));
             else
-                mapScreen.Size = new Size((ConfigScript.getScreenWidth() + 2) * blockWidth * curScale, ConfigScript.getScreenHeight() * blockHeight * curScale);
+                mapScreen.Size = new Size((int)((ConfigScript.getScreenWidth() + 2) * blockWidth * curScale), (int)(ConfigScript.getScreenHeight() * blockHeight * curScale));
         }
 
         private void reloadLevel(bool reloadScreens = true, bool reloadBlockPanel = false)
@@ -111,7 +111,7 @@ namespace CadEditor
         {
             bigBlocks.Images.Clear();
             smallBlocks.Images.Clear();
-            bigBlocks.ImageSize = new Size(curButtonScale * blockWidth, curButtonScale * blockHeight);
+            bigBlocks.ImageSize = new Size((int)(curButtonScale * blockWidth), (int)(curButtonScale * blockHeight));
 
             //if using pictures
             if (ConfigScript.usePicturesInstedBlocks)
@@ -151,9 +151,9 @@ namespace CadEditor
 
             MapViewType smallObjectsType = curViewType == MapViewType.ObjType ? MapViewType.ObjType : MapViewType.Tiles;
 
-            int smallBlockScaleFactor = curButtonScale;
+            float smallBlockScaleFactor = curButtonScale;
             var im = Video.makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsType);
-            smallBlocks.ImageSize = new Size(16*smallBlockScaleFactor, 16*smallBlockScaleFactor);
+            smallBlocks.ImageSize = new Size((int)(16*smallBlockScaleFactor), (int)(16*smallBlockScaleFactor));
             smallBlocks.Images.AddStrip(im);
 
             //tt version hardcode
@@ -165,16 +165,16 @@ namespace CadEditor
                 for (int i = 0; i < 4; i++)
                 {
                     smallBlocksAll[i].Images.Clear();
-                    smallBlocksAll[i].ImageSize = new System.Drawing.Size(16 * smallBlockScaleFactor, 16 * smallBlockScaleFactor);
+                    smallBlocksAll[i].ImageSize = new Size((int)(16 * smallBlockScaleFactor), (int)(16 * smallBlockScaleFactor));
                     smallBlocksAll[i].Images.AddStrip(Video.makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsType, i));
                 }
                 smallBlocksColorBytes = Globals.getTTSmallBlocksColorBytes(blockId);
             }
 
-            int bbRectPosX = (blockWidth/2)*curButtonScale;
-            int bbRectSizeX = (blockWidth / 2) * curButtonScale;
-            int bbRectPosY = (blockHeight /2) * curButtonScale;
-            int bbRectSizeY = (blockHeight/2) * curButtonScale;
+            int bbRectPosX = (int)((blockWidth/2)*curButtonScale);
+            int bbRectSizeX = (int)((blockWidth / 2) * curButtonScale);
+            int bbRectPosY = (int)((blockHeight /2) * curButtonScale);
+            int bbRectSizeY = (int)((blockHeight/2) * curButtonScale);
 
             for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
             {
@@ -182,13 +182,13 @@ namespace CadEditor
                 switch (Globals.gameType)
                 {
                     case GameType.TT:
-                        b = Video.makeBigBlockTT(i, blockWidth * curButtonScale, blockHeight * curButtonScale, bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
+                        b = Video.makeBigBlockTT(i, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
                         break;
                     case GameType._3E:
-                        b = Video.makeBigBlock3E(i, blockWidth * curButtonScale, blockHeight * curButtonScale, bigBlockIndexes, smallBlocks);
+                        b = Video.makeBigBlock3E(i, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocks);
                         break;
                     default:
-                        b = Video.makeBigBlock(i, blockWidth * curButtonScale, blockHeight * curButtonScale, bigBlockIndexes, smallBlocks);
+                        b = Video.makeBigBlock(i, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocks);
                         break;
                 } 
                 if (curViewType == MapViewType.ObjNumbers) 
@@ -200,7 +200,7 @@ namespace CadEditor
             //tt add
             for (int i = ConfigScript.getBigBlocksCount(); i < 256; i++)
             {
-                bigBlocks.Images.Add(Video.emptyScreen(blockWidth*curButtonScale,blockHeight*curButtonScale));
+                bigBlocks.Images.Add(Video.emptyScreen((int)(blockWidth*curButtonScale),(int)(blockHeight*curButtonScale)));
             }
             curActiveBlock = 0;
 
@@ -217,7 +217,7 @@ namespace CadEditor
             for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
             {
                 var but = new Button();
-                but.Size = new Size(blockWidth*curButtonScale+1, blockHeight*curButtonScale+1);
+                but.Size = new Size((int)(blockWidth*curButtonScale+1), (int)(blockHeight*curButtonScale+1));
                 but.ImageList = bigBlocks;
                 but.ImageIndex = i;
                 but.Click += new EventHandler(buttonBlockClick);
@@ -259,8 +259,8 @@ namespace CadEditor
 
             int WIDTH = ConfigScript.getScreenWidth();
             int HEIGHT = ConfigScript.getScreenHeight();
-            int TILE_SIZE_X = blockWidth * curScale;
-            int TILE_SIZE_Y = blockHeight * curScale;
+            int TILE_SIZE_X = (int)(blockWidth * curScale);
+            int TILE_SIZE_Y = (int)(blockHeight * curScale);
             int SIZE = WIDTH * HEIGHT;
             if (!fileLoaded)
                 return;
@@ -316,8 +316,8 @@ namespace CadEditor
             else
               g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(TILE_SIZE_X, 0, TILE_SIZE_X * WIDTH, TILE_SIZE_Y * HEIGHT));
 
-            //Additional rendering
-            ConfigScript.renderToMainScreen(g, curScale);
+            //Additional rendering  //float to int!
+            ConfigScript.renderToMainScreen(g, (int)curScale);
 
             if (showBrush && curActiveBlock != -1 && (curDx != OUTSIDE || curDy != OUTSIDE))
             {
@@ -341,8 +341,8 @@ namespace CadEditor
         private int curActiveBlockNo = 0;
         private int curActivePalleteNo = 0;
 
-        private int curScale = 2;
-        private int curButtonScale = 2;
+        private float curScale = 2;
+        private float curButtonScale = 2;
         private int blockWidth = 32;
         private int blockHeight = 32;
 
@@ -371,13 +371,13 @@ namespace CadEditor
             int dx, dy;
             if (ConfigScript.getScreenVertical())
             {
-                dy = e.X / (blockWidth * curScale);
-                dx = e.Y / (blockHeight * curScale) - 1;
+                dy = e.X / (int)(blockWidth * curScale);
+                dx = e.Y / (int)(blockHeight * curScale) - 1;
             }
             else
             {
-                dx = e.X / (blockWidth * curScale) - 1;
-                dy = e.Y / (blockHeight * curScale);
+                dx = e.X / (int)(blockWidth * curScale) - 1;
+                dy = e.Y / (int)(blockHeight * curScale);
             }
 
             if (e.Button == MouseButtons.Right)
@@ -399,13 +399,13 @@ namespace CadEditor
             int dx, dy;
             if (ConfigScript.getScreenVertical())
             {
-                dy = e.X / (blockWidth * curScale);
-                dx = e.Y / (blockHeight * curScale) - 1;
+                dy = e.X / (int)(blockWidth * curScale);
+                dx = e.Y / (int)(blockHeight * curScale) - 1;
             }
             else
             {
-                dx = e.X / (blockWidth * curScale) - 1;
-                dy = e.Y / (blockHeight * curScale);
+                dx = e.X / (int)(blockWidth * curScale) - 1;
+                dy = e.Y / (int)(blockHeight * curScale);
             }
             lbCoords.Text = String.Format("Coords:({0},{1})", dx, dy);
 
@@ -507,9 +507,9 @@ namespace CadEditor
             if (senderIsScale)
             {
                 if (ConfigScript.getScreenVertical())
-                    mapScreen.Size = new Size(ConfigScript.getScreenHeight() * blockWidth * curScale, (ConfigScript.getScreenWidth() + 2) * blockHeight * curScale);
+                    mapScreen.Size = new Size((int)(ConfigScript.getScreenHeight() * blockWidth * curScale), (int)((ConfigScript.getScreenWidth() + 2) * blockHeight * curScale));
                 else
-                    mapScreen.Size = new Size((ConfigScript.getScreenWidth() + 2) * blockWidth * curScale, ConfigScript.getScreenHeight() * blockHeight * curScale);
+                    mapScreen.Size = new Size((int)((ConfigScript.getScreenWidth() + 2) * blockWidth * curScale), (int)(ConfigScript.getScreenHeight() * blockHeight * curScale));
             }
         }
 
@@ -760,7 +760,8 @@ namespace CadEditor
 
         private void bttScale_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            curScale = curButtonScale = bttScale.DropDownItems.IndexOf(e.ClickedItem)+1;
+            float[] scaleFactors = { 0.25f, 0.5f, 1.0f, 2.0f, 3.0f, 4.0f };
+            curScale = curButtonScale = scaleFactors [bttScale.DropDownItems.IndexOf(e.ClickedItem)];
             cbLevel_SelectedIndexChanged(bttScale, new EventArgs());
         }
 

@@ -102,15 +102,15 @@ namespace CadEditor
                 NesColors = ConfigScript.nesColors;
         }
 
-        public static Bitmap makeImageStrip(byte[] videoChunk, byte[] pallete, int subPalIndex, int scale, bool scaleAccurate = true)
+        public static Bitmap makeImageStrip(byte[] videoChunk, byte[] pallete, int subPalIndex, float scale, bool scaleAccurate = true)
         {
-            Bitmap res = new Bitmap(8 * CHUNK_COUNT * scale, 8 * scale); 
+            Bitmap res = new Bitmap((int)(8 * CHUNK_COUNT * scale), (int)(8 * scale)); 
             using (Graphics g = Graphics.FromImage(res))
             {
                 for (int i = 0; i < CHUNK_COUNT; i++)
                 {
-                    int bitmapScale = scaleAccurate ? scale : 1;
-                    Bitmap onePic = new Bitmap(8*bitmapScale, 8*bitmapScale);
+                    float bitmapScale = scaleAccurate ? scale : 1;
+                    Bitmap onePic = new Bitmap((int)(8*bitmapScale), (int)(8*bitmapScale));
                     int beginIndex = 16 * i;
                     for (int line = 0; line < 8; line++)
                     {
@@ -120,25 +120,29 @@ namespace CadEditor
                             bool bitHi = Utils.getBit(videoChunk[beginIndex + line + 8], 8 - pixel);
                             int palIndex = mixBits(bitHi, bitLo);
                             Color c = NesColors[pallete[subPalIndex * 4 +palIndex]];
-                            if (scaleAccurate)
+                            if (scaleAccurate && (scale > 1.0f))
                             {
-                                for (int scaleFillX = 0; scaleFillX < scale; scaleFillX++)
-                                    for (int scaleFillY = 0; scaleFillY < scale; scaleFillY++)
-                                        onePic.SetPixel(pixel * scale + scaleFillX, line * scale + scaleFillY, c);
+                                int scaleInt = (int)scale;
+                                for (int scaleFillX = 0; scaleFillX < scaleInt; scaleFillX++)
+                                    for (int scaleFillY = 0; scaleFillY < scaleInt; scaleFillY++)
+                                        onePic.SetPixel(pixel * scaleInt + scaleFillX, line * scaleInt + scaleFillY, c);
                             }
                             else
                             {
-                                onePic.SetPixel(pixel, line, c);
+                                if (scale > 1.0f)
+                                    onePic.SetPixel(pixel, line, c);
+                                else
+                                    onePic.SetPixel((int)(pixel*scale), (int)(line*scale), c);
                             }
                         }
                     }
-                    g.DrawImage(onePic, new Rectangle(i * 8 * scale, 0, 8*scale, 8*scale));
+                    g.DrawImage(onePic, new Rectangle((int)(i * 8 * scale), 0, (int)(8*scale), (int)(8*scale)));
                 }
             }
             return res;
         }
 
-        public static Bitmap makeObjectsStrip(byte videoPageId, byte tilesId, byte palId, int scale, MapViewType drawType, int constantSubpal = -1)
+        public static Bitmap makeObjectsStrip(byte videoPageId, byte tilesId, byte palId, float scale, MapViewType drawType, int constantSubpal = -1)
         {
             byte[] videoChunk = ConfigScript.getVideoChunk(videoPageId);
 
@@ -151,12 +155,12 @@ namespace CadEditor
             var objStrip3 = makeImageStrip(videoChunk, palette, 2, scale);
             var objStrip4 = makeImageStrip(videoChunk, palette, 3, scale);
             var objStrips = new[] { objStrip1, objStrip2, objStrip3, objStrip4 };
-            Bitmap res = new Bitmap(16 * blocksCount * scale, 16 * scale);
+            Bitmap res = new Bitmap((int)(16 * blocksCount * scale), (int)(16 * scale));
             using (Graphics g = Graphics.FromImage(res))
             {
                 for (int i = 0; i < blocksCount; i++)
                 {
-                    var mblock = new Bitmap(16 * scale, 16 * scale);
+                    var mblock = new Bitmap((int)(16 * scale), (int)(16 * scale));
                     var co = objects[i];
                     Bitmap curStrip;
                     if (constantSubpal == -1)
@@ -176,32 +180,34 @@ namespace CadEditor
                         curStrip = objStrips[constantSubpal];
                     }
 
+                    int scaleInt8 = (int)(scale * 8);
+                    int scaleInt16 = (int)(scale * 16);
                     using (Graphics g2 = Graphics.FromImage(mblock))
                     {
-                        g2.DrawImage(curStrip, new Rectangle(0, 0, 8 * scale, 8 * scale), new Rectangle(co.c1 * 8 * scale, 0, 8 * scale, 8 * scale), GraphicsUnit.Pixel);
-                        g2.DrawImage(curStrip, new Rectangle(8 * scale, 0, 8 * scale, 8 * scale), new Rectangle(co.c2 * 8 * scale, 0, 8 * scale, 8 * scale), GraphicsUnit.Pixel);
-                        g2.DrawImage(curStrip, new Rectangle(0, 8 * scale, 8 * scale, 8 * scale), new Rectangle(co.c3 * 8 * scale, 0, 8 * scale, 8 * scale), GraphicsUnit.Pixel);
-                        g2.DrawImage(curStrip, new Rectangle(8 * scale, 8 * scale, 8 * scale, 8 * scale), new Rectangle(co.c4 * 8 * scale, 0, 8 * scale, 8 * scale), GraphicsUnit.Pixel);
+                        g2.DrawImage(curStrip, new Rectangle(0, 0, scaleInt8, scaleInt8), new Rectangle(co.c1 * scaleInt8, 0, scaleInt8, scaleInt8), GraphicsUnit.Pixel);
+                        g2.DrawImage(curStrip, new Rectangle(scaleInt8, 0, scaleInt8, scaleInt8), new Rectangle(co.c2 * scaleInt8, 0, scaleInt8, scaleInt8), GraphicsUnit.Pixel);
+                        g2.DrawImage(curStrip, new Rectangle(0, scaleInt8, scaleInt8, scaleInt8), new Rectangle(co.c3 * scaleInt8, 0, scaleInt8, scaleInt8), GraphicsUnit.Pixel);
+                        g2.DrawImage(curStrip, new Rectangle(scaleInt8, scaleInt8, scaleInt8, scaleInt8), new Rectangle(co.c4 * scaleInt8, 0, scaleInt8, scaleInt8), GraphicsUnit.Pixel);
                         if (drawType == MapViewType.ObjType)
                         {
                             if (Globals.gameType == GameType.DT2)
                             {
-                                g2.FillRectangle(new SolidBrush(CadObjectTypeColors[co.getTypeForDt2(i)]), new Rectangle(0, 0, 16 * scale, 16 * scale));
+                                g2.FillRectangle(new SolidBrush(CadObjectTypeColors[co.getTypeForDt2(i)]), new Rectangle(0, 0, scaleInt16, scaleInt16));
                                 g2.DrawString(String.Format("{0:X}", co.getTypeForDt2(i)), new Font("Arial", 6), Brushes.White, new Point(0, 0));
                             }
                             else
                             {
-                                g2.FillRectangle(new SolidBrush(CadObjectTypeColors[co.getType()]), new Rectangle(0, 0, 16 * scale, 16 * scale));
+                                g2.FillRectangle(new SolidBrush(CadObjectTypeColors[co.getType()]), new Rectangle(0, 0, scaleInt16, scaleInt16));
                                 g2.DrawString(String.Format("{0:X}", co.getType()), new Font("Arial", 6), Brushes.White, new Point(0, 0));
                             }
                         }
                         else if (drawType == MapViewType.ObjNumbers)
                         {
-                            g2.FillRectangle(new SolidBrush(Color.FromArgb(192, 255, 255, 255)), new Rectangle(0, 0, 16 * scale, 16 * scale));
+                            g2.FillRectangle(new SolidBrush(Color.FromArgb(192, 255, 255, 255)), new Rectangle(0, 0, scaleInt16, scaleInt16));
                             g2.DrawString(String.Format("{0:X}", i), new Font("Arial", 6), Brushes.Red, new Point(0, 0));
                         }
                     }
-                    g.DrawImage(mblock, new Rectangle(i*16*scale, 0, 16*scale, 16*scale));
+                    g.DrawImage(mblock, new Rectangle(i * scaleInt16, 0, scaleInt16, scaleInt16));
                 }
             }
             return res;

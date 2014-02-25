@@ -390,13 +390,13 @@ namespace CadEditor
             return rect;
         }
 
-        public static void setBlocks(ImageList bigBlocks, int curButtonScale = 2, int blockWidth = 32, int blockHeight = 32, MapViewType curDrawType = MapViewType.Tiles, bool showAxis = true)
+        public static void setBlocks(ImageList bigBlocks, float curButtonScale = 2, int blockWidth = 32, int blockHeight = 32, MapViewType curDrawType = MapViewType.Tiles, bool showAxis = true)
         {
             MapViewType curViewType = curDrawType;
 
             bigBlocks.Images.Clear();
             //smallBlocks.Images.Clear();
-            bigBlocks.ImageSize = new Size(curButtonScale * blockWidth, curButtonScale * blockHeight);
+            bigBlocks.ImageSize = new Size((int)(curButtonScale * blockWidth), (int)(curButtonScale * blockHeight));
 
             //if using pictures
             if (ConfigScript.usePicturesInstedBlocks)
@@ -404,7 +404,7 @@ namespace CadEditor
                 if (ConfigScript.blocksPicturesFilename != "")
                 {
                     var imSrc = Image.FromFile(ConfigScript.blocksPicturesFilename);
-                    var imResized = Utils.ResizeBitmap(imSrc, curButtonScale * blockWidth * ConfigScript.getBigBlocksCount(), curButtonScale * blockHeight);
+                    var imResized = Utils.ResizeBitmap(imSrc, (int)(curButtonScale * blockWidth * ConfigScript.getBigBlocksCount()), (int)(curButtonScale * blockHeight));
                     bigBlocks.Images.AddStrip(imResized);
                 }
                 if (ConfigScript.blocksPicturesFilenames != null)
@@ -420,24 +420,24 @@ namespace CadEditor
                     }
                 }
                 for (int i = bigBlocks.Images.Count; i < 256; i++)
-                    bigBlocks.Images.Add(Video.emptyScreen(blockWidth * curButtonScale, blockHeight * curButtonScale));
+                    bigBlocks.Images.Add(Video.emptyScreen((int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale)));
                 if (showAxis)
                 {
                     for (int i = 0; i < 256; i++)
                     {
                         var im1 = bigBlocks.Images[i];
                         using (var g = Graphics.FromImage(im1))
-                            g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), new Rectangle(0, 0, blockWidth * curButtonScale, blockHeight * curButtonScale));
+                            g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), new Rectangle(0, 0, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale)));
                         bigBlocks.Images[i] = im1;
                     }
                 }
 
                 if (curViewType == MapViewType.ObjNumbers)
                 {
-                    int _bbRectPosX = (blockWidth / 2) * curButtonScale;
-                    int _bbRectSizeX = (blockWidth / 2) * curButtonScale;
-                    int _bbRectPosY = (blockHeight / 2) * curButtonScale;
-                    int _bbRectSizeY = (blockHeight / 2) * curButtonScale;
+                    int _bbRectPosX = (int)((blockWidth / 2) * curButtonScale);
+                    int _bbRectSizeX = (int)((blockWidth / 2) * curButtonScale);
+                    int _bbRectPosY = (int)((blockHeight / 2) * curButtonScale);
+                    int _bbRectSizeY = (int)((blockHeight / 2) * curButtonScale);
                     for (int i = 0; i < 256; i++)
                     {
                         var im1 = bigBlocks.Images[i];
