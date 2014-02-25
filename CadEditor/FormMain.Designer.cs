@@ -400,8 +400,8 @@
             this.cbViewType.FormattingEnabled = true;
             this.cbViewType.Items.AddRange(new object[] {
             "Tiles",
-            "Obj types",
-            "Obj numbers"});
+            "Tile types",
+            "Tile numbers"});
             this.cbViewType.Location = new System.Drawing.Point(3, 139);
             this.cbViewType.Name = "cbViewType";
             this.cbViewType.Size = new System.Drawing.Size(64, 21);
