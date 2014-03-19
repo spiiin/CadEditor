@@ -66,6 +66,8 @@ namespace CadEditor
                 but.Size = new Size(32, 32);
                 but.ImageList = smallBlocks;
                 but.ImageIndex = i;
+                but.Margin = new Padding(0);
+                but.Padding = new Padding(0);
                 but.Click += new EventHandler(buttonObjClick);
                 blocksPanel.Controls.Add(but);
             }
