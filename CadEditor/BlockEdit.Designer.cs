@@ -230,9 +230,9 @@
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(5, 7);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(38, 13);
+            this.label14.Size = new System.Drawing.Size(39, 13);
             this.label14.TabIndex = 16;
-            this.label14.Text = "Tileset";
+            this.label14.Text = "Blocks";
             // 
             // cbTileset
             // 
