@@ -113,9 +113,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(7, 29);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 13);
+            this.label1.Size = new System.Drawing.Size(42, 13);
             this.label1.TabIndex = 9;
-            this.label1.Text = "Select tileset:";
+            this.label1.Text = "Blocks:";
             // 
             // btSave
             // 
@@ -263,9 +263,9 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(3, 43);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(69, 13);
+            this.label8.Size = new System.Drawing.Size(59, 13);
             this.label8.TabIndex = 50;
-            this.label8.Text = "Small blocks:";
+            this.label8.Text = "Big blocks:";
             // 
             // cbSmallBlock
             // 
@@ -335,9 +335,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(8, 3);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(64, 13);
+            this.label7.Size = new System.Drawing.Size(37, 13);
             this.label7.TabIndex = 42;
-            this.label7.Text = "VideoBlock:";
+            this.label7.Text = "Video:";
             // 
             // cbVideoNo
             // 
@@ -383,9 +383,9 @@
             this.cbViewType.DropDownWidth = 128;
             this.cbViewType.FormattingEnabled = true;
             this.cbViewType.Items.AddRange(new object[] {
-            "Tiles",
-            "Tile types",
-            "Tile numbers"});
+            "Blocks",
+            "Block Types",
+            "Block numbers"});
             this.cbViewType.Location = new System.Drawing.Point(75, 208);
             this.cbViewType.Name = "cbViewType";
             this.cbViewType.Size = new System.Drawing.Size(64, 21);

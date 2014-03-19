@@ -80,14 +80,14 @@
             this.bttShowBrush = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.bttScale = new System.Windows.Forms.ToolStripSplitButton();
+            this.x025ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.x05ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.x3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.x4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pnElements = new System.Windows.Forms.Panel();
-            this.x05ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.x025ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -399,9 +399,9 @@
             this.cbViewType.DropDownWidth = 128;
             this.cbViewType.FormattingEnabled = true;
             this.cbViewType.Items.AddRange(new object[] {
-            "Tiles",
-            "Tile types",
-            "Tile numbers"});
+            "Blocks",
+            "Block types",
+            "Block numbers"});
             this.cbViewType.Location = new System.Drawing.Point(3, 139);
             this.cbViewType.Name = "cbViewType";
             this.cbViewType.Size = new System.Drawing.Size(64, 21);
@@ -677,28 +677,40 @@
             this.bttScale.Text = "Scale";
             this.bttScale.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.bttScale_DropDownItemClicked);
             // 
+            // x025ToolStripMenuItem
+            // 
+            this.x025ToolStripMenuItem.Name = "x025ToolStripMenuItem";
+            this.x025ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.x025ToolStripMenuItem.Text = "x0.25";
+            // 
+            // x05ToolStripMenuItem
+            // 
+            this.x05ToolStripMenuItem.Name = "x05ToolStripMenuItem";
+            this.x05ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.x05ToolStripMenuItem.Text = "x0.5";
+            // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(100, 22);
             this.toolStripMenuItem2.Text = "x1";
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(100, 22);
             this.toolStripMenuItem3.Text = "x2";
             // 
             // x3ToolStripMenuItem
             // 
             this.x3ToolStripMenuItem.Name = "x3ToolStripMenuItem";
-            this.x3ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.x3ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.x3ToolStripMenuItem.Text = "x3";
             // 
             // x4ToolStripMenuItem
             // 
             this.x4ToolStripMenuItem.Name = "x4ToolStripMenuItem";
-            this.x4ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.x4ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.x4ToolStripMenuItem.Text = "x4";
             // 
             // splitContainer1
@@ -740,18 +752,6 @@
             this.pnElements.Name = "pnElements";
             this.pnElements.Size = new System.Drawing.Size(77, 515);
             this.pnElements.TabIndex = 5;
-            // 
-            // x05ToolStripMenuItem
-            // 
-            this.x05ToolStripMenuItem.Name = "x05ToolStripMenuItem";
-            this.x05ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.x05ToolStripMenuItem.Text = "x0.5";
-            // 
-            // x025ToolStripMenuItem
-            // 
-            this.x025ToolStripMenuItem.Name = "x025ToolStripMenuItem";
-            this.x025ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.x025ToolStripMenuItem.Text = "x0.25";
             // 
             // FormMain
             // 
