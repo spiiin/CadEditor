@@ -25,6 +25,7 @@ namespace CadEditor
             curPallete = 0;
             curPart = 0;
             dirty = false;
+            updateSaveVisibility();
             curViewType = MapViewType.Tiles;
 
             Utils.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
@@ -76,9 +77,8 @@ namespace CadEditor
             reloadLevel();
 
             readOnly = false; //must be read from config
-            btSave.Enabled = !readOnly;
-            lbReadOnly.Visible = readOnly;
-            btImport.Visible = !readOnly;
+            tbbSave.Enabled = !readOnly;
+            tbbImport.Enabled = !readOnly;
 
             pnGeneric.Visible = Globals.gameType != GameType.CAD;
             pnEditCad.Visible = Globals.gameType == GameType.CAD;
@@ -177,7 +177,7 @@ namespace CadEditor
         private void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
             int addIndexes = curPart * 256;
-            dirty = true;
+            dirty = true; updateSaveVisibility();
             int bx = e.X / 32;
             int by = e.Y / 32;
             int dx = (e.X % 32) / 16;
@@ -216,6 +216,11 @@ namespace CadEditor
 
         private FormMain formMain;
 
+        private void updateSaveVisibility()
+        {
+            tbbSave.Enabled = dirty;
+        }
+
         private void cbLevelPair_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbLevel.SelectedIndex == -1 || cbTileset.SelectedIndex == -1 || cbDoor.SelectedIndex == -1 ||
@@ -243,6 +248,7 @@ namespace CadEditor
                 else
                 {
                     dirty = false;
+                    updateSaveVisibility();
                 }
             }
             curTileset = cbTileset.SelectedIndex;
@@ -276,6 +282,7 @@ namespace CadEditor
         {
             ConfigScript.setBigBlocks(curTileset, bigBlockIndexes);
             dirty = !Globals.flushToFile();
+            updateSaveVisibility();
             return !dirty;
         }
 
@@ -296,6 +303,7 @@ namespace CadEditor
             for (int i = 0; i < ConfigScript.getBigBlocksCount() * 4; i++)
                 bigBlockIndexes[i] = 0;
             dirty = true;
+            updateSaveVisibility();
             mapScreen.Invalidate();
         }
 
@@ -354,6 +362,7 @@ namespace CadEditor
             bigBlockIndexes = data;
             reloadLevel(false);
             dirty = true;
+            updateSaveVisibility();
         }
 
         public void setFormMain(FormMain f)
