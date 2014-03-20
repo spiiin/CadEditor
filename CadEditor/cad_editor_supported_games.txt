@@ -24,6 +24,8 @@
     Power Blade 2                                   (1 уровень)
     Rockin' Kats                                    (1 уровень)
     Teenage Mutant Ninja Turtles                    (1 уровень)
+    Teenage Mutant Ninja Turtles 2                  (3 уровень)
+    Teenage Mutant Ninja Turtles 3                  (3 уровень)
     Shatterhand (Tokkyuu Shirei Solbrain)           (1 уровень)
     Contra Force                                    (1 уровень)
     Shadow of the Ninja                             (1 уровень)
@@ -43,3 +45,4 @@
     Tiny Toon Adventures: Buster's Hidden Treasure  (1 уровень)
     QuackShot                                       (1 уровень)
     Final Fantasy Tactics Advance                   (1 уровень)
+    Lost Vikings                                    (1 уровень)
