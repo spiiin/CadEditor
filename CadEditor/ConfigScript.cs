@@ -60,12 +60,14 @@ namespace CadEditor
             bigBlocksOffset = callFromScript(asm, data, "*.getBigBlocksOffset", new OffsetRec(0, 1, 0));
             blocksOffset = callFromScript(asm, data, "*.getBlocksOffset", new OffsetRec(0, 1, 0));
             screensOffset = callFromScript(asm, data, "*.getScreensOffset", new OffsetRec(0, 1, 0));
+            screensOffset2 = callFromScript(asm, data, "*.getScreensOffset2", new OffsetRec(0, 1, 0));
             screenWidth = callFromScript(asm, data, "*.getScreenWidth", 8);
             screenHeight = callFromScript(asm, data, "*.getScreenHeight", 8);
             screenVertical = callFromScript(asm, data, "*.getScreenVertical", false);
             screenDataStride = callFromScript(asm, data, "*.getScreenDataStride", 1);
             wordLen = callFromScript(asm, data, "*.getWordLen", 1);
             littleEndian = callFromScript(asm, data, "*.isLittleEndian", false);
+            layersCount = callFromScript(asm, data, "*.getLayersCount", 1);
             levelRecs = callFromScript(asm, data,"*.getLevelRecs", new List<LevelRec>());
 
             minObjCoordX = callFromScript(asm, data, "*.getMinObjCoordX", 0);
@@ -285,6 +287,11 @@ namespace CadEditor
             return blocksPicturesWidth;
         }
 
+        public static int getLayersCount()
+        {
+            return layersCount;
+        }
+
         public static T callFromScript<T>(AsmHelper script, object data, string funcName, T defaultValue = default(T), params object[] funcParams)
         {
             try
@@ -305,6 +312,7 @@ namespace CadEditor
         public static OffsetRec bigBlocksOffset;
         public static OffsetRec blocksOffset;
         public static OffsetRec screensOffset;
+        public static OffsetRec screensOffset2;
         public static OffsetRec boxesBackOffset;
         public static int bigBlocksCount;
         public static int blocksCount;
@@ -312,6 +320,7 @@ namespace CadEditor
         public static int screenHeight;
         public static bool screenVertical;
         public static int screenDataStride;
+        public static int layersCount;
         public static int wordLen;
         public static bool littleEndian;
 

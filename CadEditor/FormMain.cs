@@ -50,6 +50,8 @@ namespace CadEditor
                 cbScreenNo.Items.Add(String.Format("{0:X}", i + 1));
             cbScreenNo.SelectedIndex = 0;
             screens = Utils.setScreens();
+            if (ConfigScript.getLayersCount() > 1)
+              screens2 = Utils.setScreens2();
 
             blockWidth = ConfigScript.getBlocksPicturesWidth();
             blockHeight = 32;
@@ -97,7 +99,11 @@ namespace CadEditor
             setBigBlocksIndexes();
             setBlocks(reloadBlockPanel);
             if (reloadScreens)
+            {
                 screens = Utils.setScreens();
+                if (ConfigScript.getLayersCount() > 1)
+                    screens2 = Utils.setScreens2();
+            }
             updateMap();
         }
 
@@ -254,6 +260,26 @@ namespace CadEditor
             lbActiveBlock.Text = String.Format("Label: ({0:X})", index);
         }
 
+        private void renderNeighbornLine(Graphics g, int screenNo, int line, int X)
+        {
+            int WIDTH = ConfigScript.getScreenWidth();
+            int HEIGHT = ConfigScript.getScreenHeight();
+            int TILE_SIZE_X = (int)(blockWidth * curScale);
+            int TILE_SIZE_Y = (int)(blockHeight * curScale);
+            int SIZE = WIDTH * HEIGHT;
+            int[] indexesPrev = screens[screenNo];
+            for (int i = 0; i < SIZE; i++)
+            {
+                if (i % WIDTH == line)
+                {
+                    int index = indexesPrev[i];
+                    int bigBlockNo = Globals.getBigTileNoFromScreen(indexesPrev, i);
+                    if (bigBlockNo < bigBlocks.Images.Count)
+                        g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle(X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y));
+                }
+            }
+        }
+
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
 
@@ -265,6 +291,9 @@ namespace CadEditor
             if (!fileLoaded)
                 return;
             int[] indexes = screens[curActiveScreen];
+            int[] indexes2 = null;
+            if (ConfigScript.getLayersCount() > 1)
+                indexes2 = screens2[curActiveScreen];
             var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
             var g = e.Graphics;
             for (int i = 0; i < SIZE; i++)
@@ -281,36 +310,23 @@ namespace CadEditor
                 {
                     if (bigBlockNo < bigBlocks.Images.Count)
                       g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
+                    if (indexes2 != null)
+                    {
+                        int bigBlockNo2 = Globals.getBigTileNoFromScreen(indexes2, i);
+                        if (bigBlockNo2 < bigBlocks.Images.Count)
+                            g.DrawImage(bigBlocks.Images[bigBlockNo2], tileRect);
+                    }
                 }
             }
             if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen > 0))
             {
-                int[] indexesPrev = screens[curActiveScreen - 1];
-                for (int i = 0; i < SIZE; i++)
-                {
-                    if (i % WIDTH == WIDTH-1)
-                    {
-                        int index = indexesPrev[i];
-                        int bigBlockNo = Globals.getBigTileNoFromScreen(indexesPrev, i);
-                        if (bigBlockNo < bigBlocks.Images.Count)
-                          g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle(0, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y));
-                    }
-                }
+                renderNeighbornLine(g, curActiveScreen - 1, (WIDTH - 1), 0);
             }
             if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen < ConfigScript.screensOffset.recCount - 1))
             {
-                int[] indexesNext = screens[curActiveScreen + 1];
-                for (int i = 0; i < SIZE; i++)
-                {
-                    if (i % WIDTH == 0)
-                    {
-                        int index = indexesNext[i];
-                        int bigBlockNo = Globals.getBigTileNoFromScreen(indexesNext, i);
-                        if (bigBlockNo < bigBlocks.Images.Count)
-                          g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle((WIDTH + 1) * TILE_SIZE_X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y));
-                    }
-                }
+                renderNeighbornLine(g, curActiveScreen + 1, 0 , (WIDTH + 1) * TILE_SIZE_X);
             }
+
             if (ConfigScript.getScreenVertical())
               g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(0, TILE_SIZE_Y, TILE_SIZE_X * HEIGHT, TILE_SIZE_Y * WIDTH));
             else
@@ -351,7 +367,8 @@ namespace CadEditor
         private bool showNeiScreens;
         private bool showAxis;
         private bool showBrush;
-        private int[][] screens = null;
+        private int[][] screens;
+        private int[][] screens2;
 
         private byte[] bigBlockIndexes;
 

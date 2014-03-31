@@ -137,36 +137,37 @@ namespace CadEditor
             return levelData[levelNo].getHeight();
         }
 
-        public static int[] getScreen(int screenIndex)
+        public static int[] getScreen(OffsetRec screenOffset,  int screenIndex)
         {
-            var result = new int[Math.Max(64, ConfigScript.screensOffset.recSize)];
+            var result = new int[Math.Max(64, screenOffset.recSize)];
             var arrayWithData = Globals.dumpdata != null ? Globals.dumpdata : Globals.romdata;
             int dataStride = ConfigScript.getScreenDataStride();
             int wordLen = ConfigScript.getWordLen();
             bool littleEndian = ConfigScript.isLittleEndian();
-            int beginAddr = ConfigScript.screensOffset.beginAddr + screenIndex * ConfigScript.screensOffset.recSize * dataStride * wordLen;
+            int beginAddr = screenOffset.beginAddr + screenIndex * screenOffset.recSize * dataStride * wordLen;
             if (wordLen == 1)
             {
-                for (int i = 0; i < ConfigScript.screensOffset.recSize; i++)
+                for (int i = 0; i < screenOffset.recSize; i++)
                     result[i] = arrayWithData[beginAddr + i * dataStride];
-                for (int i = ConfigScript.screensOffset.recSize; i < 64; i++)
+                for (int i = screenOffset.recSize; i < 64; i++)
                     result[i] = 0; //need this?
             }
             else if (wordLen == 2)
             {
                 if (littleEndian)
                 {
-                    for (int i = 0; i < ConfigScript.screensOffset.recSize; i++)
+                    for (int i = 0; i < screenOffset.recSize; i++)
                         result[i] = Utils.readWordLE(arrayWithData, beginAddr + i * (dataStride * wordLen));
                 }
                 else
                 {
-                    for (int i = 0; i < ConfigScript.screensOffset.recSize; i++)
+                    for (int i = 0; i < screenOffset.recSize; i++)
                         result[i] = Utils.readWord(arrayWithData, beginAddr + i * (dataStride * wordLen));
                 }
             }
             return result;
         }
+
 
         public static int getBigTileNoFromScreen(int[] screenData, int index)
         {

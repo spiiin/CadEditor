@@ -4,9 +4,9 @@ using System.Drawing;
 
 public class Config
 {
-  public string getFileName()      { return ""; }
+  public string getFileName()      { return "Duck Tales 2.nes"; }
   public string getDumpName()      { return ""; }
-  public string getConfigName()    { return ""; }
+  public string getConfigName()    { return "settings_duck_tales_2/Settings_DuckTales2-All.cs"; }
   public bool showDumpFileField()  { return false;  }
   public Color[] getNesColors()
   {

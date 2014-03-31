@@ -303,7 +303,7 @@ namespace CadEditor
             }
 
             var bitmap = new Bitmap(ConfigScript.getScreenWidth()*64, ConfigScript.getScreenHeight()*64); //getScreenVertical, scales
-            int[] indexes = Globals.getScreen(scrNo);
+            int[] indexes = Globals.getScreen(ConfigScript.screensOffset, scrNo);
             using (var g = Graphics.FromImage(bitmap))
             {
                 for (int tileNo = 0; tileNo < SCREEN_SIZE; tileNo++)
