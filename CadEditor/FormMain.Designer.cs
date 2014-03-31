@@ -86,6 +86,9 @@
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.x3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.x4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.bttShowLayer1 = new System.Windows.Forms.ToolStripButton();
+            this.bttShowLayer2 = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pnElements = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
@@ -484,7 +487,10 @@
             this.bttAxis,
             this.bttShowBrush,
             this.toolStripSeparator4,
-            this.bttScale});
+            this.bttScale,
+            this.toolStripSeparator5,
+            this.bttShowLayer1,
+            this.bttShowLayer2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1073, 25);
@@ -713,6 +719,37 @@
             this.x4ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.x4ToolStripMenuItem.Text = "x4";
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
+            // bttShowLayer1
+            // 
+            this.bttShowLayer1.Checked = true;
+            this.bttShowLayer1.CheckOnClick = true;
+            this.bttShowLayer1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.bttShowLayer1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttShowLayer1.Image = ((System.Drawing.Image)(resources.GetObject("bttShowLayer1.Image")));
+            this.bttShowLayer1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttShowLayer1.Name = "bttShowLayer1";
+            this.bttShowLayer1.Size = new System.Drawing.Size(23, 22);
+            this.bttShowLayer1.Text = "Show Layer 1";
+            this.bttShowLayer1.CheckedChanged += new System.EventHandler(this.bttShowLayer1_CheckedChanged);
+            // 
+            // bttShowLayer2
+            // 
+            this.bttShowLayer2.Checked = true;
+            this.bttShowLayer2.CheckOnClick = true;
+            this.bttShowLayer2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.bttShowLayer2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttShowLayer2.Image = ((System.Drawing.Image)(resources.GetObject("bttShowLayer2.Image")));
+            this.bttShowLayer2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttShowLayer2.Name = "bttShowLayer2";
+            this.bttShowLayer2.Size = new System.Drawing.Size(23, 22);
+            this.bttShowLayer2.Text = "Show Layer 2";
+            this.bttShowLayer2.CheckedChanged += new System.EventHandler(this.bttShowLayer2_CheckedChanged);
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -845,6 +882,9 @@
         private System.Windows.Forms.ToolStripButton bttShowBrush;
         private System.Windows.Forms.ToolStripMenuItem x025ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem x05ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripButton bttShowLayer1;
+        private System.Windows.Forms.ToolStripButton bttShowLayer2;
     }
 }
 

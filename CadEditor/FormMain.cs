@@ -72,6 +72,8 @@ namespace CadEditor
             showNeiScreens = true;
             showAxis = true;
             showBrush = true;
+            showLayer1 = true;
+            showLayer2 = true;
             prepareBlocksPanel();
 
             reloadGameType();
@@ -87,6 +89,9 @@ namespace CadEditor
             bttEnemies.Enabled = ConfigScript.isEnemyEditorEnabled;
             bttVideo.Enabled = ConfigScript.isVideoEditorEnabled;
             bttMap.Enabled = ConfigScript.isMapEditorEnabled;
+
+            bttShowLayer1.Enabled = ConfigScript.getLayersCount() > 1;
+            bttShowLayer2.Enabled = ConfigScript.getLayersCount() > 1;
 
             if (ConfigScript.getScreenVertical())
                 mapScreen.Size = new Size((int)(ConfigScript.getScreenHeight() * blockWidth * curScale), (int)((ConfigScript.getScreenWidth() + 2) * blockHeight * curScale));
@@ -308,9 +313,9 @@ namespace CadEditor
 
                 if ((visibleRect.Contains(tileRect)) || (visibleRect.IntersectsWith(tileRect)))
                 {
-                    if (bigBlockNo < bigBlocks.Images.Count)
+                    if (bigBlockNo < bigBlocks.Images.Count & showLayer1)
                       g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
-                    if (indexes2 != null)
+                    if (indexes2 != null && showLayer2)
                     {
                         int bigBlockNo2 = Globals.getBigTileNoFromScreen(indexes2, i);
                         if (bigBlockNo2 < bigBlocks.Images.Count)
@@ -318,11 +323,11 @@ namespace CadEditor
                     }
                 }
             }
-            if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen > 0))
+            if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen > 0) && showLayer1)
             {
                 renderNeighbornLine(g, curActiveScreen - 1, (WIDTH - 1), 0);
             }
-            if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen < ConfigScript.screensOffset.recCount - 1))
+            if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen < ConfigScript.screensOffset.recCount - 1) && showLayer1)
             {
                 renderNeighbornLine(g, curActiveScreen + 1, 0 , (WIDTH + 1) * TILE_SIZE_X);
             }
@@ -367,6 +372,8 @@ namespace CadEditor
         private bool showNeiScreens;
         private bool showAxis;
         private bool showBrush;
+        private bool showLayer1;
+        private bool showLayer2;
         private int[][] screens;
         private int[][] screens2;
 
@@ -794,6 +801,18 @@ namespace CadEditor
         private void mapScreen_MouseUp(object sender, MouseEventArgs e)
         {
             curClicked = false;
+        }
+
+        private void bttShowLayer1_CheckedChanged(object sender, EventArgs e)
+        {
+            showLayer1 = bttShowLayer1.Checked;
+            mapScreen.Invalidate();
+        }
+
+        private void bttShowLayer2_CheckedChanged(object sender, EventArgs e)
+        {
+            showLayer2 = bttShowLayer2.Checked;
+            mapScreen.Invalidate();
         }
     }
 }
