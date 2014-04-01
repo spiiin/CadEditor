@@ -3,9 +3,9 @@ using System.Collections.Generic;
 public class Data
 { 
   public GameType getGameType()           { return GameType.Generic; }
-  public OffsetRec getScreensOffset()     { return new OffsetRec(0x31 + 48*8, 19-8, 48);   }
+  public OffsetRec getScreensOffset()     { return new OffsetRec(0x31, 6, 64);   }
   public int getScreenWidth()             { return 8; }
-  public int getScreenHeight()            { return 6; }
+  public int getScreenHeight()            { return 8; }
   public string getBlocksFilename()       { return "settings_monster_in_my_pocket/monster_in_my_pocket_1.png"; }
   
   public bool isBigBlockEditorEnabled() { return false; }
