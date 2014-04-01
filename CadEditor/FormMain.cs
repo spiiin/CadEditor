@@ -74,6 +74,7 @@ namespace CadEditor
             showBrush = true;
             showLayer1 = true;
             showLayer2 = true;
+            curActiveLayer = 0;
             prepareBlocksPanel();
 
             reloadGameType();
@@ -92,6 +93,7 @@ namespace CadEditor
 
             bttShowLayer1.Enabled = ConfigScript.getLayersCount() > 1;
             bttShowLayer2.Enabled = ConfigScript.getLayersCount() > 1;
+            bttLayer.Enabled = ConfigScript.getLayersCount() > 1;
 
             if (ConfigScript.getScreenVertical())
                 mapScreen.Size = new Size((int)(ConfigScript.getScreenHeight() * blockWidth * curScale), (int)((ConfigScript.getScreenWidth() + 2) * blockHeight * curScale));
@@ -385,6 +387,7 @@ namespace CadEditor
         int curDx = OUTSIDE;
         int curDy = OUTSIDE;
         bool curClicked = false;
+        int curActiveLayer = 0;
 
         private Dictionary<ToolStripButton, Func<Form>> subeditorsDict;
 
@@ -441,12 +444,13 @@ namespace CadEditor
             }
             if (curClicked)
             {
+                var activeScreens = curActiveLayer == 0 ? screens : screens2;
                 if (dx == WIDTH)
                 {
                     if (curActiveScreen < ConfigScript.screensOffset.recCount - 1)
                     {
                         int index = dy * WIDTH;
-                        Globals.setBigTileToScreen(screens[curActiveScreen + 1], index, curActiveBlock);
+                        Globals.setBigTileToScreen(activeScreens[curActiveScreen + 1], index, curActiveBlock);
                         dirty = true; updateSaveVisibility();
                     }
                 }
@@ -455,14 +459,14 @@ namespace CadEditor
                     if (curActiveScreen > 0)
                     {
                         int index = dy * WIDTH + (WIDTH - 1);
-                        Globals.setBigTileToScreen(screens[curActiveScreen - 1], index, curActiveBlock);
+                        Globals.setBigTileToScreen(activeScreens[curActiveScreen - 1], index, curActiveBlock);
                         dirty = true; updateSaveVisibility();
                     }
                 }
                 else
                 {
                     int index = dy * WIDTH + dx;
-                    Globals.setBigTileToScreen(screens[curActiveScreen], index, curActiveBlock);
+                    Globals.setBigTileToScreen(activeScreens[curActiveScreen], index, curActiveBlock);
                     dirty = true; updateSaveVisibility();
                 }
             }
@@ -483,35 +487,42 @@ namespace CadEditor
             saveToFile();
         }
 
-        private bool saveToFile()
+        private void saveScreens(OffsetRec screensRec, int[][] screensData)
         {
             var arrayToSave = Globals.dumpdata != null ? Globals.dumpdata : Globals.romdata;
             int wordLen = ConfigScript.getWordLen();
             bool littleEndian = ConfigScript.isLittleEndian();
             //write back tiles
             int dataStride = ConfigScript.getScreenDataStride();
-            for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
+            for (int i = 0; i < screensRec.recCount; i++)
             {
-                int addr = ConfigScript.screensOffset.beginAddr + i * ConfigScript.screensOffset.recSize * (dataStride * wordLen);
+                int addr = screensRec.beginAddr + i * screensRec.recSize * (dataStride * wordLen);
                 if (wordLen == 1)
                 {
-                    for (int x = 0; x < ConfigScript.screensOffset.recSize; x++)
-                        arrayToSave[addr + x * dataStride] = (byte)screens[i][x];
+                    for (int x = 0; x < screensRec.recSize; x++)
+                        arrayToSave[addr + x * dataStride] = (byte)screensData[i][x];
                 }
                 else if (wordLen == 2)
                 {
                     if (littleEndian)
                     {
-                        for (int x = 0; x < ConfigScript.screensOffset.recSize; x++)
-                            Utils.writeWordLE(arrayToSave, addr + x * (dataStride * wordLen), screens[i][x]);
+                        for (int x = 0; x < screensRec.recSize; x++)
+                            Utils.writeWordLE(arrayToSave, addr + x * (dataStride * wordLen), screensData[i][x]);
                     }
                     else
                     {
-                        for (int x = 0; x < ConfigScript.screensOffset.recSize; x++)
-                            Utils.writeWord(arrayToSave, addr + x * (dataStride * wordLen), screens[i][x]);
+                        for (int x = 0; x < screensRec.recSize; x++)
+                            Utils.writeWord(arrayToSave, addr + x * (dataStride * wordLen), screensData[i][x]);
                     }
                 }
             }
+        }
+
+        private bool saveToFile()
+        {
+            saveScreens(ConfigScript.screensOffset, screens);
+            if (ConfigScript.getLayersCount() > 1)
+                saveScreens(ConfigScript.screensOffset2, screens2);
             dirty = !Globals.flushToFile(); updateSaveVisibility();
             return !dirty;
         }
@@ -813,6 +824,11 @@ namespace CadEditor
         {
             showLayer2 = bttShowLayer2.Checked;
             mapScreen.Invalidate();
+        }
+
+        private void bttLayer_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            curActiveLayer = bttLayer.DropDownItems.IndexOf(e.ClickedItem);
         }
     }
 }
