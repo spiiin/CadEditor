@@ -11,7 +11,7 @@ public class Data : CapcomBase
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x4E45  , 32 , 8*5);   }
   public override int getScreenWidth()    { return 8; }
   public override int getScreenHeight()   { return 5; }
-  public string getBlocksFilename() { return "settings_power_blade_2/power_blade2_1.png"; }
+  public string getBlocksFilename() { return "power_blade2_1.png"; }
   public IList<LevelRec> getLevelRecs() { return null; }
   
   public bool isBigBlockEditorEnabled() { return false; }

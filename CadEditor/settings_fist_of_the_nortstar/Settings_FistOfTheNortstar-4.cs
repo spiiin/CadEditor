@@ -8,7 +8,7 @@ public class Data
   public OffsetRec getScreensOffset()  { return new OffsetRec(0x01D53F, 1 , 12); }
   public int getScreenWidth()          { return 12; }
   public int getScreenHeight()         { return 1; }
-  public string getBlocksFilename()    { return "settings_fist_of_the_nortstar/fist_of_the_nortstar_4.png"; }
+  public string getBlocksFilename()    { return "fist_of_the_nortstar_4.png"; }
   public int    getPictureBlocksWidth()   { return 16; }
 
 // Width

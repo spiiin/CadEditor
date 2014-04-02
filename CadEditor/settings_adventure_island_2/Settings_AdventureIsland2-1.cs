@@ -6,7 +6,7 @@ public class Data
   public OffsetRec getScreensOffset()     { return new OffsetRec(0xE98, 35, 64);   }
   public int getScreenWidth()             { return 8; }
   public int getScreenHeight()            { return 8; }
-  public string getBlocksFilename()       { return "settings_adventure_island_2/adventure_island2_1.png"; }
+  public string getBlocksFilename()       { return "adventure_island2_1.png"; }
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return false; }

@@ -14,7 +14,7 @@ public class Data
   public bool isLittleEndian()         { return true; }
   public int    getPictureBlocksWidth(){ return 64; }
   public int getBigBlocksCount()       { return 542; }
-  public string getBlocksFilename()    { return "settings_gba_final_fantasy_tactics_advance/gba_ffta_1.png"; }
+  public string getBlocksFilename()    { return "gba_ffta_1.png"; }
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return false; }

@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadEditor", "CadEditor.cspr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadEnemyEditor", "..\CadEnemyEditor\CadEnemyEditor.csproj", "{56D14DAD-7662-42D2-BEA1-B6E427807D30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsEditor", "..\SettingsEditor\SettingsEditor.csproj", "{3FD2E457-380B-4AF3-B8B5-A11D6FA228DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsVerifier", "..\SettingsVerifier\SettingsVerifier.csproj", "{3FD2E457-380B-4AF3-B8B5-A11D6FA228DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

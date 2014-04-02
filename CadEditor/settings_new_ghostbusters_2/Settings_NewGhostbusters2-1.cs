@@ -11,7 +11,7 @@ public class Data : CapcomBase
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x77C1 - 16*15*8  , 13 , 16*15);   }
   public override int getScreenWidth()    { return 16; }
   public override int getScreenHeight()   { return 15; }
-  public string getBlocksFilename() { return "settings_new_ghostbusters_2/gb2_1.png"; }
+  public string getBlocksFilename() { return "gb2_1.png"; }
   public IList<LevelRec> getLevelRecs() { return null; }
   
   public bool isBigBlockEditorEnabled() { return false; }

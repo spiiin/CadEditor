@@ -11,7 +11,7 @@ public class Data : CapcomBase
   public OffsetRec getScreensOffset()   { return new OffsetRec(85109   , 1 , 170*24);   }
   public override int getScreenWidth()    { return 170; }
   public override int getScreenHeight()   { return 24; }
-  public string getBlocksFilename() { return "settings_tom_and_jerry/tom_and_jerry_7.png"; }
+  public string getBlocksFilename() { return "tom_and_jerry_7.png"; }
   public IList<LevelRec> getLevelRecs() { return null; }
   
   public bool isBigBlockEditorEnabled() { return false; }

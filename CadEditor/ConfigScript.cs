@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.IO;
 using CSScriptLibrary;
 
 namespace CadEditor
@@ -52,7 +53,7 @@ namespace CadEditor
             {
                 return;
             }
-
+            Directory.SetCurrentDirectory(Path.GetDirectoryName(fileName));
             Globals.gameType = (GameType)asm.InvokeInst(data,"*.getGameType");
             palOffset = callFromScript(asm, data,"*.getPalOffset", new OffsetRec(0,1,0));
             videoOffset = callFromScript(asm, data, "*.getVideoOffset", new OffsetRec(0, 1, 0));
@@ -105,7 +106,13 @@ namespace CadEditor
             blocksCount    = callFromScript(asm, data, "*.getBlocksCount"   , 256);
 
             blocksPicturesFilename  = callFromScript(asm, data, "getBlocksFilename", "");
+            if (blocksPicturesFilename != "" && !File.Exists(blocksPicturesFilename))
+                throw new Exception("File does not exists: " + blocksPicturesFilename);
             blocksPicturesFilenames = callFromScript<string[]>(asm, data, "getBlocksFilenames", null);
+            if (blocksPicturesFilenames!=null)
+              for (int i = 0; i < blocksPicturesFilenames.Length; i++)
+                if (!File.Exists(blocksPicturesFilenames[i]))
+                    throw new Exception("File does not exists: " + blocksPicturesFilenames[i]);
             blocksPicturesWidth = callFromScript(asm, data, "getPictureBlocksWidth", 32); 
             usePicturesInstedBlocks = blocksPicturesFilename != "" || blocksPicturesFilenames != null;
 

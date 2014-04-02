@@ -7,7 +7,7 @@ public class Data
   public int getScreenWidth()    { return 64; }
   public int getScreenHeight()   { return 11; }
   public int getBigBlocksCount() { return 44; }
-  public string getBlocksFilename()       { return "settings_battletoads/battletoads_1.png"; }
+  public string getBlocksFilename()       { return "battletoads_1.png"; }
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return false; }

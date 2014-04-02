@@ -53,7 +53,7 @@ public class Data:CapcomBase
   {
     try
     {
-        using (FileStream f = File.OpenRead("settings_duck_tales_2/videoBack_DT2.bin"))
+        using (FileStream f = File.OpenRead("videoBack_DT2.bin"))
         {
             byte[] videodata = new byte[0x5000];
             f.Read(videodata, 0, 0x5000);

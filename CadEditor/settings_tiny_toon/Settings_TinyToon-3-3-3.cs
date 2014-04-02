@@ -46,7 +46,7 @@ public class Data
   {
     try
     {
-        using (FileStream f = File.OpenRead("settings_tiny_toon/videoBack_TT_33.bin"))
+        using (FileStream f = File.OpenRead("videoBack_TT_33.bin"))
         {
             byte[] videodata = new byte[0x1000];
             f.Read(videodata, 0, 0x1000);

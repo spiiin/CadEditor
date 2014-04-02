@@ -15,7 +15,7 @@ public class Data:CapcomBase
   public GetObjectsFunc getObjectsFunc() { return getObjectsDwd; }
   public SetObjectsFunc setObjectsFunc() { return setObjectsDwd; }
   
-  public string getObjTypesPicturesDir() { return "settings_darkwing_duck/obj_sprites_dwd"; }
+  public string getObjTypesPicturesDir() { return "../settings_darkwing_duck/obj_sprites_dwd"; }
   
   public IList<LevelRec> levelRecsDwd = new List<LevelRec>() 
   {

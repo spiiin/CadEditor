@@ -13,7 +13,7 @@ public class Data : CapcomBase
   public string[] getBlockTypeNames()   { return objTypesDwd;  }
   public GetObjectsFunc getObjectsFunc() { return getObjectsDwd; }
   public SetObjectsFunc setObjectsFunc() { return setObjectsDwd; }
-  public string getObjTypesPicturesDir() { return "settings_darkwing_duck/obj_sprites_dwd"; }
+  public string getObjTypesPicturesDir() { return "obj_sprites_dwd"; }
   public bool isMapEditorEnabled()      { return true; }
   public IList<LevelRec> levelRecsDwd = new List<LevelRec>() 
   {

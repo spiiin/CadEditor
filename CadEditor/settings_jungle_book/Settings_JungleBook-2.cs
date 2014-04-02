@@ -11,7 +11,7 @@ public class Data : CapcomBase
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x18149 - 24, 1 , 24*64);   }
   public override int getScreenWidth()    { return 24; }
   public override int getScreenHeight()   { return 64; }
-  public string getBlocksFilename() { return "settings_jungle_book/jungle_book_2.png"; }
+  public string getBlocksFilename() { return "jungle_book_2.png"; }
   public IList<LevelRec> getLevelRecs() { return levelRecsJB; }
   public GetObjectsFunc getObjectsFunc()   { return getObjectsJungleBook;  }
   public SetObjectsFunc setObjectsFunc()   { return setObjectsJungleBook;  }

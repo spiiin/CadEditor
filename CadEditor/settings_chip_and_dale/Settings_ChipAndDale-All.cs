@@ -17,7 +17,7 @@ public class Data:CapcomBase
   public GetObjectsFunc getObjectsFunc() { return getObjectsCad; }
   public SetObjectsFunc setObjectsFunc() { return setObjectsCad; }
   
-  public string getObjTypesPicturesDir() { return "settings_chip_and_dale/obj_sprites_cad"; }
+  public string getObjTypesPicturesDir() { return "obj_sprites_cad"; }
   
   //chip and dale specific
   public OffsetRec getBoxesBackOffset() { return new OffsetRec(0x1E909, 11  , 16);     }

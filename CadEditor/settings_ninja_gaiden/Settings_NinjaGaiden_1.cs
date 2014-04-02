@@ -8,7 +8,7 @@ public class Data
   public OffsetRec getScreensOffset()  { return new OffsetRec(0x10, 1 , 6*96);   }
   public int getScreenWidth()          { return 6; }
   public int getScreenHeight()         { return 96; }
-  public string getBlocksFilename()    { return "settings_ninja_gaiden/ninja_gaiden_1.png"; }
+  public string getBlocksFilename()    { return "ninja_gaiden_1.png"; }
   public bool getScreenVertical()      { return true; }
   
   public bool isBigBlockEditorEnabled() { return false; }

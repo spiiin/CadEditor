@@ -8,7 +8,7 @@ public class Data
   public OffsetRec getScreensOffset()  { return new OffsetRec(179167, 1 , 144*8);   }
   public int getScreenWidth()          { return 144; }
   public int getScreenHeight()         { return 8; }
-  public string getBlocksFilename()    { return "settings_battletoads_and_double_dragon/battletoads_doubledragon_5.png"; }
+  public string getBlocksFilename()    { return "battletoads_doubledragon_5.png"; }
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return false; }

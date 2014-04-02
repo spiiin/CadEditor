@@ -11,7 +11,7 @@ public class Data : CapcomBase
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x210   , 20 , 16*15);   }
   public override int getScreenWidth()    { return 16; }
   public override int getScreenHeight()   { return 15; }
-  public string getBlocksFilename() { return "settings_chip_and_dale_2/cad2_1-2.png"; }
+  public string getBlocksFilename() { return "cad2_1-2.png"; }
   public IList<LevelRec> getLevelRecs() { return null; }
   
   public bool isBigBlockEditorEnabled() { return false; }
