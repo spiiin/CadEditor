@@ -24,7 +24,9 @@ namespace SettingsEditor
 
         static void checkAndPrint(string filename)
         {
-            Console.WriteLine(checkFile(filename) ? "File verified: {0}" : "File not verified: {0}", filename);
+            bool result = checkFile(filename);
+            Console.ForegroundColor = result ? ConsoleColor.Green : ConsoleColor.Red;
+            Console.WriteLine(result ? "File verified: {0}" : "File not verified: {0}", filename);
         }
 
         static bool checkFile(string filename)
