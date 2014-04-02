@@ -18,6 +18,7 @@ namespace SettingsEditor
                 foreach (var f in fileNames)
                     checkAndPrint(f);
             }
+            Console.ResetColor();
             Console.WriteLine("Done!");
             Console.ReadLine();
         }
