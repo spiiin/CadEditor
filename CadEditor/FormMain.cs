@@ -225,30 +225,12 @@ namespace CadEditor
 
         private void prepareBlocksPanel()
         {
-            blocksPanel.Controls.Clear();
-            blocksPanel.SuspendLayout();
-            for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
-            {
-                var but = new Button();
-                but.Size = new Size((int)(blockWidth*curButtonScale+1), (int)(blockHeight*curButtonScale+1));
-                but.ImageList = bigBlocks;
-                but.ImageIndex = i;
-                but.Click += new EventHandler(buttonBlockClick);
-                but.Margin  = new Padding(0);
-                but.Padding = new Padding(0);
-                blocksPanel.Controls.Add(but);
-            }
-            blocksPanel.ResumeLayout();
+            Utils.prepareBlocksPanel(blocksPanel, new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick);
         }
 
         private void reloadBlocksPanel()
         {
-            for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
-            {
-                var but = (Button)blocksPanel.Controls[i];
-                but.ImageList = bigBlocks;
-                but.ImageIndex = i;
-            }
+            Utils.reloadBlocksPanel(blocksPanel, bigBlocks);
         }
 
 

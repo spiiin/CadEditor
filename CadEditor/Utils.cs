@@ -30,6 +30,34 @@ namespace CadEditor
             cb.SelectedIndexChanged += ev;
         }
 
+        public static void prepareBlocksPanel(FlowLayoutPanel blocksPanel, Size buttonSize, ImageList buttonsImages, EventHandler buttonBlockClick)
+        {
+            blocksPanel.Controls.Clear();
+            blocksPanel.SuspendLayout();
+            for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
+            {
+                var but = new Button();
+                but.Size = buttonSize;
+                but.ImageList = buttonsImages;
+                but.ImageIndex = i;
+                but.Click += buttonBlockClick;
+                but.Margin = new Padding(0);
+                but.Padding = new Padding(0);
+                blocksPanel.Controls.Add(but);
+            }
+            blocksPanel.ResumeLayout();
+        }
+
+        public static void reloadBlocksPanel(FlowLayoutPanel blocksPanel, ImageList buttonsImages)
+        {
+            for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
+            {
+                var but = (Button)blocksPanel.Controls[i];
+                but.ImageList = buttonsImages;
+                but.ImageIndex = i;
+            }
+        }
+
         public delegate bool SaveFunction();
         public delegate void ReturnComboBoxIndexFunction();
         public static bool askToSave(ref bool dirty, SaveFunction saveToFile, ReturnComboBoxIndexFunction returnCbLevelIndex)
