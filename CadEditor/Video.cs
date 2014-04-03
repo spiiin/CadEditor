@@ -226,15 +226,11 @@ namespace CadEditor
             return b;
         }
 
-        //make capcom screen image
-        public static Bitmap makeScreen(int scrNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, bool withBigTileBorders = true)
+        public static Image[] makeBigBlocks(int videoNo, int bigBlockNo, int blockNo, int palleteNo, bool withBigTileBorders = true, MapViewType smallObjectsViewType = MapViewType.Tiles,
+            int smallBlockScaleFactor = 2 /*todo: float*/, int blockWidth = 32, int blockHeight = 32, int curButtonScale = 2)
         {
-            if (scrNo < 0)
-                return emptyScreen(ConfigScript.getScreenWidth() * 64, ConfigScript.getScreenHeight() * 64);
             int blockCount = ConfigScript.getBigBlocksCount();
             int SCREEN_SIZE = ConfigScript.getScreenWidth() * ConfigScript.getScreenHeight();
-            var smallBlocks = new System.Windows.Forms.ImageList();
-            smallBlocks.ImageSize = new Size(withBigTileBorders ? 16 : 32, withBigTileBorders ? 16 :32);
             var bigBlocks = new Image[blockCount];
 
             byte blockId = (byte)bigBlockNo;
@@ -244,10 +240,11 @@ namespace CadEditor
             byte[] bigBlockIndexes = ConfigScript.getBigBlocks(blockIndexId);
 
             var im = Video.makeObjectsStrip(backId, blockId, palId, withBigTileBorders ? 1 : 2, MapViewType.Tiles);
+            var smallBlocks = new System.Windows.Forms.ImageList();
+            smallBlocks.ImageSize = new Size((int)(16 * smallBlockScaleFactor), (int)(16 * smallBlockScaleFactor));
             smallBlocks.Images.AddStrip(im);
 
             //tt version hardcode
-            int smallBlockScaleFactor = 2;
             ImageList[] smallBlocksAll = null;
             byte[] smallBlocksColorBytes = null;
             if (GameType.TT == Globals.gameType)
@@ -256,51 +253,39 @@ namespace CadEditor
                 for (int i = 0; i < 4; i++)
                 {
                     smallBlocksAll[i] = new ImageList();
-                    smallBlocksAll[i].ImageSize = new Size(32, 32);
-                    smallBlocksAll[i].Images.Clear();
                     smallBlocksAll[i].ImageSize = new System.Drawing.Size(16 * smallBlockScaleFactor, 16 * smallBlockScaleFactor);
-                    smallBlocksAll[i].Images.AddStrip(Video.makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, MapViewType.Tiles, i));
+                    smallBlocksAll[i].Images.AddStrip(Video.makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsViewType, i));
                 }
                 smallBlocksColorBytes = Globals.getTTSmallBlocksColorBytes(blockId);
             }
 
-            int blockWidth = 32;
-            int blockHeight = 32;
-            int curButtonScale = 2;
             for (int btileId = 0; btileId < blockCount; btileId++)
             {
-                var b = new Bitmap(64, 64);
-                using (Graphics g = Graphics.FromImage(b))
+                Bitmap b;
+                switch (Globals.gameType)
                 {
-                    /*if (withBigTileBorders)
-                    {
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4]], new Rectangle(0, 0, 32, 32));
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 1]], new Rectangle(31, 0, 32, 32));
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 2]], new Rectangle(0, 31, 32, 32));
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 3]], new Rectangle(31, 31, 32, 32));
-                    }
-                    else
-                    {
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4]], new Rectangle(0, 0, 32, 32));
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 1]], new Rectangle(32, 0, 32, 32));
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 2]], new Rectangle(0, 32, 32, 32));
-                        g.DrawImage(smallBlocks.Images[bigBlockIndexes[btileId * 4 + 3]], new Rectangle(32, 32, 32, 32));
-                    }*/
-                    switch (Globals.gameType)
-                    {
-                        case GameType.TT:
-                            b = Video.makeBigBlockTT(btileId, blockWidth * curButtonScale, blockHeight * curButtonScale, bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
-                            break;
-                        case GameType._3E:
-                            b = Video.makeBigBlock3E(btileId, blockWidth * curButtonScale, blockHeight * curButtonScale, bigBlockIndexes, smallBlocks);
-                            break;
-                        default:
-                            b = Video.makeBigBlock(btileId, blockWidth * curButtonScale, blockHeight * curButtonScale, bigBlockIndexes, smallBlocks);
-                            break;
-                    } 
+                    case GameType.TT:
+                        b = Video.makeBigBlockTT(btileId, blockWidth * curButtonScale, blockHeight * curButtonScale, bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
+                        break;
+                    case GameType._3E:
+                        b = Video.makeBigBlock3E(btileId, blockWidth * curButtonScale, blockHeight * curButtonScale, bigBlockIndexes, smallBlocks);
+                        break;
+                    default:
+                        b = Video.makeBigBlock(btileId, blockWidth * curButtonScale, blockHeight * curButtonScale, bigBlockIndexes, smallBlocks);
+                        break;
                 }
                 bigBlocks[btileId] = b;
             }
+            return bigBlocks;
+        }
+
+        //make capcom screen image
+        public static Bitmap makeScreen(int scrNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, bool withBigTileBorders = true)
+        {
+            if (scrNo < 0)
+                return emptyScreen(ConfigScript.getScreenWidth() * 64, ConfigScript.getScreenHeight() * 64);
+            int SCREEN_SIZE = ConfigScript.getScreenWidth() * ConfigScript.getScreenHeight();
+            var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, /*withBigTileBorders*/false);
 
             var bitmap = new Bitmap(ConfigScript.getScreenWidth()*64, ConfigScript.getScreenHeight()*64); //getScreenVertical, scales
             int[] indexes = Globals.getScreen(ConfigScript.screensOffset, scrNo);

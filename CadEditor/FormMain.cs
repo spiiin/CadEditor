@@ -184,10 +184,6 @@ namespace CadEditor
                 smallBlocksColorBytes = Globals.getTTSmallBlocksColorBytes(blockId);
             }
 
-            int bbRectPosX = (int)((blockWidth/2)*curButtonScale);
-            int bbRectSizeX = (int)((blockWidth / 2) * curButtonScale);
-            int bbRectPosY = (int)((blockHeight /2) * curButtonScale);
-            int bbRectSizeY = (int)((blockHeight/2) * curButtonScale);
 
             for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
             {
