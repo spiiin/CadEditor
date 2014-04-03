@@ -165,47 +165,10 @@ namespace CadEditor
             MapViewType smallObjectsType = curViewType == MapViewType.ObjType ? MapViewType.ObjType : MapViewType.Tiles;
 
             float smallBlockScaleFactor = curButtonScale;
-            var im = Video.makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsType);
-            smallBlocks.ImageSize = new Size((int)(16*smallBlockScaleFactor), (int)(16*smallBlockScaleFactor));
-            smallBlocks.Images.AddStrip(im);
+            int bigTileIndex = (Globals.gameType != GameType.CAD) ? curActiveBlockNo : Globals.levelData[curActiveLevel].bigBlockId;
+            Image[] bigImages = Video.makeBigBlocks(backId, blockId, bigTileIndex, palId, smallObjectsType, smallBlockScaleFactor, blockWidth, blockHeight, curButtonScale, curViewType, showAxis);
+            bigBlocks.Images.AddRange(bigImages);
 
-            //tt version hardcode
-            ImageList[] smallBlocksAll = null;
-            byte[] smallBlocksColorBytes = null;
-            if (GameType.TT == Globals.gameType)
-            {
-                smallBlocksAll = new[] { smallBlocks1, smallBlocks2, smallBlocks3, smallBlocks4 };
-                for (int i = 0; i < 4; i++)
-                {
-                    smallBlocksAll[i].Images.Clear();
-                    smallBlocksAll[i].ImageSize = new Size((int)(16 * smallBlockScaleFactor), (int)(16 * smallBlockScaleFactor));
-                    smallBlocksAll[i].Images.AddStrip(Video.makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsType, i));
-                }
-                smallBlocksColorBytes = Globals.getTTSmallBlocksColorBytes(blockId);
-            }
-
-
-            for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
-            {
-                Bitmap b;
-                switch (Globals.gameType)
-                {
-                    case GameType.TT:
-                        b = Video.makeBigBlockTT(i, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
-                        break;
-                    case GameType._3E:
-                        b = Video.makeBigBlock3E(i, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocks);
-                        break;
-                    default:
-                        b = Video.makeBigBlock(i, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocks);
-                        break;
-                } 
-                if (curViewType == MapViewType.ObjNumbers) 
-                    b = Video.addObjNumber(b, i);
-                if (showAxis)
-                    b = Video.addAxisRectangle(b);
-                bigBlocks.Images.Add(b);
-            }
             //tt add
             for (int i = ConfigScript.getBigBlocksCount(); i < 256; i++)
             {

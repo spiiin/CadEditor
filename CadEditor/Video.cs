@@ -226,8 +226,8 @@ namespace CadEditor
             return b;
         }
 
-        public static Image[] makeBigBlocks(int videoNo, int bigBlockNo, int blockNo, int palleteNo, bool withBigTileBorders = true, MapViewType smallObjectsViewType = MapViewType.Tiles,
-            int smallBlockScaleFactor = 2 /*todo: float*/, int blockWidth = 32, int blockHeight = 32, int curButtonScale = 2)
+        public static Image[] makeBigBlocks(int videoNo, int bigBlockNo, int blockNo, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
+            float smallBlockScaleFactor = 2.0f, int blockWidth = 32, int blockHeight = 32, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false)
         {
             int blockCount = ConfigScript.getBigBlocksCount();
             int SCREEN_SIZE = ConfigScript.getScreenWidth() * ConfigScript.getScreenHeight();
@@ -239,7 +239,7 @@ namespace CadEditor
             byte palId = (byte)palleteNo;
             byte[] bigBlockIndexes = ConfigScript.getBigBlocks(blockIndexId);
 
-            var im = Video.makeObjectsStrip(backId, blockId, palId, withBigTileBorders ? 1 : 2, MapViewType.Tiles);
+            var im = Video.makeObjectsStrip(backId, blockId, palId, smallBlockScaleFactor, smallObjectsViewType);
             var smallBlocks = new System.Windows.Forms.ImageList();
             smallBlocks.ImageSize = new Size((int)(16 * smallBlockScaleFactor), (int)(16 * smallBlockScaleFactor));
             smallBlocks.Images.AddStrip(im);
@@ -253,7 +253,7 @@ namespace CadEditor
                 for (int i = 0; i < 4; i++)
                 {
                     smallBlocksAll[i] = new ImageList();
-                    smallBlocksAll[i].ImageSize = new System.Drawing.Size(16 * smallBlockScaleFactor, 16 * smallBlockScaleFactor);
+                    smallBlocksAll[i].ImageSize = new System.Drawing.Size((int)(16 * smallBlockScaleFactor), (int)(16 * smallBlockScaleFactor));
                     smallBlocksAll[i].Images.AddStrip(Video.makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsViewType, i));
                 }
                 smallBlocksColorBytes = Globals.getTTSmallBlocksColorBytes(blockId);
@@ -265,15 +265,19 @@ namespace CadEditor
                 switch (Globals.gameType)
                 {
                     case GameType.TT:
-                        b = Video.makeBigBlockTT(btileId, blockWidth * curButtonScale, blockHeight * curButtonScale, bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
+                        b = Video.makeBigBlockTT(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
                         break;
                     case GameType._3E:
-                        b = Video.makeBigBlock3E(btileId, blockWidth * curButtonScale, blockHeight * curButtonScale, bigBlockIndexes, smallBlocks);
+                        b = Video.makeBigBlock3E(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocks);
                         break;
                     default:
-                        b = Video.makeBigBlock(btileId, blockWidth * curButtonScale, blockHeight * curButtonScale, bigBlockIndexes, smallBlocks);
+                        b = Video.makeBigBlock(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocks);
                         break;
                 }
+                if (curViewType == MapViewType.ObjNumbers)
+                    b = Video.addObjNumber(b, btileId);
+                if (showAxis)
+                    b = Video.addAxisRectangle(b);
                 bigBlocks[btileId] = b;
             }
             return bigBlocks;
@@ -285,7 +289,7 @@ namespace CadEditor
             if (scrNo < 0)
                 return emptyScreen(ConfigScript.getScreenWidth() * 64, ConfigScript.getScreenHeight() * 64);
             int SCREEN_SIZE = ConfigScript.getScreenWidth() * ConfigScript.getScreenHeight();
-            var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, /*withBigTileBorders*/false);
+            var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, 2.0f, 32, 32, 2, MapViewType.Tiles, true);
 
             var bitmap = new Bitmap(ConfigScript.getScreenWidth()*64, ConfigScript.getScreenHeight()*64); //getScreenVertical, scales
             int[] indexes = Globals.getScreen(ConfigScript.screensOffset, scrNo);
