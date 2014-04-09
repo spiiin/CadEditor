@@ -96,6 +96,8 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pnElements = new System.Windows.Forms.Panel();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.lbStructures = new System.Windows.Forms.ListBox();
+            this.cbUseStructs = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -124,7 +126,7 @@
             this.blocksPanel.Location = new System.Drawing.Point(3, 3);
             this.blocksPanel.Margin = new System.Windows.Forms.Padding(0);
             this.blocksPanel.Name = "blocksPanel";
-            this.blocksPanel.Size = new System.Drawing.Size(289, 515);
+            this.blocksPanel.Size = new System.Drawing.Size(290, 515);
             this.blocksPanel.TabIndex = 2;
             // 
             // mapScreen
@@ -806,6 +808,7 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.pnElements);
+            this.splitContainer1.Panel1.Controls.Add(this.lbStructures);
             this.splitContainer1.Panel1.Controls.Add(this.blocksPanel);
             // 
             // splitContainer1.Panel2
@@ -819,6 +822,7 @@
             // 
             this.pnElements.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnElements.Controls.Add(this.cbUseStructs);
             this.pnElements.Controls.Add(this.lbCoords);
             this.pnElements.Controls.Add(this.lbActiveBlock);
             this.pnElements.Controls.Add(this.label4);
@@ -837,6 +841,30 @@
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+            // 
+            // lbStructures
+            // 
+            this.lbStructures.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbStructures.FormattingEnabled = true;
+            this.lbStructures.Location = new System.Drawing.Point(3, 4);
+            this.lbStructures.Name = "lbStructures";
+            this.lbStructures.Size = new System.Drawing.Size(290, 511);
+            this.lbStructures.TabIndex = 6;
+            this.lbStructures.Visible = false;
+            this.lbStructures.SelectedIndexChanged += new System.EventHandler(this.lbStructures_SelectedIndexChanged);
+            // 
+            // cbUseStructs
+            // 
+            this.cbUseStructs.AutoSize = true;
+            this.cbUseStructs.Location = new System.Drawing.Point(3, 334);
+            this.cbUseStructs.Name = "cbUseStructs";
+            this.cbUseStructs.Size = new System.Drawing.Size(79, 17);
+            this.cbUseStructs.TabIndex = 57;
+            this.cbUseStructs.Text = "Use structs";
+            this.cbUseStructs.UseVisualStyleBackColor = true;
+            this.cbUseStructs.CheckedChanged += new System.EventHandler(this.cbUseStructs_CheckedChanged);
             // 
             // FormMain
             // 
@@ -938,6 +966,8 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
         private System.Windows.Forms.ToolStripButton bttStructures;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.CheckBox cbUseStructs;
+        private System.Windows.Forms.ListBox lbStructures;
     }
 }
 

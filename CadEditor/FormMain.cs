@@ -74,6 +74,7 @@ namespace CadEditor
             showBrush = true;
             showLayer1 = true;
             showLayer2 = true;
+            useStructs = false;
             curActiveLayer = 0;
             prepareBlocksPanel();
 
@@ -232,9 +233,8 @@ namespace CadEditor
         {
             int TILE_SIZE_X = (int)(blockWidth * curScale);
             int TILE_SIZE_Y = (int)(blockHeight * curScale);
-            if (FormStructures.getTileStructures().Count > 0)
+            if (curTileStruct != null)
             {
-                TileStructure curTileStruct = FormStructures.getTileStructures()[0];
                 int WIDTH1 = curTileStruct.Width;
                 int HEIGHT1 = curTileStruct.Height;
                 for (int x = 0; x < WIDTH1; x++)
@@ -315,11 +315,17 @@ namespace CadEditor
 
             if (showBrush && curActiveBlock != -1 && (curDx != OUTSIDE || curDy != OUTSIDE))
             {
-                if (!ConfigScript.getScreenVertical())
-                    g.DrawImage(bigBlocks.Images[curActiveBlock], (curDx +1)* TILE_SIZE_X, curDy * TILE_SIZE_Y);
+                if (!useStructs)
+                {
+                    if (!ConfigScript.getScreenVertical())
+                        g.DrawImage(bigBlocks.Images[curActiveBlock], (curDx + 1) * TILE_SIZE_X, curDy * TILE_SIZE_Y);
+                    else
+                        g.DrawImage(bigBlocks.Images[curActiveBlock], curDy * TILE_SIZE_X, (curDx + 1) * TILE_SIZE_Y);
+                }
                 else
-                    g.DrawImage(bigBlocks.Images[curActiveBlock], curDy * TILE_SIZE_X, (curDx+1) * TILE_SIZE_Y);
-                //drawActiveTileStruct(g, visibleRect);
+                {
+                    drawActiveTileStruct(g, visibleRect);
+                }
             }
         }
 
@@ -340,6 +346,9 @@ namespace CadEditor
         private float curButtonScale = 2;
         private int blockWidth = 32;
         private int blockHeight = 32;
+
+        bool useStructs;
+        TileStructure curTileStruct;
 
         MapViewType curViewType = MapViewType.ObjType;
         private bool dirty;
@@ -437,10 +446,16 @@ namespace CadEditor
                 }
                 else
                 {
-                    int index = dy * WIDTH + dx;
-                    Globals.setBigTileToScreen(activeScreens[curActiveScreen], index, curActiveBlock);
-                    dirty = true; updateSaveVisibility();
-                    //appendCurTileStruct(dx, dy);
+                    if (!useStructs)
+                    {
+                        int index = dy * WIDTH + dx;
+                        Globals.setBigTileToScreen(activeScreens[curActiveScreen], index, curActiveBlock);
+                        dirty = true; updateSaveVisibility();
+                    }
+                    else
+                    {
+                        appendCurTileStruct(dx, dy);
+                    }
                 }
             }
             mapScreen.Invalidate();
@@ -453,9 +468,8 @@ namespace CadEditor
             int TILE_SIZE_X = (int)(blockWidth * curScale);
             int TILE_SIZE_Y = (int)(blockHeight * curScale);
             var activeScreens = curActiveLayer == 0 ? screens : screens2;
-            if (FormStructures.getTileStructures().Count > 0)
+            if (curTileStruct!=null)
             {
-                TileStructure curTileStruct = FormStructures.getTileStructures()[0];
                 int WIDTH1 = curTileStruct.Width;
                 int HEIGHT1 = curTileStruct.Height;
                 for (int x = 0; x < WIDTH1; x++)
@@ -842,6 +856,35 @@ namespace CadEditor
             var f = new FormStructures();
             f.setFormMain(this);
             f.ShowDialog();
+            updateBlocksPanelVisible();
+        }
+
+        private void updateBlocksPanelVisible()
+        {
+            blocksPanel.Visible = !useStructs;
+            lbStructures.Visible = useStructs;
+            if (useStructs)
+            {
+                lbStructures.Items.Clear();
+                var tss = FormStructures.getTileStructures();
+                foreach (var ts in tss)
+                    lbStructures.Items.Add(ts.Name);
+            }
+        }
+
+        private void cbUseStructs_CheckedChanged(object sender, EventArgs e)
+        {
+            useStructs = cbUseStructs.Checked;
+            updateBlocksPanelVisible();
+        }
+
+        private void lbStructures_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = lbStructures.SelectedIndex;
+            var tss = FormStructures.getTileStructures();
+            if (index == -1 || index >= tss.Count)
+                return;
+            curTileStruct = tss[index];
         }
     }
 }
