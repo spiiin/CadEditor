@@ -184,9 +184,18 @@ namespace CadEditor
             int dy = (e.Y % 32) / 16;
             int ind = (by * 16 + bx) * 4 + (dy * 2 + dx);
             int actualIndex = addIndexes + ind;
-            if (actualIndex < bigBlockIndexes.Length)
-              bigBlockIndexes[actualIndex] = (byte)curActiveBlock;
-            mapScreen.Invalidate();
+            if (e.Button == MouseButtons.Left)
+            {
+                if (actualIndex < bigBlockIndexes.Length)
+                    bigBlockIndexes[actualIndex] = (byte)curActiveBlock;
+                mapScreen.Invalidate();
+            }
+            else
+            {
+                if (actualIndex < bigBlockIndexes.Length)
+                    curActiveBlock = bigBlockIndexes[actualIndex];
+                pbActive.Image = smallBlocks.Images[curActiveBlock];
+            }
         }
 
         private void buttonObjClick(Object button, EventArgs e)

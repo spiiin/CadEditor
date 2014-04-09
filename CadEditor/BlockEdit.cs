@@ -196,6 +196,7 @@ namespace CadEditor
 
         void pb_MouseClick(object sender, MouseEventArgs e)
         {
+            bool left = e.Button == MouseButtons.Left;
             int x = e.X / 16;
             int y = e.Y / 16;
             PictureBox p = (PictureBox)sender;
@@ -203,18 +204,40 @@ namespace CadEditor
             if (x == 0)
             {
                 if (y == 0)
-                    objects[objIndex].c1 = (byte)curActiveBlock;
+                {
+                    if (left)
+                        objects[objIndex].c1 = (byte)curActiveBlock;
+                    else
+                        curActiveBlock = objects[objIndex].c1;
+                }
                 else
-                    objects[objIndex].c3 = (byte)curActiveBlock;
+                {
+                    if (left)
+                        objects[objIndex].c3 = (byte)curActiveBlock;
+                    else
+                        curActiveBlock = objects[objIndex].c3;
+                }
             }
             else
             {
                 if (y == 0)
-                    objects[objIndex].c2 = (byte)curActiveBlock;
+                {
+                    if (left)
+                        objects[objIndex].c2 = (byte)curActiveBlock;
+                    else
+                        curActiveBlock = objects[objIndex].c2;
+                }
                 else
-                    objects[objIndex].c4 = (byte)curActiveBlock;
+                {
+                    if (left)
+                        objects[objIndex].c4 = (byte)curActiveBlock;
+                    else
+                        curActiveBlock = objects[objIndex].c4;
+
+                }
             }
             p.Image = makeObjImage(objIndex);
+            pbActive.Image = videoSprites[curSubpalIndex].Images[curActiveBlock];
             dirty = true;
         }
 
