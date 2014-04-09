@@ -255,6 +255,11 @@ namespace CadEditor
             e.Cancel = !closed;
         }
 
+        public static List<TileStructure> getTileStructures()
+        {
+            return tileStructs;
+        }
+
         public void setFormMain(FormMain f)
         {
             formMain = f;

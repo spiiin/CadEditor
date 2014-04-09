@@ -228,6 +228,36 @@ namespace CadEditor
             }
         }
 
+        private void drawActiveTileStruct(Graphics g, Rectangle visibleRect)
+        {
+            int TILE_SIZE_X = (int)(blockWidth * curScale);
+            int TILE_SIZE_Y = (int)(blockHeight * curScale);
+            if (FormStructures.getTileStructures().Count > 0)
+            {
+                TileStructure curTileStruct = FormStructures.getTileStructures()[0];
+                int WIDTH1 = curTileStruct.Width;
+                int HEIGHT1 = curTileStruct.Height;
+                for (int x = 0; x < WIDTH1; x++)
+                {
+                    for (int y = 0; y < HEIGHT1; y++)
+                    {
+                        int index = curTileStruct[x, y];
+                        Rectangle tileRect;
+                        if (ConfigScript.getScreenVertical())
+                            tileRect = new Rectangle(curDy * TILE_SIZE_X + y * TILE_SIZE_X, (curDx + 1) * TILE_SIZE_Y + x * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
+                        else
+                            tileRect = new Rectangle((curDx + 1) * TILE_SIZE_X + x * TILE_SIZE_X, curDy * TILE_SIZE_Y + y * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
+
+                        if ((visibleRect.Contains(tileRect)) || (visibleRect.IntersectsWith(tileRect)))
+                        {
+                            if ((index!=-1) && (index < bigBlocks.Images.Count))
+                                g.DrawImage(bigBlocks.Images[index], tileRect);
+                        }
+                    }
+                }
+            }
+        }
+
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
 
@@ -289,6 +319,7 @@ namespace CadEditor
                     g.DrawImage(bigBlocks.Images[curActiveBlock], (curDx +1)* TILE_SIZE_X, curDy * TILE_SIZE_Y);
                 else
                     g.DrawImage(bigBlocks.Images[curActiveBlock], curDy * TILE_SIZE_X, (curDx+1) * TILE_SIZE_Y);
+                //drawActiveTileStruct(g, visibleRect);
             }
         }
 
