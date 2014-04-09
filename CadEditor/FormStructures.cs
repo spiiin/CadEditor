@@ -95,7 +95,10 @@ namespace CadEditor
             if (dx < 0 || dx >= curTileStruct.Width || dy < 0 || dy >= curTileStruct.Height)
                 return;
 
-            curTileStruct[dx, dy] = curActiveBlock;
+            if (e.Button == MouseButtons.Left)
+                curTileStruct[dx, dy] = curActiveBlock;
+            else
+                curActiveBlock = curTileStruct[dx, dy];
 
             mapScreen.Invalidate();
         }
