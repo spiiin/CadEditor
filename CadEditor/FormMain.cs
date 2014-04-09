@@ -440,9 +440,38 @@ namespace CadEditor
                     int index = dy * WIDTH + dx;
                     Globals.setBigTileToScreen(activeScreens[curActiveScreen], index, curActiveBlock);
                     dirty = true; updateSaveVisibility();
+                    //appendCurTileStruct(dx, dy);
                 }
             }
             mapScreen.Invalidate();
+        }
+
+        private void appendCurTileStruct(int dx, int dy)
+        {
+            int WIDTH = ConfigScript.getScreenWidth();
+            int HEIGHT = ConfigScript.getScreenHeight();
+            int TILE_SIZE_X = (int)(blockWidth * curScale);
+            int TILE_SIZE_Y = (int)(blockHeight * curScale);
+            var activeScreens = curActiveLayer == 0 ? screens : screens2;
+            if (FormStructures.getTileStructures().Count > 0)
+            {
+                TileStructure curTileStruct = FormStructures.getTileStructures()[0];
+                int WIDTH1 = curTileStruct.Width;
+                int HEIGHT1 = curTileStruct.Height;
+                for (int x = 0; x < WIDTH1; x++)
+                {
+                    for (int y = 0; y < HEIGHT1; y++)
+                    {
+                        if ((dy + y) >= HEIGHT || (dx + x) >= WIDTH)
+                            continue;
+                        int index = (dy+y) * WIDTH + (dx+x);
+                        int no = curTileStruct[x, y];
+                        if (no == -1)
+                            continue;
+                        Globals.setBigTileToScreen(activeScreens[curActiveScreen], index, no);
+                    }
+                }
+            }
         }
 
         private void mapScreen_MouseLeave(object sender, EventArgs e)
