@@ -95,6 +95,8 @@ namespace CadEditor
             bttShowLayer2.Enabled = ConfigScript.getLayersCount() > 1;
             bttLayer.Enabled = ConfigScript.getLayersCount() > 1;
 
+            bttStructures.Enabled = ConfigScript.usePicturesInstedBlocks;
+
             if (ConfigScript.getScreenVertical())
                 mapScreen.Size = new Size((int)(ConfigScript.getScreenHeight() * blockWidth * curScale), (int)((ConfigScript.getScreenWidth() + 2) * blockHeight * curScale));
             else
@@ -770,6 +772,12 @@ namespace CadEditor
         private void bttLayer_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             curActiveLayer = bttLayer.DropDownItems.IndexOf(e.ClickedItem);
+        }
+
+        private void bttStructures_Click(object sender, EventArgs e)
+        {
+            var f = new FormStructures();
+            f.ShowDialog();
         }
     }
 }

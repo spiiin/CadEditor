@@ -132,6 +132,18 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStructures.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStructures.Designer.cs">
+      <DependentUpon>FormStructures.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStructuresName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStructuresName.Designer.cs">
+      <DependentUpon>FormStructuresName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Globals.cs" />
     <Compile Include="OpenFile.cs">
       <SubType>Form</SubType>
@@ -193,6 +205,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStructures.resx">
+      <DependentUpon>FormStructures.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStructuresName.resx">
+      <DependentUpon>FormStructuresName.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OpenFile.resx">
       <DependentUpon>OpenFile.cs</DependentUpon>

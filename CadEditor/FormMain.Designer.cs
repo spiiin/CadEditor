@@ -89,11 +89,13 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.bttShowLayer1 = new System.Windows.Forms.ToolStripButton();
             this.bttShowLayer2 = new System.Windows.Forms.ToolStripButton();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.pnElements = new System.Windows.Forms.Panel();
             this.bttLayer = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.bttStructures = new System.Windows.Forms.ToolStripButton();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.pnElements = new System.Windows.Forms.Panel();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -486,6 +488,8 @@
             this.bttMap,
             this.bttHex,
             this.toolStripSeparator3,
+            this.bttStructures,
+            this.toolStripSeparator6,
             this.bttShowNei,
             this.bttAxis,
             this.bttShowBrush,
@@ -690,37 +694,37 @@
             // x025ToolStripMenuItem
             // 
             this.x025ToolStripMenuItem.Name = "x025ToolStripMenuItem";
-            this.x025ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.x025ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.x025ToolStripMenuItem.Text = "x0.25";
             // 
             // x05ToolStripMenuItem
             // 
             this.x05ToolStripMenuItem.Name = "x05ToolStripMenuItem";
-            this.x05ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.x05ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.x05ToolStripMenuItem.Text = "x0.5";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(100, 22);
             this.toolStripMenuItem2.Text = "x1";
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(100, 22);
             this.toolStripMenuItem3.Text = "x2";
             // 
             // x3ToolStripMenuItem
             // 
             this.x3ToolStripMenuItem.Name = "x3ToolStripMenuItem";
-            this.x3ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.x3ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.x3ToolStripMenuItem.Text = "x3";
             // 
             // x4ToolStripMenuItem
             // 
             this.x4ToolStripMenuItem.Name = "x4ToolStripMenuItem";
-            this.x4ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.x4ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.x4ToolStripMenuItem.Text = "x4";
             // 
             // toolStripSeparator5
@@ -753,6 +757,41 @@
             this.bttShowLayer2.Size = new System.Drawing.Size(23, 22);
             this.bttShowLayer2.Text = "Show Layer 2";
             this.bttShowLayer2.CheckedChanged += new System.EventHandler(this.bttShowLayer2_CheckedChanged);
+            // 
+            // bttLayer
+            // 
+            this.bttLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttLayer.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem4,
+            this.toolStripMenuItem5});
+            this.bttLayer.Image = ((System.Drawing.Image)(resources.GetObject("bttLayer.Image")));
+            this.bttLayer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttLayer.Name = "bttLayer";
+            this.bttLayer.Size = new System.Drawing.Size(29, 22);
+            this.bttLayer.Text = "Select layer";
+            this.bttLayer.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.bttLayer_DropDownItemClicked);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(80, 22);
+            this.toolStripMenuItem4.Text = "1";
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(80, 22);
+            this.toolStripMenuItem5.Text = "2";
+            // 
+            // bttStructures
+            // 
+            this.bttStructures.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttStructures.Image = ((System.Drawing.Image)(resources.GetObject("bttStructures.Image")));
+            this.bttStructures.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttStructures.Name = "bttStructures";
+            this.bttStructures.Size = new System.Drawing.Size(23, 22);
+            this.bttStructures.Text = "Make structures";
+            this.bttStructures.Click += new System.EventHandler(this.bttStructures_Click);
             // 
             // splitContainer1
             // 
@@ -794,30 +833,10 @@
             this.pnElements.Size = new System.Drawing.Size(77, 515);
             this.pnElements.TabIndex = 5;
             // 
-            // bttLayer
+            // toolStripSeparator6
             // 
-            this.bttLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttLayer.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem4,
-            this.toolStripMenuItem5});
-            this.bttLayer.Image = ((System.Drawing.Image)(resources.GetObject("bttLayer.Image")));
-            this.bttLayer.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttLayer.Name = "bttLayer";
-            this.bttLayer.Size = new System.Drawing.Size(29, 22);
-            this.bttLayer.Text = "Select layer";
-            this.bttLayer.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.bttLayer_DropDownItemClicked);
-            // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem4.Text = "1";
-            // 
-            // toolStripMenuItem5
-            // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem5.Text = "2";
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
             // 
             // FormMain
             // 
@@ -917,6 +936,8 @@
         private System.Windows.Forms.ToolStripDropDownButton bttLayer;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
+        private System.Windows.Forms.ToolStripButton bttStructures;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
     }
 }
 

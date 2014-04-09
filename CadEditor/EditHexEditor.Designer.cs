@@ -40,7 +40,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "EditHexEditor";
-            this.Text = "EditHexEditor";
+            this.Text = "Hex Editor (beta)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditHexEditor_FormClosing);
             this.Load += new System.EventHandler(this.EditHexEditor_Load);
             this.ResumeLayout(false);
