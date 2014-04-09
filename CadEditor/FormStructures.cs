@@ -23,10 +23,11 @@ namespace CadEditor
         int curButtonScale;
         int curActiveBlock;
         float curScale;
-        MapViewType curViewType;
-        bool showAxis;
+        //MapViewType curViewType;
+        //bool showAxis;
         TileStructure curTileStruct;
-        List<TileStructure> tileStructs;
+        static List<TileStructure> tileStructs = new List<TileStructure>();
+        FormMain formMain;
 
         private void FormStructures_Load(object sender, EventArgs e)
         {
@@ -34,24 +35,24 @@ namespace CadEditor
             blockHeight = 32;
             curButtonScale = 2;
             curActiveBlock = 0;
-            curViewType = MapViewType.Tiles;
+            //curViewType = MapViewType.Tiles;
             curScale = 2.0f;
-            showAxis = true;
+            //showAxis = true;
             curTileStruct = null;
-            tileStructs = new List<TileStructure>(); 
             resetControls(true);
         }
 
         void resetControls(bool needToRefillBlockPanel)
         {
-            if (ConfigScript.usePicturesInstedBlocks)
-            {
-                Utils.setBlocks(bigBlocks, curButtonScale, blockWidth, blockHeight, curViewType, showAxis);
-                if (needToRefillBlockPanel)
-                    Utils.prepareBlocksPanel(blocksPanel, new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick);
-                else
-                    Utils.reloadBlocksPanel(blocksPanel, bigBlocks);
-            }
+            lbStructures.Items.Clear();
+            for (int i = 0; i < tileStructs.Count; i++)
+                lbStructures.Items.Add(tileStructs[i].Name);
+            bigBlocks = formMain.getBigBlockImageList();
+            //Utils.setBlocks(bigBlocks, curButtonScale, blockWidth, blockHeight, curViewType, showAxis);
+            if (needToRefillBlockPanel)
+                Utils.prepareBlocksPanel(blocksPanel, new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick);
+            else
+                Utils.reloadBlocksPanel(blocksPanel, bigBlocks);
             resetTileStructControls();
         }
 
@@ -184,7 +185,7 @@ namespace CadEditor
         {
             try
             {
-                using (Stream stream = File.Open("structures.bin", FileMode.Create))
+                using (Stream stream = File.Open(filename, FileMode.Create))
                 {
                     BinaryFormatter bin = new BinaryFormatter();
                     bin.Serialize(stream, tileStructs);
@@ -252,6 +253,11 @@ namespace CadEditor
         {
             bool closed = MessageBox.Show("Do you really want to close form (check that you save results)", "Attention", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes;
             e.Cancel = !closed;
+        }
+
+        public void setFormMain(FormMain f)
+        {
+            formMain = f;
         }
 
     }

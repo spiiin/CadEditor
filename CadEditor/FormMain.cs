@@ -95,8 +95,6 @@ namespace CadEditor
             bttShowLayer2.Enabled = ConfigScript.getLayersCount() > 1;
             bttLayer.Enabled = ConfigScript.getLayersCount() > 1;
 
-            bttStructures.Enabled = ConfigScript.usePicturesInstedBlocks;
-
             if (ConfigScript.getScreenVertical())
                 mapScreen.Size = new Size((int)(ConfigScript.getScreenHeight() * blockWidth * curScale), (int)((ConfigScript.getScreenWidth() + 2) * blockHeight * curScale));
             else
@@ -736,6 +734,11 @@ namespace CadEditor
             get { return curViewType; } 
         }
 
+        public ImageList getBigBlockImageList()
+        {
+            return bigBlocks;
+        }
+
         private void bttScale_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             float[] scaleFactors = { 0.25f, 0.5f, 1.0f, 2.0f, 3.0f, 4.0f };
@@ -777,6 +780,7 @@ namespace CadEditor
         private void bttStructures_Click(object sender, EventArgs e)
         {
             var f = new FormStructures();
+            f.setFormMain(this);
             f.ShowDialog();
         }
     }
