@@ -75,6 +75,8 @@
             this.bttMap = new System.Windows.Forms.ToolStripButton();
             this.bttHex = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.bttStructures = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.bttShowNei = new System.Windows.Forms.ToolStripButton();
             this.bttAxis = new System.Windows.Forms.ToolStripButton();
             this.bttShowBrush = new System.Windows.Forms.ToolStripButton();
@@ -92,12 +94,10 @@
             this.bttLayer = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
-            this.bttStructures = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pnElements = new System.Windows.Forms.Panel();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.lbStructures = new System.Windows.Forms.ListBox();
             this.cbUseStructs = new System.Windows.Forms.CheckBox();
+            this.lbStructures = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -632,6 +632,21 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
+            // bttStructures
+            // 
+            this.bttStructures.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttStructures.Image = ((System.Drawing.Image)(resources.GetObject("bttStructures.Image")));
+            this.bttStructures.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttStructures.Name = "bttStructures";
+            this.bttStructures.Size = new System.Drawing.Size(23, 22);
+            this.bttStructures.Text = "Make structures";
+            this.bttStructures.Click += new System.EventHandler(this.bttStructures_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+            // 
             // bttShowNei
             // 
             this.bttShowNei.Checked = true;
@@ -785,16 +800,6 @@
             this.toolStripMenuItem5.Size = new System.Drawing.Size(80, 22);
             this.toolStripMenuItem5.Text = "2";
             // 
-            // bttStructures
-            // 
-            this.bttStructures.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttStructures.Image = ((System.Drawing.Image)(resources.GetObject("bttStructures.Image")));
-            this.bttStructures.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttStructures.Name = "bttStructures";
-            this.bttStructures.Size = new System.Drawing.Size(23, 22);
-            this.bttStructures.Text = "Make structures";
-            this.bttStructures.Click += new System.EventHandler(this.bttStructures_Click);
-            // 
             // splitContainer1
             // 
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -837,10 +842,16 @@
             this.pnElements.Size = new System.Drawing.Size(77, 515);
             this.pnElements.TabIndex = 5;
             // 
-            // toolStripSeparator6
+            // cbUseStructs
             // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+            this.cbUseStructs.AutoSize = true;
+            this.cbUseStructs.Location = new System.Drawing.Point(3, 334);
+            this.cbUseStructs.Name = "cbUseStructs";
+            this.cbUseStructs.Size = new System.Drawing.Size(79, 17);
+            this.cbUseStructs.TabIndex = 57;
+            this.cbUseStructs.Text = "Use structs";
+            this.cbUseStructs.UseVisualStyleBackColor = true;
+            this.cbUseStructs.CheckedChanged += new System.EventHandler(this.cbUseStructs_CheckedChanged);
             // 
             // lbStructures
             // 
@@ -855,17 +866,6 @@
             this.lbStructures.Visible = false;
             this.lbStructures.SelectedIndexChanged += new System.EventHandler(this.lbStructures_SelectedIndexChanged);
             // 
-            // cbUseStructs
-            // 
-            this.cbUseStructs.AutoSize = true;
-            this.cbUseStructs.Location = new System.Drawing.Point(3, 334);
-            this.cbUseStructs.Name = "cbUseStructs";
-            this.cbUseStructs.Size = new System.Drawing.Size(79, 17);
-            this.cbUseStructs.TabIndex = 57;
-            this.cbUseStructs.Text = "Use structs";
-            this.cbUseStructs.UseVisualStyleBackColor = true;
-            this.cbUseStructs.CheckedChanged += new System.EventHandler(this.cbUseStructs_CheckedChanged);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -876,7 +876,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Text = "CAD Editor v2.6 by spiiin";
+            this.Text = "CAD Editor v2.7 by spiiin";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
