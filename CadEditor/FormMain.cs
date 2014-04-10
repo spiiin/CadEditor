@@ -455,6 +455,7 @@ namespace CadEditor
                     else
                     {
                         appendCurTileStruct(dx, dy);
+                        dirty = true; updateSaveVisibility();
                     }
                 }
             }
@@ -855,7 +856,7 @@ namespace CadEditor
         {
             var f = new FormStructures();
             f.setFormMain(this);
-            f.ShowDialog();
+            f.Show();
             updateBlocksPanelVisible();
         }
 
