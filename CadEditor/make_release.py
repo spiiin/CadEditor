@@ -17,6 +17,7 @@ COPY_FILE_LIST = [
   "readme.txt",
   "cad_editor_configs_manual.txt",
   "cad_editor_supported_games.txt",
+  "cad_editor_structures.txt"
 ]
 
 COPY_FOLDER_LIST = [
