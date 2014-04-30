@@ -12,7 +12,7 @@ public class Data
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return false; }
   public bool isLayoutEditorEnabled()   { return false; }
-  public bool isEnemyEditorEnabled()    { return false; }
+  public bool isEnemyEditorEnabled()    { return true; }
   public bool isVideoEditorEnabled()    { return false; }
   
   public GetObjectsFunc getObjectsFunc()   { return getObjects;  }
@@ -25,7 +25,7 @@ public class Data
   public IList<LevelRec> getLevelRecs() { return levelRecs; }
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
-    new LevelRec(0x0, 0, 1, 1, 0x0),
+    new LevelRec(0x114E3, 33, 1, 1, 0x0),
   };
   
   LevelLayerData getLayout(int levelNo)
@@ -40,20 +40,21 @@ public class Data
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int objCount = lr.objCount;
+    int baseAddr = lr.objectsBeginAddr;
     var objects = new List<ObjectRec>();
-    /*for (int i = 0; i < objCount; i++)
+    for (int i = 0; i < objCount; i++)
     {
-      byte x    = Globals.romdata[0x113AF + i];
-      byte y    = Globals.romdata[0x113F5 + i];
+      byte x    = Globals.romdata[baseAddr + objCount*0 + i];
+      byte y    = Globals.romdata[baseAddr + objCount*2 + i];
       int realx = x * 8;
       int realy = y * 8;
-      byte v    = Globals.romdata[0x11418 + i];
-      byte data = Globals.romdata[0x113D2 + i];
+      byte v    = Globals.romdata[baseAddr + objCount*3 + i];
+      byte data = Globals.romdata[baseAddr + objCount*1 + i];
       var dataDict = new Dictionary<string,int>();
       dataDict["data"] = data;
       var obj = new ObjectRec(v, 0, 0, realx, realy, dataDict);
       objects.Add(obj);
-    }*/
+    }
     return objects;
   }
 
@@ -61,23 +62,24 @@ public class Data
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int objCount = lr.objCount;
-    /*for (int i = 0; i < objects.Count; i++)
+    int baseAddr = lr.objectsBeginAddr;
+    for (int i = 0; i < objects.Count; i++)
     {
         var obj = objects[i];
         byte x = (byte)(obj.x /8);
         byte y = (byte)(obj.y /8);
-        Globals.romdata[0x11418 + i] = (byte)obj.type;
-        Globals.romdata[0x113D2 + i] = (byte)obj.additionalData["data"];
-        Globals.romdata[0x113AF + i] = x;
-        Globals.romdata[0x113F5 + i] = y;
+        Globals.romdata[baseAddr + objCount*0 + i] = (byte)obj.type;
+        Globals.romdata[baseAddr + objCount*1 + i] = (byte)obj.additionalData["data"];
+        Globals.romdata[baseAddr + objCount*2 + i] = x;
+        Globals.romdata[baseAddr + objCount*3 + i] = y;
     }
     for (int i = objects.Count; i < objCount; i++)
     {
-        Globals.romdata[0x11418 + i] = 0xFF;
-        Globals.romdata[0x113D2 + i] = 0xFF;
-        Globals.romdata[0x113AF + i] = 0xFF;
-        Globals.romdata[0x113F5 + i] = 0xFF;
-    }*/
+        Globals.romdata[baseAddr + objCount*0 + i] = 0xFF;
+        Globals.romdata[baseAddr + objCount*1 + i] = 0xFF;
+        Globals.romdata[baseAddr + objCount*2 + i] = 0xFF;
+        Globals.romdata[baseAddr + objCount*3 + i] = 0xFF;
+    }
     return true;
   }
 }
