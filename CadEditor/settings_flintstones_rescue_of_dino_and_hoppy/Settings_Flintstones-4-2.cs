@@ -3,11 +3,11 @@ using System.Collections.Generic;
 public class Data
 { 
   public GameType getGameType()           { return GameType.TT; }
-  public OffsetRec getScreensOffset()     { return new OffsetRec(0x122BF, 1 , 8*96);   }
+  public OffsetRec getScreensOffset()     { return new OffsetRec(0x28B1, 1 , 8*80);   }
   public int getScreenWidth()             { return 8; }
-  public int getScreenHeight()            { return 96; }
+  public int getScreenHeight()            { return 80; }
   public bool getScreenVertical()         { return true; }
-  public string getBlocksFilename()       { return "flintstones_3.png"; }
+  public string getBlocksFilename()       { return "flintstones_4.png"; }
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return false; }
@@ -25,7 +25,7 @@ public class Data
   public IList<LevelRec> getLevelRecs() { return levelRecs; }
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
-    new LevelRec(0x114E3, 42, 1, 1, 0x0),
+    new LevelRec(0x1165F, 25, 1, 1, 0x0),
   };
   
   LevelLayerData getLayout(int levelNo)
@@ -46,7 +46,7 @@ public class Data
     {
       byte x    = Globals.romdata[baseAddr + objCount*0 + i];
       byte y    = Globals.romdata[baseAddr + objCount*2 + i];
-      int realx = x * 8;
+      int realx = x * 8 + 32*32;
       int realy = y * 8;
       byte v    = Globals.romdata[baseAddr + objCount*3 + i];
       byte data = Globals.romdata[baseAddr + objCount*1 + i];
@@ -66,7 +66,7 @@ public class Data
     for (int i = 0; i < objects.Count; i++)
     {
         var obj = objects[i];
-        byte x = (byte)(obj.x /8);
+        byte x = (byte)((obj.x-32*32)/8);
         byte y = (byte)(obj.y /8);
         Globals.romdata[baseAddr + objCount*3 + i] = (byte)obj.type;
         Globals.romdata[baseAddr + objCount*1 + i] = (byte)obj.additionalData["data"];

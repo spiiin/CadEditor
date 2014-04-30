@@ -25,7 +25,7 @@ public class Data
   public IList<LevelRec> getLevelRecs() { return levelRecs; }
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
-    new LevelRec(0x114E3, 42, 1, 1, 0x0),
+    new LevelRec(0x1158B, 23, 1, 1, 0x0),
   };
   
   LevelLayerData getLayout(int levelNo)
@@ -46,7 +46,7 @@ public class Data
     {
       byte x    = Globals.romdata[baseAddr + objCount*0 + i];
       byte y    = Globals.romdata[baseAddr + objCount*2 + i];
-      int realx = x * 8;
+      int realx = x * 8 + 64*32;
       int realy = y * 8;
       byte v    = Globals.romdata[baseAddr + objCount*3 + i];
       byte data = Globals.romdata[baseAddr + objCount*1 + i];
@@ -66,7 +66,7 @@ public class Data
     for (int i = 0; i < objects.Count; i++)
     {
         var obj = objects[i];
-        byte x = (byte)(obj.x /8);
+        byte x = (byte)((obj.x-64*32)/8);
         byte y = (byte)(obj.y /8);
         Globals.romdata[baseAddr + objCount*3 + i] = (byte)obj.type;
         Globals.romdata[baseAddr + objCount*1 + i] = (byte)obj.additionalData["data"];

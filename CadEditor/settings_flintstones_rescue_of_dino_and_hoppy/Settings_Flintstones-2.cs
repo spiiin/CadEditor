@@ -68,10 +68,10 @@ public class Data
         var obj = objects[i];
         byte x = (byte)(obj.x /8);
         byte y = (byte)(obj.y /8);
-        Globals.romdata[baseAddr + objCount*0 + i] = (byte)obj.type;
+        Globals.romdata[baseAddr + objCount*3 + i] = (byte)obj.type;
         Globals.romdata[baseAddr + objCount*1 + i] = (byte)obj.additionalData["data"];
-        Globals.romdata[baseAddr + objCount*2 + i] = x;
-        Globals.romdata[baseAddr + objCount*3 + i] = y;
+        Globals.romdata[baseAddr + objCount*0 + i] = x;
+        Globals.romdata[baseAddr + objCount*2 + i] = y;
     }
     for (int i = objects.Count; i < objCount; i++)
     {
