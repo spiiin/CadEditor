@@ -94,11 +94,11 @@
             this.bttLayer = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.bttExportPic = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pnElements = new System.Windows.Forms.Panel();
             this.cbUseStructs = new System.Windows.Forms.CheckBox();
             this.lbStructures = new System.Windows.Forms.ListBox();
-            this.bttExportPic = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -481,6 +481,7 @@
             this.bttSave,
             this.toolStripSeparator1,
             this.bttExport,
+            this.bttExportPic,
             this.bttImport,
             this.toolStripSeparator2,
             this.bttBigBlocks,
@@ -501,8 +502,7 @@
             this.toolStripSeparator5,
             this.bttShowLayer1,
             this.bttShowLayer2,
-            this.bttLayer,
-            this.bttExportPic});
+            this.bttLayer});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1073, 25);
@@ -713,37 +713,37 @@
             // x025ToolStripMenuItem
             // 
             this.x025ToolStripMenuItem.Name = "x025ToolStripMenuItem";
-            this.x025ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.x025ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.x025ToolStripMenuItem.Text = "x0.25";
             // 
             // x05ToolStripMenuItem
             // 
             this.x05ToolStripMenuItem.Name = "x05ToolStripMenuItem";
-            this.x05ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.x05ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.x05ToolStripMenuItem.Text = "x0.5";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(100, 22);
             this.toolStripMenuItem2.Text = "x1";
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(100, 22);
             this.toolStripMenuItem3.Text = "x2";
             // 
             // x3ToolStripMenuItem
             // 
             this.x3ToolStripMenuItem.Name = "x3ToolStripMenuItem";
-            this.x3ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.x3ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.x3ToolStripMenuItem.Text = "x3";
             // 
             // x4ToolStripMenuItem
             // 
             this.x4ToolStripMenuItem.Name = "x4ToolStripMenuItem";
-            this.x4ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.x4ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.x4ToolStripMenuItem.Text = "x4";
             // 
             // toolStripSeparator5
@@ -801,6 +801,16 @@
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
             this.toolStripMenuItem5.Size = new System.Drawing.Size(80, 22);
             this.toolStripMenuItem5.Text = "2";
+            // 
+            // bttExportPic
+            // 
+            this.bttExportPic.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttExportPic.Image = ((System.Drawing.Image)(resources.GetObject("bttExportPic.Image")));
+            this.bttExportPic.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttExportPic.Name = "bttExportPic";
+            this.bttExportPic.Size = new System.Drawing.Size(23, 22);
+            this.bttExportPic.Text = "Export as picture";
+            this.bttExportPic.Click += new System.EventHandler(this.bttExportPic_Click);
             // 
             // splitContainer1
             // 
@@ -867,16 +877,6 @@
             this.lbStructures.TabIndex = 6;
             this.lbStructures.Visible = false;
             this.lbStructures.SelectedIndexChanged += new System.EventHandler(this.lbStructures_SelectedIndexChanged);
-            // 
-            // bttExportPic
-            // 
-            this.bttExportPic.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttExportPic.Image = ((System.Drawing.Image)(resources.GetObject("bttExportPic.Image")));
-            this.bttExportPic.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttExportPic.Name = "bttExportPic";
-            this.bttExportPic.Size = new System.Drawing.Size(23, 22);
-            this.bttExportPic.Text = "Export as picture";
-            this.bttExportPic.Click += new System.EventHandler(this.bttExportPic_Click);
             // 
             // FormMain
             // 
