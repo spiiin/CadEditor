@@ -260,7 +260,6 @@ namespace CadEditor
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-
             int WIDTH = ConfigScript.getScreenWidth();
             int HEIGHT = ConfigScript.getScreenHeight();
             int TILE_SIZE_X = (int)(blockWidth * curScale);
@@ -327,6 +326,51 @@ namespace CadEditor
                     drawActiveTileStruct(g, visibleRect);
                 }
             }
+        }
+
+        private Image screenToImage(int scrNo)
+        {
+            int EXPORT_SCALE = 2;
+            int WIDTH = ConfigScript.getScreenWidth();
+            int HEIGHT = ConfigScript.getScreenHeight();
+            int TILE_SIZE_X = (int)(blockWidth * EXPORT_SCALE);
+            int TILE_SIZE_Y = (int)(blockHeight * EXPORT_SCALE);
+            int SIZE = WIDTH * HEIGHT;
+
+            int[] indexes = screens[scrNo];
+            int[] indexes2 = null;
+            if (ConfigScript.getLayersCount() > 1)
+                indexes2 = screens2[scrNo];
+
+            Image result;
+            if ( (ConfigScript.getScreenVertical()))
+                result = new Bitmap(HEIGHT * TILE_SIZE_Y, WIDTH * TILE_SIZE_X);
+            else
+                result = new Bitmap(WIDTH * TILE_SIZE_X, HEIGHT * TILE_SIZE_Y);
+
+            using (var g = Graphics.FromImage(result))
+            {
+                for (int i = 0; i < SIZE; i++)
+                {
+                    int index = indexes[i];
+                    int bigBlockNo = Globals.getBigTileNoFromScreen(indexes, i);
+                    Rectangle tileRect;
+                    if (ConfigScript.getScreenVertical())
+                        tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X, (i % WIDTH) * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
+                    else
+                        tileRect = new Rectangle((i % WIDTH) * TILE_SIZE_X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
+
+                    if (bigBlockNo < bigBlocks.Images.Count & showLayer1)
+                        g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
+                    if (indexes2 != null && showLayer2)
+                    {
+                        int bigBlockNo2 = Globals.getBigTileNoFromScreen(indexes2, i);
+                        if (bigBlockNo2 < bigBlocks.Images.Count)
+                            g.DrawImage(bigBlocks.Images[bigBlockNo2], tileRect);
+                    }
+                }
+            }
+            return result;
         }
 
         //editor globals
@@ -658,6 +702,7 @@ namespace CadEditor
         private void btExport_Click(object sender, EventArgs e)
         {
             SaveScreensCount.ExportMode = true;
+            SaveScreensCount.Filename = "exportedScreens.bin";
             var f = new SaveScreensCount();
             f.Text = "Export";
             f.ShowDialog();
@@ -690,6 +735,7 @@ namespace CadEditor
         private void btImport_Click(object sender, EventArgs e)
         {
             SaveScreensCount.ExportMode = false;
+            SaveScreensCount.Filename = "exportedScreens.bin";
             var f = new SaveScreensCount();
             f.Text = "Import";
             f.ShowDialog();
@@ -886,6 +932,43 @@ namespace CadEditor
             if (index == -1 || index >= tss.Count)
                 return;
             curTileStruct = tss[index];
+        }
+
+        private void bttExportPic_Click(object sender, EventArgs e)
+        {
+            SaveScreensCount.ExportMode = true;
+            SaveScreensCount.Filename = "exportedScreens.png";
+            var f = new SaveScreensCount();
+            f.Text = "Export picture";
+            f.ShowDialog();
+            if (SaveScreensCount.Result)
+            {
+                if (SaveScreensCount.Count <= 0)
+                {
+                    MessageBox.Show("Screens count value must be greater than 0", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                int saveLastIndex = SaveScreensCount.First + SaveScreensCount.Count;
+                if (saveLastIndex > screens.Length)
+                {
+                    MessageBox.Show(string.Format("First screen + Screens Count value ({0}) must be less than Total Screen Count in the game ({1}", saveLastIndex, screens.Length), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                int first = SaveScreensCount.First;
+                var probeIm = screenToImage(curActiveScreen);
+                int screenCount = SaveScreensCount.Count;
+                var resultImage = new Bitmap(probeIm.Width * screenCount, probeIm.Height);
+                using (var g = Graphics.FromImage(resultImage))
+                {
+                    for (int i = 0; i < screenCount; i++)
+                    {
+                        var im = screenToImage(first + i);
+                        g.DrawImage(im, new Point(i * im.Width, 0));
+                    }
+                }
+                resultImage.Save(SaveScreensCount.Filename);
+            }
         }
     }
 }

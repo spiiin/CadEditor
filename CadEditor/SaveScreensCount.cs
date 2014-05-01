@@ -28,6 +28,7 @@ namespace CadEditor
             btImport.Visible = !ExportMode;
             lbCount.Visible = ExportMode;
             cbCount.Visible = ExportMode;
+            tbFileName.Text = Filename;
         }
 
         private void tbFileName_Click(object sender, EventArgs e)
