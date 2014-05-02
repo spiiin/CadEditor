@@ -718,10 +718,23 @@ namespace CadEditor
             {
                 var fname = String.Format(templ, i);
                 var fnameGeneric = String.Format(templGeneric,i);
+                //".." hack for WinXP compatibility
                 if (File.Exists(fname))
+                {
                     objectSprites.Images.Add(Image.FromFile(fname));
+                }
+                else if (File.Exists("..\\" + fname))
+                {
+                    objectSprites.Images.Add(Image.FromFile("..\\" + fname));
+                }
                 else if (File.Exists(fnameGeneric))
+                {
                     objectSprites.Images.Add(Image.FromFile(fnameGeneric));
+                }
+                else if (File.Exists("..\\" + fnameGeneric))
+                {
+                    objectSprites.Images.Add(Image.FromFile("..\\" + fnameGeneric));
+                }
             }
         }
 
