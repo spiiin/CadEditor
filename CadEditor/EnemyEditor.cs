@@ -29,6 +29,8 @@ namespace CadEditor
         private int curWidth = 1;
         private int curHeight = 1;
 
+        private bool bindToAxis = false;
+
         private ToolType curTool = ToolType.Create;
 
         private LevelLayerData curLevelLayerData = new LevelLayerData();
@@ -812,8 +814,16 @@ namespace CadEditor
                 for (int i = 0; i < lvObjects.SelectedIndices.Count; i++)
                 {
                     var obj = objects[lvObjects.SelectedIndices[i]];
-                    obj.x = x;
-                    obj.y = y;
+                    if (bindToAxis)
+                    {
+                        obj.x = (x / 8) * 8;
+                        obj.y = (y / 8) * 8;
+                    }
+                    else
+                    {
+                        obj.x = x;
+                        obj.y = y;
+                    }
                     objects[lvObjects.SelectedIndices[i]] = obj;
                 }
             }
@@ -861,6 +871,11 @@ namespace CadEditor
                 if (x >= coordXCount || y >= coordYCount || x < minCoordX || y < minCoordY)
                     return;
                 dirty = true;
+                if (bindToAxis)
+                {
+                    x = (x / 8) * 8;
+                    y = (y / 8) * 8;
+                }
                 var obj = new ObjectRec(type, sx, sy, x, y);
 
                 int insertPos = lvObjects.SelectedItems.Count > 0 ? lvObjects.SelectedIndices[0] + 1 : lvObjects.Items.Count;
@@ -892,6 +907,11 @@ namespace CadEditor
         public void setFormMain(FormMain f)
         {
             formMain = f;
+        }
+
+        private void cbBindToAxis_CheckedChanged(object sender, EventArgs e)
+        {
+            bindToAxis = cbBindToAxis.Checked;
         }
     }
 
