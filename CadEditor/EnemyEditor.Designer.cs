@@ -104,6 +104,10 @@
             this.lbD1 = new System.Windows.Forms.Label();
             this.pnObjects = new System.Windows.Forms.Panel();
             this.cbBindToAxis = new System.Windows.Forms.CheckBox();
+            this.cbUseBigPictures = new System.Windows.Forms.CheckBox();
+            this.cbBigObjectNo = new System.Windows.Forms.ComboBox();
+            this.pnBigObjects = new System.Windows.Forms.Panel();
+            this.pbBigObject = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -114,6 +118,8 @@
             this.pnObjectList.SuspendLayout();
             this.pnAddData.SuspendLayout();
             this.pnObjects.SuspendLayout();
+            this.pnBigObjects.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBigObject)).BeginInit();
             this.SuspendLayout();
             // 
             // cbLevel
@@ -226,9 +232,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.objPanel.AutoScroll = true;
-            this.objPanel.Location = new System.Drawing.Point(-2, 267);
+            this.objPanel.Location = new System.Drawing.Point(4, 285);
             this.objPanel.Name = "objPanel";
-            this.objPanel.Size = new System.Drawing.Size(172, 191);
+            this.objPanel.Size = new System.Drawing.Size(172, 173);
             this.objPanel.TabIndex = 37;
             // 
             // lvObjects
@@ -713,7 +719,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnTools.Controls.Add(this.label16);
             this.pnTools.Controls.Add(this.cbTool);
-            this.pnTools.Location = new System.Drawing.Point(-5, 231);
+            this.pnTools.Location = new System.Drawing.Point(7, 237);
             this.pnTools.Name = "pnTools";
             this.pnTools.Size = new System.Drawing.Size(178, 30);
             this.pnTools.TabIndex = 52;
@@ -721,7 +727,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(9, 6);
+            this.label16.Location = new System.Drawing.Point(8, 6);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(31, 13);
             this.label16.TabIndex = 28;
@@ -1042,10 +1048,11 @@
             // 
             this.pnObjects.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.pnObjects.Controls.Add(this.pnBigObjects);
+            this.pnObjects.Controls.Add(this.cbUseBigPictures);
             this.pnObjects.Controls.Add(this.cbBindToAxis);
             this.pnObjects.Controls.Add(this.pnCad);
             this.pnObjects.Controls.Add(this.objPanel);
-            this.pnObjects.Controls.Add(this.pnTools);
             this.pnObjects.Controls.Add(this.activeBlock);
             this.pnObjects.Controls.Add(this.lbReadOnly);
             this.pnObjects.Controls.Add(this.label3);
@@ -1073,11 +1080,56 @@
             this.cbBindToAxis.UseVisualStyleBackColor = true;
             this.cbBindToAxis.CheckedChanged += new System.EventHandler(this.cbBindToAxis_CheckedChanged);
             // 
+            // cbUseBigPictures
+            // 
+            this.cbUseBigPictures.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbUseBigPictures.AutoSize = true;
+            this.cbUseBigPictures.Location = new System.Drawing.Point(5, 262);
+            this.cbUseBigPictures.Name = "cbUseBigPictures";
+            this.cbUseBigPictures.Size = new System.Drawing.Size(101, 17);
+            this.cbUseBigPictures.TabIndex = 65;
+            this.cbUseBigPictures.Text = "Alternative view";
+            this.cbUseBigPictures.UseVisualStyleBackColor = true;
+            this.cbUseBigPictures.CheckedChanged += new System.EventHandler(this.cbUseBigPictures_CheckedChanged);
+            // 
+            // cbBigObjectNo
+            // 
+            this.cbBigObjectNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBigObjectNo.FormattingEnabled = true;
+            this.cbBigObjectNo.Location = new System.Drawing.Point(1, 7);
+            this.cbBigObjectNo.Name = "cbBigObjectNo";
+            this.cbBigObjectNo.Size = new System.Drawing.Size(73, 21);
+            this.cbBigObjectNo.TabIndex = 30;
+            this.cbBigObjectNo.SelectedIndexChanged += new System.EventHandler(this.cbBigObjectNo_SelectedIndexChanged);
+            // 
+            // pnBigObjects
+            // 
+            this.pnBigObjects.Controls.Add(this.pbBigObject);
+            this.pnBigObjects.Controls.Add(this.cbBigObjectNo);
+            this.pnBigObjects.Location = new System.Drawing.Point(5, 278);
+            this.pnBigObjects.Name = "pnBigObjects";
+            this.pnBigObjects.Size = new System.Drawing.Size(171, 179);
+            this.pnBigObjects.TabIndex = 31;
+            this.pnBigObjects.Visible = false;
+            // 
+            // pbBigObject
+            // 
+            this.pbBigObject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbBigObject.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbBigObject.Location = new System.Drawing.Point(1, 34);
+            this.pbBigObject.Name = "pbBigObject";
+            this.pbBigObject.Size = new System.Drawing.Size(71, 67);
+            this.pbBigObject.TabIndex = 66;
+            this.pbBigObject.TabStop = false;
+            // 
             // EnemyEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(944, 553);
+            this.Controls.Add(this.pnTools);
             this.Controls.Add(this.pnObjects);
             this.Controls.Add(this.pnObjectList);
             this.Controls.Add(this.pnView);
@@ -1105,6 +1157,8 @@
             this.pnAddData.PerformLayout();
             this.pnObjects.ResumeLayout(false);
             this.pnObjects.PerformLayout();
+            this.pnBigObjects.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbBigObject)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1186,5 +1240,9 @@
         private System.Windows.Forms.ComboBox cbD0;
         private System.Windows.Forms.Label lbD0;
         private System.Windows.Forms.CheckBox cbBindToAxis;
+        private System.Windows.Forms.CheckBox cbUseBigPictures;
+        private System.Windows.Forms.Panel pnBigObjects;
+        private System.Windows.Forms.PictureBox pbBigObject;
+        private System.Windows.Forms.ComboBox cbBigObjectNo;
     }
 }

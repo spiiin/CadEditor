@@ -30,6 +30,7 @@ namespace CadEditor
         private int curHeight = 1;
 
         private bool bindToAxis = false;
+        private bool useBigPictures = false;
 
         private ToolType curTool = ToolType.Create;
 
@@ -240,6 +241,7 @@ namespace CadEditor
             else
                 mapScreen.Size = new Size((ConfigScript.getScreenWidth() + 2) * blockWidth * 2, ConfigScript.getScreenHeight() * 64);
 
+            Utils.setCbItemsCount(cbBigObjectNo, 256, 0, true);
         }
 
         private void cbScreenNo_SelectedIndexChanged(object sender, EventArgs e)
@@ -912,6 +914,31 @@ namespace CadEditor
         private void cbBindToAxis_CheckedChanged(object sender, EventArgs e)
         {
             bindToAxis = cbBindToAxis.Checked;
+        }
+
+        private void cbUseBigPictures_CheckedChanged(object sender, EventArgs e)
+        {
+            useBigPictures = cbUseBigPictures.Checked;
+            updatePanelsVisible();
+        }
+
+        private void updatePanelsVisible()
+        {
+            objPanel.Visible = !useBigPictures;
+            pnBigObjects.Visible = useBigPictures;
+            cbBigObjectNo.SelectedIndex = 0;
+            curActiveBlock = 0;
+            pbBigObject.Image = objectSprites.Images[curActiveBlock];
+            activeBlock.Image = objectSprites.Images[curActiveBlock];
+            lbActive.Text = String.Format("({0:X2})", curActiveBlock);
+        }
+
+        private void cbBigObjectNo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            curActiveBlock = cbBigObjectNo.SelectedIndex;
+            pbBigObject.Image = objectSprites.Images[curActiveBlock];
+            activeBlock.Image = objectSprites.Images[curActiveBlock];
+            lbActive.Text = String.Format("({0:X2})", curActiveBlock);
         }
     }
 
