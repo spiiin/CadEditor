@@ -65,6 +65,7 @@
             this.bttSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.bttExport = new System.Windows.Forms.ToolStripButton();
+            this.bttExportPic = new System.Windows.Forms.ToolStripButton();
             this.bttImport = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.bttBigBlocks = new System.Windows.Forms.ToolStripButton();
@@ -94,7 +95,6 @@
             this.bttLayer = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
-            this.bttExportPic = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pnElements = new System.Windows.Forms.Panel();
             this.cbUseStructs = new System.Windows.Forms.CheckBox();
@@ -544,6 +544,16 @@
             this.bttExport.Text = "Export";
             this.bttExport.Click += new System.EventHandler(this.btExport_Click);
             // 
+            // bttExportPic
+            // 
+            this.bttExportPic.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttExportPic.Image = ((System.Drawing.Image)(resources.GetObject("bttExportPic.Image")));
+            this.bttExportPic.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttExportPic.Name = "bttExportPic";
+            this.bttExportPic.Size = new System.Drawing.Size(23, 22);
+            this.bttExportPic.Text = "Export as picture";
+            this.bttExportPic.Click += new System.EventHandler(this.bttExportPic_Click);
+            // 
             // bttImport
             // 
             this.bttImport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -802,16 +812,6 @@
             this.toolStripMenuItem5.Size = new System.Drawing.Size(80, 22);
             this.toolStripMenuItem5.Text = "2";
             // 
-            // bttExportPic
-            // 
-            this.bttExportPic.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttExportPic.Image = ((System.Drawing.Image)(resources.GetObject("bttExportPic.Image")));
-            this.bttExportPic.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttExportPic.Name = "bttExportPic";
-            this.bttExportPic.Size = new System.Drawing.Size(23, 22);
-            this.bttExportPic.Text = "Export as picture";
-            this.bttExportPic.Click += new System.EventHandler(this.bttExportPic_Click);
-            // 
             // splitContainer1
             // 
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -888,7 +888,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Text = "CAD Editor v2.7 by spiiin";
+            this.Text = "CAD Editor v2.8 by spiiin";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
