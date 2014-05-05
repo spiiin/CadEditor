@@ -150,7 +150,10 @@ namespace CadEditor
                 if (Globals.gameType != GameType.CAD && cbPlus256.Checked)
                     scrNo += 256;
                 lbScrNo.Text = String.Format("({0:X})", scrNo);
-                mapScreen.Image = (Globals.gameType != GameType.CAD) ? makeCurScreen(scrNo - 1) : scrImages[scrNo];
+                if (scrNo < ConfigScript.screensOffset.recCount)
+                    mapScreen.Image = (Globals.gameType != GameType.CAD) ? makeCurScreen(scrNo - 1) : scrImages[scrNo];
+                else
+                    mapScreen.Image = Video.emptyScreen(512, 512);
             }
         }
 
@@ -466,22 +469,28 @@ namespace CadEditor
             int TILE_SIZE_X = blockWidth * curScale;
             int TILE_SIZE_Y = 32 * curScale;
             int SIZE = WIDTH * HEIGHT;
-            int[] indexes = screens[curLevelLayerData.layer[curActiveScreen]];
-            var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
-            for (int i = 0; i < SIZE; i++)
+            if (curLevelLayerData.layer[curActiveScreen] < screens.Length)
             {
-                int index = indexes[i];
-                int bigBlockNo = Globals.getBigTileNoFromScreen(indexes, i);
-                Rectangle tileRect;
-                if (ConfigScript.getScreenVertical())
-                  tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X, (i % WIDTH) * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
-                else
-                  tileRect  = new Rectangle((i % WIDTH) * TILE_SIZE_X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
+                int[] indexes = screens[curLevelLayerData.layer[curActiveScreen]];
+                var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
+                for (int i = 0; i < SIZE; i++)
+                {
+                    int index = indexes[i];
+                    int bigBlockNo = Globals.getBigTileNoFromScreen(indexes, i);
+                    Rectangle tileRect;
+                    if (ConfigScript.getScreenVertical())
+                        tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X, (i % WIDTH) * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
+                    else
+                        tileRect = new Rectangle((i % WIDTH) * TILE_SIZE_X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
 
-                if ((visibleRect.Contains(tileRect)) || (visibleRect.IntersectsWith(tileRect)))
-                  g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
+                    if ((visibleRect.Contains(tileRect)) || (visibleRect.IntersectsWith(tileRect)))
+                        g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
+                }
             }
- 
+            else
+            {
+                g.FillRectangle(Brushes.Black, new Rectangle(0, 0, 512, 512));
+            }
             //Additional rendering
             ConfigScript.renderToMainScreen(g, curScale);
         }
