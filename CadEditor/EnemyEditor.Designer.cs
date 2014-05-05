@@ -103,11 +103,11 @@
             this.cbD1 = new System.Windows.Forms.ComboBox();
             this.lbD1 = new System.Windows.Forms.Label();
             this.pnObjects = new System.Windows.Forms.Panel();
-            this.cbBindToAxis = new System.Windows.Forms.CheckBox();
-            this.cbUseBigPictures = new System.Windows.Forms.CheckBox();
-            this.cbBigObjectNo = new System.Windows.Forms.ComboBox();
             this.pnBigObjects = new System.Windows.Forms.Panel();
             this.pbBigObject = new System.Windows.Forms.PictureBox();
+            this.cbBigObjectNo = new System.Windows.Forms.ComboBox();
+            this.cbUseBigPictures = new System.Windows.Forms.CheckBox();
+            this.cbBindToAxis = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -1066,43 +1066,6 @@
             this.pnObjects.Size = new System.Drawing.Size(183, 546);
             this.pnObjects.TabIndex = 31;
             // 
-            // cbBindToAxis
-            // 
-            this.cbBindToAxis.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbBindToAxis.AutoSize = true;
-            this.cbBindToAxis.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbBindToAxis.Location = new System.Drawing.Point(33, 498);
-            this.cbBindToAxis.Name = "cbBindToAxis";
-            this.cbBindToAxis.Size = new System.Drawing.Size(136, 17);
-            this.cbBindToAxis.TabIndex = 64;
-            this.cbBindToAxis.Text = "Coord Align per 8 pixels";
-            this.cbBindToAxis.UseVisualStyleBackColor = true;
-            this.cbBindToAxis.CheckedChanged += new System.EventHandler(this.cbBindToAxis_CheckedChanged);
-            // 
-            // cbUseBigPictures
-            // 
-            this.cbUseBigPictures.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbUseBigPictures.AutoSize = true;
-            this.cbUseBigPictures.Location = new System.Drawing.Point(5, 262);
-            this.cbUseBigPictures.Name = "cbUseBigPictures";
-            this.cbUseBigPictures.Size = new System.Drawing.Size(101, 17);
-            this.cbUseBigPictures.TabIndex = 65;
-            this.cbUseBigPictures.Text = "Alternative view";
-            this.cbUseBigPictures.UseVisualStyleBackColor = true;
-            this.cbUseBigPictures.CheckedChanged += new System.EventHandler(this.cbUseBigPictures_CheckedChanged);
-            // 
-            // cbBigObjectNo
-            // 
-            this.cbBigObjectNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbBigObjectNo.FormattingEnabled = true;
-            this.cbBigObjectNo.Location = new System.Drawing.Point(1, 7);
-            this.cbBigObjectNo.Name = "cbBigObjectNo";
-            this.cbBigObjectNo.Size = new System.Drawing.Size(73, 21);
-            this.cbBigObjectNo.TabIndex = 30;
-            this.cbBigObjectNo.SelectedIndexChanged += new System.EventHandler(this.cbBigObjectNo_SelectedIndexChanged);
-            // 
             // pnBigObjects
             // 
             this.pnBigObjects.Controls.Add(this.pbBigObject);
@@ -1123,6 +1086,43 @@
             this.pbBigObject.Size = new System.Drawing.Size(71, 67);
             this.pbBigObject.TabIndex = 66;
             this.pbBigObject.TabStop = false;
+            // 
+            // cbBigObjectNo
+            // 
+            this.cbBigObjectNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBigObjectNo.FormattingEnabled = true;
+            this.cbBigObjectNo.Location = new System.Drawing.Point(1, 7);
+            this.cbBigObjectNo.Name = "cbBigObjectNo";
+            this.cbBigObjectNo.Size = new System.Drawing.Size(73, 21);
+            this.cbBigObjectNo.TabIndex = 30;
+            this.cbBigObjectNo.SelectedIndexChanged += new System.EventHandler(this.cbBigObjectNo_SelectedIndexChanged);
+            // 
+            // cbUseBigPictures
+            // 
+            this.cbUseBigPictures.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbUseBigPictures.AutoSize = true;
+            this.cbUseBigPictures.Location = new System.Drawing.Point(5, 262);
+            this.cbUseBigPictures.Name = "cbUseBigPictures";
+            this.cbUseBigPictures.Size = new System.Drawing.Size(101, 17);
+            this.cbUseBigPictures.TabIndex = 65;
+            this.cbUseBigPictures.Text = "Alternative view";
+            this.cbUseBigPictures.UseVisualStyleBackColor = true;
+            this.cbUseBigPictures.CheckedChanged += new System.EventHandler(this.cbUseBigPictures_CheckedChanged);
+            // 
+            // cbBindToAxis
+            // 
+            this.cbBindToAxis.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbBindToAxis.AutoSize = true;
+            this.cbBindToAxis.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbBindToAxis.Location = new System.Drawing.Point(33, 498);
+            this.cbBindToAxis.Name = "cbBindToAxis";
+            this.cbBindToAxis.Size = new System.Drawing.Size(136, 17);
+            this.cbBindToAxis.TabIndex = 64;
+            this.cbBindToAxis.Text = "Coord Align per 8 pixels";
+            this.cbBindToAxis.UseVisualStyleBackColor = true;
+            this.cbBindToAxis.CheckedChanged += new System.EventHandler(this.cbBindToAxis_CheckedChanged);
             // 
             // EnemyEditor
             // 

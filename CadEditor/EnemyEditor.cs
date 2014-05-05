@@ -44,6 +44,8 @@ namespace CadEditor
         ComboBox[] cbDatas;
         Label[] lbDatas;
 
+        private Image[] objectSpritesBig;
+
         const int MAX_SIZE = 64;
         const int OBJECTS_COUNT = 256;
 
@@ -497,10 +499,22 @@ namespace CadEditor
                 if (screenIndex == curActiveScreen)
                 {
                     int x = curObject.x, y = curObject.y;
-                    if (curObject.type < objectSprites.Images.Count)
-                        g.DrawImage(objectSprites.Images[curObject.type], new Point(x * 2 - 8, y * 2 - 8));
-                    if (selectedInds.Contains(i))
-                        g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle(x * 2 - 8, y * 2 - 8, 16, 16));
+                    if (!useBigPictures)
+                    {
+                        if (curObject.type < objectSprites.Images.Count)
+                            g.DrawImage(objectSprites.Images[curObject.type], new Point(x * 2 - 8, y * 2 - 8));
+                        if (selectedInds.Contains(i))
+                            g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle(x * 2 - 8, y * 2 - 8, 16, 16));
+                    }
+                    else
+                    {
+                        int xsize = objectSpritesBig[curObject.type].Size.Width;
+                        int ysize = objectSpritesBig[curObject.type].Size.Height;
+                        if (curObject.type < objectSpritesBig.Length)
+                            g.DrawImage(objectSpritesBig[curObject.type], new Rectangle(x * 2 - xsize/2, y * 2 - ysize/2, xsize, ysize));
+                        if (selectedInds.Contains(i))
+                            g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle(x * 2 - xsize/2, y * 2 - ysize/2, xsize, ysize));
+                    }
                 }
             }
         }
@@ -717,7 +731,10 @@ namespace CadEditor
             var objSpritesDirGeneric = "obj_sprites";
             var templ = objSpritesDir + "\\object{0}.png";
             var templGeneric = objSpritesDirGeneric + "\\object{0}.png";
+            var templBig = objSpritesDir + "\\object{0}b.png";
+            var templGenericBig = objSpritesDirGeneric + "\\object{0}b.png";
             objectSprites.Images.Clear();
+            objectSpritesBig = new Image[256];
             for (int i = 0; i < OBJECTS_COUNT; i++)
             {
                 var fname = String.Format(templ, i);
@@ -738,6 +755,30 @@ namespace CadEditor
                 else if (File.Exists("..\\" + fnameGeneric))
                 {
                     objectSprites.Images.Add(Image.FromFile("..\\" + fnameGeneric));
+                }
+
+                //
+                var fnameBig = String.Format(templBig, i);
+                var fnameGenericBig = String.Format(templGenericBig, i);
+                if (File.Exists(fnameBig))
+                {
+                    objectSpritesBig[i] = Image.FromFile(fnameBig);
+                }
+                else if (File.Exists("..\\" + fnameBig))
+                {
+                    objectSpritesBig[i] = Image.FromFile("..\\" + fnameBig);
+                }
+                else if (File.Exists(fnameGenericBig))
+                {
+                    objectSpritesBig[i] = Image.FromFile(fnameGenericBig);
+                }
+                else if (File.Exists("..\\" + fnameGenericBig))
+                {
+                    objectSpritesBig[i] = Image.FromFile("..\\" + fnameGenericBig);
+                }
+                else
+                {
+                    objectSpritesBig[i] = objectSprites.Images[i];
                 }
             }
         }
@@ -920,6 +961,7 @@ namespace CadEditor
         {
             useBigPictures = cbUseBigPictures.Checked;
             updatePanelsVisible();
+            mapScreen.Invalidate();
         }
 
         private void updatePanelsVisible()
@@ -928,7 +970,7 @@ namespace CadEditor
             pnBigObjects.Visible = useBigPictures;
             cbBigObjectNo.SelectedIndex = 0;
             curActiveBlock = 0;
-            pbBigObject.Image = objectSprites.Images[curActiveBlock];
+            pbBigObject.Image = objectSpritesBig[curActiveBlock];
             activeBlock.Image = objectSprites.Images[curActiveBlock];
             lbActive.Text = String.Format("({0:X2})", curActiveBlock);
         }
@@ -936,7 +978,7 @@ namespace CadEditor
         private void cbBigObjectNo_SelectedIndexChanged(object sender, EventArgs e)
         {
             curActiveBlock = cbBigObjectNo.SelectedIndex;
-            pbBigObject.Image = objectSprites.Images[curActiveBlock];
+            pbBigObject.Image = objectSpritesBig[curActiveBlock];
             activeBlock.Image = objectSprites.Images[curActiveBlock];
             lbActive.Text = String.Format("({0:X2})", curActiveBlock);
         }
