@@ -99,6 +99,7 @@
             this.pnElements = new System.Windows.Forms.Panel();
             this.cbUseStructs = new System.Windows.Forms.CheckBox();
             this.lbStructures = new System.Windows.Forms.ListBox();
+            this.bttReload = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -479,6 +480,7 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bttOpen,
             this.bttSave,
+            this.bttReload,
             this.toolStripSeparator1,
             this.bttExport,
             this.bttExportPic,
@@ -878,6 +880,16 @@
             this.lbStructures.Visible = false;
             this.lbStructures.SelectedIndexChanged += new System.EventHandler(this.lbStructures_SelectedIndexChanged);
             // 
+            // bttReload
+            // 
+            this.bttReload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttReload.Image = ((System.Drawing.Image)(resources.GetObject("bttReload.Image")));
+            this.bttReload.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttReload.Name = "bttReload";
+            this.bttReload.Size = new System.Drawing.Size(23, 22);
+            this.bttReload.Text = "Reload";
+            this.bttReload.Click += new System.EventHandler(this.bttReload_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -981,6 +993,7 @@
         private System.Windows.Forms.CheckBox cbUseStructs;
         private System.Windows.Forms.ListBox lbStructures;
         private System.Windows.Forms.ToolStripButton bttExportPic;
+        private System.Windows.Forms.ToolStripButton bttReload;
     }
 }
 

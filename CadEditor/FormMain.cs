@@ -124,7 +124,7 @@ namespace CadEditor
         private void setBlocks(bool needToRefillBlockPanel)
         {
             bigBlocks.Images.Clear();
-            smallBlocks.Images.Clear();
+            //smallBlocks.Images.Clear();
             bigBlocks.ImageSize = new Size((int)(curButtonScale * blockWidth), (int)(curButtonScale * blockHeight));
 
             //if using pictures
@@ -968,6 +968,15 @@ namespace CadEditor
                     }
                 }
                 resultImage.Save(SaveScreensCount.Filename);
+            }
+        }
+
+        private void bttReload_Click(object sender, EventArgs e)
+        {
+            if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
+            {
+                reloadLevel(true, true);
+                mapScreen.Invalidate();
             }
         }
     }
