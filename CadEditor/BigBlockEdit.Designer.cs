@@ -62,6 +62,7 @@
             this.tbbImport = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tbbDeleteAll = new System.Windows.Forms.ToolStripButton();
+            this.lbBigBlockNo = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).BeginInit();
             this.pnEditCad.SuspendLayout();
@@ -81,6 +82,8 @@
             this.mapScreen.TabStop = false;
             this.mapScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.mapScreen_Paint);
             this.mapScreen.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseClick);
+            this.mapScreen.MouseLeave += new System.EventHandler(this.mapScreen_MouseLeave);
+            this.mapScreen.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseMove);
             // 
             // blocksPanel
             // 
@@ -420,6 +423,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.lbBigBlockNo);
             this.splitContainer1.Panel2.Controls.Add(this.mapScreen);
             this.splitContainer1.Size = new System.Drawing.Size(808, 547);
             this.splitContainer1.SplitterDistance = 271;
@@ -490,6 +494,16 @@
             this.tbbDeleteAll.Text = "Clear All";
             this.tbbDeleteAll.Click += new System.EventHandler(this.btClear_Click);
             // 
+            // lbBigBlockNo
+            // 
+            this.lbBigBlockNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbBigBlockNo.AutoSize = true;
+            this.lbBigBlockNo.Location = new System.Drawing.Point(502, 528);
+            this.lbBigBlockNo.Name = "lbBigBlockNo";
+            this.lbBigBlockNo.Size = new System.Drawing.Size(13, 13);
+            this.lbBigBlockNo.TabIndex = 59;
+            this.lbBigBlockNo.Text = "()";
+            // 
             // BigBlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -514,6 +528,7 @@
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
             this.splitContainer1.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -556,5 +571,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton tbbDeleteAll;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.Label lbBigBlockNo;
     }
 }

@@ -378,5 +378,29 @@ namespace CadEditor
         {
             formMain = f;
         }
+
+        private void mapScreen_MouseMove(object sender, MouseEventArgs e)
+        {
+            int addIndexes = curPart * 256;
+            int bx = e.X / 32;
+            int by = e.Y / 32;
+            int dx = (e.X % 32) / 16;
+            int dy = (e.Y % 32) / 16;
+            int ind = ((by * 16 + bx) * 4 + (dy * 2 + dx)) / 4;
+            if (ind > 255)
+            {
+                lbBigBlockNo.Text = "()";
+            }
+            else
+            {
+                int actualIndex = addIndexes + ind;
+                lbBigBlockNo.Text = String.Format("({0:X})", actualIndex);
+            }
+        }
+
+        private void mapScreen_MouseLeave(object sender, EventArgs e)
+        {
+            lbBigBlockNo.Text = "()";
+        }
     }
 }
