@@ -163,7 +163,9 @@ namespace CadEditor
                 }
             }
 
-            MapViewType smallObjectsType = curViewType == MapViewType.ObjType ? MapViewType.ObjType : MapViewType.Tiles;
+            MapViewType smallObjectsType = 
+                curViewType == MapViewType.SmallObjNumbers ? MapViewType.ObjNumbers :
+                  curViewType == MapViewType.ObjType ? MapViewType.ObjType : MapViewType.Tiles;
 
             float smallBlockScaleFactor = curButtonScale;
             int bigTileIndex = (Globals.gameType != GameType.CAD) ? curActiveBlockNo : Globals.levelData[curActiveLevel].bigBlockId;

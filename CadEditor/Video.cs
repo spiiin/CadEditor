@@ -395,6 +395,7 @@ namespace CadEditor
     {
         Tiles,
         ObjType,
-        ObjNumbers
+        ObjNumbers,
+        SmallObjNumbers,
     };
 }

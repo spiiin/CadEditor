@@ -413,7 +413,8 @@
             this.cbViewType.Items.AddRange(new object[] {
             "Blocks",
             "Block types",
-            "Block numbers"});
+            "Block numbers",
+            "Small blocks numbers"});
             this.cbViewType.Location = new System.Drawing.Point(3, 139);
             this.cbViewType.Name = "cbViewType";
             this.cbViewType.Size = new System.Drawing.Size(64, 21);
