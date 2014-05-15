@@ -211,8 +211,16 @@ namespace CadEditor
             int minCoordX = ConfigScript.getMinObjCoordX();
             int minCoordY = ConfigScript.getMinObjCoordY();
             int minObjType = ConfigScript.getMinObjType();
-            Utils.setCbItemsCount(cbCoordX, coordXCount - minCoordX, minCoordX, true);
-            Utils.setCbItemsCount(cbCoordY, coordYCount - minCoordY, minCoordY, true);
+            if (!ConfigScript.getScreenVertical())
+            {
+                Utils.setCbItemsCount(cbCoordX, coordXCount - minCoordX, minCoordX, true);
+                Utils.setCbItemsCount(cbCoordY, coordYCount - minCoordY, minCoordY, true);
+            }
+            else
+            {
+                Utils.setCbItemsCount(cbCoordY, coordXCount - minCoordX, minCoordX, true);
+                Utils.setCbItemsCount(cbCoordX, coordYCount - minCoordY, minCoordY, true);
+            }
             Utils.setCbItemsCount(cbObjType, objType - minObjType, minObjType, true);
 
             Utils.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
