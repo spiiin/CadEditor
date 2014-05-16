@@ -47,7 +47,7 @@ namespace CadEditor
                 cbSmallBlock.SelectedIndex = formMain.CurActiveBlockNo;
                 cbPaletteNo.SelectedIndex = formMain.CurActivePalleteNo;
                 cbPart.SelectedIndex = 0;
-                cbViewType.SelectedIndex = (int)formMain.CurActiveViewType;
+                cbViewType.SelectedIndex = Math.Min((int)formMain.CurActiveViewType, cbViewType.Items.Count - 1);
             }
             else
             {
