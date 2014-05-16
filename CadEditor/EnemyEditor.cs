@@ -936,7 +936,8 @@ namespace CadEditor
                     x = (x / 8) * 8;
                     y = (y / 8) * 8;
                 }
-                var obj = new ObjectRec(type, sx, sy, x, y);
+                var dictionary = ConfigScript.getObjectDictionary(type);
+                var obj = new ObjectRec(type, sx, sy, x, y, dictionary);
 
                 int insertPos = lvObjects.SelectedItems.Count > 0 ? lvObjects.SelectedIndices[0] + 1 : lvObjects.Items.Count;
                 objects.Insert(insertPos, obj);

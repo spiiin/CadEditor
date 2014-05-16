@@ -21,6 +21,7 @@ namespace CadEditor
     public delegate bool            SetObjectsFunc(int levelNo, List<ObjectRec> objects); 
     public delegate void            SortObjectsFunc(int levelNo, List<ObjectRec> objects);
     public delegate LevelLayerData  GetLayoutFunc(int levelNo);
+    public delegate Dictionary<String, int> GetObjectDictionaryFunc(int objNo);
 
     public class ConfigScript
     {
@@ -91,6 +92,7 @@ namespace CadEditor
             setObjectsFunc = callFromScript<SetObjectsFunc>(asm, data, "*.setObjectsFunc");
             sortObjectsFunc = callFromScript<SortObjectsFunc>(asm, data, "*.sortObjectsFunc");
             getLayoutFunc = callFromScript<GetLayoutFunc>(asm, data, "*.getLayoutFunc");
+            getObjectDictionaryFunc = callFromScript<GetObjectDictionaryFunc>(asm, data, "*.getObjectDictionaryFunc");
 
             renderToMainScreenFunc = callFromScript<RenderToMainScreenFunc>(asm, data, "*.getRenderToMainScreenFunc");
 
@@ -196,6 +198,11 @@ namespace CadEditor
         public static LevelLayerData getLayout(int levelNo)
         {
             return getLayoutFunc(levelNo);
+        }
+
+        public static Dictionary<String, int> getObjectDictionary(int objType)
+        {
+            return (getObjectDictionaryFunc ?? (_ => null))(objType);
         }
 
         public static void renderToMainScreen(Graphics g, int scale)
@@ -353,6 +360,7 @@ namespace CadEditor
         public static SetObjectsFunc setObjectsFunc;
         public static SortObjectsFunc sortObjectsFunc;
         public static GetLayoutFunc getLayoutFunc;
+        public static GetObjectDictionaryFunc getObjectDictionaryFunc;
         public static RenderToMainScreenFunc renderToMainScreenFunc;
 
         public static bool isBigBlockEditorEnabled;
