@@ -18,9 +18,6 @@ public class Data
   
   public GetObjectsFunc getObjectsFunc()   { return FliUtils.getObjects;  }
   public SetObjectsFunc setObjectsFunc()   { return FliUtils.setObjects;  }
-  public int getMaxObjCoordX()           { return 60*32; }
-  public int getMaxObjCoordY()           { return 8 *32; }
-  //public SortObjectsFunc sortObjectsFunc() { return sortObjects; }
   public GetLayoutFunc getLayoutFunc()     { return FliUtils.getLayout;   } 
   public GetObjectDictionaryFunc getObjectDictionaryFunc() { return FliUtils.getObjectDictionary; }
   

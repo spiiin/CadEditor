@@ -928,8 +928,16 @@ namespace CadEditor
                 int minCoordX = ConfigScript.getMinObjCoordX();
                 int minCoordY = ConfigScript.getMinObjCoordY();
 
-                if (x >= coordXCount || y >= coordYCount || x < minCoordX || y < minCoordY)
-                    return;
+                if (!ConfigScript.getScreenVertical())
+                {
+                    if (x >= coordXCount || y >= coordYCount || x < minCoordX || y < minCoordY)
+                        return;
+                }
+                else
+                {
+                    if (y >= coordXCount || x >= coordYCount || y < minCoordX || x < minCoordY)
+                        return;
+                }
                 dirty = true;
                 if (bindToAxis)
                 {
