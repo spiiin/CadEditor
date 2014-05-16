@@ -1,4 +1,5 @@
 using CadEditor;
+using System;
 using System.Collections.Generic;
 
 public static class FliUtils
@@ -56,5 +57,10 @@ public static class FliUtils
     byte[] layer = new byte[1];
     layer[0] = 0;
     return new LevelLayerData(1, 1, layer);
+  }
+  
+  public static Dictionary<String,int> getObjectDictionary(int type)
+  {
+    return new Dictionary<String, int> { {"data", 0} };
   }
 }

@@ -18,7 +18,8 @@ public class Data
   
   public GetObjectsFunc getObjectsFunc()   { return FliUtils.getObjects;  }
   public SetObjectsFunc setObjectsFunc()   { return FliUtils.setObjects;  }
-  public GetLayoutFunc getLayoutFunc()     { return FliUtils.getLayout;   } 
+  public GetLayoutFunc getLayoutFunc()     { return FliUtils.getLayout;   }
+  public GetObjectDictionaryFunc getObjectDictionaryFunc() { return FliUtils.getObjectDictionary; }
   
   public IList<LevelRec> getLevelRecs() { return levelRecs; }
   public IList<LevelRec> levelRecs = new List<LevelRec>() 

@@ -13,6 +13,7 @@ COPY_FILE_LIST = [
   "Settings_CapcomBase.cs",
   "Settings_Mermaid-Utils.cs",
   "Settings_TinyToon-Utils.cs",
+  "Settings_Flintstones-Utils.cs",
   
   "readme.txt",
   "cad_editor_configs_manual.txt",

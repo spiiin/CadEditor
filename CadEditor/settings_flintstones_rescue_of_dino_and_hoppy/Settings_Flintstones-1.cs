@@ -22,6 +22,7 @@ public class Data
   public int getMaxObjCoordY()           { return 8 *32; }
   //public SortObjectsFunc sortObjectsFunc() { return sortObjects; }
   public GetLayoutFunc getLayoutFunc()     { return FliUtils.getLayout;   } 
+  public GetObjectDictionaryFunc getObjectDictionaryFunc() { return FliUtils.getObjectDictionary; }
   
   public IList<LevelRec> getLevelRecs() { return levelRecs; }
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
