@@ -23,6 +23,7 @@ public class Data
   public SetObjectsFunc setObjectsFunc()   { return setObjectsJungleBook;  }
   public SortObjectsFunc sortObjectsFunc() { return sortObjectsJungleBook; }
   public GetLayoutFunc getLayoutFunc()     { return getLayoutJungleBook;   } 
+  public GetObjectDictionaryFunc getObjectDictionaryFunc() { return getObjectDictionary; }
   public int getMinObjCoordX()           { return 16; }
   public int getMinObjCoordY()           { return 16; }
   public int getMinObjType()             { return 0;          }
@@ -106,5 +107,10 @@ public class Data
     byte[] layer = new byte[1];
     layer[0] = 0;
     return new LevelLayerData(1, 1, layer);
+  }
+  
+  public Dictionary<String,int> getObjectDictionary(int type)
+  {
+    return new Dictionary<String, int> { {"data", 0} };
   }
 }

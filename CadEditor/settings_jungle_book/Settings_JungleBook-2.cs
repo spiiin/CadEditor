@@ -1,22 +1,21 @@
 using CadEditor;
+using System;
+//using System.Drawing;
 using System.Collections.Generic;
-//css_include Settings_CapcomBase.cs;
-public class Data : CapcomBase
+
+public class Data
 { 
-  public OffsetRec getPalOffset()       { return new OffsetRec(0, 32  , 16);     }
-  public OffsetRec getVideoOffset()     { return new OffsetRec(0, 16  , 0x1000); }
-  public OffsetRec getVideoObjOffset()  { return new OffsetRec(0, 16  , 0x1000); }
-  public OffsetRec getBigBlocksOffset() { return new OffsetRec(0 , 8   , 0x4000); }
-  public OffsetRec getBlocksOffset()    { return new OffsetRec(0 , 8   , 0x4000); }
+  public GameType getGameType()                             { return GameType.TT; }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x18149 - 24, 1 , 24*64);   }
-  public override int getScreenWidth()    { return 24; }
-  public override int getScreenHeight()   { return 64; }
+  public int getScreenWidth()    { return 24; }
+  public int getScreenHeight()   { return 64; }
   public string getBlocksFilename() { return "jungle_book_2.png"; }
   public IList<LevelRec> getLevelRecs() { return levelRecsJB; }
   public GetObjectsFunc getObjectsFunc()   { return getObjectsJungleBook;  }
   public SetObjectsFunc setObjectsFunc()   { return setObjectsJungleBook;  }
   public SortObjectsFunc sortObjectsFunc() { return sortObjectsJungleBook; }
-  public GetLayoutFunc getLayoutFunc()     { return getLayoutJungleBook;   } 
+  public GetLayoutFunc getLayoutFunc()     { return getLayoutJungleBook;   }
+  public GetObjectDictionaryFunc getObjectDictionaryFunc() { return getObjectDictionary; }  
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return false; }
@@ -85,5 +84,10 @@ public class Data : CapcomBase
     byte[] layer = new byte[1];
     layer[0] = 0;
     return new LevelLayerData(1, 1, layer);
+  }
+  
+  public Dictionary<String,int> getObjectDictionary(int type)
+  {
+    return new Dictionary<String, int> { {"data", 0} };
   }
 }

@@ -1,4 +1,5 @@
 using CadEditor;
+using System;
 using System.Collections.Generic;
 //css_include Settings_CapcomBase.cs;
 public class Data : CapcomBase
@@ -21,6 +22,7 @@ public class Data : CapcomBase
   public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return true; }
   public bool isVideoEditorEnabled()    { return false; }
+  public GetObjectDictionaryFunc getObjectDictionaryFunc() { return getObjectDictionary; }
   
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
@@ -78,5 +80,9 @@ public class Data : CapcomBase
     byte[] layer = new byte[1];
     layer[0] = 0;
     return new LevelLayerData(1, 1, layer);
+  }
+  public Dictionary<String,int> getObjectDictionary(int type)
+  {
+    return new Dictionary<String, int> { {"data", 0} };
   }
 }
