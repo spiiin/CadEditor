@@ -63,6 +63,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.bttOpen = new System.Windows.Forms.ToolStripButton();
             this.bttSave = new System.Windows.Forms.ToolStripButton();
+            this.bttReload = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.bttExport = new System.Windows.Forms.ToolStripButton();
             this.bttExportPic = new System.Windows.Forms.ToolStripButton();
@@ -99,7 +100,6 @@
             this.pnElements = new System.Windows.Forms.Panel();
             this.cbUseStructs = new System.Windows.Forms.CheckBox();
             this.lbStructures = new System.Windows.Forms.ListBox();
-            this.bttReload = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -532,6 +532,16 @@
             this.bttSave.Text = "Save";
             this.bttSave.Click += new System.EventHandler(this.btSave_Click);
             // 
+            // bttReload
+            // 
+            this.bttReload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttReload.Image = ((System.Drawing.Image)(resources.GetObject("bttReload.Image")));
+            this.bttReload.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttReload.Name = "bttReload";
+            this.bttReload.Size = new System.Drawing.Size(23, 22);
+            this.bttReload.Text = "Reload";
+            this.bttReload.Click += new System.EventHandler(this.bttReload_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -881,16 +891,6 @@
             this.lbStructures.Visible = false;
             this.lbStructures.SelectedIndexChanged += new System.EventHandler(this.lbStructures_SelectedIndexChanged);
             // 
-            // bttReload
-            // 
-            this.bttReload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttReload.Image = ((System.Drawing.Image)(resources.GetObject("bttReload.Image")));
-            this.bttReload.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttReload.Name = "bttReload";
-            this.bttReload.Size = new System.Drawing.Size(23, 22);
-            this.bttReload.Text = "Reload";
-            this.bttReload.Click += new System.EventHandler(this.bttReload_Click);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -901,7 +901,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Text = "CAD Editor v2.8 by spiiin";
+            this.Text = "CAD Editor v2.9 by spiiin";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
