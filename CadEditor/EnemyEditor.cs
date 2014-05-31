@@ -187,7 +187,7 @@ namespace CadEditor
             curScale = cbScale.SelectedIndex + 1; //TODO: normal scale factors;
             cbLayoutNo.Items.Clear();
             foreach (var lr in ConfigScript.levelRecs)
-                cbLayoutNo.Items.Add(String.Format("0x{0:X} ({1}x{2})", lr.layoutAddr, lr.width, lr.height));
+                cbLayoutNo.Items.Add(String.Format("{0}:0x{1:X} ({2}x{3})", lr.name, lr.layoutAddr, lr.width, lr.height));
             Utils.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged, curActiveLayout);
             reloadLevel(reloadObjects);
             mapScreen.Invalidate();
@@ -242,7 +242,7 @@ namespace CadEditor
             }
             cbLayoutNo.Items.Clear();
             foreach (var lr in ConfigScript.levelRecs)
-                cbLayoutNo.Items.Add(String.Format("0x{0:X} ({1}x{2})", lr.layoutAddr, lr.width, lr.height));
+                cbLayoutNo.Items.Add(String.Format("{0}:0x{1:X} ({2}x{3})", lr.name, lr.layoutAddr, lr.width, lr.height));
             Utils.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged);
             cbLevel.SelectedIndex = 0;
             updatePanelsVisibility();

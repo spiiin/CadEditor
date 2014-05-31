@@ -22,63 +22,63 @@ public class Data : CapcomBase
   public IList<LevelRec> levelRecsCad2 = new List<LevelRec>() 
   {
     //level 1
-    new LevelRec(0xE401, 12, 8, 8, 0xDE7A), //1-1
-    new LevelRec(0xE426, 15, 8, 8, 0xDE7A), //1-2
-    new LevelRec(0xE454, 8 , 8, 8, 0xDE7A), //1-3
+    new LevelRec(0xE401, 12, 8, 8, 0xDE7A, "1-1"),
+    new LevelRec(0xE426, 15, 8, 8, 0xDE7A, "1-2"),
+    new LevelRec(0xE454, 8 , 8, 8, 0xDE7A, "1-3"),
    //bonus
-    new LevelRec(0xE471, 1, 8, 8, 0xDE7A), //1-4 (boss)
+    new LevelRec(0xE471, 1 , 8, 8, 0xDE7A, "1-4 (boss)"),
     
     //level 2
-    new LevelRec(0xE475, 10, 8, 8, 0xDEBA), //2-1
-    new LevelRec(0xE494, 13, 8, 8, 0xDEBA), //2-2
-    new LevelRec(0xE4BC, 1 , 8, 8, 0xDEBA), //2-3 (boss)
+    new LevelRec(0xE475, 10, 8, 8, 0xDEBA, "2-1"),
+    new LevelRec(0xE494, 13, 8, 8, 0xDEBA, "2-2"),
+    new LevelRec(0xE4BC, 1 , 8, 8, 0xDEBA, "2-3 (boss)"),
     //bonuses
     //copy of boss 2
     
     //level 3
-    new LevelRec(0xE4C0, 28, 8, 8, 0xDEFA), //3-1
-    new LevelRec(0xE515, 1 , 8, 8, 0xDEFA), //3-2 (boss)
+    new LevelRec(0xE4C0, 28, 8, 8, 0xDEFA, "3-1"),
+    new LevelRec(0xE515, 1 , 8, 8, 0xDEFA, "3-2 (boss)"),
     //bonuses
     //copy of boss 3
     
     //level 4
-    new LevelRec(0xE5BB, 25, 8, 8, 0xDFBA), //4-1
+    new LevelRec(0xE5BB, 25, 8, 8, 0xDFBA, "4-1"),
     
     //level 5
-    new LevelRec(0xE55B, 14, 8, 8, 0xDF7A), //5-1
-    new LevelRec(0xE588, 15, 8, 8, 0xDF7A), //5-2
-    new LevelRec(0xE5B7, 1 , 8, 8, 0xDF7A), //5-3
+    new LevelRec(0xE55B, 14, 8, 8, 0xDF7A, "5-1"),
+    new LevelRec(0xE588, 15, 8, 8, 0xDF7A, "5-2"),
+    new LevelRec(0xE5B7, 1 , 8, 8, 0xDF7A, "5-3 (boss)"),
     //bonuses
     //copy of boss 5
     //bonuses
     //copy of boss 5
     
     //level 6
-    new LevelRec(0xE519, 21, 8, 8, 0xDF3A), //6-1
-    new LevelRec(0xE559, 1 , 8, 8, 0xDF3A), //6-2
+    new LevelRec(0xE519, 21, 8, 8, 0xDF3A, "6-1"),
+    new LevelRec(0xE559, 1 , 8, 8, 0xDF3A, "6-2 (boss)"),
     
     //level 7
-    new LevelRec(0xE607, 8 , 8, 8, 0xDFFA), //7-1
-    new LevelRec(0xE620, 7 , 8, 8, 0xDFFA), //7-2
-    new LevelRec(0xE636, 7 , 8, 8, 0xDFFA), //7-3
-    new LevelRec(0xE64C, 11, 8, 8, 0xDFFA), //7-4
-    new LevelRec(0xE66E, 1 , 8, 8, 0xDFFA), //7-5
+    new LevelRec(0xE607, 8 , 8, 8, 0xDFFA, "7-1"),
+    new LevelRec(0xE620, 7 , 8, 8, 0xDFFA, "7-2"),
+    new LevelRec(0xE636, 7 , 8, 8, 0xDFFA, "7-3"),
+    new LevelRec(0xE64C, 11, 8, 8, 0xDFFA, "7-4"),
+    new LevelRec(0xE66E, 1 , 8, 8, 0xDFFA, "7-5 (boss)"),
     
     //level 8
-    new LevelRec(0xE672, 9 , 8, 8, 0xE03A), //8-1
-    new LevelRec(0xE68E, 23, 8, 8, 0xE03A), //8-2
+    new LevelRec(0xE672, 9 , 8, 8, 0xE03A, "8-1"),
+    new LevelRec(0xE68E, 23, 8, 8, 0xE03A, "8-2"),
     //bonus
-    new LevelRec(0xE6B0, 9 , 8, 8, 0xE03A), //8-3
-    new LevelRec(0xE6CC, 1 , 8, 8, 0xE03A), //8-4
+    new LevelRec(0xE6B0, 9 , 8, 8, 0xE03A, "8-3"),
+    new LevelRec(0xE6CC, 1 , 8, 8, 0xE03A, "8-4 (boss)"),
     
     //level 9
-    new LevelRec(0xE6D0, 10, 8, 8, 0xE07A), //9-1
-    new LevelRec(0xE6EF, 7 , 8, 8, 0xE07A), //9-2
+    new LevelRec(0xE6D0, 10, 8, 8, 0xE07A, "9-1"),
+    new LevelRec(0xE6EF, 7 , 8, 8, 0xE07A, "9-2"),
     //bonus
-    new LevelRec(0xE705, 12, 8, 8, 0xE07A), //9-3
-    new LevelRec(0xE72A, 5 , 8, 8, 0xE07A), //9-4
-    new LevelRec(0xE73A, 4 , 8, 8, 0xE07A), //9-5
-    new LevelRec(0xE747, 1 , 8, 8, 0xE07A), //9-6
+    new LevelRec(0xE705, 12, 8, 8, 0xE07A, "9-3"),
+    new LevelRec(0xE72A, 5 , 8, 8, 0xE07A, "9-4"),
+    new LevelRec(0xE73A, 4 , 8, 8, 0xE07A, "9-5"),
+    new LevelRec(0xE747, 1 , 8, 8, 0xE07A, "9-6 (boss)"),
   };
   
   public bool isBigBlockEditorEnabled() { return false; }

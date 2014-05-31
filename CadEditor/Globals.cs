@@ -572,7 +572,9 @@ namespace CadEditor
             this.width = 0;
             this.height = 0;
             this.layoutAddr = 0;
+            this.name = "";
         }
+
         public LevelRec(int objectsBeginAddr, int objCount, int width = 0, int height = 0, int layoutAddr = 0)
         {
             this.objCount = objCount;
@@ -580,12 +582,24 @@ namespace CadEditor
             this.width = width;
             this.height = height;
             this.layoutAddr = layoutAddr;
+            this.name = "";
+        }
+
+        public LevelRec(int objectsBeginAddr, int objCount, int width = 0, int height = 0, int layoutAddr = 0, string name = "")
+        {
+            this.objCount = objCount;
+            this.objectsBeginAddr = objectsBeginAddr;
+            this.width = width;
+            this.height = height;
+            this.layoutAddr = layoutAddr;
+            this.name = name;
         }
         public int objCount;
         public int objectsBeginAddr;
         public int width;
         public int height;
         public int layoutAddr;
+        public string name;
     }
 
     public struct ScreenRec
