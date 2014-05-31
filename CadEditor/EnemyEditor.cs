@@ -190,6 +190,7 @@ namespace CadEditor
                 cbLayoutNo.Items.Add(String.Format("0x{0:X} ({1}x{2})", lr.layoutAddr, lr.width, lr.height));
             Utils.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged, curActiveLayout);
             reloadLevel(reloadObjects);
+            mapScreen.Invalidate();
         }
 
         private void EnemyEditor_Load(object sender, EventArgs e)
@@ -198,7 +199,7 @@ namespace CadEditor
             {
                 screens = Utils.setScreens();
                 //bigBlocks.ImageSize = new Size(2 * ConfigScript.getBlocksPicturesWidth(), 2 * 32);
-                Utils.setBlocks(bigBlocks /*, 2, ConfigScript.getBlocksPicturesWidth()*/);
+                Utils.setBlocks(bigBlocks, 2, 32,32, MapViewType.Tiles, formMain.ShowAxis);
             }
 
             cbDatas = new ComboBox[] { cbD0, cbD1, cbD2, cbD3, cbD4, cbD5 };
@@ -476,10 +477,9 @@ namespace CadEditor
         {
             int WIDTH = ConfigScript.getScreenWidth();
             int HEIGHT = ConfigScript.getScreenHeight();
-            int curScale = 2;
             int blockWidth = ConfigScript.getBlocksPicturesWidth();
-            int TILE_SIZE_X = blockWidth * curScale;
-            int TILE_SIZE_Y = 32 * curScale;
+            int TILE_SIZE_X = (int)(blockWidth * curScale);
+            int TILE_SIZE_Y = (int)(32 * curScale);
             int SIZE = WIDTH * HEIGHT;
             if (curLevelLayerData.layer[curActiveScreen] < screens.Length)
             {
@@ -504,7 +504,7 @@ namespace CadEditor
                 g.FillRectangle(Brushes.Black, new Rectangle(0, 0, 512, 512));
             }
             //Additional rendering
-            ConfigScript.renderToMainScreen(g, curScale);
+            ConfigScript.renderToMainScreen(g, (int)curScale);
         }
 
         private void mapScreen_Paint(object sender, PaintEventArgs e)

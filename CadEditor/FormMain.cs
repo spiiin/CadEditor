@@ -857,6 +857,11 @@ namespace CadEditor
             get { return curViewType; } 
         }
 
+        public bool ShowAxis
+        {
+            get { return showAxis; }
+        }
+
         public ImageList getBigBlockImageList()
         {
             return bigBlocks;
