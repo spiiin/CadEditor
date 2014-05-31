@@ -460,7 +460,7 @@ namespace CadEditor
 
         public static int getScrollAddr(int index)
         {
-            return getLayoutAddr(index) + 508; //dwd specific
+            return getLayoutAddr(index) + ConfigScript.getScrollsOffsetFromLayout();
         }
 
         /*private static int getTeleport(int doorNo)

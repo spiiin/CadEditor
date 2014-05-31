@@ -7,6 +7,7 @@ using System.Windows.Forms;
 public class Data:CapcomBase
 {
   public override GameType getGameType()  { return GameType.DT2; }
+  public bool isShowScrollsInLayout() { return false; }
   
   public OffsetRec getPalOffset()       { return new OffsetRec(0x3E2F, 12   , 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x4D10 , 5   , 0xD00);  }

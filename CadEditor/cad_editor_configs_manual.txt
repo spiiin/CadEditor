@@ -34,8 +34,11 @@
   getPalFunc = callFromScript<GetPalFunc>(asm, data, "*.getPalFunc");
   setPalFunc = callFromScript<SetPalFunc>(asm, data, "*.setPalFunc");
   renderToMainScreenFunc = callFromScript<RenderToMainScreenFunc>(asm, data, "*.getRenderToMainScreenFunc");
+  buildScreenFromSmallBlocks = callFromScript(asm, data, "isBuildScreenFromSmallBlocks", false);
   
 В качестве примера можно посмотреть конфиг от Duck Tales 2, там переписаны функции доступа к видеопамяти, она загружается из дампов, так как внутри рома видеопамять сжата алгоритмом RLE, и функции загрузки макроблоков (BigBlocks), потому что они составляются из 4х массивов, каждый из которых описывает отдельные части блоков. Вообще, данные о блоках в подавляющем большинстве игр описываются тремя способами - либо последовательным массивом данным, либо несколькими массивами одинакового размера, либо несколькими массивами, которые лежат в разных частях рома и доступ к ним происходит через указатели. Внутри редактора предусмотрена библиотека для загрузки всех трех типов (но пока нет документации к ней =\ ).
+
+Если установлен флажок buildScreenFromSmallBlocks, то экран будет строиться из маленьких блоков, все параметры касающие больших блоков, будут проигнорированы.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 Второй способ создания конфига - заготовить картинки уже составленных блоков, и отрисовать уровень или игровой экран ими. Этот способ намного более простой и с помощью него подключены почти все игры. Опции, которые существуют для настройки редактора по такому случаю:
@@ -81,6 +84,10 @@
   isVideoEditorEnabled = callFromScript(asm, data, "*.isVideoEditorEnabled", true);
   isMapEditorEnabled = callFromScript(asm, data, "*.isMapEditorEnabled", false); //specific for dwd
   objTypesPicturesDir = callFromScript(asm, data, "*.getObjTypesPicturesDir", "obj_sprites");
+  
+Смещение массива скроллов (определяют, из какого экрана в какую сторону возможно движение) относительно массива раскладки (определяют форму уровня и номера используемых экранов).
+  showScrollsInLayout = callFromScript(asm, data, "*.isShowScrollsInLayout", true);
+  scrollsOffsetFromLayout = callFromScript(asm, data, "*.getScrollsOffsetFromLayout", 0);
 
 Позволяют ограничить число игровых макроблоков и блоков (на случай, если в игре они идут последовательно и их меньше 256, чтобы пользователь редактируя один уровень случайно не перерисовал блоки соседнего):
   bigBlocksCount = callFromScript(asm, data, "*.getBigBlocksCount", 256);

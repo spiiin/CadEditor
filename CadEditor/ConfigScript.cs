@@ -69,6 +69,7 @@ namespace CadEditor
             screenDataStride = callFromScript(asm, data, "*.getScreenDataStride", 1);
             wordLen = callFromScript(asm, data, "*.getWordLen", 1);
             littleEndian = callFromScript(asm, data, "*.isLittleEndian", false);
+            buildScreenFromSmallBlocks = callFromScript(asm, data, "isBuildScreenFromSmallBlocks", false);
             layersCount = callFromScript(asm, data, "*.getLayersCount", 1);
             levelRecs = callFromScript(asm, data,"*.getLevelRecs", new List<LevelRec>());
 
@@ -103,6 +104,9 @@ namespace CadEditor
             isVideoEditorEnabled = callFromScript(asm, data, "*.isVideoEditorEnabled", true);
             isMapEditorEnabled = callFromScript(asm, data, "*.isMapEditorEnabled", false); //specific for dwd
             objTypesPicturesDir = callFromScript(asm, data, "*.getObjTypesPicturesDir", "obj_sprites");
+
+            showScrollsInLayout = callFromScript(asm, data, "*.isShowScrollsInLayout", true);
+            scrollsOffsetFromLayout = callFromScript(asm, data, "*.getScrollsOffsetFromLayout", 0);
 
             bigBlocksCount = callFromScript(asm, data, "*.getBigBlocksCount", 256);
             blocksCount    = callFromScript(asm, data, "*.getBlocksCount"   , 256);
@@ -296,6 +300,11 @@ namespace CadEditor
             return littleEndian;
         }
 
+        public static bool isBuildScreenFromSmallBlocks()
+        {
+            return buildScreenFromSmallBlocks;
+        }
+
         public static int getBlocksPicturesWidth()
         {
             return blocksPicturesWidth;
@@ -304,6 +313,16 @@ namespace CadEditor
         public static int getLayersCount()
         {
             return layersCount;
+        }
+
+        public static bool isShowScrollsInLayout()
+        {
+            return showScrollsInLayout;
+        }
+
+        public static int getScrollsOffsetFromLayout()
+        {
+            return scrollsOffsetFromLayout;
         }
 
         public static T callFromScript<T>(AsmHelper script, object data, string funcName, T defaultValue = default(T), params object[] funcParams)
@@ -337,6 +356,7 @@ namespace CadEditor
         public static int layersCount;
         public static int wordLen;
         public static bool littleEndian;
+        public static bool buildScreenFromSmallBlocks;
 
         public static int minObjCoordX;
         public static int minObjCoordY;
@@ -369,6 +389,9 @@ namespace CadEditor
         public static bool isEnemyEditorEnabled;
         public static bool isVideoEditorEnabled;
         public static bool isMapEditorEnabled;
+
+        public static bool showScrollsInLayout;
+        public static int scrollsOffsetFromLayout;
 
         public static bool usePicturesInstedBlocks;
         public static string blocksPicturesFilename;

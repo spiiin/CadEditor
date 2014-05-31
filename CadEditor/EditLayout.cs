@@ -20,12 +20,15 @@ namespace CadEditor
         {
             makeScreens();
 
+            var addPath = "";
+            if (!File.Exists("scroll_sprites//scrolls.png"))
+                addPath = "..//";
             scrollSprites.Images.Clear();
-            scrollSprites.Images.AddStrip(Image.FromFile("scroll_sprites//scrolls.png"));
+            scrollSprites.Images.AddStrip(Image.FromFile(addPath + "scroll_sprites//scrolls.png"));
             doorSprites.Images.Clear();
-            doorSprites.Images.AddStrip(Image.FromFile("scroll_sprites//doors.png"));
+            doorSprites.Images.AddStrip(Image.FromFile(addPath + "scroll_sprites//doors.png"));
             dirSprites.Images.Clear();
-            dirSprites.Images.AddStrip(Image.FromFile("scroll_sprites//dirs.png"));
+            dirSprites.Images.AddStrip(Image.FromFile(addPath + "scroll_sprites//dirs.png"));
             objPanel.Controls.Clear();
             objPanel.SuspendLayout();
 
@@ -324,9 +327,9 @@ namespace CadEditor
         private void updatePanelsVisibility()
         {
             bool generic = Globals.gameType != GameType.CAD;
-            bool notDt = Globals.gameType != GameType.DT && GameType.DT2 != Globals.gameType;
-            pnDoors.Visible = notDt;
-            pnSelectScroll.Visible = notDt;
+            bool showScroll = ConfigScript.isShowScrollsInLayout();
+            pnDoors.Visible = showScroll;
+            pnSelectScroll.Visible = showScroll;
             pnIngameScreenOrder.Visible = !generic;
             pnGeneric.Visible = generic;
             pnCad.Visible = !generic;

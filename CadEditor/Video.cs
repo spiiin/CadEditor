@@ -261,18 +261,25 @@ namespace CadEditor
 
             for (int btileId = 0; btileId < blockCount; btileId++)
             {
-                Bitmap b;
-                switch (Globals.gameType)
+                Image b;
+                if (ConfigScript.isBuildScreenFromSmallBlocks())
                 {
-                    case GameType.TT:
-                        b = Video.makeBigBlockTT(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
-                        break;
-                    case GameType._3E:
-                        b = Video.makeBigBlock3E(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocks);
-                        break;
-                    default:
-                        b = Video.makeBigBlock(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocks);
-                        break;
+                    b = Utils.ResizeBitmap(smallBlocks.Images[btileId], (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale));
+                }
+                else
+                {
+                    switch (Globals.gameType)
+                    {
+                        case GameType.TT:
+                            b = Video.makeBigBlockTT(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
+                            break;
+                        case GameType._3E:
+                            b = Video.makeBigBlock3E(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocks);
+                            break;
+                        default:
+                            b = Video.makeBigBlock(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocks);
+                            break;
+                    }
                 }
                 if (curViewType == MapViewType.ObjNumbers)
                     b = Video.addObjNumber(b, btileId);
@@ -360,14 +367,14 @@ namespace CadEditor
             return b;
         }
 
-        public static Bitmap addAxisRectangle(Bitmap source)
+        public static Image addAxisRectangle(Image source)
         {
             using (Graphics g = Graphics.FromImage(source))
                 g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), new Rectangle(0, 0, source.Width, source.Height));
             return source;
         }
 
-        public static Bitmap addObjNumber(Bitmap source, int no)
+        public static Image addObjNumber(Image source, int no)
         {
             using (Graphics g = Graphics.FromImage(source))
             {
