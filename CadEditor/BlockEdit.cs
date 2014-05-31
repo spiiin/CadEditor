@@ -25,7 +25,7 @@ namespace CadEditor
             videoSprites[3] = videoSprites4;
             dirty = false;
             preparePanel();
-            Utils.setCbItemsCount(cbVideo, ConfigScript.videoObjOffset.recCount);
+            Utils.setCbItemsCount(cbVideo, ConfigScript.videoOffset.recCount);
             Utils.setCbItemsCount(cbTileset, ConfigScript.blocksOffset.recCount);
             Utils.setCbItemsCount(cbPalette, ConfigScript.palOffset.recCount);
             Utils.setCbIndexWithoutUpdateLevel(cbLevelSelect, cbLevelSelect_SelectedIndexChanged);
