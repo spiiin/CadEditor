@@ -7,6 +7,7 @@
     Little Mermaid                                  (все уровни) 
     Tale Spin                                       (все уровни)
     Tiny Toon                                       (все уровни)
+    Chip & Dale 2                                   (все уровни)
   редактор экранов/макроблоков/блоков:
     Mega Man 4                                      (8 уровней)
     Three Eyes Story                                (1 уровень)
@@ -15,7 +16,6 @@
     Ninja Cat (Cattou Ninden Teyandee)              (все уровни + редактор объектов 4 уровней)
     Tom & Jerry                                     (8 уровней  + редактор объектов 2 уровней)
     Jungle Book                                     (1-9 уровни + редактор объектов 2 уровней)
-    Chip & Dale 2                                   (1-1 уровни + редактор объектов 1 уровня)
     Flintstones: The Surprise at Dinosaur Peak!     (1 уровень  + редактор объектов 1 уровня)
     New Ghostbusters 2                              (1 уровень  + редактор объектов 1 уровня)
     Little Nemo                                     (все уровни)
