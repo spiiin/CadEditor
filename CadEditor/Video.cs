@@ -291,24 +291,23 @@ namespace CadEditor
         }
 
         //make capcom screen image
-        public static Bitmap makeScreen(int scrNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, bool withBigTileBorders = true)
+        public static Bitmap makeScreen(int scrNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, float scale = 2.0f)
         {
             if (scrNo < 0)
-                return emptyScreen(ConfigScript.getScreenWidth() * 64, ConfigScript.getScreenHeight() * 64);
+                return emptyScreen((int)(ConfigScript.getScreenWidth() * 32 * scale), (int)(ConfigScript.getScreenHeight() * 32 * scale));
             int SCREEN_SIZE = ConfigScript.getScreenWidth() * ConfigScript.getScreenHeight();
-            var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, 2.0f, 32, 32, 2, MapViewType.Tiles, true);
+            var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, scale, 32, 32, scale, MapViewType.Tiles, true);
 
-            var bitmap = new Bitmap(ConfigScript.getScreenWidth()*64, ConfigScript.getScreenHeight()*64); //getScreenVertical, scales
+            var bitmap = new Bitmap((int)(ConfigScript.getScreenWidth()*32*scale), (int)(ConfigScript.getScreenHeight()*32*scale)); //getScreenVertical, scales
             int[] indexes = Globals.getScreen(ConfigScript.screensOffset, scrNo);
+            int width = ConfigScript.getScreenWidth();
+            int height = ConfigScript.getScreenHeight();
             using (var g = Graphics.FromImage(bitmap))
             {
                 for (int tileNo = 0; tileNo < SCREEN_SIZE; tileNo++)
                 {
                     int index = Globals.getBigTileNoFromScreen(indexes, tileNo);
-                    if (withBigTileBorders)
-                      g.DrawImage(bigBlocks[index], new Rectangle(tileNo % 8 * 63, tileNo / 8 * 63, 64, 64));
-                    else
-                      g.DrawImage(bigBlocks[index], new Rectangle(tileNo % 8 * 64, tileNo / 8 * 64, 64, 64));
+                    g.DrawImage(bigBlocks[index], new Rectangle((int)(tileNo % width * 32*scale), (int)(tileNo / width * 32*scale), (int)(32*scale), (int)(32*scale)));
                 }
             }
             return bitmap;

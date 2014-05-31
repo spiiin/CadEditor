@@ -86,7 +86,7 @@ namespace CadEditor
 
             cbLevel.SelectedIndex = 0;
 
-            cbShowScrolls.Visible = (Globals.gameType == GameType.CAD) || (Globals.gameType == GameType.Generic);
+            cbShowScrolls.Visible = ConfigScript.isShowScrollsInLayout();
             btExport.Visible = 
             pnParamGeneric.Visible = Globals.gameType != GameType.CAD;
         }
@@ -174,7 +174,7 @@ namespace CadEditor
                 int realScrNo = scrNo - 1 + levelEHadd;
                 if (scrNo != 0) 
                 {
-                    Bitmap bitmap = bitmap = Video.makeScreen(realScrNo, backId, blockId, blockId, palId, false);
+                    Bitmap bitmap = bitmap = Video.makeScreen(realScrNo, backId, blockId, blockId, palId, 2.0f);
                     using (var g = Graphics.FromImage(bitmap))
                         g.DrawString(String.Format("{0:X}", scrNo), new Font("Arial", 64), Brushes.White, new Point(0, 0));
                     Bitmap convertedSize = new Bitmap(64, 64);
@@ -450,7 +450,7 @@ namespace CadEditor
                     for (int h = 0; h < curHeight; h++)
                     {
                         int scrNo = curLevelLayerData.layer[h*curWidth + w] - 1;
-                        Bitmap scr = scrNo >= 0 ? Video.makeScreen(scrNo, curVideoNo, curBigBlockNo, curBlockNo, curPalleteNo, false) : Video.emptyScreen(512,512,false);
+                        Bitmap scr = scrNo >= 0 ? Video.makeScreen(scrNo, curVideoNo, curBigBlockNo, curBlockNo, curPalleteNo, 2.0f) : Video.emptyScreen(512,512,false);
                         g.DrawImage(scr, new Point(w*512,h*512));
                     }
                 }
