@@ -23,6 +23,7 @@ public class Data : CapcomBase
   {
     //level 1
     new LevelRec(0xE401, 12, 8, 8, 0xDE7A, "1-1"),
+    new LevelRec(0xE75C, 53, 8, 8, 0xDE7A, "1-1 stars"),
     new LevelRec(0xE426, 15, 8, 8, 0xDE7A, "1-2"),
     new LevelRec(0xE454, 8 , 8, 8, 0xDE7A, "1-3"),
    //bonus
@@ -87,8 +88,53 @@ public class Data : CapcomBase
   public bool isEnemyEditorEnabled()    { return true; }
   public bool isVideoEditorEnabled()    { return true; }
   
+  public List<ObjectRec> getPrizesCad2(int levelNo)
+  {
+    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    int addr = lr.objectsBeginAddr;
+    int objCount = lr.objCount;
+    var objects = new List<ObjectRec>();
+    for (int i = 0; i < objCount; i++)
+    {
+      int xx = Globals.romdata[addr + i * 2 + 0];
+      int yy = Globals.romdata[addr + i * 2 + 1];
+      int sx = (xx >> 4);
+      int v =  (yy >> 4);
+      int sy = 2;
+      int x = (xx & 0x0F) * 32;
+      int y = (yy & 0x0F) * 32;
+      var obj = new ObjectRec(v, sx, sy, x, y);
+      objects.Add(obj);
+    }
+    return objects;
+  }
+  
+  public bool setPrizesCad2(int levelNo, List<ObjectRec> objects)
+  {
+    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    int addrBase = lr.objectsBeginAddr;
+    int objCount = lr.objCount;
+    for (int i = 0; i < objects.Count; i++)
+    {
+      var obj = objects[i];
+      Globals.romdata[addrBase + i * 2 + 0] = (byte)((obj.x / 32) | (obj.sx << 4));
+      Globals.romdata[addrBase + i * 2 + 1] = (byte)((obj.y / 32) | (obj.type << 4));
+    }
+    for (int i = objects.Count; i < objCount; i++)
+    {
+      Globals.romdata[addrBase + i * 2 + 0] = 0xFF;
+      Globals.romdata[addrBase + i * 2 + 1] = 0xFF;
+    }
+    return true;
+  }
+  
+  
   public List<ObjectRec> getObjectsCad2(int levelNo)
   {
+    //hack for prizes
+    if (levelNo == 1)
+      return getPrizesCad2(levelNo);
+      
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int addr = lr.objectsBeginAddr;
     int objCount = lr.objCount;
@@ -110,6 +156,11 @@ public class Data : CapcomBase
 
   public bool setObjectsCad2(int levelNo, List<ObjectRec> objects)
   {
+    //hack for prizes
+    if (levelNo == 1)
+      return  setPrizesCad2(levelNo, objects);
+     
+    
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int addrBase = lr.objectsBeginAddr;
     int objCount = lr.objCount;
