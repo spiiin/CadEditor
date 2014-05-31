@@ -108,6 +108,8 @@
             this.cbBigObjectNo = new System.Windows.Forms.ComboBox();
             this.cbUseBigPictures = new System.Windows.Forms.CheckBox();
             this.cbBindToAxis = new System.Windows.Forms.CheckBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.cbScale = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -415,6 +417,8 @@
             // 
             this.pnGeneric.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnGeneric.Controls.Add(this.label14);
+            this.pnGeneric.Controls.Add(this.cbScale);
             this.pnGeneric.Controls.Add(this.cbPlus256);
             this.pnGeneric.Controls.Add(this.label11);
             this.pnGeneric.Controls.Add(this.cbLayoutNo);
@@ -1122,6 +1126,28 @@
             this.cbBindToAxis.UseVisualStyleBackColor = true;
             this.cbBindToAxis.CheckedChanged += new System.EventHandler(this.cbBindToAxis_CheckedChanged);
             // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(116, 50);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(37, 13);
+            this.label14.TabIndex = 57;
+            this.label14.Text = "Scale:";
+            // 
+            // cbScale
+            // 
+            this.cbScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbScale.FormattingEnabled = true;
+            this.cbScale.Items.AddRange(new object[] {
+            "1",
+            "2"});
+            this.cbScale.Location = new System.Drawing.Point(118, 66);
+            this.cbScale.Name = "cbScale";
+            this.cbScale.Size = new System.Drawing.Size(45, 21);
+            this.cbScale.TabIndex = 56;
+            this.cbScale.SelectedIndexChanged += new System.EventHandler(this.cbLevel_SelectedIndexChanged);
+            // 
             // EnemyEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1242,5 +1268,7 @@
         private System.Windows.Forms.Panel pnBigObjects;
         private System.Windows.Forms.PictureBox pbBigObject;
         private System.Windows.Forms.ComboBox cbBigObjectNo;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox cbScale;
     }
 }

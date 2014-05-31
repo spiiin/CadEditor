@@ -28,6 +28,7 @@ namespace CadEditor
         private int curPaletteNo = 0;
         private int curWidth = 1;
         private int curHeight = 1;
+        private float curScale = 1.0f;
 
         private bool bindToAxis = false;
         private bool useBigPictures = false;
@@ -139,7 +140,7 @@ namespace CadEditor
         {
             if (Globals.gameType == GameType.LM)
                 scrNo = (scrNo + 1) % 256;
-            return  Video.makeScreen(scrNo, curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo);
+            return  Video.makeScreen(scrNo, curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo, curScale);
         }
 
         private void setBackImage()
@@ -183,6 +184,7 @@ namespace CadEditor
            
             curActiveLevel = cbLevel.SelectedIndex;
             curActiveLayout = cbLayoutNo.SelectedIndex;
+            curScale = cbScale.SelectedIndex + 1; //TODO: normal scale factors;
             cbLayoutNo.Items.Clear();
             foreach (var lr in ConfigScript.levelRecs)
                 cbLayoutNo.Items.Add(String.Format("0x{0:X} ({1}x{2})", lr.layoutAddr, lr.width, lr.height));
@@ -227,6 +229,7 @@ namespace CadEditor
             Utils.setCbItemsCount(cbBigBlockNo, ConfigScript.bigBlocksOffset.recCount);
             Utils.setCbItemsCount(cbBlockNo, ConfigScript.blocksOffset.recCount);
             Utils.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
+            Utils.setCbItemsCount(cbScale, 2, 1);
             if (Globals.gameType != GameType.CAD)
             {
                 Utils.setCbIndexWithoutUpdateLevel(cbVideoNo, cbLevel_SelectedIndexChanged, formMain.CurActiveVideoNo - 0x90);
@@ -234,6 +237,7 @@ namespace CadEditor
                 Utils.setCbIndexWithoutUpdateLevel(cbBigBlockNo, cbLevel_SelectedIndexChanged, formMain.CurActiveBigBlockNo);
                 Utils.setCbIndexWithoutUpdateLevel(cbPaletteNo, cbLevel_SelectedIndexChanged, formMain.CurActivePalleteNo);
                 Utils.setCbIndexWithoutUpdateLevel(cbTool, cbTool_SelectedIndexChanged);
+                Utils.setCbIndexWithoutUpdateLevel(cbScale, cbLevel_SelectedIndexChanged, 1);
             }
             cbLayoutNo.Items.Clear();
             foreach (var lr in ConfigScript.levelRecs)
@@ -519,18 +523,18 @@ namespace CadEditor
                     if (!useBigPictures)
                     {
                         if (curObject.type < objectSprites.Images.Count)
-                            g.DrawImage(objectSprites.Images[curObject.type], new Point(x * 2 - 8, y * 2 - 8));
+                            g.DrawImage(objectSprites.Images[curObject.type], new Point((int)(x * curScale) - 8, (int)(y * curScale) - 8));
                         if (selectedInds.Contains(i))
-                            g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle(x * 2 - 8, y * 2 - 8, 16, 16));
+                            g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle((int)(x * curScale) - 8, (int)(y * curScale) - 8, 16, 16));
                     }
                     else
                     {
                         int xsize = objectSpritesBig[curObject.type].Size.Width;
                         int ysize = objectSpritesBig[curObject.type].Size.Height;
                         if (curObject.type < objectSpritesBig.Length)
-                            g.DrawImage(objectSpritesBig[curObject.type], new Rectangle(x * 2 - xsize/2, y * 2 - ysize/2, xsize, ysize));
+                            g.DrawImage(objectSpritesBig[curObject.type], new Rectangle((int)(x * curScale) - xsize / 2, (int)(y * curScale) - ysize / 2, xsize, ysize));
                         if (selectedInds.Contains(i))
-                            g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle(x * 2 - xsize/2, y * 2 - ysize/2, xsize, ysize));
+                            g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle((int)(x * curScale) - xsize / 2, (int)(y * curScale) - ysize / 2, xsize, ysize));
                     }
                 }
             }
@@ -822,14 +826,11 @@ namespace CadEditor
 
         private void mapScreen_MouseDown(object sender, MouseEventArgs e)
         {
-            int dx = e.X / 64;
-            int dy = e.Y / 64;
-            //int index = dy * 8 + dx;
             Point coord = screenNoToCoord();
             int type = curActiveBlock;
             int sx = coord.X, sy = coord.Y;
-            int x = e.X / 2;
-            int y = e.Y / 2;
+            int x = (int)(e.X / curScale);
+            int y = (int)(e.Y / curScale);
             if (curTool == ToolType.Select)
             {
                 if (Control.ModifierKeys != Keys.Shift && Control.ModifierKeys != Keys.Control)
@@ -851,8 +852,8 @@ namespace CadEditor
                 return;
             Point coord = screenNoToCoord();
            // int sx = coord.X, sy = coord.Y;
-            int x = e.X / 2;
-            int y = e.Y / 2;
+            int x = (int)(e.X / curScale);
+            int y = (int)(e.Y / curScale);
 
             int coordXCount = (ConfigScript.getMaxObjCoordX() != -1) ? ConfigScript.getMaxObjCoordX() : ConfigScript.getScreenWidth() * 32;
             int coordYCount = (ConfigScript.getMaxObjCoordY() != -1) ? ConfigScript.getMaxObjCoordY() : ConfigScript.getScreenHeight() * 32;
@@ -912,14 +913,11 @@ namespace CadEditor
 
         private void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
-            int dx = e.X / 64;
-            int dy = e.Y / 64;
-            //int index = dy * 8 + dx;
             Point coord = screenNoToCoord();
             int type = curActiveBlock;
             int sx = coord.X, sy = coord.Y;
-            int x = e.X / 2;
-            int y = e.Y / 2;
+            int x = (int)(e.X / curScale);
+            int y = (int)(e.Y / curScale);
 
             if (curTool == ToolType.Create)
             {
