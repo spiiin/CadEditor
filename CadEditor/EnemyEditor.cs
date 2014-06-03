@@ -59,6 +59,15 @@ namespace CadEditor
         {
             if (ConfigScript.getLayoutFunc != null)
             {
+                //copy-paste
+                curWidth = Globals.getLevelWidth(curActiveLayout);
+                curHeight = Globals.getLevelHeight(curActiveLayout);
+                curActiveLayout = cbLayoutNo.SelectedIndex;
+                curVideoNo = cbVideoNo.SelectedIndex + 0x90;
+                curBigBlockNo = cbBigBlockNo.SelectedIndex;
+                curBlockNo = cbBlockNo.SelectedIndex;
+                curPaletteNo = cbPaletteNo.SelectedIndex;
+                curActiveScreen = cbScreenNo.SelectedIndex;
                 curLevelLayerData = ConfigScript.getLayout(curActiveLayout);
             }
             else
@@ -87,6 +96,7 @@ namespace CadEditor
                 }
                 else
                 {
+                    //copy-paste
                     curWidth = Globals.getLevelWidth(curActiveLayout);
                     curHeight = Globals.getLevelHeight(curActiveLayout);
                     curActiveLayout = cbLayoutNo.SelectedIndex;
@@ -95,22 +105,7 @@ namespace CadEditor
                     curBlockNo = cbBlockNo.SelectedIndex;
                     curPaletteNo = cbPaletteNo.SelectedIndex;
                     curActiveScreen = cbScreenNo.SelectedIndex;
-
-                    int layoutAddr = Globals.getLayoutAddr(curActiveLayout);
-                    int width = curWidth;
-                    int height = curHeight;
-                    byte[] layer = new byte[width * height];
-                    if (Globals.gameType != GameType.TT)
-                    {
-                        for (int i = 0; i < width * height; i++)
-                            layer[i] = Globals.romdata[layoutAddr + i];
-                    }
-                    else
-                    {
-                        for (int i = 0; i < width * height; i++)
-                            layer[i] = (byte)(i + 1);
-                    }
-                    curLevelLayerData = new LevelLayerData(width, height, layer, null, null);
+                    curLevelLayerData = Utils.getLayoutLinear(curActiveLayout);
                 }
             }
 

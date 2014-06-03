@@ -18,12 +18,38 @@ public class Data : CapcomBase
   public SetObjectsFunc setObjectsFunc()   { return setObjectsCad2; }
   public override GetVideoPageAddrFunc getVideoPageAddrFunc() { return getChrAddress; }
   public bool isBuildScreenFromSmallBlocks() { return true; }
+  public GetLayoutFunc getLayoutFunc()     { return getLayout;   }
+  
+  const int LEVEL_REC_COUNT = 30;
+  
+  LevelLayerData getLayout(int levelNo)
+  {
+    if (levelNo < LEVEL_REC_COUNT)
+      return Utils.getLayoutLinear(levelNo);
+    else
+      return getLayoutForPrizes(levelNo - LEVEL_REC_COUNT);
+  }
+  
+  LevelLayerData getLayoutForPrizes(int levelNo)
+  {
+    var levelLayers = new byte[][]
+    {
+        new byte[] { 5,6,7,5,6,7,5,6 },                                     //1-1
+        new byte[] { 1, 0xC, 0x12, 1, 0xC, 0x13, 0x10, 0x11, 0xF },         //1-2
+        new byte[] { 9, 0xA, 0xB, 0xC, 0xA, 0xD, 0xE },                     //1-3
+        
+        new byte[] { 0x18, 0x1A, 0x1D, 0x1E, 0x18, 0x1D, 0x1F, 0x20 },      //2-1
+        new byte[] { 0x19, 0x18, 0x1A, 0x1B, 0x1C, 0x17, 0x18, 0x16 },      //2-2
+        
+        new byte[] { 0x2C, 0x2D, 0x2C, 0x2E, /**/0x2A /*, 0x26, 0x27, 0x28, 0x27, 0x29, 0x25, 0x24, 0x23, 0x22, 0x24, 0x23, 0x22, 0x21*/ },      //3-1 begin
+    };
+    return new LevelLayerData(levelLayers[levelNo].Length, 1, levelLayers[levelNo]);
+  }
   
   public IList<LevelRec> levelRecsCad2 = new List<LevelRec>() 
   {
     //level 1
     new LevelRec(0xE401, 12, 8, 8, 0xDE7A, "1-1"),
-    new LevelRec(0xE75C, 53, 8, 8, 0xDE7A, "1-1 stars"),
     new LevelRec(0xE426, 15, 8, 8, 0xDE7A, "1-2"),
     new LevelRec(0xE454, 8 , 8, 8, 0xDE7A, "1-3"),
    //bonus
@@ -80,6 +106,16 @@ public class Data : CapcomBase
     new LevelRec(0xE72A, 5 , 8, 8, 0xE07A, "9-4"),
     new LevelRec(0xE73A, 4 , 8, 8, 0xE07A, "9-5"),
     new LevelRec(0xE747, 1 , 8, 8, 0xE07A, "9-6 (boss)"),
+    
+    //prizes
+    new LevelRec(0xE75C, 53, 8, 8, 0xDE7A, "1-1 stars"),
+    new LevelRec(0xE7C7, 55, 8, 8, 0xDE7A, "1-2 stars"),
+    new LevelRec(0xE836, 33, 8, 8, 0xDE7A, "1-3 stars"),
+    
+    new LevelRec(0xE879, 46, 8, 8, 0xDEBA, "2-1 stars"),
+    new LevelRec(0xE8D6, 57, 8, 8, 0xDEBA, "2-2 stars"),
+    
+    new LevelRec(0xE949, 75, 8, 8, 0xDEFA, "3-1 stars"),
   };
   
   public bool isBigBlockEditorEnabled() { return false; }
@@ -100,7 +136,7 @@ public class Data : CapcomBase
       int yy = Globals.romdata[addr + i * 2 + 1];
       int sx = (xx >> 4);
       int v =  (yy >> 4);
-      int sy = 2;
+      int sy = 0;
       int x = (xx & 0x0F) * 32;
       int y = (yy & 0x0F) * 32;
       var obj = new ObjectRec(v, sx, sy, x, y);
@@ -132,7 +168,7 @@ public class Data : CapcomBase
   public List<ObjectRec> getObjectsCad2(int levelNo)
   {
     //hack for prizes
-    if (levelNo == 1)
+    if (levelNo >= LEVEL_REC_COUNT)
       return getPrizesCad2(levelNo);
       
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
@@ -157,7 +193,7 @@ public class Data : CapcomBase
   public bool setObjectsCad2(int levelNo, List<ObjectRec> objects)
   {
     //hack for prizes
-    if (levelNo == 1)
+    if (levelNo >= LEVEL_REC_COUNT)
       return  setPrizesCad2(levelNo, objects);
      
     

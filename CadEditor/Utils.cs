@@ -144,6 +144,25 @@ namespace CadEditor
                 Globals.romdata[addr + i] = pallete[i];
         }
 
+        public static LevelLayerData getLayoutLinear(int curActiveLayout)
+        {
+            int layoutAddr = Globals.getLayoutAddr(curActiveLayout);
+            int width =  Globals.getLevelWidth(curActiveLayout);
+            int height = Globals.getLevelHeight(curActiveLayout);
+            byte[] layer = new byte[width * height];
+            if (Globals.gameType != GameType.TT)
+            {
+                for (int i = 0; i < width * height; i++)
+                    layer[i] = Globals.romdata[layoutAddr + i];
+            }
+            else
+            {
+                for (int i = 0; i < width * height; i++)
+                    layer[i] = (byte)(i + 1);
+            }
+            return new LevelLayerData(width, height, layer, null, null);
+        }
+
         public static bool getBit(byte b, int bit)
         {
             return (b & (1 << bit - 1)) != 0;
