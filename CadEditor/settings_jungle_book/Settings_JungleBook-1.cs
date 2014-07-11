@@ -9,9 +9,22 @@ public class Data
   public OffsetRec getPalOffset()                           { return new OffsetRec(0x1CC19, 32  , 16);     }
   public OffsetRec getVideoOffset()                         { return new OffsetRec(0x30010, 16  , 0x1000); }
   public OffsetRec getVideoObjOffset()                      { return new OffsetRec(0x20010, 16  , 0x1000); }
+  public OffsetRec getBigBlocksOffset()                     { return new OffsetRec(0 , 8   , 1); }
+  public OffsetRec getBlocksOffset()                        { return new OffsetRec(0 , 8   , 1); }
+  
+  //level 1
   public OffsetRec getScreensOffset()                       { return new OffsetRec(90441 - 96   , 1 , 17*96);   }
-  public int getScreenWidth()                               { return 96; }
+  public int getScreenWidth()                              { return 96; }
   public int getScreenHeight()                              { return 17; }
+  //level 2
+  //public OffsetRec getScreensOffset()   { return new OffsetRec(0x18149 - 24, 1 , 24*64);   }
+  //public int getScreenWidth()           { return 24; }
+  //public int getScreenHeight()          { return 64; }
+  //level 3
+  //public OffsetRec getScreensOffset()     { return new OffsetRec(93367   , 1 , 168*10);   }
+  //public int getScreenWidth()    { return 168; }
+  //public int getScreenHeight()   { return 10; }
+  
   //public string getBlocksFilename()                         { return "jungle_book_1.png"; }
   //public RenderToMainScreenFunc getRenderToMainScreenFunc() { return renderObjects; }
   
@@ -139,11 +152,13 @@ public class Data
   }
   
   static BlockRec[] BlocksAddrs = new BlockRec[]{
-    new BlockRec{ hiAddr = 0x1D984, loAddr = 0x16859 }
+    new BlockRec{ hiAddr = 0x1D984, loAddr = 0x16859 },
+    new BlockRec{ hiAddr = 0x1D984, loAddr = 0x1889F },
   };
   
   static BigBlockRec[] BigBlocksAddrs = new BigBlockRec[] { 
-    new BigBlockRec { hiAddr = 0x1DC04, hiCount = 101, loAddr = 0x16AD0 + 9, loCount = 119 }
+    new BigBlockRec { hiAddr = 0x1DC04, hiCount = 101, loAddr = 0x16A59 + 128, loCount = 119 },
+    new BigBlockRec { hiAddr = 0x1DC04, hiCount = 101, loAddr = 0x19779 + 128, loCount = 120 },
   };
   
   //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
