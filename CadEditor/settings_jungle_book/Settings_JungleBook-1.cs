@@ -5,25 +5,38 @@ using System.Collections.Generic;
 
 public class Data 
 { 
-  public GameType getGameType()                             { return GameType.TT; }
+  public GameType getGameType()                             { return GameType.LM; } //for Video.makeCurScreen function
+  public OffsetRec getPalOffset()                           { return new OffsetRec(0x1CC19, 32  , 16);     }
+  public OffsetRec getVideoOffset()                         { return new OffsetRec(0x30010, 16  , 0x1000); }
+  public OffsetRec getVideoObjOffset()                      { return new OffsetRec(0x20010, 16  , 0x1000); }
   public OffsetRec getScreensOffset()                       { return new OffsetRec(90441 - 96   , 1 , 17*96);   }
+  public int getBigBlocksCount()                            { return 256;}
   public int getScreenWidth()                               { return 96; }
   public int getScreenHeight()                              { return 17; }
-  public string getBlocksFilename()                         { return "jungle_book_1.png"; }
+  //public string getBlocksFilename()                         { return "jungle_book_1.png"; }
   //public RenderToMainScreenFunc getRenderToMainScreenFunc() { return renderObjects; }
   
-  public bool isBigBlockEditorEnabled() { return false; }
-  public bool isBlockEditorEnabled()    { return false; }
+  public bool isBigBlockEditorEnabled() { return true; }
+  public bool isBlockEditorEnabled()    { return true; }
   public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return true; }
-  public bool isVideoEditorEnabled()    { return false; }
+  public bool isVideoEditorEnabled()    { return true; }
   public IList<LevelRec> getLevelRecs() { return levelRecsJB; }
   
+  public SetBlocksFunc setBlocksFunc()     { return setBlocksJB;}
+  public GetBlocksFunc getBlocksFunc()     { return getBlocksJB;}
+  public GetBigBlocksFunc getBigBlocksFunc()  { return getBigBlocksJB;}
+  public SetBigBlocksFunc setBigBlocksFunc()  { return setBigBlocksJB;}
   public GetObjectsFunc getObjectsFunc()   { return getObjectsJungleBook;  }
   public SetObjectsFunc setObjectsFunc()   { return setObjectsJungleBook;  }
   public SortObjectsFunc sortObjectsFunc() { return sortObjectsJungleBook; }
-  public GetLayoutFunc getLayoutFunc()     { return getLayoutJungleBook;   } 
-  public GetObjectDictionaryFunc getObjectDictionaryFunc() { return getObjectDictionary; }
+  public GetLayoutFunc getLayoutFunc()     { return getLayoutJungleBook;   }
+  public GetPalFunc           getPalFunc() { return Utils.getPalleteLinear;}
+  public SetPalFunc           setPalFunc() { return Utils.setPalleteLinear;}
+  public GetVideoPageAddrFunc getVideoPageAddrFunc()         { return Utils.getChrAddress; }
+  public GetVideoChunkFunc    getVideoChunkFunc()            { return Utils.getVideoChunk; }
+  public SetVideoChunkFunc    setVideoChunkFunc()            { return Utils.setVideoChunk; }
+  public GetObjectDictionaryFunc getObjectDictionaryFunc()   { return getObjectDictionary; }
   public int getMinObjCoordX()           { return 16; }
   public int getMinObjCoordY()           { return 16; }
   public int getMinObjType()             { return 0;          }
@@ -44,10 +57,13 @@ public class Data
         byte y  = Globals.romdata[0x167A5 + i];
         byte b1 = Globals.romdata[0x167D5 + i];
         byte b2 = Globals.romdata[0x16805 + i];
-        var rect = new Rectangle((x+1) * 32*curScale+16, y * 32*curScale - 32, 16*curScale, 16*curScale);
-        g.DrawRectangle(new Pen(Color.Red, 4.0f), rect);
-        g.DrawString(String.Format("{0:X}", b1), new Font("Arial", 8), Brushes.Red, rect);
-        g.DrawString(String.Format("{0:X}", b2), new Font("Arial", 8), Brushes.Red, rect.X, rect.Y+16);
+        if ((b1 == 0x40) && (b2 == 0xF)) //draw only crystals
+        {
+          var rect = new Rectangle((x+1) * 32*curScale+16, y * 32*curScale - 32, 16*curScale, 16*curScale);
+          g.DrawRectangle(new Pen(Color.Red, 4.0f), rect);
+          g.DrawString(String.Format("{0:X}", b1), new Font("Arial", 8), Brushes.Red, rect);
+          g.DrawString(String.Format("{0:X}", b2), new Font("Arial", 8), Brushes.Red, rect.X, rect.Y+16);
+        }
     }
   }*/
   
@@ -112,5 +128,40 @@ public class Data
   public Dictionary<String,int> getObjectDictionary(int type)
   {
     return new Dictionary<String, int> { {"data", 0} };
+  }
+  
+   public void setBlocksJB(int blockIndex, ObjRec[] objects)
+  {
+    return;
+  }
+  
+  public static ObjRec[] getBlocksJB(int blockIndex)
+  {
+    var part1 = Utils.readBlocksFromAlignedArrays(Globals.romdata, 0x1D984, 0x80);
+    var part2 = Utils.readBlocksFromAlignedArrays(Globals.romdata, 0x16859, 0x80);
+    var ans = new ObjRec[part1.Length + part2.Length];
+    part1.CopyTo(ans, 0);
+    part2.CopyTo(ans, 0x80);
+    return ans;
+  }
+  
+  public byte[] getBigBlocksJB(int bigTileIndex)
+  {
+    byte[] ans = new byte[256 * 4];
+    int bigBlocksAddr1 = 0x1DC04;
+    int bigBlocksCount1 = 101;
+    int bigBlocksAddr2 = 0x16AD0 +9;//0x16A59;
+    int bigBlocksCount2 = 119;
+    var bb1 = Utils.readDataFromAlignedArrays(Globals.romdata, bigBlocksAddr1, bigBlocksCount1);
+    var bb2 = Utils.readDataFromAlignedArrays(Globals.romdata, bigBlocksAddr2, bigBlocksCount2);
+    bb1.CopyTo(ans, 0);
+    bb2.CopyTo(ans, 128*4);
+    return ans;
+  }
+  
+  public void setBigBlocksJB(int bigTileIndex, byte[] bigBlockIndexes)
+  {
+    /*var bigBlocksAddr = Globals.getBigTilesAddr(bigTileIndex);
+    Utils.writeDataToAlignedArrays(bigBlockIndexes, Globals.romdata, bigBlocksAddr, getBigBlocksCount());*/
   }
 }
