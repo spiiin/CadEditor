@@ -376,6 +376,14 @@ namespace CadEditor
             }
         }
 
+        public static T[] mergeArrays<T>(T[] a, T[] b)
+        {
+            var c = new T[a.Length + b.Length];
+            a.CopyTo(c, 0);
+            b.CopyTo(c, a.Length);
+            return c;
+        }
+
         //
         public static int readWord(byte[] data, int addr)
         {

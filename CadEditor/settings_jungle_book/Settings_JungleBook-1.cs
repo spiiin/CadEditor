@@ -10,7 +10,6 @@ public class Data
   public OffsetRec getVideoOffset()                         { return new OffsetRec(0x30010, 16  , 0x1000); }
   public OffsetRec getVideoObjOffset()                      { return new OffsetRec(0x20010, 16  , 0x1000); }
   public OffsetRec getScreensOffset()                       { return new OffsetRec(90441 - 96   , 1 , 17*96);   }
-  public int getBigBlocksCount()                            { return 256;}
   public int getScreenWidth()                               { return 96; }
   public int getScreenHeight()                              { return 17; }
   //public string getBlocksFilename()                         { return "jungle_book_1.png"; }
@@ -37,12 +36,6 @@ public class Data
   public GetVideoChunkFunc    getVideoChunkFunc()            { return Utils.getVideoChunk; }
   public SetVideoChunkFunc    setVideoChunkFunc()            { return Utils.setVideoChunk; }
   public GetObjectDictionaryFunc getObjectDictionaryFunc()   { return getObjectDictionary; }
-  public int getMinObjCoordX()           { return 16; }
-  public int getMinObjCoordY()           { return 16; }
-  public int getMinObjType()             { return 0;          }
-  public int getMaxObjCoordX()           { return (96)*32+16; }
-  public int getMaxObjCoordY()           { return (17)*32+16; }
-  public int getMaxObjType()             { return 256;          }
   
   public IList<LevelRec> levelRecsJB = new List<LevelRec>() 
   {
@@ -139,10 +132,7 @@ public class Data
   {
     var part1 = Utils.readBlocksFromAlignedArrays(Globals.romdata, 0x1D984, 0x80);
     var part2 = Utils.readBlocksFromAlignedArrays(Globals.romdata, 0x16859, 0x80);
-    var ans = new ObjRec[part1.Length + part2.Length];
-    part1.CopyTo(ans, 0);
-    part2.CopyTo(ans, 0x80);
-    return ans;
+    return Utils.mergeArrays(part1, part2);
   }
   
   public byte[] getBigBlocksJB(int bigTileIndex)
