@@ -123,25 +123,45 @@ public class Data
     return new Dictionary<String, int> { {"data", 0} };
   }
   
-   public void setBlocksJB(int blockIndex, ObjRec[] objects)
+  //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  struct BigBlockRec
   {
-    return;
+    public int hiAddr;
+    public int hiCount;
+    public int loAddr;
+    public int loCount;
   }
   
+  struct BlockRec
+  {
+    public int hiAddr;
+    public int loAddr;
+  }
+  
+  static BlockRec[] BlocksAddrs = new BlockRec[]{
+    new BlockRec{ hiAddr = 0x1D984, loAddr = 0x16859 }
+  };
+  
+  static BigBlockRec[] BigBlocksAddrs = new BigBlockRec[] { 
+    new BigBlockRec { hiAddr = 0x1DC04, hiCount = 101, loAddr = 0x16AD0 + 9, loCount = 119 }
+  };
+  
+  //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   public static ObjRec[] getBlocksJB(int blockIndex)
   {
-    var part1 = Utils.readBlocksFromAlignedArrays(Globals.romdata, 0x1D984, 0x80);
-    var part2 = Utils.readBlocksFromAlignedArrays(Globals.romdata, 0x16859, 0x80);
+    var part1 = Utils.readBlocksFromAlignedArrays(Globals.romdata, BlocksAddrs[blockIndex].hiAddr, 0x80);
+    var part2 = Utils.readBlocksFromAlignedArrays(Globals.romdata, BlocksAddrs[blockIndex].loAddr, 0x80);
     return Utils.mergeArrays(part1, part2);
   }
   
   public byte[] getBigBlocksJB(int bigTileIndex)
   {
+    var bigBlockRec = BigBlocksAddrs[bigTileIndex];
     byte[] ans = new byte[256 * 4];
-    int bigBlocksAddr1 = 0x1DC04;
-    int bigBlocksCount1 = 101;
-    int bigBlocksAddr2 = 0x16AD0 +9;//0x16A59;
-    int bigBlocksCount2 = 119;
+    int bigBlocksAddr1 = bigBlockRec.hiAddr;
+    int bigBlocksCount1 = bigBlockRec.hiCount;
+    int bigBlocksAddr2 = bigBlockRec.loAddr;
+    int bigBlocksCount2 = bigBlockRec.loCount;
     var bb1 = Utils.readDataFromAlignedArrays(Globals.romdata, bigBlocksAddr1, bigBlocksCount1);
     var bb2 = Utils.readDataFromAlignedArrays(Globals.romdata, bigBlocksAddr2, bigBlocksCount2);
     bb1.CopyTo(ans, 0);
@@ -149,9 +169,20 @@ public class Data
     return ans;
   }
   
+  public void setBlocksJB(int blockIndex, ObjRec[] objects)
+  {
+    var secondPart = new ObjRec[0x80];
+    Array.Copy(objects, 0x80, secondPart, 0, 0x80);
+    Utils.writeBlocksToAlignedArrays(objects   , Globals.romdata, BlocksAddrs[blockIndex].hiAddr, 0x80);
+    Utils.writeBlocksToAlignedArrays(secondPart, Globals.romdata, BlocksAddrs[blockIndex].loAddr, 0x80);
+  }
+  
   public void setBigBlocksJB(int bigTileIndex, byte[] bigBlockIndexes)
   {
-    /*var bigBlocksAddr = Globals.getBigTilesAddr(bigTileIndex);
-    Utils.writeDataToAlignedArrays(bigBlockIndexes, Globals.romdata, bigBlocksAddr, getBigBlocksCount());*/
+    var bigBlockRec = BigBlocksAddrs[bigTileIndex];
+    var secondPart  = new byte[bigBlockRec.loCount*4];
+    Array.Copy(bigBlockIndexes, 128*4, secondPart, 0, bigBlockRec.loCount*4);
+    Utils.writeDataToAlignedArrays(bigBlockIndexes, Globals.romdata, bigBlockRec.hiAddr, bigBlockRec.hiCount);
+    Utils.writeDataToAlignedArrays(secondPart     , Globals.romdata, bigBlockRec.loAddr, bigBlockRec.loCount);
   }
 }
