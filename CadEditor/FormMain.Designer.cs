@@ -100,6 +100,8 @@
             this.pnElements = new System.Windows.Forms.Panel();
             this.cbUseStructs = new System.Windows.Forms.CheckBox();
             this.lbStructures = new System.Windows.Forms.ListBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cbLevelNo = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -198,7 +200,7 @@
             this.pnGeneric.Controls.Add(this.cbBigBlockNo);
             this.pnGeneric.Controls.Add(this.cbVideoNo);
             this.pnGeneric.Controls.Add(this.label1);
-            this.pnGeneric.Location = new System.Drawing.Point(1, 166);
+            this.pnGeneric.Location = new System.Drawing.Point(1, 213);
             this.pnGeneric.Name = "pnGeneric";
             this.pnGeneric.Size = new System.Drawing.Size(72, 162);
             this.pnGeneric.TabIndex = 42;
@@ -325,7 +327,7 @@
             this.pnCad.Controls.Add(this.cbDoor);
             this.pnCad.Controls.Add(this.label2);
             this.pnCad.Controls.Add(this.cbLevel);
-            this.pnCad.Location = new System.Drawing.Point(1, 166);
+            this.pnCad.Location = new System.Drawing.Point(1, 213);
             this.pnCad.Name = "pnCad";
             this.pnCad.Size = new System.Drawing.Size(72, 93);
             this.pnCad.TabIndex = 43;
@@ -415,7 +417,7 @@
             "Block types",
             "Block numbers",
             "Small blocks numbers"});
-            this.cbViewType.Location = new System.Drawing.Point(3, 139);
+            this.cbViewType.Location = new System.Drawing.Point(3, 186);
             this.cbViewType.Name = "cbViewType";
             this.cbViewType.Size = new System.Drawing.Size(64, 21);
             this.cbViewType.TabIndex = 45;
@@ -423,7 +425,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(0, 123);
+            this.label4.Location = new System.Drawing.Point(0, 170);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(56, 13);
             this.label4.TabIndex = 44;
@@ -852,6 +854,8 @@
             // 
             this.pnElements.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnElements.Controls.Add(this.label3);
+            this.pnElements.Controls.Add(this.cbLevelNo);
             this.pnElements.Controls.Add(this.cbUseStructs);
             this.pnElements.Controls.Add(this.lbCoords);
             this.pnElements.Controls.Add(this.lbActiveBlock);
@@ -870,7 +874,7 @@
             // cbUseStructs
             // 
             this.cbUseStructs.AutoSize = true;
-            this.cbUseStructs.Location = new System.Drawing.Point(3, 334);
+            this.cbUseStructs.Location = new System.Drawing.Point(3, 381);
             this.cbUseStructs.Name = "cbUseStructs";
             this.cbUseStructs.Size = new System.Drawing.Size(79, 17);
             this.cbUseStructs.TabIndex = 57;
@@ -890,6 +894,25 @@
             this.lbStructures.TabIndex = 6;
             this.lbStructures.Visible = false;
             this.lbStructures.SelectedIndexChanged += new System.EventHandler(this.lbStructures_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(2, 123);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 13);
+            this.label3.TabIndex = 58;
+            this.label3.Text = "Level No:";
+            // 
+            // cbLevelNo
+            // 
+            this.cbLevelNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbLevelNo.FormattingEnabled = true;
+            this.cbLevelNo.Location = new System.Drawing.Point(5, 139);
+            this.cbLevelNo.Name = "cbLevelNo";
+            this.cbLevelNo.Size = new System.Drawing.Size(64, 21);
+            this.cbLevelNo.TabIndex = 59;
+            this.cbLevelNo.SelectedIndexChanged += new System.EventHandler(this.cbLevelNo_SelectedIndexChanged);
             // 
             // FormMain
             // 
@@ -995,6 +1018,8 @@
         private System.Windows.Forms.ListBox lbStructures;
         private System.Windows.Forms.ToolStripButton bttExportPic;
         private System.Windows.Forms.ToolStripButton bttReload;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cbLevelNo;
     }
 }
 

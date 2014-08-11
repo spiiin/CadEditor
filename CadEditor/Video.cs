@@ -226,11 +226,11 @@ namespace CadEditor
             return b;
         }
 
-        public static Image[] makeBigBlocks(int videoNo, int bigBlockNo, int blockNo, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
+        public static Image[] makeBigBlocks(int videoNo, int levelNo, int bigBlockNo, int blockNo, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
             float smallBlockScaleFactor = 2.0f, int blockWidth = 32, int blockHeight = 32, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false)
         {
             int blockCount = ConfigScript.getBigBlocksCount();
-            int SCREEN_SIZE = ConfigScript.getScreenWidth() * ConfigScript.getScreenHeight();
+            int SCREEN_SIZE = ConfigScript.getScreenWidth(levelNo) * ConfigScript.getScreenHeight(levelNo);
             var bigBlocks = new Image[blockCount];
 
             byte blockId = (byte)bigBlockNo;
@@ -291,17 +291,17 @@ namespace CadEditor
         }
 
         //make capcom screen image
-        public static Bitmap makeScreen(int scrNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, float scale = 2.0f)
+        public static Bitmap makeScreen(int scrNo, int levelNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, float scale = 2.0f)
         {
             if (scrNo < 0)
-                return emptyScreen((int)(ConfigScript.getScreenWidth() * 32 * scale), (int)(ConfigScript.getScreenHeight() * 32 * scale));
-            int SCREEN_SIZE = ConfigScript.getScreenWidth() * ConfigScript.getScreenHeight();
-            var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, scale, 32, 32, scale, MapViewType.Tiles, true);
+                return emptyScreen((int)(ConfigScript.getScreenWidth(levelNo) * 32 * scale), (int)(ConfigScript.getScreenHeight(levelNo) * 32 * scale));
+            int SCREEN_SIZE = ConfigScript.getScreenWidth(levelNo) * ConfigScript.getScreenHeight(levelNo);
+            var bigBlocks = makeBigBlocks(videoNo, levelNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, scale, 32, 32, scale, MapViewType.Tiles, true);
 
-            var bitmap = new Bitmap((int)(ConfigScript.getScreenWidth()*32*scale), (int)(ConfigScript.getScreenHeight()*32*scale)); //getScreenVertical, scales
-            int[] indexes = Globals.getScreen(ConfigScript.screensOffset, scrNo);
-            int width = ConfigScript.getScreenWidth();
-            int height = ConfigScript.getScreenHeight();
+            var bitmap = new Bitmap((int)(ConfigScript.getScreenWidth(levelNo) * 32 * scale), (int)(ConfigScript.getScreenHeight(levelNo) * 32 * scale)); //getScreenVertical, scales
+            int[] indexes = Globals.getScreen(ConfigScript.screensOffset[levelNo], scrNo);
+            int width = ConfigScript.getScreenWidth(levelNo);
+            int height = ConfigScript.getScreenHeight(levelNo);
             using (var g = Graphics.FromImage(bitmap))
             {
                 for (int tileNo = 0; tileNo < SCREEN_SIZE; tileNo++)

@@ -56,15 +56,23 @@ namespace CadEditor
             }
             Directory.SetCurrentDirectory(Path.GetDirectoryName(fileName));
             Globals.gameType = (GameType)asm.InvokeInst(data,"*.getGameType");
+
+            levelsCount = callFromScript(asm, data, "*.getLevelsCount", 1);
+            screensOffset = new OffsetRec[levelsCount];
+
             palOffset = callFromScript(asm, data,"*.getPalOffset", new OffsetRec(0,1,0));
             videoOffset = callFromScript(asm, data, "*.getVideoOffset", new OffsetRec(0, 1, 0));
             videoObjOffset = callFromScript(asm, data, "*.getVideoObjOffset", new OffsetRec(0, 1, 0));
             bigBlocksOffset = callFromScript(asm, data, "*.getBigBlocksOffset", new OffsetRec(0, 1, 0));
             blocksOffset = callFromScript(asm, data, "*.getBlocksOffset", new OffsetRec(0, 1, 0));
-            screensOffset = callFromScript(asm, data, "*.getScreensOffset", new OffsetRec(0, 1, 0));
+            screensOffset[0]        = callFromScript(asm, data, "*.getScreensOffset", new OffsetRec(0, 1, 0));
+            screensOffset[0].width  = callFromScript(asm, data, "*.getScreenWidth", 8);
+            screensOffset[0].height = callFromScript(asm, data, "*.getScreenHeight", 8);
+            if ((screensOffset[0].beginAddr == 0) && (screensOffset[0].recSize == 0))
+            {
+                screensOffset = callFromScript(asm, data, "*.getScreensOffsetsForLevels", new OffsetRec[1]);
+            }
             screensOffset2 = callFromScript(asm, data, "*.getScreensOffset2", new OffsetRec(0, 1, 0));
-            screenWidth = callFromScript(asm, data, "*.getScreenWidth", 8);
-            screenHeight = callFromScript(asm, data, "*.getScreenHeight", 8);
             screenVertical = callFromScript(asm, data, "*.getScreenVertical", false);
             screenDataStride = callFromScript(asm, data, "*.getScreenDataStride", 1);
             wordLen = callFromScript(asm, data, "*.getWordLen", 1);
@@ -230,14 +238,14 @@ namespace CadEditor
             return levelRecs[i];
         }
 
-        public static int getScreenWidth()
+        public static int getScreenWidth(int levelNo)
         {
-            return screenWidth;
+            return screensOffset[levelNo].width;
         }
 
-        public static int getScreenHeight()
+        public static int getScreenHeight(int levelNo)
         {
-            return screenHeight;
+            return screensOffset[levelNo].height;
         }
 
         public static int getMaxObjCoordX()
@@ -325,6 +333,11 @@ namespace CadEditor
             return scrollsOffsetFromLayout;
         }
 
+        public static int getLevelsCount()
+        {
+            return levelsCount;
+        }
+
         public static T callFromScript<T>(AsmHelper script, object data, string funcName, T defaultValue = default(T), params object[] funcParams)
         {
             try
@@ -344,13 +357,12 @@ namespace CadEditor
         public static OffsetRec videoObjOffset;
         public static OffsetRec bigBlocksOffset;
         public static OffsetRec blocksOffset;
-        public static OffsetRec screensOffset;
+        public static OffsetRec[] screensOffset;
         public static OffsetRec screensOffset2;
         public static OffsetRec boxesBackOffset;
+        public static int levelsCount;
         public static int bigBlocksCount;
         public static int blocksCount;
-        public static int screenWidth;
-        public static int screenHeight;
         public static bool screenVertical;
         public static int screenDataStride;
         public static int layersCount;

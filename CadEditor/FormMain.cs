@@ -43,15 +43,22 @@ namespace CadEditor
             };
         }
 
-        private void resetControls()
+        private void resetScreens()
         {
             cbScreenNo.Items.Clear();
-            for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
+            for (int i = 0; i < ConfigScript.screensOffset[curActiveLevelForScreen].recCount; i++)
                 cbScreenNo.Items.Add(String.Format("{0:X}", i + 1));
             cbScreenNo.SelectedIndex = 0;
-            screens = Utils.setScreens();
+            screens = Utils.setScreens(curActiveLevelForScreen);
             if (ConfigScript.getLayersCount() > 1)
-              screens2 = Utils.setScreens2();
+                screens2 = Utils.setScreens2();
+        }
+
+        private void resetControls()
+        {
+            curActiveLevelForScreen = 0;
+
+            resetScreens();
 
             blockWidth = ConfigScript.getBlocksPicturesWidth();
             blockHeight = 32;
@@ -60,10 +67,12 @@ namespace CadEditor
             Utils.setCbItemsCount(cbBigBlockNo, ConfigScript.bigBlocksOffset.recCount);
             Utils.setCbItemsCount(cbBlockNo, ConfigScript.blocksOffset.recCount);
             Utils.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
+            Utils.setCbItemsCount(cbLevelNo, ConfigScript.getLevelsCount());
             Utils.setCbIndexWithoutUpdateLevel(cbVideoNo, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbBigBlockNo, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbBlockNo, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbPaletteNo, cbLevel_SelectedIndexChanged);
+            Utils.setCbIndexWithoutUpdateLevel(cbLevelNo, cbLevelNo_SelectedIndexChanged);
 
             Utils.setCbIndexWithoutUpdateLevel(cbLevel, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbDoor, cbLevel_SelectedIndexChanged);
@@ -96,10 +105,15 @@ namespace CadEditor
             bttShowLayer2.Enabled = ConfigScript.getLayersCount() > 1;
             bttLayer.Enabled = ConfigScript.getLayersCount() > 1;
 
+            resetMapScreenSize();
+        }
+
+        void resetMapScreenSize()
+        {
             if (ConfigScript.getScreenVertical())
-                mapScreen.Size = new Size((int)(ConfigScript.getScreenHeight() * blockWidth * curScale), (int)((ConfigScript.getScreenWidth() + 2) * blockHeight * curScale));
+                mapScreen.Size = new Size((int)(ConfigScript.getScreenHeight(curActiveLevelForScreen) * blockWidth * curScale), (int)((ConfigScript.getScreenWidth(curActiveLevelForScreen) + 2) * blockHeight * curScale));
             else
-                mapScreen.Size = new Size((int)((ConfigScript.getScreenWidth() + 2) * blockWidth * curScale), (int)(ConfigScript.getScreenHeight() * blockHeight * curScale));
+                mapScreen.Size = new Size((int)((ConfigScript.getScreenWidth(curActiveLevelForScreen) + 2) * blockWidth * curScale), (int)(ConfigScript.getScreenHeight(curActiveLevelForScreen) * blockHeight * curScale));
         }
 
         private void reloadLevel(bool reloadScreens = true, bool reloadBlockPanel = false)
@@ -107,11 +121,7 @@ namespace CadEditor
             setBigBlocksIndexes();
             setBlocks(reloadBlockPanel);
             if (reloadScreens)
-            {
-                screens = Utils.setScreens();
-                if (ConfigScript.getLayersCount() > 1)
-                    screens2 = Utils.setScreens2();
-            }
+                resetScreens();
             updateMap();
         }
 
@@ -169,7 +179,7 @@ namespace CadEditor
 
             float smallBlockScaleFactor = curButtonScale;
             int bigTileIndex = (Globals.gameType != GameType.CAD) ? curActiveBlockNo : Globals.levelData[curActiveLevel].bigBlockId;
-            Image[] bigImages = Video.makeBigBlocks(backId, blockId, bigTileIndex, palId, smallObjectsType, smallBlockScaleFactor, blockWidth, blockHeight, curButtonScale, curViewType, showAxis);
+            Image[] bigImages = Video.makeBigBlocks(backId, curActiveLevelForScreen, blockId, bigTileIndex, palId, smallObjectsType, smallBlockScaleFactor, blockWidth, blockHeight, curButtonScale, curViewType, showAxis);
             bigBlocks.Images.AddRange(bigImages);
 
             //tt add
@@ -213,8 +223,8 @@ namespace CadEditor
 
         private void renderNeighbornLine(Graphics g, int screenNo, int line, int X)
         {
-            int WIDTH = ConfigScript.getScreenWidth();
-            int HEIGHT = ConfigScript.getScreenHeight();
+            int WIDTH = ConfigScript.getScreenWidth(curActiveLevelForScreen);
+            int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
             int TILE_SIZE_X = (int)(blockWidth * curScale);
             int TILE_SIZE_Y = (int)(blockHeight * curScale);
             int SIZE = WIDTH * HEIGHT;
@@ -262,8 +272,8 @@ namespace CadEditor
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            int WIDTH = ConfigScript.getScreenWidth();
-            int HEIGHT = ConfigScript.getScreenHeight();
+            int WIDTH = ConfigScript.getScreenWidth(curActiveLevelForScreen);
+            int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
             int TILE_SIZE_X = (int)(blockWidth * curScale);
             int TILE_SIZE_Y = (int)(blockHeight * curScale);
             int SIZE = WIDTH * HEIGHT;
@@ -301,7 +311,7 @@ namespace CadEditor
             {
                 renderNeighbornLine(g, curActiveScreen - 1, (WIDTH - 1), 0);
             }
-            if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen < ConfigScript.screensOffset.recCount - 1) && showLayer1)
+            if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen < ConfigScript.screensOffset[curActiveLevelForScreen].recCount - 1) && showLayer1)
             {
                 renderNeighbornLine(g, curActiveScreen + 1, 0 , (WIDTH + 1) * TILE_SIZE_X);
             }
@@ -333,8 +343,8 @@ namespace CadEditor
         private Image screenToImage(int scrNo)
         {
             int EXPORT_SCALE = 2;
-            int WIDTH = ConfigScript.getScreenWidth();
-            int HEIGHT = ConfigScript.getScreenHeight();
+            int WIDTH = ConfigScript.getScreenWidth(curActiveLevelForScreen);
+            int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
             int TILE_SIZE_X = (int)(blockWidth * EXPORT_SCALE);
             int TILE_SIZE_Y = (int)(blockHeight * EXPORT_SCALE);
             int SIZE = WIDTH * HEIGHT;
@@ -378,6 +388,7 @@ namespace CadEditor
         //editor globals
         private int curActiveBlock = 0;
         private int curActiveScreen = 0;
+        private int curActiveLevelForScreen = 0;
 
         //chip'n'dale specific
         private int curActiveLevel = 0;
@@ -420,8 +431,8 @@ namespace CadEditor
 
         private void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
-            int WIDTH = ConfigScript.getScreenWidth();
-            int HEIGHT = ConfigScript.getScreenHeight();
+            int WIDTH = ConfigScript.getScreenWidth(curActiveLevelForScreen);
+            int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
             int dx, dy;
             if (ConfigScript.getScreenVertical())
             {
@@ -448,8 +459,8 @@ namespace CadEditor
 
         private void mapScreen_MouseMove(object sender, MouseEventArgs e)
         {
-            int WIDTH = ConfigScript.getScreenWidth();
-            int HEIGHT = ConfigScript.getScreenHeight();
+            int WIDTH = ConfigScript.getScreenWidth(curActiveLevelForScreen);
+            int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
             int dx, dy;
             if (ConfigScript.getScreenVertical())
             {
@@ -474,7 +485,7 @@ namespace CadEditor
                 var activeScreens = curActiveLayer == 0 ? screens : screens2;
                 if (dx == WIDTH)
                 {
-                    if (curActiveScreen < ConfigScript.screensOffset.recCount - 1)
+                    if (curActiveScreen < ConfigScript.screensOffset[curActiveLevelForScreen].recCount - 1)
                     {
                         int index = dy * WIDTH;
                         Globals.setBigTileToScreen(activeScreens[curActiveScreen + 1], index, curActiveBlock);
@@ -510,8 +521,8 @@ namespace CadEditor
 
         private void appendCurTileStruct(int dx, int dy)
         {
-            int WIDTH = ConfigScript.getScreenWidth();
-            int HEIGHT = ConfigScript.getScreenHeight();
+            int WIDTH = ConfigScript.getScreenWidth(curActiveLevelForScreen);
+            int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
             int TILE_SIZE_X = (int)(blockWidth * curScale);
             int TILE_SIZE_Y = (int)(blockHeight * curScale);
             var activeScreens = curActiveLayer == 0 ? screens : screens2;
@@ -582,7 +593,7 @@ namespace CadEditor
 
         private bool saveToFile()
         {
-            saveScreens(ConfigScript.screensOffset, screens);
+            saveScreens(ConfigScript.screensOffset[curActiveLevelForScreen], screens);
             if (ConfigScript.getLayersCount() > 1)
                 saveScreens(ConfigScript.screensOffset2, screens2);
             dirty = !Globals.flushToFile(); updateSaveVisibility();
@@ -604,9 +615,9 @@ namespace CadEditor
             if (senderIsScale)
             {
                 if (ConfigScript.getScreenVertical())
-                    mapScreen.Size = new Size((int)(ConfigScript.getScreenHeight() * blockWidth * curScale), (int)((ConfigScript.getScreenWidth() + 2) * blockHeight * curScale));
+                    mapScreen.Size = new Size((int)(ConfigScript.getScreenHeight(curActiveLevelForScreen) * blockWidth * curScale), (int)((ConfigScript.getScreenWidth(curActiveLevelForScreen) + 2) * blockHeight * curScale));
                 else
-                    mapScreen.Size = new Size((int)((ConfigScript.getScreenWidth() + 2) * blockWidth * curScale), (int)(ConfigScript.getScreenHeight() * blockHeight * curScale));
+                    mapScreen.Size = new Size((int)((ConfigScript.getScreenWidth(curActiveLevelForScreen) + 2) * blockWidth * curScale), (int)(ConfigScript.getScreenHeight(curActiveLevelForScreen) * blockHeight * curScale));
             }
         }
 
@@ -633,6 +644,9 @@ namespace CadEditor
             cbLevel.SelectedIndexChanged -= cbLevel_SelectedIndexChanged;
             cbLevel.SelectedIndex = curActiveLevel;
             cbLevel.SelectedIndexChanged += cbLevel_SelectedIndexChanged;
+            cbLevelNo.SelectedIndexChanged -= cbLevelNo_SelectedIndexChanged;
+            cbLevelNo.SelectedIndex = curActiveLevelForScreen;
+            cbLevelNo.SelectedIndexChanged += cbLevelNo_SelectedIndexChanged;
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -722,7 +736,7 @@ namespace CadEditor
                     return;
                 }
 
-                int screenSize = ConfigScript.screensOffset.recSize;
+                int screenSize = ConfigScript.screensOffset[curActiveLevelForScreen].recSize;
                 int screenCount = SaveScreensCount.Count;
                 int first = SaveScreensCount.First;
                 var data = new byte[screenSize * screenCount];
@@ -756,7 +770,7 @@ namespace CadEditor
                     return;
                 }
 
-                int screenSize = ConfigScript.screensOffset.recSize;
+                int screenSize = ConfigScript.screensOffset[curActiveLevelForScreen].recSize;
                 int first = SaveScreensCount.First;
                 var data = Utils.loadDataFromFile(SaveScreensCount.Filename);
                 int screenCount = data.Length / screenSize;
@@ -795,7 +809,7 @@ namespace CadEditor
             {
                 updateSaveVisibility();
                 var f = new EditHexEditor();
-                f.setHighlightZone(ConfigScript.screensOffset.beginAddr + ConfigScript.screensOffset.recSize * curActiveScreen, ConfigScript.screensOffset.recSize);
+                f.setHighlightZone(ConfigScript.screensOffset[curActiveLevelForScreen].beginAddr + ConfigScript.screensOffset[curActiveLevelForScreen].recSize * curActiveScreen, ConfigScript.screensOffset[curActiveLevelForScreen].recSize);
                 f.ShowDialog();
                 reloadLevel();
             }
@@ -985,6 +999,19 @@ namespace CadEditor
                 reloadLevel(true, true);
                 mapScreen.Invalidate();
             }
+        }
+
+        private void cbLevelNo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
+            {
+                updateSaveVisibility();
+                return;
+            }
+            curActiveLevelForScreen = cbLevelNo.SelectedIndex;
+            resetScreens();
+            resetMapScreenSize();
+            mapScreen.Invalidate();
         }
     }
 }

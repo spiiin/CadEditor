@@ -18,7 +18,7 @@ namespace CadEditor
 
         private void SaveScreensCount_Load(object sender, EventArgs e)
         {
-            int scrCount = ConfigScript.screensOffset.recCount;
+            int scrCount = ConfigScript.screensOffset[0].recCount;
             Utils.setCbItemsCount(cbFirst, scrCount);
             Utils.setCbItemsCount(cbCount, scrCount);
             cbFirst.SelectedIndex = 0;

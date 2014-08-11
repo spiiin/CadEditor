@@ -131,14 +131,14 @@ namespace CadEditor
         }
 
         //for generic editor
-        private Bitmap makeCurScreen(int scrNo)
+        private Bitmap makeCurScreen(int scrNo, int levelNo)
         {
             if (Globals.gameType == GameType.LM)
                 scrNo = (scrNo + 1) % 256;
-            return  Video.makeScreen(scrNo, curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo, curScale);
+            return  Video.makeScreen(scrNo, levelNo, curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo, curScale);
         }
 
-        private void setBackImage()
+        private void setBackImage(int levelNo)
         {
             if (!ConfigScript.usePicturesInstedBlocks)
             {
@@ -146,8 +146,8 @@ namespace CadEditor
                 if (Globals.gameType != GameType.CAD && cbPlus256.Checked)
                     scrNo += 256;
                 lbScrNo.Text = String.Format("({0:X})", scrNo);
-                if (scrNo < ConfigScript.screensOffset.recCount)
-                    mapScreen.Image = (Globals.gameType != GameType.CAD) ? makeCurScreen(scrNo - 1) : scrImages[scrNo];
+                if (scrNo < ConfigScript.screensOffset[levelNo].recCount)
+                    mapScreen.Image = (Globals.gameType != GameType.CAD) ? makeCurScreen(scrNo - 1, getLevelRecForGameType().levelNo) : scrImages[scrNo];
                 else
                     mapScreen.Image = Video.emptyScreen(512, 512);
             }
@@ -158,7 +158,7 @@ namespace CadEditor
             if (Globals.gameType == GameType.CAD)
                 makeScreensCad();
             reloadLevelLayerData(reloadObjects);
-            setBackImage();
+            setBackImage(getLevelRecForGameType().levelNo);
             if (reloadObjects)
               setObjects();
             curActiveBlock = 0;
@@ -192,7 +192,7 @@ namespace CadEditor
         {
             if (ConfigScript.usePicturesInstedBlocks)
             {
-                screens = Utils.setScreens();
+                screens = Utils.setScreens(getLevelRecForGameType().levelNo);
                 //bigBlocks.ImageSize = new Size(2 * ConfigScript.getBlocksPicturesWidth(), 2 * 32);
                 Utils.setBlocks(bigBlocks, 2, 32,32, MapViewType.Tiles, formMain.ShowAxis);
             }
@@ -203,8 +203,8 @@ namespace CadEditor
             reloadPictures();
             fillObjPanel();
 
-            int coordXCount = (ConfigScript.getMaxObjCoordX() != -1) ? ConfigScript.getMaxObjCoordX() : ConfigScript.getScreenWidth() * 32;
-            int coordYCount = (ConfigScript.getMaxObjCoordY() != -1) ? ConfigScript.getMaxObjCoordY() : ConfigScript.getScreenHeight() * 32;
+            int coordXCount = (ConfigScript.getMaxObjCoordX() != -1) ? ConfigScript.getMaxObjCoordX() : ConfigScript.getScreenWidth(getLevelRecForGameType().levelNo) * 32;
+            int coordYCount = (ConfigScript.getMaxObjCoordY() != -1) ? ConfigScript.getMaxObjCoordY() : ConfigScript.getScreenHeight(getLevelRecForGameType().levelNo) * 32;
             int objType = (ConfigScript.getMaxObjType() != -1) ? ConfigScript.getMaxObjType() : 256;
             int minCoordX = ConfigScript.getMinObjCoordX();
             int minCoordY = ConfigScript.getMinObjCoordY();
@@ -249,10 +249,11 @@ namespace CadEditor
             btSort.Visible = ConfigScript.sortObjectsFunc != null;
 
             int blockWidth = ConfigScript.getBlocksPicturesWidth();
+            int scrLevelNo = getLevelRecForGameType().levelNo;
             if (ConfigScript.getScreenVertical())
-                mapScreen.Size = new Size(ConfigScript.getScreenHeight() * blockWidth * 2, (ConfigScript.getScreenWidth() + 2) * 64);
+                mapScreen.Size = new Size(ConfigScript.getScreenHeight(scrLevelNo) * blockWidth * 2, (ConfigScript.getScreenWidth(scrLevelNo) + 2) * 64);
             else
-                mapScreen.Size = new Size((ConfigScript.getScreenWidth() + 2) * blockWidth * 2, ConfigScript.getScreenHeight() * 64);
+                mapScreen.Size = new Size((ConfigScript.getScreenWidth(scrLevelNo) + 2) * blockWidth * 2, ConfigScript.getScreenHeight(scrLevelNo) * 64);
 
             Utils.setCbItemsCount(cbBigObjectNo, 256, 0, true);
         }
@@ -266,7 +267,7 @@ namespace CadEditor
             btRight.Enabled = curActiveScreen % w != w - 1;
             btUp.Enabled = curActiveScreen >= w;
             btDown.Enabled = curActiveScreen < w * (h - 1);
-            setBackImage();
+            setBackImage(getLevelRecForGameType().levelNo);
             mapScreen.Invalidate();
         }
 
@@ -470,8 +471,9 @@ namespace CadEditor
 
         private void paintBack(Graphics g)
         {
-            int WIDTH = ConfigScript.getScreenWidth();
-            int HEIGHT = ConfigScript.getScreenHeight();
+            int scrLevelNo = getLevelRecForGameType().levelNo;
+            int WIDTH = ConfigScript.getScreenWidth(scrLevelNo);
+            int HEIGHT = ConfigScript.getScreenHeight(scrLevelNo);
             int blockWidth = ConfigScript.getBlocksPicturesWidth();
             int TILE_SIZE_X = (int)(blockWidth * curScale);
             int TILE_SIZE_Y = (int)(32 * curScale);
@@ -850,8 +852,9 @@ namespace CadEditor
             int x = (int)(e.X / curScale);
             int y = (int)(e.Y / curScale);
 
-            int coordXCount = (ConfigScript.getMaxObjCoordX() != -1) ? ConfigScript.getMaxObjCoordX() : ConfigScript.getScreenWidth() * 32;
-            int coordYCount = (ConfigScript.getMaxObjCoordY() != -1) ? ConfigScript.getMaxObjCoordY() : ConfigScript.getScreenHeight() * 32;
+            int scrLevelNo = getLevelRecForGameType().levelNo;
+            int coordXCount = (ConfigScript.getMaxObjCoordX() != -1) ? ConfigScript.getMaxObjCoordX() : ConfigScript.getScreenWidth(scrLevelNo) * 32;
+            int coordYCount = (ConfigScript.getMaxObjCoordY() != -1) ? ConfigScript.getMaxObjCoordY() : ConfigScript.getScreenHeight(scrLevelNo) * 32;
             int minCoordX = ConfigScript.getMinObjCoordX();
             int minCoordY = ConfigScript.getMinObjCoordY();
             if (!ConfigScript.getScreenVertical())
@@ -916,8 +919,9 @@ namespace CadEditor
 
             if (curTool == ToolType.Create)
             {
-                int coordXCount = (ConfigScript.getMaxObjCoordX() != -1) ? ConfigScript.getMaxObjCoordX() : ConfigScript.getScreenWidth() * 32;
-                int coordYCount = (ConfigScript.getMaxObjCoordY() != -1) ? ConfigScript.getMaxObjCoordY() : ConfigScript.getScreenHeight() * 32;
+                int scrLevelNo = getLevelRecForGameType().levelNo;
+                int coordXCount = (ConfigScript.getMaxObjCoordX() != -1) ? ConfigScript.getMaxObjCoordX() : ConfigScript.getScreenWidth(scrLevelNo) * 32;
+                int coordYCount = (ConfigScript.getMaxObjCoordY() != -1) ? ConfigScript.getMaxObjCoordY() : ConfigScript.getScreenHeight(scrLevelNo) * 32;
                 int minCoordX = ConfigScript.getMinObjCoordX();
                 int minCoordY = ConfigScript.getMinObjCoordY();
 

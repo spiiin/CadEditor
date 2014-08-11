@@ -58,7 +58,7 @@ namespace CadEditor
 
             blocksPanel.Controls.Clear();
             blocksPanel.SuspendLayout();
-            for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
+            for (int i = 0; i < ConfigScript.screensOffset[scrLevelNo].recCount; i++)
             {
                 var but = new Button();
                 but.Size = new Size(64, 64);
@@ -139,7 +139,7 @@ namespace CadEditor
         {
             screenImages.Images.Clear();
             screenImages.Images.Add(makeBlackScreen(64,64,0));
-            for (int scrNo = 0; scrNo < ConfigScript.screensOffset.recCount; scrNo++)
+            for (int scrNo = 0; scrNo < ConfigScript.screensOffset[scrLevelNo].recCount; scrNo++)
                 screenImages.Images.Add(makeBlackScreen(64, 64, scrNo + 1));
         }
 
@@ -174,7 +174,7 @@ namespace CadEditor
                 int realScrNo = scrNo - 1 + levelEHadd;
                 if (scrNo != 0) 
                 {
-                    Bitmap bitmap = bitmap = Video.makeScreen(realScrNo, backId, blockId, blockId, palId, 2.0f);
+                    Bitmap bitmap = bitmap = Video.makeScreen(realScrNo, scrLevelNo, backId, blockId, blockId, palId, 2.0f);
                     using (var g = Graphics.FromImage(bitmap))
                         g.DrawString(String.Format("{0:X}", scrNo), new Font("Arial", 64), Brushes.White, new Point(0, 0));
                     Bitmap convertedSize = new Bitmap(64, 64);
@@ -298,6 +298,9 @@ namespace CadEditor
 
         private int curWidth = 1;
         private int curHeight = 1;
+
+        //
+        private int scrLevelNo = 0;
         
 
         private void cbLevel_SelectedIndexChanged(object sender, EventArgs e)
@@ -450,7 +453,7 @@ namespace CadEditor
                     for (int h = 0; h < curHeight; h++)
                     {
                         int scrNo = curLevelLayerData.layer[h*curWidth + w] - 1;
-                        Bitmap scr = scrNo >= 0 ? Video.makeScreen(scrNo, curVideoNo, curBigBlockNo, curBlockNo, curPalleteNo, 2.0f) : Video.emptyScreen(512,512,false);
+                        Bitmap scr = scrNo >= 0 ? Video.makeScreen(scrNo, scrLevelNo, curVideoNo, curBigBlockNo, curBlockNo, curPalleteNo, 2.0f) : Video.emptyScreen(512,512,false);
                         g.DrawImage(scr, new Point(w*512,h*512));
                     }
                 }

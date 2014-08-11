@@ -368,8 +368,8 @@ namespace CadEditor
         public static Image[] makeScreensCad(int levelNo, bool stopOnDoors)
         {
             //!!!duplicate in EditLayout.cs
-            Image[] scrImages = new Image[ConfigScript.screensOffset.recCount];
-            for (int i = 0; i < ConfigScript.screensOffset.recCount; i++)
+            Image[] scrImages = new Image[ConfigScript.screensOffset[0].recCount];
+            for (int i = 0; i < ConfigScript.screensOffset[0].recCount; i++)
                 scrImages[i] = Video.emptyScreen(512, 512);
 
             var screenList = Globals.buildScreenRecs(levelNo, stopOnDoors);
@@ -399,7 +399,7 @@ namespace CadEditor
                 int scrNo = sortedScreenList[i].no;
                 int addEH = (levelNo == 5 || levelNo == 8) ? 256 : 0; //hack
                 int realScrNo = scrNo - 1 + addEH;
-                scrImages[scrNo] = Video.makeScreen(realScrNo, backId, blockId, blockId, palId);
+                scrImages[scrNo] = Video.makeScreen(realScrNo, 0, backId, blockId, blockId, palId);
             }
             return scrImages;
         }
@@ -502,11 +502,24 @@ namespace CadEditor
             this.beginAddr = beginAddr;
             this.recCount = recCount;
             this.recSize = recSize;
+            this.width = 0;
+            this.height = 0;
+        }
+
+        public OffsetRec(int beginAddr, int recCount, int recSize, int width = 0, int height = 0)
+        {
+            this.beginAddr = beginAddr;
+            this.recCount = recCount;
+            this.recSize = recSize;
+            this.width = width;
+            this.height = height;
         }
 
         public int beginAddr;
         public int recCount;
         public int recSize;
+        public int width;
+        public int height;
     }
 
     public struct LevelObjRec
@@ -573,6 +586,7 @@ namespace CadEditor
             this.height = 0;
             this.layoutAddr = 0;
             this.name = "";
+            this.levelNo = 0;
         }
 
         public LevelRec(int objectsBeginAddr, int objCount, int width = 0, int height = 0, int layoutAddr = 0)
@@ -583,6 +597,7 @@ namespace CadEditor
             this.height = height;
             this.layoutAddr = layoutAddr;
             this.name = "";
+            this.levelNo = 0;
         }
 
         public LevelRec(int objectsBeginAddr, int objCount, int width = 0, int height = 0, int layoutAddr = 0, string name = "")
@@ -593,12 +608,25 @@ namespace CadEditor
             this.height = height;
             this.layoutAddr = layoutAddr;
             this.name = name;
+            this.levelNo = 0;
+        }
+
+        public LevelRec(int objectsBeginAddr, int objCount, int width = 0, int height = 0, int layoutAddr = 0, string name = "", int levelNo = 0)
+        {
+            this.objCount = objCount;
+            this.objectsBeginAddr = objectsBeginAddr;
+            this.width = width;
+            this.height = height;
+            this.layoutAddr = layoutAddr;
+            this.name = name;
+            this.levelNo = levelNo;
         }
         public int objCount;
         public int objectsBeginAddr;
         public int width;
         public int height;
         public int layoutAddr;
+        public int levelNo;
         public string name;
     }
 
