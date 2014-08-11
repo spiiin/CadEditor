@@ -102,6 +102,7 @@
             this.lbStructures = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cbLevelNo = new System.Windows.Forms.ComboBox();
+            this.bttConfig = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -498,6 +499,7 @@
             this.bttHex,
             this.toolStripSeparator3,
             this.bttStructures,
+            this.bttConfig,
             this.toolStripSeparator6,
             this.bttShowNei,
             this.bttAxis,
@@ -914,6 +916,16 @@
             this.cbLevelNo.TabIndex = 59;
             this.cbLevelNo.SelectedIndexChanged += new System.EventHandler(this.cbLevelNo_SelectedIndexChanged);
             // 
+            // bttConfig
+            // 
+            this.bttConfig.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttConfig.Image = ((System.Drawing.Image)(resources.GetObject("bttConfig.Image")));
+            this.bttConfig.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttConfig.Name = "bttConfig";
+            this.bttConfig.Size = new System.Drawing.Size(23, 22);
+            this.bttConfig.Text = "Edit Config";
+            this.bttConfig.Click += new System.EventHandler(this.btSubeditor_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1020,6 +1032,7 @@
         private System.Windows.Forms.ToolStripButton bttReload;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbLevelNo;
+        private System.Windows.Forms.ToolStripButton bttConfig;
     }
 }
 

@@ -40,6 +40,7 @@ namespace CadEditor
                  { bttEnemies,      ()=>{ var f = new EnemyEditor();  f.setFormMain(this); return f;}  },
                  { bttVideo,        ()=>{ return new EditVideo();}    },
                  { bttMap,          ()=>{ return new EditMap();}    },
+                 { bttConfig,       ()=>{  var f = new FormConfig();  f.setFormMain(this); f.onApply+=reloadCallback; return f;}    },
             };
         }
 
@@ -876,6 +877,11 @@ namespace CadEditor
             get { return showAxis; }
         }
 
+        public int LevelNoForScreens
+        {
+            get { return curActiveLevelForScreen; }
+        }
+
         public ImageList getBigBlockImageList()
         {
             return bigBlocks;
@@ -990,6 +996,11 @@ namespace CadEditor
                 }
                 resultImage.Save(SaveScreensCount.Filename);
             }
+        }
+
+        public void reloadCallback()
+        {
+            bttReload_Click(null, new EventArgs());
         }
 
         private void bttReload_Click(object sender, EventArgs e)

@@ -86,18 +86,22 @@ namespace CadEditor
             }
         }
 
-        public static int parseInt(string value)
+        public static int parseInt(string value, int defaultVal = 0)
         {
-            int ans = 0;
+            int ans = defaultVal;
             //try hex parsing
             if ((value.Length > 2) && (value[0] == '0') && ((value[1] == 'x') || (value[1] == 'X')))
             {
                 var newStr = value.Substring(2);
-                int.TryParse(newStr, NumberStyles.HexNumber, CultureInfo.CurrentCulture, out ans);
-                return ans;
+                if (int.TryParse(newStr, NumberStyles.HexNumber, CultureInfo.CurrentCulture, out ans))
+                  return ans;
+                else 
+                  return defaultVal;
             }
-            int.TryParse(value, out ans);
-            return ans;
+            if (int.TryParse(value, out ans))
+                return ans;
+            else
+                return defaultVal;
 
         }
 
