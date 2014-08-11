@@ -123,8 +123,12 @@ namespace CadEditor
             //
             try
             {
-                using (FileStream f = File.OpenWrite("map.bin"))
-                    f.Write(x, 0, (int)nn);
+                if (ofOpenDialog.ShowDialog() == DialogResult.OK)
+                {
+                    var fname = ofOpenDialog.FileName;
+                    using (FileStream f = File.OpenWrite(fname))
+                        f.Write(x, 0, (int)nn);
+                }
             }
             catch (Exception ex)
             {

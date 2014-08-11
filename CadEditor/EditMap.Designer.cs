@@ -31,10 +31,10 @@
             this.mapScreen = new System.Windows.Forms.PictureBox();
             this.blocksPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.btSave = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.cbShowAxis = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cbScreenNo = new System.Windows.Forms.ComboBox();
+            this.ofOpenDialog = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             this.SuspendLayout();
             // 
@@ -68,16 +68,6 @@
             this.btSave.Text = "Save";
             this.btSave.UseVisualStyleBackColor = true;
             this.btSave.Click += new System.EventHandler(this.btSave_Click);
-            // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(69, 482);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(76, 13);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "*to file map.bin";
             // 
             // cbShowAxis
             // 
@@ -121,6 +111,10 @@
             this.cbScreenNo.TabIndex = 43;
             this.cbScreenNo.SelectedIndexChanged += new System.EventHandler(this.cbVideoNo_SelectedIndexChanged);
             // 
+            // ofOpenDialog
+            // 
+            this.ofOpenDialog.FileName = "map.bin";
+            // 
             // EditMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -129,7 +123,6 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cbScreenNo);
             this.Controls.Add(this.cbShowAxis);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.btSave);
             this.Controls.Add(this.blocksPanel);
             this.Controls.Add(this.mapScreen);
@@ -147,9 +140,9 @@
         private System.Windows.Forms.PictureBox mapScreen;
         private System.Windows.Forms.FlowLayoutPanel blocksPanel;
         private System.Windows.Forms.Button btSave;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox cbShowAxis;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cbScreenNo;
+        private System.Windows.Forms.OpenFileDialog ofOpenDialog;
     }
 }
