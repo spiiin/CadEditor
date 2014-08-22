@@ -78,6 +78,7 @@
             this.bttHex = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.bttStructures = new System.Windows.Forms.ToolStripButton();
+            this.bttConfig = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.bttShowNei = new System.Windows.Forms.ToolStripButton();
             this.bttAxis = new System.Windows.Forms.ToolStripButton();
@@ -98,11 +99,10 @@
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pnElements = new System.Windows.Forms.Panel();
-            this.cbUseStructs = new System.Windows.Forms.CheckBox();
-            this.lbStructures = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cbLevelNo = new System.Windows.Forms.ComboBox();
-            this.bttConfig = new System.Windows.Forms.ToolStripButton();
+            this.cbUseStructs = new System.Windows.Forms.CheckBox();
+            this.lbStructures = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -671,6 +671,16 @@
             this.bttStructures.Text = "Make structures";
             this.bttStructures.Click += new System.EventHandler(this.bttStructures_Click);
             // 
+            // bttConfig
+            // 
+            this.bttConfig.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttConfig.Image = ((System.Drawing.Image)(resources.GetObject("bttConfig.Image")));
+            this.bttConfig.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttConfig.Name = "bttConfig";
+            this.bttConfig.Size = new System.Drawing.Size(23, 22);
+            this.bttConfig.Text = "Edit Config";
+            this.bttConfig.Click += new System.EventHandler(this.btSubeditor_Click);
+            // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
@@ -873,6 +883,25 @@
             this.pnElements.Size = new System.Drawing.Size(77, 515);
             this.pnElements.TabIndex = 5;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(2, 123);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 13);
+            this.label3.TabIndex = 58;
+            this.label3.Text = "Level No:";
+            // 
+            // cbLevelNo
+            // 
+            this.cbLevelNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbLevelNo.FormattingEnabled = true;
+            this.cbLevelNo.Location = new System.Drawing.Point(5, 139);
+            this.cbLevelNo.Name = "cbLevelNo";
+            this.cbLevelNo.Size = new System.Drawing.Size(64, 21);
+            this.cbLevelNo.TabIndex = 59;
+            this.cbLevelNo.SelectedIndexChanged += new System.EventHandler(this.cbLevelNo_SelectedIndexChanged);
+            // 
             // cbUseStructs
             // 
             this.cbUseStructs.AutoSize = true;
@@ -897,35 +926,6 @@
             this.lbStructures.Visible = false;
             this.lbStructures.SelectedIndexChanged += new System.EventHandler(this.lbStructures_SelectedIndexChanged);
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(2, 123);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 13);
-            this.label3.TabIndex = 58;
-            this.label3.Text = "Level No:";
-            // 
-            // cbLevelNo
-            // 
-            this.cbLevelNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbLevelNo.FormattingEnabled = true;
-            this.cbLevelNo.Location = new System.Drawing.Point(5, 139);
-            this.cbLevelNo.Name = "cbLevelNo";
-            this.cbLevelNo.Size = new System.Drawing.Size(64, 21);
-            this.cbLevelNo.TabIndex = 59;
-            this.cbLevelNo.SelectedIndexChanged += new System.EventHandler(this.cbLevelNo_SelectedIndexChanged);
-            // 
-            // bttConfig
-            // 
-            this.bttConfig.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttConfig.Image = ((System.Drawing.Image)(resources.GetObject("bttConfig.Image")));
-            this.bttConfig.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttConfig.Name = "bttConfig";
-            this.bttConfig.Size = new System.Drawing.Size(23, 22);
-            this.bttConfig.Text = "Edit Config";
-            this.bttConfig.Click += new System.EventHandler(this.btSubeditor_Click);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -936,7 +936,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Text = "CAD Editor v3.0 by spiiin";
+            this.Text = "CAD Editor v3.1 by spiiin";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
