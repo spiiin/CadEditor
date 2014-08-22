@@ -346,7 +346,9 @@ namespace CadEditor
 
         private void cbLevelSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbLevelSelect.SelectedIndex == -1 || cbTileset.SelectedIndex == -1)
+            if (cbLevelSelect.SelectedIndex == -1 && GameType.CAD == Globals.gameType)
+                return;
+            if (cbTileset.SelectedIndex == -1 && GameType.CAD != Globals.gameType)
                 return;
             if (!readOnly && dirty)
             {
