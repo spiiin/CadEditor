@@ -11,11 +11,11 @@
   редактор экранов/макроблоков/блоков:
     Mega Man 4                                      (8 уровней)
     Three Eyes Story                                (1 уровень)
+    Jungle Book                                     (1-9 уровни + редактор объектов 2 уровней)
   редактор экранов картинками:
     Flintstones: The Rescue of Dino & Hoppy         (все уровни + редактор объектов)
     Ninja Cat (Cattou Ninden Teyandee)              (все уровни + редактор объектов 4 уровней)
     Tom & Jerry                                     (8 уровней  + редактор объектов 2 уровней)
-    Jungle Book                                     (1-9 уровни + редактор объектов 2 уровней)
     Flintstones: The Surprise at Dinosaur Peak!     (1 уровень  + редактор объектов 1 уровня)
     New Ghostbusters 2                              (1 уровень  + редактор объектов 1 уровня)
     Little Nemo                                     (все уровни)
@@ -40,6 +40,8 @@
   редактор раскладок картинками:
     Argos No Senshi                                 (все уровни)
     Fist of The Nortstar                            (3 уровня)
+редактор экранов (Sega)
+    EarthWorm Jim 2                                 (1 уровень)
 редактор экранов картинками (Sega/GBA)
     Zombies Ate My Neighbors                        (1 уровень + редактор объектов 1 уровня)
     Final Fantasy Tactics Advance                   (все уровни)

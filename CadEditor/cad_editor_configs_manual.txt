@@ -13,12 +13,16 @@
 
 1-й способ передать редактору данные о блоках, в том случае, когда они описаны в виде последовательных массивов данных, передать указатели на них:
 (строки кода, которые считывают данные из конфига - то что в кавычках, это имя функции из конфига).
+  levelsCount = callFromScript(asm, data, "*.getLevelsCount", 1); //количество типов экранов
   palOffset = callFromScript(asm, data,"*.getPalOffset", new OffsetRec(0,1,0));
   videoOffset = callFromScript(asm, data, "*.getVideoOffset", new OffsetRec(0, 1, 0));
   videoObjOffset = callFromScript(asm, data, "*.getVideoObjOffset", new OffsetRec(0, 1, 0));
   bigBlocksOffset = callFromScript(asm, data, "*.getBigBlocksOffset", new OffsetRec(0, 1, 0));
   blocksOffset = callFromScript(asm, data, "*.getBlocksOffset", new OffsetRec(0, 1, 0));
   screensOffset = callFromScript(asm, data, "*.getScreensOffset", new OffsetRec(0, 1, 0));
+  screensOffset = callFromScript(asm, data, "*.getScreensOffsetsForLevels", new OffsetRec[1]); //возможность загрузить несколько типов экранов.
+  
+  convertScreenTileFunc = callFromScript<ConvertScreenTileFunc>(asm, data, "*.getConvertScreenTileFunc"); //функция конвертации индекса экрана после загрузки.
   
 набор функций get*Offset позволяет передать структуру типа OffsetRec, которая описывает начальный адрес массива данных, количество массивов и их размер и количество (количество массивов соответствует количеству уровней в игре, если конфиг описывает только один уровень, то второй параметр будет всегда равен единице).
 
@@ -36,6 +40,8 @@
   renderToMainScreenFunc = callFromScript<RenderToMainScreenFunc>(asm, data, "*.getRenderToMainScreenFunc");
   buildScreenFromSmallBlocks = callFromScript(asm, data, "isBuildScreenFromSmallBlocks", false);
   
+  useSegaGraphics = callFromScript(asm, data, "*.isUseSegaGraphics", false); //использовать библиотеку для построения картинок видеопамятью для Sega-игр
+  
 В качестве примера можно посмотреть конфиг от Duck Tales 2, там переписаны функции доступа к видеопамяти, она загружается из дампов, так как внутри рома видеопамять сжата алгоритмом RLE, и функции загрузки макроблоков (BigBlocks), потому что они составляются из 4х массивов, каждый из которых описывает отдельные части блоков. Вообще, данные о блоках в подавляющем большинстве игр описываются тремя способами - либо последовательным массивом данным, либо несколькими массивами одинакового размера, либо несколькими массивами, которые лежат в разных частях рома и доступ к ним происходит через указатели. Внутри редактора предусмотрена библиотека для загрузки всех трех типов (но пока нет документации к ней =\ ).
 
 Если установлен флажок buildScreenFromSmallBlocks, то экран будет строиться из маленьких блоков, все параметры касающие больших блоков, будут проигнорированы.
@@ -52,6 +58,7 @@
   screenVertical = callFromScript(asm, data, "*.getScreenVertical", false);          //описывают ли данные экран справа налево или сверху вниз
   screenDataStride = callFromScript(asm, data, "*.getScreenDataStride", 1);          //шаг в байтах между данными экрана (для 16-битных игр может быть 1 или 2).
   wordLen = callFromScript(asm, data, "*.getWordLen", 1);                            //размер одного слова в описании экрана (для 16-битных игр может быть 1 или 2).
+  littleEndian = callFromScript(asm, data, "*.isLittleEndian", false);               //порядок байт для платформ со словом > 8 бит.
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Для редактора врагов существуют опции:
