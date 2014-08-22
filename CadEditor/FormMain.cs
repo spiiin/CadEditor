@@ -40,7 +40,7 @@ namespace CadEditor
                  { bttEnemies,      ()=>{ var f = new EnemyEditor();  f.setFormMain(this); return f;}  },
                  { bttVideo,        ()=>{ return new EditVideo();}    },
                  { bttMap,          ()=>{ return new EditMap();}    },
-                 { bttConfig,       ()=>{  var f = new FormConfig();  f.setFormMain(this); f.onApply+=reloadCallback; return f;}    },
+                 { bttConfig,       ()=>{ var f = new FormConfig();  f.setFormMain(this); f.onApply += reloadCallback; return f;}    },
             };
         }
 
@@ -132,6 +132,15 @@ namespace CadEditor
           bigBlockIndexes = ConfigScript.getBigBlocks(bigTileIndex);
         }
 
+        private Image[] makeSegaBigBlocks()
+        {
+            byte[] mapping = ConfigScript.getBigBlocks(curActiveBigBlockNo);
+            byte[] videoTiles = ConfigScript.getVideoChunk(curActiveVideoNo);
+            byte[] pal = ConfigScript.getPal(curActivePalleteNo);
+            int count = ConfigScript.getBigBlocksCount();
+            return VideoSega.makeBigBlocksSega(mapping, videoTiles, pal, count, curScale);
+        }
+
         private void setBlocks(bool needToRefillBlockPanel)
         {
             bigBlocks.Images.Clear();
@@ -180,7 +189,11 @@ namespace CadEditor
 
             float smallBlockScaleFactor = curButtonScale;
             int bigTileIndex = (Globals.gameType != GameType.CAD) ? curActiveBlockNo : Globals.levelData[curActiveLevel].bigBlockId;
-            Image[] bigImages = Video.makeBigBlocks(backId, curActiveLevelForScreen, blockId, bigTileIndex, palId, smallObjectsType, smallBlockScaleFactor, blockWidth, blockHeight, curButtonScale, curViewType, showAxis);
+            Image[] bigImages;
+            if (ConfigScript.isUseSegaGraphics())
+                bigImages = makeSegaBigBlocks();
+            else
+                bigImages = Video.makeBigBlocks(backId, curActiveLevelForScreen, blockId, bigTileIndex, palId, smallObjectsType, smallBlockScaleFactor, blockWidth, blockHeight, curButtonScale, curViewType, showAxis);
             bigBlocks.Images.AddRange(bigImages);
 
             //tt add

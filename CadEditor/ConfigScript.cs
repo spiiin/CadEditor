@@ -22,6 +22,7 @@ namespace CadEditor
     public delegate void            SortObjectsFunc(int levelNo, List<ObjectRec> objects);
     public delegate LevelLayerData  GetLayoutFunc(int levelNo);
     public delegate Dictionary<String, int> GetObjectDictionaryFunc(int objNo);
+    public delegate int ConvertScreenTileFunc(int val);
 
     public class ConfigScript
     {
@@ -77,6 +78,7 @@ namespace CadEditor
             screenDataStride = callFromScript(asm, data, "*.getScreenDataStride", 1);
             wordLen = callFromScript(asm, data, "*.getWordLen", 1);
             littleEndian = callFromScript(asm, data, "*.isLittleEndian", false);
+            useSegaGraphics = callFromScript(asm, data, "*.isUseSegaGraphics", false);
             buildScreenFromSmallBlocks = callFromScript(asm, data, "isBuildScreenFromSmallBlocks", false);
             layersCount = callFromScript(asm, data, "*.getLayersCount", 1);
             levelRecs = callFromScript(asm, data,"*.getLevelRecs", new List<LevelRec>());
@@ -101,6 +103,7 @@ namespace CadEditor
             setObjectsFunc = callFromScript<SetObjectsFunc>(asm, data, "*.setObjectsFunc");
             sortObjectsFunc = callFromScript<SortObjectsFunc>(asm, data, "*.sortObjectsFunc");
             getLayoutFunc = callFromScript<GetLayoutFunc>(asm, data, "*.getLayoutFunc");
+            convertScreenTileFunc = callFromScript<ConvertScreenTileFunc>(asm, data, "*.getConvertScreenTileFunc");
             getObjectDictionaryFunc = callFromScript<GetObjectDictionaryFunc>(asm, data, "*.getObjectDictionaryFunc");
 
             renderToMainScreenFunc = callFromScript<RenderToMainScreenFunc>(asm, data, "*.getRenderToMainScreenFunc");
@@ -206,6 +209,11 @@ namespace CadEditor
         {
             sortObjectsFunc(levelNo, objects);
         }
+
+         public static int convertScreenTile(int tile)
+         {
+             return (convertScreenTileFunc ?? (v=>v))(tile);
+         }
 
         public static LevelLayerData getLayout(int levelNo)
         {
@@ -338,6 +346,11 @@ namespace CadEditor
             return levelsCount;
         }
 
+        public static bool isUseSegaGraphics()
+        {
+            return useSegaGraphics;
+        }
+
         public static T callFromScript<T>(AsmHelper script, object data, string funcName, T defaultValue = default(T), params object[] funcParams)
         {
             try
@@ -370,6 +383,8 @@ namespace CadEditor
         public static bool littleEndian;
         public static bool buildScreenFromSmallBlocks;
 
+        public static bool useSegaGraphics;
+
         public static int minObjCoordX;
         public static int minObjCoordY;
         public static int minObjType;
@@ -394,6 +409,7 @@ namespace CadEditor
         public static GetLayoutFunc getLayoutFunc;
         public static GetObjectDictionaryFunc getObjectDictionaryFunc;
         public static RenderToMainScreenFunc renderToMainScreenFunc;
+        public static ConvertScreenTileFunc convertScreenTileFunc;
 
         public static bool isBigBlockEditorEnabled;
         public static bool isBlockEditorEnabled;

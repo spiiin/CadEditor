@@ -148,21 +148,21 @@ namespace CadEditor
             if (wordLen == 1)
             {
                 for (int i = 0; i < screenOffset.recSize; i++)
-                    result[i] = arrayWithData[beginAddr + i * dataStride];
+                    result[i] = ConfigScript.convertScreenTile(arrayWithData[beginAddr + i * dataStride]);
                 for (int i = screenOffset.recSize; i < 64; i++)
-                    result[i] = 0; //need this?
+                    result[i] = ConfigScript.convertScreenTile(0); //need this?
             }
             else if (wordLen == 2)
             {
                 if (littleEndian)
                 {
                     for (int i = 0; i < screenOffset.recSize; i++)
-                        result[i] = Utils.readWordLE(arrayWithData, beginAddr + i * (dataStride * wordLen));
+                        result[i] = ConfigScript.convertScreenTile(Utils.readWordLE(arrayWithData, beginAddr + i * (dataStride * wordLen)));
                 }
                 else
                 {
                     for (int i = 0; i < screenOffset.recSize; i++)
-                        result[i] = Utils.readWord(arrayWithData, beginAddr + i * (dataStride * wordLen));
+                        result[i] = ConfigScript.convertScreenTile(Utils.readWord(arrayWithData, beginAddr + i * (dataStride * wordLen)));
                 }
             }
             return result;

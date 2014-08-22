@@ -316,9 +316,10 @@ namespace CadEditor
 
         public static byte[] getBigBlocksCapcomDefault(int bigTileIndex)
         {
-            byte[] bigBlockIndexes = new byte[ConfigScript.getBigBlocksCount() * 4];
+            int size = ConfigScript.getBigBlocksCount() * 4 * (ConfigScript.isUseSegaGraphics() ? 2 : 1);
+            byte[] bigBlockIndexes = new byte[size];
             var bigBlocksAddr = Globals.getBigTilesAddr(bigTileIndex);
-            for (int i = 0; i < ConfigScript.getBigBlocksCount() * 4; i++)
+            for (int i = 0; i < size; i++)
                 bigBlockIndexes[i] = Globals.romdata[bigBlocksAddr + i];
             return bigBlockIndexes;
         }

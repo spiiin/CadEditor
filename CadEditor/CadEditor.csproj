@@ -179,6 +179,7 @@
     </Compile>
     <Compile Include="Utils.cs" />
     <Compile Include="Video.cs" />
+    <Compile Include="VideoSega.cs" />
     <EmbeddedResource Include="BigBlockEdit.resx">
       <DependentUpon>BigBlockEdit.cs</DependentUpon>
     </EmbeddedResource>
