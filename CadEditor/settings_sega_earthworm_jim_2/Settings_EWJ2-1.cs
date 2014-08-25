@@ -11,7 +11,7 @@ public class Data
   //public bool isBuildScreenFromSmallBlocks() { return true; }
   public int getWordLen()              { return 2;}
   
-  public OffsetRec getPalOffset()       { return new OffsetRec(0, 1, 64    );   }
+  public OffsetRec getPalOffset()       { return new OffsetRec(0x24DE42, 1, 64    );   }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0, 1, 0     );   }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0, 1, 0     );   }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x1E1FC0, 1, 0x8000);  }
@@ -26,7 +26,7 @@ public class Data
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   public GetBigBlocksFunc     getBigBlocksFunc()     { return Utils.getBigBlocksCapcomDefault;}
   public SetBigBlocksFunc     setBigBlocksFunc()     { return null;}
-  public GetPalFunc           getPalFunc()           { return getPallete;}
+  public GetPalFunc           getPalFunc()           { return Utils.getPalleteLinear;}
   public SetPalFunc           setPalFunc()           { return null;}
   public GetObjectsFunc getObjectsFunc() { return null; }
   public SetObjectsFunc setObjectsFunc() { return null; }
@@ -42,24 +42,6 @@ public class Data
             f.Read(d, 0, 0x10000);
             return d;
         }
-    }
-    catch (Exception ex)
-    {
-        MessageBox.Show(ex.Message);
-    }
-    return null;
-  }
-  
-  public byte[] getPallete(int palId)
-  {
-   try
-    {
-      using (FileStream f = File.OpenRead("pal.bin"))
-      {
-        byte[] d = new byte[0x80];
-        f.Read(d, 0, 0x80);
-        return d;
-      }
     }
     catch (Exception ex)
     {

@@ -134,10 +134,19 @@ namespace CadEditor
 
         public static byte[] getPalleteLinear(int palIndex)
         {
-            var palette = new byte[Globals.PAL_LEN];
+            int pal_size = ConfigScript.isUseSegaGraphics() ? Globals.SEGA_PAL_LEN : Globals.PAL_LEN;
+            var palette = new byte[pal_size];
             int addr = ConfigScript.palOffset.beginAddr + palIndex * ConfigScript.palOffset.recSize;
-            for (int i = 0; i < Globals.PAL_LEN; i++)
-                palette[i] = (byte)(Globals.romdata[addr + i] & 0x3F);
+            if (!ConfigScript.isUseSegaGraphics())
+            {
+                for (int i = 0; i < pal_size; i++)
+                    palette[i] = (byte)(Globals.romdata[addr + i] & 0x3F);
+            }
+            else
+            {
+                for (int i = 0; i < pal_size; i++)
+                    palette[i] = (byte)(Globals.romdata[addr + i]);
+            }
             return palette;
         }
 
