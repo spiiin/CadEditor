@@ -103,6 +103,11 @@
             this.cbLevelNo = new System.Windows.Forms.ComboBox();
             this.cbUseStructs = new System.Windows.Forms.CheckBox();
             this.lbStructures = new System.Windows.Forms.ListBox();
+            this.cbPanelNo = new System.Windows.Forms.ComboBox();
+            this.lbPanelNo = new System.Windows.Forms.Label();
+            this.blockPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.blockPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.blockPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -128,10 +133,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.blocksPanel.AutoScroll = true;
             this.blocksPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.blocksPanel.Location = new System.Drawing.Point(3, 3);
+            this.blocksPanel.Location = new System.Drawing.Point(3, 0);
             this.blocksPanel.Margin = new System.Windows.Forms.Padding(0);
             this.blocksPanel.Name = "blocksPanel";
-            this.blocksPanel.Size = new System.Drawing.Size(290, 515);
+            this.blocksPanel.Size = new System.Drawing.Size(290, 491);
             this.blocksPanel.TabIndex = 2;
             // 
             // mapScreen
@@ -851,9 +856,14 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.blockPanel4);
+            this.splitContainer1.Panel1.Controls.Add(this.blockPanel3);
+            this.splitContainer1.Panel1.Controls.Add(this.blockPanel2);
+            this.splitContainer1.Panel1.Controls.Add(this.lbPanelNo);
+            this.splitContainer1.Panel1.Controls.Add(this.cbPanelNo);
             this.splitContainer1.Panel1.Controls.Add(this.pnElements);
-            this.splitContainer1.Panel1.Controls.Add(this.lbStructures);
             this.splitContainer1.Panel1.Controls.Add(this.blocksPanel);
+            this.splitContainer1.Panel1.Controls.Add(this.lbStructures);
             // 
             // splitContainer1.Panel2
             // 
@@ -926,6 +936,71 @@
             this.lbStructures.Visible = false;
             this.lbStructures.SelectedIndexChanged += new System.EventHandler(this.lbStructures_SelectedIndexChanged);
             // 
+            // cbPanelNo
+            // 
+            this.cbPanelNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cbPanelNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPanelNo.FormattingEnabled = true;
+            this.cbPanelNo.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3"});
+            this.cbPanelNo.Location = new System.Drawing.Point(230, 494);
+            this.cbPanelNo.Name = "cbPanelNo";
+            this.cbPanelNo.Size = new System.Drawing.Size(61, 21);
+            this.cbPanelNo.TabIndex = 7;
+            this.cbPanelNo.SelectedIndexChanged += new System.EventHandler(this.cbPanelNo_SelectedIndexChanged);
+            // 
+            // lbPanelNo
+            // 
+            this.lbPanelNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lbPanelNo.AutoSize = true;
+            this.lbPanelNo.Location = new System.Drawing.Point(152, 499);
+            this.lbPanelNo.Name = "lbPanelNo";
+            this.lbPanelNo.Size = new System.Drawing.Size(72, 13);
+            this.lbPanelNo.TabIndex = 60;
+            this.lbPanelNo.Text = "Panel subpart";
+            // 
+            // blockPanel2
+            // 
+            this.blockPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.blockPanel2.AutoScroll = true;
+            this.blockPanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.blockPanel2.Location = new System.Drawing.Point(0, 0);
+            this.blockPanel2.Margin = new System.Windows.Forms.Padding(0);
+            this.blockPanel2.Name = "blockPanel2";
+            this.blockPanel2.Size = new System.Drawing.Size(290, 491);
+            this.blockPanel2.TabIndex = 61;
+            // 
+            // blockPanel3
+            // 
+            this.blockPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.blockPanel3.AutoScroll = true;
+            this.blockPanel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.blockPanel3.Location = new System.Drawing.Point(0, 0);
+            this.blockPanel3.Margin = new System.Windows.Forms.Padding(0);
+            this.blockPanel3.Name = "blockPanel3";
+            this.blockPanel3.Size = new System.Drawing.Size(290, 491);
+            this.blockPanel3.TabIndex = 62;
+            // 
+            // blockPanel4
+            // 
+            this.blockPanel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.blockPanel4.AutoScroll = true;
+            this.blockPanel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.blockPanel4.Location = new System.Drawing.Point(0, 0);
+            this.blockPanel4.Margin = new System.Windows.Forms.Padding(0);
+            this.blockPanel4.Name = "blockPanel4";
+            this.blockPanel4.Size = new System.Drawing.Size(290, 491);
+            this.blockPanel4.TabIndex = 63;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -933,6 +1008,7 @@
             this.ClientSize = new System.Drawing.Size(1073, 548);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
+            this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormMain";
@@ -949,6 +1025,7 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
             this.pnElements.ResumeLayout(false);
@@ -1033,6 +1110,11 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbLevelNo;
         private System.Windows.Forms.ToolStripButton bttConfig;
+        private System.Windows.Forms.Label lbPanelNo;
+        private System.Windows.Forms.ComboBox cbPanelNo;
+        private System.Windows.Forms.FlowLayoutPanel blockPanel4;
+        private System.Windows.Forms.FlowLayoutPanel blockPanel3;
+        private System.Windows.Forms.FlowLayoutPanel blockPanel2;
     }
 }
 

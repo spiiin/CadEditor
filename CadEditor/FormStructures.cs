@@ -44,15 +44,32 @@ namespace CadEditor
 
         void resetControls(bool needToRefillBlockPanel)
         {
+            Utils.setCbItemsCount(cbPanelNo, (ConfigScript.getBigBlocksCount() + 1023) / 1024);
+            cbPanelNo.SelectedIndex = 0;
             lbStructures.Items.Clear();
             for (int i = 0; i < tileStructs.Count; i++)
                 lbStructures.Items.Add(tileStructs[i].Name);
             bigBlocks = formMain.getBigBlockImageList();
             //Utils.setBlocks(bigBlocks, curButtonScale, blockWidth, blockHeight, curViewType, showAxis);
+
+            int subparts = (ConfigScript.getBigBlocksCount() + 1023) / 1024;
+            FlowLayoutPanel[] blocksPanels = { blocksPanel, blockPanel2, blockPanel3, blockPanel4 };
             if (needToRefillBlockPanel)
-                Utils.prepareBlocksPanel(blocksPanel, new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick);
+            {
+                for (int i = 0; i < subparts; i++)
+                {
+                    int count = (i * 1024 > ConfigScript.getBigBlocksCount()) ? (i * 1024) % ConfigScript.getBigBlocksCount() : 1024;
+                    Utils.prepareBlocksPanel(blocksPanel, new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick, i * 1024, count);
+                }
+            }
             else
-                Utils.reloadBlocksPanel(blocksPanel, bigBlocks);
+            {
+                for (int i = 0; i < subparts; i++)
+                {
+                    int count = (i * 1024 > ConfigScript.getBigBlocksCount()) ? (i * 1024) % ConfigScript.getBigBlocksCount() : 1024;
+                    Utils.reloadBlocksPanel(blocksPanel, bigBlocks, i * 1024, count);
+                }
+            }
             resetTileStructControls();
         }
 
@@ -263,6 +280,14 @@ namespace CadEditor
         public void setFormMain(FormMain f)
         {
             formMain = f;
+        }
+
+        private void cbPanelNo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FlowLayoutPanel[] blocksPanels = { blocksPanel, blockPanel2, blockPanel3, blockPanel4 };
+            int index = cbPanelNo.SelectedIndex;
+            for (int i = 0; i < blocksPanels.Length; i++)
+                blocksPanels[i].Visible = i == index;
         }
 
     }

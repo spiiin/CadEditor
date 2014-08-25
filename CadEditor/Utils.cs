@@ -30,11 +30,11 @@ namespace CadEditor
             cb.SelectedIndexChanged += ev;
         }
 
-        public static void prepareBlocksPanel(FlowLayoutPanel blocksPanel, Size buttonSize, ImageList buttonsImages, EventHandler buttonBlockClick)
+        public static void prepareBlocksPanel(FlowLayoutPanel blocksPanel, Size buttonSize, ImageList buttonsImages, EventHandler buttonBlockClick, int startIndex, int count)
         {
             blocksPanel.Controls.Clear();
             blocksPanel.SuspendLayout();
-            for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
+            for (int i = startIndex; i < startIndex+count; i++)
             {
                 var but = new Button();
                 but.Size = buttonSize;
@@ -48,11 +48,11 @@ namespace CadEditor
             blocksPanel.ResumeLayout();
         }
 
-        public static void reloadBlocksPanel(FlowLayoutPanel blocksPanel, ImageList buttonsImages)
+        public static void reloadBlocksPanel(FlowLayoutPanel blocksPanel, ImageList buttonsImages, int startIndex, int count)
         {
-            for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
+            for (int i = startIndex, controlIndex = 0; i < startIndex+count; i++, controlIndex++)
             {
-                var but = (Button)blocksPanel.Controls[i];
+                var but = (Button)blocksPanel.Controls[controlIndex];
                 but.ImageList = buttonsImages;
                 but.ImageIndex = i;
             }

@@ -42,6 +42,11 @@
             this.btLoad = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.lbPanelNo = new System.Windows.Forms.Label();
+            this.cbPanelNo = new System.Windows.Forms.ComboBox();
+            this.blockPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.blockPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.blockPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,7 +60,7 @@
             this.blocksPanel.Location = new System.Drawing.Point(231, 9);
             this.blocksPanel.Margin = new System.Windows.Forms.Padding(0);
             this.blocksPanel.Name = "blocksPanel";
-            this.blocksPanel.Size = new System.Drawing.Size(327, 512);
+            this.blocksPanel.Size = new System.Drawing.Size(327, 483);
             this.blocksPanel.TabIndex = 3;
             // 
             // mapScreen
@@ -162,11 +167,81 @@
             // 
             this.saveFileDialog1.FileName = "structures.bin";
             // 
+            // lbPanelNo
+            // 
+            this.lbPanelNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lbPanelNo.AutoSize = true;
+            this.lbPanelNo.Location = new System.Drawing.Point(418, 507);
+            this.lbPanelNo.Name = "lbPanelNo";
+            this.lbPanelNo.Size = new System.Drawing.Size(72, 13);
+            this.lbPanelNo.TabIndex = 62;
+            this.lbPanelNo.Text = "Panel subpart";
+            // 
+            // cbPanelNo
+            // 
+            this.cbPanelNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cbPanelNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPanelNo.FormattingEnabled = true;
+            this.cbPanelNo.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3"});
+            this.cbPanelNo.Location = new System.Drawing.Point(496, 502);
+            this.cbPanelNo.Name = "cbPanelNo";
+            this.cbPanelNo.Size = new System.Drawing.Size(61, 21);
+            this.cbPanelNo.TabIndex = 61;
+            this.cbPanelNo.SelectedIndexChanged += new System.EventHandler(this.cbPanelNo_SelectedIndexChanged);
+            // 
+            // blockPanel2
+            // 
+            this.blockPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.blockPanel2.AutoScroll = true;
+            this.blockPanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.blockPanel2.Location = new System.Drawing.Point(231, 9);
+            this.blockPanel2.Margin = new System.Windows.Forms.Padding(0);
+            this.blockPanel2.Name = "blockPanel2";
+            this.blockPanel2.Size = new System.Drawing.Size(327, 483);
+            this.blockPanel2.TabIndex = 63;
+            // 
+            // blockPanel3
+            // 
+            this.blockPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.blockPanel3.AutoScroll = true;
+            this.blockPanel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.blockPanel3.Location = new System.Drawing.Point(231, 9);
+            this.blockPanel3.Margin = new System.Windows.Forms.Padding(0);
+            this.blockPanel3.Name = "blockPanel3";
+            this.blockPanel3.Size = new System.Drawing.Size(327, 483);
+            this.blockPanel3.TabIndex = 64;
+            // 
+            // blockPanel4
+            // 
+            this.blockPanel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.blockPanel4.AutoScroll = true;
+            this.blockPanel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.blockPanel4.Location = new System.Drawing.Point(231, 9);
+            this.blockPanel4.Margin = new System.Windows.Forms.Padding(0);
+            this.blockPanel4.Name = "blockPanel4";
+            this.blockPanel4.Size = new System.Drawing.Size(327, 490);
+            this.blockPanel4.TabIndex = 65;
+            // 
             // FormStructures
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1113, 598);
+            this.Controls.Add(this.blockPanel4);
+            this.Controls.Add(this.blockPanel3);
+            this.Controls.Add(this.blockPanel2);
+            this.Controls.Add(this.lbPanelNo);
+            this.Controls.Add(this.cbPanelNo);
             this.Controls.Add(this.btLoad);
             this.Controls.Add(this.btSave);
             this.Controls.Add(this.btRemoveStructure);
@@ -183,6 +258,7 @@
             this.Load += new System.EventHandler(this.FormStructures_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -200,5 +276,10 @@
         private System.Windows.Forms.Button btLoad;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Label lbPanelNo;
+        private System.Windows.Forms.ComboBox cbPanelNo;
+        private System.Windows.Forms.FlowLayoutPanel blockPanel2;
+        private System.Windows.Forms.FlowLayoutPanel blockPanel3;
+        private System.Windows.Forms.FlowLayoutPanel blockPanel4;
     }
 }
