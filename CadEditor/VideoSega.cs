@@ -8,7 +8,7 @@ namespace CadEditor
     //---------------------------------------------------------------------------------------------
     static public class VideoSega
     {
-        public static Image[] makeBigBlocksSega(byte[] mapping, byte[] tiles, byte[] palette, int count, float zoom)
+        public static Image[] makeBigBlocksSega(byte[] mapping, byte[] tiles, byte[] palette, int count, float zoom, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false)
         {
             var result = new Image[count];
             ushort[] m = Mapper.LoadMapping(mapping, true);
@@ -16,6 +16,10 @@ namespace CadEditor
             for (ushort i = 0; i < count; i++)
             {
                 result[i] = GetZoomBlock(m, tiles, cpal, i, zoom*2.0f);
+                if (curViewType == MapViewType.ObjNumbers)
+                  result[i] = addObjNumber(result[i], i);
+                if (showAxis)
+                    result[i] = addAxisRectangle(result[i]);
             }
             return result;
         }
@@ -141,9 +145,11 @@ namespace CadEditor
             Graphics gr = Graphics.FromImage(retn);
             gr.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 
-            gr.DrawImage(tile, new Rectangle(0, 0, retn.Width, retn.Height));
+            if (zoom > 1.0f)
+                gr.DrawImage(tile, new Rectangle(0, 0, retn.Width + 2, retn.Height + 2));
+            else
+                gr.DrawImage(tile, new Rectangle(0, 0, retn.Width, retn.Height));
             gr.Dispose();
-
             return retn;
         }
 
@@ -179,9 +185,50 @@ namespace CadEditor
                     bool VF = Mapper.VF(Word);
 
                     Bitmap tile = GetZoomTile(tiles, Word, palette, palIndex, HF, VF, zoom);
-
                     using (Graphics g = Graphics.FromImage(block)) g.DrawImage(tile, new Rectangle(x * 8, y * 8, 8, 8));
                 }
+
+            Graphics gr = Graphics.FromImage(retn);
+            gr.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+
+            if (zoom > 1.0f)
+                gr.DrawImage(block, new Rectangle(0, 0, retn.Width + 2, retn.Height + 2));
+            else
+                gr.DrawImage(block, new Rectangle(0, 0, retn.Width, retn.Height));
+            gr.Dispose();
+            return retn;
+        }
+
+        public static Image addObjNumber(Image source, int no)
+        {
+            using (Graphics g = Graphics.FromImage(source))
+            {
+                g.FillRectangle(new SolidBrush(Color.FromArgb(192, 255, 255, 255)), new Rectangle(0, 0, source.Width, source.Height));
+                g.DrawString(String.Format("{0:X}", no), new Font("Arial", 16), Brushes.Red, new Point(0, 0));
+            }
+            return source;
+        }
+
+        public static Image addAxisRectangle(Image source)
+        {
+            using (Graphics g = Graphics.FromImage(source))
+                g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), new Rectangle(0, 0, source.Width, source.Height));
+            return source;
+        }
+
+        /*public static Bitmap GetZoomBlock1x1(ushort[] mapping, byte[] tiles, Color[] pallete, int Index, float zoom)
+        {
+            Bitmap block = new Bitmap(8, 8, System.Drawing.Imaging.PixelFormat.Format16bppRgb555);
+            Bitmap retn = new Bitmap((int)(8 * zoom), (int)(8 * zoom), System.Drawing.Imaging.PixelFormat.Format16bppRgb555);
+
+            ushort Word = mapping[Index];
+            byte palIndex = Mapper.PalIdx(Word);
+            bool HF = Mapper.HF(Word);
+            bool VF = Mapper.VF(Word);
+
+            Bitmap tile = GetZoomTile(tiles, Word, pallete, palIndex, HF, VF, zoom);
+
+            using (Graphics g = Graphics.FromImage(block)) g.DrawImage(tile, new Rectangle (8, 8, 8, 8));
 
             Graphics gr = Graphics.FromImage(retn);
             gr.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
@@ -189,7 +236,7 @@ namespace CadEditor
             gr.DrawImage(block, new Rectangle(0, 0, retn.Width, retn.Height));
             gr.Dispose();
             return retn;
-        }
+        }*/
     }
     //---------------------------------------------------------------------------------------------
 

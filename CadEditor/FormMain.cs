@@ -139,7 +139,7 @@ namespace CadEditor
             byte[] videoTiles = ConfigScript.getVideoChunk(curActiveVideoNo);
             byte[] pal = ConfigScript.getPal(curActivePalleteNo);
             int count = ConfigScript.getBigBlocksCount();
-            return VideoSega.makeBigBlocksSega(mapping, videoTiles, pal, count, curScale);
+            return VideoSega.makeBigBlocksSega(mapping, videoTiles, pal, count, curScale, curViewType, showAxis);
         }
 
         private void setBlocks(bool needToRefillBlockPanel)
