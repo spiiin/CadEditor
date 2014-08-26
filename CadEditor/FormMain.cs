@@ -600,19 +600,19 @@ namespace CadEditor
                 if (wordLen == 1)
                 {
                     for (int x = 0; x < screensRec.recSize; x++)
-                        arrayToSave[addr + x * dataStride] = (byte)screensData[i][x];
+                        arrayToSave[addr + x * dataStride] = (byte)ConfigScript.backConvertScreenTile(screensData[i][x]);
                 }
                 else if (wordLen == 2)
                 {
                     if (littleEndian)
                     {
                         for (int x = 0; x < screensRec.recSize; x++)
-                            Utils.writeWordLE(arrayToSave, addr + x * (dataStride * wordLen), screensData[i][x]);
+                            Utils.writeWordLE(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(screensData[i][x]));
                     }
                     else
                     {
                         for (int x = 0; x < screensRec.recSize; x++)
-                            Utils.writeWord(arrayToSave, addr + x * (dataStride * wordLen), screensData[i][x]);
+                            Utils.writeWord(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(screensData[i][x]));
                     }
                 }
             }

@@ -104,6 +104,7 @@ namespace CadEditor
             sortObjectsFunc = callFromScript<SortObjectsFunc>(asm, data, "*.sortObjectsFunc");
             getLayoutFunc = callFromScript<GetLayoutFunc>(asm, data, "*.getLayoutFunc");
             convertScreenTileFunc = callFromScript<ConvertScreenTileFunc>(asm, data, "*.getConvertScreenTileFunc");
+            backConvertScreenTileFunc = callFromScript<ConvertScreenTileFunc>(asm, data, "*.getBackConvertScreenTileFunc");
             getObjectDictionaryFunc = callFromScript<GetObjectDictionaryFunc>(asm, data, "*.getObjectDictionaryFunc");
 
             renderToMainScreenFunc = callFromScript<RenderToMainScreenFunc>(asm, data, "*.getRenderToMainScreenFunc");
@@ -213,6 +214,11 @@ namespace CadEditor
          public static int convertScreenTile(int tile)
          {
              return (convertScreenTileFunc ?? (v=>v))(tile);
+         }
+
+         public static int backConvertScreenTile(int tile)
+         {
+             return (backConvertScreenTileFunc ?? (v => v))(tile);
          }
 
         public static LevelLayerData getLayout(int levelNo)
@@ -410,6 +416,7 @@ namespace CadEditor
         public static GetObjectDictionaryFunc getObjectDictionaryFunc;
         public static RenderToMainScreenFunc renderToMainScreenFunc;
         public static ConvertScreenTileFunc convertScreenTileFunc;
+        public static ConvertScreenTileFunc backConvertScreenTileFunc;
 
         public static bool isBigBlockEditorEnabled;
         public static bool isBlockEditorEnabled;

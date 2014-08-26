@@ -31,6 +31,7 @@ public class Data
   public GetObjectsFunc getObjectsFunc() { return null; }
   public SetObjectsFunc setObjectsFunc() { return null; }
   public ConvertScreenTileFunc getConvertScreenTileFunc() { return (v=>v/8);}
+  public ConvertScreenTileFunc getBackConvertScreenTileFunc() { return (v=>v*8);}
   
   public byte[] getVideoChuck(int videoPageId)
   {
