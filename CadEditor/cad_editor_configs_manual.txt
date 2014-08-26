@@ -23,6 +23,7 @@
   screensOffset = callFromScript(asm, data, "*.getScreensOffsetsForLevels", new OffsetRec[1]); //возможность загрузить несколько типов экранов.
   
   convertScreenTileFunc = callFromScript<ConvertScreenTileFunc>(asm, data, "*.getConvertScreenTileFunc"); //функция конвертации индекса экрана после загрузки.
+  backConvertScreenTileFunc = callFromScript<ConvertScreenTileFunc>(asm, data, "*.getBackConvertScreenTileFunc"); //обратная конвертация перед сохранением
   
 набор функций get*Offset позволяет передать структуру типа OffsetRec, которая описывает начальный адрес массива данных, количество массивов и их размер и количество (количество массивов соответствует количеству уровней в игре, если конфиг описывает только один уровень, то второй параметр будет всегда равен единице).
 
