@@ -18,6 +18,7 @@ namespace CadEditor
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            mapEditor = new MapEditor(mapScreen, activeBlock, pnView, bigBlocks);
             if (OpenFile.FileName == "" || OpenFile.ConfigName == "")
             {
                 if (!openFile())
@@ -299,41 +300,31 @@ namespace CadEditor
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
+            if (!fileLoaded)
+                return;
+            int[] indexes = screens[curActiveScreen];
+            int[] indexes2 = null;
+            var g = e.Graphics;
+            if (ConfigScript.getLayersCount() > 1)
+                indexes2 = screens2[curActiveScreen];
+
             int WIDTH = ConfigScript.getScreenWidth(curActiveLevelForScreen);
             int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
             int TILE_SIZE_X = (int)(blockWidth * curScale);
             int TILE_SIZE_Y = (int)(blockHeight * curScale);
             int SIZE = WIDTH * HEIGHT;
-            if (!fileLoaded)
-                return;
-            int[] indexes = screens[curActiveScreen];
-            int[] indexes2 = null;
-            if (ConfigScript.getLayersCount() > 1)
-                indexes2 = screens2[curActiveScreen];
             var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
-            var g = e.Graphics;
-            for (int i = 0; i < SIZE; i++)
-            {
-                int index = indexes[i];
-                int bigBlockNo = Globals.getBigTileNoFromScreen(indexes, i);
-                Rectangle tileRect;
-                if (ConfigScript.getScreenVertical())
-                  tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X, (i % WIDTH + 1) * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
-                else
-                  tileRect  = new Rectangle((i % WIDTH + 1) * TILE_SIZE_X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
 
-                if ((visibleRect.Contains(tileRect)) || (visibleRect.IntersectsWith(tileRect)))
-                {
-                    if (bigBlockNo < bigBlocks.Images.Count & showLayer1)
-                      g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
-                    if (indexes2 != null && showLayer2)
-                    {
-                        int bigBlockNo2 = Globals.getBigTileNoFromScreen(indexes2, i);
-                        if (bigBlockNo2 < bigBlocks.Images.Count)
-                            g.DrawImage(bigBlocks.Images[bigBlockNo2], tileRect);
-                    }
-                }
-            }
+            mapEditor.setScreenData(indexes, 0);
+            mapEditor.setScreenData(indexes2, 1);
+            mapEditor.ShowLayer1 = showLayer1;
+            mapEditor.ShowLayer2 = showLayer2;
+            mapEditor.ShowNeiScreens = showNeiScreens;
+            mapEditor.CurScale = curScale;
+            mapEditor.CurActiveLevelForScreen = curActiveLevelForScreen;
+            mapEditor.LeftMargin = ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X;
+            mapEditor.Render(e.Graphics);
+
             if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen > 0) && showLayer1)
             {
                 renderNeighbornLine(g, curActiveScreen - 1, (WIDTH - 1), 0);
@@ -343,14 +334,7 @@ namespace CadEditor
                 renderNeighbornLine(g, curActiveScreen + 1, 0 , (WIDTH + 1) * TILE_SIZE_X);
             }
 
-            if (ConfigScript.getScreenVertical())
-              g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(0, TILE_SIZE_Y, TILE_SIZE_X * HEIGHT, TILE_SIZE_Y * WIDTH));
-            else
-              g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(TILE_SIZE_X, 0, TILE_SIZE_X * WIDTH, TILE_SIZE_Y * HEIGHT));
-
-            //Additional rendering  //float to int!
-            ConfigScript.renderToMainScreen(g, (int)curScale);
-
+            //show brush
             if (showBrush && curActiveBlock != -1 && (curDx != OUTSIDE || curDy != OUTSIDE))
             {
                 if (!useStructs)
@@ -411,6 +395,8 @@ namespace CadEditor
             }
             return result;
         }
+
+        MapEditor mapEditor;
 
         //editor globals
         private int curActiveBlock = 0;

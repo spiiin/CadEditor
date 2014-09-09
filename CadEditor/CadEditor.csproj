@@ -151,6 +151,7 @@
       <DependentUpon>FormStructuresName.cs</DependentUpon>
     </Compile>
     <Compile Include="Globals.cs" />
+    <Compile Include="MapEditor.cs" />
     <Compile Include="OpenFile.cs">
       <SubType>Form</SubType>
     </Compile>
