@@ -87,6 +87,50 @@ namespace CadEditor
             }*/
         }
 
+        public Image ScreenToImage()
+        {
+            int EXPORT_SCALE = 2;
+            int WIDTH = ConfigScript.getScreenWidth(CurActiveLevelForScreen);
+            int HEIGHT = ConfigScript.getScreenHeight(CurActiveLevelForScreen);
+            int TILE_SIZE_X = (int)(blockWidth * EXPORT_SCALE);
+            int TILE_SIZE_Y = (int)(blockHeight * EXPORT_SCALE);
+            int SIZE = WIDTH * HEIGHT;
+
+            int[] indexes2 = null;
+            if (ConfigScript.getLayersCount() > 1)
+                indexes2 = screen2;
+
+            Image result;
+            if ((ConfigScript.getScreenVertical()))
+                result = new Bitmap(HEIGHT * TILE_SIZE_Y, WIDTH * TILE_SIZE_X);
+            else
+                result = new Bitmap(WIDTH * TILE_SIZE_X, HEIGHT * TILE_SIZE_Y);
+
+            using (var g = Graphics.FromImage(result))
+            {
+                for (int i = 0; i < SIZE; i++)
+                {
+                    int index = screen[i];
+                    int bigBlockNo = Globals.getBigTileNoFromScreen(screen, i);
+                    Rectangle tileRect;
+                    if (ConfigScript.getScreenVertical())
+                        tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X, (i % WIDTH) * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
+                    else
+                        tileRect = new Rectangle((i % WIDTH) * TILE_SIZE_X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
+
+                    if (bigBlockNo < bigBlocks.Images.Count)
+                        g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
+                    if (indexes2 != null)
+                    {
+                        int bigBlockNo2 = Globals.getBigTileNoFromScreen(indexes2, i);
+                        if (bigBlockNo2 < bigBlocks.Images.Count)
+                            g.DrawImage(bigBlocks.Images[bigBlockNo2], tileRect);
+                    }
+                }
+            }
+            return result;
+        }
+
         public void setScreenData(int[] _screen, int layer)
         {
             if (layer == 0)

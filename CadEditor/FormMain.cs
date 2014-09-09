@@ -351,51 +351,6 @@ namespace CadEditor
             }
         }
 
-        private Image screenToImage(int scrNo)
-        {
-            int EXPORT_SCALE = 2;
-            int WIDTH = ConfigScript.getScreenWidth(curActiveLevelForScreen);
-            int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
-            int TILE_SIZE_X = (int)(blockWidth * EXPORT_SCALE);
-            int TILE_SIZE_Y = (int)(blockHeight * EXPORT_SCALE);
-            int SIZE = WIDTH * HEIGHT;
-
-            int[] indexes = screens[scrNo];
-            int[] indexes2 = null;
-            if (ConfigScript.getLayersCount() > 1)
-                indexes2 = screens2[scrNo];
-
-            Image result;
-            if ( (ConfigScript.getScreenVertical()))
-                result = new Bitmap(HEIGHT * TILE_SIZE_Y, WIDTH * TILE_SIZE_X);
-            else
-                result = new Bitmap(WIDTH * TILE_SIZE_X, HEIGHT * TILE_SIZE_Y);
-
-            using (var g = Graphics.FromImage(result))
-            {
-                for (int i = 0; i < SIZE; i++)
-                {
-                    int index = indexes[i];
-                    int bigBlockNo = Globals.getBigTileNoFromScreen(indexes, i);
-                    Rectangle tileRect;
-                    if (ConfigScript.getScreenVertical())
-                        tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X, (i % WIDTH) * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
-                    else
-                        tileRect = new Rectangle((i % WIDTH) * TILE_SIZE_X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
-
-                    if (bigBlockNo < bigBlocks.Images.Count & showLayer1)
-                        g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
-                    if (indexes2 != null && showLayer2)
-                    {
-                        int bigBlockNo2 = Globals.getBigTileNoFromScreen(indexes2, i);
-                        if (bigBlockNo2 < bigBlocks.Images.Count)
-                            g.DrawImage(bigBlocks.Images[bigBlockNo2], tileRect);
-                    }
-                }
-            }
-            return result;
-        }
-
         MapEditor mapEditor;
 
         //editor globals
@@ -995,14 +950,18 @@ namespace CadEditor
                 }
 
                 int first = SaveScreensCount.First;
-                var probeIm = screenToImage(curActiveScreen);
+                //assume that all parameters set same as in paint func.
+                mapEditor.setScreenData(screens[curActiveScreen], 0);
+                if (ConfigScript.getLayersCount() > 1)
+                    mapEditor.setScreenData(screens2[curActiveScreen], 1);
+                var probeIm = mapEditor.ScreenToImage();
                 int screenCount = SaveScreensCount.Count;
                 var resultImage = new Bitmap(probeIm.Width * screenCount, probeIm.Height);
                 using (var g = Graphics.FromImage(resultImage))
                 {
                     for (int i = 0; i < screenCount; i++)
                     {
-                        var im = screenToImage(first + i);
+                        var im = mapEditor.ScreenToImage();
                         g.DrawImage(im, new Point(i * im.Width, 0));
                     }
                 }
