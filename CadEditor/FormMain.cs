@@ -314,16 +314,7 @@ namespace CadEditor
             int TILE_SIZE_Y = (int)(blockHeight * curScale);
             int SIZE = WIDTH * HEIGHT;
             var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
-
-            mapEditor.setScreenData(indexes, 0);
-            mapEditor.setScreenData(indexes2, 1);
-            mapEditor.ShowLayer1 = showLayer1;
-            mapEditor.ShowLayer2 = showLayer2;
-            mapEditor.ShowNeiScreens = showNeiScreens;
-            mapEditor.CurScale = curScale;
-            mapEditor.CurActiveLevelForScreen = curActiveLevelForScreen;
-            mapEditor.LeftMargin = ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X;
-            mapEditor.Render(e.Graphics);
+            mapEditor.Render(e.Graphics, indexes, indexes2, curActiveLevelForScreen, curScale, showLayer1, showLayer2, ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X);
 
             if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen > 0) && showLayer1)
             {
@@ -951,17 +942,22 @@ namespace CadEditor
 
                 int first = SaveScreensCount.First;
                 //assume that all parameters set same as in paint func.
-                mapEditor.setScreenData(screens[curActiveScreen], 0);
+                int[] indexes = screens[curActiveScreen];
+                int[] indexes2 = null;
                 if (ConfigScript.getLayersCount() > 1)
-                    mapEditor.setScreenData(screens2[curActiveScreen], 1);
-                var probeIm = mapEditor.ScreenToImage();
+                    indexes2 = screens2[curActiveScreen];
+                int WIDTH = ConfigScript.getScreenWidth(curActiveLevelForScreen);
+                int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
+                int TILE_SIZE_X = (int)(blockWidth * curScale);
+                int TILE_SIZE_Y = (int)(blockHeight * curScale);
+                var probeIm = mapEditor.ScreenToImage(indexes, indexes2, curActiveLevelForScreen, curScale, showLayer1, showLayer2, ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X);
                 int screenCount = SaveScreensCount.Count;
                 var resultImage = new Bitmap(probeIm.Width * screenCount, probeIm.Height);
                 using (var g = Graphics.FromImage(resultImage))
                 {
                     for (int i = 0; i < screenCount; i++)
                     {
-                        var im = mapEditor.ScreenToImage();
+                        var im = mapEditor.ScreenToImage(indexes, indexes2, curActiveLevelForScreen, curScale, showLayer1, showLayer2, ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X);
                         g.DrawImage(im, new Point(i * im.Width, 0));
                     }
                 }

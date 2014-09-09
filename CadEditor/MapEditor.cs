@@ -19,7 +19,7 @@ namespace CadEditor
             mapScreen.Invalidate();
         }
 
-        public void Render(Graphics g)
+        public void Render(Graphics g, int[] screen, int[] screen2, int CurActiveLevelForScreen, float CurScale, bool ShowLayer1, bool ShowLayer2, int LeftMargin)
         {
             int WIDTH = ConfigScript.getScreenWidth(CurActiveLevelForScreen);
             int HEIGHT = ConfigScript.getScreenHeight(CurActiveLevelForScreen);
@@ -87,7 +87,8 @@ namespace CadEditor
             }*/
         }
 
-        public Image ScreenToImage()
+        //need to be fixed to work as RENDER, delete all copypaste
+        public Image ScreenToImage(int[] screen, int[] screen2, int CurActiveLevelForScreen, float CurScale, bool ShowLayer1, bool ShowLayer2, int LeftMargin)
         {
             int EXPORT_SCALE = 2;
             int WIDTH = ConfigScript.getScreenWidth(CurActiveLevelForScreen);
@@ -143,7 +144,7 @@ namespace CadEditor
             }
         }
 
-        void resetMapScreenSize()
+        void resetMapScreenSize(int CurActiveLevelForScreen, float CurScale)
         {
             if (ConfigScript.getScreenVertical())
                 mapScreen.Size = new Size((int)(ConfigScript.getScreenHeight(CurActiveLevelForScreen) * blockWidth * CurScale), (int)((ConfigScript.getScreenWidth(CurActiveLevelForScreen) + 2) * blockHeight * CurScale));
@@ -156,17 +157,8 @@ namespace CadEditor
         private Panel pnView;
         private ImageList bigBlocks;
 
-        public int CurActiveLevelForScreen { get; set; }
-        public float CurScale { get; set; }
-
-        public int LeftMargin { get; set; }
-
         private int blockWidth = 32;
         private int blockHeight = 32;
-
-        public bool ShowLayer1 { get; set; }
-        public bool ShowLayer2 { get; set; }
-        public bool ShowNeiScreens { get; set; }
 
         int[] screen;
         int[] screen2;
