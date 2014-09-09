@@ -19,15 +19,13 @@ namespace CadEditor
             mapScreen.Invalidate();
         }
 
-        public void Render(Graphics g, int[] screen, int[] screen2, int CurActiveLevelForScreen, float CurScale, bool ShowLayer1, bool ShowLayer2, int LeftMargin)
+        public void Render(Graphics g, int[] screen, int[] screen2, int CurActiveLevelForScreen, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin, bool useClip = true)
         {
             int WIDTH = ConfigScript.getScreenWidth(CurActiveLevelForScreen);
             int HEIGHT = ConfigScript.getScreenHeight(CurActiveLevelForScreen);
             int TILE_SIZE_X = (int)(blockWidth * CurScale);
             int TILE_SIZE_Y = (int)(blockHeight * CurScale);
             int SIZE = WIDTH * HEIGHT;
-            //if (!fileLoaded)
-            //    return;
             int[] indexes2 = null;
             if (ConfigScript.getLayersCount() > 1)
                 indexes2 = screen2;
@@ -42,7 +40,7 @@ namespace CadEditor
                 else
                     tileRect = new Rectangle((i % WIDTH) * TILE_SIZE_X + LeftMargin, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
 
-                if ((visibleRect.Contains(tileRect)) || (visibleRect.IntersectsWith(tileRect)))
+                if (!useClip || visibleRect.Contains(tileRect) || visibleRect.IntersectsWith(tileRect))
                 {
                     if (bigBlockNo < bigBlocks.Images.Count & ShowLayer1)
                         g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
@@ -63,10 +61,13 @@ namespace CadEditor
                 renderNeighbornLine(g, curActiveScreen + 1, 0, (WIDTH + 1) * TILE_SIZE_X);
             }*/
 
-            if (ConfigScript.getScreenVertical())
-                g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(0, TILE_SIZE_Y, TILE_SIZE_X * HEIGHT, TILE_SIZE_Y * WIDTH));
-            else
-                g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(TILE_SIZE_X, 0, TILE_SIZE_X * WIDTH, TILE_SIZE_Y * HEIGHT));
+            if (ShowBorder)
+            {
+                if (ConfigScript.getScreenVertical())
+                    g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(0, TILE_SIZE_Y, TILE_SIZE_X * HEIGHT, TILE_SIZE_Y * WIDTH));
+                else
+                    g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(TILE_SIZE_X, 0, TILE_SIZE_X * WIDTH, TILE_SIZE_Y * HEIGHT));
+            }
 
             //Additional rendering  //float to int!
             ConfigScript.renderToMainScreen(g, (int)CurScale);
@@ -88,13 +89,12 @@ namespace CadEditor
         }
 
         //need to be fixed to work as RENDER, delete all copypaste
-        public Image ScreenToImage(int[] screen, int[] screen2, int CurActiveLevelForScreen, float CurScale, bool ShowLayer1, bool ShowLayer2, int LeftMargin)
+        public Image ScreenToImage(int[] screen, int[] screen2, int CurActiveLevelForScreen, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin)
         {
-            int EXPORT_SCALE = 2;
             int WIDTH = ConfigScript.getScreenWidth(CurActiveLevelForScreen);
             int HEIGHT = ConfigScript.getScreenHeight(CurActiveLevelForScreen);
-            int TILE_SIZE_X = (int)(blockWidth * EXPORT_SCALE);
-            int TILE_SIZE_Y = (int)(blockHeight * EXPORT_SCALE);
+            int TILE_SIZE_X = (int)(blockWidth * CurScale);
+            int TILE_SIZE_Y = (int)(blockHeight * CurScale);
             int SIZE = WIDTH * HEIGHT;
 
             int[] indexes2 = null;
@@ -109,39 +109,9 @@ namespace CadEditor
 
             using (var g = Graphics.FromImage(result))
             {
-                for (int i = 0; i < SIZE; i++)
-                {
-                    int index = screen[i];
-                    int bigBlockNo = Globals.getBigTileNoFromScreen(screen, i);
-                    Rectangle tileRect;
-                    if (ConfigScript.getScreenVertical())
-                        tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X, (i % WIDTH) * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
-                    else
-                        tileRect = new Rectangle((i % WIDTH) * TILE_SIZE_X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
-
-                    if (bigBlockNo < bigBlocks.Images.Count)
-                        g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
-                    if (indexes2 != null)
-                    {
-                        int bigBlockNo2 = Globals.getBigTileNoFromScreen(indexes2, i);
-                        if (bigBlockNo2 < bigBlocks.Images.Count)
-                            g.DrawImage(bigBlocks.Images[bigBlockNo2], tileRect);
-                    }
-                }
+                Render(g, screen, screen2, CurActiveLevelForScreen, CurScale, ShowLayer1, ShowLayer2, ShowBorder, LeftMargin, false);
             }
             return result;
-        }
-
-        public void setScreenData(int[] _screen, int layer)
-        {
-            if (layer == 0)
-            {
-                screen = _screen;
-            }
-            else
-            {
-                screen2 = _screen;
-            }
         }
 
         void resetMapScreenSize(int CurActiveLevelForScreen, float CurScale)
