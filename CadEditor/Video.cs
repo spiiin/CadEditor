@@ -295,7 +295,6 @@ namespace CadEditor
         {
             if (scrNo < 0)
                 return emptyScreen((int)(ConfigScript.getScreenWidth(levelNo) * 32 * scale), (int)(ConfigScript.getScreenHeight(levelNo) * 32 * scale));
-            int SCREEN_SIZE = ConfigScript.getScreenWidth(levelNo) * ConfigScript.getScreenHeight(levelNo);
             var bigBlocks = makeBigBlocks(videoNo, levelNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, scale, 32, 32, scale, MapViewType.Tiles, true);
             var il = new ImageList();
             if (bigBlocks.Length > 0)
