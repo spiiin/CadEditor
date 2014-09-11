@@ -18,7 +18,6 @@ namespace CadEditor
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            mapEditor = new MapEditor(mapScreen, activeBlock, pnView, bigBlocks);
             if (OpenFile.FileName == "" || OpenFile.ConfigName == "")
             {
                 if (!openFile())
@@ -314,7 +313,7 @@ namespace CadEditor
             int TILE_SIZE_Y = (int)(blockHeight * curScale);
             int SIZE = WIDTH * HEIGHT;
             var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
-            mapEditor.Render(e.Graphics, indexes, indexes2, curActiveLevelForScreen, curScale, showLayer1, showLayer2, true, ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X);
+            MapEditor.Render(e.Graphics, bigBlocks, visibleRect, indexes, indexes2, curActiveLevelForScreen, curScale, showLayer1, showLayer2, true, ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X);
 
             if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen > 0) && showLayer1)
             {
@@ -341,8 +340,6 @@ namespace CadEditor
                 }
             }
         }
-
-        MapEditor mapEditor;
 
         //editor globals
         private int curActiveBlock = 0;
@@ -950,14 +947,14 @@ namespace CadEditor
                 int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
                 int TILE_SIZE_X = (int)(blockWidth * curScale);
                 int TILE_SIZE_Y = (int)(blockHeight * curScale);
-                var probeIm = mapEditor.ScreenToImage(indexes, indexes2, curActiveLevelForScreen, curScale, showLayer1, showLayer2, false, 0);
+                var probeIm = MapEditor.ScreenToImage(bigBlocks, indexes, indexes2, curActiveLevelForScreen, curScale, showLayer1, showLayer2, false, 0);
                 int screenCount = SaveScreensCount.Count;
                 var resultImage = new Bitmap(probeIm.Width * screenCount, probeIm.Height);
                 using (var g = Graphics.FromImage(resultImage))
                 {
                     for (int i = 0; i < screenCount; i++)
                     {
-                        var im = mapEditor.ScreenToImage(indexes, indexes2, curActiveLevelForScreen, curScale, showLayer1, showLayer2, false, 0);
+                        var im = MapEditor.ScreenToImage(bigBlocks, indexes, indexes2, curActiveLevelForScreen, curScale, showLayer1, showLayer2, false, 0);
                         g.DrawImage(im, new Point(i * im.Width, 0));
                     }
                 }

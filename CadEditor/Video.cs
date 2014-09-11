@@ -297,20 +297,15 @@ namespace CadEditor
                 return emptyScreen((int)(ConfigScript.getScreenWidth(levelNo) * 32 * scale), (int)(ConfigScript.getScreenHeight(levelNo) * 32 * scale));
             int SCREEN_SIZE = ConfigScript.getScreenWidth(levelNo) * ConfigScript.getScreenHeight(levelNo);
             var bigBlocks = makeBigBlocks(videoNo, levelNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, scale, 32, 32, scale, MapViewType.Tiles, true);
-
-            var bitmap = new Bitmap((int)(ConfigScript.getScreenWidth(levelNo) * 32 * scale), (int)(ConfigScript.getScreenHeight(levelNo) * 32 * scale)); //getScreenVertical, scales
-            int[] indexes = Globals.getScreen(ConfigScript.screensOffset[levelNo], scrNo);
-            int width = ConfigScript.getScreenWidth(levelNo);
-            int height = ConfigScript.getScreenHeight(levelNo);
-            using (var g = Graphics.FromImage(bitmap))
+            var il = new ImageList();
+            if (bigBlocks.Length > 0)
             {
-                for (int tileNo = 0; tileNo < SCREEN_SIZE; tileNo++)
-                {
-                    int index = Globals.getBigTileNoFromScreen(indexes, tileNo);
-                    g.DrawImage(bigBlocks[index], new Rectangle((int)(tileNo % width * 32*scale), (int)(tileNo / width * 32*scale), (int)(32*scale), (int)(32*scale)));
-                }
+                il.ImageSize = bigBlocks[0].Size;
+                il.Images.AddRange(bigBlocks);
             }
-            return bitmap;
+            int[] indexes = Globals.getScreen(ConfigScript.screensOffset[levelNo], scrNo);
+            
+            return new Bitmap(MapEditor.ScreenToImage(il, indexes, null, 0, scale, true, false, false, 0));
         }
 
 #region Render Functions

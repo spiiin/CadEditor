@@ -6,27 +6,27 @@ namespace CadEditor
 {
     class MapEditor
     {
-        public MapEditor(PictureBox _mapScreen, PictureBox _activeBlock, Panel _pnView, ImageList _bigBlocks)
+        /*public MapEditor(PictureBox _mapScreen, PictureBox _activeBlock, Panel _pnView, ImageList _bigBlocks)
         {
             mapScreen = _mapScreen;
             activeBlock = _activeBlock;
             pnView = _pnView;
             bigBlocks = _bigBlocks;
-        }
+        }*/
 
-        public void Update()
+        /*public void Update()
         {
             mapScreen.Invalidate();
-        }
+        }*/
 
-        public void Render(Graphics g, int[] screen, int[] screen2, int CurActiveLevelForScreen, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin, bool useClip = true)
+        public static void Render(Graphics g, ImageList bigBlocks, Rectangle? visibleRect, int[] screen, int[] screen2, int CurActiveLevelForScreen, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin)
         {
             int WIDTH = ConfigScript.getScreenWidth(CurActiveLevelForScreen);
             int HEIGHT = ConfigScript.getScreenHeight(CurActiveLevelForScreen);
             int TILE_SIZE_X = (int)(blockWidth * CurScale);
             int TILE_SIZE_Y = (int)(blockHeight * CurScale);
             int SIZE = WIDTH * HEIGHT;
-            var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
+            //var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
             for (int i = 0; i < SIZE; i++)
             {
                 int index = screen[i];
@@ -37,7 +37,7 @@ namespace CadEditor
                 else
                     tileRect = new Rectangle((i % WIDTH) * TILE_SIZE_X + LeftMargin, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
 
-                if (!useClip || visibleRect.Contains(tileRect) || visibleRect.IntersectsWith(tileRect))
+                if (visibleRect == null || visibleRect.Value.Contains(tileRect) || visibleRect.Value.IntersectsWith(tileRect))
                 {
                     if (bigBlockNo < bigBlocks.Images.Count & ShowLayer1)
                         g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
@@ -63,7 +63,7 @@ namespace CadEditor
         }
 
         //need to be fixed to work as RENDER, delete all copypaste
-        public Image ScreenToImage(int[] screen, int[] screen2, int CurActiveLevelForScreen, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin)
+        public static Image ScreenToImage(ImageList bigBlocks, int[] screen, int[] screen2, int CurActiveLevelForScreen, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin)
         {
             int WIDTH = ConfigScript.getScreenWidth(CurActiveLevelForScreen);
             int HEIGHT = ConfigScript.getScreenHeight(CurActiveLevelForScreen);
@@ -83,28 +83,25 @@ namespace CadEditor
 
             using (var g = Graphics.FromImage(result))
             {
-                Render(g, screen, screen2, CurActiveLevelForScreen, CurScale, ShowLayer1, ShowLayer2, ShowBorder, LeftMargin, false);
+                Render(g, bigBlocks, null, screen, screen2, CurActiveLevelForScreen, CurScale, ShowLayer1, ShowLayer2, ShowBorder, LeftMargin);
             }
             return result;
         }
 
-        void resetMapScreenSize(int CurActiveLevelForScreen, float CurScale)
+        /*void resetMapScreenSize(PictureBox mapScreen, int CurActiveLevelForScreen, float CurScale)
         {
             if (ConfigScript.getScreenVertical())
                 mapScreen.Size = new Size((int)(ConfigScript.getScreenHeight(CurActiveLevelForScreen) * blockWidth * CurScale), (int)((ConfigScript.getScreenWidth(CurActiveLevelForScreen) + 2) * blockHeight * CurScale));
             else
                 mapScreen.Size = new Size((int)((ConfigScript.getScreenWidth(CurActiveLevelForScreen) + 2) * blockWidth * CurScale), (int)(ConfigScript.getScreenHeight(CurActiveLevelForScreen) * blockHeight * CurScale));
-        }
+        }*/
 
-        private PictureBox mapScreen;
-        private PictureBox activeBlock;
-        private Panel pnView;
-        private ImageList bigBlocks;
+        /*private static PictureBox mapScreen;
+        private static PictureBox activeBlock;
+        private static Panel pnView;
+        private static ImageList bigBlocks;*/
 
-        private int blockWidth = 32;
-        private int blockHeight = 32;
-
-        int[] screen;
-        int[] screen2;
+        private static int blockWidth = 32;
+        private static int blockHeight = 32;
     }
 }

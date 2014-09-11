@@ -17,8 +17,6 @@ namespace CadEditor
             InitializeComponent();
         }
 
-        private MapEditor mapEditor;
-
         private int curActiveLevel = 0;
         private int curActiveBlock = 0;
         private int curActiveScreen = 0;
@@ -192,7 +190,6 @@ namespace CadEditor
 
         private void EnemyEditor_Load(object sender, EventArgs e)
         {
-            mapEditor = new MapEditor(mapScreen, activeBlock, pnView, bigBlocks);
             if (ConfigScript.usePicturesInstedBlocks)
             {
                 screens = Utils.setScreens(getLevelRecForGameType().levelNo);
@@ -478,14 +475,14 @@ namespace CadEditor
             {
                 int[] indexes = screens[curLevelLayerData.layer[curActiveScreen]];
                 int scrLevelNo = getLevelRecForGameType().levelNo;
-                mapEditor.Render(g, indexes, null, scrLevelNo, curScale, true, false, false, 0, true);
+                var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
+                MapEditor.Render(g, bigBlocks, visibleRect, indexes, null, scrLevelNo, curScale, true, false, false, 0);
+                ConfigScript.renderToMainScreen(g, (int)curScale);
             }
             else
             {
                 g.FillRectangle(Brushes.Black, new Rectangle(0, 0, 512, 512));
             }
-            //Additional rendering
-            ConfigScript.renderToMainScreen(g, (int)curScale);
         }
 
         private void mapScreen_Paint(object sender, PaintEventArgs e)
