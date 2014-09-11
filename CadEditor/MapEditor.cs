@@ -26,9 +26,6 @@ namespace CadEditor
             int TILE_SIZE_X = (int)(blockWidth * CurScale);
             int TILE_SIZE_Y = (int)(blockHeight * CurScale);
             int SIZE = WIDTH * HEIGHT;
-            int[] indexes2 = null;
-            if (ConfigScript.getLayersCount() > 1)
-                indexes2 = screen2;
             var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
             for (int i = 0; i < SIZE; i++)
             {
@@ -44,22 +41,14 @@ namespace CadEditor
                 {
                     if (bigBlockNo < bigBlocks.Images.Count & ShowLayer1)
                         g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
-                    if (indexes2 != null && ShowLayer2)
+                    if (screen2 != null && ShowLayer2)
                     {
-                        int bigBlockNo2 = Globals.getBigTileNoFromScreen(indexes2, i);
+                        int bigBlockNo2 = Globals.getBigTileNoFromScreen(screen2, i);
                         if (bigBlockNo2 < bigBlocks.Images.Count)
                             g.DrawImage(bigBlocks.Images[bigBlockNo2], tileRect);
                     }
                 }
             }
-            /*if (!ConfigScript.getScreenVertical() && ShowNeiScreens && (curActiveScreen > 0) && ShowLayer1)
-            {
-                renderNeighbornLine(g, curActiveScreen - 1, (WIDTH - 1), 0);
-            }
-            if (!ConfigScript.getScreenVertical() && ShowNeiScreens && (curActiveScreen < ConfigScript.screensOffset[CurActiveLevelForScreen].recCount - 1) && ShowLayer1)
-            {
-                renderNeighbornLine(g, curActiveScreen + 1, 0, (WIDTH + 1) * TILE_SIZE_X);
-            }*/
 
             if (ShowBorder)
             {
@@ -71,21 +60,6 @@ namespace CadEditor
 
             //Additional rendering  //float to int!
             ConfigScript.renderToMainScreen(g, (int)CurScale);
-
-            /*if (showBrush && curActiveBlock != -1 && (curDx != OUTSIDE || curDy != OUTSIDE))
-            {
-                if (!useStructs)
-                {
-                    if (!ConfigScript.getScreenVertical())
-                        g.DrawImage(bigBlocks.Images[curActiveBlock], (curDx + 1) * TILE_SIZE_X, curDy * TILE_SIZE_Y);
-                    else
-                        g.DrawImage(bigBlocks.Images[curActiveBlock], curDy * TILE_SIZE_X, (curDx + 1) * TILE_SIZE_Y);
-                }
-                else
-                {
-                    drawActiveTileStruct(g, visibleRect);
-                }
-            }*/
         }
 
         //need to be fixed to work as RENDER, delete all copypaste

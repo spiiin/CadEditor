@@ -17,6 +17,8 @@ namespace CadEditor
             InitializeComponent();
         }
 
+        private MapEditor mapEditor;
+
         private int curActiveLevel = 0;
         private int curActiveBlock = 0;
         private int curActiveScreen = 0;
@@ -190,6 +192,7 @@ namespace CadEditor
 
         private void EnemyEditor_Load(object sender, EventArgs e)
         {
+            mapEditor = new MapEditor(mapScreen, activeBlock, pnView, bigBlocks);
             if (ConfigScript.usePicturesInstedBlocks)
             {
                 screens = Utils.setScreens(getLevelRecForGameType().levelNo);
@@ -471,30 +474,11 @@ namespace CadEditor
 
         private void paintBack(Graphics g)
         {
-            int scrLevelNo = getLevelRecForGameType().levelNo;
-            int WIDTH = ConfigScript.getScreenWidth(scrLevelNo);
-            int HEIGHT = ConfigScript.getScreenHeight(scrLevelNo);
-            int blockWidth = ConfigScript.getBlocksPicturesWidth();
-            int TILE_SIZE_X = (int)(blockWidth * curScale);
-            int TILE_SIZE_Y = (int)(32 * curScale);
-            int SIZE = WIDTH * HEIGHT;
             if (curLevelLayerData.layer[curActiveScreen] < screens.Length)
             {
                 int[] indexes = screens[curLevelLayerData.layer[curActiveScreen]];
-                var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
-                for (int i = 0; i < SIZE; i++)
-                {
-                    int index = indexes[i];
-                    int bigBlockNo = Globals.getBigTileNoFromScreen(indexes, i);
-                    Rectangle tileRect;
-                    if (ConfigScript.getScreenVertical())
-                        tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X, (i % WIDTH) * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
-                    else
-                        tileRect = new Rectangle((i % WIDTH) * TILE_SIZE_X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
-
-                    if ((visibleRect.Contains(tileRect)) || (visibleRect.IntersectsWith(tileRect)))
-                        g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
-                }
+                int scrLevelNo = getLevelRecForGameType().levelNo;
+                mapEditor.Render(g, indexes, null, scrLevelNo, curScale, true, false, false, 0, true);
             }
             else
             {
