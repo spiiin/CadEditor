@@ -111,6 +111,7 @@ namespace CadEditor
             Utils.setCbIndexWithoutUpdateLevel(cbPal, cbPal_SelectedIndexChanged, Mapper.PalIdx(word));
             Utils.setCbCheckedWithoutUpdateLevel(cbHFlip, cbHFlip_CheckedChanged, Mapper.HF(word));
             Utils.setCbCheckedWithoutUpdateLevel(cbVFlip, cbVFlip_CheckedChanged, Mapper.VF(word));
+            Utils.setCbCheckedWithoutUpdateLevel(cbPrior, cbPrior_CheckedChanged, Mapper.P(word));
         }
 
         private void mapScreen_Paint(object sender, PaintEventArgs e)
@@ -214,6 +215,14 @@ namespace CadEditor
             int tileIdx = getCurTileIdx();
             int val = cbVFlip.Checked ? 1 : 0;
             tiles[tileIdx] = Mapper.ApplyVF(tiles[tileIdx], val);
+            mapScreen.Invalidate();
+        }
+
+        private void cbPrior_CheckedChanged(object sender, EventArgs e)
+        {
+            int tileIdx = getCurTileIdx();
+            int val = cbVFlip.Checked ? 1 : 0;
+            tiles[tileIdx] = Mapper.ApplyP(tiles[tileIdx], val);
             mapScreen.Invalidate();
         }
 

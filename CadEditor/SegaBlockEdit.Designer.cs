@@ -53,6 +53,7 @@
             this.tbbSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ilSegaTiles = new System.Windows.Forms.ImageList(this.components);
+            this.cbPrior = new System.Windows.Forms.CheckBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -194,6 +195,7 @@
             // 
             // pnMapping
             // 
+            this.pnMapping.Controls.Add(this.cbPrior);
             this.pnMapping.Controls.Add(this.cbVFlip);
             this.pnMapping.Controls.Add(this.cbHFlip);
             this.pnMapping.Controls.Add(this.cbPal);
@@ -202,7 +204,7 @@
             this.pnMapping.Controls.Add(this.label3);
             this.pnMapping.Location = new System.Drawing.Point(3, 140);
             this.pnMapping.Name = "pnMapping";
-            this.pnMapping.Size = new System.Drawing.Size(128, 75);
+            this.pnMapping.Size = new System.Drawing.Size(128, 90);
             this.pnMapping.TabIndex = 6;
             // 
             // cbVFlip
@@ -309,6 +311,18 @@
             this.ilSegaTiles.ImageSize = new System.Drawing.Size(32, 32);
             this.ilSegaTiles.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // cbPrior
+            // 
+            this.cbPrior.AutoSize = true;
+            this.cbPrior.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbPrior.Location = new System.Drawing.Point(57, 70);
+            this.cbPrior.Name = "cbPrior";
+            this.cbPrior.Size = new System.Drawing.Size(57, 17);
+            this.cbPrior.TabIndex = 9;
+            this.cbPrior.Text = "Priority";
+            this.cbPrior.UseVisualStyleBackColor = true;
+            this.cbPrior.CheckedChanged += new System.EventHandler(this.cbPrior_CheckedChanged);
+            // 
             // SegaBlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -365,6 +379,7 @@
         private System.Windows.Forms.ComboBox cbTile;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox cbPrior;
 
     }
 }

@@ -263,6 +263,11 @@ namespace CadEditor
             return ((Word & 0x1000) >> 12) == 1;
         }
 
+        public static bool P(ushort Word)
+        {
+            return ((Word & 0x8000) >> 15) == 1;
+        }
+
         public static ushort ApplyTileIdx(ushort Word, ushort tileIdx)
         {
             return (ushort)((Word & ~0x07FF) | tileIdx);
@@ -281,6 +286,11 @@ namespace CadEditor
         public static ushort ApplyVF(ushort Word, int vf)
         {
             return (ushort)((Word & ~0x1000) | (vf << 12));
+        }
+
+        public static ushort ApplyP(ushort Word, int p)
+        {
+            return (ushort)((Word & ~0x8000) | (p << 15));
         }
 
         public static ushort TilePos(ushort Word)
