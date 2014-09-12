@@ -42,6 +42,7 @@
             this.cbBlockNo = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.pnMapping = new System.Windows.Forms.Panel();
+            this.cbPrior = new System.Windows.Forms.CheckBox();
             this.cbVFlip = new System.Windows.Forms.CheckBox();
             this.cbHFlip = new System.Windows.Forms.CheckBox();
             this.cbPal = new System.Windows.Forms.ComboBox();
@@ -53,7 +54,6 @@
             this.tbbSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ilSegaTiles = new System.Windows.Forms.ImageList(this.components);
-            this.cbPrior = new System.Windows.Forms.CheckBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -207,6 +207,18 @@
             this.pnMapping.Size = new System.Drawing.Size(128, 90);
             this.pnMapping.TabIndex = 6;
             // 
+            // cbPrior
+            // 
+            this.cbPrior.AutoSize = true;
+            this.cbPrior.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbPrior.Location = new System.Drawing.Point(57, 70);
+            this.cbPrior.Name = "cbPrior";
+            this.cbPrior.Size = new System.Drawing.Size(57, 17);
+            this.cbPrior.TabIndex = 9;
+            this.cbPrior.Text = "Priority";
+            this.cbPrior.UseVisualStyleBackColor = true;
+            this.cbPrior.CheckedChanged += new System.EventHandler(this.cbPrior_CheckedChanged);
+            // 
             // cbVFlip
             // 
             this.cbVFlip.AutoSize = true;
@@ -311,18 +323,6 @@
             this.ilSegaTiles.ImageSize = new System.Drawing.Size(32, 32);
             this.ilSegaTiles.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // cbPrior
-            // 
-            this.cbPrior.AutoSize = true;
-            this.cbPrior.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbPrior.Location = new System.Drawing.Point(57, 70);
-            this.cbPrior.Name = "cbPrior";
-            this.cbPrior.Size = new System.Drawing.Size(57, 17);
-            this.cbPrior.TabIndex = 9;
-            this.cbPrior.Text = "Priority";
-            this.cbPrior.UseVisualStyleBackColor = true;
-            this.cbPrior.CheckedChanged += new System.EventHandler(this.cbPrior_CheckedChanged);
-            // 
             // SegaBlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -334,6 +334,7 @@
             this.MaximizeBox = false;
             this.Name = "SegaBlockEdit";
             this.Text = "Block Editor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SegaBlockEdit_FormClosing);
             this.Load += new System.EventHandler(this.SegaBlockEdit_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);

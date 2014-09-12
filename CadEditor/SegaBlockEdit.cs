@@ -21,6 +21,7 @@ namespace CadEditor
         int curActivePalNo = 0;
         float curScale = 2.0f;
         int curSelectedTilePart = 0;
+        private bool dirty;
 
         ushort[] tiles;
         byte[] videoChunk;
@@ -30,6 +31,7 @@ namespace CadEditor
 
         private void SegaBlockEdit_Load(object sender, EventArgs e)
         {
+            dirty = false;
             reloadTiles();
             Utils.prepareBlocksPanel(pnBlocks, ilSegaTiles.ImageSize, ilSegaTiles, buttonObjClick, 0, SEGA_TILES_COUNT);
             Utils.setCbItemsCount(cbPalSubpart, 4);
@@ -48,12 +50,13 @@ namespace CadEditor
             tiles = Mapper.LoadMapping(mapping);
         }
 
-        void saveTiles()
+        bool saveTiles()
         {
             byte[] tileBytes = new byte[tiles.Length*2];
             Mapper.ApplyMapping(ref tileBytes, tiles);
             ConfigScript.setBigBlocks(0, tileBytes);
-            Globals.flushToFile();
+            dirty = !Globals.flushToFile();
+            return !dirty;
         }
 
         void resetControls()
@@ -162,6 +165,7 @@ namespace CadEditor
                 w = Mapper.ApplyPalIdx(w, (byte)curActivePalNo);
                 w = Mapper.ApplyTileIdx(w, (ushort)curActiveTile);
                 tiles[changeIndex] = w;
+                dirty = true;
             }
             else
             {
@@ -190,6 +194,7 @@ namespace CadEditor
             ushort val = (ushort)cbTile.SelectedIndex;
             tiles[tileIdx] = Mapper.ApplyTileIdx(tiles[tileIdx], val);
             mapScreen.Invalidate();
+            dirty = true;
         }
 
         private void cbPal_SelectedIndexChanged(object sender, EventArgs e)
@@ -200,6 +205,7 @@ namespace CadEditor
             byte val = (byte)cbPal.SelectedIndex;
             tiles[tileIdx] = Mapper.ApplyPalIdx(tiles[tileIdx], val);
             mapScreen.Invalidate();
+            dirty = true;
         }
 
         private void cbHFlip_CheckedChanged(object sender, EventArgs e)
@@ -208,6 +214,7 @@ namespace CadEditor
             int val = cbHFlip.Checked ? 1 : 0;
             tiles[tileIdx] = Mapper.ApplyHF(tiles[tileIdx], val);
             mapScreen.Invalidate();
+            dirty = true;
         }
 
         private void cbVFlip_CheckedChanged(object sender, EventArgs e)
@@ -216,6 +223,7 @@ namespace CadEditor
             int val = cbVFlip.Checked ? 1 : 0;
             tiles[tileIdx] = Mapper.ApplyVF(tiles[tileIdx], val);
             mapScreen.Invalidate();
+            dirty = true;
         }
 
         private void cbPrior_CheckedChanged(object sender, EventArgs e)
@@ -224,11 +232,20 @@ namespace CadEditor
             int val = cbVFlip.Checked ? 1 : 0;
             tiles[tileIdx] = Mapper.ApplyP(tiles[tileIdx], val);
             mapScreen.Invalidate();
+            dirty = true;
         }
 
         private void tbbSave_Click(object sender, EventArgs e)
         {
             saveTiles();
+        }
+
+        private void SegaBlockEdit_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!Utils.askToSave(ref dirty, saveTiles, null))
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

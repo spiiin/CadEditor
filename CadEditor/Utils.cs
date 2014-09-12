@@ -74,14 +74,16 @@ namespace CadEditor
             DialogResult dr = MessageBox.Show("Level was changed. Do you want to save current level?", "Save", MessageBoxButtons.YesNoCancel);
             if (dr == DialogResult.Cancel)
             {
-                returnCbLevelIndex();
+                if (returnCbLevelIndex != null)
+                  returnCbLevelIndex();
                 return false;
             }
             else if (dr == DialogResult.Yes)
             {
                 if (!saveToFile())
                 {
-                    returnCbLevelIndex();
+                    if (returnCbLevelIndex != null)
+                      returnCbLevelIndex();
                     return false;
                 }
                 return true;
