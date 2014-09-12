@@ -30,6 +30,13 @@ namespace CadEditor
             cb.SelectedIndexChanged += ev;
         }
 
+        public static void setCbCheckedWithoutUpdateLevel(CheckBox cb, EventHandler ev, bool index = false)
+        {
+            cb.CheckedChanged -= ev;
+            cb.Checked = index;
+            cb.CheckedChanged += ev;
+        }
+
         public static void prepareBlocksPanel(FlowLayoutPanel blocksPanel, Size buttonSize, ImageList buttonsImages, EventHandler buttonBlockClick, int startIndex, int count)
         {
             blocksPanel.Controls.Clear();
@@ -335,8 +342,9 @@ namespace CadEditor
 
         public static void setBigBlocksCapcomDefault(int bigTileIndex, byte[] bigBlockIndexes)
         {
+            int size = ConfigScript.getBigBlocksCount() * 4 * (ConfigScript.isUseSegaGraphics() ? 2 : 1);
             int addr = Globals.getBigTilesAddr(bigTileIndex);
-            for (int i = 0; i < ConfigScript.getBigBlocksCount() * 4; i++)
+            for (int i = 0; i < size; i++)
                 Globals.romdata[addr + i] = bigBlockIndexes[i];
         }
 

@@ -11,7 +11,7 @@ namespace CadEditor
         public static Image[] makeBigBlocksSega(byte[] mapping, byte[] tiles, byte[] palette, int count, float zoom, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false)
         {
             var result = new Image[count];
-            ushort[] m = Mapper.LoadMapping(mapping, true);
+            ushort[] m = Mapper.LoadMapping(mapping);
             Color[] cpal = GetPalette(palette);
             for (ushort i = 0; i < count; i++)
             {
@@ -263,6 +263,26 @@ namespace CadEditor
             return ((Word & 0x1000) >> 12) == 1;
         }
 
+        public static ushort ApplyTileIdx(ushort Word, ushort tileIdx)
+        {
+            return (ushort)((Word & ~0x07FF) | tileIdx);
+        }
+
+        public static ushort ApplyPalIdx(ushort Word, byte palIdx)
+        {
+            return (ushort)((Word & ~0x6000) | (palIdx << 13));
+        }
+
+        public static ushort ApplyHF(ushort Word, int hf)
+        {
+            return (ushort)((Word & ~0x0800) | (hf << 11));
+        }
+
+        public static ushort ApplyVF(ushort Word, int vf)
+        {
+            return (ushort)((Word & ~0x1000) | (vf << 12));
+        }
+
         public static ushort TilePos(ushort Word)
         {
             ushort idx = TileIdx(Word);
@@ -277,23 +297,22 @@ namespace CadEditor
             return (ushort)retn;
         }
 
-        public static void ApplyMapping(ref byte[] LevelMapping, ushort[] ChangedMapping, bool PlaneA)
+        public static void ApplyMapping(ref byte[] LevelMapping, ushort[] ChangedMapping)
         {
-            for (int i = 0, j = PlaneA ? 0 : 0x2000; i < 0x1000; i++, j += 2)
+            int len = ChangedMapping.Length;
+            for (int i = 0, j =  0; i < len; i++, j += 2)
             {
                 LevelMapping[j] = (byte)((ChangedMapping[i] & 0xFF00) >> 8);
                 LevelMapping[j + 1] = (byte)(ChangedMapping[i] & 0xFF);
             }
         }
 
-        public static ushort[] LoadMapping(byte[] LevelMapping, bool PlaneA)
+        public static ushort[] LoadMapping(byte[] LevelMapping)
         {
-            //0x4000 fixed size for now
-            ushort[] retn = new ushort[0x4000];
-
-            for (int i = 0, j = PlaneA ? 0 : 0x8000; i < 0x4000; i++, j += 2)
-                retn[i] = (ushort)(((LevelMapping[j] << 8) | LevelMapping[j + 1]) & 0x7FFF);
-
+            int len = LevelMapping.Length/2;
+            ushort[] retn = new ushort[len];
+            for (int i = 0, j = 0 ; i < len; i++, j += 2)
+                retn[i] = (ushort)(((LevelMapping[j] << 8) | LevelMapping[j + 1]) & 0xFFFF);
             return retn;
         }
     }

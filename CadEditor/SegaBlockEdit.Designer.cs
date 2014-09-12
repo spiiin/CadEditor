@@ -200,7 +200,6 @@
             this.pnMapping.Controls.Add(this.cbTile);
             this.pnMapping.Controls.Add(this.label4);
             this.pnMapping.Controls.Add(this.label3);
-            this.pnMapping.Enabled = false;
             this.pnMapping.Location = new System.Drawing.Point(3, 140);
             this.pnMapping.Name = "pnMapping";
             this.pnMapping.Size = new System.Drawing.Size(128, 75);
@@ -216,6 +215,7 @@
             this.cbVFlip.TabIndex = 8;
             this.cbVFlip.Text = "VFlip";
             this.cbVFlip.UseVisualStyleBackColor = true;
+            this.cbVFlip.CheckedChanged += new System.EventHandler(this.cbVFlip_CheckedChanged);
             // 
             // cbHFlip
             // 
@@ -227,6 +227,7 @@
             this.cbHFlip.TabIndex = 7;
             this.cbHFlip.Text = "HFlip";
             this.cbHFlip.UseVisualStyleBackColor = true;
+            this.cbHFlip.CheckedChanged += new System.EventHandler(this.cbHFlip_CheckedChanged);
             // 
             // cbPal
             // 
@@ -236,6 +237,7 @@
             this.cbPal.Name = "cbPal";
             this.cbPal.Size = new System.Drawing.Size(47, 21);
             this.cbPal.TabIndex = 6;
+            this.cbPal.SelectedIndexChanged += new System.EventHandler(this.cbPal_SelectedIndexChanged);
             // 
             // cbTile
             // 
@@ -245,6 +247,7 @@
             this.cbTile.Name = "cbTile";
             this.cbTile.Size = new System.Drawing.Size(47, 21);
             this.cbTile.TabIndex = 5;
+            this.cbTile.SelectedIndexChanged += new System.EventHandler(this.cbTile_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -272,6 +275,7 @@
             this.mapScreen.TabIndex = 5;
             this.mapScreen.TabStop = false;
             this.mapScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.mapScreen_Paint);
+            this.mapScreen.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseClick);
             // 
             // toolStrip1
             // 
@@ -292,6 +296,7 @@
             this.tbbSave.Name = "tbbSave";
             this.tbbSave.Size = new System.Drawing.Size(23, 22);
             this.tbbSave.Text = "Save";
+            this.tbbSave.Click += new System.EventHandler(this.tbbSave_Click);
             // 
             // toolStripSeparator2
             // 

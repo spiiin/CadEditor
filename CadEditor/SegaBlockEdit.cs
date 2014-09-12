@@ -20,6 +20,7 @@ namespace CadEditor
         int curActiveTile = 0;
         int curActivePalNo = 0;
         float curScale = 2.0f;
+        int curSelectedTilePart = 0;
 
         ushort[] tiles;
         byte[] videoChunk;
@@ -34,21 +35,25 @@ namespace CadEditor
             Utils.setCbItemsCount(cbPalSubpart, 4);
             Utils.setCbIndexWithoutUpdateLevel(cbPalSubpart, cbPalNo_SelectedIndexChanged);
 
-            Utils.setCbItemsCount(cbBlockNo, ConfigScript.getBigBlocksCount());
-            Utils.setCbItemsCount(cbTile, SEGA_TILES_COUNT);
+            Utils.setCbItemsCount(cbBlockNo, ConfigScript.getBigBlocksCount(), inHex:true);
+            Utils.setCbItemsCount(cbTile, SEGA_TILES_COUNT, inHex:true);
             Utils.setCbItemsCount(cbPal, 4);
+            Utils.setCbIndexWithoutUpdateLevel(cbBlockNo, cbBlockNo_SelectedIndexChanged);
             resetControls();
         }
 
         void reloadTiles()
         {
             var mapping = ConfigScript.getBigBlocks(0); //curActiveBigBlock;
-            tiles = Mapper.LoadMapping(mapping, true);
+            tiles = Mapper.LoadMapping(mapping);
         }
 
         void saveTiles()
         {
-            //
+            byte[] tileBytes = new byte[tiles.Length*2];
+            Mapper.ApplyMapping(ref tileBytes, tiles);
+            ConfigScript.setBigBlocks(0, tileBytes);
+            Globals.flushToFile();
         }
 
         void resetControls()
@@ -90,7 +95,22 @@ namespace CadEditor
             if (cbBlockNo.SelectedIndex == -1)
                 return;
             curActiveBlock = cbBlockNo.SelectedIndex;
+            curSelectedTilePart = 0;
             mapScreen.Invalidate();
+
+            int TILE_WIDTH = 2;
+            int TILE_HEIGHT = 2;
+            int TILE_SIZE = TILE_WIDTH * TILE_HEIGHT;
+            updateMappingControls(curActiveBlock * TILE_SIZE + curSelectedTilePart);
+        }
+
+        private void updateMappingControls(int index)
+        {
+            ushort word = tiles[index];
+            Utils.setCbIndexWithoutUpdateLevel(cbTile, cbTile_SelectedIndexChanged, Mapper.TileIdx(word));
+            Utils.setCbIndexWithoutUpdateLevel(cbPal, cbPal_SelectedIndexChanged, Mapper.PalIdx(word));
+            Utils.setCbCheckedWithoutUpdateLevel(cbHFlip, cbHFlip_CheckedChanged, Mapper.HF(word));
+            Utils.setCbCheckedWithoutUpdateLevel(cbVFlip, cbVFlip_CheckedChanged, Mapper.VF(word));
         }
 
         private void mapScreen_Paint(object sender, PaintEventArgs e)
@@ -113,7 +133,93 @@ namespace CadEditor
                 bool vf = Mapper.VF(word);
                 var b = VideoSega.GetZoomTile(videoChunk, tileIdx, cpal, pal, hf, vf, curScale);
                 g.DrawImage(b, tileRect);
+                if (i == curSelectedTilePart)
+                    g.DrawRectangle(new Pen(Brushes.Red, 2.0f), tileRect);
             }
+        }
+
+        private void mapScreen_MouseClick(object sender, MouseEventArgs e)
+        {
+            int BLOCK_WIDTH = 32;
+            int BLOCK_HEIGHT = 32;
+            int TILE_WIDTH = 2;
+            int TILE_HEIGHT = 2;
+            int TILE_SIZE = TILE_WIDTH * TILE_HEIGHT;
+            int index = curActiveBlock * TILE_SIZE;
+
+            int dx = e.X / (int)(BLOCK_WIDTH);
+            int dy = e.Y / (int)(BLOCK_HEIGHT);
+            if (dx < 0 || dx >= TILE_WIDTH || dy < 0 || dy >= TILE_HEIGHT)
+                return;
+            int tileIdx = dy * TILE_WIDTH + dx;
+            curSelectedTilePart = tileIdx;
+            int changeIndex = getCurTileIdx();
+            //
+            if (e.Button == MouseButtons.Left)
+            {
+                ushort w = tiles[changeIndex];
+                w = Mapper.ApplyPalIdx(w, (byte)curActivePalNo);
+                w = Mapper.ApplyTileIdx(w, (ushort)curActiveTile);
+                tiles[changeIndex] = w;
+            }
+            else
+            {
+                curActiveTile = Mapper.TileIdx(tiles[changeIndex]);
+                pbActive.Image = ilSegaTiles.Images[curActiveTile];
+            }
+            //
+
+            updateMappingControls(index + tileIdx);
+            mapScreen.Invalidate();
+        }
+
+        private int getCurTileIdx()
+        {
+            int TILE_WIDTH = 2;
+            int TILE_HEIGHT = 2;
+            int TILE_SIZE = TILE_WIDTH * TILE_HEIGHT;
+            return curSelectedTilePart + curActiveBlock * TILE_SIZE;
+        }
+
+        private void cbTile_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbTile.SelectedIndex == -1)
+                return;
+            int tileIdx = getCurTileIdx();
+            ushort val = (ushort)cbTile.SelectedIndex;
+            tiles[tileIdx] = Mapper.ApplyTileIdx(tiles[tileIdx], val);
+            mapScreen.Invalidate();
+        }
+
+        private void cbPal_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbPal.SelectedIndex == -1)
+                return;
+            int tileIdx = getCurTileIdx();
+            byte val = (byte)cbPal.SelectedIndex;
+            tiles[tileIdx] = Mapper.ApplyPalIdx(tiles[tileIdx], val);
+            mapScreen.Invalidate();
+        }
+
+        private void cbHFlip_CheckedChanged(object sender, EventArgs e)
+        {
+            int tileIdx = getCurTileIdx();
+            int val = cbHFlip.Checked ? 1 : 0;
+            tiles[tileIdx] = Mapper.ApplyHF(tiles[tileIdx], val);
+            mapScreen.Invalidate();
+        }
+
+        private void cbVFlip_CheckedChanged(object sender, EventArgs e)
+        {
+            int tileIdx = getCurTileIdx();
+            int val = cbVFlip.Checked ? 1 : 0;
+            tiles[tileIdx] = Mapper.ApplyVF(tiles[tileIdx], val);
+            mapScreen.Invalidate();
+        }
+
+        private void tbbSave_Click(object sender, EventArgs e)
+        {
+            saveTiles();
         }
     }
 }
