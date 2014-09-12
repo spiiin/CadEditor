@@ -332,7 +332,9 @@ namespace CadEditor
 
         public static byte[] getBigBlocksCapcomDefault(int bigTileIndex)
         {
-            int size = ConfigScript.getBigBlocksCount() * 4 * (ConfigScript.isUseSegaGraphics() ? 2 : 1);
+            int tileSize = ConfigScript.isBlockSize4x4() ? 16 : 4;
+            int wordSize = ConfigScript.isUseSegaGraphics() ? 2 : 1;
+            int size = ConfigScript.getBigBlocksCount() * tileSize * wordSize;
             byte[] bigBlockIndexes = new byte[size];
             var bigBlocksAddr = Globals.getBigTilesAddr(bigTileIndex);
             for (int i = 0; i < size; i++)
@@ -342,7 +344,9 @@ namespace CadEditor
 
         public static void setBigBlocksCapcomDefault(int bigTileIndex, byte[] bigBlockIndexes)
         {
-            int size = ConfigScript.getBigBlocksCount() * 4 * (ConfigScript.isUseSegaGraphics() ? 2 : 1);
+            int tileSize = ConfigScript.isBlockSize4x4() ? 16 : 4;
+            int wordSize = ConfigScript.isUseSegaGraphics() ? 2 : 1;
+            int size = ConfigScript.getBigBlocksCount() * tileSize * wordSize;
             int addr = Globals.getBigTilesAddr(bigTileIndex);
             for (int i = 0; i < size; i++)
                 Globals.romdata[addr + i] = bigBlockIndexes[i];

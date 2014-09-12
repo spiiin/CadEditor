@@ -15,7 +15,10 @@ namespace CadEditor
             Color[] cpal = GetPalette(palette);
             for (ushort i = 0; i < count; i++)
             {
-                result[i] = GetZoomBlock(m, tiles, cpal, i, zoom*2.0f);
+                if (!ConfigScript.isBlockSize4x4())
+                    result[i] = GetZoomBlock(m, tiles, cpal, i, zoom * 2.0f);
+                else
+                    result[i] = GetZoomBlock4x4(m, tiles, cpal, i, zoom);
                 if (curViewType == MapViewType.ObjNumbers)
                   result[i] = addObjNumber(result[i], i);
                 if (showAxis)
@@ -216,27 +219,34 @@ namespace CadEditor
             return source;
         }
 
-        /*public static Bitmap GetZoomBlock1x1(ushort[] mapping, byte[] tiles, Color[] pallete, int Index, float zoom)
+        public static Bitmap GetZoomBlock4x4(ushort[] mapping, byte[] tiles, Color[] palette, int Index, float zoom)
         {
-            Bitmap block = new Bitmap(8, 8, System.Drawing.Imaging.PixelFormat.Format16bppRgb555);
-            Bitmap retn = new Bitmap((int)(8 * zoom), (int)(8 * zoom), System.Drawing.Imaging.PixelFormat.Format16bppRgb555);
+            Bitmap block = new Bitmap(32, 32, System.Drawing.Imaging.PixelFormat.Format16bppRgb555);
+            Bitmap retn = new Bitmap((int)(32 * zoom), (int)(32 * zoom), System.Drawing.Imaging.PixelFormat.Format16bppRgb555);
 
-            ushort Word = mapping[Index];
-            byte palIndex = Mapper.PalIdx(Word);
-            bool HF = Mapper.HF(Word);
-            bool VF = Mapper.VF(Word);
+            for (int y = 0; y < 4; y++)
+                for (int x = 0; x < 4; x++)
+                {
+                    ushort Word = mapping[Index * 0x10 + y * 4 + x];
+                    byte palIndex = Mapper.PalIdx(Word);
+                    bool HF = Mapper.HF(Word);
+                    bool VF = Mapper.VF(Word);
 
-            Bitmap tile = GetZoomTile(tiles, Word, pallete, palIndex, HF, VF, zoom);
+                    Bitmap tile = GetZoomTile(tiles, Word, palette, palIndex, HF, VF, zoom);
 
-            using (Graphics g = Graphics.FromImage(block)) g.DrawImage(tile, new Rectangle (8, 8, 8, 8));
+                    using (Graphics g = Graphics.FromImage(block)) g.DrawImage(tile, new Rectangle(x * 8, y * 8, 8, 8));
+                }
 
             Graphics gr = Graphics.FromImage(retn);
             gr.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 
-            gr.DrawImage(block, new Rectangle(0, 0, retn.Width, retn.Height));
+            if (zoom > 1.0f)
+                gr.DrawImage(block, new Rectangle(0, 0, retn.Width + 2, retn.Height + 2));
+            else
+                gr.DrawImage(block, new Rectangle(0, 0, retn.Width, retn.Height));
             gr.Dispose();
             return retn;
-        }*/
+        }
     }
     //---------------------------------------------------------------------------------------------
 

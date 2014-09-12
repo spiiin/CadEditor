@@ -98,8 +98,8 @@ namespace CadEditor
             curSelectedTilePart = 0;
             mapScreen.Invalidate();
 
-            int TILE_WIDTH = 2;
-            int TILE_HEIGHT = 2;
+            int TILE_WIDTH = ConfigScript.isBlockSize4x4() ? 4 : 2;
+            int TILE_HEIGHT = ConfigScript.isBlockSize4x4() ? 4 : 2;
             int TILE_SIZE = TILE_WIDTH * TILE_HEIGHT;
             updateMappingControls(curActiveBlock * TILE_SIZE + curSelectedTilePart);
         }
@@ -116,11 +116,11 @@ namespace CadEditor
 
         private void mapScreen_Paint(object sender, PaintEventArgs e)
         {
-            int TILE_WIDTH = 2;
-            int TILE_HEIGHT = 2;
+            int TILE_WIDTH = ConfigScript.isBlockSize4x4()? 4 : 2;
+            int TILE_HEIGHT = ConfigScript.isBlockSize4x4() ? 4 : 2;
             int TILE_SIZE = TILE_WIDTH * TILE_HEIGHT;
             int BLOCK_WIDTH = 32;
-            int BLOCK_HEIGHT =32;
+            int BLOCK_HEIGHT = 32;
             int index = curActiveBlock * TILE_SIZE;
             var g = e.Graphics;
             
@@ -143,8 +143,8 @@ namespace CadEditor
         {
             int BLOCK_WIDTH = 32;
             int BLOCK_HEIGHT = 32;
-            int TILE_WIDTH = 2;
-            int TILE_HEIGHT = 2;
+            int TILE_WIDTH = ConfigScript.isBlockSize4x4() ? 4 : 2;
+            int TILE_HEIGHT = ConfigScript.isBlockSize4x4() ? 4 : 2;
             int TILE_SIZE = TILE_WIDTH * TILE_HEIGHT;
             int index = curActiveBlock * TILE_SIZE;
 
@@ -176,8 +176,8 @@ namespace CadEditor
 
         private int getCurTileIdx()
         {
-            int TILE_WIDTH = 2;
-            int TILE_HEIGHT = 2;
+            int TILE_WIDTH = ConfigScript.isBlockSize4x4() ? 4 : 2;
+            int TILE_HEIGHT = ConfigScript.isBlockSize4x4() ? 4 : 2;
             int TILE_SIZE = TILE_WIDTH * TILE_HEIGHT;
             return curSelectedTilePart + curActiveBlock * TILE_SIZE;
         }
