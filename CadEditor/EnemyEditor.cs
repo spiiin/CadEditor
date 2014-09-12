@@ -475,8 +475,10 @@ namespace CadEditor
             {
                 int[] indexes = screens[curLevelLayerData.layer[curActiveScreen]];
                 int scrLevelNo = getLevelRecForGameType().levelNo;
+                int width = ConfigScript.getScreenWidth(scrLevelNo);
+                int height = ConfigScript.getScreenHeight(scrLevelNo);
                 var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
-                MapEditor.Render(g, bigBlocks, visibleRect, indexes, null, scrLevelNo, curScale, true, false, false, 0);
+                MapEditor.Render(g, bigBlocks, visibleRect, indexes, null, curScale, true, false, false, 0, width, height, ConfigScript.getScreenVertical());
                 ConfigScript.renderToMainScreen(g, (int)curScale);
             }
             else

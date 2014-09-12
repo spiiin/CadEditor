@@ -129,33 +129,9 @@ namespace CadEditor
                 g.Clear(Color.Black);
                 return;
             }
-            int WIDTH = curTileStruct.Width;
-            int HEIGHT = curTileStruct.Height;
-            int TILE_SIZE_X = (int)(blockWidth * curScale);
-            int TILE_SIZE_Y = (int)(blockHeight * curScale);
             var visibleRect = Utils.getVisibleRectangle(this, mapScreen);
-
             g.Clear(Color.Black);
-            for (int x = 0; x < WIDTH; x++)
-            {
-                for (int y = 0; y < HEIGHT; y++)
-                {
-                    int index = curTileStruct[x, y];
-                    Rectangle tileRect;
-                    if (ConfigScript.getScreenVertical())
-                        tileRect = new Rectangle(y * TILE_SIZE_X, x * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
-                    else
-                        tileRect = new Rectangle(x * TILE_SIZE_X, y * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
-
-                    if ((visibleRect.Contains(tileRect)) || (visibleRect.IntersectsWith(tileRect)))
-                    {
-                        if (index == -1)
-                            g.FillRectangle(Brushes.White, tileRect);
-                        else if (index < bigBlocks.Images.Count)
-                            g.DrawImage(bigBlocks.Images[index], tileRect);
-                    }
-                }
-            }
+            MapEditor.Render(g, bigBlocks, visibleRect, curTileStruct.toArray(), null, 2.0f, true, false, false, 0, curTileStruct.Width, curTileStruct.Height, !ConfigScript.getScreenVertical());
         }
 
         private void cbWidth_SelectedIndexChanged(object sender, EventArgs e)
@@ -326,6 +302,13 @@ namespace CadEditor
         {
             get { return tileIndexes[x, y]; }
             set { tileIndexes[x,y] = value; }
+        }
+
+        public int[] toArray() //inverted
+        {
+            int[] arr = new int[Width * Height];
+            Buffer.BlockCopy(tileIndexes, 0, arr, 0, width * height * sizeof(int));
+            return arr;
         }
 
         public int Width { get { return width; } }

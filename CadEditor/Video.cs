@@ -303,8 +303,9 @@ namespace CadEditor
                 il.Images.AddRange(bigBlocks);
             }
             int[] indexes = Globals.getScreen(ConfigScript.screensOffset[levelNo], scrNo);
-            
-            return new Bitmap(MapEditor.ScreenToImage(il, indexes, null, 0, scale, true, false, false, 0));
+            int scrW = ConfigScript.getScreenWidth(0); //zero as screenNoForLevel
+            int scrH = ConfigScript.getScreenHeight(0);
+            return new Bitmap(MapEditor.ScreenToImage(il, indexes, null, scale, true, false, false, 0, scrW, scrH, ConfigScript.getScreenVertical()));
         }
 
 #region Render Functions

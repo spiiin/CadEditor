@@ -19,40 +19,40 @@ namespace CadEditor
             mapScreen.Invalidate();
         }*/
 
-        public static void Render(Graphics g, ImageList bigBlocks, Rectangle? visibleRect, int[] screen, int[] screen2, int CurActiveLevelForScreen, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin)
+        public static void Render(Graphics g, ImageList bigBlocks, Rectangle? visibleRect, int[] screen, int[] screen2, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin, int WIDTH, int HEIGHT, bool verticalScreen)
         {
-            int WIDTH = ConfigScript.getScreenWidth(CurActiveLevelForScreen);
-            int HEIGHT = ConfigScript.getScreenHeight(CurActiveLevelForScreen);
             int TILE_SIZE_X = (int)(blockWidth * CurScale);
             int TILE_SIZE_Y = (int)(blockHeight * CurScale);
             int SIZE = WIDTH * HEIGHT;
-            //var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
             for (int i = 0; i < SIZE; i++)
             {
-                int index = screen[i];
                 int bigBlockNo = Globals.getBigTileNoFromScreen(screen, i);
                 Rectangle tileRect;
-                if (ConfigScript.getScreenVertical())
+                if (verticalScreen)
                     tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X, (i % WIDTH) * TILE_SIZE_Y + LeftMargin, TILE_SIZE_X, TILE_SIZE_Y);
                 else
                     tileRect = new Rectangle((i % WIDTH) * TILE_SIZE_X + LeftMargin, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
 
                 if (visibleRect == null || visibleRect.Value.Contains(tileRect) || visibleRect.Value.IntersectsWith(tileRect))
                 {
-                    if (bigBlockNo < bigBlocks.Images.Count & ShowLayer1)
+                    if (bigBlockNo != -1 && bigBlockNo < bigBlocks.Images.Count & ShowLayer1)
                         g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
+                    else
+                        g.FillRectangle(Brushes.White, tileRect);
                     if (screen2 != null && ShowLayer2)
                     {
                         int bigBlockNo2 = Globals.getBigTileNoFromScreen(screen2, i);
-                        if (bigBlockNo2 < bigBlocks.Images.Count)
+                        if (bigBlockNo2 != -1 && bigBlockNo2 < bigBlocks.Images.Count)
                             g.DrawImage(bigBlocks.Images[bigBlockNo2], tileRect);
+                        else
+                            g.FillRectangle(Brushes.White, tileRect);
                     }
                 }
             }
 
             if (ShowBorder)
             {
-                if (ConfigScript.getScreenVertical())
+                if (verticalScreen)
                     g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(0, TILE_SIZE_Y, TILE_SIZE_X * HEIGHT, TILE_SIZE_Y * WIDTH));
                 else
                     g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(TILE_SIZE_X, 0, TILE_SIZE_X * WIDTH, TILE_SIZE_Y * HEIGHT));
@@ -62,11 +62,8 @@ namespace CadEditor
             ConfigScript.renderToMainScreen(g, (int)CurScale);
         }
 
-        //need to be fixed to work as RENDER, delete all copypaste
-        public static Image ScreenToImage(ImageList bigBlocks, int[] screen, int[] screen2, int CurActiveLevelForScreen, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin)
+        public static Image ScreenToImage(ImageList bigBlocks, int[] screen, int[] screen2, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin, int WIDTH, int HEIGHT, bool verticalScreen)
         {
-            int WIDTH = ConfigScript.getScreenWidth(CurActiveLevelForScreen);
-            int HEIGHT = ConfigScript.getScreenHeight(CurActiveLevelForScreen);
             int TILE_SIZE_X = (int)(blockWidth * CurScale);
             int TILE_SIZE_Y = (int)(blockHeight * CurScale);
             int SIZE = WIDTH * HEIGHT;
@@ -76,14 +73,14 @@ namespace CadEditor
                 indexes2 = screen2;
 
             Image result;
-            if ((ConfigScript.getScreenVertical()))
+            if (verticalScreen)
                 result = new Bitmap(HEIGHT * TILE_SIZE_Y, WIDTH * TILE_SIZE_X);
             else
                 result = new Bitmap(WIDTH * TILE_SIZE_X, HEIGHT * TILE_SIZE_Y);
 
             using (var g = Graphics.FromImage(result))
             {
-                Render(g, bigBlocks, null, screen, screen2, CurActiveLevelForScreen, CurScale, ShowLayer1, ShowLayer2, ShowBorder, LeftMargin);
+                Render(g, bigBlocks, null, screen, screen2, CurScale, ShowLayer1, ShowLayer2, ShowBorder, LeftMargin, WIDTH, HEIGHT, verticalScreen);
             }
             return result;
         }

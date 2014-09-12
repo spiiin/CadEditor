@@ -179,6 +179,8 @@ namespace CadEditor
                 int addValue = (lineByte & (1 << (7 - noY))) != 0 ? 256 : 0;
                 return addValue + screenData[index];
             }
+            if (index == -1)
+                return -1;
             return screenData[index];
         }
 
