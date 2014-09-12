@@ -24,7 +24,7 @@ namespace CadEditor
             return result;
         }
 
-        private static Color[] GetPalette(byte[] pal)
+        public static Color[] GetPalette(byte[] pal)
         {
             Color[] retn = new Color[0x40];
             int offset = 0;

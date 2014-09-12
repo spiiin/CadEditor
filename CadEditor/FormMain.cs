@@ -35,13 +35,28 @@ namespace CadEditor
 
             subeditorsDict = new Dictionary<ToolStripButton, Func<Form>> { 
                  { bttBigBlocks,    ()=>{ var f = new BigBlockEdit(); f.setFormMain(this); return f;} },
-                 { bttBlocks,       ()=>{ var f = new BlockEdit();    f.setFormMain(this); return f;} },
+                 { bttBlocks,       getBlocksForm },
                  { bttLayout,       ()=>{ return new EditLayout();}   },
                  { bttEnemies,      ()=>{ var f = new EnemyEditor();  f.setFormMain(this); return f;}  },
                  { bttVideo,        ()=>{ return new EditVideo();}    },
                  { bttMap,          ()=>{ return new EditMap();}    },
                  { bttConfig,       ()=>{ var f = new FormConfig();  f.setFormMain(this); f.onApply += reloadCallback; return f;}    },
             };
+        }
+
+        private Form getBlocksForm()
+        {
+            if (!ConfigScript.isUseSegaGraphics())
+            {
+                var f = new BlockEdit();
+                f.setFormMain(this);
+                return f;
+            }
+            else
+            {
+                var f = new SegaBlockEdit();
+                return f;
+            }
         }
 
         private void resetScreens()

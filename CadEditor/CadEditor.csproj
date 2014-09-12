@@ -166,6 +166,12 @@
     <Compile Include="SaveScreensCount.Designer.cs">
       <DependentUpon>SaveScreensCount.cs</DependentUpon>
     </Compile>
+    <Compile Include="SegaBlockEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SegaBlockEdit.Designer.cs">
+      <DependentUpon>SegaBlockEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="SelectDoorIndex.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -238,6 +244,9 @@
     </Compile>
     <EmbeddedResource Include="SaveScreensCount.resx">
       <DependentUpon>SaveScreensCount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SegaBlockEdit.resx">
+      <DependentUpon>SegaBlockEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SelectDoorIndex.resx">
       <DependentUpon>SelectDoorIndex.cs</DependentUpon>
