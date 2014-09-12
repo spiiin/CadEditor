@@ -79,6 +79,7 @@ namespace CadEditor
             wordLen = callFromScript(asm, data, "*.getWordLen", 1);
             littleEndian = callFromScript(asm, data, "*.isLittleEndian", false);
             useSegaGraphics = callFromScript(asm, data, "*.isUseSegaGraphics", false);
+            blockSize4x4 = callFromScript(asm, data, "*.isBlockSize4x4", false);
             buildScreenFromSmallBlocks = callFromScript(asm, data, "isBuildScreenFromSmallBlocks", false);
             layersCount = callFromScript(asm, data, "*.getLayersCount", 1);
             levelRecs = callFromScript(asm, data,"*.getLevelRecs", new List<LevelRec>());
@@ -357,6 +358,11 @@ namespace CadEditor
             return useSegaGraphics;
         }
 
+        public static bool isBlockSize4x4()
+        {
+            return blockSize4x4;
+        }
+
         public static T callFromScript<T>(AsmHelper script, object data, string funcName, T defaultValue = default(T), params object[] funcParams)
         {
             try
@@ -390,6 +396,7 @@ namespace CadEditor
         public static bool buildScreenFromSmallBlocks;
 
         public static bool useSegaGraphics;
+        public static bool blockSize4x4;
 
         public static int minObjCoordX;
         public static int minObjCoordY;
