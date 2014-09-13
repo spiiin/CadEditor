@@ -55,7 +55,9 @@ namespace CadEditor
             {
                 return;
             }
-            Directory.SetCurrentDirectory(Path.GetDirectoryName(fileName));
+            var dn = Path.GetDirectoryName(fileName);
+            if (dn != "")
+              Directory.SetCurrentDirectory(dn);
             Globals.gameType = (GameType)asm.InvokeInst(data,"*.getGameType");
 
             levelsCount = callFromScript(asm, data, "*.getLevelsCount", 1);
