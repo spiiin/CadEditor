@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace CadEditor
 {
@@ -579,6 +580,56 @@ namespace CadEditor
             return !dirty;
         }
 
+        private bool saveToJsonFile(string fname)
+        {
+            if (!cbManualSort.Checked)
+                sortObjects();
+            LevelRec lr = getLevelRecForGameType();
+            try
+            {
+                using (TextWriter f = new StreamWriter(fname))
+                {
+                    for (int i = 0; i < objects.Count; i++)
+                    {
+                        var obj = objects[i];
+                        string json = JsonConvert.SerializeObject(obj);
+                        f.WriteLine(json);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Save error");
+                return false;
+            }
+
+            //dirty = !Globals.flushToFile();
+            return true;
+        }
+
+        private bool loadFromJsonFile(string fname)
+        {
+            objects.Clear();
+            try
+            {
+                using (TextReader f = new StreamReader(fname))
+                {
+                    string line;
+                    while ((line = f.ReadLine()) != null)
+                    {
+                        var obj = JsonConvert.DeserializeObject<ObjectRec>(line);
+                        objects.Add(obj);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Load error");
+                return false;
+            }
+            return true;
+        }
+
         private void lvObjects_SelectedIndexChanged(object sender, EventArgs e)
         {
             bool selectedZero = lvObjects.SelectedItems.Count == 0;
@@ -639,6 +690,9 @@ namespace CadEditor
         private void btSave_Click(object sender, EventArgs e)
         {
             saveToFile();
+            /*saveToJsonFile("test.json");
+            loadFromJsonFile("test.json");
+            fillObjectsListBox();*/
         }
 
         private void EnemyEditor_FormClosing(object sender, FormClosingEventArgs e)
