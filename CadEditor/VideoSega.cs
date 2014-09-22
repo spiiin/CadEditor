@@ -307,7 +307,7 @@ namespace CadEditor
         {
             ushort idx = TileIdx(Word);
             ushort tilesPos = (ushort)(idx * 0x20);
-            if (idx >= 0x1F0 && idx <= 0x1FF) tilesPos += 0x200;
+            //if (idx >= 0x1F0 && idx <= 0x1FF) tilesPos += 0x200;
             return tilesPos;
         }
 
