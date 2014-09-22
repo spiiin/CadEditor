@@ -8,6 +8,7 @@ COPY_FILE_LIST = [
   "CadEditor.exe",
   "Be.Windows.Forms.HexBox.dll",
   "CSScriptLibrary.v3.5.dll",
+  "Newtonsoft.Json.dll",
   
   "Config.cs",
   "Settings_CapcomBase.cs",
