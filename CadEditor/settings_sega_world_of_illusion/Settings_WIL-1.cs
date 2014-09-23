@@ -25,7 +25,7 @@ public class Data
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChuck;   }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   public GetBigBlocksFunc     getBigBlocksFunc()     { return Utils.getBigBlocksCapcomDefault;}
-  public SetBigBlocksFunc     setBigBlocksFunc()     { return null;}
+  public SetBigBlocksFunc     setBigBlocksFunc()     { return Utils.setBigBlocksCapcomDefault;}
   public GetPalFunc           getPalFunc()           { return readPal;}
   public SetPalFunc           setPalFunc()           { return null;}
   public GetObjectsFunc getObjectsFunc() { return null; }
@@ -71,7 +71,7 @@ public class Data
   }
   
   public bool isBigBlockEditorEnabled() { return false;  }
-  public bool isBlockEditorEnabled()    { return false;  }
+  public bool isBlockEditorEnabled()    { return true;  }
   public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return false; }
   public bool isVideoEditorEnabled()    { return false; }
