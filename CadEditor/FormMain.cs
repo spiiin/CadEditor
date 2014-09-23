@@ -229,10 +229,17 @@ namespace CadEditor
         {
             int subparts = (ConfigScript.getBigBlocksCount()+1023) / 1024;
             FlowLayoutPanel[] blocksPanels = { blocksPanel, blockPanel2, blockPanel3, blockPanel4 };
-            for (int i = 0; i < subparts; i++)
+            if (ConfigScript.getBigBlocksCount() < 1024)
             {
-                int count = (i*1024 > ConfigScript.getBigBlocksCount()) ? (i*1024) % ConfigScript.getBigBlocksCount() : 1024;
-                Utils.prepareBlocksPanel(blocksPanels[i], new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick, i * 1024, count);
+                Utils.prepareBlocksPanel(blocksPanels[0], new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick, 0, ConfigScript.getBigBlocksCount());
+            }
+            else
+            {
+                for (int i = 0; i < subparts; i++)
+                {
+                    int count = (i * 1024 > ConfigScript.getBigBlocksCount()) ? (i * 1024) % ConfigScript.getBigBlocksCount() : 1024;
+                    Utils.prepareBlocksPanel(blocksPanels[i], new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick, i * 1024, count);
+                }
             }
         }
 
@@ -240,10 +247,17 @@ namespace CadEditor
         {
              int subparts = (ConfigScript.getBigBlocksCount() + 1023) / 1024;
              FlowLayoutPanel[] blocksPanels = { blocksPanel, blockPanel2, blockPanel3, blockPanel4 };
-             for (int i = 0; i < subparts; i++)
+             if (ConfigScript.getBigBlocksCount() < 1024)
              {
-                 int count = (i * 1024 > ConfigScript.getBigBlocksCount()) ? (i * 1024) % ConfigScript.getBigBlocksCount() : 1024;
-                 Utils.reloadBlocksPanel(blocksPanels[i], bigBlocks, i * 1024, count);
+                 Utils.reloadBlocksPanel(blocksPanels[0], bigBlocks, 0, ConfigScript.getBigBlocksCount());
+             }
+             else
+             {
+                 for (int i = 0; i < subparts; i++)
+                 {
+                     int count = (i * 1024 > ConfigScript.getBigBlocksCount()) ? (i * 1024) % ConfigScript.getBigBlocksCount() : 1024;
+                     Utils.reloadBlocksPanel(blocksPanels[i], bigBlocks, i * 1024, count);
+                 }
              }
         }
 
