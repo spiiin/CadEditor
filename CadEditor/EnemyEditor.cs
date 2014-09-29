@@ -121,7 +121,7 @@ namespace CadEditor
 
         private void makeScreensCad()
         {
-            scrImages = Globals.makeScreensCad(curActiveLevel, cbStopOnDoors.Checked);
+            scrImages = Globals.makeScreensCad(curActiveLevel, false /*cbStopOnDoors.Checked*/);
         }
 
         private int findStartPosition()
@@ -297,7 +297,7 @@ namespace CadEditor
         private void sortObjects()
         {
             List<ObjectRec> sortedObjects = new List<ObjectRec>();
-            bool stopOnDoor = cbStopOnDoors.Checked;
+            bool stopOnDoor = false; //cbStopOnDoors.Checked;
             List<ScreenRec> sortedScreens = Globals.buildScreenRecs(curActiveLevel, stopOnDoor);
             for (int i = 0; i < sortedScreens.Count; i++)
             {
@@ -843,7 +843,6 @@ namespace CadEditor
             bool generic = Globals.gameType != GameType.CAD;
             pnCad.Visible = !generic;
             pnGeneric.Visible = generic;
-            cbStopOnDoors.Visible = !generic;
             cbManualSort.Visible = !generic;
         }
 
@@ -1041,6 +1040,16 @@ namespace CadEditor
             pbBigObject.Image = objectSpritesBig[curActiveBlock];
             activeBlock.Image = objectSprites.Images[curActiveBlock];
             lbActive.Text = String.Format("({0:X2})", curActiveBlock);
+        }
+
+        private void btSaveJson_Click(object sender, EventArgs e)
+        {
+            saveToJsonFile("test.json");
+        }
+
+        private void btLoadJson_Click(object sender, EventArgs e)
+        {
+            loadFromJsonFile("test.json");
         }
     }
 

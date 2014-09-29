@@ -53,8 +53,9 @@
             this.cbManualSort = new System.Windows.Forms.CheckBox();
             this.btSortUp = new System.Windows.Forms.Button();
             this.btSortDown = new System.Windows.Forms.Button();
-            this.cbStopOnDoors = new System.Windows.Forms.CheckBox();
             this.pnGeneric = new System.Windows.Forms.Panel();
+            this.label14 = new System.Windows.Forms.Label();
+            this.cbScale = new System.Windows.Forms.ComboBox();
             this.cbPlus256 = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.cbLayoutNo = new System.Windows.Forms.ComboBox();
@@ -108,8 +109,8 @@
             this.cbBigObjectNo = new System.Windows.Forms.ComboBox();
             this.cbUseBigPictures = new System.Windows.Forms.CheckBox();
             this.cbBindToAxis = new System.Windows.Forms.CheckBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.cbScale = new System.Windows.Forms.ComboBox();
+            this.btSaveJson = new System.Windows.Forms.Button();
+            this.btLoadJson = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -398,21 +399,6 @@
             this.btSortDown.UseVisualStyleBackColor = true;
             this.btSortDown.Click += new System.EventHandler(this.btSortDown_Click);
             // 
-            // cbStopOnDoors
-            // 
-            this.cbStopOnDoors.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbStopOnDoors.AutoSize = true;
-            this.cbStopOnDoors.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbStopOnDoors.Checked = true;
-            this.cbStopOnDoors.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbStopOnDoors.Location = new System.Drawing.Point(13, 521);
-            this.cbStopOnDoors.Name = "cbStopOnDoors";
-            this.cbStopOnDoors.Size = new System.Drawing.Size(156, 17);
-            this.cbStopOnDoors.TabIndex = 49;
-            this.cbStopOnDoors.Text = "Branch type (stop on doors)";
-            this.cbStopOnDoors.UseVisualStyleBackColor = true;
-            // 
             // pnGeneric
             // 
             this.pnGeneric.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -434,6 +420,28 @@
             this.pnGeneric.Name = "pnGeneric";
             this.pnGeneric.Size = new System.Drawing.Size(175, 133);
             this.pnGeneric.TabIndex = 50;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(116, 50);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(37, 13);
+            this.label14.TabIndex = 57;
+            this.label14.Text = "Scale:";
+            // 
+            // cbScale
+            // 
+            this.cbScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbScale.FormattingEnabled = true;
+            this.cbScale.Items.AddRange(new object[] {
+            "1",
+            "2"});
+            this.cbScale.Location = new System.Drawing.Point(118, 66);
+            this.cbScale.Name = "cbScale";
+            this.cbScale.Size = new System.Drawing.Size(45, 21);
+            this.cbScale.TabIndex = 56;
+            this.cbScale.SelectedIndexChanged += new System.EventHandler(this.cbLevel_SelectedIndexChanged);
             // 
             // cbPlus256
             // 
@@ -1050,6 +1058,8 @@
             // 
             this.pnObjects.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.pnObjects.Controls.Add(this.btLoadJson);
+            this.pnObjects.Controls.Add(this.btSaveJson);
             this.pnObjects.Controls.Add(this.pnBigObjects);
             this.pnObjects.Controls.Add(this.cbUseBigPictures);
             this.pnObjects.Controls.Add(this.cbBindToAxis);
@@ -1059,7 +1069,6 @@
             this.pnObjects.Controls.Add(this.lbReadOnly);
             this.pnObjects.Controls.Add(this.label3);
             this.pnObjects.Controls.Add(this.btSave);
-            this.pnObjects.Controls.Add(this.cbStopOnDoors);
             this.pnObjects.Controls.Add(this.lbActive);
             this.pnObjects.Controls.Add(this.pnGeneric);
             this.pnObjects.Controls.Add(this.pnSelectScreen);
@@ -1074,7 +1083,7 @@
             this.pnBigObjects.Controls.Add(this.cbBigObjectNo);
             this.pnBigObjects.Location = new System.Drawing.Point(5, 278);
             this.pnBigObjects.Name = "pnBigObjects";
-            this.pnBigObjects.Size = new System.Drawing.Size(171, 179);
+            this.pnBigObjects.Size = new System.Drawing.Size(171, 175);
             this.pnBigObjects.TabIndex = 31;
             this.pnBigObjects.Visible = false;
             // 
@@ -1083,7 +1092,7 @@
             this.pbBigObject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pbBigObject.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbBigObject.Location = new System.Drawing.Point(1, 34);
+            this.pbBigObject.Location = new System.Drawing.Point(1, 30);
             this.pbBigObject.Name = "pbBigObject";
             this.pbBigObject.Size = new System.Drawing.Size(71, 67);
             this.pbBigObject.TabIndex = 66;
@@ -1118,35 +1127,37 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cbBindToAxis.AutoSize = true;
             this.cbBindToAxis.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbBindToAxis.Location = new System.Drawing.Point(33, 498);
+            this.cbBindToAxis.Location = new System.Drawing.Point(64, 498);
             this.cbBindToAxis.Name = "cbBindToAxis";
-            this.cbBindToAxis.Size = new System.Drawing.Size(136, 17);
+            this.cbBindToAxis.Size = new System.Drawing.Size(105, 17);
             this.cbBindToAxis.TabIndex = 64;
-            this.cbBindToAxis.Text = "Coord Align per 8 pixels";
+            this.cbBindToAxis.Text = "Align per 8 pixels";
             this.cbBindToAxis.UseVisualStyleBackColor = true;
             this.cbBindToAxis.CheckedChanged += new System.EventHandler(this.cbBindToAxis_CheckedChanged);
             // 
-            // label14
+            // btSaveJson
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(116, 50);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(37, 13);
-            this.label14.TabIndex = 57;
-            this.label14.Text = "Scale:";
+            this.btSaveJson.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btSaveJson.Location = new System.Drawing.Point(2, 512);
+            this.btSaveJson.Name = "btSaveJson";
+            this.btSaveJson.Size = new System.Drawing.Size(82, 34);
+            this.btSaveJson.TabIndex = 66;
+            this.btSaveJson.Text = "save test.json";
+            this.btSaveJson.UseVisualStyleBackColor = true;
+            this.btSaveJson.Click += new System.EventHandler(this.btSaveJson_Click);
             // 
-            // cbScale
+            // btLoadJson
             // 
-            this.cbScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbScale.FormattingEnabled = true;
-            this.cbScale.Items.AddRange(new object[] {
-            "1",
-            "2"});
-            this.cbScale.Location = new System.Drawing.Point(118, 66);
-            this.cbScale.Name = "cbScale";
-            this.cbScale.Size = new System.Drawing.Size(45, 21);
-            this.cbScale.TabIndex = 56;
-            this.cbScale.SelectedIndexChanged += new System.EventHandler(this.cbLevel_SelectedIndexChanged);
+            this.btLoadJson.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btLoadJson.Location = new System.Drawing.Point(90, 512);
+            this.btLoadJson.Name = "btLoadJson";
+            this.btLoadJson.Size = new System.Drawing.Size(81, 34);
+            this.btLoadJson.TabIndex = 67;
+            this.btLoadJson.Text = "load test.json";
+            this.btLoadJson.UseVisualStyleBackColor = true;
+            this.btLoadJson.Click += new System.EventHandler(this.btLoadJson_Click);
             // 
             // EnemyEditor
             // 
@@ -1213,7 +1224,6 @@
         private System.Windows.Forms.CheckBox cbManualSort;
         private System.Windows.Forms.Button btSortUp;
         private System.Windows.Forms.Button btSortDown;
-        private System.Windows.Forms.CheckBox cbStopOnDoors;
         private System.Windows.Forms.Panel pnGeneric;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox cbLayoutNo;
@@ -1270,5 +1280,7 @@
         private System.Windows.Forms.ComboBox cbBigObjectNo;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ComboBox cbScale;
+        private System.Windows.Forms.Button btLoadJson;
+        private System.Windows.Forms.Button btSaveJson;
     }
 }
