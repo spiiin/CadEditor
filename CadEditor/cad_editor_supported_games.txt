@@ -48,6 +48,7 @@
     Pitfall The Mayan Adventure                     (1 уровень)
     Jungle Book                                     (1 уровень)
     World Of Illusion                               (1 уровень)
+    Great Circus Mystery                            (1 уровень)
     Dune 2                                          (макроблоки)
 редактор экранов картинками (Sega/GBA)
     Zombies Ate My Neighbors                        (1 уровень + редактор объектов 1 уровня)
