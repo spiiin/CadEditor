@@ -104,7 +104,7 @@
             this.cbTileset.Name = "cbTileset";
             this.cbTileset.Size = new System.Drawing.Size(251, 21);
             this.cbTileset.TabIndex = 8;
-            this.cbTileset.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
+            this.cbTileset.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChangedCad);
             // 
             // label1
             // 
@@ -199,7 +199,7 @@
             this.cbDoor.Name = "cbDoor";
             this.cbDoor.Size = new System.Drawing.Size(236, 21);
             this.cbDoor.TabIndex = 19;
-            this.cbDoor.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
+            this.cbDoor.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChangedCad);
             // 
             // label2
             // 
@@ -230,7 +230,7 @@
             this.cbLevel.Name = "cbLevel";
             this.cbLevel.Size = new System.Drawing.Size(236, 21);
             this.cbLevel.TabIndex = 17;
-            this.cbLevel.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
+            this.cbLevel.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChangedCad);
             // 
             // cbPart
             // 
@@ -241,7 +241,7 @@
             this.cbPart.Name = "cbPart";
             this.cbPart.Size = new System.Drawing.Size(38, 21);
             this.cbPart.TabIndex = 55;
-            this.cbPart.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
+            this.cbPart.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChangedCad);
             // 
             // label5
             // 
@@ -266,7 +266,7 @@
             this.cbViewType.Name = "cbViewType";
             this.cbViewType.Size = new System.Drawing.Size(64, 21);
             this.cbViewType.TabIndex = 58;
-            this.cbViewType.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
+            this.cbViewType.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChangedCad);
             // 
             // label6
             // 

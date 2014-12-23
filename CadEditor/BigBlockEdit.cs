@@ -28,26 +28,8 @@ namespace CadEditor
             updateSaveVisibility();
             curViewType = MapViewType.Tiles;
 
-            Utils.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
-            Utils.setCbItemsCount(cbSmallBlock, ConfigScript.blocksOffset.recCount);
-            Utils.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
-            Utils.setCbItemsCount(cbPart, Math.Max(ConfigScript.getBigBlocksCount() / 256, 1));
-            cbTileset.Items.Clear();
-            for (int i = 0; i < ConfigScript.bigBlocksOffset.recCount; i++)
-            {
-                var str = String.Format("Tileset{0}", i);
-                cbTileset.Items.Add(str);
-            }
-             
-            //generic version
-            cbTileset.SelectedIndex = formMain.CurActiveBigBlockNo;
-            cbVideoNo.SelectedIndex = formMain.CurActiveVideoNo - 0x90;
-            cbSmallBlock.SelectedIndex = formMain.CurActiveBlockNo;
-            cbPaletteNo.SelectedIndex = formMain.CurActivePalleteNo;
-            cbPart.SelectedIndex = 0;
-            cbViewType.SelectedIndex = Math.Min((int)formMain.CurActiveViewType, cbViewType.Items.Count - 1);
+            initControls();
         
-
             blocksPanel.Controls.Clear();
             blocksPanel.SuspendLayout();
             for (int i = 0; i < SMALL_BLOCKS_COUNT; i++)
@@ -68,6 +50,28 @@ namespace CadEditor
             readOnly = false; //must be read from config
             tbbSave.Enabled = !readOnly;
             tbbImport.Enabled = !readOnly;
+        }
+
+        private void initControls()
+        {
+            Utils.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
+            Utils.setCbItemsCount(cbSmallBlock, ConfigScript.blocksOffset.recCount);
+            Utils.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
+            Utils.setCbItemsCount(cbPart, Math.Max(ConfigScript.getBigBlocksCount() / 256, 1));
+            cbTileset.Items.Clear();
+            for (int i = 0; i < ConfigScript.bigBlocksOffset.recCount; i++)
+            {
+                var str = String.Format("Tileset{0}", i);
+                cbTileset.Items.Add(str);
+            }
+
+            //generic version
+            cbTileset.SelectedIndex = formMain.CurActiveBigBlockNo;
+            cbVideoNo.SelectedIndex = formMain.CurActiveVideoNo - 0x90;
+            cbSmallBlock.SelectedIndex = formMain.CurActiveBlockNo;
+            cbPaletteNo.SelectedIndex = formMain.CurActivePalleteNo;
+            cbPart.SelectedIndex = 0;
+            cbViewType.SelectedIndex = Math.Min((int)formMain.CurActiveViewType, cbViewType.Items.Count - 1);
         }
 
         private void prepareAxisLabels()
@@ -108,12 +112,6 @@ namespace CadEditor
             var im = Video.makeObjectsStrip((byte)backId, (byte)curTileset, (byte)palId, 1, curViewType);
             smallBlocks.Images.Clear();
             smallBlocks.Images.AddStrip(im);
-            /*for (int i = 0; i < SMALL_BLOCKS_COUNT ; i++)
-            {
-                var but = (Button)blocksPanel.Controls[i];
-                but.ImageList = smallBlocks;
-                but.ImageIndex = i;
-            }*/
             blocksPanel.Invalidate(true);
         }
 
@@ -289,6 +287,11 @@ namespace CadEditor
 
         private void btExport_Click(object sender, EventArgs e)
         {
+            exportBlocks();
+        }
+
+        private void exportBlocks()
+        {
             //duck tales 2 has other format
             var f = new SelectFile();
             f.Filename = "exportedBigBlocks.bin";
@@ -303,7 +306,7 @@ namespace CadEditor
             }
             else
             {
-                Bitmap result = new Bitmap(64*256, 64); //need some hack for duck tales 1
+                Bitmap result = new Bitmap(64 * 256, 64); //need some hack for duck tales 1
                 using (Graphics g = Graphics.FromImage(result))
                 {
                     for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
