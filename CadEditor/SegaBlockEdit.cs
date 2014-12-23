@@ -77,11 +77,11 @@ namespace CadEditor
         {
             videoChunk = ConfigScript.getVideoChunk(0);
             byte[] pal = ConfigScript.getPal(0);
-            cpal = VideoSega.GetPalette(pal);
+            cpal = ConfigScript.videoSega.GetPalette(pal);
             ilSegaTiles.Images.Clear();
             for (ushort idx = 0; idx < SEGA_TILES_COUNT; idx++)
             {
-                ilSegaTiles.Images.Add(VideoSega.GetZoomTile(videoChunk, idx, cpal, (byte)curActivePalNo, false, false, curScale));
+                ilSegaTiles.Images.Add(ConfigScript.videoSega.GetZoomTile(videoChunk, idx, cpal, (byte)curActivePalNo, false, false, curScale));
             }
         }
 
@@ -135,7 +135,7 @@ namespace CadEditor
                 byte pal = Mapper.PalIdx(word);
                 bool hf = Mapper.HF(word);
                 bool vf = Mapper.VF(word);
-                var b = VideoSega.GetZoomTile(videoChunk, tileIdx, cpal, pal, hf, vf, curScale);
+                var b = ConfigScript.videoSega.GetZoomTile(videoChunk, tileIdx, cpal, pal, hf, vf, curScale);
                 g.DrawImage(b, tileRect);
                 if (i == curSelectedTilePart)
                     g.DrawRectangle(new Pen(Brushes.Red, 2.0f), tileRect);

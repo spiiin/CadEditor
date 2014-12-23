@@ -503,7 +503,7 @@ namespace CadEditor
                     }
                 }
                 for (int i = bigBlocks.Images.Count; i < 256; i++)
-                    bigBlocks.Images.Add(Video.emptyScreen((int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale)));
+                    bigBlocks.Images.Add(VideoHelper.emptyScreen((int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale)));
                 if (showAxis)
                 {
                     for (int i = 0; i < 256; i++)

@@ -201,7 +201,7 @@ namespace CadEditor
             //!!!duplicate in EditLayout.cs
             Image[] scrImages = new Image[ConfigScript.screensOffset[0].recCount];
             for (int i = 0; i < ConfigScript.screensOffset[0].recCount; i++)
-                scrImages[i] = Video.emptyScreen(512, 512);
+                scrImages[i] = VideoHelper.emptyScreen(512, 512);
 
             var screenList = buildScreenRecs(levelNo, stopOnDoors);
 
@@ -230,7 +230,7 @@ namespace CadEditor
                 int scrNo = sortedScreenList[i].no;
                 int addEH = (levelNo == 5 || levelNo == 8) ? 256 : 0; //hack
                 int realScrNo = scrNo - 1 + addEH;
-                scrImages[scrNo] = Video.makeScreen(realScrNo, 0, backId, blockId, blockId, palId);
+                scrImages[scrNo] = ConfigScript.videoNes.makeScreen(realScrNo, 0, backId, blockId, blockId, palId);
             }
             return scrImages;
         }

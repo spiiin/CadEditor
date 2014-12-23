@@ -174,7 +174,7 @@ namespace CadEditor
                 int realScrNo = scrNo - 1 + levelEHadd;
                 if (scrNo != 0) 
                 {
-                    Bitmap bitmap = bitmap = Video.makeScreen(realScrNo, scrLevelNo, backId, blockId, blockId, palId, 2.0f);
+                    Bitmap bitmap = bitmap = ConfigScript.videoNes.makeScreen(realScrNo, scrLevelNo, backId, blockId, blockId, palId, 2.0f);
                     using (var g = Graphics.FromImage(bitmap))
                         g.DrawString(String.Format("{0:X}", scrNo), new Font("Arial", 64), Brushes.White, new Point(0, 0));
                     Bitmap convertedSize = new Bitmap(64, 64);
@@ -447,7 +447,7 @@ namespace CadEditor
                     for (int h = 0; h < curHeight; h++)
                     {
                         int scrNo = curLevelLayerData.layer[h*curWidth + w] - 1;
-                        Bitmap scr = scrNo >= 0 ? Video.makeScreen(scrNo, scrLevelNo, curVideoNo, curBigBlockNo, curBlockNo, curPalleteNo, 2.0f) : Video.emptyScreen(512,512,false);
+                        Bitmap scr = scrNo >= 0 ? ConfigScript.videoNes.makeScreen(scrNo, scrLevelNo, curVideoNo, curBigBlockNo, curBlockNo, curPalleteNo, 2.0f) : VideoHelper.emptyScreen(512,512,false);
                         g.DrawImage(scr, new Point(w*512,h*512));
                     }
                 }

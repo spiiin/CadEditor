@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Windows Desktop
+# Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadEditor", "CadEditor.csproj", "{BD2A990C-9D64-472D-9C78-1429C666604B}"
@@ -14,6 +14,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginMapEditor", "..\PluginMapEditor\PluginMapEditor.csproj", "{7FC87FFB-7EF9-46EB-8B84-62A5BA52B6FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginLevelParamsCad", "..\PluginLevelParamsCad\PluginLevelParamsCad.csproj", "{3A8AEE96-DA24-41FE-BAC5-DAAE7843D4BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginVideoNes", "..\PluginVideoNes\PluginVideoNes.csproj", "{B941BC5F-B083-42D1-905F-665EB708A272}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginVideoSega", "..\PluginVideoSega\PluginVideoSega.csproj", "{64BDE26D-C9E7-4617-85E4-1FFB53E373AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +87,26 @@ Global
 		{3A8AEE96-DA24-41FE-BAC5-DAAE7843D4BD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{3A8AEE96-DA24-41FE-BAC5-DAAE7843D4BD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{3A8AEE96-DA24-41FE-BAC5-DAAE7843D4BD}.Release|x86.ActiveCfg = Release|Any CPU
+		{B941BC5F-B083-42D1-905F-665EB708A272}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B941BC5F-B083-42D1-905F-665EB708A272}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B941BC5F-B083-42D1-905F-665EB708A272}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B941BC5F-B083-42D1-905F-665EB708A272}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B941BC5F-B083-42D1-905F-665EB708A272}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B941BC5F-B083-42D1-905F-665EB708A272}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B941BC5F-B083-42D1-905F-665EB708A272}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B941BC5F-B083-42D1-905F-665EB708A272}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B941BC5F-B083-42D1-905F-665EB708A272}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B941BC5F-B083-42D1-905F-665EB708A272}.Release|x86.ActiveCfg = Release|Any CPU
+		{64BDE26D-C9E7-4617-85E4-1FFB53E373AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64BDE26D-C9E7-4617-85E4-1FFB53E373AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64BDE26D-C9E7-4617-85E4-1FFB53E373AD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{64BDE26D-C9E7-4617-85E4-1FFB53E373AD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{64BDE26D-C9E7-4617-85E4-1FFB53E373AD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{64BDE26D-C9E7-4617-85E4-1FFB53E373AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64BDE26D-C9E7-4617-85E4-1FFB53E373AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64BDE26D-C9E7-4617-85E4-1FFB53E373AD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{64BDE26D-C9E7-4617-85E4-1FFB53E373AD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{64BDE26D-C9E7-4617-85E4-1FFB53E373AD}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

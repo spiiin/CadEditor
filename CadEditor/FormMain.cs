@@ -59,7 +59,6 @@ namespace CadEditor
                 f.setFormMain(this);
                 return f;
             }
-            return null;
         }
 
         private Form getBlocksForm()
@@ -171,7 +170,7 @@ namespace CadEditor
             byte[] videoTiles = ConfigScript.getVideoChunk(curActiveVideoNo);
             byte[] pal = ConfigScript.getPal(curActivePalleteNo);
             int count = ConfigScript.getBigBlocksCount();
-            return VideoSega.makeBigBlocksSega(mapping, videoTiles, pal, count, curScale, curViewType, showAxis);
+            return ConfigScript.videoSega.makeBigBlocks(mapping, videoTiles, pal, count, curScale, curViewType, showAxis);
         }
 
         private void setBlocks(bool needToRefillBlockPanel)
@@ -226,13 +225,13 @@ namespace CadEditor
             if (ConfigScript.isUseSegaGraphics())
                 bigImages = makeSegaBigBlocks();
             else
-                bigImages = Video.makeBigBlocks(backId, curActiveLevelForScreen, blockId, bigTileIndex, palId, smallObjectsType, smallBlockScaleFactor, blockWidth, blockHeight, curButtonScale, curViewType, showAxis);
+                bigImages = ConfigScript.videoNes.makeBigBlocks(backId, curActiveLevelForScreen, blockId, bigTileIndex, palId, smallObjectsType, smallBlockScaleFactor, blockWidth, blockHeight, curButtonScale, curViewType, showAxis);
             bigBlocks.Images.AddRange(bigImages);
 
             //tt add
             for (int i = ConfigScript.getBigBlocksCount(); i < 256; i++)
             {
-                bigBlocks.Images.Add(Video.emptyScreen((int)(blockWidth*curButtonScale),(int)(blockHeight*curButtonScale)));
+                bigBlocks.Images.Add(VideoHelper.emptyScreen((int)(blockWidth*curButtonScale),(int)(blockHeight*curButtonScale)));
             }
             curActiveBlock = 0;
 

@@ -37,7 +37,7 @@ namespace CadEditor
             {
                 for (int i = 0; i < 16; i++)
                 {
-                    g.FillRectangle(new SolidBrush(Video.NesColors[curPal[i]]), i % 4 * 32, (i / 4) * 32, 32, 32);
+                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.NesColors[curPal[i]]), i % 4 * 32, (i / 4) * 32, 32, 32);
                     if (showNo)
                         g.DrawString(String.Format("{0:X2}", curPal[i]), new Font("Arial", 6), Brushes.White, new Rectangle(i % 4 * 32, (i / 4) * 32, 32, 32));
                 }
@@ -49,7 +49,7 @@ namespace CadEditor
         {
             setPal();
             byte videoPageId = (byte)(curActiveVideo + 0x90);
-            Bitmap imageStrip = Video.makeImageStrip(ConfigScript.getVideoChunk(videoPageId), curPal, curSubPal, 4);
+            Bitmap imageStrip = ConfigScript.videoNes.makeImageStrip(ConfigScript.getVideoChunk(videoPageId), curPal, curSubPal, 4);
             Bitmap resultVideo = new Bitmap(512, 512);
             using (Graphics g = Graphics.FromImage(resultVideo))
             {
@@ -113,7 +113,7 @@ namespace CadEditor
         private void btExport_Click(object sender, EventArgs e)
         {
             var f = new SelectFile();
-            f.Filename = "exportedVideo.bin";
+            f.Filename = "exportedConfigScript.videoNes.bin";
             f.ShowDialog();
             if (!f.Result)
                 return;
@@ -126,7 +126,7 @@ namespace CadEditor
         private void btImport_Click(object sender, EventArgs e)
         {
             var f = new SelectFile();
-            f.Filename = "exportedVideo.bin";
+            f.Filename = "exportedConfigScript.videoNes.bin";
             f.ShowDialog();
             if (!f.Result)
                 return;

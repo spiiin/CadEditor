@@ -25,7 +25,7 @@ namespace CadEditor
             videos = new ImageList[4];
             for (int i = 0; i < 4; i++)
             {
-                Bitmap imageStrip = Video.makeImageStrip(ConfigScript.getVideoChunk(videoPageId), curPal, i, 2);
+                Bitmap imageStrip = ConfigScript.videoNes.makeImageStrip(ConfigScript.getVideoChunk(videoPageId), curPal, i, 2);
                 videos[i] = new ImageList();
                 videos[i].ImageSize = new Size(16, 16);
                 videos[i].Images.AddStrip(imageStrip);

@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace CadEditor
 {
-    class MapEditor
+    public class MapEditor
     {
         /*public MapEditor(PictureBox _mapScreen, PictureBox _activeBlock, Panel _pnView, ImageList _bigBlocks)
         {

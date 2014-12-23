@@ -39,10 +39,12 @@ namespace CadEditor
                 nesColors = callFromScript<Color[]>(asm, data, "*.getNesColors", null);
 
                 //test plugins
-                loadPluginWithSilentCatch("PluginMapEditor.dll");
-                loadPluginWithSilentCatch("PluginHexEditor.dll");
-                loadPluginWithSilentCatch("PluginLevelParamsCad.dll");
+                loadPluginWithSilentCatch(()=>addPlugin("PluginMapEditor.dll"));
+                loadPluginWithSilentCatch(()=>addPlugin("PluginHexEditor.dll"));
+                loadPluginWithSilentCatch(()=>addPlugin("PluginLevelParamsCad.dll"));
                 plugins.Reverse();
+                loadPluginWithSilentCatch(() => videoNes = PluginLoader.loadPlugin<IVideoPluginNes>("PluginVideoNes.dll"));
+                loadPluginWithSilentCatch(() => videoSega = PluginLoader.loadPlugin<IVideoPluginSega>("PluginVideoSega.dll"));
             }
             catch (Exception)
             {
@@ -56,13 +58,13 @@ namespace CadEditor
                 plugins.Add(plugin);
         }
 
-        private static void loadPluginWithSilentCatch(string filename)
+        private static void loadPluginWithSilentCatch(Action action)
         {
             try
             {
-                addPlugin(filename);
+                action();
             }
-            catch (Exception _)
+            catch (Exception)
             {
             }
         }
@@ -176,7 +178,7 @@ namespace CadEditor
 
         public static IPlugin LoadPlugin(string pluginName)
         {
-            return PluginLoader.loadPlugin(pluginName);
+            return PluginLoader.loadPlugin<IPlugin>(pluginName);
         }
 
         //0x90 - background memory
@@ -489,5 +491,7 @@ namespace CadEditor
         public static bool showDumpFileField;
 
         public static List<IPlugin> plugins = new List<IPlugin>();
+        public static IVideoPluginNes videoNes;
+        public static IVideoPluginSega videoSega;
     }
 }

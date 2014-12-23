@@ -169,8 +169,7 @@
       <DependentUpon>SelectFile.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils.cs" />
-    <Compile Include="Video.cs" />
-    <Compile Include="VideoSega.cs" />
+    <Compile Include="VideoHelper.cs" />
     <EmbeddedResource Include="BigBlockEditCad.resx">
       <DependentUpon>BigBlockEditCad.cs</DependentUpon>
     </EmbeddedResource>

@@ -477,4 +477,12 @@ namespace CadEditor
         LM,
         _3E,
     };
+
+    public enum MapViewType
+    {
+        Tiles,
+        ObjType,
+        ObjNumbers,
+        SmallObjNumbers,
+    };
 }

@@ -84,7 +84,7 @@ namespace CadEditor
                 palId = dd.palId;
             }
 
-            var im = Video.makeObjectsStrip((byte)backId, (byte)curTileset, (byte)palId, 1, curViewType);
+            var im = ConfigScript.videoNes.makeObjectsStrip((byte)backId, (byte)curTileset, (byte)palId, 1, curViewType);
             smallBlocks.Images.Clear();
             smallBlocks.Images.AddStrip(im);
             blocksPanel.Invalidate(true);
@@ -168,7 +168,7 @@ namespace CadEditor
                 {
                     for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
                     {
-                        Bitmap b = Video.makeBigBlock(i, 64, 64, bigBlockIndexes, smallBlocks);
+                        Bitmap b = ConfigScript.videoNes.makeBigBlock(i, 64, 64, bigBlockIndexes, smallBlocks);
                         g.DrawImage(b, new Point(64 * i, 0));
                     }
                 }

@@ -136,7 +136,7 @@ namespace CadEditor
         {
             if (Globals.gameType == GameType.LM)
                 scrNo = (scrNo + 1) % 256;
-            return  Video.makeScreen(scrNo, levelNo, curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo, curScale);
+            return  ConfigScript.videoNes.makeScreen(scrNo, levelNo, curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo, curScale);
         }
 
         private void setBackImage(int levelNo)
@@ -150,7 +150,7 @@ namespace CadEditor
                 if (scrNo < ConfigScript.screensOffset[levelNo].recCount)
                     mapScreen.Image = (Globals.gameType != GameType.CAD) ? makeCurScreen(scrNo - 1, getLevelRecForGameType().levelNo) : scrImages[scrNo];
                 else
-                    mapScreen.Image = Video.emptyScreen(512, 512);
+                    mapScreen.Image = VideoHelper.emptyScreen(512, 512);
             }
         }
 

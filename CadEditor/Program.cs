@@ -16,7 +16,7 @@ namespace CadEditor
                 if (args.Length == 1)
                     globalConfigName = args[0];
                 ConfigScript.LoadGlobalsFromFile(globalConfigName);
-                Video.updateColorsFromConfig();
+                ConfigScript.videoNes.updateColorsFromConfig();
             }
             catch (Exception)
             {

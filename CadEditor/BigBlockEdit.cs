@@ -107,7 +107,7 @@ namespace CadEditor
             backId = curVideo;
             palId = curPallete;
 
-            var im = Video.makeObjectsStrip((byte)backId, (byte)curTileset, (byte)palId, 1, curViewType);
+            var im = ConfigScript.videoNes.makeObjectsStrip((byte)backId, (byte)curTileset, (byte)palId, 1, curViewType);
             smallBlocks.Images.Clear();
             smallBlocks.Images.AddStrip(im);
             blocksPanel.Invalidate(true);
@@ -144,13 +144,13 @@ namespace CadEditor
                         {
                             //todo: write code to export blocks for TinyToon
                             /*case GameType.TT:
-                                b = Video.makeBigBlockTT(i, 64, 64, bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
+                                b = ConfigScript.videoNes.makeBigBlockTT(i, 64, 64, bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
                                 break;*/
                             case GameType._3E:
-                                b = Video.makeBigBlock3E(i, 64, 64, bigBlockIndexes, smallBlocks);
+                                b = ConfigScript.videoNes.makeBigBlock3E(i, 64, 64, bigBlockIndexes, smallBlocks);
                                 break;
                             default:
-                                b = Video.makeBigBlock(i, 64, 64, bigBlockIndexes, smallBlocks);
+                                b = ConfigScript.videoNes.makeBigBlock(i, 64, 64, bigBlockIndexes, smallBlocks);
                                 break;
                         }
                         g.DrawImage(b, new Point(64 * i, 0));
