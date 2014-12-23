@@ -74,7 +74,6 @@
             this.bttEnemies = new System.Windows.Forms.ToolStripButton();
             this.bttLayout = new System.Windows.Forms.ToolStripButton();
             this.bttVideo = new System.Windows.Forms.ToolStripButton();
-            this.bttMap = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.bttStructures = new System.Windows.Forms.ToolStripButton();
             this.bttConfig = new System.Windows.Forms.ToolStripButton();
@@ -499,7 +498,6 @@
             this.bttEnemies,
             this.bttLayout,
             this.bttVideo,
-            this.bttMap,
             this.toolStripSeparator3,
             this.bttStructures,
             this.bttConfig,
@@ -638,16 +636,6 @@
             this.bttVideo.Size = new System.Drawing.Size(23, 22);
             this.bttVideo.Text = "Edit Video";
             this.bttVideo.Click += new System.EventHandler(this.btSubeditor_Click);
-            // 
-            // bttMap
-            // 
-            this.bttMap.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttMap.Image = ((System.Drawing.Image)(resources.GetObject("bttMap.Image")));
-            this.bttMap.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttMap.Name = "bttMap";
-            this.bttMap.Size = new System.Drawing.Size(23, 22);
-            this.bttMap.Text = "Edit Map";
-            this.bttMap.Click += new System.EventHandler(this.btSubeditor_Click);
             // 
             // toolStripSeparator3
             // 
@@ -1067,7 +1055,6 @@
         private System.Windows.Forms.ToolStripButton bttEnemies;
         private System.Windows.Forms.ToolStripButton bttLayout;
         private System.Windows.Forms.ToolStripButton bttVideo;
-        private System.Windows.Forms.ToolStripButton bttMap;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Panel pnElements;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;

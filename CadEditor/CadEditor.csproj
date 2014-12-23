@@ -102,12 +102,6 @@
     <Compile Include="EditLevelData.Designer.cs">
       <DependentUpon>EditLevelData.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditMap.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EditMap.Designer.cs">
-      <DependentUpon>EditMap.cs</DependentUpon>
-    </Compile>
     <Compile Include="EditVideo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -199,9 +193,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditLevelData.resx">
       <DependentUpon>EditLevelData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditMap.resx">
-      <DependentUpon>EditMap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditVideo.resx">
       <DependentUpon>EditVideo.cs</DependentUpon>

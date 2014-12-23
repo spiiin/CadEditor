@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
+# Visual Studio Express 2013 for Windows Desktop
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadEditor", "CadEditor.csproj", "{BD2A990C-9D64-472D-9C78-1429C666604B}"
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsVerifier", "..\SettingsVerifier\SettingsVerifier.csproj", "{3FD2E457-380B-4AF3-B8B5-A11D6FA228DA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginHexEditor", "..\PluginHexEditor\PluginHexEditor.csproj", "{56C8768C-CBE8-492C-A58C-9A2766B1DD68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginMapEditor", "..\PluginMapEditor\PluginMapEditor.csproj", "{7FC87FFB-7EF9-46EB-8B84-62A5BA52B6FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,16 @@ Global
 		{56C8768C-CBE8-492C-A58C-9A2766B1DD68}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{56C8768C-CBE8-492C-A58C-9A2766B1DD68}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{56C8768C-CBE8-492C-A58C-9A2766B1DD68}.Release|x86.ActiveCfg = Release|Any CPU
+		{7FC87FFB-7EF9-46EB-8B84-62A5BA52B6FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FC87FFB-7EF9-46EB-8B84-62A5BA52B6FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FC87FFB-7EF9-46EB-8B84-62A5BA52B6FA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7FC87FFB-7EF9-46EB-8B84-62A5BA52B6FA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7FC87FFB-7EF9-46EB-8B84-62A5BA52B6FA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7FC87FFB-7EF9-46EB-8B84-62A5BA52B6FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FC87FFB-7EF9-46EB-8B84-62A5BA52B6FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FC87FFB-7EF9-46EB-8B84-62A5BA52B6FA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7FC87FFB-7EF9-46EB-8B84-62A5BA52B6FA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7FC87FFB-7EF9-46EB-8B84-62A5BA52B6FA}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

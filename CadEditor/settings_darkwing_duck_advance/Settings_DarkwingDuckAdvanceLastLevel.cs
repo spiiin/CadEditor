@@ -11,7 +11,6 @@ public class Data:CapcomBase
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x20010   , 300 , 0x40);   }
   public IList<LevelRec> getLevelRecs() { return levelRecsDwd; }
   public string[] getBlockTypeNames()   { return objTypesDwd;  }
-  public bool isMapEditorEnabled()      { return true; }
   public GetObjectsFunc getObjectsFunc() { return getObjectsDwdAdvanceLastLevel; }
   public SetObjectsFunc setObjectsFunc() { return setObjectsDwdAdvanceLastLevel; }
   

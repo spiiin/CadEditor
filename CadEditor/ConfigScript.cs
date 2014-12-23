@@ -39,13 +39,19 @@ namespace CadEditor
                 nesColors = callFromScript<Color[]>(asm, data, "*.getNesColors", null);
 
                 //test plugins
-                var hexPlugin = LoadPlugin("PluginHexEditor.dll");
-                if (hexPlugin != null)
-                    plugins.Add(hexPlugin);
+                addPlugin("PluginMapEditor.dll");
+                addPlugin("PluginHexEditor.dll");
             }
-            catch (Exception e)
+            catch (Exception _)
             {
             }
+        }
+
+        private static void addPlugin(string pluginName)
+        {
+            var plugin = LoadPlugin(pluginName);
+            if (plugin != null)
+                plugins.Add(plugin);
         }
 
         public static void LoadFromFile(string fileName)
@@ -122,7 +128,6 @@ namespace CadEditor
             isLayoutEditorEnabled = callFromScript(asm, data, "*.isLayoutEditorEnabled", true);
             isEnemyEditorEnabled = callFromScript(asm, data, "*.isEnemyEditorEnabled", true);
             isVideoEditorEnabled = callFromScript(asm, data, "*.isVideoEditorEnabled", true);
-            isMapEditorEnabled = callFromScript(asm, data, "*.isMapEditorEnabled", false); //specific for dwd
             objTypesPicturesDir = callFromScript(asm, data, "*.getObjTypesPicturesDir", "obj_sprites");
 
             showScrollsInLayout = callFromScript(asm, data, "*.isShowScrollsInLayout", true);
@@ -442,7 +447,6 @@ namespace CadEditor
         public static bool isLayoutEditorEnabled;
         public static bool isEnemyEditorEnabled;
         public static bool isVideoEditorEnabled;
-        public static bool isMapEditorEnabled;
 
         public static bool showScrollsInLayout;
         public static int scrollsOffsetFromLayout;
