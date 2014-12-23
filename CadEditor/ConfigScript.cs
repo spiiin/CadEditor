@@ -37,8 +37,13 @@ namespace CadEditor
                 dumpName = callFromScript(asm, data, "*.getDumpName", "");
                 showDumpFileField = callFromScript(asm, data, "*.showDumpFileField", false);
                 nesColors = callFromScript<Color[]>(asm, data, "*.getNesColors", null);
+
+                //test plugins
+                var hexPlugin = LoadPlugin("PluginHexEditor.dll");
+                if (hexPlugin != null)
+                    plugins.Add(hexPlugin);
             }
-            catch (Exception)
+            catch (Exception e)
             {
             }
         }
@@ -149,6 +154,11 @@ namespace CadEditor
                 DirPtrAdd = (int)asm.InvokeInst(data, "*.getDirPtrAdd");
                 DoorRecBaseOffset = (int)asm.InvokeInst(data, "*.getDoorRecBaseOffset");
             }
+        }
+
+        public static IPlugin LoadPlugin(string pluginName)
+        {
+            return PluginLoader.loadPlugin(pluginName);
         }
 
         //0x90 - background memory
@@ -460,5 +470,7 @@ namespace CadEditor
         public static string  cfgName;
         public static Color[] nesColors;
         public static bool showDumpFileField;
+
+        public static List<IPlugin> plugins = new List<IPlugin>();
     }
 }

@@ -42,6 +42,8 @@ namespace CadEditor
                  { bttMap,          ()=>{ return new EditMap();}    },
                  { bttConfig,       ()=>{ var f = new FormConfig();  f.setFormMain(this); f.onApply += reloadCallback; return f;}    },
             };
+
+            ConfigScript.plugins.ForEach((p) => p.addSubeditorButton(this));
         }
 
         private Form getBlocksForm()
@@ -788,19 +790,6 @@ namespace CadEditor
             reloadLevel(false);
         }
 
-        private void btHex_Click(object sender, EventArgs e)
-        {
-            if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
-            {
-                updateSaveVisibility();
-                var f = new EditHexEditor();
-                f.setHighlightZone(ConfigScript.screensOffset[curActiveLevelForScreen].beginAddr + ConfigScript.screensOffset[curActiveLevelForScreen].recSize * curActiveScreen, ConfigScript.screensOffset[curActiveLevelForScreen].recSize);
-                f.ShowDialog();
-                reloadLevel();
-            }
-            
-        }
-
         private FormClosedEventHandler subeditorClosed(ToolStripButton enabledAfterCloseButton)
         {
             return delegate(object sender, FormClosedEventArgs e) 
@@ -810,14 +799,21 @@ namespace CadEditor
             };
         }
 
-        private void subeditorOpen(Form f, ToolStripButton b)
+        public void subeditorOpen(Form f, ToolStripButton b, bool showDialog = false)
         {
             if (Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
             {
                 updateSaveVisibility();
                 b.Enabled = false;
-                f.Show();
                 f.FormClosed += subeditorClosed(b);
+                if (showDialog)
+                {
+                  f.ShowDialog();
+                }
+                else
+                {
+                  f.Show();
+                }
             }
         }
 
@@ -864,6 +860,11 @@ namespace CadEditor
         public int LevelNoForScreens
         {
             get { return curActiveLevelForScreen; }
+        }
+
+        public int ScreenNo
+        {
+            get { return curActiveScreen; }
         }
 
         public ImageList getBigBlockImageList()
@@ -1024,6 +1025,11 @@ namespace CadEditor
             int index = cbPanelNo.SelectedIndex;
             for (int i = 0; i < blocksPanels.Length; i++)
                 blocksPanels[i].Visible = i == index;
+        }
+
+        public void addSubeditorButton(ToolStripItem item)
+        {
+          toolStrip1.Items.Insert(toolStrip1.Items.IndexOf(bttMap)+1, item);
         }
     }
 }

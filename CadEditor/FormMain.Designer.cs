@@ -75,7 +75,6 @@
             this.bttLayout = new System.Windows.Forms.ToolStripButton();
             this.bttVideo = new System.Windows.Forms.ToolStripButton();
             this.bttMap = new System.Windows.Forms.ToolStripButton();
-            this.bttHex = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.bttStructures = new System.Windows.Forms.ToolStripButton();
             this.bttConfig = new System.Windows.Forms.ToolStripButton();
@@ -501,7 +500,6 @@
             this.bttLayout,
             this.bttVideo,
             this.bttMap,
-            this.bttHex,
             this.toolStripSeparator3,
             this.bttStructures,
             this.bttConfig,
@@ -650,16 +648,6 @@
             this.bttMap.Size = new System.Drawing.Size(23, 22);
             this.bttMap.Text = "Edit Map";
             this.bttMap.Click += new System.EventHandler(this.btSubeditor_Click);
-            // 
-            // bttHex
-            // 
-            this.bttHex.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttHex.Image = ((System.Drawing.Image)(resources.GetObject("bttHex.Image")));
-            this.bttHex.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttHex.Name = "bttHex";
-            this.bttHex.Size = new System.Drawing.Size(23, 22);
-            this.bttHex.Text = "Hex Editor";
-            this.bttHex.Click += new System.EventHandler(this.btHex_Click);
             // 
             // toolStripSeparator3
             // 
@@ -1091,7 +1079,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem x3ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem x4ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton bttHex;
         private System.Windows.Forms.ToolStripButton bttShowBrush;
         private System.Windows.Forms.ToolStripMenuItem x025ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem x05ToolStripMenuItem;
