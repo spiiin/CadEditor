@@ -38,11 +38,6 @@
             this.pbActive = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.subPalletes = new System.Windows.Forms.ImageList(this.components);
-            this.pnEditCad = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.cbDoor = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cbLevel = new System.Windows.Forms.ComboBox();
             this.pnGeneric = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.cbSmallBlock = new System.Windows.Forms.ComboBox();
@@ -55,6 +50,7 @@
             this.cbViewType = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lbBigBlockNo = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tbbSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -62,10 +58,8 @@
             this.tbbImport = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tbbDeleteAll = new System.Windows.Forms.ToolStripButton();
-            this.lbBigBlockNo = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).BeginInit();
-            this.pnEditCad.SuspendLayout();
             this.pnGeneric.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -151,95 +145,6 @@
             this.subPalletes.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
             this.subPalletes.ImageSize = new System.Drawing.Size(16, 16);
             this.subPalletes.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // pnEditCad
-            // 
-            this.pnEditCad.Controls.Add(this.label4);
-            this.pnEditCad.Controls.Add(this.cbDoor);
-            this.pnEditCad.Controls.Add(this.label2);
-            this.pnEditCad.Controls.Add(this.cbLevel);
-            this.pnEditCad.Location = new System.Drawing.Point(8, 46);
-            this.pnEditCad.Name = "pnEditCad";
-            this.pnEditCad.Size = new System.Drawing.Size(251, 81);
-            this.pnEditCad.TabIndex = 51;
-            this.pnEditCad.Visible = false;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 42);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(33, 13);
-            this.label4.TabIndex = 20;
-            this.label4.Text = "Door:";
-            // 
-            // cbDoor
-            // 
-            this.cbDoor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbDoor.FormattingEnabled = true;
-            this.cbDoor.Items.AddRange(new object[] {
-            "None",
-            "Door 1",
-            "Door 2",
-            "Door 3",
-            "Door 4",
-            "Door 5",
-            "Door 6",
-            "Door 7",
-            "Door 8",
-            "Door 9",
-            "Door A",
-            "Door B",
-            "Door C",
-            "Door D",
-            "Door E",
-            "Door F",
-            "Door 10",
-            "Door 11",
-            "Door 12",
-            "Door 13",
-            "Door 14",
-            "Door 15",
-            "Door 16",
-            "Door 17",
-            "Door 18",
-            "Door 19"});
-            this.cbDoor.Location = new System.Drawing.Point(6, 58);
-            this.cbDoor.Name = "cbDoor";
-            this.cbDoor.Size = new System.Drawing.Size(236, 21);
-            this.cbDoor.TabIndex = 19;
-            this.cbDoor.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 2);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 13);
-            this.label2.TabIndex = 18;
-            this.label2.Text = "View with level:";
-            // 
-            // cbLevel
-            // 
-            this.cbLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbLevel.FormattingEnabled = true;
-            this.cbLevel.Items.AddRange(new object[] {
-            "Level 0",
-            "Level A",
-            "Level B",
-            "Level C",
-            "Level D",
-            "Level E",
-            "Level F",
-            "Level G",
-            "Level H",
-            "Level I",
-            "Level J"});
-            this.cbLevel.Location = new System.Drawing.Point(6, 18);
-            this.cbLevel.Name = "cbLevel";
-            this.cbLevel.Size = new System.Drawing.Size(236, 21);
-            this.cbLevel.TabIndex = 17;
-            this.cbLevel.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
             // 
             // pnGeneric
             // 
@@ -419,7 +324,6 @@
             this.splitContainer1.Panel1.Controls.Add(this.cbViewType);
             this.splitContainer1.Panel1.Controls.Add(this.label3);
             this.splitContainer1.Panel1.Controls.Add(this.label6);
-            this.splitContainer1.Panel1.Controls.Add(this.pnEditCad);
             // 
             // splitContainer1.Panel2
             // 
@@ -428,6 +332,16 @@
             this.splitContainer1.Size = new System.Drawing.Size(808, 547);
             this.splitContainer1.SplitterDistance = 271;
             this.splitContainer1.TabIndex = 62;
+            // 
+            // lbBigBlockNo
+            // 
+            this.lbBigBlockNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbBigBlockNo.AutoSize = true;
+            this.lbBigBlockNo.Location = new System.Drawing.Point(502, 528);
+            this.lbBigBlockNo.Name = "lbBigBlockNo";
+            this.lbBigBlockNo.Size = new System.Drawing.Size(13, 13);
+            this.lbBigBlockNo.TabIndex = 59;
+            this.lbBigBlockNo.Text = "()";
             // 
             // toolStrip1
             // 
@@ -494,16 +408,6 @@
             this.tbbDeleteAll.Text = "Clear All";
             this.tbbDeleteAll.Click += new System.EventHandler(this.btClear_Click);
             // 
-            // lbBigBlockNo
-            // 
-            this.lbBigBlockNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbBigBlockNo.AutoSize = true;
-            this.lbBigBlockNo.Location = new System.Drawing.Point(502, 528);
-            this.lbBigBlockNo.Name = "lbBigBlockNo";
-            this.lbBigBlockNo.Size = new System.Drawing.Size(13, 13);
-            this.lbBigBlockNo.TabIndex = 59;
-            this.lbBigBlockNo.Text = "()";
-            // 
             // BigBlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -521,8 +425,6 @@
             this.Load += new System.EventHandler(this.BigBlockEdit_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).EndInit();
-            this.pnEditCad.ResumeLayout(false);
-            this.pnEditCad.PerformLayout();
             this.pnGeneric.ResumeLayout(false);
             this.pnGeneric.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -547,11 +449,6 @@
         private System.Windows.Forms.PictureBox pbActive;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ImageList subPalletes;
-        private System.Windows.Forms.Panel pnEditCad;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox cbDoor;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cbLevel;
         private System.Windows.Forms.Panel pnGeneric;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox cbPaletteNo;

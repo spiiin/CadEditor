@@ -1,0 +1,5 @@
+/CadEditor/*.nes
+/CadEditor/obj/x86/Debug
+/PluginHexEditor/obj/Debug
+/PluginLevelParamsCad/obj/Debug
+/PluginMapEditor/obj/Debug
