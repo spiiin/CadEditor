@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginHexEditor", "..\Plugi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginMapEditor", "..\PluginMapEditor\PluginMapEditor.csproj", "{7FC87FFB-7EF9-46EB-8B84-62A5BA52B6FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginLevelParamsCad", "..\PluginLevelParamsCad\PluginLevelParamsCad.csproj", "{3A8AEE96-DA24-41FE-BAC5-DAAE7843D4BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,16 @@ Global
 		{7FC87FFB-7EF9-46EB-8B84-62A5BA52B6FA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7FC87FFB-7EF9-46EB-8B84-62A5BA52B6FA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{7FC87FFB-7EF9-46EB-8B84-62A5BA52B6FA}.Release|x86.ActiveCfg = Release|Any CPU
+		{3A8AEE96-DA24-41FE-BAC5-DAAE7843D4BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A8AEE96-DA24-41FE-BAC5-DAAE7843D4BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A8AEE96-DA24-41FE-BAC5-DAAE7843D4BD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3A8AEE96-DA24-41FE-BAC5-DAAE7843D4BD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3A8AEE96-DA24-41FE-BAC5-DAAE7843D4BD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3A8AEE96-DA24-41FE-BAC5-DAAE7843D4BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A8AEE96-DA24-41FE-BAC5-DAAE7843D4BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A8AEE96-DA24-41FE-BAC5-DAAE7843D4BD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3A8AEE96-DA24-41FE-BAC5-DAAE7843D4BD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3A8AEE96-DA24-41FE-BAC5-DAAE7843D4BD}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

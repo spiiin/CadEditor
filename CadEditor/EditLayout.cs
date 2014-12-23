@@ -437,12 +437,6 @@ namespace CadEditor
             objPanel.Invalidate(true);
         }
 
-        private void btLevelParams_Click(object sender, EventArgs e)
-        {
-            var f = new EditLevelData();
-            f.ShowDialog();
-        }
-
         private Bitmap makeLevelImage()
         {
             var answer = new Bitmap(curWidth*512, curHeight*512);

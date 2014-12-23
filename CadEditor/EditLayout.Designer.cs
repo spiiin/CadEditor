@@ -46,7 +46,6 @@
             this.btPreview = new System.Windows.Forms.Button();
             this.dirSprites = new System.Windows.Forms.ImageList(this.components);
             this.doorsPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.btLevelParams = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -62,6 +61,7 @@
             this.pnSelectScroll = new System.Windows.Forms.Panel();
             this.btExport = new System.Windows.Forms.Button();
             this.pnParamGeneric = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.cbPaletteNo = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -70,7 +70,6 @@
             this.cbBigBlockNo = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cbVideoNo = new System.Windows.Forms.ComboBox();
-            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnLevelLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMap)).BeginInit();
@@ -228,16 +227,6 @@
             this.doorsPanel.Size = new System.Drawing.Size(328, 94);
             this.doorsPanel.TabIndex = 24;
             // 
-            // btLevelParams
-            // 
-            this.btLevelParams.Location = new System.Drawing.Point(3, 43);
-            this.btLevelParams.Name = "btLevelParams";
-            this.btLevelParams.Size = new System.Drawing.Size(64, 39);
-            this.btLevelParams.TabIndex = 29;
-            this.btLevelParams.Text = "edit level params";
-            this.btLevelParams.UseVisualStyleBackColor = true;
-            this.btLevelParams.Click += new System.EventHandler(this.btLevelParams_Click);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -338,7 +327,6 @@
             // 
             this.pnCad.Controls.Add(this.label1);
             this.pnCad.Controls.Add(this.cbLevel);
-            this.pnCad.Controls.Add(this.btLevelParams);
             this.pnCad.Location = new System.Drawing.Point(333, 141);
             this.pnCad.Name = "pnCad";
             this.pnCad.Size = new System.Drawing.Size(72, 100);
@@ -398,6 +386,15 @@
             this.pnParamGeneric.Name = "pnParamGeneric";
             this.pnParamGeneric.Size = new System.Drawing.Size(72, 193);
             this.pnParamGeneric.TabIndex = 53;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(3, 15);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(57, 13);
+            this.label10.TabIndex = 49;
+            this.label10.Text = "(for export)";
             // 
             // label9
             // 
@@ -519,15 +516,6 @@
             this.cbVideoNo.TabIndex = 41;
             this.cbVideoNo.SelectedIndexChanged += new System.EventHandler(this.cbVideoNo_SelectedIndexChanged);
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 15);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(57, 13);
-            this.label10.TabIndex = 49;
-            this.label10.Text = "(for export)";
-            // 
             // EditLayout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -591,7 +579,6 @@
         private System.Windows.Forms.Button btPreview;
         private System.Windows.Forms.ImageList dirSprites;
         private System.Windows.Forms.FlowLayoutPanel doorsPanel;
-        private System.Windows.Forms.Button btLevelParams;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;

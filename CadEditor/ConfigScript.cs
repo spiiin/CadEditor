@@ -41,6 +41,8 @@ namespace CadEditor
                 //test plugins
                 loadPluginWithSilentCatch("PluginMapEditor.dll");
                 loadPluginWithSilentCatch("PluginHexEditor.dll");
+                loadPluginWithSilentCatch("PluginLevelParamsCad.dll");
+                plugins.Reverse();
             }
             catch (Exception)
             {

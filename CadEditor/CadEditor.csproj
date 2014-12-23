@@ -65,6 +65,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BigBlockEditCad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BigBlockEditCad.Designer.cs">
+      <DependentUpon>BigBlockEditCad.cs</DependentUpon>
+    </Compile>
     <Compile Include="BigBlockEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,12 +101,6 @@
     </Compile>
     <Compile Include="EditLayout.Designer.cs">
       <DependentUpon>EditLayout.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EditLevelData.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EditLevelData.Designer.cs">
-      <DependentUpon>EditLevelData.cs</DependentUpon>
     </Compile>
     <Compile Include="EditVideo.cs">
       <SubType>Form</SubType>
@@ -176,6 +176,9 @@
     <Compile Include="Utils.cs" />
     <Compile Include="Video.cs" />
     <Compile Include="VideoSega.cs" />
+    <EmbeddedResource Include="BigBlockEditCad.resx">
+      <DependentUpon>BigBlockEditCad.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BigBlockEdit.resx">
       <DependentUpon>BigBlockEdit.cs</DependentUpon>
     </EmbeddedResource>
@@ -190,9 +193,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditLayout.resx">
       <DependentUpon>EditLayout.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditLevelData.resx">
-      <DependentUpon>EditLevelData.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditVideo.resx">
       <DependentUpon>EditVideo.cs</DependentUpon>
