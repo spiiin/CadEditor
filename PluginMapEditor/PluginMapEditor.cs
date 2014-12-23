@@ -23,7 +23,7 @@ namespace PluginMapEditor
         private void btMap_Click(object sender, EventArgs e)
         {
             var f = new EditMap();
-            formMain.subeditorOpen(f, (ToolStripButton)sender, true);
+            formMain.subeditorOpen(f, (ToolStripButton)sender);
         }
 
         FormMain formMain;
