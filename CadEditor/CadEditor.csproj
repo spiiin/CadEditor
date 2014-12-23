@@ -162,12 +162,6 @@
     <Compile Include="SegaBlockEdit.Designer.cs">
       <DependentUpon>SegaBlockEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="SelectDoorIndex.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SelectDoorIndex.Designer.cs">
-      <DependentUpon>SelectDoorIndex.cs</DependentUpon>
-    </Compile>
     <Compile Include="SelectFile.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -231,9 +225,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SegaBlockEdit.resx">
       <DependentUpon>SegaBlockEdit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SelectDoorIndex.resx">
-      <DependentUpon>SelectDoorIndex.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SelectFile.resx">
       <DependentUpon>SelectFile.cs</DependentUpon>

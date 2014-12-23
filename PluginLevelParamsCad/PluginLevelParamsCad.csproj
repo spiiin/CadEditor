@@ -52,10 +52,19 @@
     </Compile>
     <Compile Include="PluginLevelParams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectDoorIndex.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectDoorIndex.Designer.cs">
+      <DependentUpon>SelectDoorIndex.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="EditLevelData.resx">
       <DependentUpon>EditLevelData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectDoorIndex.resx">
+      <DependentUpon>SelectDoorIndex.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
