@@ -11,6 +11,10 @@ namespace PluginLevelParamsCad
 {
     public class PluginLevelParams : IPlugin
     {
+        public string getName()
+        {
+            return "Chip and Dale Level Parameters Editor";
+        }
         public void addSubeditorButton(FormMain formMain)
         {
             this.formMain = formMain;

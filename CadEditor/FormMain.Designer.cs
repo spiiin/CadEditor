@@ -106,6 +106,8 @@
             this.cbLevelNo = new System.Windows.Forms.ComboBox();
             this.cbUseStructs = new System.Windows.Forms.CheckBox();
             this.lbStructures = new System.Windows.Forms.ListBox();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.tbbShowPluginInfo = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -510,7 +512,9 @@
             this.toolStripSeparator5,
             this.bttShowLayer1,
             this.bttShowLayer2,
-            this.bttLayer});
+            this.bttLayer,
+            this.toolStripSeparator7,
+            this.tbbShowPluginInfo});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1073, 25);
@@ -977,6 +981,21 @@
             this.lbStructures.Visible = false;
             this.lbStructures.SelectedIndexChanged += new System.EventHandler(this.lbStructures_SelectedIndexChanged);
             // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tbbShowPluginInfo
+            // 
+            this.tbbShowPluginInfo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbbShowPluginInfo.Image = ((System.Drawing.Image)(resources.GetObject("tbbShowPluginInfo.Image")));
+            this.tbbShowPluginInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbbShowPluginInfo.Name = "tbbShowPluginInfo";
+            this.tbbShowPluginInfo.Size = new System.Drawing.Size(23, 22);
+            this.tbbShowPluginInfo.Text = "Show plugins info";
+            this.tbbShowPluginInfo.Click += new System.EventHandler(this.tbbShowPluginInfo_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1089,6 +1108,8 @@
         private System.Windows.Forms.FlowLayoutPanel blockPanel4;
         private System.Windows.Forms.FlowLayoutPanel blockPanel3;
         private System.Windows.Forms.FlowLayoutPanel blockPanel2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripButton tbbShowPluginInfo;
     }
 }
 

@@ -1045,5 +1045,20 @@ namespace CadEditor
         {
           toolStrip1.Items.Insert(toolStrip1.Items.IndexOf(bttVideo)+1, item);
         }
+
+        private void tbbShowPluginInfo_Click(object sender, EventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Loaded Plugins:\n\n");
+            foreach (var p in ConfigScript.plugins)
+            {
+                sb.Append(p.getName() + "\n");
+            }
+            if (ConfigScript.videoNes != null)
+                sb.Append(ConfigScript.videoNes.getName() + "\n");
+            if (ConfigScript.videoSega != null)
+                sb.Append(ConfigScript.videoSega.getName() + "\n");
+            MessageBox.Show(sb.ToString());
+        }
     }
 }

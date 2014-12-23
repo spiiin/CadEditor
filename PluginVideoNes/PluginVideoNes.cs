@@ -11,6 +11,10 @@ namespace PluginVideoNes
 {
     public class Video : IVideoPluginNes
     {
+        public string getName()
+        {
+            return "Nes Video Plugin";
+        }
         static Video()
         {
             nesColors[0] = Color.FromArgb(124, 124, 124);

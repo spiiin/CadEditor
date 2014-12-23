@@ -28,6 +28,7 @@ namespace CadEditor
   public interface IPlugin
   {
     void addSubeditorButton(FormMain formMain);
+    string getName();
   }
 
   public interface IVideoPluginNes
@@ -44,6 +45,8 @@ namespace CadEditor
       Bitmap makeBigBlockTT(int i, int width, int height, byte[] bigBlockIndexes, System.Windows.Forms.ImageList[] smallBlocksAll, byte[] smallBlocksColorBytes);
 
       Color[] NesColors { get; set; }
+
+      string getName();
   }
 
   public interface IVideoPluginSega
@@ -60,5 +63,7 @@ namespace CadEditor
      // Bitmap GetBlock(ushort[] mapping, byte[] tiles, Color[] palette, byte Index);
       Bitmap GetZoomBlock(ushort[] mapping, byte[] tiles, Color[] palette, int Index, float zoom);
       Bitmap GetZoomBlock4x4(ushort[] mapping, byte[] tiles, Color[] palette, int Index, float zoom);
+
+      string getName();
   }
 }

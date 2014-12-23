@@ -9,6 +9,10 @@ namespace PluginVideoSega
 {
     public class PluginVideoSega : IVideoPluginSega
     {
+        public string getName()
+        {
+            return "Sega Video Plugin";
+        }
         public Image[] makeBigBlocks(byte[] mapping, byte[] tiles, byte[] palette, int count, float zoom, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false)
         {
             var result = new Image[count];

@@ -11,6 +11,10 @@ namespace PluginHexEditor
 {
     public class PluginHexEditor : IPlugin
     {
+        public string getName()
+        {
+            return "Hex Editor";
+        }
       public void addSubeditorButton(FormMain formMain)
       {
         this.formMain = formMain;
