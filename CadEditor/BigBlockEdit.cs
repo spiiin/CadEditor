@@ -19,8 +19,6 @@ namespace CadEditor
         private void BigBlockEdit_Load(object sender, EventArgs e)
         {
             curTileset = 0;
-            curLevel = 0;
-            curDoor = -1;
             curVideo = 0x90;
             curPallete = 0;
             curPart = 0;
@@ -52,7 +50,7 @@ namespace CadEditor
             tbbImport.Enabled = !readOnly;
         }
 
-        private void initControls()
+        protected virtual void initControls()
         {
             Utils.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
             Utils.setCbItemsCount(cbSmallBlock, ConfigScript.blocksOffset.recCount);
@@ -74,7 +72,7 @@ namespace CadEditor
             cbViewType.SelectedIndex = Math.Min((int)formMain.CurActiveViewType, cbViewType.Items.Count - 1);
         }
 
-        private void prepareAxisLabels()
+        protected void prepareAxisLabels()
         {
             int x = mapScreen.Location.X;
             int y = mapScreen.Location.Y;
@@ -94,7 +92,7 @@ namespace CadEditor
             }
         }
 
-        private void reloadLevel(bool reloadBigBlocks = true)
+        protected void reloadLevel(bool reloadBigBlocks = true)
         {
             curActiveBlock = 0;
             setSmallBlocks();
@@ -103,7 +101,7 @@ namespace CadEditor
             mapScreen.Invalidate();
         }
 
-        private void setSmallBlocks()
+        protected virtual void setSmallBlocks()
         {
             int backId, palId;
             backId = curVideo;
@@ -115,15 +113,57 @@ namespace CadEditor
             blocksPanel.Invalidate(true);
         }
 
-        private void setBigBlocksIndexes()
+        protected virtual void setBigBlocksIndexes()
         {
             bigBlockIndexes = ConfigScript.getBigBlocks(curSmallBlockNo);
         }
 
-        const int SMALL_BLOCKS_COUNT = 256;
-        private byte[] bigBlockIndexes;
+        protected virtual void exportBlocks()
+        {
+            //duck tales 2 has other format
+            var f = new SelectFile();
+            f.Filename = "exportedBigBlocks.bin";
+            f.ShowExportParams = true;
+            f.ShowDialog();
+            if (!f.Result)
+                return;
+            var fn = f.Filename;
+            if (f.getExportType() == ExportType.Binary)
+            {
+                Utils.saveDataToFile(fn, bigBlockIndexes);
+            }
+            else
+            {
+                Bitmap result = new Bitmap(64 * 256, 64); //need some hack for duck tales 1
+                using (Graphics g = Graphics.FromImage(result))
+                {
+                    for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
+                    {
+                        Bitmap b;
+                        switch (Globals.gameType)
+                        {
+                            //todo: write code to export blocks for TinyToon
+                            /*case GameType.TT:
+                                b = Video.makeBigBlockTT(i, 64, 64, bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
+                                break;*/
+                            case GameType._3E:
+                                b = Video.makeBigBlock3E(i, 64, 64, bigBlockIndexes, smallBlocks);
+                                break;
+                            default:
+                                b = Video.makeBigBlock(i, 64, 64, bigBlockIndexes, smallBlocks);
+                                break;
+                        }
+                        g.DrawImage(b, new Point(64 * i, 0));
+                    }
+                }
+                result.Save(fn);
+            }
+        }
 
-        private void mapScreen_Paint(object sender, PaintEventArgs e)
+        protected int SMALL_BLOCKS_COUNT = 256;
+        protected byte[] bigBlockIndexes;
+
+        protected void mapScreen_Paint(object sender, PaintEventArgs e)
         {
             int addIndexes = curPart * 256;
             Graphics g = e.Graphics;
@@ -139,7 +179,7 @@ namespace CadEditor
             }
         }
 
-        private void mapScreen_MouseClick(object sender, MouseEventArgs e)
+        protected void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
             int addIndexes = curPart * 256;
             dirty = true; updateSaveVisibility();
@@ -163,34 +203,30 @@ namespace CadEditor
             }
         }
 
-        private void buttonObjClick(Object button, EventArgs e)
+        protected void buttonObjClick(Object button, EventArgs e)
         {
             int index = ((Button)button).ImageIndex;
             pbActive.Image = smallBlocks.Images[index];
             curActiveBlock = index;
         }
 
-        private int curActiveBlock;
-        private int curTileset;
-        private int curSmallBlockNo;
-
-        //chip and dale
-        private int curLevel;
-        private int curDoor;
+        protected int curActiveBlock;
+        protected int curTileset;
+        protected int curSmallBlockNo;
 
         //generic
-        private int curVideo;
-        private int curPallete;
-        private int curPart;
+        protected int curVideo;
+        protected int curPallete;
+        protected int curPart;
 
-        private MapViewType curViewType;
+        protected MapViewType curViewType;
 
-        private bool dirty;
-        private bool readOnly;
+        protected bool dirty;
+        protected bool readOnly;
 
-        private FormMain formMain;
+        protected FormMain formMain;
 
-        private void updateSaveVisibility()
+        protected void updateSaveVisibility()
         {
             tbbSave.Enabled = dirty;
         }
@@ -251,12 +287,12 @@ namespace CadEditor
             cbTileset.SelectedIndexChanged += cbLevelPair_SelectedIndexChanged;
         }
 
-        private void btSave_Click(object sender, EventArgs e)
+        protected void btSave_Click(object sender, EventArgs e)
         {
             saveToFile();
         }
 
-        private bool saveToFile()
+        protected bool saveToFile()
         {
             ConfigScript.setBigBlocks(curTileset, bigBlockIndexes);
             dirty = !Globals.flushToFile();
@@ -264,7 +300,7 @@ namespace CadEditor
             return !dirty;
         }
 
-        private void BigBlockEdit_FormClosing(object sender, FormClosingEventArgs e)
+        protected void BigBlockEdit_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!readOnly && dirty)
             {
@@ -274,7 +310,7 @@ namespace CadEditor
             }
         }
 
-        private void btClear_Click(object sender, EventArgs e)
+        protected void btClear_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Are you sure want to clear all blocks?", "Clear", MessageBoxButtons.YesNo) != DialogResult.Yes)
                 return;
@@ -285,54 +321,12 @@ namespace CadEditor
             mapScreen.Invalidate();
         }
 
-        private void btExport_Click(object sender, EventArgs e)
+        protected void btExport_Click(object sender, EventArgs e)
         {
             exportBlocks();
         }
 
-        private void exportBlocks()
-        {
-            //duck tales 2 has other format
-            var f = new SelectFile();
-            f.Filename = "exportedBigBlocks.bin";
-            f.ShowExportParams = true;
-            f.ShowDialog();
-            if (!f.Result)
-                return;
-            var fn = f.Filename;
-            if (f.getExportType() == ExportType.Binary)
-            {
-                Utils.saveDataToFile(fn, bigBlockIndexes);
-            }
-            else
-            {
-                Bitmap result = new Bitmap(64 * 256, 64); //need some hack for duck tales 1
-                using (Graphics g = Graphics.FromImage(result))
-                {
-                    for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
-                    {
-                        Bitmap b;
-                        switch (Globals.gameType)
-                        {
-                            //todo: write code to export blocks for TinyToon
-                            /*case GameType.TT:
-                                b = Video.makeBigBlockTT(i, 64, 64, bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
-                                break;*/
-                            case GameType._3E:
-                                b = Video.makeBigBlock3E(i, 64, 64, bigBlockIndexes, smallBlocks);
-                                break;
-                            default:
-                                b = Video.makeBigBlock(i, 64, 64, bigBlockIndexes, smallBlocks);
-                                break;
-                        }
-                        g.DrawImage(b, new Point(64 * i, 0));
-                    }
-                }
-                result.Save(fn);
-            }
-        }
-
-        private void btImport_Click(object sender, EventArgs e)
+        protected void btImport_Click(object sender, EventArgs e)
         {
             var f = new SelectFile();
             f.Filename = "exportedBigBlocks.bin";
@@ -353,7 +347,7 @@ namespace CadEditor
             formMain = f;
         }
 
-        private void mapScreen_MouseMove(object sender, MouseEventArgs e)
+        protected void mapScreen_MouseMove(object sender, MouseEventArgs e)
         {
             int addIndexes = curPart * 256;
             int bx = e.X / 32;
@@ -372,7 +366,7 @@ namespace CadEditor
             }
         }
 
-        private void mapScreen_MouseLeave(object sender, EventArgs e)
+        protected void mapScreen_MouseLeave(object sender, EventArgs e)
         {
             lbBigBlockNo.Text = "()";
         }
