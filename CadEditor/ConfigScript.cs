@@ -39,10 +39,10 @@ namespace CadEditor
                 nesColors = callFromScript<Color[]>(asm, data, "*.getNesColors", null);
 
                 //test plugins
-                addPlugin("PluginMapEditor.dll");
-                addPlugin("PluginHexEditor.dll");
+                loadPluginWithSilentCatch("PluginMapEditor.dll");
+                loadPluginWithSilentCatch("PluginHexEditor.dll");
             }
-            catch (Exception _)
+            catch (Exception)
             {
             }
         }
@@ -52,6 +52,17 @@ namespace CadEditor
             var plugin = LoadPlugin(pluginName);
             if (plugin != null)
                 plugins.Add(plugin);
+        }
+
+        private static void loadPluginWithSilentCatch(string filename)
+        {
+            try
+            {
+                addPlugin(filename);
+            }
+            catch (Exception _)
+            {
+            }
         }
 
         public static void LoadFromFile(string fileName)
