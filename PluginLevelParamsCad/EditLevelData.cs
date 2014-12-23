@@ -54,10 +54,10 @@ namespace CadEditor
             curActiveLevel = no;
             if (no == -1)
                 return;
-            bool isLevel = no < Globals.LEVELS_COUNT;
+            bool isLevel = no < GlobalsCad.LEVELS_COUNT;
             if (isLevel)
             {
-                LevelData ld = Globals.levelData[no];
+                LevelData ld = GlobalsCad.levelData[no];
                 cbBackGfx.SelectedIndex = id89toIndex(ld.backId);
                 cbObjGfx.SelectedIndex = id89toIndex(ld.objId);
                 cbPalleteNo.SelectedIndex = ld.palId;
@@ -91,8 +91,8 @@ namespace CadEditor
             }
             else
             {
-                no -= Globals.LEVELS_COUNT;
-                DoorData ld = Globals.doorsData[no];
+                no -= GlobalsCad.LEVELS_COUNT;
+                DoorData ld = GlobalsCad.doorsData[no];
                 cbBackGfx.SelectedIndex = id89toIndex(ld.backId);
                 cbObjGfx.SelectedIndex = id89toIndex(ld.objId);
                 cbPalleteNo.SelectedIndex = ld.palId;
@@ -212,11 +212,11 @@ namespace CadEditor
             int no = cbLevel.SelectedIndex;
             if (no == -1)
                 return false;
-            bool isLevel = no < Globals.LEVELS_COUNT;
+            bool isLevel = no < GlobalsCad.LEVELS_COUNT;
 
             if (isLevel)
             {
-                LevelData ld = Globals.levelData[no];
+                LevelData ld = GlobalsCad.levelData[no];
                 ld.backId = indexToId89(cbBackGfx.SelectedIndex);
                 ld.objId = indexToId89(cbObjGfx.SelectedIndex);
                 ld.palId = cbPalleteNo.SelectedIndex;
@@ -232,8 +232,8 @@ namespace CadEditor
             }
             else
             {
-                no -= Globals.LEVELS_COUNT;
-                DoorData ld = Globals.doorsData[no];
+                no -= GlobalsCad.LEVELS_COUNT;
+                DoorData ld = GlobalsCad.doorsData[no];
                 ld.backId = indexToId89(cbBackGfx.SelectedIndex);
                 ld.objId = indexToId89(cbObjGfx.SelectedIndex);
                 ld.palId = cbPalleteNo.SelectedIndex;
