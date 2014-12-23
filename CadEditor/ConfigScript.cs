@@ -38,12 +38,11 @@ namespace CadEditor
                 showDumpFileField = callFromScript(asm, data, "*.showDumpFileField", false);
                 nesColors = callFromScript<Color[]>(asm, data, "*.getNesColors", null);
 
-                //test plugins
-                loadPluginWithSilentCatch(()=>addPlugin("PluginMapEditor.dll"));
+                //auto load plugins
+                //loadPluginWithSilentCatch(()=>addPlugin("PluginMapEditor.dll"));
+                //loadPluginWithSilentCatch(()=>addPlugin("PluginLevelParamsCad.dll"));
                 loadPluginWithSilentCatch(()=>addPlugin("PluginHexEditor.dll"));
-                loadPluginWithSilentCatch(()=>addPlugin("PluginLevelParamsCad.dll"));
-                plugins.Reverse();
-                loadPluginWithSilentCatch(() => videoNes = PluginLoader.loadPlugin<IVideoPluginNes>("PluginVideoNes.dll"));
+                loadPluginWithSilentCatch(() => videoNes  = PluginLoader.loadPlugin<IVideoPluginNes> ("PluginVideoNes.dll"));
                 loadPluginWithSilentCatch(() => videoSega = PluginLoader.loadPlugin<IVideoPluginSega>("PluginVideoSega.dll"));
             }
             catch (Exception)
@@ -53,7 +52,7 @@ namespace CadEditor
 
         private static void addPlugin(string pluginName)
         {
-            var plugin = LoadPlugin(pluginName);
+            var plugin = PluginLoader.loadPlugin<IPlugin>(pluginName);
             if (plugin != null)
                 plugins.Add(plugin);
         }
@@ -164,6 +163,8 @@ namespace CadEditor
 
             blockTypeNames = callFromScript(asm, data, "getBlockTypeNames", defaultBlockTypeNames);
 
+            loadPluginsFromConfig(asm, data);
+
             if (Globals.gameType == GameType.CAD)
             {
                 boxesBackOffset = (OffsetRec)asm.InvokeInst(data, "*.getBoxesBackOffset");
@@ -176,9 +177,14 @@ namespace CadEditor
             }
         }
 
-        public static IPlugin LoadPlugin(string pluginName)
+        private static void loadPluginsFromConfig(AsmHelper asm, object data)
         {
-            return PluginLoader.loadPlugin<IPlugin>(pluginName);
+            string[] pluginNames = callFromScript(asm, data, "getPluginNames", new string[0]);
+            foreach (var pluginName in pluginNames)
+            {
+                addPlugin(pluginName);
+            }
+            plugins.Reverse();
         }
 
         //0x90 - background memory

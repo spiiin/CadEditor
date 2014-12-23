@@ -3,6 +3,10 @@ using System.Collections.Generic;
 //css_include Settings_CapcomBase.cs;
 public class Data:CapcomBase
 {
+  public string[] getPluginNames() 
+  {
+    return new string[] { "../PluginLevelParamsCad.dll" };
+  }
   public override GameType getGameType()  { return GameType.CAD; }
    
   public OffsetRec getPalOffset()       { return new OffsetRec(0x1C354, 32  , 16);     }

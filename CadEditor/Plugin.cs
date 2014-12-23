@@ -14,7 +14,7 @@ namespace CadEditor
   {
     public static T loadPlugin<T>(string path)
     {
-      Assembly currentAssembly = Assembly.LoadFile(Path.Combine(Directory.GetCurrentDirectory(),path));
+      Assembly currentAssembly = Assembly.LoadFile(Path.Combine(Directory.GetCurrentDirectory(), path));
       foreach (Type type in currentAssembly.GetTypes())
       {
         if (type.GetInterfaces().Contains(typeof(T)))
