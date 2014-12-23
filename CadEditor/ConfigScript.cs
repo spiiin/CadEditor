@@ -39,9 +39,12 @@ namespace CadEditor
                 nesColors = callFromScript<Color[]>(asm, data, "*.getNesColors", null);
 
                 //auto load plugins
+
+                loadPluginWithSilentCatch(() => addPlugin("PluginHexEditor.dll"));
                 //loadPluginWithSilentCatch(()=>addPlugin("PluginMapEditor.dll"));
                 //loadPluginWithSilentCatch(()=>addPlugin("PluginLevelParamsCad.dll"));
-                loadPluginWithSilentCatch(()=>addPlugin("PluginHexEditor.dll"));
+                
+                //auto load video plugins
                 loadPluginWithSilentCatch(() => videoNes  = PluginLoader.loadPlugin<IVideoPluginNes> ("PluginVideoNes.dll"));
                 loadPluginWithSilentCatch(() => videoSega = PluginLoader.loadPlugin<IVideoPluginSega>("PluginVideoSega.dll"));
             }
