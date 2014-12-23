@@ -95,7 +95,7 @@ namespace CadEditor
         {
             if (GameType.CAD == Globals.gameType)
             {
-                var lr = Globals.levelData[curActiveLevel];
+                var lr = GlobalsCad.levelData[curActiveLevel];
                 int layoutAddr = lr.getActualLayoutAddr();
                 int scrollAddr = lr.getActualScrollAddr();
                 int dirAddr = lr.getActualDirsAddr();
@@ -151,7 +151,7 @@ namespace CadEditor
             sortedScreenList.Sort((r1, r2) => { return r1.door > r2.door ? 1 : r1.door < r2.door ? -1 : 0; });
             int lastDoorNo = -1;
             int levelNo = curActiveLevel;
-            byte blockId = (byte)Globals.levelData[curActiveLevel].bigBlockId;
+            byte blockId = (byte)GlobalsCad.levelData[curActiveLevel].bigBlockId;
             byte backId = 0, palId = 0;
             for (int i = 0; i < sortedScreenList.Count; i++)
             {
@@ -160,13 +160,13 @@ namespace CadEditor
                     lastDoorNo = sortedScreenList[i].door;
                     if (lastDoorNo == 0)
                     {
-                        backId = (byte)Globals.levelData[curActiveLevel].backId;
-                        palId = (byte)Globals.levelData[curActiveLevel].palId;
+                        backId = (byte)GlobalsCad.levelData[curActiveLevel].backId;
+                        palId = (byte)GlobalsCad.levelData[curActiveLevel].palId;
                     }
                     else
                     {
-                        backId = (byte)Globals.doorsData[lastDoorNo-1].backId;
-                        palId = (byte)Globals.doorsData[lastDoorNo-1].palId;
+                        backId = (byte)GlobalsCad.doorsData[lastDoorNo-1].backId;
+                        palId = (byte)GlobalsCad.doorsData[lastDoorNo-1].palId;
                     }
                 }
                 int scrNo = sortedScreenList[i].no;
@@ -386,8 +386,8 @@ namespace CadEditor
             {
                 width = curLevelLayerData.width;
                 height = curLevelLayerData.height;
-                layerAddr = Globals.levelData[curActiveLevel].getActualLayoutAddr();
-                scrollAddr = Globals.levelData[curActiveLevel].getActualScrollAddr();
+                layerAddr = GlobalsCad.levelData[curActiveLevel].getActualLayoutAddr();
+                scrollAddr = GlobalsCad.levelData[curActiveLevel].getActualScrollAddr();
             }
             for (int i = 0; i < width * height; i++)
             {
@@ -396,7 +396,7 @@ namespace CadEditor
             }
             if (Globals.gameType == GameType.CAD)
             {
-                int dirAddr = Globals.levelData[curActiveLevel].getActualDirsAddr();
+                int dirAddr = GlobalsCad.levelData[curActiveLevel].getActualDirsAddr();
                 for (int i = 0; i < height; i++)
                 {
                     Globals.romdata[dirAddr + i] = curLevelLayerData.dirs[i];
@@ -428,7 +428,7 @@ namespace CadEditor
         {
             saveToFile();
             bool stopOnDoor = cbStopOnDoor.Checked;
-            var screenList = Globals.buildScreenRecs(curActiveLevel, stopOnDoor);
+            var screenList = GlobalsCad.buildScreenRecs(curActiveLevel, stopOnDoor);
             lvObjects.Items.Clear();
             for (int i = 0; i < screenList.Count; i++)
                 lvObjects.Items.Add(String.Format("{0:X} ({1}:{2}) [{3:X}]", screenList[i].no, screenList[i].sx, screenList[i].sy, screenList[i].door));

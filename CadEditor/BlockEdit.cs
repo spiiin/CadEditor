@@ -79,9 +79,9 @@ namespace CadEditor
             if (Globals.gameType == GameType.CAD)
             {
                 if (curDoor <= 0)
-                    palId = (byte)Globals.levelData[curActiveLevel].palId;
+                    palId = (byte)GlobalsCad.levelData[curActiveLevel].palId;
                 else
-                    palId = (byte)Globals.doorsData[curDoor - 1].palId;
+                    palId = (byte)GlobalsCad.doorsData[curDoor - 1].palId;
             }
             else
             {
@@ -115,7 +115,7 @@ namespace CadEditor
 
         private void setObjects()
         {
-            byte bigBlockId = (Globals.gameType == GameType.CAD) ? (byte)Globals.levelData[curActiveLevel].bigBlockId : (byte)curActiveBigBlock;
+            byte bigBlockId = (Globals.gameType == GameType.CAD) ? (byte)GlobalsCad.levelData[curActiveLevel].bigBlockId : (byte)curActiveBigBlock;
             objects = ConfigScript.getBlocks(bigBlockId);
             refillPanel();
         }
@@ -319,7 +319,7 @@ namespace CadEditor
         {
             byte blockId;
             if (Globals.gameType == GameType.CAD)
-                blockId = (byte)Globals.levelData[curActiveLevel].bigBlockId;
+                blockId = (byte)GlobalsCad.levelData[curActiveLevel].bigBlockId;
             else
                 blockId = (byte)curActiveBigBlock;
             return blockId;
@@ -536,9 +536,9 @@ namespace CadEditor
             if (Globals.gameType == GameType.CAD)
             {
                 if (curDoor <= 0)
-                    backId = (byte)Globals.levelData[curActiveLevel].backId;
+                    backId = (byte)GlobalsCad.levelData[curActiveLevel].backId;
                 else
-                    backId = (byte)Globals.doorsData[curDoor - 1].backId;
+                    backId = (byte)GlobalsCad.doorsData[curDoor - 1].backId;
             }
             else
             {
@@ -615,7 +615,7 @@ namespace CadEditor
             if (data == null)
                 return;
 
-            byte bigBlockId = (Globals.gameType == GameType.CAD) ? (byte)Globals.levelData[curActiveLevel].bigBlockId : (byte)curActiveBigBlock;
+            byte bigBlockId = (Globals.gameType == GameType.CAD) ? (byte)GlobalsCad.levelData[curActiveLevel].bigBlockId : (byte)curActiveBigBlock;
             int addr = Globals.getTilesAddr(bigBlockId);
             for (int i = 0; i < ConfigScript.getBlocksCount(); i++)
             {

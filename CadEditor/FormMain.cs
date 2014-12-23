@@ -161,7 +161,7 @@ namespace CadEditor
 
         private void setBigBlocksIndexes()
         {
-          int bigTileIndex = (Globals.gameType != GameType.CAD) ? curActiveBlockNo : Globals.levelData[curActiveLevel].bigBlockId;
+          int bigTileIndex = (Globals.gameType != GameType.CAD) ? curActiveBlockNo : GlobalsCad.levelData[curActiveLevel].bigBlockId;
           bigBlockIndexes = ConfigScript.getBigBlocks(bigTileIndex);
         }
 
@@ -203,16 +203,16 @@ namespace CadEditor
             else
             {
                 var lr = ConfigScript.getLevelRec(curActiveLevel);
-                blockId = Globals.levelData[curActiveLevel].bigBlockId;
+                blockId = GlobalsCad.levelData[curActiveLevel].bigBlockId;
                 if (curActiveDoor < 0)
                 {
-                    backId = Globals.levelData[curActiveLevel].backId;
-                    palId = Globals.levelData[curActiveLevel].palId;
+                    backId = GlobalsCad.levelData[curActiveLevel].backId;
+                    palId = GlobalsCad.levelData[curActiveLevel].palId;
                 }
                 else
                 {
-                    backId = Globals.doorsData[curActiveDoor].backId;
-                    palId = Globals.doorsData[curActiveDoor].palId;
+                    backId = GlobalsCad.doorsData[curActiveDoor].backId;
+                    palId = GlobalsCad.doorsData[curActiveDoor].palId;
                 }
             }
 
@@ -221,7 +221,7 @@ namespace CadEditor
                   curViewType == MapViewType.ObjType ? MapViewType.ObjType : MapViewType.Tiles;
 
             float smallBlockScaleFactor = curButtonScale;
-            int bigTileIndex = (Globals.gameType != GameType.CAD) ? curActiveBlockNo : Globals.levelData[curActiveLevel].bigBlockId;
+            int bigTileIndex = (Globals.gameType != GameType.CAD) ? curActiveBlockNo : GlobalsCad.levelData[curActiveLevel].bigBlockId;
             Image[] bigImages;
             if (ConfigScript.isUseSegaGraphics())
                 bigImages = makeSegaBigBlocks();

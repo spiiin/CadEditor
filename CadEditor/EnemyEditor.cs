@@ -75,7 +75,7 @@ namespace CadEditor
             {
                 if (Globals.gameType == GameType.CAD)
                 {
-                    var lr = Globals.levelData[curActiveLevel];
+                    var lr = GlobalsCad.levelData[curActiveLevel];
                     int layoutAddr = lr.getActualLayoutAddr();
                     int scrollAddr = lr.getActualScrollAddr();
                     int dirAddr = lr.getActualDirsAddr();
@@ -121,7 +121,7 @@ namespace CadEditor
 
         private void makeScreensCad()
         {
-            scrImages = Globals.makeScreensCad(curActiveLevel, false /*cbStopOnDoors.Checked*/);
+            scrImages = GlobalsCad.makeScreensCad(curActiveLevel, false /*cbStopOnDoors.Checked*/);
         }
 
         private int findStartPosition()
@@ -298,7 +298,7 @@ namespace CadEditor
         {
             List<ObjectRec> sortedObjects = new List<ObjectRec>();
             bool stopOnDoor = false; //cbStopOnDoors.Checked;
-            List<ScreenRec> sortedScreens = Globals.buildScreenRecs(curActiveLevel, stopOnDoor);
+            List<ScreenRec> sortedScreens = GlobalsCad.buildScreenRecs(curActiveLevel, stopOnDoor);
             for (int i = 0; i < sortedScreens.Count; i++)
             {
                 var scrrec = sortedScreens[i];

@@ -102,27 +102,8 @@ namespace CadEditor
         private void setSmallBlocks()
         {
             int backId, palId;
-
-            if (Globals.gameType == GameType.CAD)
-            {
-                var ld = Globals.levelData[curLevel];
-                if (curDoor < 0)
-                {
-                    backId = ld.backId;
-                    palId = ld.palId;
-                }
-                else
-                {
-                    DoorData dd = Globals.doorsData[curDoor];
-                    backId = dd.backId;
-                    palId = dd.palId;
-                }
-            }
-            else
-            {
-                backId = curVideo;
-                palId = curPallete;
-            }
+            backId = curVideo;
+            palId = curPallete;
 
             var im = Video.makeObjectsStrip((byte)backId, (byte)curTileset, (byte)palId, 1, curViewType);
             smallBlocks.Images.Clear();
@@ -138,7 +119,7 @@ namespace CadEditor
 
         private void setBigBlocksIndexes()
         {
-            bigBlockIndexes = ConfigScript.getBigBlocks(Globals.gameType == GameType.CAD ? curTileset : curSmallBlockNo);
+            bigBlockIndexes = ConfigScript.getBigBlocks(curSmallBlockNo);
         }
 
         const int SMALL_BLOCKS_COUNT = 256;

@@ -95,7 +95,7 @@ namespace CadEditor
         private void setSmallBlocks()
         {
             int backId, palId;
-            var ld = Globals.levelData[curLevel];
+            var ld = GlobalsCad.levelData[curLevel];
             if (curDoor < 0)
             {
                 backId = ld.backId;
@@ -103,7 +103,7 @@ namespace CadEditor
             }
             else
             {
-                DoorData dd = Globals.doorsData[curDoor];
+                DoorData dd = GlobalsCad.doorsData[curDoor];
                 backId = dd.backId;
                 palId = dd.palId;
             }

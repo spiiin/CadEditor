@@ -22,7 +22,7 @@ namespace CadEditor
             int levelNo = cbLevel.SelectedIndex;
             if (levelNo == -1)
                 return;
-            LevelData ld = Globals.levelData[levelNo];
+            LevelData ld = GlobalsCad.levelData[levelNo];
             int h = ld.getHeight();
             int w = ld.getWidth();
             for (int i = 0; i < w; i++)
@@ -56,7 +56,7 @@ namespace CadEditor
 
         private void SelectDoorIndex_Load(object sender, EventArgs e)
         {
-            Globals.reloadLevelParamsData();
+            GlobalsCad.reloadLevelParamsData();
             cbLevel.SelectedIndex = 0;
         }
 
