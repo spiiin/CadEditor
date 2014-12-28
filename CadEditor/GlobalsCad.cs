@@ -289,10 +289,10 @@ namespace CadEditor
             return ConfigScript.getLevelRec(index).layoutAddr;
         }
 
-        public static int getScrollAddr(int index)
+        /*public static int getScrollAddr(int index)
         {
             return getLayoutAddr(index) + ConfigScript.getScrollsOffsetFromLayout();
-        }
+        }*/
 
         public static IList<LevelData> levelData = new List<LevelData>(LEVELS_COUNT);
         public static IList<DoorData> doorsData = new List<DoorData>(DOORS_COUNT);
