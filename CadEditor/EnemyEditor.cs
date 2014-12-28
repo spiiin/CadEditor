@@ -585,8 +585,8 @@ namespace CadEditor
             }
             if (!selectedZero)
             {
-                btSortDown.Enabled = cbManualSort.Checked && lvObjects.SelectedIndices[lvObjects.SelectedIndices.Count - 1] < objects.Count - 1;
-                btSortUp.Enabled = cbManualSort.Checked && lvObjects.SelectedIndices[0] > 0;
+                btSortDown.Enabled = lvObjects.SelectedIndices[lvObjects.SelectedIndices.Count - 1] < objects.Count - 1;
+                btSortUp.Enabled = lvObjects.SelectedIndices[0] > 0;
             }
 
             mapScreen.Invalidate();
@@ -674,8 +674,8 @@ namespace CadEditor
         {
             if (lvObjects.SelectedIndices.Count > 0)
             {
-                btSortDown.Enabled = cbManualSort.Checked && lvObjects.SelectedIndices[lvObjects.SelectedIndices.Count - 1] < objects.Count - 1;
-                btSortUp.Enabled = cbManualSort.Checked && lvObjects.SelectedIndices[0] > 0;
+                btSortDown.Enabled = lvObjects.SelectedIndices[lvObjects.SelectedIndices.Count - 1] < objects.Count - 1;
+                btSortUp.Enabled = lvObjects.SelectedIndices[0] > 0;
             }
         }
 

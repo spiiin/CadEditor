@@ -48,7 +48,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.activeBlock = new System.Windows.Forms.PictureBox();
             this.btSave = new System.Windows.Forms.Button();
-            this.cbManualSort = new System.Windows.Forms.CheckBox();
             this.btSortUp = new System.Windows.Forms.Button();
             this.btSortDown = new System.Windows.Forms.Button();
             this.pnGeneric = new System.Windows.Forms.Panel();
@@ -323,22 +322,6 @@
             this.btSave.Text = "save";
             this.btSave.UseVisualStyleBackColor = true;
             this.btSave.Click += new System.EventHandler(this.btSave_Click);
-            // 
-            // cbManualSort
-            // 
-            this.cbManualSort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbManualSort.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbManualSort.Checked = true;
-            this.cbManualSort.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbManualSort.Location = new System.Drawing.Point(133, 331);
-            this.cbManualSort.Name = "cbManualSort";
-            this.cbManualSort.Size = new System.Drawing.Size(90, 18);
-            this.cbManualSort.TabIndex = 46;
-            this.cbManualSort.Text = "Manual sort";
-            this.cbManualSort.UseVisualStyleBackColor = true;
-            this.cbManualSort.Visible = false;
-            this.cbManualSort.CheckedChanged += new System.EventHandler(this.cbManualSort_CheckedChanged);
             // 
             // btSortUp
             // 
@@ -794,7 +777,6 @@
             this.pnObjectList.Controls.Add(this.cbCoordX);
             this.pnObjectList.Controls.Add(this.label17);
             this.pnObjectList.Controls.Add(this.cbCoordY);
-            this.pnObjectList.Controls.Add(this.cbManualSort);
             this.pnObjectList.Controls.Add(this.btSortUp);
             this.pnObjectList.Controls.Add(this.label15);
             this.pnObjectList.Controls.Add(this.btSortDown);
@@ -1170,7 +1152,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox activeBlock;
         private System.Windows.Forms.Button btSave;
-        private System.Windows.Forms.CheckBox cbManualSort;
         private System.Windows.Forms.Button btSortUp;
         private System.Windows.Forms.Button btSortDown;
         private System.Windows.Forms.Panel pnGeneric;
