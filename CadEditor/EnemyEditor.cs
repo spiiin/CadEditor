@@ -101,11 +101,6 @@ namespace CadEditor
             }
         }
 
-        private void makeScreensCad()
-        {
-            scrImages = GlobalsCad.makeScreensCad(curActiveLevel, false /*cbStopOnDoors.Checked*/);
-        }
-
         private int findStartPosition()
         {
             int w = curLevelLayerData.width;
@@ -113,35 +108,28 @@ namespace CadEditor
             return w * (h - 1);
         }
 
-        //for generic editor
-        private Bitmap makeCurScreen(int scrNo, int levelNo)
-        {
-            if (Globals.gameType == GameType.LM)
-                scrNo = (scrNo + 1) % 256;
-            return  ConfigScript.videoNes.makeScreen(scrNo, levelNo, curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo, curScale);
-        }
-
-        private void setBackImage(int levelNo)
+        private void reloadBigBlocks()
         {
             if (!ConfigScript.usePicturesInstedBlocks)
             {
-                int scrNo = curLevelLayerData.layer[curActiveScreen];
-                if (cbPlus256.Checked)
-                    scrNo += 256;
-                lbScrNo.Text = String.Format("({0:X})", scrNo);
-                if (scrNo < ConfigScript.screensOffset[levelNo].recCount)
-                    mapScreen.Image = (Globals.gameType != GameType.CAD) ? makeCurScreen(scrNo - 1, getLevelRecForGameType().levelNo) : scrImages[scrNo];
-                else
-                    mapScreen.Image = VideoHelper.emptyScreen(512, 512);
+                bigBlocks.Images.Clear();
+                var bs = ConfigScript.videoNes.makeBigBlocks(curVideoNo, 0,  curBigBlockNo, curBlockNo, curPaletteNo, MapViewType.Tiles, curScale, 32, 32, curScale, MapViewType.Tiles, formMain.ShowAxis);
+                bigBlocks.Images.AddRange(bs);
             }
+        }
+
+        private int calcScrNo()
+        {
+            int scrNo = curLevelLayerData.layer[curActiveScreen];
+            if (cbPlus256.Checked)
+                scrNo += 256;
+            return scrNo - 1;
         }
 
         private void reloadLevel(bool reloadObjects)
         {
-            if (Globals.gameType == GameType.CAD)
-                makeScreensCad();
             reloadLevelLayerData(reloadObjects);
-            setBackImage(getLevelRecForGameType().levelNo);
+            reloadBigBlocks();
             if (reloadObjects)
               setObjects();
             curActiveBlock = 0;
@@ -173,10 +161,9 @@ namespace CadEditor
 
         private void EnemyEditor_Load(object sender, EventArgs e)
         {
+            screens = Utils.setScreens(getLevelRecForGameType().levelNo);
             if (ConfigScript.usePicturesInstedBlocks)
             {
-                screens = Utils.setScreens(getLevelRecForGameType().levelNo);
-                //bigBlocks.ImageSize = new Size(2 * ConfigScript.getBlocksPicturesWidth(), 2 * 32);
                 Utils.setBlocks(bigBlocks, 2, 32,32, MapViewType.Tiles, formMain.ShowAxis);
             }
 
@@ -250,7 +237,7 @@ namespace CadEditor
             btRight.Enabled = curActiveScreen % w != w - 1;
             btUp.Enabled = curActiveScreen >= w;
             btDown.Enabled = curActiveScreen < w * (h - 1);
-            setBackImage(getLevelRecForGameType().levelNo);
+            lbScrNo.Text = String.Format("({0:X})", calcScrNo());
             mapScreen.Invalidate();
         }
 
@@ -454,9 +441,11 @@ namespace CadEditor
 
         private void paintBack(Graphics g)
         {
-            if (curLevelLayerData.layer[curActiveScreen] < screens.Length)
+            //temp hack for compatibility. for cad-games scrNo -= 1 !!!
+            int scrNo = ConfigScript.usePicturesInstedBlocks ? curLevelLayerData.layer[curActiveScreen] : calcScrNo(); 
+            if (scrNo < screens.Length && scrNo >= 0)
             {
-                int[] indexes = screens[curLevelLayerData.layer[curActiveScreen]];
+                int[] indexes = screens[scrNo];
                 int scrLevelNo = getLevelRecForGameType().levelNo;
                 int width = ConfigScript.getScreenWidth(scrLevelNo);
                 int height = ConfigScript.getScreenHeight(scrLevelNo);
@@ -472,8 +461,8 @@ namespace CadEditor
 
         private void mapScreen_Paint(object sender, PaintEventArgs e)
         {
-            if (ConfigScript.usePicturesInstedBlocks)
-              paintBack(e.Graphics);
+            //if (ConfigScript.usePicturesInstedBlocks)
+            paintBack(e.Graphics);
             var g = e.Graphics;
             var selectedInds = lvObjects.SelectedIndices;
             for (int i = 0; i < objects.Count; i++)

@@ -21,6 +21,8 @@ public class Data:CapcomBase
   public GetObjectsFunc getObjectsFunc() { return getObjectsCad; }
   public SetObjectsFunc setObjectsFunc() { return setObjectsCad; }
   
+  public bool isEnemyEditorEnabled()    { return false; }
+  
   public string getObjTypesPicturesDir() { return "obj_sprites_cad"; }
   
   //chip and dale specific
