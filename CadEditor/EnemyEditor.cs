@@ -81,7 +81,6 @@ namespace CadEditor
             }
             else
             {
-                //copy-paste
                 curWidth = Globals.getLevelWidth(curActiveLayout);
                 curHeight = Globals.getLevelHeight(curActiveLayout);
                 curActiveLayout = cbLayoutNo.SelectedIndex;
@@ -127,7 +126,7 @@ namespace CadEditor
             if (!ConfigScript.usePicturesInstedBlocks)
             {
                 int scrNo = curLevelLayerData.layer[curActiveScreen];
-                if (Globals.gameType != GameType.CAD && cbPlus256.Checked)
+                if (cbPlus256.Checked)
                     scrNo += 256;
                 lbScrNo.Text = String.Format("({0:X})", scrNo);
                 if (scrNo < ConfigScript.screensOffset[levelNo].recCount)
@@ -343,12 +342,12 @@ namespace CadEditor
 
         private LevelRec getLevelRecForGameType()
         {
-            return ConfigScript.getLevelRec(GameType.CAD == Globals.gameType ? curActiveLevel : curActiveLayout);
+            return ConfigScript.getLevelRec(getActiveLevelNo());
         }
 
         private void setObjects()
         {
-            objects = ConfigScript.getObjects(Globals.gameType == GameType.CAD ? curActiveLevel : curActiveLayout);
+            objects = ConfigScript.getObjects(getActiveLevelNo());
             updateAddDataVisible();
             fillObjectsListBox();
         }
@@ -551,7 +550,7 @@ namespace CadEditor
             }
             try
             {
-                ConfigScript.setObjects(Globals.gameType == GameType.CAD ? curActiveLevel : curActiveLayout, objects);
+                ConfigScript.setObjects(getActiveLevelNo(), objects);
             }
             catch (IndexOutOfRangeException ex)
             {
@@ -783,8 +782,13 @@ namespace CadEditor
 
         private void btSort_Click(object sender, EventArgs e)
         {
-            ConfigScript.sortObjects(Globals.gameType == GameType.CAD ? curActiveLevel : curActiveLayout, objects);
+            ConfigScript.sortObjects(getActiveLevelNo(), objects);
             fillObjectsListBox();
+        }
+
+        private int getActiveLevelNo()
+        {
+            return Globals.gameType == GameType.CAD ? curActiveLevel : curActiveLayout;
         }
 
         private void mapScreen_MouseDown(object sender, MouseEventArgs e)
