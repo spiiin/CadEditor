@@ -57,7 +57,29 @@ namespace CadEditor
 
         private void reloadLevelLayerData(bool resetScreenPos)
         {
-            if (ConfigScript.getLayoutFunc != null)
+            if (Globals.gameType == GameType.CAD)
+            {
+                var lr = GlobalsCad.levelData[curActiveLevel];
+                int layoutAddr = lr.getActualLayoutAddr();
+                int scrollAddr = lr.getActualScrollAddr();
+                int dirAddr = lr.getActualDirsAddr();
+                int width = lr.getWidth();
+                int height = lr.getHeight();
+                byte[] layer = new byte[width * height];
+                byte[] scroll = new byte[width * height];
+                byte[] dirs = new byte[height];
+                for (int i = 0; i < width * height; i++)
+                {
+                    layer[i] = Globals.romdata[layoutAddr + i];
+                    scroll[i] = Globals.romdata[scrollAddr + i];
+                }
+                for (int i = 0; i < height; i++)
+                {
+                    dirs[i] = Globals.romdata[dirAddr + i];
+                }
+                curLevelLayerData = new LevelLayerData(width, height, layer, scroll, dirs);
+            }
+            else
             {
                 //copy-paste
                 curWidth = Globals.getLevelWidth(curActiveLayout);
@@ -68,45 +90,7 @@ namespace CadEditor
                 curBlockNo = cbBlockNo.SelectedIndex;
                 curPaletteNo = cbPaletteNo.SelectedIndex;
                 curActiveScreen = cbScreenNo.SelectedIndex;
-                curLevelLayerData = ConfigScript.getLayout(curActiveLayout);
-            }
-            else
-            {
-                if (Globals.gameType == GameType.CAD)
-                {
-                    var lr = GlobalsCad.levelData[curActiveLevel];
-                    int layoutAddr = lr.getActualLayoutAddr();
-                    int scrollAddr = lr.getActualScrollAddr();
-                    int dirAddr = lr.getActualDirsAddr();
-                    int width = lr.getWidth();
-                    int height = lr.getHeight();
-                    byte[] layer = new byte[width * height];
-                    byte[] scroll = new byte[width * height];
-                    byte[] dirs = new byte[height];
-                    for (int i = 0; i < width * height; i++)
-                    {
-                        layer[i] = Globals.romdata[layoutAddr + i];
-                        scroll[i] = Globals.romdata[scrollAddr + i];
-                    }
-                    for (int i = 0; i < height; i++)
-                    {
-                        dirs[i] = Globals.romdata[dirAddr + i];
-                    }
-                    curLevelLayerData = new LevelLayerData(width, height, layer, scroll, dirs);
-                }
-                else
-                {
-                    //copy-paste
-                    curWidth = Globals.getLevelWidth(curActiveLayout);
-                    curHeight = Globals.getLevelHeight(curActiveLayout);
-                    curActiveLayout = cbLayoutNo.SelectedIndex;
-                    curVideoNo = cbVideoNo.SelectedIndex + 0x90;
-                    curBigBlockNo = cbBigBlockNo.SelectedIndex;
-                    curBlockNo = cbBlockNo.SelectedIndex;
-                    curPaletteNo = cbPaletteNo.SelectedIndex;
-                    curActiveScreen = cbScreenNo.SelectedIndex;
-                    curLevelLayerData = Utils.getLayoutLinear(curActiveLayout);
-                }
+                curLevelLayerData = (ConfigScript.getLayoutFunc != null) ? ConfigScript.getLayout(curActiveLayout) : Utils.getLayoutLinear(curActiveLayout);
             }
 
             if (resetScreenPos)
