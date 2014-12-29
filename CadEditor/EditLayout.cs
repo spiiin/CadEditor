@@ -82,56 +82,29 @@ namespace CadEditor
             cbLayoutNo.Items.Clear();
             foreach (var lr in ConfigScript.levelRecs)
                 cbLayoutNo.Items.Add(String.Format("0x{0:X} ({1}x{2})", lr.layoutAddr, lr.width, lr.height));
-            Utils.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged);
 
-            cbLevel.SelectedIndex = 0;
+            cbLayoutNo.SelectedIndex = 0;
 
             cbShowScrolls.Visible = ConfigScript.isShowScrollsInLayout();
-            btExport.Visible = 
-            pnParamGeneric.Visible = Globals.gameType != GameType.CAD;
+            btExport.Visible =
+            pnParamGeneric.Visible = true;
         }
 
         private void reloadLevelLayer()
         {
-            if (GameType.CAD == Globals.gameType)
+            int layoutAddr = Globals.getLayoutAddr(curActiveLayout);
+            int scrollAddr = Globals.getScrollAddr(curActiveLayout); //darkwing duck specific
+            int width = curWidth;
+            int height = curHeight;
+            byte[] layer = new byte[width * height];
+            byte[] scroll = new byte[width * height];
+            for (int i = 0; i < width * height; i++)
             {
-                var lr = GlobalsCad.levelData[curActiveLevel];
-                int layoutAddr = lr.getActualLayoutAddr();
-                int scrollAddr = lr.getActualScrollAddr();
-                int dirAddr = lr.getActualDirsAddr();
-                int width = lr.getWidth();
-                int height = lr.getHeight();
-                byte[] layer = new byte[width * height];
-                byte[] scroll = new byte[width * height];
-                byte[] dirs = new byte[height];
-                for (int i = 0; i < width * height; i++)
-                {
-                    layer[i] = Globals.romdata[layoutAddr + i];
-                    scroll[i] = Globals.romdata[scrollAddr + i];
-                }
-                for (int i = 0; i < height; i++)
-                {
-                    dirs[i] = Globals.romdata[dirAddr + i];
-                }
-                curLevelLayerData = new LevelLayerData(width, height, layer, scroll, dirs);
+                layer[i] = Globals.romdata[layoutAddr + i];
+                scroll[i] = Globals.romdata[scrollAddr + i];
             }
-            else
-            {
-                int layoutAddr = Globals.getLayoutAddr(curActiveLayout);
-                int scrollAddr = Globals.getScrollAddr(curActiveLayout); //darkwing duck specific
-                int width = curWidth;
-                int height = curHeight;
-                byte[] layer = new byte[width * height];
-                byte[] scroll = new byte[width * height];
-                for (int i = 0; i < width * height; i++)
-                {
-                    layer[i] = Globals.romdata[layoutAddr + i];
-                    scroll[i] = Globals.romdata[scrollAddr + i];
-                }
-                curLevelLayerData = new LevelLayerData(width, height, layer, scroll, null);
-            }
+            curLevelLayerData = new LevelLayerData(width, height, layer, scroll, null);
             curActiveBlock = 0;
-            lvObjects.Items.Clear();
             pbMap.Invalidate();
         }
 
@@ -141,49 +114,6 @@ namespace CadEditor
             screenImages.Images.Add(makeBlackScreen(64,64,0));
             for (int scrNo = 0; scrNo < ConfigScript.screensOffset[scrLevelNo].recCount; scrNo++)
                 screenImages.Images.Add(makeBlackScreen(64, 64, scrNo + 1));
-        }
-
-        //C&D specific
-        private void previewScreens(List<ScreenRec> screenList)
-        {
-            makeScreens();
-            var sortedScreenList = new List<ScreenRec>(screenList);
-            sortedScreenList.Sort((r1, r2) => { return r1.door > r2.door ? 1 : r1.door < r2.door ? -1 : 0; });
-            int lastDoorNo = -1;
-            int levelNo = curActiveLevel;
-            byte blockId = (byte)GlobalsCad.levelData[curActiveLevel].bigBlockId;
-            byte backId = 0, palId = 0;
-            for (int i = 0; i < sortedScreenList.Count; i++)
-            {
-                if (lastDoorNo != sortedScreenList[i].door)
-                {
-                    lastDoorNo = sortedScreenList[i].door;
-                    if (lastDoorNo == 0)
-                    {
-                        backId = (byte)GlobalsCad.levelData[curActiveLevel].backId;
-                        palId = (byte)GlobalsCad.levelData[curActiveLevel].palId;
-                    }
-                    else
-                    {
-                        backId = (byte)GlobalsCad.doorsData[lastDoorNo-1].backId;
-                        palId = (byte)GlobalsCad.doorsData[lastDoorNo-1].palId;
-                    }
-                }
-                int scrNo = sortedScreenList[i].no;
-                int levelEHadd = (curActiveLevel == 5 || curActiveLevel == 8) ? 256 : 0; //level E & H hack
-                int realScrNo = scrNo - 1 + levelEHadd;
-                if (scrNo != 0) 
-                {
-                    Bitmap bitmap = ConfigScript.videoNes.makeScreen(realScrNo, scrLevelNo, backId, blockId, blockId, palId, 2.0f);
-                    using (var g = Graphics.FromImage(bitmap))
-                        g.DrawString(String.Format("{0:X}", scrNo), new Font("Arial", 64), Brushes.White, new Point(0, 0));
-                    Bitmap convertedSize = new Bitmap(64, 64);
-                    using (var g = Graphics.FromImage(convertedSize))
-                        g.DrawImage(bitmap, new Rectangle(0, 0, 64, 64));
-
-                    screenImages.Images[scrNo + levelEHadd] = convertedSize;
-                }
-            }
         }
 
         private Image makeBlackScreen(int w, int h, int no)
@@ -201,44 +131,22 @@ namespace CadEditor
 
         const int SCREEN_SIZE = 64;
 
-      
-
         private void pb_Paint(object sender, PaintEventArgs e)
         {
             var g = e.Graphics;
-            int w = Globals.gameType != GameType.CAD ? curWidth : curLevelLayerData.width;
-            int h = Globals.gameType != GameType.CAD ? curHeight : curLevelLayerData.height;
+            int w = curWidth;
+            int h = curHeight;
             for (int y = 0; y < h; y++)
             {
                 for (int x = 0; x < w; x++)
                 {
-                    int levelEHhack = (curActiveLevel == 5 || curActiveLevel == 8) ? 256 : 0;
-                    int index = curLevelLayerData.layer[y * w + x] + levelEHhack;
+                    int index = curLevelLayerData.layer[y * w + x];
                     int scroll = curLevelLayerData.scroll[y * w + x];
                     int scrollIndex = scroll >> 5;
                     int doorIndex = scroll & 0x01F;
                     g.DrawImage(screenImages.Images[index], new Rectangle(x*64, y*64, 64, 64));
                     if (showScrolls)
-                    {
-                        if (Globals.gameType == GameType.CAD)
-                        {
-                            g.DrawImage(scrollSprites.Images[scrollIndex], new Rectangle(x * 64 + 24, y * 64 + 24, 16, 16));
-                            if (doorIndex != 0)
-                                g.DrawImage(doorSprites.Images[doorIndex], new Rectangle(x * 64 + 48, y * 64 + 48, 16, 16));
-                        }
-                        else
-                        {
-                            g.DrawString(String.Format("{0:X}", scroll), new Font("Arial", 8), new SolidBrush(Color.Red), new Rectangle(x * 64 + 24, y * 64 + 24, 32, 16));
-                        }
-                    }
-                }
-            }
-            if (Globals.gameType == GameType.CAD)
-            {
-                for (int i = 0; i < curLevelLayerData.height; i++)
-                {
-                    int dirIndex = (curLevelLayerData.dirs[i] % 2 == 0) ? 0 : 1;
-                    g.DrawImage(dirSprites.Images[dirIndex], new Rectangle(curLevelLayerData.width * 64, i * 64, 64, 64));
+                      g.DrawString(String.Format("{0:X}", scroll), new Font("Arial", 8), new SolidBrush(Color.Red), new Rectangle(x * 64 + 24, y * 64 + 24, 32, 16));
                 }
             }
         }
@@ -246,42 +154,27 @@ namespace CadEditor
         private void changeScroll(int index)
         {
             var scrollByteArray = new byte[]{ 0x42, 0x42, 0x43, 0x03, 0x00, 0xC0, 0xC0, 0x41 };
-            if (Globals.gameType == GameType.CAD)
-                curLevelLayerData.scroll[index] = (byte)((curActiveBlock << 5) | (curLevelLayerData.scroll[index] & 0x01F));
-            else
-                curLevelLayerData.scroll[index] = scrollByteArray[curActiveBlock];
+            curLevelLayerData.scroll[index] = scrollByteArray[curActiveBlock];
         }
 
         private void pb_MouseUp(object sender, MouseEventArgs e)
         {
             int dx = e.X / 64;
             int dy = e.Y / 64;
-            if (dx >= curLevelLayerData.width + 1 || dy >= curLevelLayerData.height)
+            if (dx >= curLevelLayerData.width || dy >= curLevelLayerData.height)
                 return;
             dirty = true;
-            if (dx == curLevelLayerData.width)
-            {
-                if (Globals.gameType == GameType.CAD)
-                {
-                    int dir = curLevelLayerData.dirs[dy];
-                    curLevelLayerData.dirs[dy] = (byte)((dir == 0) ? 3 : 0);
-                }
-            }
-            else
-            {
-                int index = dy * curLevelLayerData.width + dx;
+            int index = dy * curLevelLayerData.width + dx;
 
-                if (drawMode == MapDrawMode.Screens)
-                    curLevelLayerData.layer[index] = (byte)(curActiveBlock & 0xFF);
-                else if (drawMode == MapDrawMode.Scrolls)
-                    changeScroll(index);
-                else if (drawMode == MapDrawMode.Doors)
-                    curLevelLayerData.scroll[index] = (byte)((curActiveBlock & 0x1F) | (curLevelLayerData.scroll[index] & 0xE0));
-            }
+            if (drawMode == MapDrawMode.Screens)
+                curLevelLayerData.layer[index] = (byte)(curActiveBlock & 0xFF);
+            else if (drawMode == MapDrawMode.Scrolls)
+                changeScroll(index);
+            else if (drawMode == MapDrawMode.Doors)
+                curLevelLayerData.scroll[index] = (byte)((curActiveBlock & 0x1F) | (curLevelLayerData.scroll[index] & 0xE0));
             pbMap.Invalidate();
         }
 
-        private int curActiveLevel = 0;
         private int curActiveBlock = 0;
         private MapDrawMode drawMode = MapDrawMode.Screens;
         private bool dirty = false;
@@ -307,9 +200,8 @@ namespace CadEditor
         {
             if (!Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
                 return;
-            if (cbLevel.SelectedIndex == -1 || cbLayoutNo.SelectedIndex == -1)
+            if (cbLayoutNo.SelectedIndex == -1)
                 return;
-            curActiveLevel = cbLevel.SelectedIndex;
 
             curActiveLayout = cbLayoutNo.SelectedIndex;
             curWidth = Globals.getLevelWidth(curActiveLayout);
@@ -329,13 +221,10 @@ namespace CadEditor
 
         private void updatePanelsVisibility()
         {
-            bool generic = Globals.gameType != GameType.CAD;
             bool showScroll = ConfigScript.isShowScrollsInLayout();
             pnDoors.Visible = showScroll;
             pnSelectScroll.Visible = showScroll;
-            pnIngameScreenOrder.Visible = !generic;
-            pnGeneric.Visible = generic;
-            pnCad.Visible = !generic;
+            pnGeneric.Visible = true;
         }
 
         private void buttonBlockClick(Object button, EventArgs e)
@@ -375,32 +264,14 @@ namespace CadEditor
         private bool saveToFile()
         {
             int layerAddr, scrollAddr, width, height;
-            if (Globals.gameType != GameType.CAD)
-            {
-                layerAddr = Globals.getLayoutAddr(curActiveLayout);
-                scrollAddr = Globals.getScrollAddr(curActiveLayout); //darkwing duck specific
-                width = curWidth;
-                height = curHeight;
-            }
-            else
-            {
-                width = curLevelLayerData.width;
-                height = curLevelLayerData.height;
-                layerAddr = GlobalsCad.levelData[curActiveLevel].getActualLayoutAddr();
-                scrollAddr = GlobalsCad.levelData[curActiveLevel].getActualScrollAddr();
-            }
+            layerAddr = Globals.getLayoutAddr(curActiveLayout);
+            scrollAddr = Globals.getScrollAddr(curActiveLayout); //darkwing duck specific
+            width = curWidth;
+            height = curHeight;
             for (int i = 0; i < width * height; i++)
             {
                 Globals.romdata[layerAddr + i] = curLevelLayerData.layer[i];
                 Globals.romdata[scrollAddr + i] = curLevelLayerData.scroll[i];
-            }
-            if (Globals.gameType == GameType.CAD)
-            {
-                int dirAddr = GlobalsCad.levelData[curActiveLevel].getActualDirsAddr();
-                for (int i = 0; i < height; i++)
-                {
-                    Globals.romdata[dirAddr + i] = curLevelLayerData.dirs[i];
-                }
             }
 
             dirty = !Globals.flushToFile();
@@ -409,7 +280,6 @@ namespace CadEditor
 
         private void returnCbLevelIndex()
         {
-            Utils.setCbIndexWithoutUpdateLevel(cbLevel, cbLevel_SelectedIndexChanged, curActiveLevel);
             Utils.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged, curActiveLayout);
         }
 
@@ -422,19 +292,6 @@ namespace CadEditor
         {
             showScrolls = cbShowScrolls.Checked;
             pbMap.Invalidate();
-        }
-
-        private void btPreview_Click(object sender, EventArgs e)
-        {
-            saveToFile();
-            bool stopOnDoor = cbStopOnDoor.Checked;
-            var screenList = GlobalsCad.buildScreenRecs(curActiveLevel, stopOnDoor);
-            lvObjects.Items.Clear();
-            for (int i = 0; i < screenList.Count; i++)
-                lvObjects.Items.Add(String.Format("{0:X} ({1}:{2}) [{3:X}]", screenList[i].no, screenList[i].sx, screenList[i].sy, screenList[i].door));
-            previewScreens(screenList);
-            pbMap.Invalidate();
-            objPanel.Invalidate(true);
         }
 
         private Bitmap makeLevelImage()
