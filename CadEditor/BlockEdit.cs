@@ -38,7 +38,7 @@ namespace CadEditor
             //btExport.Visible = !readOnly;
         }
 
-        private void resetControls()
+        protected virtual void resetControls()
         {
             Utils.setCbItemsCount(cbVideo, ConfigScript.videoOffset.recCount);
             Utils.setCbItemsCount(cbTileset, ConfigScript.blocksOffset.recCount);
@@ -54,7 +54,7 @@ namespace CadEditor
             Utils.setCbIndexWithoutUpdateLevel(cbSubpalette, cbSubpalette_SelectedIndexChanged);
         }
 
-        private void reloadLevel(bool resetDirty = true)
+        protected void reloadLevel(bool resetDirty = true)
         {
             setPal();
             setVideo();
@@ -65,11 +65,11 @@ namespace CadEditor
               dirty = false;
         }
 
-        private void reloadLevelEx()
+        protected virtual void reloadLevelEx()
         {
         }
 
-        private void setPal()
+        protected void setPal()
         {
             byte palId = getPalNo();
             palette = ConfigScript.getPal(palId);
@@ -98,12 +98,12 @@ namespace CadEditor
             }
         }
 
-        private byte getPalNo()
+        protected virtual byte getPalNo()
         {
             return (byte)curActivePal;
         }
 
-        private byte getBigBlockNo()
+        protected virtual byte getBigBlockNo()
         {
             return (byte)curActiveBigBlock;
         }
@@ -115,7 +115,7 @@ namespace CadEditor
             refillPanel();
         }
 
-        private void setVideo()
+        protected void setVideo()
         {
             byte backId = getBackId();
             for (int i = 0; i < 4; i++)
@@ -126,7 +126,7 @@ namespace CadEditor
             }
         }
 
-        private void setVideoImage()
+        protected void setVideoImage()
         {
             var b = new Bitmap(256, 256);
             using (Graphics g = Graphics.FromImage(b))
@@ -146,21 +146,21 @@ namespace CadEditor
         private int curActiveBigBlock = 0;
         private int curActivePal = 0;
         //editor
-        private int curSubpalIndex = 0;
-        private int curActiveBlock = 0;
+        protected int curSubpalIndex = 0;
+        protected int curActiveBlock = 0;
 
-        private byte[] palette = new byte[Globals.PAL_LEN];
-        private ObjRec[] objects = new ObjRec[256];
-        private ImageList[] videoSprites = new ImageList[4];
-        private bool dirty;
-        private bool readOnly;
-        private bool showAxis;
+        protected byte[] palette = new byte[Globals.PAL_LEN];
+        protected ObjRec[] objects = new ObjRec[256];
+        protected ImageList[] videoSprites = new ImageList[4];
+        protected bool dirty;
+        protected bool readOnly;
+        protected bool showAxis;
 
-        private string[] subPalItems = { "1", "2", "3", "4" };
+        protected string[] subPalItems = { "1", "2", "3", "4" };
 
-        private FormMain formMain;
+        protected FormMain formMain;
 
-        private void cbSubpalette_SelectedIndexChanged(object sender, EventArgs e)
+        protected void cbSubpalette_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbSubpalette.SelectedIndex == -1)
                 return;
@@ -168,7 +168,7 @@ namespace CadEditor
             setVideoImage();
         }
 
-        private void cbSubpalette_DrawItemEvent(object sender, DrawItemEventArgs e)
+        protected void cbSubpalette_DrawItemEvent(object sender, DrawItemEventArgs e)
         {
             if (e.Index == -1)
             {
@@ -185,7 +185,7 @@ namespace CadEditor
             e.DrawFocusRectangle();
         }
 
-        void pb_MouseClick(object sender, MouseEventArgs e)
+        protected void pb_MouseClick(object sender, MouseEventArgs e)
         {
             bool left = e.Button == MouseButtons.Left;
             int x = e.X / 16;
@@ -232,7 +232,7 @@ namespace CadEditor
             dirty = true;
         }
 
-        void cbColor_SelectedIndexChanged(object sender, EventArgs e)
+        protected void cbColor_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
             PictureBox pb = (PictureBox)cb.Tag;
@@ -242,7 +242,7 @@ namespace CadEditor
             dirty = true;
         }
 
-        void cbColor_SelectedIndexChangedDt2(object sender, EventArgs e)
+        protected void cbColor_SelectedIndexChangedDt2(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
             PictureBox pb = (PictureBox)cb.Tag;
@@ -252,7 +252,7 @@ namespace CadEditor
             dirty = true;
         }
 
-        void cbType_SelectedIndexChanged(object sender, EventArgs e)
+        protected void cbType_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
             int index = (int)cb.Tag;
@@ -293,7 +293,7 @@ namespace CadEditor
             return b;
         }
 
-        private void mapScreen_MouseClick(object sender, MouseEventArgs e)
+        protected void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
             int x = e.X / 16;
             int y = e.Y / 16;
@@ -302,7 +302,7 @@ namespace CadEditor
             dirty = true;
         }
 
-        private bool saveToFile()
+        protected virtual bool saveToFile()
         {
             byte blockId = getBigBlockNo();
             ConfigScript.setBlocks(blockId, objects);
@@ -310,7 +310,7 @@ namespace CadEditor
             return !dirty;
         }
 
-        private void btSave_Click(object sender, EventArgs e)
+        protected void btSave_Click(object sender, EventArgs e)
         {
             saveToFile();
         }
@@ -346,7 +346,7 @@ namespace CadEditor
             reloadLevel();
         }
 
-        private void BlockEdit_FormClosing(object sender, FormClosingEventArgs e)
+        protected void BlockEdit_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!readOnly && dirty)
             {
@@ -418,7 +418,7 @@ namespace CadEditor
             mapObjects.ResumeLayout();
         }
 
-        private void refillPanel()
+        protected virtual void refillPanel()
         {
             //GUI
             for (int i = 0; i < ConfigScript.getBlocksCount(); i++)
@@ -442,7 +442,7 @@ namespace CadEditor
             reloadLevel(false);
         }
 
-        private void btClear_Click(object sender, EventArgs e)
+        protected void btClear_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Are you sure want to clear all blocks?", "Clear", MessageBoxButtons.YesNo)!= DialogResult.Yes)
               return;
@@ -452,13 +452,13 @@ namespace CadEditor
             refillPanel();
         }
 
-        private byte getBackId()
+        protected virtual byte getBackId()
         {
             byte backId = (byte)curActiveVideo;
             return backId;
         }
 
-        private void btFlipHorizontal_Click(object sender, EventArgs e)
+        protected void btFlipHorizontal_Click(object sender, EventArgs e)
         {
             var videoChunk = ConfigScript.getVideoChunk(getBackId());
             int beginIndex = 16 * curActiveBlock;
@@ -472,7 +472,7 @@ namespace CadEditor
             dirty = true;
         }
 
-        private void btFlipVertical_Click(object sender, EventArgs e)
+        protected void btFlipVertical_Click(object sender, EventArgs e)
         {
             var videoChunk = ConfigScript.getVideoChunk(getBackId());
             int beginIndex = 16 * curActiveBlock;
@@ -490,7 +490,7 @@ namespace CadEditor
             dirty = true;
         }
 
-        private void btExport_Click(object sender, EventArgs e)
+        protected void btExport_Click(object sender, EventArgs e)
         {
             var f = new SelectFile();
             f.Filename = "exportedBlocks.bin";
@@ -514,7 +514,7 @@ namespace CadEditor
             Utils.saveDataToFile(fn, data);
         }
 
-        private void btImport_Click(object sender, EventArgs e)
+        protected void btImport_Click(object sender, EventArgs e)
         {
             var f = new SelectFile();
             f.Filename = "exportedBlocks.bin";
@@ -539,7 +539,7 @@ namespace CadEditor
             dirty = true;
         }
 
-        private void cbShowAxis_CheckedChanged(object sender, EventArgs e)
+        protected void cbShowAxis_CheckedChanged(object sender, EventArgs e)
         {
             showAxis = cbShowAxis.Checked;
             reloadLevel(false);

@@ -65,35 +65,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BigBlockEditCad.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="BigBlockEditCad.Designer.cs">
-      <DependentUpon>BigBlockEditCad.cs</DependentUpon>
-    </Compile>
     <Compile Include="BigBlockEdit.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="BigBlockEdit.Designer.cs">
       <DependentUpon>BigBlockEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="BlockEditCad.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="BlockEditCad.Designer.cs">
-      <DependentUpon>BlockEditCad.cs</DependentUpon>
-    </Compile>
     <Compile Include="BlockEdit.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="BlockEdit.Designer.cs">
       <DependentUpon>BlockEdit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BoxBackForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="BoxBackForm.Designer.cs">
-      <DependentUpon>BoxBackForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ConfigScript.cs" />
     <Compile Include="EditColor.cs">
@@ -176,20 +158,11 @@
     </Compile>
     <Compile Include="Utils.cs" />
     <Compile Include="VideoHelper.cs" />
-    <EmbeddedResource Include="BigBlockEditCad.resx">
-      <DependentUpon>BigBlockEditCad.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="BigBlockEdit.resx">
       <DependentUpon>BigBlockEdit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BlockEditCad.resx">
-      <DependentUpon>BlockEditCad.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="BlockEdit.resx">
       <DependentUpon>BlockEdit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="BoxBackForm.resx">
-      <DependentUpon>BoxBackForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditColor.resx">
       <DependentUpon>EditColor.cs</DependentUpon>

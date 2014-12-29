@@ -21,7 +21,11 @@ public class Data:CapcomBase
   public GetObjectsFunc getObjectsFunc() { return getObjectsCad; }
   public SetObjectsFunc setObjectsFunc() { return setObjectsCad; }
   
+  public bool isBigBlockEditorEnabled() { return false; }
+  public bool isBlockEditorEnabled()    { return false; }
+  public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return false; }
+  public bool isVideoEditorEnabled()    { return false; }
   
   public string getObjTypesPicturesDir() { return "obj_sprites_cad"; }
   

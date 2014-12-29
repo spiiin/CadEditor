@@ -47,7 +47,7 @@ namespace CadEditor
 
         private Form makeBigBlocksEditor()
         {
-            BigBlockEdit f = (GameType.CAD == Globals.gameType) ? new BigBlockEditCad() : new BigBlockEdit();
+            BigBlockEdit f = new BigBlockEdit();
             f.setFormMain(this);
             return f;
         }
@@ -56,18 +56,9 @@ namespace CadEditor
         {
             if (!ConfigScript.isUseSegaGraphics())
             {
-                if (GameType.CAD == Globals.gameType)
-                {
-                    var f = new BlockEditCad();
-                    f.setFormMain(this);
-                    return f;
-                }
-                else
-                {
-                    var f = new BlockEdit();
-                    f.setFormMain(this);
-                    return f;
-                }
+                var f = new BlockEdit();
+                f.setFormMain(this);
+                return f;
             }
             else
             {
