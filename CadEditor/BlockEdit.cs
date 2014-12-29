@@ -239,10 +239,6 @@ namespace CadEditor
             ComboBox cb = (ComboBox)sender;
             int index = (int)cb.Tag;
             objects[index].typeColor = (byte)((objects[index].typeColor & 0x0F) | (cb.SelectedIndex << 4));
-            //try
-            int t = objects[index].getType();
-            var pbBack = (PictureBox)mapObjects.Controls[index].Controls[4];
-            pbBack.Visible = t >= 0x0E || t == 1;
             dirty = true;
         }
 
@@ -406,14 +402,6 @@ namespace CadEditor
                   cbType.SelectedIndexChanged += cbType_SelectedIndexChanged;
                 cbType.Enabled = Globals.gameType != GameType.DT2;
                 fp.Controls.Add(cbType);
-                //
-                PictureBox pb2 = new PictureBox();
-                pb2.Location = new Point(280, 0);
-                pb2.Size = new Size(32, 32);
-                pb2.Tag = i;
-                pb2.Visible = false;
-                fp.Controls.Add(pb2);
-                //
                 mapObjects.Controls.Add(fp);
             }
             mapObjects.ResumeLayout();
@@ -431,11 +419,6 @@ namespace CadEditor
                 cbColor.SelectedIndex = Globals.gameType == GameType.DT2 ? objects[i/4].getSubpalleteForDt2(i%4) : objects[i].getSubpallete();
                 ComboBox cbType = (ComboBox)p.Controls[3];
                 cbType.SelectedIndex = objects[i].getType();
-
-                /*PictureBox pb2 = (PictureBox)p.Controls[4];
-                pb2.Image = makeObjImage(curActiveBack[i % 16]);
-                int t = objects[i].getType();
-                pb2.Visible = isCad && (t >= 0x0E || t == 1);*/
             }
         }
 
