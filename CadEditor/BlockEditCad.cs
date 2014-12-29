@@ -24,12 +24,9 @@ namespace CadEditor
             videoSprites[2] = videoSprites3;
             videoSprites[3] = videoSprites4;
             dirty = false;
-            preparePanel();
-            Utils.setCbIndexWithoutUpdateLevel(cbLevelSelect, cbLevelSelect_SelectedIndexChanged);
-            Utils.setCbIndexWithoutUpdateLevel(cbDoor, VisibleOnlyChange_SelectedIndexChanged);
-            Utils.setCbIndexWithoutUpdateLevel(cbSubpalette, cbSubpalette_SelectedIndexChanged);
 
-            updatePanelsVisible();
+            preparePanel();
+            resetControls();
             reloadLevel();
 
             readOnly = false; //must be read from config
@@ -41,34 +38,40 @@ namespace CadEditor
             //btExport.Visible = !readOnly;
         }
 
+        private void resetControls()
+        {
+            Utils.setCbIndexWithoutUpdateLevel(cbLevelSelect, cbLevelSelect_SelectedIndexChanged);
+            Utils.setCbIndexWithoutUpdateLevel(cbDoor, VisibleOnlyChange_SelectedIndexChanged);
+            Utils.setCbIndexWithoutUpdateLevel(cbSubpalette, cbSubpalette_SelectedIndexChanged);
+        }
+
         private void reloadLevel(bool resetDirty = true)
         {
             setPal();
             setVideo();
             setVideoImage();
             setObjects();
-
-            setBack();
-
-            pbBacks.Refresh();
+            reloadLevelEx();
             if (resetDirty)
               dirty = false;
+        }
+
+        private void reloadLevelEx()
+        {
+            setBack();
+            pbBacks.Refresh();
         }
 
         private void setBack()
         {
             int backAddr = Globals.getBackTileAddr(curActiveLevel);
             for (int i = 0; i < 16; i++)
-              curActiveBack[i] = Globals.romdata[backAddr + i];
+                curActiveBack[i] = Globals.romdata[backAddr + i];
         }
 
         private void setPal()
         {
-            byte palId;
-            if (curDoor <= 0)
-                palId = (byte)GlobalsCad.levelData[curActiveLevel].palId;
-            else
-                palId = (byte)GlobalsCad.doorsData[curDoor - 1].palId;
+            byte palId = getPalNo();
             palette = ConfigScript.getPal(palId);
             //set image for pallete
             var b = new Bitmap(16 * 16, 16);
@@ -95,9 +98,19 @@ namespace CadEditor
             }
         }
 
+        private byte getPalNo()
+        {
+            return (curDoor <= 0) ?  (byte)GlobalsCad.levelData[curActiveLevel].palId :  (byte)GlobalsCad.doorsData[curDoor - 1].palId;
+        }
+
+        private byte getBigBlockNo()
+        {
+            return (byte)GlobalsCad.levelData[curActiveLevel].bigBlockId;
+        }
+
         private void setObjects()
         {
-            byte bigBlockId = (byte)GlobalsCad.levelData[curActiveLevel].bigBlockId;
+            byte bigBlockId = getBigBlockNo();
             objects = ConfigScript.getBlocks(bigBlockId);
             refillPanel();
         }
@@ -289,16 +302,9 @@ namespace CadEditor
             dirty = true;
         }
 
-        private byte getBlockId()
-        {
-            byte blockId;
-            blockId = (byte)GlobalsCad.levelData[curActiveLevel].bigBlockId;
-            return blockId;
-        }
-
         private bool saveToFile()
         {
-            byte blockId = getBlockId();
+            byte blockId = getBigBlockNo();
             ConfigScript.setBlocks(blockId, objects);
             int backAddr = Globals.getBackTileAddr(curActiveLevel);
             for (int i = 0; i < 16; i++)
@@ -467,12 +473,6 @@ namespace CadEditor
             return curActiveLevel;
         }
 
-        private void updatePanelsVisible()
-        {
-            pnCad.Visible = true;
-            pnBacks.Visible = true;
-        }
-
         private void btClear_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Are you sure want to clear all blocks?", "Clear", MessageBoxButtons.YesNo)!= DialogResult.Yes)
@@ -534,7 +534,7 @@ namespace CadEditor
             if (!f.Result)
                 return;
             var fn = f.Filename;
-            byte blockId = getBlockId();
+            byte blockId = getBigBlockNo();
             int blocksCount = ConfigScript.getBlocksCount();
             var data = new byte[blocksCount * 5];
             for (int i = 0; i < blocksCount; i++)
@@ -561,8 +561,7 @@ namespace CadEditor
             if (data == null)
                 return;
 
-            byte bigBlockId = (byte)GlobalsCad.levelData[curActiveLevel].bigBlockId;
-            int addr = Globals.getTilesAddr(bigBlockId);
+            int addr = Globals.getTilesAddr(getBigBlockNo());
             for (int i = 0; i < ConfigScript.getBlocksCount(); i++)
             {
                 Globals.romdata[addr + i] = data[i];

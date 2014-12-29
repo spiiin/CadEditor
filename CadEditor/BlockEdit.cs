@@ -24,22 +24,9 @@ namespace CadEditor
             videoSprites[2] = videoSprites3;
             videoSprites[3] = videoSprites4;
             dirty = false;
+
             preparePanel();
-            Utils.setCbItemsCount(cbVideo, ConfigScript.videoOffset.recCount);
-            Utils.setCbItemsCount(cbTileset, ConfigScript.blocksOffset.recCount);
-            Utils.setCbItemsCount(cbPalette, ConfigScript.palOffset.recCount);
-
-
-            Utils.setCbIndexWithoutUpdateLevel(cbTileset, cbLevelSelect_SelectedIndexChanged, formMain.CurActiveBigBlockNo);  //small blocks no?
-            Utils.setCbIndexWithoutUpdateLevel(cbVideo, VisibleOnlyChange_SelectedIndexChanged, formMain.CurActiveVideoNo - 0x90);
-            Utils.setCbIndexWithoutUpdateLevel(cbPalette, VisibleOnlyChange_SelectedIndexChanged, formMain.CurActivePalleteNo);
-            curActiveBigBlock = formMain.CurActiveBigBlockNo; //small blocks no?
-            curActiveVideo = formMain.CurActiveVideoNo;
-            curActivePal = formMain.CurActivePalleteNo;
-
-            Utils.setCbIndexWithoutUpdateLevel(cbSubpalette, cbSubpalette_SelectedIndexChanged);
-
-            updatePanelsVisible();
+            resetControls();
             reloadLevel();
 
             readOnly = false; //must be read from config
@@ -51,19 +38,40 @@ namespace CadEditor
             //btExport.Visible = !readOnly;
         }
 
+        private void resetControls()
+        {
+            Utils.setCbItemsCount(cbVideo, ConfigScript.videoOffset.recCount);
+            Utils.setCbItemsCount(cbTileset, ConfigScript.blocksOffset.recCount);
+            Utils.setCbItemsCount(cbPalette, ConfigScript.palOffset.recCount);
+
+
+            Utils.setCbIndexWithoutUpdateLevel(cbTileset, cbLevelSelect_SelectedIndexChanged, formMain.CurActiveBigBlockNo);  //small blocks no?
+            Utils.setCbIndexWithoutUpdateLevel(cbVideo, VisibleOnlyChange_SelectedIndexChanged, formMain.CurActiveVideoNo - 0x90);
+            Utils.setCbIndexWithoutUpdateLevel(cbPalette, VisibleOnlyChange_SelectedIndexChanged, formMain.CurActivePalleteNo);
+            curActiveBigBlock = formMain.CurActiveBigBlockNo; //small blocks no?
+            curActiveVideo = formMain.CurActiveVideoNo;
+            curActivePal = formMain.CurActivePalleteNo;
+            Utils.setCbIndexWithoutUpdateLevel(cbSubpalette, cbSubpalette_SelectedIndexChanged);
+        }
+
         private void reloadLevel(bool resetDirty = true)
         {
             setPal();
             setVideo();
             setVideoImage();
             setObjects();
+            reloadLevelEx();
             if (resetDirty)
               dirty = false;
         }
 
+        private void reloadLevelEx()
+        {
+        }
+
         private void setPal()
         {
-            byte palId = (byte)curActivePal;
+            byte palId = getPalNo();
             palette = ConfigScript.getPal(palId);
             //set image for pallete
             var b = new Bitmap(16 * 16, 16);
@@ -90,9 +98,19 @@ namespace CadEditor
             }
         }
 
+        private byte getPalNo()
+        {
+            return (byte)curActivePal;
+        }
+
+        private byte getBigBlockNo()
+        {
+            return (byte)curActiveBigBlock;
+        }
+
         private void setObjects()
         {
-            byte bigBlockId = (byte)curActiveBigBlock;
+            byte bigBlockId = getBigBlockNo();
             objects = ConfigScript.getBlocks(bigBlockId);
             refillPanel();
         }
@@ -284,16 +302,9 @@ namespace CadEditor
             dirty = true;
         }
 
-        private byte getBlockId()
-        {
-            byte blockId;
-            blockId = (byte)curActiveBigBlock;
-            return blockId;
-        }
-
         private bool saveToFile()
         {
-            byte blockId = getBlockId();
+            byte blockId = getBigBlockNo();
             ConfigScript.setBlocks(blockId, objects);
             dirty = !Globals.flushToFile();
             return !dirty;
@@ -431,11 +442,6 @@ namespace CadEditor
             reloadLevel(false);
         }
 
-        private void updatePanelsVisible()
-        {
-            pnGeneric.Visible = true;
-        }
-
         private void btClear_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Are you sure want to clear all blocks?", "Clear", MessageBoxButtons.YesNo)!= DialogResult.Yes)
@@ -493,7 +499,7 @@ namespace CadEditor
             if (!f.Result)
                 return;
             var fn = f.Filename;
-            byte blockId = getBlockId();
+            byte blockId = getBigBlockNo();
             int blocksCount = ConfigScript.getBlocksCount();
             var data = new byte[blocksCount * 5];
             for (int i = 0; i < blocksCount; i++)
@@ -520,8 +526,7 @@ namespace CadEditor
             if (data == null)
                 return;
 
-            byte bigBlockId = (byte)curActiveBigBlock;
-            int addr = Globals.getTilesAddr(bigBlockId);
+            int addr = Globals.getTilesAddr(getBigBlockNo());
             for (int i = 0; i < ConfigScript.getBlocksCount(); i++)
             {
                 Globals.romdata[addr + i] = data[i];
