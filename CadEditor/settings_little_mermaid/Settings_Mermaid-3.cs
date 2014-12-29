@@ -15,6 +15,7 @@ public class Data:CapcomBase
   public override GetVideoChunkFunc    getVideoChunkFunc()    { return getLMVideoChunk; }
   public GetObjectsFunc getObjectsFunc() { return MermaidUtils.getObjectsLM; }
   public SetObjectsFunc setObjectsFunc() { return MermaidUtils.setObjectsLM; }
+  public GetLayoutFunc  getLayoutFunc()  { return MermaidUtils.getLayoutLinearMermaid;   }
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
     new LevelRec(0x139FD, 51, 20, 1,  0x1DACD), 

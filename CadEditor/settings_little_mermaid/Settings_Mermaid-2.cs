@@ -14,7 +14,8 @@ public class Data:CapcomBase
   public IList<LevelRec> getLevelRecs() { return levelRecs; }
   public override GetVideoChunkFunc    getVideoChunkFunc()    { return getLMVideoChunk; }
   public GetObjectsFunc getObjectsFunc() { return MermaidUtils.getObjectsLM; }
-  public SetObjectsFunc setObjectsFunc() { return MermaidUtils.setObjectsLM; }  
+  public SetObjectsFunc setObjectsFunc() { return MermaidUtils.setObjectsLM; }
+  public GetLayoutFunc  getLayoutFunc()  { return MermaidUtils.getLayoutLinearMermaid;   }  
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
     new LevelRec(0x13930, 52/*56*/, 17, 1,  0x1DABB), //error, pointers not aligned
