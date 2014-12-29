@@ -172,7 +172,7 @@ namespace PluginVideoNes
                     Bitmap curStrip;
                     if (constantSubpal == -1)
                     {
-                        if (Globals.gameType == GameType.DT2)
+                        if (Globals.getGameType() == GameType.DT2)
                         {
                             var objectForColor = objects[i / 4];
                             curStrip = objStrips[objectForColor.getSubpalleteForDt2(i % 4)];
@@ -197,7 +197,7 @@ namespace PluginVideoNes
                         g2.DrawImage(curStrip, new Rectangle(scaleInt8, scaleInt8, scaleInt8, scaleInt8), new Rectangle(co.c4 * scaleInt8, 0, scaleInt8, scaleInt8), GraphicsUnit.Pixel);
                         if (drawType == MapViewType.ObjType)
                         {
-                            if (Globals.gameType == GameType.DT2)
+                            if (Globals.getGameType() == GameType.DT2)
                             {
                                 g2.FillRectangle(new SolidBrush(CadObjectTypeColors[co.getTypeForDt2(i)]), new Rectangle(0, 0, scaleInt16, scaleInt16));
                                 g2.DrawString(String.Format("{0:X}", co.getTypeForDt2(i)), new Font("Arial", 6), Brushes.White, new Point(0, 0));
@@ -244,7 +244,7 @@ namespace PluginVideoNes
             //tt version hardcode
             ImageList[] smallBlocksAll = null;
             byte[] smallBlocksColorBytes = null;
-            if (GameType.TT == Globals.gameType)
+            if (GameType.TT == Globals.getGameType())
             {
                 smallBlocksAll = new ImageList[4];
                 for (int i = 0; i < 4; i++)
@@ -265,7 +265,7 @@ namespace PluginVideoNes
                 }
                 else
                 {
-                    switch (Globals.gameType)
+                    switch (Globals.getGameType())
                     {
                         case GameType.TT:
                             b = makeBigBlockTT(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
