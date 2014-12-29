@@ -69,10 +69,16 @@ namespace CadEditor
 
         private void resetScreens()
         {
+            int oldScreenNo = cbScreenNo.SelectedIndex;
             cbScreenNo.Items.Clear();
             for (int i = 0; i < ConfigScript.screensOffset[curActiveLevelForScreen].recCount; i++)
                 cbScreenNo.Items.Add(String.Format("{0:X}", i + 1));
-            cbScreenNo.SelectedIndex = 0;
+
+            if (oldScreenNo == -1)
+                cbScreenNo.SelectedIndex = 0;
+            else if (oldScreenNo < cbScreenNo.Items.Count)
+                cbScreenNo.SelectedIndex = oldScreenNo;
+
             screens = Utils.setScreens(curActiveLevelForScreen);
             if (ConfigScript.getLayersCount() > 1)
                 screens2 = Utils.setScreens2();
