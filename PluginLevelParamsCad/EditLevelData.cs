@@ -133,6 +133,8 @@ namespace CadEditor
 
         private void EditLevelData_Load(object sender, EventArgs e)
         {
+            loadLevelData();
+
             cbBackGfx.Items.Clear();
             cbObjGfx.Items.Clear();
             cbPalleteNo.Items.Clear();
@@ -181,6 +183,13 @@ namespace CadEditor
             }
 
             cbLevel.SelectedIndex = 0;
+        }
+
+        private void loadLevelData()
+        {
+            LevelData.LoadOffsetsFromConfig();
+            DoorData.LoadOffsetsFromConfig();
+            GlobalsCad.reloadLevelParamsData();
         }
 
         private int id89toIndex(int id)

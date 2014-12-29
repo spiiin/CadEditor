@@ -51,15 +51,11 @@ namespace CadEditor
             try
             {
                 ConfigScript.LoadFromFile(ConfigFilename);
-                LevelData.LoadOffsetsFromConfig();
-                DoorData.LoadOffsetsFromConfig();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            if (gameType == GameType.CAD) 
-              GlobalsCad.reloadLevelParamsData();
         }
 
         public static bool flushToFile()
@@ -88,7 +84,6 @@ namespace CadEditor
                 {
                     f.Write(Globals.romdata, 0, OpenFile.FileSize);
                     f.Seek(0, SeekOrigin.Begin);
-
                 }
             }
             catch (Exception ex)
@@ -109,23 +104,14 @@ namespace CadEditor
             return ConfigScript.bigBlocksOffset.beginAddr + ConfigScript.bigBlocksOffset.recSize * id;
         }
 
-        public static int getBackTileAddr(int levelNo)
-        {
-            return ConfigScript.boxesBackOffset.beginAddr + levelNo * ConfigScript.boxesBackOffset.recSize;
-        }
-
         public static int getLevelWidth(int levelNo)
         {
-            if (gameType != GameType.CAD)
-                return ConfigScript.getLevelRec(levelNo).width;
-            return GlobalsCad.levelData[levelNo].getWidth();
+            return ConfigScript.getLevelRec(levelNo).width;
         }
 
         public static int getLevelHeight(int levelNo)
         {
-            if (gameType != GameType.CAD)
-                return ConfigScript.getLevelRec(levelNo).height;
-            return GlobalsCad.levelData[levelNo].getHeight();
+            return ConfigScript.getLevelRec(levelNo).height;
         }
 
         public static int[] getScreen(OffsetRec screenOffset,  int screenIndex)

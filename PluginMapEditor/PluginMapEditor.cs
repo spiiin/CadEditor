@@ -30,6 +30,10 @@ namespace PluginMapEditor
             formMain.subeditorOpen(f, (ToolStripButton)sender);
         }
 
+        public void loadFromConfig(object asm, object data)
+        {
+        }
+
         FormMain formMain;
     }
 }

@@ -25,6 +25,10 @@ namespace PluginHexEditor
         formMain.addSubeditorButton(item);
       }
 
+      public void loadFromConfig(object asm, object data)
+      {
+      }
+
       private void btHex_Click(object sender, EventArgs e)
       {
           var f = new EditHexEditor();

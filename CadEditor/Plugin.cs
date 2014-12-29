@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.IO;
 using System.Drawing;
+using CSScriptLibrary;
 
 namespace CadEditor
 {
@@ -28,6 +29,7 @@ namespace CadEditor
   public interface IPlugin
   {
     void addSubeditorButton(FormMain formMain);
+    void loadFromConfig(object asm, object data); //asm is CSScriptLibrary.AsmHelper
     string getName();
   }
 

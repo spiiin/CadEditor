@@ -151,7 +151,7 @@ namespace CadEditor
 
         private void setBigBlocksIndexes()
         {
-          int bigTileIndex = (Globals.gameType != GameType.CAD) ? curActiveBlockNo : GlobalsCad.levelData[curActiveLevel].bigBlockId;
+          int bigTileIndex = curActiveBlockNo;
           bigBlockIndexes = ConfigScript.getBigBlocks(bigTileIndex);
         }
 
@@ -183,35 +183,16 @@ namespace CadEditor
 
             //read blocks from file
             int backId, blockId, palId;
-
-            if (GameType.CAD != Globals.gameType)
-            {
-                backId = curActiveVideoNo; ;
-                blockId = curActiveBigBlockNo;
-                palId = curActivePalleteNo;
-            }
-            else
-            {
-                var lr = ConfigScript.getLevelRec(curActiveLevel);
-                blockId = GlobalsCad.levelData[curActiveLevel].bigBlockId;
-                if (curActiveDoor < 0)
-                {
-                    backId = GlobalsCad.levelData[curActiveLevel].backId;
-                    palId = GlobalsCad.levelData[curActiveLevel].palId;
-                }
-                else
-                {
-                    backId = GlobalsCad.doorsData[curActiveDoor].backId;
-                    palId = GlobalsCad.doorsData[curActiveDoor].palId;
-                }
-            }
+            backId = curActiveVideoNo; ;
+            blockId = curActiveBigBlockNo;
+            palId = curActivePalleteNo;
 
             MapViewType smallObjectsType = 
                 curViewType == MapViewType.SmallObjNumbers ? MapViewType.ObjNumbers :
                   curViewType == MapViewType.ObjType ? MapViewType.ObjType : MapViewType.Tiles;
 
             float smallBlockScaleFactor = curButtonScale;
-            int bigTileIndex = (Globals.gameType != GameType.CAD) ? curActiveBlockNo : GlobalsCad.levelData[curActiveLevel].bigBlockId;
+            int bigTileIndex = curActiveBlockNo;
             Image[] bigImages;
             if (ConfigScript.isUseSegaGraphics())
                 bigImages = makeSegaBigBlocks();
@@ -615,18 +596,10 @@ namespace CadEditor
 
         private void changeLevelIndex(bool reloadObjectsPanel = false)
         {
-            if (Globals.gameType == GameType.CAD)
-            {
-                curActiveLevel = cbLevel.SelectedIndex;
-                curActiveDoor = cbDoor.SelectedIndex - 1;
-            }
-            else
-            {
-                curActiveVideoNo = cbVideoNo.SelectedIndex + 0x90;
-                curActiveBigBlockNo = cbBigBlockNo.SelectedIndex;
-                curActiveBlockNo = cbBlockNo.SelectedIndex;
-                curActivePalleteNo = cbPaletteNo.SelectedIndex;
-            }
+            curActiveVideoNo = cbVideoNo.SelectedIndex + 0x90;
+            curActiveBigBlockNo = cbBigBlockNo.SelectedIndex;
+            curActiveBlockNo = cbBlockNo.SelectedIndex;
+            curActivePalleteNo = cbPaletteNo.SelectedIndex;
             curViewType = (MapViewType)cbViewType.SelectedIndex;
             reloadLevel(true, reloadObjectsPanel);
         }
@@ -695,9 +668,8 @@ namespace CadEditor
 
         public void reloadGameType()
         {
-            bool generic = Globals.gameType != GameType.CAD;
-            pnGeneric.Visible = generic;
-            pnCad.Visible = !generic;
+            pnGeneric.Visible = true;
+            pnCad.Visible = false;
         }
 
         private void btOpen_Click(object sender, EventArgs e)
@@ -820,16 +792,6 @@ namespace CadEditor
                   f.Show();
                 }
             }
-        }
-
-        public int CurActiveLevelCad
-        {
-           get { return curActiveLevel; }
-        }
-
-        public int CurActiveDoorCad
-        {
-             get { return curActiveDoor; }
         }
 
         public int CurActiveVideoNo

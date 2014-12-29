@@ -10,14 +10,29 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsVerifier", "..\SettingsVerifier\SettingsVerifier.csproj", "{3FD2E457-380B-4AF3-B8B5-A11D6FA228DA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginHexEditor", "..\PluginHexEditor\PluginHexEditor.csproj", "{56C8768C-CBE8-492C-A58C-9A2766B1DD68}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BD2A990C-9D64-472D-9C78-1429C666604B} = {BD2A990C-9D64-472D-9C78-1429C666604B}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginMapEditor", "..\PluginMapEditor\PluginMapEditor.csproj", "{7FC87FFB-7EF9-46EB-8B84-62A5BA52B6FA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BD2A990C-9D64-472D-9C78-1429C666604B} = {BD2A990C-9D64-472D-9C78-1429C666604B}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginLevelParamsCad", "..\PluginLevelParamsCad\PluginLevelParamsCad.csproj", "{3A8AEE96-DA24-41FE-BAC5-DAAE7843D4BD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BD2A990C-9D64-472D-9C78-1429C666604B} = {BD2A990C-9D64-472D-9C78-1429C666604B}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginVideoNes", "..\PluginVideoNes\PluginVideoNes.csproj", "{B941BC5F-B083-42D1-905F-665EB708A272}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BD2A990C-9D64-472D-9C78-1429C666604B} = {BD2A990C-9D64-472D-9C78-1429C666604B}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginVideoSega", "..\PluginVideoSega\PluginVideoSega.csproj", "{64BDE26D-C9E7-4617-85E4-1FFB53E373AD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BD2A990C-9D64-472D-9C78-1429C666604B} = {BD2A990C-9D64-472D-9C78-1429C666604B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

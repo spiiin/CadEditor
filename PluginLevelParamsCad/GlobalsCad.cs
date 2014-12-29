@@ -28,6 +28,14 @@ namespace CadEditor
         public static int LEVELS_COUNT = 11;
         public static int DOORS_COUNT = 25;
         public static int MAX_SCREEN_LIST_LEN = 64;
+
+        public static OffsetRec boxesBackOffset;
+        public static int LevelRecBaseOffset;
+        public static int LevelRecDirOffset;
+        public static int LayoutPtrAdd;
+        public static int ScrollPtrAdd;
+        public static int DirPtrAdd;
+        public static int DoorRecBaseOffset;
     }
 
     public struct LevelData
@@ -150,14 +158,15 @@ namespace CadEditor
         public static int LayoutPtrAdd;
         public static int ScrollPtrAdd;
         public static int DirPtrAdd;
+        public static int DoorRecBaseOffset;
 
         public static void LoadOffsetsFromConfig()
         {
-            LevelRecBaseOffset = ConfigScript.LevelRecBaseOffset;
-            LevelRecDirOffset = ConfigScript.LevelRecDirOffset;
-            LayoutPtrAdd = ConfigScript.LayoutPtrAdd;
-            ScrollPtrAdd = ConfigScript.ScrollPtrAdd;
-            DirPtrAdd = ConfigScript.DirPtrAdd;
+            LevelRecBaseOffset = GlobalsCad.LevelRecBaseOffset;
+            LevelRecDirOffset = GlobalsCad.LevelRecDirOffset;
+            LayoutPtrAdd = GlobalsCad.LayoutPtrAdd;
+            ScrollPtrAdd = GlobalsCad.ScrollPtrAdd;
+            DirPtrAdd = GlobalsCad.DirPtrAdd;
         }
     }
 
@@ -209,7 +218,7 @@ namespace CadEditor
 
         public static void LoadOffsetsFromConfig()
         {
-            DoorRecBaseOffset = ConfigScript.DoorRecBaseOffset;
+            DoorRecBaseOffset = GlobalsCad.DoorRecBaseOffset;
         }
     }
 }

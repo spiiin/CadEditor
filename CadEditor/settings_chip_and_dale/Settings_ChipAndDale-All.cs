@@ -5,7 +5,7 @@ public class Data:CapcomBase
 {
   public string[] getPluginNames() 
   {
-    return new string[] { "../PluginLevelParamsCad.dll" };
+    return new string[] { "PluginLevelParamsCad.dll" };
   }
   public override GameType getGameType()  { return GameType.CAD; }
    

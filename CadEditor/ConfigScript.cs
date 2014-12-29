@@ -37,16 +37,6 @@ namespace CadEditor
                 dumpName = callFromScript(asm, data, "*.getDumpName", "");
                 showDumpFileField = callFromScript(asm, data, "*.showDumpFileField", false);
                 nesColors = callFromScript<Color[]>(asm, data, "*.getNesColors", null);
-
-                //auto load plugins
-
-                loadPluginWithSilentCatch(() => addPlugin("PluginHexEditor.dll"));
-                //loadPluginWithSilentCatch(()=>addPlugin("PluginMapEditor.dll"));
-                //loadPluginWithSilentCatch(()=>addPlugin("PluginLevelParamsCad.dll"));
-                
-                //auto load video plugins
-                loadPluginWithSilentCatch(() => videoNes  = PluginLoader.loadPlugin<IVideoPluginNes> ("PluginVideoNes.dll"));
-                loadPluginWithSilentCatch(() => videoSega = PluginLoader.loadPlugin<IVideoPluginSega>("PluginVideoSega.dll"));
             }
             catch (Exception)
             {
@@ -83,9 +73,12 @@ namespace CadEditor
             {
                 return;
             }
-            var dn = Path.GetDirectoryName(fileName);
-            if (dn != "")
-              Directory.SetCurrentDirectory(dn);
+
+
+            programStartDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            configDirectory       = Path.GetDirectoryName(fileName);
+            if (configDirectory != "")
+                changeToConfigDirectory();
             Globals.gameType = (GameType)asm.InvokeInst(data,"*.getGameType");
 
             levelsCount = callFromScript(asm, data, "*.getLevelsCount", 1);
@@ -166,26 +159,40 @@ namespace CadEditor
 
             blockTypeNames = callFromScript(asm, data, "getBlockTypeNames", defaultBlockTypeNames);
 
-            loadPluginsFromConfig(asm, data);
-
-            if (Globals.gameType == GameType.CAD)
-            {
-                boxesBackOffset = (OffsetRec)asm.InvokeInst(data, "*.getBoxesBackOffset");
-                LevelRecBaseOffset = (int)asm.InvokeInst(data, "*.getLevelRecBaseOffset");
-                LevelRecDirOffset = (int)asm.InvokeInst(data, "*.getLevelRecDirOffset");
-                LayoutPtrAdd = (int)asm.InvokeInst(data, "*.getLayoutPtrAdd");
-                ScrollPtrAdd = (int)asm.InvokeInst(data, "*.getScrollPtrAdd");
-                DirPtrAdd = (int)asm.InvokeInst(data, "*.getDirPtrAdd");
-                DoorRecBaseOffset = (int)asm.InvokeInst(data, "*.getDoorRecBaseOffset");
-            }
+            loadAllPlugins(asm, data);
         }
 
-        private static void loadPluginsFromConfig(AsmHelper asm, object data)
+        private static void loadAllPlugins(AsmHelper asm, object data)
+        {
+            changeToProgramDirectory();
+            loadGlobalPlugins();
+            loadPluginsFromCurrentConfig(asm, data);
+            changeToConfigDirectory();
+        }
+
+        private static void loadGlobalPlugins()
+        {
+            //auto load plugins
+            loadPluginWithSilentCatch(() => addPlugin("PluginHexEditor.dll"));
+            //loadPluginWithSilentCatch(()=>addPlugin("PluginMapEditor.dll"));
+            //loadPluginWithSilentCatch(()=>addPlugin("PluginLevelParamsCad.dll"));
+
+            //auto load video plugins
+            loadPluginWithSilentCatch(() => videoNes = PluginLoader.loadPlugin<IVideoPluginNes>("PluginVideoNes.dll"));
+            loadPluginWithSilentCatch(() => videoSega = PluginLoader.loadPlugin<IVideoPluginSega>("PluginVideoSega.dll"));
+        }
+
+        private static void loadPluginsFromCurrentConfig(AsmHelper asm, object data)
         {
             string[] pluginNames = callFromScript(asm, data, "getPluginNames", new string[0]);
             foreach (var pluginName in pluginNames)
             {
-                addPlugin(pluginName);
+                var p = PluginLoader.loadPlugin<IPlugin>(pluginName);
+                if (p != null)
+                {
+                    p.loadFromConfig(asm, data);
+                    plugins.Add(p);
+                }
             }
             plugins.Reverse();
         }
@@ -416,6 +423,18 @@ namespace CadEditor
             }
         }
 
+        public static void changeToProgramDirectory()
+        {
+            Directory.SetCurrentDirectory(programStartDirectory);
+        }
+        public static void changeToConfigDirectory()
+        {
+            Directory.SetCurrentDirectory(configDirectory);
+        }
+
+        private static string programStartDirectory;
+        private static string configDirectory;
+
         //public static GameType gameType;
 
         public static OffsetRec palOffset;
@@ -425,7 +444,7 @@ namespace CadEditor
         public static OffsetRec blocksOffset;
         public static OffsetRec[] screensOffset;
         public static OffsetRec screensOffset2;
-        public static OffsetRec boxesBackOffset;
+        //public static OffsetRec boxesBackOffset;
         public static int levelsCount;
         public static int bigBlocksCount;
         public static int blocksCount;
@@ -483,14 +502,6 @@ namespace CadEditor
 
         public static string[] blockTypeNames;
         public static string[] defaultBlockTypeNames = new[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F" };
-
-        //chip and dale specific
-        public static int LevelRecBaseOffset;
-        public static int LevelRecDirOffset;
-        public static int LayoutPtrAdd;
-        public static int ScrollPtrAdd;
-        public static int DirPtrAdd;
-        public static int DoorRecBaseOffset;
 
         //global editor settings
         public static string  romName;
