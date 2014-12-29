@@ -35,7 +35,7 @@ namespace CadEditor
 
             subeditorsDict = new Dictionary<ToolStripButton, Func<Form>> { 
                  { bttBigBlocks,    makeBigBlocksEditor },
-                 { bttBlocks,       getBlocksForm },
+                 { bttBlocks,       makeBlocksEditor },
                  { bttLayout,       ()=>{ return new EditLayout();}   },
                  { bttEnemies,      ()=>{ var f = new EnemyEditor();  f.setFormMain(this); return f;}  },
                  { bttVideo,        ()=>{ return new EditVideo();}    },
@@ -61,13 +61,22 @@ namespace CadEditor
             }
         }
 
-        private Form getBlocksForm()
+        private Form makeBlocksEditor()
         {
             if (!ConfigScript.isUseSegaGraphics())
             {
-                var f = new BlockEdit();
-                f.setFormMain(this);
-                return f;
+                if (GameType.CAD == Globals.gameType)
+                {
+                    var f = new BlockEditCad();
+                    f.setFormMain(this);
+                    return f;
+                }
+                else
+                {
+                    var f = new BlockEdit();
+                    f.setFormMain(this);
+                    return f;
+                }
             }
             else
             {

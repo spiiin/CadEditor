@@ -95,11 +95,11 @@ namespace CadEditor
             return !dirty;
         }
 
-        private BlockEdit parentForm = null;
+        private BlockEditCad parentForm = null;
         private byte[] curActiveBack = new byte[16];
         private bool dirty = false;
 
-        public void setParentForm(BlockEdit parentForm)
+        public void setParentForm(BlockEditCad parentForm)
         {
             this.parentForm = parentForm;
         }

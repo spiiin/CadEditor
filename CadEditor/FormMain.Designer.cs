@@ -95,6 +95,8 @@
             this.bttLayer = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.tbbShowPluginInfo = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.blockPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.blockPanel3 = new System.Windows.Forms.FlowLayoutPanel();
@@ -106,8 +108,6 @@
             this.cbLevelNo = new System.Windows.Forms.ComboBox();
             this.cbUseStructs = new System.Windows.Forms.CheckBox();
             this.lbStructures = new System.Windows.Forms.ListBox();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.tbbShowPluginInfo = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -824,6 +824,21 @@
             this.toolStripMenuItem5.Size = new System.Drawing.Size(80, 22);
             this.toolStripMenuItem5.Text = "2";
             // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tbbShowPluginInfo
+            // 
+            this.tbbShowPluginInfo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbbShowPluginInfo.Image = ((System.Drawing.Image)(resources.GetObject("tbbShowPluginInfo.Image")));
+            this.tbbShowPluginInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbbShowPluginInfo.Name = "tbbShowPluginInfo";
+            this.tbbShowPluginInfo.Size = new System.Drawing.Size(23, 22);
+            this.tbbShowPluginInfo.Text = "Show plugins info";
+            this.tbbShowPluginInfo.Click += new System.EventHandler(this.tbbShowPluginInfo_Click);
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -921,6 +936,7 @@
             // 
             this.pnElements.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnElements.Controls.Add(this.pnGeneric);
             this.pnElements.Controls.Add(this.label3);
             this.pnElements.Controls.Add(this.cbLevelNo);
             this.pnElements.Controls.Add(this.cbUseStructs);
@@ -932,7 +948,6 @@
             this.pnElements.Controls.Add(this.label6);
             this.pnElements.Controls.Add(this.cbScreenNo);
             this.pnElements.Controls.Add(this.pnCad);
-            this.pnElements.Controls.Add(this.pnGeneric);
             this.pnElements.Location = new System.Drawing.Point(297, 3);
             this.pnElements.Name = "pnElements";
             this.pnElements.Size = new System.Drawing.Size(77, 515);
@@ -980,21 +995,6 @@
             this.lbStructures.TabIndex = 6;
             this.lbStructures.Visible = false;
             this.lbStructures.SelectedIndexChanged += new System.EventHandler(this.lbStructures_SelectedIndexChanged);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
-            // 
-            // tbbShowPluginInfo
-            // 
-            this.tbbShowPluginInfo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbbShowPluginInfo.Image = ((System.Drawing.Image)(resources.GetObject("tbbShowPluginInfo.Image")));
-            this.tbbShowPluginInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbbShowPluginInfo.Name = "tbbShowPluginInfo";
-            this.tbbShowPluginInfo.Size = new System.Drawing.Size(23, 22);
-            this.tbbShowPluginInfo.Text = "Show plugins info";
-            this.tbbShowPluginInfo.Click += new System.EventHandler(this.tbbShowPluginInfo_Click);
             // 
             // FormMain
             // 

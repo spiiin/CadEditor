@@ -77,6 +77,12 @@
     <Compile Include="BigBlockEdit.Designer.cs">
       <DependentUpon>BigBlockEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="BlockEditCad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BlockEditCad.Designer.cs">
+      <DependentUpon>BlockEditCad.cs</DependentUpon>
+    </Compile>
     <Compile Include="BlockEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -175,6 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BigBlockEdit.resx">
       <DependentUpon>BigBlockEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BlockEditCad.resx">
+      <DependentUpon>BlockEditCad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BlockEdit.resx">
       <DependentUpon>BlockEdit.cs</DependentUpon>
