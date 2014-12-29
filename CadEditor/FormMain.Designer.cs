@@ -47,11 +47,6 @@
             this.cbBigBlockNo = new System.Windows.Forms.ComboBox();
             this.cbVideoNo = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.pnCad = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
-            this.cbDoor = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cbLevel = new System.Windows.Forms.ComboBox();
             this.cbViewType = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.smallBlocks1 = new System.Windows.Forms.ImageList(this.components);
@@ -111,7 +106,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
-            this.pnCad.SuspendLayout();
             this.pnView.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -326,92 +320,6 @@
             this.label1.Size = new System.Drawing.Size(64, 13);
             this.label1.TabIndex = 42;
             this.label1.Text = "VideoBlock:";
-            // 
-            // pnCad
-            // 
-            this.pnCad.Controls.Add(this.label7);
-            this.pnCad.Controls.Add(this.cbDoor);
-            this.pnCad.Controls.Add(this.label2);
-            this.pnCad.Controls.Add(this.cbLevel);
-            this.pnCad.Location = new System.Drawing.Point(1, 213);
-            this.pnCad.Name = "pnCad";
-            this.pnCad.Size = new System.Drawing.Size(72, 93);
-            this.pnCad.TabIndex = 43;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(4, 37);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(33, 13);
-            this.label7.TabIndex = 36;
-            this.label7.Text = "Door:";
-            // 
-            // cbDoor
-            // 
-            this.cbDoor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbDoor.FormattingEnabled = true;
-            this.cbDoor.Items.AddRange(new object[] {
-            "None",
-            "Door 1",
-            "Door 2",
-            "Door 3",
-            "Door 4",
-            "Door 5",
-            "Door 6",
-            "Door 7",
-            "Door 8",
-            "Door 9",
-            "Door A",
-            "Door B",
-            "Door C",
-            "Door D",
-            "Door E",
-            "Door F",
-            "Door 10",
-            "Door 11",
-            "Door 12",
-            "Door 13",
-            "Door 14",
-            "Door 15",
-            "Door 16",
-            "Door 17",
-            "Door 18",
-            "Door 19"});
-            this.cbDoor.Location = new System.Drawing.Point(7, 53);
-            this.cbDoor.Name = "cbDoor";
-            this.cbDoor.Size = new System.Drawing.Size(64, 21);
-            this.cbDoor.TabIndex = 35;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, -3);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 13);
-            this.label2.TabIndex = 32;
-            this.label2.Text = "View as:";
-            // 
-            // cbLevel
-            // 
-            this.cbLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbLevel.FormattingEnabled = true;
-            this.cbLevel.Items.AddRange(new object[] {
-            "Level 0",
-            "Level A",
-            "Level B",
-            "Level C",
-            "Level D",
-            "Level E",
-            "Level F",
-            "Level G",
-            "Level H",
-            "Level I",
-            "Level J"});
-            this.cbLevel.Location = new System.Drawing.Point(6, 13);
-            this.cbLevel.Name = "cbLevel";
-            this.cbLevel.Size = new System.Drawing.Size(64, 21);
-            this.cbLevel.TabIndex = 31;
             // 
             // cbViewType
             // 
@@ -936,7 +844,6 @@
             // 
             this.pnElements.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnElements.Controls.Add(this.pnGeneric);
             this.pnElements.Controls.Add(this.label3);
             this.pnElements.Controls.Add(this.cbLevelNo);
             this.pnElements.Controls.Add(this.cbUseStructs);
@@ -947,7 +854,7 @@
             this.pnElements.Controls.Add(this.cbViewType);
             this.pnElements.Controls.Add(this.label6);
             this.pnElements.Controls.Add(this.cbScreenNo);
-            this.pnElements.Controls.Add(this.pnCad);
+            this.pnElements.Controls.Add(this.pnGeneric);
             this.pnElements.Location = new System.Drawing.Point(297, 3);
             this.pnElements.Name = "pnElements";
             this.pnElements.Size = new System.Drawing.Size(77, 515);
@@ -1014,8 +921,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).EndInit();
             this.pnGeneric.ResumeLayout(false);
             this.pnGeneric.PerformLayout();
-            this.pnCad.ResumeLayout(false);
-            this.pnCad.PerformLayout();
             this.pnView.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -1049,11 +954,6 @@
         private System.Windows.Forms.ComboBox cbBigBlockNo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbVideoNo;
-        private System.Windows.Forms.Panel pnCad;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox cbDoor;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cbLevel;
         private System.Windows.Forms.ComboBox cbViewType;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ImageList smallBlocks1;

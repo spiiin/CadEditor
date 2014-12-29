@@ -140,19 +140,20 @@ namespace CadEditor
                     for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
                     {
                         Bitmap b;
-                        switch (Globals.gameType)
+                        /*switch (Globals.gameType)
                         {
                             //todo: write code to export blocks for TinyToon
-                            /*case GameType.TT:
-                                b = ConfigScript.videoNes.makeBigBlockTT(i, 64, 64, bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
-                                break;*/
+                            //case GameType.TT:
+                            //    b = ConfigScript.videoNes.makeBigBlockTT(i, 64, 64, bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
+                            //    break;
                             case GameType._3E:
                                 b = ConfigScript.videoNes.makeBigBlock3E(i, 64, 64, bigBlockIndexes, smallBlocks);
                                 break;
                             default:
                                 b = ConfigScript.videoNes.makeBigBlock(i, 64, 64, bigBlockIndexes, smallBlocks);
                                 break;
-                        }
+                        }*/
+                        b = ConfigScript.videoNes.makeBigBlock(i, 64, 64, bigBlockIndexes, smallBlocks);
                         g.DrawImage(b, new Point(64 * i, 0));
                     }
                 }

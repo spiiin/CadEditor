@@ -7,7 +7,6 @@ public class Data:CapcomBase
   {
     return new string[] { "PluginLevelParamsCad.dll" };
   }
-  public override GameType getGameType()  { return GameType.CAD; }
    
   public OffsetRec getPalOffset()       { return new OffsetRec(0x1C354, 32  , 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x30010, 16  , 0x1000); }

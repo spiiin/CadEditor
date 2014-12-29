@@ -79,7 +79,7 @@ namespace CadEditor
             configDirectory       = Path.GetDirectoryName(fileName);
             if (configDirectory != "")
                 changeToConfigDirectory();
-            Globals.gameType = (GameType)asm.InvokeInst(data,"*.getGameType");
+            Globals.gameType = callFromScript(asm, data, "*.getGameType", GameType.Generic);
 
             levelsCount = callFromScript(asm, data, "*.getLevelsCount", 1);
             screensOffset = new OffsetRec[levelsCount];
@@ -434,8 +434,6 @@ namespace CadEditor
 
         private static string programStartDirectory;
         private static string configDirectory;
-
-        //public static GameType gameType;
 
         public static OffsetRec palOffset;
         public static OffsetRec videoOffset;

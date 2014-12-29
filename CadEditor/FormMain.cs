@@ -104,9 +104,6 @@ namespace CadEditor
             Utils.setCbIndexWithoutUpdateLevel(cbBlockNo, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbPaletteNo, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbLevelNo, cbLevelNo_SelectedIndexChanged);
-
-            Utils.setCbIndexWithoutUpdateLevel(cbLevel, cbLevel_SelectedIndexChanged);
-            Utils.setCbIndexWithoutUpdateLevel(cbDoor, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbViewType, cbLevel_SelectedIndexChanged);
             dirty = false; updateSaveVisibility();
             showNeiScreens = true;
@@ -369,9 +366,6 @@ namespace CadEditor
         private int curActiveScreen = 0;
         private int curActiveLevelForScreen = 0;
 
-        //chip'n'dale specific
-        private int curActiveLevel = 0;
-        private int curActiveDoor = 0;
         //generic
         private int curActiveVideoNo = 0;
         private int curActiveBigBlockNo = 0;
@@ -612,9 +606,6 @@ namespace CadEditor
 
         private void returnCbLevelIndex()
         {
-            cbLevel.SelectedIndexChanged -= cbLevel_SelectedIndexChanged;
-            cbLevel.SelectedIndex = curActiveLevel;
-            cbLevel.SelectedIndexChanged += cbLevel_SelectedIndexChanged;
             cbLevelNo.SelectedIndexChanged -= cbLevelNo_SelectedIndexChanged;
             cbLevelNo.SelectedIndex = curActiveLevelForScreen;
             cbLevelNo.SelectedIndexChanged += cbLevelNo_SelectedIndexChanged;
@@ -675,7 +666,6 @@ namespace CadEditor
         public void reloadGameType()
         {
             pnGeneric.Visible = true;
-            pnCad.Visible = false;
         }
 
         private void btOpen_Click(object sender, EventArgs e)
