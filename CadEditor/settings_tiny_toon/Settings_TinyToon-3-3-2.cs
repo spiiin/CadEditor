@@ -31,6 +31,7 @@ public class Data
   public SetPalFunc           setPalFunc()           { return null;}
   public GetObjectsFunc getObjectsFunc() { return TinyToonUtils.getObjectsTT; }
   public SetObjectsFunc setObjectsFunc() { return TinyToonUtils.setObjectsTT; }
+  public GetLayoutFunc  getLayoutFunc()  { return TinyToonUtils.getLayoutLinearTT;   }
   
   public IList<LevelRec> levelRecsTT = new List<LevelRec>() 
   {

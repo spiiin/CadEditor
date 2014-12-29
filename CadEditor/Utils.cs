@@ -172,16 +172,8 @@ namespace CadEditor
             int width =  Globals.getLevelWidth(curActiveLayout);
             int height = Globals.getLevelHeight(curActiveLayout);
             byte[] layer = new byte[width * height];
-            if (Globals.gameType != GameType.TT)
-            {
-                for (int i = 0; i < width * height; i++)
-                    layer[i] = Globals.romdata[layoutAddr + i];
-            }
-            else
-            {
-                for (int i = 0; i < width * height; i++)
-                    layer[i] = (byte)(i + 1);
-            }
+            for (int i = 0; i < width * height; i++)
+                layer[i] = Globals.romdata[layoutAddr + i];
             return new LevelLayerData(width, height, layer, null, null);
         }
 
