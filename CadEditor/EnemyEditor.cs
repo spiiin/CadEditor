@@ -193,6 +193,7 @@ namespace CadEditor
                 mapScreen.Size = new Size((ConfigScript.getScreenWidth(scrLevelNo) + 2) * blockWidth * 2, ConfigScript.getScreenHeight(scrLevelNo) * 64);
 
             Utils.setCbItemsCount(cbBigObjectNo, 256, 0, true);
+            cbLevel_SelectedIndexChanged(cbLayoutNo, new EventArgs());
         }
 
         private void cbScreenNo_SelectedIndexChanged(object sender, EventArgs e)
