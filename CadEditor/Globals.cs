@@ -233,7 +233,16 @@ namespace CadEditor
         public static int SEGA_PAL_LEN = 128;
         public static int MAX_SCREEN_LIST_LEN = 64;
 
-        public static GameType gameType = GameType.Generic;
+        public static GameType getGameType()
+        {
+            return gameType;
+        }
+        public static void setGameType(GameType _gameType)
+        {
+            gameType = _gameType;
+        }
+
+        private static GameType gameType = GameType.Generic;
     }
 
     public struct OffsetRec

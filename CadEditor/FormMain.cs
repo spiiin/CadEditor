@@ -118,7 +118,7 @@ namespace CadEditor
             reloadGameType();
             changeLevelIndex();
 
-            bool showImportExport = Globals.gameType != GameType.DT;
+            bool showImportExport = Globals.getGameType() != GameType.DT;
             bttImport.Visible = showImportExport;
             bttExport.Visible = showImportExport;
 
@@ -643,7 +643,7 @@ namespace CadEditor
 
         private bool openFile()
         {
-            Globals.gameType = GameType.Generic;
+            Globals.setGameType(GameType.Generic);
             if (!Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
             {
                 updateSaveVisibility();

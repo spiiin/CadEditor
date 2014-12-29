@@ -262,7 +262,7 @@ namespace CadEditor
 
         public Image makeObjImage(int index)
         {
-            if (Globals.gameType == GameType.DT2)
+            if (Globals.getGameType() == GameType.DT2)
             {
                 return makeObjImageDt2(index);
             }
@@ -396,7 +396,7 @@ namespace CadEditor
                 cbColor.DrawItem += new DrawItemEventHandler(cbSubpalette_DrawItemEvent);
                 cbColor.Items.AddRange(subPalItems);
                 cbColor.DropDownStyle = ComboBoxStyle.DropDownList;
-                if (Globals.gameType != GameType.DT2)
+                if (Globals.getGameType() != GameType.DT2)
                     cbColor.SelectedIndexChanged += cbColor_SelectedIndexChanged;
                 else
                     cbColor.SelectedIndexChanged += cbColor_SelectedIndexChangedDt2;
@@ -409,9 +409,9 @@ namespace CadEditor
                 cbType.Size = new Size(120, 21);
                 cbType.Tag = i;
                 cbType.DropDownStyle = ComboBoxStyle.DropDownList;
-                if (Globals.gameType != GameType.DT2)
+                if (Globals.getGameType() != GameType.DT2)
                   cbType.SelectedIndexChanged += cbType_SelectedIndexChanged;
-                cbType.Enabled = Globals.gameType != GameType.DT2;
+                cbType.Enabled = Globals.getGameType() != GameType.DT2;
                 fp.Controls.Add(cbType);
                 mapObjects.Controls.Add(fp);
             }
@@ -427,7 +427,7 @@ namespace CadEditor
                 PictureBox pb = (PictureBox)p.Controls[1];
                 pb.Image = makeObjImage(i);
                 ComboBox cbColor = (ComboBox)p.Controls[2];
-                cbColor.SelectedIndex = Globals.gameType == GameType.DT2 ? objects[i/4].getSubpalleteForDt2(i%4) : objects[i].getSubpallete();
+                cbColor.SelectedIndex = Globals.getGameType() == GameType.DT2 ? objects[i/4].getSubpalleteForDt2(i%4) : objects[i].getSubpallete();
                 ComboBox cbType = (ComboBox)p.Controls[3];
                 cbType.SelectedIndex = objects[i].getType();
             }
