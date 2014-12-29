@@ -2,7 +2,6 @@ using CadEditor;
 using System.Collections.Generic;
 public class Data
 { 
-  public GameType getGameType()           { return GameType.Generic; }
   public OffsetRec getScreensOffset()     { return new OffsetRec(0xA890, 4 /*next - castle level too, with other graphics*/, 8*9);   }
   public int getScreenWidth()             { return 8; }
   public int getScreenHeight()            { return 9; }

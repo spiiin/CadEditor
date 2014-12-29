@@ -4,7 +4,6 @@ using System.Collections.Generic;
 //css_include Settings_Mermaid-Utils.cs;
 public class Data:CapcomBase
 {
-  public override GameType getGameType(){ return GameType.LM; }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x1DB53, 32  , 16);  }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0xD810, 1 , 0xD00); }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0xD810, 1 , 0xD00); }

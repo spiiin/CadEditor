@@ -468,7 +468,6 @@ namespace CadEditor
         DT,
         DT2,
         TT,
-        LM,
         _3E,
     };
 
