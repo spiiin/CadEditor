@@ -3,7 +3,6 @@ using System.Collections.Generic;
 //css_include Settings_Flintstones-Utils.cs;
 public class Data
 { 
-  public GameType getGameType()           { return GameType.TT; }
   public OffsetRec getScreensOffset()     { return new OffsetRec(0x10, 1 , 8*60);   }
   public int getScreenWidth()             { return 8; }
   public int getScreenHeight()            { return 60; }
