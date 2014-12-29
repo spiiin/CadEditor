@@ -25,9 +25,6 @@ namespace CadEditor
             Utils.setCbIndexWithoutUpdateLevel(cbSubPal, cbVideoNo_SelectedIndexChanged);
             //Utils.setCbIndexWithoutUpdateLevel(cbPalleteNo, cbPalleteNo_SelectedIndexChanged);
             cbPalleteNo.SelectedIndex = 0;
-
-            //visibility
-            btImport.Visible = Globals.gameType != GameType.DT2;
         }
 
         private void setPal()

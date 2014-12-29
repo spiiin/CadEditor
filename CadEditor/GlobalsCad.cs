@@ -21,20 +21,6 @@ namespace CadEditor
                 doorsData.Add(DoorData.readFromFile(Globals.romdata, i));
         }
 
-        /*public static int getLevelWidth(int levelNo)
-        {
-            if (gameType != GameType.CAD)
-                return ConfigScript.getLevelRec(levelNo).width;
-            return levelData[levelNo].getWidth();
-        }
-
-        public static int getLevelHeight(int levelNo)
-        {
-            if (gameType != GameType.CAD)
-                return ConfigScript.getLevelRec(levelNo).height;
-            return levelData[levelNo].getHeight();
-        }*/
-
         public static List<ScreenRec> buildScreenRecs(int levelNo, bool stopOnDoor)
         {
              var lr = GlobalsCad.levelData[levelNo];
