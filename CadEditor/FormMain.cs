@@ -118,7 +118,7 @@ namespace CadEditor
             reloadGameType();
             changeLevelIndex();
 
-            bool showImportExport = Globals.getGameType() != GameType.DT;
+            bool showImportExport = true; // Globals.getGameType() != GameType.DT;
             bttImport.Visible = showImportExport;
             bttExport.Visible = showImportExport;
 
@@ -281,7 +281,7 @@ namespace CadEditor
                 if (i % WIDTH == line)
                 {
                     int index = indexesPrev[i];
-                    int bigBlockNo = Globals.getBigTileNoFromScreen(indexesPrev, i);
+                    int bigBlockNo = ConfigScript.getBigTileNoFromScreen(indexesPrev, i);
                     if (bigBlockNo < bigBlocks.Images.Count)
                         g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle(X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y));
                 }
@@ -423,7 +423,7 @@ namespace CadEditor
                 if (dx == WIDTH || dx == -1)
                     return;
                 int index = dy * WIDTH + dx;
-                curActiveBlock = Globals.getBigTileNoFromScreen(screens[curActiveScreen], index);
+                curActiveBlock = ConfigScript.getBigTileNoFromScreen(screens[curActiveScreen], index);
                 activeBlock.Image = bigBlocks.Images[curActiveBlock];
                 lbActiveBlock.Text = String.Format("Label: {0:X}", curActiveBlock);
                 return;
@@ -461,7 +461,7 @@ namespace CadEditor
                     if (curActiveScreen < ConfigScript.screensOffset[curActiveLevelForScreen].recCount - 1)
                     {
                         int index = dy * WIDTH;
-                        Globals.setBigTileToScreen(activeScreens[curActiveScreen + 1], index, curActiveBlock);
+                        ConfigScript.setBigTileToScreen(activeScreens[curActiveScreen + 1], index, curActiveBlock);
                         dirty = true; updateSaveVisibility();
                     }
                 }
@@ -470,7 +470,7 @@ namespace CadEditor
                     if (curActiveScreen > 0)
                     {
                         int index = dy * WIDTH + (WIDTH - 1);
-                        Globals.setBigTileToScreen(activeScreens[curActiveScreen - 1], index, curActiveBlock);
+                        ConfigScript.setBigTileToScreen(activeScreens[curActiveScreen - 1], index, curActiveBlock);
                         dirty = true; updateSaveVisibility();
                     }
                 }
@@ -479,7 +479,7 @@ namespace CadEditor
                     if (!useStructs)
                     {
                         int index = dy * WIDTH + dx;
-                        Globals.setBigTileToScreen(activeScreens[curActiveScreen], index, curActiveBlock);
+                        ConfigScript.setBigTileToScreen(activeScreens[curActiveScreen], index, curActiveBlock);
                         dirty = true; updateSaveVisibility();
                     }
                     else
@@ -513,7 +513,7 @@ namespace CadEditor
                         int no = curTileStruct[x, y];
                         if (no == -1)
                             continue;
-                        Globals.setBigTileToScreen(activeScreens[curActiveScreen], index, no);
+                        ConfigScript.setBigTileToScreen(activeScreens[curActiveScreen], index, no);
                     }
                 }
             }

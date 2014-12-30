@@ -26,7 +26,7 @@ namespace CadEditor
             int SIZE = WIDTH * HEIGHT;
             for (int i = 0; i < SIZE; i++)
             {
-                int bigBlockNo = Globals.getBigTileNoFromScreen(screen, i);
+                int bigBlockNo = ConfigScript.getBigTileNoFromScreen(screen, i);
                 Rectangle tileRect;
                 if (verticalScreen)
                     tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X, (i % WIDTH) * TILE_SIZE_Y + LeftMargin, TILE_SIZE_X, TILE_SIZE_Y);
@@ -41,7 +41,7 @@ namespace CadEditor
                         g.FillRectangle(Brushes.White, tileRect);
                     if (screen2 != null && ShowLayer2)
                     {
-                        int bigBlockNo2 = Globals.getBigTileNoFromScreen(screen2, i);
+                        int bigBlockNo2 = ConfigScript.getBigTileNoFromScreen(screen2, i);
                         if (bigBlockNo2 != -1 && bigBlockNo2 < bigBlocks.Images.Count)
                             g.DrawImage(bigBlocks.Images[bigBlockNo2], tileRect);
                         else

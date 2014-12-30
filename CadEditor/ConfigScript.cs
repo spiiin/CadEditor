@@ -22,7 +22,9 @@ namespace CadEditor
     public delegate void            SortObjectsFunc(int levelNo, List<ObjectRec> objects);
     public delegate LevelLayerData  GetLayoutFunc(int levelNo);
     public delegate Dictionary<String, int> GetObjectDictionaryFunc(int objNo);
-    public delegate int ConvertScreenTileFunc(int val);
+    public delegate int  ConvertScreenTileFunc(int val);
+    public delegate int  GetBigTileNoFromScreenFunc(int[] screenData, int index);
+    public delegate void SetBigTileToScreenFunc(int[] screenData, int index, int value);
 
     public class ConfigScript
     {
@@ -129,7 +131,11 @@ namespace CadEditor
             getLayoutFunc = callFromScript<GetLayoutFunc>(asm, data, "*.getLayoutFunc");
             convertScreenTileFunc = callFromScript<ConvertScreenTileFunc>(asm, data, "*.getConvertScreenTileFunc");
             backConvertScreenTileFunc = callFromScript<ConvertScreenTileFunc>(asm, data, "*.getBackConvertScreenTileFunc");
+            getBigTileNoFromScreenFunc = callFromScript<GetBigTileNoFromScreenFunc>(asm, data, "*.getBigTileNoFromScreenFunc", Utils.getBigTileNoFromScreen);
+            setBigTileToScreenFunc = callFromScript<SetBigTileToScreenFunc>(asm, data, "*.setBigTileToScreenFunc", Utils.setBigTileToScreen);
             getObjectDictionaryFunc = callFromScript<GetObjectDictionaryFunc>(asm, data, "*.getObjectDictionaryFunc");
+
+
 
             renderToMainScreenFunc = callFromScript<RenderToMainScreenFunc>(asm, data, "*.getRenderToMainScreenFunc");
 
@@ -268,6 +274,16 @@ namespace CadEditor
          public static int backConvertScreenTile(int tile)
          {
              return (backConvertScreenTileFunc ?? (v => v))(tile);
+         }
+
+         public static int getBigTileNoFromScreen(int[] screenData, int index)
+         {
+             return getBigTileNoFromScreenFunc(screenData, index);
+         }
+
+         public static void setBigTileToScreen(int[] screenData, int index, int value)
+         {
+             setBigTileToScreenFunc(screenData, index, value);
          }
 
         public static LevelLayerData getLayout(int levelNo)
@@ -482,6 +498,8 @@ namespace CadEditor
         public static RenderToMainScreenFunc renderToMainScreenFunc;
         public static ConvertScreenTileFunc convertScreenTileFunc;
         public static ConvertScreenTileFunc backConvertScreenTileFunc;
+        public static GetBigTileNoFromScreenFunc getBigTileNoFromScreenFunc;
+        public static SetBigTileToScreenFunc setBigTileToScreenFunc;
 
         public static bool isBigBlockEditorEnabled;
         public static bool isBlockEditorEnabled;

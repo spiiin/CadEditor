@@ -145,44 +145,6 @@ namespace CadEditor
             return result;
         }
 
-
-        public static int getBigTileNoFromScreen(int[] screenData, int index)
-        {
-            if (gameType == GameType.DT)
-            {
-                int noY = index % 8;
-                int noX = index / 8;
-                int lineByte = screenData[0x40 + noX];
-                int addValue = (lineByte & (1 << (7 - noY))) != 0 ? 256 : 0;
-                return addValue + screenData[index];
-            }
-            if (index == -1)
-                return -1;
-            return screenData[index];
-        }
-
-        public static void setBigTileToScreen(int[] screenData, int index, int value)
-        {
-            if (gameType == GameType.DT)
-            {
-                bool hiPart = value > 0xFF;
-                int noY = index % 8;
-                int noX = index / 8;
-                int lineByte = screenData[0x40 + noX];
-                int mask = 1 << (7 - noY);
-                if (hiPart)
-                    lineByte |= mask;
-                else
-                    lineByte &= ~mask;
-                screenData[index] = (byte)value;
-                screenData[0x40 + noX] = (byte)lineByte;
-            }
-            else
-            {
-                screenData[index] = value;
-            }
-        }
-
         private static int compareRooms(List<ScreenRec> r1, List<ScreenRec> r2)
         {
             if (r1.Count == 0 || r2.Count == 0)

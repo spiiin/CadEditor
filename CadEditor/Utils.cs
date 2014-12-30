@@ -177,6 +177,18 @@ namespace CadEditor
             return new LevelLayerData(width, height, layer, null, null);
         }
 
+        public static int getBigTileNoFromScreen(int[] screenData, int index)
+        {
+            if (index == -1)
+                return -1;
+            return screenData[index];
+        }
+
+        public static void setBigTileToScreen(int[] screenData, int index, int value)
+        {
+            screenData[index] = value;
+        }
+
         public static bool getBit(byte b, int bit)
         {
             return (b & (1 << bit - 1)) != 0;
