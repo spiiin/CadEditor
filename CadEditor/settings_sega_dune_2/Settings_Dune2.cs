@@ -6,7 +6,6 @@ using System.Windows.Forms;
 
 public class Data
 {
-  public GameType getGameType()              { return GameType.Generic; }
   public bool isUseSegaGraphics()            { return true; }
   public bool isBlockSize4x4()               { return true; } //valid only for sega games
   //public bool isBuildScreenFromSmallBlocks() { return true; }

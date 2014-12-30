@@ -4,7 +4,6 @@ using System.Collections.Generic;
 public class Data:CapcomBase
 {
   //--------------------------------------------------------------------------------------------
-  public override GameType getGameType()  { return GameType.DT; }
   public override int getBigBlocksCount() { return 512; }
   public bool isShowScrollsInLayout()     { return false; }
   

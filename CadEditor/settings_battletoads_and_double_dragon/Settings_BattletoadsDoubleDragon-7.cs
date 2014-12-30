@@ -4,7 +4,6 @@ using System.Drawing;
 
 public class Data 
 { 
-  public GameType getGameType()        { return GameType.Generic; }
   public OffsetRec getScreensOffset()  { return new OffsetRec(0x2F614, 1 , 16*6);   }
   public int getScreenWidth()          { return 16; }
   public int getScreenHeight()         { return 6; }

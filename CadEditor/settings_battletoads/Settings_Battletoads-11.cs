@@ -2,7 +2,6 @@ using CadEditor;
 using System.Collections.Generic;
 public class Data
 { 
-  public GameType getGameType()  { return GameType.Generic; }
   public OffsetRec getScreensOffset()     { return new OffsetRec(184828   , 1 , 56*48);  }
   public int getScreenWidth()    { return 56; }
   public int getScreenHeight()   { return 48; }

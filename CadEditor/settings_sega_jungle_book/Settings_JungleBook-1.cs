@@ -6,7 +6,6 @@ using System.Windows.Forms;
 
 public class Data
 {
-  public GameType getGameType()              { return GameType.Generic; }
   public bool isUseSegaGraphics()            { return true; }
   //public bool isBuildScreenFromSmallBlocks() { return true; }
   public int getWordLen()              { return 2;}

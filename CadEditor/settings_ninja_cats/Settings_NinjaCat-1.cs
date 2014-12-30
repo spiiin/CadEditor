@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 public class Data 
 { 
-  public GameType getGameType()        { return GameType.Generic; }
   public OffsetRec getScreensOffset()  { return new OffsetRec(88, 22 , 8*5);   }
   public int getScreenWidth()          { return 5; }
   public int getScreenHeight()         { return 8; }

@@ -6,7 +6,7 @@ using System.Windows.Forms;
 //css_include Settings_CapcomBase.cs;
 public class Data:CapcomBase
 {
-  public override GameType getGameType()  { return GameType.DT2; }
+  public GameType getGameType()  { return GameType.DT2; }
   public bool isShowScrollsInLayout() { return false; }
   
   public OffsetRec getPalOffset()       { return new OffsetRec(0x3E2F, 12   , 16);     }
