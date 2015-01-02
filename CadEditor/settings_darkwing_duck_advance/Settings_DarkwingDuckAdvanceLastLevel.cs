@@ -9,7 +9,8 @@ public class Data:CapcomBase
     {
       "PluginMapEditor.dll",
       "PluginChrView.dll",
-      "PluginEditLayout.dll"
+      "PluginEditLayout.dll",
+      "PluginAnimEditor.dll",
     };
   }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x3F1B0, 32  , 16);     }

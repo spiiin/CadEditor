@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
+using CadEditor;
+
 namespace CadEnemyEditor
 {
     public partial class AnimEditor : Form
@@ -17,7 +19,7 @@ namespace CadEnemyEditor
             InitializeComponent();
         }
 
-        byte[] romdata = null;
+        //byte[] Globals.romdata = null;
         AnimData[] animList;
         FrameData[] frameList;
         CoordData[] coordList;
@@ -30,23 +32,6 @@ namespace CadEnemyEditor
 
         private void loadData()
         {
- 
-            string Filename = "Darkwing Duck (U) [!].nes";
-            //string Filename = "Chip 'n Dale Rescue Rangers (U) [!].nes";
-            try
-            {
-                using (FileStream f = File.OpenRead(Filename))
-                {
-                    int size = (int)new FileInfo(Filename).Length;
-                    romdata = new byte[size];
-                    f.Read(romdata, 0, size);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
             loadAnimData();
 
             //test fill pal
@@ -92,20 +77,20 @@ namespace CadEnemyEditor
 
             for (int i = 0; i < ANIM_COUNT; i++)
             {
-                byte hiAddrByte = romdata[animAddrHi + i];
-                byte loAddrByte = romdata[animAddrLo + i];
+                byte hiAddrByte = Globals.romdata[animAddrHi + i];
+                byte loAddrByte = Globals.romdata[animAddrLo + i];
                 int addr = Utils.makeAddrPtr(hiAddrByte, loAddrByte);
                 int addrRom = Utils.getRomAddr(5, addr);
-                int frameCountAndShift = romdata[addrRom] + 1;
+                int frameCountAndShift = Globals.romdata[addrRom] + 1;
                 int framesCount = frameCountAndShift % 128;
                 int frameShift = frameCountAndShift < 128 ? 0 : 256;
-                int timer = romdata[addrRom+1];
+                int timer = Globals.romdata[addrRom+1];
                 int[] frameIndexes = null;
                 {
                     frameIndexes = new int[framesCount];
                     for (int frame = 0; frame < framesCount; frame++)
                     {
-                        int frameNo = romdata[addrRom + 2 + frame];
+                        int frameNo = Globals.romdata[addrRom + 2 + frame];
                         frameIndexes[frame] = frameNo + frameShift;
                     }
                 }
@@ -114,17 +99,17 @@ namespace CadEnemyEditor
 
             for (int frame = 0; frame < FRAME_COUNT; frame++)
             {
-                byte frameAddrHi = romdata[frameAddr1Hi + frame];
-                byte frameAddrLo = romdata[frameAddr1Lo + frame];
+                byte frameAddrHi = Globals.romdata[frameAddr1Hi + frame];
+                byte frameAddrLo = Globals.romdata[frameAddr1Lo + frame];
                 int frameAddr = Utils.makeAddrPtr(frameAddrHi, frameAddrLo);
                 int frameAddrRom = Utils.getRomAddr(5, frameAddr);
-                int tileCount = romdata[frameAddrRom]+1;
-                int coordsIndex = romdata[frameAddrRom+1];
+                int tileCount = Globals.romdata[frameAddrRom]+1;
+                int coordsIndex = Globals.romdata[frameAddrRom+1];
                 var tiles = new TileInfo[tileCount];
                 for (int tile = 0; tile < tileCount; tile++)
                 {
-                    tiles[tile].index    = romdata[frameAddrRom + 2 + tile*2];
-                    tiles[tile].property = romdata[frameAddrRom + 2 + tile*2+1];
+                    tiles[tile].index    = Globals.romdata[frameAddrRom + 2 + tile*2];
+                    tiles[tile].property = Globals.romdata[frameAddrRom + 2 + tile*2+1];
                 }
                 FrameData frameData = new FrameData(frame, frameAddr, tileCount, coordsIndex, tiles);
                 frameList[frame] = frameData;
@@ -132,8 +117,8 @@ namespace CadEnemyEditor
 
             for (int coord = 0; coord < COORD_COUNT; coord++)
             {
-                byte coordAddrHiByte = romdata[coordAddrHi + coord];
-                byte coordAddrLoByte = romdata[coordAddrLo + coord];
+                byte coordAddrHiByte = Globals.romdata[coordAddrHi + coord];
+                byte coordAddrLoByte = Globals.romdata[coordAddrLo + coord];
                 int coordAddr = Utils.makeAddrPtr(coordAddrHiByte, coordAddrLoByte);
                 CoordData coordData = new CoordData(coordAddr);
                 coordList[coord] = coordData;
@@ -170,9 +155,9 @@ namespace CadEnemyEditor
             var videoChunk = new byte[VideoSize];
             for (int i = 0; i < VideoSize; i++)
             {
-                videoChunk[i] = romdata[beginAddr + i];
+                videoChunk[i] = Globals.romdata[beginAddr + i];
             }
-            var videoStrip = CadEditor.Video.makeImageStrip(videoChunk, pal, 0, scale);
+            var videoStrip = ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 0, scale);
             int scaleBitmap = 2;
             Bitmap resultVideo = new Bitmap(128 * scaleBitmap, 128 * scaleBitmap);
             using (Graphics g = Graphics.FromImage(resultVideo))
@@ -190,9 +175,9 @@ namespace CadEnemyEditor
             imageList3.Images.Clear();
             imageList4.Images.Clear();
             imageList1.Images.AddStrip(videoStrip);
-            imageList2.Images.AddStrip(CadEditor.Video.makeImageStrip(videoChunk, pal, 1, scale));
-            imageList3.Images.AddStrip(CadEditor.Video.makeImageStrip(videoChunk, pal, 2, scale));
-            imageList4.Images.AddStrip(CadEditor.Video.makeImageStrip(videoChunk, pal, 3, scale));
+            imageList2.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 1, scale));
+            imageList3.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 2, scale));
+            imageList4.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 3, scale));
 
             setPal();
         }
@@ -224,8 +209,8 @@ namespace CadEnemyEditor
                 g.FillRectangle(Brushes.Black, new Rectangle(0,0,128*scale, 128*scale));
                 for (int i = 0; i < count; i++)
                 {
-                    byte xcByte = romdata[coordsRomAddr + i * 2 + 1];
-                    byte ycByte = romdata[coordsRomAddr + i * 2 + 0];
+                    byte xcByte = Globals.romdata[coordsRomAddr + i * 2 + 1];
+                    byte ycByte = Globals.romdata[coordsRomAddr + i * 2 + 0];
                     int xOrig = Utils.getSignedFromByte(xcByte);
                     int yOrig = Utils.getSignedFromByte(ycByte);
                     int x = addPart + xOrig * scale;
@@ -272,8 +257,8 @@ namespace CadEnemyEditor
             int coordsRomAddr = Utils.getRomAddr(5, coordsAddr);
             for (int i = 0; i < tiles.Length; i++)
             {
-                byte xcByte = romdata[coordsRomAddr + i * 2 + 1];
-                byte ycByte = romdata[coordsRomAddr + i * 2 + 0];
+                byte xcByte = Globals.romdata[coordsRomAddr + i * 2 + 1];
+                byte ycByte = Globals.romdata[coordsRomAddr + i * 2 + 0];
                 lvTiles.Items.Add(String.Format("T:{0,2:X2} P[{1,2:X2}] X:{2,2:X2} Y:{3,2:X2}", tiles[i].index, tiles[i].property, xcByte, ycByte));
             }
         }
@@ -287,20 +272,7 @@ namespace CadEnemyEditor
 
         void flushToFile()
         {
-            string Filename = "Chip 'n Dale Rescue Rangers (U) [!].nes";
-            try
-            {
-                using (FileStream f = File.OpenWrite(Filename))
-                {
-                    int size = (int)new FileInfo(Filename).Length;
-                    f.Write(romdata, 0, size);
-                    f.Seek(0, SeekOrigin.Begin);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            Globals.flushToFile();
         }
 
         private void pbVideo_MouseClick(object sender, MouseEventArgs e)
@@ -353,7 +325,7 @@ namespace CadEnemyEditor
         private void btSave_Click(object sender, EventArgs e)
         {
             //DWD
-            int ANIM_COUNT = 199;
+            //int ANIM_COUNT = 199;
             int animAddrHi = Utils.getRomAddr(5, 0xB4F0);
             int animAddrLo = Utils.getRomAddr(5, 0xB429);
 
@@ -361,13 +333,13 @@ namespace CadEnemyEditor
             int frameAddr1Hi = Utils.getRomAddr(5, 0x9C45);
             int frameAddr1Lo = Utils.getRomAddr(5, 0x9B0B);
 
-            int COORD_COUNT = 256;//208;
+            //int COORD_COUNT = 256;//208;
             int coordAddrHi = Utils.getRomAddr(5, 0xAF23);
             int coordAddrLo = Utils.getRomAddr(5, 0xAE53);
 
-            animList = new AnimData[ANIM_COUNT];
-            frameList = new FrameData[FRAME_COUNT];
-            coordList = new CoordData[COORD_COUNT];
+            //animList = new AnimData[ANIM_COUNT];
+            //frameList = new FrameData[FRAME_COUNT];
+            //coordList = new CoordData[COORD_COUNT];
 
             /*int FRAME_COUNT = 300;
             int frameAddr1Hi = Utils.getRomAddr(5, 0x9CAE);
@@ -376,17 +348,17 @@ namespace CadEnemyEditor
 
             for (int frame = 0; frame < FRAME_COUNT; frame++)
             {
-                byte frameAddrHi = romdata[frameAddr1Hi + frame];
-                byte frameAddrLo = romdata[frameAddr1Lo + frame];
+                byte frameAddrHi = Globals.romdata[frameAddr1Hi + frame];
+                byte frameAddrLo = Globals.romdata[frameAddr1Lo + frame];
                 int frameAddr = Utils.makeAddrPtr(frameAddrHi, frameAddrLo);
                 int frameAddrRom = Utils.getRomAddr(5, frameAddr);
-                int tileCount = romdata[frameAddrRom] + 1;
-                int coordsIndex = romdata[frameAddrRom + 1];
+                int tileCount = Globals.romdata[frameAddrRom] + 1;
+                int coordsIndex = Globals.romdata[frameAddrRom + 1];
                 var tiles = frameList[frame].tiles;
                 for (int tile = 0; tile < tileCount; tile++)
                 {
-                    romdata[frameAddrRom + 2 + tile * 2] = (byte)tiles[tile].index;
-                    romdata[frameAddrRom + 2 + tile * 2 + 1] = (byte)tiles[tile].property;
+                    Globals.romdata[frameAddrRom + 2 + tile * 2] = (byte)tiles[tile].index;
+                    Globals.romdata[frameAddrRom + 2 + tile * 2 + 1] = (byte)tiles[tile].property;
                 }
                 FrameData frameData = new FrameData(frame, frameAddr, tileCount, coordsIndex, tiles);
                 frameList[frame] = frameData;
@@ -402,15 +374,15 @@ namespace CadEnemyEditor
 
         private void pbPal_MouseClick(object sender, MouseEventArgs e)
         {
-            var f = new CadEditor.EditColor();
+           /* var f = new EditColor();
             f.ShowDialog();
-            if (CadEditor.EditColor.ColorIndex != -1)
+            if (EditColor.ColorIndex != -1)
             {
                 int index = e.X / 32 + (e.Y / 32) * 4;
-                pal[index] = (byte)CadEditor.EditColor.ColorIndex;
+                pal[index] = (byte)EditColor.ColorIndex;
                 int videoIndex = cbVideo.SelectedIndex;
                 reloadVideo(videoIndex);
-            }
+            }*/
         }
 
         private void setPal()
@@ -420,7 +392,7 @@ namespace CadEnemyEditor
             {
                 for (int i = 0; i < 16; i++)
                 {
-                    g.FillRectangle(new SolidBrush(CadEditor.Video.NesColors[pal[i]]), i % 4 * 32, (i / 4) * 32, 32, 32);
+                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.NesColors[pal[i]]), i % 4 * 32, (i / 4) * 32, 32, 32);
                 }
             }
             pbPal.Image = palImage;

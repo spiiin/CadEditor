@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadEditor", "CadEditor.csproj", "{BD2A990C-9D64-472D-9C78-1429C666604B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CadEnemyEditor", "..\CadEnemyEditor\CadEnemyEditor.csproj", "{56D14DAD-7662-42D2-BEA1-B6E427807D30}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginAnimEditor", "..\CadEnemyEditor\PluginAnimEditor.csproj", "{56D14DAD-7662-42D2-BEA1-B6E427807D30}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsVerifier", "..\SettingsVerifier\SettingsVerifier.csproj", "{3FD2E457-380B-4AF3-B8B5-A11D6FA228DA}"
 EndProject
@@ -68,6 +68,7 @@ Global
 		{BD2A990C-9D64-472D-9C78-1429C666604B}.Release|x86.Build.0 = Release|x86
 		{56D14DAD-7662-42D2-BEA1-B6E427807D30}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{56D14DAD-7662-42D2-BEA1-B6E427807D30}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{56D14DAD-7662-42D2-BEA1-B6E427807D30}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{56D14DAD-7662-42D2-BEA1-B6E427807D30}.Debug|x86.ActiveCfg = Debug|x86
 		{56D14DAD-7662-42D2-BEA1-B6E427807D30}.Debug|x86.Build.0 = Debug|x86
 		{56D14DAD-7662-42D2-BEA1-B6E427807D30}.Release|Any CPU.ActiveCfg = Release|x86
