@@ -39,6 +39,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginExportScreens", "..\P
 		{BD2A990C-9D64-472D-9C78-1429C666604B} = {BD2A990C-9D64-472D-9C78-1429C666604B}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginChrView", "..\PluginChrView\PluginChrView.csproj", "{79D910C0-CDD8-4350-8A37-16A88D903F23}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BD2A990C-9D64-472D-9C78-1429C666604B} = {BD2A990C-9D64-472D-9C78-1429C666604B}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +142,16 @@ Global
 		{FDB942A3-33FE-4236-B617-E4D2A3AC00B1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{FDB942A3-33FE-4236-B617-E4D2A3AC00B1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{FDB942A3-33FE-4236-B617-E4D2A3AC00B1}.Release|x86.ActiveCfg = Release|Any CPU
+		{79D910C0-CDD8-4350-8A37-16A88D903F23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79D910C0-CDD8-4350-8A37-16A88D903F23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79D910C0-CDD8-4350-8A37-16A88D903F23}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{79D910C0-CDD8-4350-8A37-16A88D903F23}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{79D910C0-CDD8-4350-8A37-16A88D903F23}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{79D910C0-CDD8-4350-8A37-16A88D903F23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79D910C0-CDD8-4350-8A37-16A88D903F23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79D910C0-CDD8-4350-8A37-16A88D903F23}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{79D910C0-CDD8-4350-8A37-16A88D903F23}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{79D910C0-CDD8-4350-8A37-16A88D903F23}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

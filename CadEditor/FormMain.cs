@@ -38,7 +38,6 @@ namespace CadEditor
                  { bttBlocks,       makeBlocksEditor },
                  { bttLayout,       ()=>{ return new EditLayout();}   },
                  { bttEnemies,      ()=>{ var f = new EnemyEditor();  f.setFormMain(this); return f;}  },
-                 { bttVideo,        ()=>{ return new EditVideo();}    },
                  { bttConfig,       ()=>{ var f = new FormConfig();  f.setFormMain(this); f.onApply += reloadCallback; return f;}    },
             };
 
@@ -123,7 +122,6 @@ namespace CadEditor
             bttBlocks.Enabled = ConfigScript.isBlockEditorEnabled;
             bttLayout.Enabled = ConfigScript.isLayoutEditorEnabled;
             bttEnemies.Enabled = ConfigScript.isEnemyEditorEnabled;
-            bttVideo.Enabled = ConfigScript.isVideoEditorEnabled;
 
             bttShowLayer1.Enabled = ConfigScript.getLayersCount() > 1;
             bttShowLayer2.Enabled = ConfigScript.getLayersCount() > 1;
@@ -914,7 +912,7 @@ namespace CadEditor
 
         public void addSubeditorButton(ToolStripItem item)
         {
-          toolStrip1.Items.Insert(toolStrip1.Items.IndexOf(bttVideo)+1, item);
+          toolStrip1.Items.Insert(toolStrip1.Items.IndexOf(bttLayout)+1, item);
         }
 
         public void addToolButton(ToolStripItem item)

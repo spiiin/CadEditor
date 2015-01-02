@@ -90,12 +90,6 @@
     <Compile Include="EditLayout.Designer.cs">
       <DependentUpon>EditLayout.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditVideo.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EditVideo.Designer.cs">
-      <DependentUpon>EditVideo.cs</DependentUpon>
-    </Compile>
     <Compile Include="EnemyEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,9 +156,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditLayout.resx">
       <DependentUpon>EditLayout.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditVideo.resx">
-      <DependentUpon>EditVideo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EnemyEditor.resx">
       <DependentUpon>EnemyEditor.cs</DependentUpon>
