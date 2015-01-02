@@ -143,10 +143,10 @@ namespace CadEditor
                         /*switch (Globals.gameType)
                         {
                             //todo: write code to export blocks for TinyToon
-                            //case GameType.TT:
+                            //case GameTyp.TT:
                             //    b = ConfigScript.videoNes.makeBigBlockTT(i, 64, 64, bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
                             //    break;
-                            case GameType._3E:
+                            case GameTyp._3E:
                                 b = ConfigScript.videoNes.makeBigBlock3E(i, 64, 64, bigBlockIndexes, smallBlocks);
                                 break;
                             default:

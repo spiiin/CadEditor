@@ -29,6 +29,7 @@ namespace CadEditor
   public interface IPlugin
   {
     void addSubeditorButton(FormMain formMain);
+    void addToolButton(FormMain formMain);
     void loadFromConfig(object asm, object data); //asm is CSScriptLibrary.AsmHelper
     string getName();
   }

@@ -179,6 +179,7 @@ namespace CadEditor
         private static void loadGlobalPlugins()
         {
             //auto load plugins
+            loadPluginWithSilentCatch(() => addPlugin("PluginExportScreens.dll"));
             loadPluginWithSilentCatch(() => addPlugin("PluginHexEditor.dll"));
             //loadPluginWithSilentCatch(()=>addPlugin("PluginMapEditor.dll"));
             //loadPluginWithSilentCatch(()=>addPlugin("PluginLevelParamsCad.dll"));

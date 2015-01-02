@@ -60,9 +60,6 @@
             this.bttSave = new System.Windows.Forms.ToolStripButton();
             this.bttReload = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.bttExport = new System.Windows.Forms.ToolStripButton();
-            this.bttExportPic = new System.Windows.Forms.ToolStripButton();
-            this.bttImport = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.bttBigBlocks = new System.Windows.Forms.ToolStripButton();
             this.bttBlocks = new System.Windows.Forms.ToolStripButton();
@@ -399,9 +396,6 @@
             this.bttSave,
             this.bttReload,
             this.toolStripSeparator1,
-            this.bttExport,
-            this.bttExportPic,
-            this.bttImport,
             this.toolStripSeparator2,
             this.bttBigBlocks,
             this.bttBlocks,
@@ -463,36 +457,6 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // bttExport
-            // 
-            this.bttExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttExport.Image = ((System.Drawing.Image)(resources.GetObject("bttExport.Image")));
-            this.bttExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttExport.Name = "bttExport";
-            this.bttExport.Size = new System.Drawing.Size(23, 22);
-            this.bttExport.Text = "Export";
-            this.bttExport.Click += new System.EventHandler(this.btExport_Click);
-            // 
-            // bttExportPic
-            // 
-            this.bttExportPic.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttExportPic.Image = ((System.Drawing.Image)(resources.GetObject("bttExportPic.Image")));
-            this.bttExportPic.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttExportPic.Name = "bttExportPic";
-            this.bttExportPic.Size = new System.Drawing.Size(23, 22);
-            this.bttExportPic.Text = "Export as picture";
-            this.bttExportPic.Click += new System.EventHandler(this.bttExportPic_Click);
-            // 
-            // bttImport
-            // 
-            this.bttImport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttImport.Image = ((System.Drawing.Image)(resources.GetObject("bttImport.Image")));
-            this.bttImport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttImport.Name = "bttImport";
-            this.bttImport.Size = new System.Drawing.Size(23, 22);
-            this.bttImport.Text = "Import";
-            this.bttImport.Click += new System.EventHandler(this.btImport_Click);
             // 
             // toolStripSeparator2
             // 
@@ -966,8 +930,6 @@
         private System.Windows.Forms.ToolStripButton bttOpen;
         private System.Windows.Forms.ToolStripButton bttSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton bttExport;
-        private System.Windows.Forms.ToolStripButton bttImport;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton bttBigBlocks;
         private System.Windows.Forms.ToolStripButton bttBlocks;
@@ -998,7 +960,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.CheckBox cbUseStructs;
         private System.Windows.Forms.ListBox lbStructures;
-        private System.Windows.Forms.ToolStripButton bttExportPic;
         private System.Windows.Forms.ToolStripButton bttReload;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbLevelNo;

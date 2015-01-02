@@ -204,7 +204,7 @@ namespace CadEditor
             gameType = _gameType;
         }
 
-        private static GameType gameType = GameType.Generic;
+        private static GameType gameType;
     }
 
     public struct OffsetRec
