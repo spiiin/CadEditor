@@ -19,7 +19,9 @@ COPY_FILE_LIST = [
   "readme.txt",
   "cad_editor_configs_manual.txt",
   "cad_editor_supported_games.txt",
-  "cad_editor_structures.txt"
+  "cad_editor_structures.txt",
+  
+  "Plugin*.dll"
 ]
 
 COPY_FOLDER_LIST = [
@@ -49,8 +51,14 @@ def makeRelease():
   removeAndCreate(absRoot)
   print "Copying files:"
   for fn in COPY_FILE_LIST:
-    print "  copy ", fn
-    shutil.copy(fn, absRoot)
+    if fn.find("*")==-1:
+      print "  copy ", fn
+      shutil.copy(fn, absRoot)
+    else:
+      fileList2 = glob.glob(fn)
+      for fn2 in fileList2:
+        print "  copy ", fn2
+        shutil.copy(fn2, absRoot)
   print "Copying folders:"
   for dir in COPY_FOLDER_LIST:
     if dir.find("*") == -1:
