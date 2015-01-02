@@ -170,15 +170,23 @@ namespace CadEditor
         private static void loadAllPlugins(AsmHelper asm, object data)
         {
             changeToProgramDirectory();
+            cleanPlugins();
             loadGlobalPlugins();
             loadPluginsFromCurrentConfig(asm, data);
             changeToConfigDirectory();
         }
 
+        private static void cleanPlugins()
+        {
+            plugins.Clear();
+            videoNes = null;
+            videoSega = null;
+        }
+
         private static void loadGlobalPlugins()
         {
             //auto load plugins
-            loadPluginWithSilentCatch(() => addPlugin("PluginChrView.dll"));
+            //loadPluginWithSilentCatch(() => addPlugin("PluginChrView.dll"));
             loadPluginWithSilentCatch(() => addPlugin("PluginExportScreens.dll"));
             loadPluginWithSilentCatch(() => addPlugin("PluginHexEditor.dll"));
             //loadPluginWithSilentCatch(()=>addPlugin("PluginMapEditor.dll"));

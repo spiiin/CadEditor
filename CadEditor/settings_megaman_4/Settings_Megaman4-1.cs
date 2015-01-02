@@ -3,6 +3,13 @@ using System.Collections.Generic;
 //css_include Settings_CapcomBase.cs;
 public class Data:CapcomBase
 {
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginChrView.dll"
+    };
+  }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x415A0, 1  , 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x20010, 1   , 0x1000); }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x20010, 1   , 0x1000); } //

@@ -3,6 +3,13 @@ using System.Collections.Generic;
 //css_include Settings_CapcomBase.cs;
 public class Data:CapcomBase
 {
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginChrView.dll"
+    };
+  }
   //--------------------------------------------------------------------------------------------
   public override int getBigBlocksCount() { return 512; }
   public bool isShowScrollsInLayout()     { return false; }

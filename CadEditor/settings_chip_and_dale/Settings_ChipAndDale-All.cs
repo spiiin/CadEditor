@@ -5,7 +5,10 @@ public class Data:CapcomBase
 {
   public string[] getPluginNames() 
   {
-    return new string[] { "PluginLevelParamsCad.dll" };
+    return new string[] { 
+      "PluginChrView.dll",
+      "PluginLevelParamsCad.dll"
+    };
   }
    
   public OffsetRec getPalOffset()       { return new OffsetRec(0x1C354, 32  , 16);     }

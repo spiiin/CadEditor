@@ -5,6 +5,13 @@ using System.Collections.Generic;
 
 public class Data 
 { 
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginChrView.dll"
+    };
+  }
   public OffsetRec getPalOffset()                           { return new OffsetRec(0x1CC19, 32  , 16);     }
   public OffsetRec getVideoOffset()                         { return new OffsetRec(0x30010, 16  , 0x1000); }
   public OffsetRec getVideoObjOffset()                      { return new OffsetRec(0x20010, 16  , 0x1000); }

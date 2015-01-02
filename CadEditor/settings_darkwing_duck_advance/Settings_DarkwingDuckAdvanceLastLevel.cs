@@ -5,7 +5,11 @@ public class Data:CapcomBase
 {
   public string[] getPluginNames() 
   {
-    return new string[] { "PluginMapEditor.dll" };
+    return new string[] 
+    {
+      "PluginMapEditor.dll",
+      "PluginChrView.dll"
+    };
   }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x3F1B0, 32  , 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x70010, 32  , 0x1000); }
