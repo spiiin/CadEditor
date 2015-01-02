@@ -121,9 +121,9 @@ namespace CadEditor
             bttBlocks.Enabled = ConfigScript.isBlockEditorEnabled;
             bttEnemies.Enabled = ConfigScript.isEnemyEditorEnabled;
 
-            bttShowLayer1.Enabled = ConfigScript.getLayersCount() > 1;
-            bttShowLayer2.Enabled = ConfigScript.getLayersCount() > 1;
-            bttLayer.Enabled = ConfigScript.getLayersCount() > 1;
+            bttShowLayer1.Visible = ConfigScript.getLayersCount() > 1;
+            bttShowLayer2.Visible = ConfigScript.getLayersCount() > 1;
+            bttLayer.Visible = ConfigScript.getLayersCount() > 1;
 
             resetMapScreenSize();
         }
