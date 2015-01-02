@@ -24,7 +24,6 @@ public class Data:CapcomBase
   public bool isBlockEditorEnabled()    { return true; }
   public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return false; }
-  public bool isVideoEditorEnabled()    { return true; }
   
   public string getObjTypesPicturesDir() { return "obj_sprites_cad"; }
   

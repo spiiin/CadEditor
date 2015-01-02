@@ -28,7 +28,6 @@ public class Data:CapcomBase
   public bool isBlockEditorEnabled()    { return true;  }
   public bool isLayoutEditorEnabled()   { return true; }
   public bool isEnemyEditorEnabled()    { return true; }
-  public bool isVideoEditorEnabled()    { return true; }
   
   public List<ObjectRec> getObjectsDwd(int levelNo)
   {

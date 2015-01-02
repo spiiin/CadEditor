@@ -33,5 +33,4 @@ public class Data:CapcomBase
   public bool isBlockEditorEnabled()    { return true;  }
   public bool isLayoutEditorEnabled()   { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
-  public bool isVideoEditorEnabled()    { return false; }
 }

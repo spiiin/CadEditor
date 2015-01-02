@@ -86,5 +86,4 @@ public class Data : CapcomBase
   public bool isBlockEditorEnabled()    { return false; }
   public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return true; }
-  public bool isVideoEditorEnabled()    { return false; }
 }

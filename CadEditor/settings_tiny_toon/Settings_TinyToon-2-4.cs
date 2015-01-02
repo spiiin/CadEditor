@@ -91,6 +91,5 @@ public class Data
   public bool isBlockEditorEnabled()    { return true;  }
   public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return false; }
-  public bool isVideoEditorEnabled()    { return true; }
   //--------------------------------------------------------------------------------------------
 }
