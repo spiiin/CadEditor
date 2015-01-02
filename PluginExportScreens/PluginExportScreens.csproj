@@ -52,11 +52,20 @@
     </Compile>
     <Compile Include="PluginExportScreens.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaveScreensCount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SaveScreensCount.Designer.cs">
+      <DependentUpon>SaveScreensCount.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icon.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Icon.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SaveScreensCount.resx">
+      <DependentUpon>SaveScreensCount.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
