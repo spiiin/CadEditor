@@ -189,6 +189,7 @@ namespace CadEditor
             //loadPluginWithSilentCatch(() => addPlugin("PluginChrView.dll"));
             loadPluginWithSilentCatch(() => addPlugin("PluginExportScreens.dll"));
             loadPluginWithSilentCatch(() => addPlugin("PluginHexEditor.dll"));
+            loadPluginWithSilentCatch(() => addPlugin("PluginEditLayout.dll"));
             //loadPluginWithSilentCatch(()=>addPlugin("PluginMapEditor.dll"));
             //loadPluginWithSilentCatch(()=>addPlugin("PluginLevelParamsCad.dll"));
 
