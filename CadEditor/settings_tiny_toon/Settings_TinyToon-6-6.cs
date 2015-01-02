@@ -88,7 +88,6 @@ public class Data
   
   public bool isBigBlockEditorEnabled() { return true;  }
   public bool isBlockEditorEnabled()    { return true;  }
-  public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return false; }
   //--------------------------------------------------------------------------------------------
 }

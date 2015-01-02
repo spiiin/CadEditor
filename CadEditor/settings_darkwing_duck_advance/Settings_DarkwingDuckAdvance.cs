@@ -8,7 +8,8 @@ public class Data:CapcomBase
     return new string[] 
     {
       "PluginMapEditor.dll",
-      "PluginChrView.dll"
+      "PluginChrView.dll",
+      "PluginEditLayout.dll"
     };
   }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x1C010, 32  , 16);     }

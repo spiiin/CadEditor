@@ -7,7 +7,8 @@ public class Data:CapcomBase
   {
     return new string[] { 
       "PluginChrView.dll",
-      "PluginLevelParamsCad.dll"
+      "PluginLevelParamsCad.dll",
+      //"PluginEditLayout.dll",
     };
   }
    
@@ -25,7 +26,6 @@ public class Data:CapcomBase
   
   public bool isBigBlockEditorEnabled() { return true; }
   public bool isBlockEditorEnabled()    { return true; }
-  public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return false; }
   
   public string getObjTypesPicturesDir() { return "obj_sprites_cad"; }

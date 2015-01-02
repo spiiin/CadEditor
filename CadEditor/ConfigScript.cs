@@ -141,7 +141,6 @@ namespace CadEditor
 
             isBigBlockEditorEnabled = callFromScript(asm, data, "*.isBigBlockEditorEnabled", true);
             isBlockEditorEnabled = callFromScript(asm, data, "*.isBlockEditorEnabled", true);
-            isLayoutEditorEnabled = callFromScript(asm, data, "*.isLayoutEditorEnabled", true);
             isEnemyEditorEnabled = callFromScript(asm, data, "*.isEnemyEditorEnabled", true);
             objTypesPicturesDir = callFromScript(asm, data, "*.getObjTypesPicturesDir", "obj_sprites");
 
@@ -189,7 +188,7 @@ namespace CadEditor
             //loadPluginWithSilentCatch(() => addPlugin("PluginChrView.dll"));
             loadPluginWithSilentCatch(() => addPlugin("PluginExportScreens.dll"));
             loadPluginWithSilentCatch(() => addPlugin("PluginHexEditor.dll"));
-            loadPluginWithSilentCatch(() => addPlugin("PluginEditLayout.dll"));
+            //loadPluginWithSilentCatch(() => addPlugin("PluginEditLayout.dll"));
             //loadPluginWithSilentCatch(()=>addPlugin("PluginMapEditor.dll"));
             //loadPluginWithSilentCatch(()=>addPlugin("PluginLevelParamsCad.dll"));
 
@@ -513,7 +512,6 @@ namespace CadEditor
 
         public static bool isBigBlockEditorEnabled;
         public static bool isBlockEditorEnabled;
-        public static bool isLayoutEditorEnabled;
         public static bool isEnemyEditorEnabled;
 
         public static bool showScrollsInLayout;

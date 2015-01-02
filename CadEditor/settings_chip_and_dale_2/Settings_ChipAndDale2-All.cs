@@ -7,7 +7,8 @@ public class Data : CapcomBase
   {
     return new string[] 
     {
-      "PluginChrView.dll"
+      "PluginChrView.dll",
+      "PluginEditLayout.dll"
     };
   }
   public GameType getGameType()  { return GameType.DT2; }
@@ -128,7 +129,6 @@ public class Data : CapcomBase
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }
-  public bool isLayoutEditorEnabled()   { return true; }
   public bool isEnemyEditorEnabled()    { return true; }
   
   public List<ObjectRec> getPrizesCad2(int levelNo)

@@ -13,7 +13,6 @@ public class Data
 // Width
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return false; }
-  public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return false; }
 
   public bool getScreenVertical()         { return false; }

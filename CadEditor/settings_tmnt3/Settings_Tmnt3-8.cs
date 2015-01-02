@@ -11,6 +11,5 @@ public class Data
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return false; }
-  public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return false; }
 }

@@ -19,7 +19,6 @@ public class Data : CapcomBase
   public GetLayoutFunc getLayoutFunc()     { return getLayout;   } 
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return false; }
-  public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return true; }
   public GetObjectDictionaryFunc getObjectDictionaryFunc() { return getObjectDictionary; }
   

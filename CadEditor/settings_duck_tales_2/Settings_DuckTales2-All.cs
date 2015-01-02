@@ -10,7 +10,8 @@ public class Data:CapcomBase
   {
     return new string[] 
     {
-      "PluginChrView.dll"
+      "PluginChrView.dll",
+      "PluginEditLayout.dll"
     };
   }
   public GameType getGameType()  { return GameType.DT2; }

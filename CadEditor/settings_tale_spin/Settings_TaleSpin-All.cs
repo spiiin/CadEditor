@@ -7,7 +7,8 @@ public class Data:CapcomBase
   {
     return new string[] 
     {
-      "PluginChrView.dll"
+      "PluginChrView.dll",
+      "PluginEditLayout.dll"
     };
   }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x1C374, 32  , 16);     }
@@ -33,7 +34,6 @@ public class Data:CapcomBase
   };
   public bool isBigBlockEditorEnabled() { return true;  }
   public bool isBlockEditorEnabled()    { return true;  }
-  public bool isLayoutEditorEnabled()   { return true; }
   public bool isEnemyEditorEnabled()    { return true; }
   
   public List<ObjectRec> getObjectsDwd(int levelNo)
