@@ -25,6 +25,10 @@ namespace PluginHexEditor
         formMain.addSubeditorButton(item);
       }
 
+      public void addToolButton(FormMain formMain)
+      {
+      }
+
       public void loadFromConfig(object asm, object data)
       {
       }

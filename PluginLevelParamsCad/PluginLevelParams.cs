@@ -26,6 +26,10 @@ namespace PluginLevelParamsCad
             formMain.addSubeditorButton(item);
         }
 
+        public void addToolButton(FormMain formMain)
+        {
+        }
+
         public void loadFromConfig(object asmObj, object data)
         {
             AsmHelper asm = (AsmHelper)asmObj;

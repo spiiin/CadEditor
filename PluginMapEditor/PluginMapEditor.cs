@@ -24,6 +24,10 @@ namespace PluginMapEditor
             formMain.addSubeditorButton(item);
         }
 
+        public void addToolButton(FormMain formMain)
+        {
+        }
+
         private void btMap_Click(object sender, EventArgs e)
         {
             var f = new EditMap();
