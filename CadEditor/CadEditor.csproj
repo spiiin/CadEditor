@@ -78,18 +78,6 @@
       <DependentUpon>BlockEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="ConfigScript.cs" />
-    <Compile Include="EditColor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EditColor.Designer.cs">
-      <DependentUpon>EditColor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EditLayout.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EditLayout.Designer.cs">
-      <DependentUpon>EditLayout.cs</DependentUpon>
-    </Compile>
     <Compile Include="EnemyEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,12 +138,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BlockEdit.resx">
       <DependentUpon>BlockEdit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditColor.resx">
-      <DependentUpon>EditColor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditLayout.resx">
-      <DependentUpon>EditLayout.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EnemyEditor.resx">
       <DependentUpon>EnemyEditor.cs</DependentUpon>

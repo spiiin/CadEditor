@@ -44,6 +44,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginChrView", "..\PluginC
 		{BD2A990C-9D64-472D-9C78-1429C666604B} = {BD2A990C-9D64-472D-9C78-1429C666604B}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginEditLayout", "..\PluginEditLayout\PluginEditLayout.csproj", "{0A1C83B2-823F-44F0-9ABA-9F252AC4F93B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -152,6 +154,16 @@ Global
 		{79D910C0-CDD8-4350-8A37-16A88D903F23}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{79D910C0-CDD8-4350-8A37-16A88D903F23}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{79D910C0-CDD8-4350-8A37-16A88D903F23}.Release|x86.ActiveCfg = Release|Any CPU
+		{0A1C83B2-823F-44F0-9ABA-9F252AC4F93B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A1C83B2-823F-44F0-9ABA-9F252AC4F93B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A1C83B2-823F-44F0-9ABA-9F252AC4F93B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0A1C83B2-823F-44F0-9ABA-9F252AC4F93B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0A1C83B2-823F-44F0-9ABA-9F252AC4F93B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0A1C83B2-823F-44F0-9ABA-9F252AC4F93B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A1C83B2-823F-44F0-9ABA-9F252AC4F93B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A1C83B2-823F-44F0-9ABA-9F252AC4F93B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0A1C83B2-823F-44F0-9ABA-9F252AC4F93B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0A1C83B2-823F-44F0-9ABA-9F252AC4F93B}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
