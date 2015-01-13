@@ -32,7 +32,8 @@ public class Data
   public GetObjectsFunc getObjectsFunc() { return TinyToonUtils.getObjectsTT; }
   public SetObjectsFunc setObjectsFunc() { return TinyToonUtils.setObjectsTT; }
   public GetLayoutFunc  getLayoutFunc()  { return TinyToonUtils.getLayoutLinearTT;   }
-  
+  public string getObjTypesPicturesDir() { return "obj_sprites_TT"; }
+
   public IList<LevelRec> levelRecsTT = new List<LevelRec>() 
   {
     new LevelRec(0x14333, 15, 11, 1, 0x0),

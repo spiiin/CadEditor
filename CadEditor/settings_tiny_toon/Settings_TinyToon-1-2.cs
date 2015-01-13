@@ -21,6 +21,7 @@ public class Data
   public IList<LevelRec> getLevelRecs() { return levelRecsTT; }
   public GetObjectsFunc getObjectsFunc() { return TinyToonUtils.getObjectsTT; }
   public SetObjectsFunc setObjectsFunc() { return TinyToonUtils.setObjectsTT; }
+  public string getObjTypesPicturesDir() { return "obj_sprites_TT"; }
   public GetLayoutFunc  getLayoutFunc()  { return TinyToonUtils.getLayoutLinearTT;   }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getTinyToonVideoAddress; }
