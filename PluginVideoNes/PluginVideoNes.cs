@@ -253,7 +253,7 @@ namespace PluginVideoNes
                     smallBlocksAll[i].ImageSize = new System.Drawing.Size((int)(16 * smallBlockScaleFactor), (int)(16 * smallBlockScaleFactor));
                     smallBlocksAll[i].Images.AddStrip(makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsViewType, i));
                 }
-                smallBlocksColorBytes = Globals.getTTSmallBlocksColorBytes(blockId);
+                smallBlocksColorBytes = getTTSmallBlocksColorBytes(blockId);
             }
 
             for (int btileId = 0; btileId < blockCount; btileId++)
@@ -285,6 +285,16 @@ namespace PluginVideoNes
                 bigBlocks[btileId] = b;
             }
             return bigBlocks;
+        }
+
+        private static byte[] getTTSmallBlocksColorBytes(int bigTileIndex)
+        {
+            int btc = ConfigScript.getBigBlocksCount();
+            var colorBytes = new byte[btc];
+            int addr = Globals.getBigTilesAddr(bigTileIndex);
+            for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
+                colorBytes[i] = Globals.romdata[addr + btc * 4 + i];
+            return colorBytes;
         }
 
         //make capcom screen image

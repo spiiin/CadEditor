@@ -177,16 +177,6 @@ namespace CadEditor
             return getLayoutAddr(index) + ConfigScript.getScrollsOffsetFromLayout();
         }
 
-        public static byte[] getTTSmallBlocksColorBytes(int bigTileIndex)
-        {
-            int btc = ConfigScript.getBigBlocksCount();
-            var colorBytes = new byte[btc];
-            int addr = Globals.getBigTilesAddr(bigTileIndex);
-            for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
-                colorBytes[i] = Globals.romdata[addr + btc * 4 + i];
-            return colorBytes;
-        }
-
         public static byte[] romdata;
         public static byte[] dumpdata;
         public static int CHUNKS_COUNT = 256;
