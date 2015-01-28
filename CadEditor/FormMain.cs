@@ -110,8 +110,8 @@ namespace CadEditor
             {
                 cbGroup.Items.Add(g.name);
             }
-            if (cbGroup.Items.Count > 0)
-              Utils.setCbIndexWithoutUpdateLevel(cbGroup, cbGroup_SelectedIndexChanged);
+            /*if (cbGroup.Items.Count > 0)
+              Utils.setCbIndexWithoutUpdateLevel(cbGroup, cbGroup_SelectedIndexChanged);*/
             dirty = false; updateSaveVisibility();
             showNeiScreens = true;
             showAxis = true;

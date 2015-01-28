@@ -43,6 +43,17 @@ public class Data:CapcomBase
     new LevelRec(0x1BD70, 182, 8, 6, 0x1CF53),
   };
   
+  public GroupRec[] getGroups()
+  {
+    return new GroupRec[] { 
+      new GroupRec("Amazon"         , 1,0,0,0, 0x01),
+      new GroupRec("Transylvania"   , 2,1,1,1, 0x2C),
+      new GroupRec("African Mines"  , 3,1,1,2, 0x4B),
+      new GroupRec("Himalayas"      , 4,2,2,3, 0x7C),
+      new GroupRec("Moon"           , 5,2,2,4, 0x9E),
+    };
+  }
+  
   string[] objTypesDt = new[] {
     "0 (back)","1 (block)","2 ()","3 ()","4 ()","5 ()","6","7",
     "8","9","A","B","C","D","E","F"
