@@ -163,6 +163,8 @@ namespace CadEditor
 
             blockTypeNames = callFromScript(asm, data, "getBlockTypeNames", defaultBlockTypeNames);
 
+            groups = callFromScript(asm, data, "getGroups", new GroupRec[0]);
+
             loadAllPlugins(asm, data);
         }
 
@@ -437,6 +439,16 @@ namespace CadEditor
             return blockSize4x4;
         }
 
+        public static GroupRec[] getGroups()
+        {
+            return groups;
+        }
+
+        public static GroupRec getGroup(int i)
+        {
+            return groups[i];
+        }
+
         public static T callFromScript<T>(AsmHelper script, object data, string funcName, T defaultValue = default(T), params object[] funcParams)
         {
             try
@@ -523,6 +535,8 @@ namespace CadEditor
         public static string[] blocksPicturesFilenames;
         public static int blocksPicturesWidth;
         public static string objTypesPicturesDir;
+
+        public static GroupRec[] groups;
 
         public static string[] blockTypeNames;
         public static string[] defaultBlockTypeNames = new[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F" };

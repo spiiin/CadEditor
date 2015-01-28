@@ -36,6 +36,19 @@ public class Data : CapcomBase
     new LevelRec(0x10A89, 58, 19, 3,  0x1E156),  
   };
   
+  public GroupRec[] getGroups()
+  {
+    return new GroupRec[] { 
+      new GroupRec("Brigde"         , 0,0,0,0, 0x01),
+      new GroupRec("City"           , 1,1,1,2, 0x21),
+      new GroupRec("Sewers"         , 2,2,2,4, 0x41),
+      new GroupRec("Tower"          , 3,3,3,6, 0x61),
+      new GroupRec("Forest"         , 4,4,4,10,0x81),
+      new GroupRec("Warehouse"      , 5,5,5,12,0xA1),
+      new GroupRec("FOWL’s Fortress", 6,6,6,9 ,0x101),
+    };
+  }
+  
   string[] objTypesDwd =
     new[] {
         "0 (back)","1 (hook)","2 (platform)","3 (block)","4 (spikes)","5 (door)",

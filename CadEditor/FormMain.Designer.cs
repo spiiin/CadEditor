@@ -98,6 +98,9 @@
             this.cbLevelNo = new System.Windows.Forms.ComboBox();
             this.cbUseStructs = new System.Windows.Forms.CheckBox();
             this.lbStructures = new System.Windows.Forms.ListBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cbGroup = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -187,6 +190,9 @@
             // 
             // pnGeneric
             // 
+            this.pnGeneric.Controls.Add(this.cbGroup);
+            this.pnGeneric.Controls.Add(this.label7);
+            this.pnGeneric.Controls.Add(this.label2);
             this.pnGeneric.Controls.Add(this.label9);
             this.pnGeneric.Controls.Add(this.cbPaletteNo);
             this.pnGeneric.Controls.Add(this.label8);
@@ -197,7 +203,7 @@
             this.pnGeneric.Controls.Add(this.label1);
             this.pnGeneric.Location = new System.Drawing.Point(1, 213);
             this.pnGeneric.Name = "pnGeneric";
-            this.pnGeneric.Size = new System.Drawing.Size(72, 162);
+            this.pnGeneric.Size = new System.Drawing.Size(72, 215);
             this.pnGeneric.TabIndex = 42;
             // 
             // label9
@@ -822,7 +828,7 @@
             // cbUseStructs
             // 
             this.cbUseStructs.AutoSize = true;
-            this.cbUseStructs.Location = new System.Drawing.Point(3, 381);
+            this.cbUseStructs.Location = new System.Drawing.Point(3, 434);
             this.cbUseStructs.Name = "cbUseStructs";
             this.cbUseStructs.Size = new System.Drawing.Size(79, 17);
             this.cbUseStructs.TabIndex = 57;
@@ -842,6 +848,35 @@
             this.lbStructures.TabIndex = 6;
             this.lbStructures.Visible = false;
             this.lbStructures.SelectedIndexChanged += new System.EventHandler(this.lbStructures_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(5, 158);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(23, 13);
+            this.label2.TabIndex = 49;
+            this.label2.Text = "OR";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(5, 173);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(49, 13);
+            this.label7.TabIndex = 50;
+            this.label7.Text = "GROUP:";
+            // 
+            // cbGroup
+            // 
+            this.cbGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbGroup.DropDownWidth = 200;
+            this.cbGroup.FormattingEnabled = true;
+            this.cbGroup.Location = new System.Drawing.Point(6, 189);
+            this.cbGroup.Name = "cbGroup";
+            this.cbGroup.Size = new System.Drawing.Size(64, 21);
+            this.cbGroup.TabIndex = 51;
+            this.cbGroup.SelectedIndexChanged += new System.EventHandler(this.cbGroup_SelectedIndexChanged);
             // 
             // FormMain
             // 
@@ -945,6 +980,9 @@
         private System.Windows.Forms.FlowLayoutPanel blockPanel2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripButton tbbShowPluginInfo;
+        private System.Windows.Forms.ComboBox cbGroup;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label2;
     }
 }
 

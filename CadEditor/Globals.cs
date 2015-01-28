@@ -383,6 +383,26 @@ namespace CadEditor
         public byte[] dirs;
     }
 
+    public struct GroupRec
+    {
+        public string name;
+        public int videoNo;
+        public int bigBlockNo;
+        public int blockNo;
+        public int palNo;
+        public int firstScreen;
+
+        public GroupRec(string name, int videoNo, int bigBlockNo, int blockNo, int palNo, int firstScreen)
+        {
+            this.name = name;
+            this.videoNo = videoNo;
+            this.bigBlockNo = bigBlockNo;
+            this.blockNo = blockNo;
+            this.palNo = palNo;
+            this.firstScreen = firstScreen;
+        }
+    }
+
     public struct ObjectRec
     {
         public ObjectRec(int type, int sx, int sy, int x, int y, Dictionary<String, int> additionalData)

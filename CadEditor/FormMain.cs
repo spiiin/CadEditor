@@ -104,6 +104,14 @@ namespace CadEditor
             Utils.setCbIndexWithoutUpdateLevel(cbPaletteNo, cbLevel_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbLevelNo, cbLevelNo_SelectedIndexChanged);
             Utils.setCbIndexWithoutUpdateLevel(cbViewType, cbLevel_SelectedIndexChanged);
+
+            cbGroup.Items.Clear();
+            foreach (var g in ConfigScript.getGroups())
+            {
+                cbGroup.Items.Add(g.name);
+            }
+            if (cbGroup.Items.Count > 0)
+              Utils.setCbIndexWithoutUpdateLevel(cbGroup, cbGroup_SelectedIndexChanged);
             dirty = false; updateSaveVisibility();
             showNeiScreens = true;
             showAxis = true;
@@ -568,7 +576,7 @@ namespace CadEditor
 
 
 
-        private void cbLevel_SelectedIndexChanged(object sender, EventArgs e)
+        private void cbLevel_SelectedIndexChanged(object sender, EventArgs ev)
         {
             if (!Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
             {
@@ -931,6 +939,20 @@ namespace CadEditor
             if (ConfigScript.videoSega != null)
                 sb.Append(ConfigScript.videoSega.getName() + "\n");
             MessageBox.Show(sb.ToString());
+        }
+
+        private void cbGroup_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbGroup.SelectedIndex < 0)
+                return;
+            GroupRec g = ConfigScript.getGroup(cbGroup.SelectedIndex);
+            Utils.setCbIndexWithoutUpdateLevel(cbVideoNo, cbLevel_SelectedIndexChanged, g.videoNo);
+            Utils.setCbIndexWithoutUpdateLevel(cbBigBlockNo, cbLevel_SelectedIndexChanged, g.bigBlockNo);
+            Utils.setCbIndexWithoutUpdateLevel(cbBlockNo, cbLevel_SelectedIndexChanged, g.blockNo);
+            Utils.setCbIndexWithoutUpdateLevel(cbPaletteNo, cbLevel_SelectedIndexChanged, g.palNo);
+            cbLevel_SelectedIndexChanged(cbVideoNo, new EventArgs());
+            if (g.firstScreen < 0 || g.firstScreen <= cbScreenNo.Items.Count)
+              cbScreenNo.SelectedIndex = g.firstScreen - 1;
         }
     }
 }
