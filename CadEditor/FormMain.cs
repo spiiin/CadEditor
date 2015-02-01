@@ -703,7 +703,7 @@ namespace CadEditor
         private void bttShowBrush_CheckedChanged(object sender, EventArgs e)
         {
             showBrush = bttShowBrush.Checked;
-            reloadLevel(false);
+            //reloadLevel(false);
         }
 
         private FormClosedEventHandler subeditorClosed(ToolStripButton enabledAfterCloseButton)
