@@ -19,9 +19,9 @@ namespace PluginAnimEditor
         public void addSubeditorButton(FormMain formMain)
         {
             this.formMain = formMain;
-            /*var rm = new ResourceManager("PluginHexEditor.Icon", this.GetType().Assembly);
-            var iconHex = (System.Drawing.Bitmap)rm.GetObject("icon_hex");*/
-            var item = new ToolStripButton("Anim Editor", null, btAnim_Click);
+            var rm = new ResourceManager("PluginAnimEditor.Icon", this.GetType().Assembly);
+            var iconAnim = (System.Drawing.Bitmap)rm.GetObject("icon_anim");
+            var item = new ToolStripButton("Anim Editor", iconAnim, btAnim_Click);
             item.DisplayStyle = ToolStripItemDisplayStyle.Image;
             formMain.addSubeditorButton(item);
         }
