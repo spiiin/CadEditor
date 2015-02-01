@@ -131,7 +131,7 @@ namespace CadEditor
             }
             var visibleRect = Utils.getVisibleRectangle(this, mapScreen);
             g.Clear(Color.Black);
-            MapEditor.Render(g, bigBlocks, visibleRect, curTileStruct.toArray(), null, 2.0f, true, false, false, 0, curTileStruct.Width, curTileStruct.Height, !ConfigScript.getScreenVertical());
+            MapEditor.Render(g, bigBlocks, visibleRect, curTileStruct.toArray(), null, 2.0f, true, false, false, 0, curTileStruct.Width, curTileStruct.Height, ConfigScript.getScreenVertical());
         }
 
         private void cbWidth_SelectedIndexChanged(object sender, EventArgs e)
@@ -242,6 +242,32 @@ namespace CadEditor
             }
         }
 
+        public static void addTileStruct(int[][] indexes)
+        {
+            var ts = new TileStructure("NewStruct", indexes[0].Length, indexes.Length);
+            for (int i = 0; i < indexes.Length; i++)
+            {
+                for (int j = 0; j < indexes[i].Length; j++)
+                    ts[j,i] = indexes[i][j];
+            }
+            //
+            /*var f = new FormStructuresName();
+            FormStructuresName.StructName = ts.Name;
+            FormStructuresName.StructWidth = ts.Width;
+            FormStructuresName.StructHeight = ts.Height;
+            f.ShowDialog();
+            //
+            if (FormStructuresName.Result)
+            {
+                ts.Name = FormStructuresName.StructName;
+                ts.resetDim(FormStructuresName.StructWidth, FormStructuresName.StructHeight);
+                tileStructs.Add(ts);
+                lbStructures.Items.Add(ts.Name);
+                lbStructures_SelectedIndexChanged(lbStructures, new EventArgs());
+            }*/
+            tileStructs.Add(ts);
+        }
+
         private void FormStructures_FormClosing(object sender, FormClosingEventArgs e)
         {
             bool closed = MessageBox.Show("Do you really want to close form (check that you save results)", "Attention", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes;
@@ -307,7 +333,10 @@ namespace CadEditor
         public int[] toArray() //inverted
         {
             int[] arr = new int[Width * Height];
-            Buffer.BlockCopy(tileIndexes, 0, arr, 0, width * height * sizeof(int));
+            for (int i = 0; i < width; i++)
+                for (int j = 0; j < height; j++)
+                    arr[j*width + i] = tileIndexes[i,j];
+            //Buffer.BlockCopy(tileIndexes, 0, arr, 0, width * height * sizeof(int));
             return arr;
         }
 

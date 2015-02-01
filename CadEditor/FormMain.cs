@@ -346,7 +346,8 @@ namespace CadEditor
             }
 
             //show brush
-            if (showBrush && curActiveBlock != -1 && (curDx != OUTSIDE || curDy != OUTSIDE))
+            bool altPressed = Control.ModifierKeys == Keys.Alt;
+            if (showBrush && curActiveBlock != -1 && (curDx != OUTSIDE || curDy != OUTSIDE) && !altPressed)
             {
                 if (!useStructs)
                 {
@@ -401,6 +402,10 @@ namespace CadEditor
         bool curClicked = false;
         int curActiveLayer = 0;
 
+        //select rect if alt pressed
+        private int selectionBeginX, selectionBeginY, selectionEndX, selectionEndY;
+        private bool selectionRect = false;
+
         private Dictionary<ToolStripButton, Func<Form>> subeditorsDict;
 
         private void mapScreen_MouseClick(object sender, MouseEventArgs e)
@@ -433,6 +438,8 @@ namespace CadEditor
 
         private void mapScreen_MouseMove(object sender, MouseEventArgs e)
         {
+            if (selectionRect)
+                return;
             int WIDTH = ConfigScript.getScreenWidth(curActiveLevelForScreen);
             int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
             int dx, dy;
@@ -818,14 +825,73 @@ namespace CadEditor
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                curClicked = true;
-                mapScreen_MouseMove(sender, e);
+                if (Control.ModifierKeys == Keys.Alt)
+                {
+                    convertMouseToDxDy(e, out selectionBeginX, out selectionBeginY);
+                    selectionRect = true;
+                }
+                else
+                {
+                    curClicked = true;
+                    mapScreen_MouseMove(sender, e);
+                }
             }
         }
 
         private void mapScreen_MouseUp(object sender, MouseEventArgs e)
         {
+            if (selectionRect)
+            {
+                convertMouseToDxDy(e, out selectionEndX, out selectionEndY);
+                if (selectionEndX < selectionBeginX)
+                {
+                    selectionBeginX ^= selectionEndX;
+                    selectionEndX ^= selectionBeginX;
+                    selectionBeginX ^= selectionEndX;
+                }
+                if (selectionEndY < selectionBeginY)
+                {
+                    selectionBeginY ^= selectionEndY;
+                    selectionEndY ^= selectionBeginY;
+                    selectionBeginY ^= selectionEndY;
+                }
+                /*var f = new FormStructures();
+                f.setFormMain(this);
+                f.Show();*/
+                int deltaX = selectionEndX - selectionBeginX + 1;
+                int deltaY = selectionEndY - selectionBeginY + 1;
+                int [][] tiles = new int[deltaY][];
+                for (int arrs = 0; arrs < tiles.Length; arrs++)
+                    tiles[arrs] = new int[deltaX];
+                var curScreen = screens[curActiveScreen]; //screens2?
+                for (int i = 0; i < deltaX; i++)
+                {
+                    for (int j = 0; j < deltaY; j++)
+                    {
+                        int index = (selectionBeginY + j)*ConfigScript.getScreenWidth(curActiveLevelForScreen) + (selectionBeginX + i);
+                        tiles[j][i] = curScreen[index];
+                    }
+                }
+                FormStructures.addTileStruct(tiles);
+                if (useStructs)
+                    updateBlocksPanelVisible();
+            }
+            selectionRect = false;
             curClicked = false;
+        }
+
+        private void convertMouseToDxDy(MouseEventArgs e, out int dx, out int dy)
+        {
+            if (ConfigScript.getScreenVertical())
+            {
+                dy = e.X / (int)(blockWidth * curScale);
+                dx = e.Y / (int)(blockHeight * curScale) - 1;
+            }
+            else
+            {
+                dx = e.X / (int)(blockWidth * curScale) - 1;
+                dy = e.Y / (int)(blockHeight * curScale);
+            }
         }
 
         private void bttShowLayer1_CheckedChanged(object sender, EventArgs e)
