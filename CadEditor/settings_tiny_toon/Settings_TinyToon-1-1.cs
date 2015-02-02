@@ -31,7 +31,9 @@ public class Data
   public SetPalFunc           setPalFunc()           { return null;}
   public GetObjectsFunc getObjectsFunc() { return TinyToonUtils.getObjectsTT; }
   public SetObjectsFunc setObjectsFunc() { return TinyToonUtils.setObjectsTT; }
-  
+  public GetLayoutFunc  getLayoutFunc()  { return TinyToonUtils.getLayoutLinearTT;   }
+  public string getObjTypesPicturesDir() { return "obj_sprites_TT"; }
+
   public IList<LevelRec> levelRecsTT = new List<LevelRec>() 
   {
     new LevelRec(0x14333, 15, 11, 1, 0x0),
@@ -90,8 +92,6 @@ public class Data
   
   public bool isBigBlockEditorEnabled() { return true;  }
   public bool isBlockEditorEnabled()    { return true;  }
-  public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return true; }
-  public bool isVideoEditorEnabled()    { return true; }
   //--------------------------------------------------------------------------------------------
 }

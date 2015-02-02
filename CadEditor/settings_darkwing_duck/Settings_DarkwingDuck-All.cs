@@ -3,6 +3,16 @@ using System.Collections.Generic;
 //css_include Settings_CapcomBase.cs;
 public class Data : CapcomBase
 { 
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginMapEditor.dll",
+      "PluginChrView.dll",
+      "PluginEditLayout.dll",
+      "PluginAnimEditor.dll",
+    };
+  }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x1C36D, 32  , 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x30010, 16  , 0x1000); }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x20010, 16  , 0x1000); }
@@ -25,6 +35,19 @@ public class Data : CapcomBase
     new LevelRec(0x10962, 63, 19, 3,  0x1E11D),  
     new LevelRec(0x10A89, 58, 19, 3,  0x1E156),  
   };
+  
+  public GroupRec[] getGroups()
+  {
+    return new GroupRec[] { 
+      new GroupRec("Brigde"         , 0,0,0,0, 0x01),
+      new GroupRec("City"           , 1,1,1,2, 0x21),
+      new GroupRec("Sewers"         , 2,2,2,4, 0x41),
+      new GroupRec("Tower"          , 3,3,3,6, 0x61),
+      new GroupRec("Forest"         , 4,4,4,10,0x81),
+      new GroupRec("Warehouse"      , 5,5,5,12,0xA1),
+      new GroupRec("FOWL’s Fortress", 6,6,6,9 ,0x101),
+    };
+  }
   
   string[] objTypesDwd =
     new[] {

@@ -6,7 +6,6 @@ using System.Windows.Forms;
 
 public class Data
 {
-  public GameType getGameType()              { return GameType.Generic; }
   public bool isUseSegaGraphics()            { return true; }
   //public bool isBuildScreenFromSmallBlocks() { return true; }
   public bool getScreenVertical()         { return true; }
@@ -54,8 +53,6 @@ public class Data
   
   public bool isBigBlockEditorEnabled() { return false;  }
   public bool isBlockEditorEnabled()    { return true;  }
-  public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return false; }
-  public bool isVideoEditorEnabled()    { return false; }
   //--------------------------------------------------------------------------------------------
 }

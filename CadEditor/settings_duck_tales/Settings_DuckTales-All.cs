@@ -3,8 +3,15 @@ using System.Collections.Generic;
 //css_include Settings_CapcomBase.cs;
 public class Data:CapcomBase
 {
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginChrView.dll",
+      "PluginEditLayout.dll"
+    };
+  }
   //--------------------------------------------------------------------------------------------
-  public override GameType getGameType()  { return GameType.DT; }
   public override int getBigBlocksCount() { return 512; }
   public bool isShowScrollsInLayout()     { return false; }
   
@@ -19,6 +26,8 @@ public class Data:CapcomBase
   public string[] getBlockTypeNames()    { return objTypesDt;  }
   public GetObjectsFunc getObjectsFunc() { return getObjectsDt; }
   public SetObjectsFunc setObjectsFunc() { return setObjectsDt; }
+  public GetBigTileNoFromScreenFunc getBigTileNoFromScreenFunc() { return getBigTileNoFromScreen; }
+  public SetBigTileToScreenFunc     setBigTileToScreenFunc()     { return setBigTileToScreen; }
   
   public string getObjTypesPicturesDir() { return "obj_sprites_dt_1"; }
   
@@ -33,6 +42,17 @@ public class Data:CapcomBase
     new LevelRec(0x1BAD1, 119, 8, 6, 0x1CF23),
     new LevelRec(0x1BD70, 182, 8, 6, 0x1CF53),
   };
+  
+  public GroupRec[] getGroups()
+  {
+    return new GroupRec[] { 
+      new GroupRec("Amazon"         , 1,0,0,0, 0x01),
+      new GroupRec("Transylvania"   , 2,1,1,1, 0x2C),
+      new GroupRec("African Mines"  , 3,1,1,2, 0x4B),
+      new GroupRec("Himalayas"      , 4,2,2,3, 0x7C),
+      new GroupRec("Moon"           , 5,2,2,4, 0x9E),
+    };
+  }
   
   string[] objTypesDt = new[] {
     "0 (back)","1 (block)","2 ()","3 ()","4 ()","5 ()","6","7",
@@ -116,6 +136,30 @@ public class Data:CapcomBase
         Globals.romdata[addrBase - 1 * objCount + i - lr.height] = 0xFF;
     }
     return true;
+  }
+  
+  public static int getBigTileNoFromScreen(int[] screenData, int index)
+  {
+    int noY = index % 8;
+    int noX = index / 8;
+    int lineByte = screenData[0x40 + noX];
+    int addValue = (lineByte & (1 << (7 - noY))) != 0 ? 256 : 0;
+    return addValue + screenData[index];
+  }
+
+  public static void setBigTileToScreen(int[] screenData, int index, int value)
+  {
+    bool hiPart = value > 0xFF;
+    int noY = index % 8;
+    int noX = index / 8;
+    int lineByte = screenData[0x40 + noX];
+    int mask = 1 << (7 - noY);
+    if (hiPart)
+        lineByte |= mask;
+    else
+        lineByte &= ~mask;
+    screenData[index] = (byte)value;
+    screenData[0x40 + noX] = (byte)lineByte;
   }
   //--------------------------------------------------------------------------------------------
 }

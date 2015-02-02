@@ -10,6 +10,10 @@ namespace PluginMapEditor
 {
     public class PluginMapEditor : IPlugin
     {
+        public string getName()
+        {
+            return "Map Editor (Darkwing Duck version)";
+        }
         public void addSubeditorButton(FormMain formMain)
         {
             this.formMain = formMain;
@@ -20,10 +24,18 @@ namespace PluginMapEditor
             formMain.addSubeditorButton(item);
         }
 
+        public void addToolButton(FormMain formMain)
+        {
+        }
+
         private void btMap_Click(object sender, EventArgs e)
         {
             var f = new EditMap();
             formMain.subeditorOpen(f, (ToolStripButton)sender);
+        }
+
+        public void loadFromConfig(object asm, object data)
+        {
         }
 
         FormMain formMain;

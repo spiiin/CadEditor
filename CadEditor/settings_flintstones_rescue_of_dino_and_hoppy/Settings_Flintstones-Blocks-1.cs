@@ -1,8 +1,7 @@
 using CadEditor;
 using System.Collections.Generic;
 public class Data
-{ 
-  public GameType getGameType()           { return GameType.TT; }
+{
   public OffsetRec getScreensOffset()     { return new OffsetRec(0x1F0, 256 , 4*4);   }
   public int getScreenWidth()             { return 4; }
   public int getScreenHeight()            { return 4; }
@@ -11,7 +10,5 @@ public class Data
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return false; }
-  public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return false; }
-  public bool isVideoEditorEnabled()    { return false; }
 }

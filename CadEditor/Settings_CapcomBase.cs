@@ -30,7 +30,6 @@ public class CapcomBase
       public int height;
       public int layoutAddr;
   }*/
-  public virtual GameType getGameType()  { return GameType.Generic; }
   public virtual int getBigBlocksCount() { return 256; }
   public virtual int getBlocksCount()    { return 256; }
   public virtual int getScreenWidth()    { return 8; }

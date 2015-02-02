@@ -4,7 +4,6 @@ using System.Drawing;
 
 public class Data 
 { 
-  public GameType getGameType()        { return GameType.Generic; }
   public OffsetRec getScreensOffset()  { return new OffsetRec(4096, 1 , 0x20*0x40);   }
   public OffsetRec getScreensOffset2() { return new OffsetRec(0   , 1 , 0x20*0x40);   }
   public int getScreenWidth()          { return 0x20; }
@@ -18,7 +17,5 @@ public class Data
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return false; }
-  public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return false; }
-  public bool isVideoEditorEnabled()    { return false; }
 }

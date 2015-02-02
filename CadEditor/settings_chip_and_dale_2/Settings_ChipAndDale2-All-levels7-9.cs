@@ -8,7 +8,15 @@ using System.Collections.Generic;
 
 public class Data : CapcomBase
 { 
-  public override GameType getGameType(){ return GameType.DT2; }
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginChrView.dll",
+      "PluginEditLayout.dll"
+    };
+  }
+  public GameType getGameType(){ return GameType.DT2; }
   public OffsetRec getPalOffset()       { return new OffsetRec(0xF291 - 16  , 32  , 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x20010 , 32  , 0x1000); }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0, 16   , 0x1000); }
@@ -89,9 +97,7 @@ public class Data : CapcomBase
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }
-  public bool isLayoutEditorEnabled()   { return true; }
   public bool isEnemyEditorEnabled()    { return true; }
-  public bool isVideoEditorEnabled()    { return true; }
   
   public List<ObjectRec> getPrizesCad2(int levelNo)
   {

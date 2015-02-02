@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,6 +34,10 @@
   <ItemGroup>
     <Reference Include="CadEditor">
       <HintPath>..\CadEditor\CadEditor.exe</HintPath>
+    </Reference>
+    <Reference Include="CSScriptLibrary.v3.5, Version=3.5.2.0, Culture=neutral, PublicKeyToken=70fcc3d18c749033, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CadEditor\CSScriptLibrary.v3.5.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -50,6 +55,7 @@
     <Compile Include="EditLevelData.Designer.cs">
       <DependentUpon>EditLevelData.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalsCad.cs" />
     <Compile Include="PluginLevelParams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SelectDoorIndex.cs">

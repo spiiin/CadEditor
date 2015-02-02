@@ -22,7 +22,9 @@ namespace CadEditor
     public delegate void            SortObjectsFunc(int levelNo, List<ObjectRec> objects);
     public delegate LevelLayerData  GetLayoutFunc(int levelNo);
     public delegate Dictionary<String, int> GetObjectDictionaryFunc(int objNo);
-    public delegate int ConvertScreenTileFunc(int val);
+    public delegate int  ConvertScreenTileFunc(int val);
+    public delegate int  GetBigTileNoFromScreenFunc(int[] screenData, int index);
+    public delegate void SetBigTileToScreenFunc(int[] screenData, int index, int value);
 
     public class ConfigScript
     {
@@ -37,12 +39,6 @@ namespace CadEditor
                 dumpName = callFromScript(asm, data, "*.getDumpName", "");
                 showDumpFileField = callFromScript(asm, data, "*.showDumpFileField", false);
                 nesColors = callFromScript<Color[]>(asm, data, "*.getNesColors", null);
-
-                //test plugins
-                loadPluginWithSilentCatch("PluginMapEditor.dll");
-                loadPluginWithSilentCatch("PluginHexEditor.dll");
-                loadPluginWithSilentCatch("PluginLevelParamsCad.dll");
-                plugins.Reverse();
             }
             catch (Exception)
             {
@@ -51,18 +47,18 @@ namespace CadEditor
 
         private static void addPlugin(string pluginName)
         {
-            var plugin = LoadPlugin(pluginName);
+            var plugin = PluginLoader.loadPlugin<IPlugin>(pluginName);
             if (plugin != null)
                 plugins.Add(plugin);
         }
 
-        private static void loadPluginWithSilentCatch(string filename)
+        private static void loadPluginWithSilentCatch(Action action)
         {
             try
             {
-                addPlugin(filename);
+                action();
             }
-            catch (Exception _)
+            catch (Exception)
             {
             }
         }
@@ -79,10 +75,13 @@ namespace CadEditor
             {
                 return;
             }
-            var dn = Path.GetDirectoryName(fileName);
-            if (dn != "")
-              Directory.SetCurrentDirectory(dn);
-            Globals.gameType = (GameType)asm.InvokeInst(data,"*.getGameType");
+
+
+            programStartDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            configDirectory       = Path.GetDirectoryName(fileName);
+            if (configDirectory != "")
+                changeToConfigDirectory();
+            Globals.setGameType(callFromScript(asm, data, "*.getGameType", GameType.Generic));
 
             levelsCount = callFromScript(asm, data, "*.getLevelsCount", 1);
             screensOffset = new OffsetRec[levelsCount];
@@ -132,15 +131,17 @@ namespace CadEditor
             getLayoutFunc = callFromScript<GetLayoutFunc>(asm, data, "*.getLayoutFunc");
             convertScreenTileFunc = callFromScript<ConvertScreenTileFunc>(asm, data, "*.getConvertScreenTileFunc");
             backConvertScreenTileFunc = callFromScript<ConvertScreenTileFunc>(asm, data, "*.getBackConvertScreenTileFunc");
+            getBigTileNoFromScreenFunc = callFromScript<GetBigTileNoFromScreenFunc>(asm, data, "*.getBigTileNoFromScreenFunc", Utils.getBigTileNoFromScreen);
+            setBigTileToScreenFunc = callFromScript<SetBigTileToScreenFunc>(asm, data, "*.setBigTileToScreenFunc", Utils.setBigTileToScreen);
             getObjectDictionaryFunc = callFromScript<GetObjectDictionaryFunc>(asm, data, "*.getObjectDictionaryFunc");
+
+
 
             renderToMainScreenFunc = callFromScript<RenderToMainScreenFunc>(asm, data, "*.getRenderToMainScreenFunc");
 
             isBigBlockEditorEnabled = callFromScript(asm, data, "*.isBigBlockEditorEnabled", true);
             isBlockEditorEnabled = callFromScript(asm, data, "*.isBlockEditorEnabled", true);
-            isLayoutEditorEnabled = callFromScript(asm, data, "*.isLayoutEditorEnabled", true);
             isEnemyEditorEnabled = callFromScript(asm, data, "*.isEnemyEditorEnabled", true);
-            isVideoEditorEnabled = callFromScript(asm, data, "*.isVideoEditorEnabled", true);
             objTypesPicturesDir = callFromScript(asm, data, "*.getObjTypesPicturesDir", "obj_sprites");
 
             showScrollsInLayout = callFromScript(asm, data, "*.isShowScrollsInLayout", true);
@@ -162,21 +163,56 @@ namespace CadEditor
 
             blockTypeNames = callFromScript(asm, data, "getBlockTypeNames", defaultBlockTypeNames);
 
-            if (Globals.gameType == GameType.CAD)
-            {
-                boxesBackOffset = (OffsetRec)asm.InvokeInst(data, "*.getBoxesBackOffset");
-                LevelRecBaseOffset = (int)asm.InvokeInst(data, "*.getLevelRecBaseOffset");
-                LevelRecDirOffset = (int)asm.InvokeInst(data, "*.getLevelRecDirOffset");
-                LayoutPtrAdd = (int)asm.InvokeInst(data, "*.getLayoutPtrAdd");
-                ScrollPtrAdd = (int)asm.InvokeInst(data, "*.getScrollPtrAdd");
-                DirPtrAdd = (int)asm.InvokeInst(data, "*.getDirPtrAdd");
-                DoorRecBaseOffset = (int)asm.InvokeInst(data, "*.getDoorRecBaseOffset");
-            }
+            groups = callFromScript(asm, data, "getGroups", new GroupRec[0]);
+
+            loadAllPlugins(asm, data);
         }
 
-        public static IPlugin LoadPlugin(string pluginName)
+        private static void loadAllPlugins(AsmHelper asm, object data)
         {
-            return PluginLoader.loadPlugin(pluginName);
+            changeToProgramDirectory();
+            cleanPlugins();
+            loadGlobalPlugins();
+            loadPluginsFromCurrentConfig(asm, data);
+            changeToConfigDirectory();
+        }
+
+        private static void cleanPlugins()
+        {
+            plugins.Clear();
+            videoNes = null;
+            videoSega = null;
+        }
+
+        private static void loadGlobalPlugins()
+        {
+            //auto load plugins
+            //loadPluginWithSilentCatch(() => addPlugin("PluginChrView.dll"));
+            loadPluginWithSilentCatch(() => addPlugin("PluginExportScreens.dll"));
+            loadPluginWithSilentCatch(() => addPlugin("PluginHexEditor.dll"));
+            //loadPluginWithSilentCatch(() => addPlugin("PluginAnimEditor.dll"));
+            //loadPluginWithSilentCatch(() => addPlugin("PluginEditLayout.dll"));
+            //loadPluginWithSilentCatch(()=>addPlugin("PluginMapEditor.dll"));
+            //loadPluginWithSilentCatch(()=>addPlugin("PluginLevelParamsCad.dll"));
+
+            //auto load video plugins
+            loadPluginWithSilentCatch(() => videoNes = PluginLoader.loadPlugin<IVideoPluginNes>("PluginVideoNes.dll"));
+            loadPluginWithSilentCatch(() => videoSega = PluginLoader.loadPlugin<IVideoPluginSega>("PluginVideoSega.dll"));
+        }
+
+        private static void loadPluginsFromCurrentConfig(AsmHelper asm, object data)
+        {
+            string[] pluginNames = callFromScript(asm, data, "getPluginNames", new string[0]);
+            foreach (var pluginName in pluginNames)
+            {
+                var p = PluginLoader.loadPlugin<IPlugin>(pluginName);
+                if (p != null)
+                {
+                    p.loadFromConfig(asm, data);
+                    plugins.Add(p);
+                }
+            }
+            plugins.Reverse();
         }
 
         //0x90 - background memory
@@ -250,6 +286,16 @@ namespace CadEditor
          public static int backConvertScreenTile(int tile)
          {
              return (backConvertScreenTileFunc ?? (v => v))(tile);
+         }
+
+         public static int getBigTileNoFromScreen(int[] screenData, int index)
+         {
+             return getBigTileNoFromScreenFunc(screenData, index);
+         }
+
+         public static void setBigTileToScreen(int[] screenData, int index, int value)
+         {
+             setBigTileToScreenFunc(screenData, index, value);
          }
 
         public static LevelLayerData getLayout(int levelNo)
@@ -393,6 +439,16 @@ namespace CadEditor
             return blockSize4x4;
         }
 
+        public static GroupRec[] getGroups()
+        {
+            return groups;
+        }
+
+        public static GroupRec getGroup(int i)
+        {
+            return groups[i];
+        }
+
         public static T callFromScript<T>(AsmHelper script, object data, string funcName, T defaultValue = default(T), params object[] funcParams)
         {
             try
@@ -405,7 +461,17 @@ namespace CadEditor
             }
         }
 
-        //public static GameType gameType;
+        public static void changeToProgramDirectory()
+        {
+            Directory.SetCurrentDirectory(programStartDirectory);
+        }
+        public static void changeToConfigDirectory()
+        {
+            Directory.SetCurrentDirectory(configDirectory);
+        }
+
+        private static string programStartDirectory;
+        private static string configDirectory;
 
         public static OffsetRec palOffset;
         public static OffsetRec videoOffset;
@@ -414,7 +480,7 @@ namespace CadEditor
         public static OffsetRec blocksOffset;
         public static OffsetRec[] screensOffset;
         public static OffsetRec screensOffset2;
-        public static OffsetRec boxesBackOffset;
+        //public static OffsetRec boxesBackOffset;
         public static int levelsCount;
         public static int bigBlocksCount;
         public static int blocksCount;
@@ -454,12 +520,12 @@ namespace CadEditor
         public static RenderToMainScreenFunc renderToMainScreenFunc;
         public static ConvertScreenTileFunc convertScreenTileFunc;
         public static ConvertScreenTileFunc backConvertScreenTileFunc;
+        public static GetBigTileNoFromScreenFunc getBigTileNoFromScreenFunc;
+        public static SetBigTileToScreenFunc setBigTileToScreenFunc;
 
         public static bool isBigBlockEditorEnabled;
         public static bool isBlockEditorEnabled;
-        public static bool isLayoutEditorEnabled;
         public static bool isEnemyEditorEnabled;
-        public static bool isVideoEditorEnabled;
 
         public static bool showScrollsInLayout;
         public static int scrollsOffsetFromLayout;
@@ -470,16 +536,10 @@ namespace CadEditor
         public static int blocksPicturesWidth;
         public static string objTypesPicturesDir;
 
+        public static GroupRec[] groups;
+
         public static string[] blockTypeNames;
         public static string[] defaultBlockTypeNames = new[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F" };
-
-        //chip and dale specific
-        public static int LevelRecBaseOffset;
-        public static int LevelRecDirOffset;
-        public static int LayoutPtrAdd;
-        public static int ScrollPtrAdd;
-        public static int DirPtrAdd;
-        public static int DoorRecBaseOffset;
 
         //global editor settings
         public static string  romName;
@@ -489,5 +549,7 @@ namespace CadEditor
         public static bool showDumpFileField;
 
         public static List<IPlugin> plugins = new List<IPlugin>();
+        public static IVideoPluginNes videoNes;
+        public static IVideoPluginSega videoSega;
     }
 }

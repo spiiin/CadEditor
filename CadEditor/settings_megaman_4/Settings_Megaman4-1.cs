@@ -3,6 +3,13 @@ using System.Collections.Generic;
 //css_include Settings_CapcomBase.cs;
 public class Data:CapcomBase
 {
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginChrView.dll"
+    };
+  }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x415A0, 1  , 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x20010, 1   , 0x1000); }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x20010, 1   , 0x1000); } //
@@ -17,7 +24,5 @@ public class Data:CapcomBase
   };
   public bool isBigBlockEditorEnabled() { return true;  }
   public bool isBlockEditorEnabled()    { return true;  }
-  public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return false; }
-  public bool isVideoEditorEnabled()    { return false; }
 }

@@ -3,6 +3,14 @@ using System.Collections.Generic;
 //css_include Settings_CapcomBase.cs;
 public class Data:CapcomBase
 {
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginChrView.dll",
+      "PluginEditLayout.dll"
+    };
+  }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x1C374, 32  , 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x30010, 16  , 0x1000); }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x20010, 16  , 0x1000); }
@@ -24,11 +32,26 @@ public class Data:CapcomBase
     new LevelRec(0x10B00, 51, 12, 5,  0x1E292),
     new LevelRec(0x10C07, 53, 8,  6,  0x1E2D9),
   };
+  
+  public GroupRec[] getGroups()
+  {
+    return new GroupRec[] { 
+      new GroupRec("Level 1"         , 0 ,0,0,0, 0x01),
+      new GroupRec("Level 2"         , 10,0,0,1, 0x17),
+      new GroupRec("Level 3"         , 1 ,1,1,2, 0x21),
+      new GroupRec("Level 4"         , 5 ,1,1,1, 0x34),
+      new GroupRec("Level 5"         , 2 ,2,2,3, 0x51),
+      new GroupRec("Level 5-2"       , 2 ,2,2,3, 0x86),
+      new GroupRec("Level 6"         , 3 ,2,2,5, 0x62),
+      new GroupRec("Level 7"         , 6 ,3,3,10, 0x91),
+      new GroupRec("Level 8"         , 4 ,4,4,6, 0xB1),
+      new GroupRec("Level 9"         , 7 ,4,4,7, 0xC5),
+    };
+  }
+  
   public bool isBigBlockEditorEnabled() { return true;  }
   public bool isBlockEditorEnabled()    { return true;  }
-  public bool isLayoutEditorEnabled()   { return true; }
   public bool isEnemyEditorEnabled()    { return true; }
-  public bool isVideoEditorEnabled()    { return true; }
   
   public List<ObjectRec> getObjectsDwd(int levelNo)
   {

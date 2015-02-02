@@ -6,6 +6,13 @@ using System.Windows.Forms;
 
 public class Data
 {
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginChrView.dll"
+    };
+  }
   public GameType getGameType()  { return GameType._3E; }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x147F8,  1  , 0x4000);  }//153
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x14660 , 1  , 0x440);   }//102
@@ -100,8 +107,6 @@ public class Data
   
   public bool isBigBlockEditorEnabled() { return true;  }
   public bool isBlockEditorEnabled()    { return true;  }
-  public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return false; }
-  public bool isVideoEditorEnabled()    { return true; }
   //--------------------------------------------------------------------------------------------
 }

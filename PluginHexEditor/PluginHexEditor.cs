@@ -11,6 +11,10 @@ namespace PluginHexEditor
 {
     public class PluginHexEditor : IPlugin
     {
+        public string getName()
+        {
+            return "Hex Editor";
+        }
       public void addSubeditorButton(FormMain formMain)
       {
         this.formMain = formMain;
@@ -19,6 +23,14 @@ namespace PluginHexEditor
         var item = new ToolStripButton("Hex Editor", iconHex, btHex_Click);
         item.DisplayStyle = ToolStripItemDisplayStyle.Image;
         formMain.addSubeditorButton(item);
+      }
+
+      public void addToolButton(FormMain formMain)
+      {
+      }
+
+      public void loadFromConfig(object asm, object data)
+      {
       }
 
       private void btHex_Click(object sender, EventArgs e)

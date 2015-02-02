@@ -2,8 +2,7 @@ using CadEditor;
 using System.Collections.Generic;
 //css_include Settings_Flintstones-Utils.cs;
 public class Data
-{ 
-  public GameType getGameType()           { return GameType.TT; }
+{
   public OffsetRec getScreensOffset()     { return new OffsetRec(0x28B1, 1 , 8*80);   }
   public int getScreenWidth()             { return 8; }
   public int getScreenHeight()            { return 80; }
@@ -12,9 +11,7 @@ public class Data
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return false; }
-  public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return true; }
-  public bool isVideoEditorEnabled()    { return false; }
   
   public GetObjectsFunc getObjectsFunc()   { return getObjects;  }
   public SetObjectsFunc setObjectsFunc()   { return setObjects;  }

@@ -6,7 +6,15 @@ using System.Windows.Forms;
 //css_include Settings_CapcomBase.cs;
 public class Data:CapcomBase
 {
-  public override GameType getGameType()  { return GameType.DT2; }
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginChrView.dll",
+      "PluginEditLayout.dll"
+    };
+  }
+  public GameType getGameType()  { return GameType.DT2; }
   public bool isShowScrollsInLayout() { return false; }
   
   public OffsetRec getPalOffset()       { return new OffsetRec(0x3E2F, 12   , 16);     }
@@ -37,6 +45,18 @@ public class Data:CapcomBase
     new LevelRec(0x19A87, 0xFF, 8, 6, 0x11D2A),
     new LevelRec(0x19B9E, 0xFF, 8, 6, 0x11C6A),
   };
+  
+  public GroupRec[] getGroups()
+  {
+    return new GroupRec[] { 
+      new GroupRec("Niagara"         , 0,0,0,0, 0x01),
+      new GroupRec("Bermuda"         , 1,0,1,2, 0x20),
+      new GroupRec("Egypt"           , 2,1,2,4, 0x41),
+      new GroupRec("Mu"              , 3,1,3,6, 0x5F),
+      new GroupRec("Scotland"        , 4,2,4,8, 0x81),
+      new GroupRec("Scotland 2"      , 4,2,4,8, 0x9E),
+    };
+  }
   
   string[] objTypesDt2 = new[] {
     "no","no","no","no","no","no","no","no",

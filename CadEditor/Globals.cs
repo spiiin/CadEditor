@@ -51,15 +51,11 @@ namespace CadEditor
             try
             {
                 ConfigScript.LoadFromFile(ConfigFilename);
-                LevelData.LoadOffsetsFromConfig();
-                DoorData.LoadOffsetsFromConfig();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            if (gameType == GameType.CAD) 
-              GlobalsCad.reloadLevelParamsData();
         }
 
         public static bool flushToFile()
@@ -88,7 +84,6 @@ namespace CadEditor
                 {
                     f.Write(Globals.romdata, 0, OpenFile.FileSize);
                     f.Seek(0, SeekOrigin.Begin);
-
                 }
             }
             catch (Exception ex)
@@ -109,23 +104,14 @@ namespace CadEditor
             return ConfigScript.bigBlocksOffset.beginAddr + ConfigScript.bigBlocksOffset.recSize * id;
         }
 
-        public static int getBackTileAddr(int levelNo)
-        {
-            return ConfigScript.boxesBackOffset.beginAddr + levelNo * ConfigScript.boxesBackOffset.recSize;
-        }
-
         public static int getLevelWidth(int levelNo)
         {
-            if (gameType != GameType.CAD)
-                return ConfigScript.getLevelRec(levelNo).width;
-            return GlobalsCad.levelData[levelNo].getWidth();
+            return ConfigScript.getLevelRec(levelNo).width;
         }
 
         public static int getLevelHeight(int levelNo)
         {
-            if (gameType != GameType.CAD)
-                return ConfigScript.getLevelRec(levelNo).height;
-            return GlobalsCad.levelData[levelNo].getHeight();
+            return ConfigScript.getLevelRec(levelNo).height;
         }
 
         public static int[] getScreen(OffsetRec screenOffset,  int screenIndex)
@@ -157,44 +143,6 @@ namespace CadEditor
                 }
             }
             return result;
-        }
-
-
-        public static int getBigTileNoFromScreen(int[] screenData, int index)
-        {
-            if (gameType == GameType.DT)
-            {
-                int noY = index % 8;
-                int noX = index / 8;
-                int lineByte = screenData[0x40 + noX];
-                int addValue = (lineByte & (1 << (7 - noY))) != 0 ? 256 : 0;
-                return addValue + screenData[index];
-            }
-            if (index == -1)
-                return -1;
-            return screenData[index];
-        }
-
-        public static void setBigTileToScreen(int[] screenData, int index, int value)
-        {
-            if (gameType == GameType.DT)
-            {
-                bool hiPart = value > 0xFF;
-                int noY = index % 8;
-                int noX = index / 8;
-                int lineByte = screenData[0x40 + noX];
-                int mask = 1 << (7 - noY);
-                if (hiPart)
-                    lineByte |= mask;
-                else
-                    lineByte &= ~mask;
-                screenData[index] = (byte)value;
-                screenData[0x40 + noX] = (byte)lineByte;
-            }
-            else
-            {
-                screenData[index] = value;
-            }
         }
 
         private static int compareRooms(List<ScreenRec> r1, List<ScreenRec> r2)
@@ -229,16 +177,6 @@ namespace CadEditor
             return getLayoutAddr(index) + ConfigScript.getScrollsOffsetFromLayout();
         }
 
-        public static byte[] getTTSmallBlocksColorBytes(int bigTileIndex)
-        {
-            int btc = ConfigScript.getBigBlocksCount();
-            var colorBytes = new byte[btc];
-            int addr = Globals.getBigTilesAddr(bigTileIndex);
-            for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
-                colorBytes[i] = Globals.romdata[addr + btc * 4 + i];
-            return colorBytes;
-        }
-
         public static byte[] romdata;
         public static byte[] dumpdata;
         public static int CHUNKS_COUNT = 256;
@@ -247,7 +185,16 @@ namespace CadEditor
         public static int SEGA_PAL_LEN = 128;
         public static int MAX_SCREEN_LIST_LEN = 64;
 
-        public static GameType gameType = GameType.Generic;
+        public static GameType getGameType()
+        {
+            return gameType;
+        }
+        public static void setGameType(GameType _gameType)
+        {
+            gameType = _gameType;
+        }
+
+        private static GameType gameType;
     }
 
     public struct OffsetRec
@@ -436,6 +383,26 @@ namespace CadEditor
         public byte[] dirs;
     }
 
+    public struct GroupRec
+    {
+        public string name;
+        public int videoNo;
+        public int bigBlockNo;
+        public int blockNo;
+        public int palNo;
+        public int firstScreen;
+
+        public GroupRec(string name, int videoNo, int bigBlockNo, int blockNo, int palNo, int firstScreen)
+        {
+            this.name = name;
+            this.videoNo = videoNo;
+            this.bigBlockNo = bigBlockNo;
+            this.blockNo = blockNo;
+            this.palNo = palNo;
+            this.firstScreen = firstScreen;
+        }
+    }
+
     public struct ObjectRec
     {
         public ObjectRec(int type, int sx, int sy, int x, int y, Dictionary<String, int> additionalData)
@@ -470,11 +437,16 @@ namespace CadEditor
     public enum GameType
     {
         Generic,
-        CAD,
-        DT,
         DT2,
         TT,
-        LM,
         _3E,
+    };
+
+    public enum MapViewType
+    {
+        Tiles,
+        ObjType,
+        ObjNumbers,
+        SmallObjNumbers,
     };
 }

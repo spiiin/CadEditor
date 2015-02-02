@@ -172,17 +172,21 @@ namespace CadEditor
             int width =  Globals.getLevelWidth(curActiveLayout);
             int height = Globals.getLevelHeight(curActiveLayout);
             byte[] layer = new byte[width * height];
-            if (Globals.gameType != GameType.TT)
-            {
-                for (int i = 0; i < width * height; i++)
-                    layer[i] = Globals.romdata[layoutAddr + i];
-            }
-            else
-            {
-                for (int i = 0; i < width * height; i++)
-                    layer[i] = (byte)(i + 1);
-            }
+            for (int i = 0; i < width * height; i++)
+                layer[i] = Globals.romdata[layoutAddr + i];
             return new LevelLayerData(width, height, layer, null, null);
+        }
+
+        public static int getBigTileNoFromScreen(int[] screenData, int index)
+        {
+            if (index == -1)
+                return -1;
+            return screenData[index];
+        }
+
+        public static void setBigTileToScreen(int[] screenData, int index, int value)
+        {
+            screenData[index] = value;
         }
 
         public static bool getBit(byte b, int bit)
@@ -503,7 +507,7 @@ namespace CadEditor
                     }
                 }
                 for (int i = bigBlocks.Images.Count; i < 256; i++)
-                    bigBlocks.Images.Add(Video.emptyScreen((int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale)));
+                    bigBlocks.Images.Add(VideoHelper.emptyScreen((int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale)));
                 if (showAxis)
                 {
                     for (int i = 0; i < 256; i++)
@@ -550,6 +554,65 @@ namespace CadEditor
             for (int i = 0; i < ConfigScript.screensOffset2.recCount; i++)
                 screens[i] = Globals.getScreen(ConfigScript.screensOffset2, i);
             return screens;
+        }
+
+        public static void loadEnemyPictures(ref ImageList objectSprites, ref Image[] objectSpritesBig)
+        {
+            const int OBJECTS_COUNT = 256; //limit for now
+            var objSpritesDir = ConfigScript.getObjTypesPicturesDir();
+            var objSpritesDirGeneric = "obj_sprites";
+            var templ = objSpritesDir + "\\object{0}.png";
+            var templGeneric = objSpritesDirGeneric + "\\object{0}.png";
+            var templBig = objSpritesDir + "\\object{0}b.png";
+            var templGenericBig = objSpritesDirGeneric + "\\object{0}b.png";
+            objectSprites.Images.Clear();
+            objectSpritesBig = new Image[256];
+            for (int i = 0; i < OBJECTS_COUNT; i++)
+            {
+                var fname = String.Format(templ, i);
+                var fnameGeneric = String.Format(templGeneric, i);
+                //".." hack for WinXP compatibility
+                if (File.Exists(fname))
+                {
+                    objectSprites.Images.Add(Image.FromFile(fname));
+                }
+                else if (File.Exists("..\\" + fname))
+                {
+                    objectSprites.Images.Add(Image.FromFile("..\\" + fname));
+                }
+                else if (File.Exists(fnameGeneric))
+                {
+                    objectSprites.Images.Add(Image.FromFile(fnameGeneric));
+                }
+                else if (File.Exists("..\\" + fnameGeneric))
+                {
+                    objectSprites.Images.Add(Image.FromFile("..\\" + fnameGeneric));
+                }
+
+                //
+                var fnameBig = String.Format(templBig, i);
+                var fnameGenericBig = String.Format(templGenericBig, i);
+                if (File.Exists(fnameBig))
+                {
+                    objectSpritesBig[i] = Image.FromFile(fnameBig);
+                }
+                else if (File.Exists("..\\" + fnameBig))
+                {
+                    objectSpritesBig[i] = Image.FromFile("..\\" + fnameBig);
+                }
+                else if (File.Exists(fnameGenericBig))
+                {
+                    objectSpritesBig[i] = Image.FromFile(fnameGenericBig);
+                }
+                else if (File.Exists("..\\" + fnameGenericBig))
+                {
+                    objectSpritesBig[i] = Image.FromFile("..\\" + fnameGenericBig);
+                }
+                else
+                {
+                    objectSpritesBig[i] = objectSprites.Images[i];
+                }
+            }
         }
     }
 }

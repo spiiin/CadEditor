@@ -5,7 +5,13 @@ using System.Collections.Generic;
 
 public class Data 
 { 
-  public GameType getGameType()                             { return GameType.LM; } //for Video.makeCurScreen function
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginChrView.dll"
+    };
+  }
   public OffsetRec getPalOffset()                           { return new OffsetRec(0x1CC19, 32  , 16);     }
   public OffsetRec getVideoOffset()                         { return new OffsetRec(0x30010, 16  , 0x1000); }
   public OffsetRec getVideoObjOffset()                      { return new OffsetRec(0x20010, 16  , 0x1000); }
@@ -31,9 +37,7 @@ public class Data
   
   public bool isBigBlockEditorEnabled() { return true; }
   public bool isBlockEditorEnabled()    { return true; }
-  public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return true; }
-  public bool isVideoEditorEnabled()    { return true; }
   public IList<LevelRec> getLevelRecs() { return levelRecsJB; }
   
   public SetBlocksFunc setBlocksFunc()     { return setBlocksJB;}
@@ -175,7 +179,7 @@ public class Data
   LevelLayerData getLayoutJungleBook(int levelNo)
   {
     byte[] layer = new byte[1];
-    layer[0] = 0;
+    layer[0] = 1;
     return new LevelLayerData(1, 1, layer);
   }
   

@@ -107,7 +107,7 @@ namespace CadEditor
             backId = curVideo;
             palId = curPallete;
 
-            var im = Video.makeObjectsStrip((byte)backId, (byte)curTileset, (byte)palId, 1, curViewType);
+            var im = ConfigScript.videoNes.makeObjectsStrip((byte)backId, (byte)curTileset, (byte)palId, 1, curViewType);
             smallBlocks.Images.Clear();
             smallBlocks.Images.AddStrip(im);
             blocksPanel.Invalidate(true);
@@ -140,19 +140,20 @@ namespace CadEditor
                     for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
                     {
                         Bitmap b;
-                        switch (Globals.gameType)
+                        /*switch (Globals.gameType)
                         {
                             //todo: write code to export blocks for TinyToon
-                            /*case GameType.TT:
-                                b = Video.makeBigBlockTT(i, 64, 64, bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
-                                break;*/
-                            case GameType._3E:
-                                b = Video.makeBigBlock3E(i, 64, 64, bigBlockIndexes, smallBlocks);
+                            //case GameTyp.TT:
+                            //    b = ConfigScript.videoNes.makeBigBlockTT(i, 64, 64, bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
+                            //    break;
+                            case GameTyp._3E:
+                                b = ConfigScript.videoNes.makeBigBlock3E(i, 64, 64, bigBlockIndexes, smallBlocks);
                                 break;
                             default:
-                                b = Video.makeBigBlock(i, 64, 64, bigBlockIndexes, smallBlocks);
+                                b = ConfigScript.videoNes.makeBigBlock(i, 64, 64, bigBlockIndexes, smallBlocks);
                                 break;
-                        }
+                        }*/
+                        b = ConfigScript.videoNes.makeBigBlock(i, 64, 64, bigBlockIndexes, smallBlocks);
                         g.DrawImage(b, new Point(64 * i, 0));
                     }
                 }

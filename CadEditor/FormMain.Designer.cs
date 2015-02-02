@@ -47,11 +47,6 @@
             this.cbBigBlockNo = new System.Windows.Forms.ComboBox();
             this.cbVideoNo = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.pnCad = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
-            this.cbDoor = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cbLevel = new System.Windows.Forms.ComboBox();
             this.cbViewType = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.smallBlocks1 = new System.Windows.Forms.ImageList(this.components);
@@ -65,15 +60,10 @@
             this.bttSave = new System.Windows.Forms.ToolStripButton();
             this.bttReload = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.bttExport = new System.Windows.Forms.ToolStripButton();
-            this.bttExportPic = new System.Windows.Forms.ToolStripButton();
-            this.bttImport = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.bttBigBlocks = new System.Windows.Forms.ToolStripButton();
             this.bttBlocks = new System.Windows.Forms.ToolStripButton();
             this.bttEnemies = new System.Windows.Forms.ToolStripButton();
-            this.bttLayout = new System.Windows.Forms.ToolStripButton();
-            this.bttVideo = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.bttStructures = new System.Windows.Forms.ToolStripButton();
             this.bttConfig = new System.Windows.Forms.ToolStripButton();
@@ -95,6 +85,8 @@
             this.bttLayer = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.tbbShowPluginInfo = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.blockPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.blockPanel3 = new System.Windows.Forms.FlowLayoutPanel();
@@ -106,10 +98,12 @@
             this.cbLevelNo = new System.Windows.Forms.ComboBox();
             this.cbUseStructs = new System.Windows.Forms.CheckBox();
             this.lbStructures = new System.Windows.Forms.ListBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cbGroup = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
-            this.pnCad.SuspendLayout();
             this.pnView.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -196,6 +190,9 @@
             // 
             // pnGeneric
             // 
+            this.pnGeneric.Controls.Add(this.cbGroup);
+            this.pnGeneric.Controls.Add(this.label7);
+            this.pnGeneric.Controls.Add(this.label2);
             this.pnGeneric.Controls.Add(this.label9);
             this.pnGeneric.Controls.Add(this.cbPaletteNo);
             this.pnGeneric.Controls.Add(this.label8);
@@ -206,7 +203,7 @@
             this.pnGeneric.Controls.Add(this.label1);
             this.pnGeneric.Location = new System.Drawing.Point(1, 213);
             this.pnGeneric.Name = "pnGeneric";
-            this.pnGeneric.Size = new System.Drawing.Size(72, 162);
+            this.pnGeneric.Size = new System.Drawing.Size(72, 215);
             this.pnGeneric.TabIndex = 42;
             // 
             // label9
@@ -325,92 +322,6 @@
             this.label1.TabIndex = 42;
             this.label1.Text = "VideoBlock:";
             // 
-            // pnCad
-            // 
-            this.pnCad.Controls.Add(this.label7);
-            this.pnCad.Controls.Add(this.cbDoor);
-            this.pnCad.Controls.Add(this.label2);
-            this.pnCad.Controls.Add(this.cbLevel);
-            this.pnCad.Location = new System.Drawing.Point(1, 213);
-            this.pnCad.Name = "pnCad";
-            this.pnCad.Size = new System.Drawing.Size(72, 93);
-            this.pnCad.TabIndex = 43;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(4, 37);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(33, 13);
-            this.label7.TabIndex = 36;
-            this.label7.Text = "Door:";
-            // 
-            // cbDoor
-            // 
-            this.cbDoor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbDoor.FormattingEnabled = true;
-            this.cbDoor.Items.AddRange(new object[] {
-            "None",
-            "Door 1",
-            "Door 2",
-            "Door 3",
-            "Door 4",
-            "Door 5",
-            "Door 6",
-            "Door 7",
-            "Door 8",
-            "Door 9",
-            "Door A",
-            "Door B",
-            "Door C",
-            "Door D",
-            "Door E",
-            "Door F",
-            "Door 10",
-            "Door 11",
-            "Door 12",
-            "Door 13",
-            "Door 14",
-            "Door 15",
-            "Door 16",
-            "Door 17",
-            "Door 18",
-            "Door 19"});
-            this.cbDoor.Location = new System.Drawing.Point(7, 53);
-            this.cbDoor.Name = "cbDoor";
-            this.cbDoor.Size = new System.Drawing.Size(64, 21);
-            this.cbDoor.TabIndex = 35;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, -3);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 13);
-            this.label2.TabIndex = 32;
-            this.label2.Text = "View as:";
-            // 
-            // cbLevel
-            // 
-            this.cbLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbLevel.FormattingEnabled = true;
-            this.cbLevel.Items.AddRange(new object[] {
-            "Level 0",
-            "Level A",
-            "Level B",
-            "Level C",
-            "Level D",
-            "Level E",
-            "Level F",
-            "Level G",
-            "Level H",
-            "Level I",
-            "Level J"});
-            this.cbLevel.Location = new System.Drawing.Point(6, 13);
-            this.cbLevel.Name = "cbLevel";
-            this.cbLevel.Size = new System.Drawing.Size(64, 21);
-            this.cbLevel.TabIndex = 31;
-            // 
             // cbViewType
             // 
             this.cbViewType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -489,15 +400,10 @@
             this.bttSave,
             this.bttReload,
             this.toolStripSeparator1,
-            this.bttExport,
-            this.bttExportPic,
-            this.bttImport,
             this.toolStripSeparator2,
             this.bttBigBlocks,
             this.bttBlocks,
             this.bttEnemies,
-            this.bttLayout,
-            this.bttVideo,
             this.toolStripSeparator3,
             this.bttStructures,
             this.bttConfig,
@@ -510,7 +416,9 @@
             this.toolStripSeparator5,
             this.bttShowLayer1,
             this.bttShowLayer2,
-            this.bttLayer});
+            this.bttLayer,
+            this.toolStripSeparator7,
+            this.tbbShowPluginInfo});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1073, 25);
@@ -552,36 +460,6 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // bttExport
-            // 
-            this.bttExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttExport.Image = ((System.Drawing.Image)(resources.GetObject("bttExport.Image")));
-            this.bttExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttExport.Name = "bttExport";
-            this.bttExport.Size = new System.Drawing.Size(23, 22);
-            this.bttExport.Text = "Export";
-            this.bttExport.Click += new System.EventHandler(this.btExport_Click);
-            // 
-            // bttExportPic
-            // 
-            this.bttExportPic.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttExportPic.Image = ((System.Drawing.Image)(resources.GetObject("bttExportPic.Image")));
-            this.bttExportPic.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttExportPic.Name = "bttExportPic";
-            this.bttExportPic.Size = new System.Drawing.Size(23, 22);
-            this.bttExportPic.Text = "Export as picture";
-            this.bttExportPic.Click += new System.EventHandler(this.bttExportPic_Click);
-            // 
-            // bttImport
-            // 
-            this.bttImport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttImport.Image = ((System.Drawing.Image)(resources.GetObject("bttImport.Image")));
-            this.bttImport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttImport.Name = "bttImport";
-            this.bttImport.Size = new System.Drawing.Size(23, 22);
-            this.bttImport.Text = "Import";
-            this.bttImport.Click += new System.EventHandler(this.btImport_Click);
-            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -616,26 +494,6 @@
             this.bttEnemies.Size = new System.Drawing.Size(23, 22);
             this.bttEnemies.Text = "Edit Enemies";
             this.bttEnemies.Click += new System.EventHandler(this.btSubeditor_Click);
-            // 
-            // bttLayout
-            // 
-            this.bttLayout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttLayout.Image = ((System.Drawing.Image)(resources.GetObject("bttLayout.Image")));
-            this.bttLayout.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttLayout.Name = "bttLayout";
-            this.bttLayout.Size = new System.Drawing.Size(23, 22);
-            this.bttLayout.Text = "Edit Layout";
-            this.bttLayout.Click += new System.EventHandler(this.btSubeditor_Click);
-            // 
-            // bttVideo
-            // 
-            this.bttVideo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttVideo.Image = ((System.Drawing.Image)(resources.GetObject("bttVideo.Image")));
-            this.bttVideo.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttVideo.Name = "bttVideo";
-            this.bttVideo.Size = new System.Drawing.Size(23, 22);
-            this.bttVideo.Text = "Edit Video";
-            this.bttVideo.Click += new System.EventHandler(this.btSubeditor_Click);
             // 
             // toolStripSeparator3
             // 
@@ -820,6 +678,21 @@
             this.toolStripMenuItem5.Size = new System.Drawing.Size(80, 22);
             this.toolStripMenuItem5.Text = "2";
             // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tbbShowPluginInfo
+            // 
+            this.tbbShowPluginInfo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbbShowPluginInfo.Image = ((System.Drawing.Image)(resources.GetObject("tbbShowPluginInfo.Image")));
+            this.tbbShowPluginInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbbShowPluginInfo.Name = "tbbShowPluginInfo";
+            this.tbbShowPluginInfo.Size = new System.Drawing.Size(23, 22);
+            this.tbbShowPluginInfo.Text = "Show plugins info";
+            this.tbbShowPluginInfo.Click += new System.EventHandler(this.tbbShowPluginInfo_Click);
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -927,7 +800,6 @@
             this.pnElements.Controls.Add(this.cbViewType);
             this.pnElements.Controls.Add(this.label6);
             this.pnElements.Controls.Add(this.cbScreenNo);
-            this.pnElements.Controls.Add(this.pnCad);
             this.pnElements.Controls.Add(this.pnGeneric);
             this.pnElements.Location = new System.Drawing.Point(297, 3);
             this.pnElements.Name = "pnElements";
@@ -956,7 +828,7 @@
             // cbUseStructs
             // 
             this.cbUseStructs.AutoSize = true;
-            this.cbUseStructs.Location = new System.Drawing.Point(3, 381);
+            this.cbUseStructs.Location = new System.Drawing.Point(3, 434);
             this.cbUseStructs.Name = "cbUseStructs";
             this.cbUseStructs.Size = new System.Drawing.Size(79, 17);
             this.cbUseStructs.TabIndex = 57;
@@ -977,6 +849,35 @@
             this.lbStructures.Visible = false;
             this.lbStructures.SelectedIndexChanged += new System.EventHandler(this.lbStructures_SelectedIndexChanged);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(5, 158);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(23, 13);
+            this.label2.TabIndex = 49;
+            this.label2.Text = "OR";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(5, 173);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(49, 13);
+            this.label7.TabIndex = 50;
+            this.label7.Text = "GROUP:";
+            // 
+            // cbGroup
+            // 
+            this.cbGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbGroup.DropDownWidth = 200;
+            this.cbGroup.FormattingEnabled = true;
+            this.cbGroup.Location = new System.Drawing.Point(6, 189);
+            this.cbGroup.Name = "cbGroup";
+            this.cbGroup.Size = new System.Drawing.Size(64, 21);
+            this.cbGroup.TabIndex = 51;
+            this.cbGroup.SelectedIndexChanged += new System.EventHandler(this.cbGroup_SelectedIndexChanged);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -995,8 +896,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).EndInit();
             this.pnGeneric.ResumeLayout(false);
             this.pnGeneric.PerformLayout();
-            this.pnCad.ResumeLayout(false);
-            this.pnCad.PerformLayout();
             this.pnView.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -1030,11 +929,6 @@
         private System.Windows.Forms.ComboBox cbBigBlockNo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbVideoNo;
-        private System.Windows.Forms.Panel pnCad;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox cbDoor;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cbLevel;
         private System.Windows.Forms.ComboBox cbViewType;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ImageList smallBlocks1;
@@ -1047,14 +941,10 @@
         private System.Windows.Forms.ToolStripButton bttOpen;
         private System.Windows.Forms.ToolStripButton bttSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton bttExport;
-        private System.Windows.Forms.ToolStripButton bttImport;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton bttBigBlocks;
         private System.Windows.Forms.ToolStripButton bttBlocks;
         private System.Windows.Forms.ToolStripButton bttEnemies;
-        private System.Windows.Forms.ToolStripButton bttLayout;
-        private System.Windows.Forms.ToolStripButton bttVideo;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Panel pnElements;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
@@ -1079,7 +969,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.CheckBox cbUseStructs;
         private System.Windows.Forms.ListBox lbStructures;
-        private System.Windows.Forms.ToolStripButton bttExportPic;
         private System.Windows.Forms.ToolStripButton bttReload;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbLevelNo;
@@ -1089,6 +978,11 @@
         private System.Windows.Forms.FlowLayoutPanel blockPanel4;
         private System.Windows.Forms.FlowLayoutPanel blockPanel3;
         private System.Windows.Forms.FlowLayoutPanel blockPanel2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripButton tbbShowPluginInfo;
+        private System.Windows.Forms.ComboBox cbGroup;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label2;
     }
 }
 

@@ -91,5 +91,16 @@ public static class TinyToonUtils
     }
     return true;
   }
+  
+  public static LevelLayerData getLayoutLinearTT(int curActiveLayout)
+  {
+      int layoutAddr = Globals.getLayoutAddr(curActiveLayout);
+      int width = Globals.getLevelWidth(curActiveLayout);
+      int height = Globals.getLevelHeight(curActiveLayout);
+      byte[] layer = new byte[width * height];
+      for (int i = 0; i < width * height; i++)
+          layer[i] = (byte)(i + 1);
+      return new LevelLayerData(width, height, layer, null, null);
+  }
   //--------------------------------------------------------------------------------------------------------------
 }

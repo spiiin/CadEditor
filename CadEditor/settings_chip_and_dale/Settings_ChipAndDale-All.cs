@@ -3,7 +3,14 @@ using System.Collections.Generic;
 //css_include Settings_CapcomBase.cs;
 public class Data:CapcomBase
 {
-  public override GameType getGameType()  { return GameType.CAD; }
+  public string[] getPluginNames() 
+  {
+    return new string[] { 
+      "PluginChrView.dll",
+      "PluginLevelParamsCad.dll",
+      //"PluginEditLayout.dll",
+    };
+  }
    
   public OffsetRec getPalOffset()       { return new OffsetRec(0x1C354, 32  , 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x30010, 16  , 0x1000); }
@@ -16,6 +23,10 @@ public class Data:CapcomBase
   
   public GetObjectsFunc getObjectsFunc() { return getObjectsCad; }
   public SetObjectsFunc setObjectsFunc() { return setObjectsCad; }
+  
+  public bool isBigBlockEditorEnabled() { return true; }
+  public bool isBlockEditorEnabled()    { return true; }
+  public bool isEnemyEditorEnabled()    { return false; }
   
   public string getObjTypesPicturesDir() { return "obj_sprites_cad"; }
   

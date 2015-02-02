@@ -21,6 +21,8 @@ public class Data
   public IList<LevelRec> getLevelRecs() { return levelRecsTT; }
   public GetObjectsFunc getObjectsFunc() { return TinyToonUtils.getObjectsTT; }
   public SetObjectsFunc setObjectsFunc() { return TinyToonUtils.setObjectsTT; }
+  public string getObjTypesPicturesDir() { return "obj_sprites_TT"; }
+  public GetLayoutFunc  getLayoutFunc()  { return TinyToonUtils.getLayoutLinearTT;   }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getTinyToonVideoAddress; }
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getTinyToonVideoChunk;   }
@@ -89,8 +91,6 @@ public class Data
   
   public bool isBigBlockEditorEnabled() { return true;  }
   public bool isBlockEditorEnabled()    { return true;  }
-  public bool isLayoutEditorEnabled()   { return false; }
   public bool isEnemyEditorEnabled()    { return true; }
-  public bool isVideoEditorEnabled()    { return true; }
   //--------------------------------------------------------------------------------------------
 }

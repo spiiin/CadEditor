@@ -30,8 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnemyEditor));
-            this.cbLevel = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.mapScreen = new System.Windows.Forms.PictureBox();
             this.btLeft = new System.Windows.Forms.Button();
             this.btRight = new System.Windows.Forms.Button();
@@ -50,7 +48,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.activeBlock = new System.Windows.Forms.PictureBox();
             this.btSave = new System.Windows.Forms.Button();
-            this.cbManualSort = new System.Windows.Forms.CheckBox();
             this.btSortUp = new System.Windows.Forms.Button();
             this.btSortDown = new System.Windows.Forms.Button();
             this.pnGeneric = new System.Windows.Forms.Panel();
@@ -67,7 +64,6 @@
             this.cbBigBlockNo = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cbVideoNo = new System.Windows.Forms.ComboBox();
-            this.pnCad = new System.Windows.Forms.Panel();
             this.pnSelectScreen = new System.Windows.Forms.Panel();
             this.lbScrNo = new System.Windows.Forms.Label();
             this.lbActive = new System.Windows.Forms.Label();
@@ -104,17 +100,16 @@
             this.cbD1 = new System.Windows.Forms.ComboBox();
             this.lbD1 = new System.Windows.Forms.Label();
             this.pnObjects = new System.Windows.Forms.Panel();
+            this.btLoadJson = new System.Windows.Forms.Button();
+            this.btSaveJson = new System.Windows.Forms.Button();
             this.pnBigObjects = new System.Windows.Forms.Panel();
             this.pbBigObject = new System.Windows.Forms.PictureBox();
             this.cbBigObjectNo = new System.Windows.Forms.ComboBox();
             this.cbUseBigPictures = new System.Windows.Forms.CheckBox();
             this.cbBindToAxis = new System.Windows.Forms.CheckBox();
-            this.btSaveJson = new System.Windows.Forms.Button();
-            this.btLoadJson = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
-            this.pnCad.SuspendLayout();
             this.pnSelectScreen.SuspendLayout();
             this.pnTools.SuspendLayout();
             this.pnView.SuspendLayout();
@@ -124,37 +119,6 @@
             this.pnBigObjects.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbBigObject)).BeginInit();
             this.SuspendLayout();
-            // 
-            // cbLevel
-            // 
-            this.cbLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbLevel.FormattingEnabled = true;
-            this.cbLevel.Items.AddRange(new object[] {
-            "Level 0",
-            "Level A",
-            "Level B",
-            "Level C",
-            "Level D",
-            "Level E",
-            "Level F",
-            "Level G",
-            "Level H",
-            "Level I",
-            "Level J"});
-            this.cbLevel.Location = new System.Drawing.Point(69, 11);
-            this.cbLevel.Name = "cbLevel";
-            this.cbLevel.Size = new System.Drawing.Size(104, 21);
-            this.cbLevel.TabIndex = 29;
-            this.cbLevel.SelectedIndexChanged += new System.EventHandler(this.cbLevel_SelectedIndexChanged);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 14);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(65, 13);
-            this.label6.TabIndex = 28;
-            this.label6.Text = "Select level:";
             // 
             // mapScreen
             // 
@@ -358,22 +322,6 @@
             this.btSave.Text = "save";
             this.btSave.UseVisualStyleBackColor = true;
             this.btSave.Click += new System.EventHandler(this.btSave_Click);
-            // 
-            // cbManualSort
-            // 
-            this.cbManualSort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbManualSort.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbManualSort.Checked = true;
-            this.cbManualSort.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbManualSort.Location = new System.Drawing.Point(133, 331);
-            this.cbManualSort.Name = "cbManualSort";
-            this.cbManualSort.Size = new System.Drawing.Size(90, 18);
-            this.cbManualSort.TabIndex = 46;
-            this.cbManualSort.Text = "Manual sort";
-            this.cbManualSort.UseVisualStyleBackColor = true;
-            this.cbManualSort.Visible = false;
-            this.cbManualSort.CheckedChanged += new System.EventHandler(this.cbManualSort_CheckedChanged);
             // 
             // btSortUp
             // 
@@ -602,17 +550,6 @@
             this.cbVideoNo.TabIndex = 41;
             this.cbVideoNo.SelectedIndexChanged += new System.EventHandler(this.cbLevel_SelectedIndexChanged);
             // 
-            // pnCad
-            // 
-            this.pnCad.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnCad.Controls.Add(this.label6);
-            this.pnCad.Controls.Add(this.cbLevel);
-            this.pnCad.Location = new System.Drawing.Point(3, 3);
-            this.pnCad.Name = "pnCad";
-            this.pnCad.Size = new System.Drawing.Size(175, 50);
-            this.pnCad.TabIndex = 51;
-            // 
             // pnSelectScreen
             // 
             this.pnSelectScreen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -840,7 +777,6 @@
             this.pnObjectList.Controls.Add(this.cbCoordX);
             this.pnObjectList.Controls.Add(this.label17);
             this.pnObjectList.Controls.Add(this.cbCoordY);
-            this.pnObjectList.Controls.Add(this.cbManualSort);
             this.pnObjectList.Controls.Add(this.btSortUp);
             this.pnObjectList.Controls.Add(this.label15);
             this.pnObjectList.Controls.Add(this.btSortDown);
@@ -1063,7 +999,6 @@
             this.pnObjects.Controls.Add(this.pnBigObjects);
             this.pnObjects.Controls.Add(this.cbUseBigPictures);
             this.pnObjects.Controls.Add(this.cbBindToAxis);
-            this.pnObjects.Controls.Add(this.pnCad);
             this.pnObjects.Controls.Add(this.objPanel);
             this.pnObjects.Controls.Add(this.activeBlock);
             this.pnObjects.Controls.Add(this.lbReadOnly);
@@ -1076,6 +1011,30 @@
             this.pnObjects.Name = "pnObjects";
             this.pnObjects.Size = new System.Drawing.Size(183, 546);
             this.pnObjects.TabIndex = 31;
+            // 
+            // btLoadJson
+            // 
+            this.btLoadJson.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btLoadJson.Location = new System.Drawing.Point(90, 512);
+            this.btLoadJson.Name = "btLoadJson";
+            this.btLoadJson.Size = new System.Drawing.Size(81, 34);
+            this.btLoadJson.TabIndex = 67;
+            this.btLoadJson.Text = "load test.json";
+            this.btLoadJson.UseVisualStyleBackColor = true;
+            this.btLoadJson.Click += new System.EventHandler(this.btLoadJson_Click);
+            // 
+            // btSaveJson
+            // 
+            this.btSaveJson.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btSaveJson.Location = new System.Drawing.Point(2, 512);
+            this.btSaveJson.Name = "btSaveJson";
+            this.btSaveJson.Size = new System.Drawing.Size(82, 34);
+            this.btSaveJson.TabIndex = 66;
+            this.btSaveJson.Text = "save test.json";
+            this.btSaveJson.UseVisualStyleBackColor = true;
+            this.btSaveJson.Click += new System.EventHandler(this.btSaveJson_Click);
             // 
             // pnBigObjects
             // 
@@ -1135,30 +1094,6 @@
             this.cbBindToAxis.UseVisualStyleBackColor = true;
             this.cbBindToAxis.CheckedChanged += new System.EventHandler(this.cbBindToAxis_CheckedChanged);
             // 
-            // btSaveJson
-            // 
-            this.btSaveJson.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSaveJson.Location = new System.Drawing.Point(2, 512);
-            this.btSaveJson.Name = "btSaveJson";
-            this.btSaveJson.Size = new System.Drawing.Size(82, 34);
-            this.btSaveJson.TabIndex = 66;
-            this.btSaveJson.Text = "save test.json";
-            this.btSaveJson.UseVisualStyleBackColor = true;
-            this.btSaveJson.Click += new System.EventHandler(this.btSaveJson_Click);
-            // 
-            // btLoadJson
-            // 
-            this.btLoadJson.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btLoadJson.Location = new System.Drawing.Point(90, 512);
-            this.btLoadJson.Name = "btLoadJson";
-            this.btLoadJson.Size = new System.Drawing.Size(81, 34);
-            this.btLoadJson.TabIndex = 67;
-            this.btLoadJson.Text = "load test.json";
-            this.btLoadJson.UseVisualStyleBackColor = true;
-            this.btLoadJson.Click += new System.EventHandler(this.btLoadJson_Click);
-            // 
             // EnemyEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1179,8 +1114,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).EndInit();
             this.pnGeneric.ResumeLayout(false);
             this.pnGeneric.PerformLayout();
-            this.pnCad.ResumeLayout(false);
-            this.pnCad.PerformLayout();
             this.pnSelectScreen.ResumeLayout(false);
             this.pnSelectScreen.PerformLayout();
             this.pnTools.ResumeLayout(false);
@@ -1201,8 +1134,6 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox cbLevel;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.PictureBox mapScreen;
         private System.Windows.Forms.Button btLeft;
         private System.Windows.Forms.Button btRight;
@@ -1221,7 +1152,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox activeBlock;
         private System.Windows.Forms.Button btSave;
-        private System.Windows.Forms.CheckBox cbManualSort;
         private System.Windows.Forms.Button btSortUp;
         private System.Windows.Forms.Button btSortDown;
         private System.Windows.Forms.Panel pnGeneric;
@@ -1235,7 +1165,6 @@
         private System.Windows.Forms.ComboBox cbBigBlockNo;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbVideoNo;
-        private System.Windows.Forms.Panel pnCad;
         private System.Windows.Forms.Panel pnSelectScreen;
         private System.Windows.Forms.Label lbScrNo;
         private System.Windows.Forms.CheckBox cbPlus256;

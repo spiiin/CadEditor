@@ -87,15 +87,8 @@
 Позволяют отключить для пользователя те редакторы, которые не поддерживаются игрой, что он не мог поломать редактор:
   isBigBlockEditorEnabled = callFromScript(asm, data, "*.isBigBlockEditorEnabled", true);
   isBlockEditorEnabled = callFromScript(asm, data, "*.isBlockEditorEnabled", true);
-  isLayoutEditorEnabled = callFromScript(asm, data, "*.isLayoutEditorEnabled", true);
   isEnemyEditorEnabled = callFromScript(asm, data, "*.isEnemyEditorEnabled", true);
-  isVideoEditorEnabled = callFromScript(asm, data, "*.isVideoEditorEnabled", true);
-  isMapEditorEnabled = callFromScript(asm, data, "*.isMapEditorEnabled", false); //specific for dwd
   objTypesPicturesDir = callFromScript(asm, data, "*.getObjTypesPicturesDir", "obj_sprites");
-  
-Смещение массива скроллов (определяют, из какого экрана в какую сторону возможно движение) относительно массива раскладки (определяют форму уровня и номера используемых экранов).
-  showScrollsInLayout = callFromScript(asm, data, "*.isShowScrollsInLayout", true);
-  scrollsOffsetFromLayout = callFromScript(asm, data, "*.getScrollsOffsetFromLayout", 0);
 
 Позволяют ограничить число игровых макроблоков и блоков (на случай, если в игре они идут последовательно и их меньше 256, чтобы пользователь редактируя один уровень случайно не перерисовал блоки соседнего):
   bigBlocksCount = callFromScript(asm, data, "*.getBigBlocksCount", 256);
@@ -103,16 +96,4 @@
   
 Подсказка по типам блоков, чтобы вместо цифр высвечивались строки с названием типов (например: провал/шипы/стена/фон):
   blockTypeNames = callFromScript(asm, data, "getBlockTypeNames", defaultBlockTypeNames);
-
-Специфические для игр Chip & Dale опции настройки дверей переходов, для других игр не имеют смысла:
-  if (Globals.gameType == GameType.CAD)
-  {
-      boxesBackOffset = (OffsetRec)asm.InvokeInst(data, "*.getBoxesBackOffset");
-      LevelRecBaseOffset = (int)asm.InvokeInst(data, "*.getLevelRecBaseOffset");
-      LevelRecDirOffset = (int)asm.InvokeInst(data, "*.getLevelRecDirOffset");
-      LayoutPtrAdd = (int)asm.InvokeInst(data, "*.getLayoutPtrAdd");
-      ScrollPtrAdd = (int)asm.InvokeInst(data, "*.getScrollPtrAdd");
-      DirPtrAdd = (int)asm.InvokeInst(data, "*.getDirPtrAdd");
-      DoorRecBaseOffset = (int)asm.InvokeInst(data, "*.getDoorRecBaseOffset");
-  }
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -4,7 +4,14 @@ using System.Collections.Generic;
 //css_include Settings_Mermaid-Utils.cs;
 public class Data:CapcomBase
 {
-  public override GameType getGameType(){ return GameType.LM; }
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginChrView.dll",
+      "PluginEditLayout.dll"
+    };
+  }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x1DB53, 32  , 16);  }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0xF010, 1 , 0xD00); }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0xF010, 1 , 0xD00); }
@@ -14,6 +21,7 @@ public class Data:CapcomBase
   public IList<LevelRec> getLevelRecs() { return levelRecs; }
   public GetObjectsFunc getObjectsFunc() { return MermaidUtils.getObjectsLM; }
   public SetObjectsFunc setObjectsFunc() { return MermaidUtils.setObjectsLM; }
+    public GetLayoutFunc  getLayoutFunc()  { return MermaidUtils.getLayoutLinearMermaid;   }
   public override GetVideoChunkFunc    getVideoChunkFunc()    { return getLMVideoChunk; }
   
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
@@ -31,7 +39,5 @@ public class Data:CapcomBase
   }
   public bool isBigBlockEditorEnabled() { return true;  }
   public bool isBlockEditorEnabled()    { return true;  }
-  public bool isLayoutEditorEnabled()   { return true; }
   public bool isEnemyEditorEnabled()    { return true; }
-  public bool isVideoEditorEnabled()    { return false; }
 }
