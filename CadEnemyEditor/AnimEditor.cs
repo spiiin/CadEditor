@@ -176,7 +176,7 @@ namespace CadEnemyEditor
             {
                 videoChunk[i] = Globals.romdata[beginAddr + i];
             }*/
-            var videoStrip = ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 0, scale);
+            var videoStrip = ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 0, scale, true, true);
             int scaleBitmap = 2;
             Bitmap resultVideo = new Bitmap(128 * scaleBitmap, 128 * scaleBitmap);
             using (Graphics g = Graphics.FromImage(resultVideo))
@@ -194,9 +194,9 @@ namespace CadEnemyEditor
             imageList3.Images.Clear();
             imageList4.Images.Clear();
             imageList1.Images.AddStrip(videoStrip);
-            imageList2.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 1, scale));
-            imageList3.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 2, scale));
-            imageList4.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 3, scale));
+            imageList2.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 1, scale, true, true));
+            imageList3.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 2, scale, true, true));
+            imageList4.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 3, scale, true, true));
 
             setPal();
         }
