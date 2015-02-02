@@ -1,5 +1,8 @@
 using CadEditor;
 using System.Collections.Generic;
+using System.IO;
+using System;
+using System.Windows.Forms;
 //css_include Settings_CapcomBase.cs;
 public class Data:CapcomBase
 {
@@ -77,6 +80,26 @@ public class Data:CapcomBase
   
   public byte[] getDuckTalesVideoChunk(int videoPageId)
   {
+    //anim editor hack
+    if (videoPageId < 0x90)
+    {
+      try
+      {
+          using (FileStream f = File.OpenRead("videoObj_DT.bin"))
+          {
+              byte[] videodata = new byte[0x1000];
+              f.Read(videodata, 0, 0x1000);
+              return videodata;
+          }
+      }
+      catch (Exception ex)
+      {
+          MessageBox.Show(ex.Message);
+      }
+      return null;
+    }
+    
+    //background
     byte[] videoChunk = Utils.getVideoChunk(videoPageId);
     //fill first quarter of videoChunk with constant to all video memory data
     for (int i = 0; i < 16 * 16 * 3; i++)
@@ -164,4 +187,15 @@ public class Data:CapcomBase
     screenData[0x40 + noX] = (byte)lineByte;
   }
   //--------------------------------------------------------------------------------------------
+  //Anim Editor
+  public static int getAnimCount()   { return 144; }
+  public static int getAnimAddrHi()  { return Utils.getRomAddr(5, 0xB257); }
+  public static int getAnimAddrLo()  { return Utils.getRomAddr(5, 0xB1C7); }
+  public static int getFrameCount()  { return 248; }
+  public static int getFrameAddrHi() { return Utils.getRomAddr(5, 0x9779); }
+  public static int getFrameAddrLo() { return Utils.getRomAddr(5, 0x9681); }
+  public static int getCoordCount()  { return 224; }
+  public static int getCoordAddrHi() { return Utils.getRomAddr(5, 0xAEC1); }
+  public static int getCoordAddrLo() { return Utils.getRomAddr(5, 0xADE1); }
+  public static byte[] getAnimPal()  { return new byte[] { 0x0F, 0x0F, 0x20, 0x16, 0x0F, 0x0F, 0x20, 0x27, 0x0F, 0x0f, 0x31, 0x27, 0x0F, 0x0F, 0x20, 0x19 }; }
 }

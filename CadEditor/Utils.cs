@@ -540,6 +540,26 @@ namespace CadEditor
             }
         }
 
+        public static int getRomAddr(int bank, int addr)
+        {
+            if (bank == 0x05)
+                return 0xC000 + addr + 0x10;
+            return addr;
+        }
+
+        public static int makeAddrPtr(byte hi, byte lo)
+        {
+            return (hi << 8) | lo;
+        }
+
+        public static int getSignedFromByte(byte b)
+        {
+            if (b < 128)
+                return b;
+            else
+                return -256 + b;
+        }
+
         public static int[][] setScreens(int levelNo)
         {
             int[][]screens = new int[ConfigScript.screensOffset[levelNo].recCount][];

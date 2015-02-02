@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using CadEditor;
 using CadEnemyEditor;
+using CSScriptLibrary;
 
 namespace PluginAnimEditor
 {
@@ -30,8 +31,19 @@ namespace PluginAnimEditor
         {
         }
 
-        public void loadFromConfig(object asm, object data)
+        public void loadFromConfig(object asmObj, object data)
         {
+            AsmHelper asm = (AsmHelper)asmObj;
+            AnimConfig.ANIM_COUNT = (int)asm.InvokeInst(data, "*.getAnimCount");
+            AnimConfig.animAddrHi = (int)asm.InvokeInst(data, "*.getAnimAddrHi");
+            AnimConfig.animAddrLo = (int)asm.InvokeInst(data, "*.getAnimAddrLo");
+            AnimConfig.FRAME_COUNT = (int)asm.InvokeInst(data, "*.getFrameCount");
+            AnimConfig.frameAddrHi = (int)asm.InvokeInst(data, "*.getFrameAddrHi");
+            AnimConfig.frameAddrLo = (int)asm.InvokeInst(data, "*.getFrameAddrLo");
+            AnimConfig.COORD_COUNT = (int)asm.InvokeInst(data, "*.getCoordCount");
+            AnimConfig.coordAddrHi = (int)asm.InvokeInst(data, "*.getCoordAddrHi");
+            AnimConfig.coordAddrLo = (int)asm.InvokeInst(data, "*.getCoordAddrLo");
+            AnimConfig.pal = (byte[])asm.InvokeInst(data, "*.getAnimPal");
         }
 
         private void btAnim_Click(object sender, EventArgs e)
@@ -41,5 +53,22 @@ namespace PluginAnimEditor
         }
 
         FormMain formMain;
+    }
+
+    public static class AnimConfig
+    {
+        public static int ANIM_COUNT;
+        public static int animAddrHi;
+        public static int animAddrLo;
+
+        public static int FRAME_COUNT;
+        public static int frameAddrHi;
+        public static int frameAddrLo;
+
+        public static int COORD_COUNT;
+        public static int coordAddrHi;
+        public static int coordAddrLo;
+
+        public static byte[] pal;
     }
 }

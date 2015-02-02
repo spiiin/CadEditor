@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 
 using CadEditor;
+using PluginAnimEditor;
 
 namespace CadEnemyEditor
 {
@@ -28,7 +29,8 @@ namespace CadEnemyEditor
 
         byte[] pal = new byte[16];
         //byte[] pal0 = { 0x00, 0x0F, 0x37, 0x16, 0x00, 0x0F, 0x30, 0x10, 0x00, 0x0f, 0x30, 0x29, 0x00, 0x0F, 0x37, 0x27 };
-        byte[] pal0 = { 0x00, 0x0F, 0x30, 0x27, 0x00, 0x0F, 0x27, 0x13, 0x00, 0x0f, 0x27, 0x15, 0x00, 0x0F, 0x37, 0x07 };
+        //byte[] pal0 = { 0x00, 0x0F, 0x30, 0x27, 0x00, 0x0F, 0x27, 0x13, 0x00, 0x0f, 0x27, 0x15, 0x00, 0x0F, 0x37, 0x07 };
+        byte[] pal0 = AnimConfig.pal;
 
         private void loadData()
         {
@@ -75,18 +77,17 @@ namespace CadEnemyEditor
             frameList = new FrameData[FRAME_COUNT];
             coordList = new CoordData[COORD_COUNT];*/
 
-            //DT
-            int ANIM_COUNT = 144;
-            int animAddrHi = Utils.getRomAddr(5, 0xB257);
-            int animAddrLo = Utils.getRomAddr(5, 0xB1C7);
+            int ANIM_COUNT = AnimConfig.ANIM_COUNT;
+            int animAddrHi = AnimConfig.animAddrHi;
+            int animAddrLo = AnimConfig.animAddrLo;
 
-            int FRAME_COUNT = 248;
-            int frameAddr1Hi = Utils.getRomAddr(5, 0x9779);
-            int frameAddr1Lo = Utils.getRomAddr(5, 0x9681);
+            int FRAME_COUNT = AnimConfig.FRAME_COUNT;
+            int frameAddr1Hi = AnimConfig.frameAddrHi;
+            int frameAddr1Lo = AnimConfig.frameAddrLo;
 
-            int COORD_COUNT = 224;
-            int coordAddrHi = Utils.getRomAddr(5, 0xAEC1);
-            int coordAddrLo = Utils.getRomAddr(5, 0xADE1);
+            int COORD_COUNT = AnimConfig.COORD_COUNT;
+            int coordAddrHi = AnimConfig.coordAddrHi;
+            int coordAddrLo = AnimConfig.coordAddrLo;
 
             animList = new AnimData[ANIM_COUNT];
             frameList = new FrameData[FRAME_COUNT];
@@ -167,13 +168,14 @@ namespace CadEnemyEditor
         private void reloadVideo(int index)
         {
             int scale = 4;
-            int VideoSize = 4096;
-            int beginAddr = ConfigScript.videoObjOffset.beginAddr + index * ConfigScript.videoObjOffset.recSize;
-            var videoChunk = new byte[VideoSize];
-            for (int i = 0; i < VideoSize; i++)
+            //int VideoSize = 4096;
+            //int beginAddr = ConfigScript.videoObjOffset.beginAddr + index * ConfigScript.videoObjOffset.recSize;
+            int videoId = index + 0x80;
+            var videoChunk = ConfigScript.getVideoChunk(videoId);//(ConfigScript.getVideoChunkFunc == null) ? ConfigScript.getVideoChunk(videoId): Utils.getVideoChunk(videoId);
+            /*for (int i = 0; i < VideoSize; i++)
             {
                 videoChunk[i] = Globals.romdata[beginAddr + i];
-            }
+            }*/
             var videoStrip = ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 0, scale);
             int scaleBitmap = 2;
             Bitmap resultVideo = new Bitmap(128 * scaleBitmap, 128 * scaleBitmap);
@@ -413,29 +415,6 @@ namespace CadEnemyEditor
                 }
             }
             pbPal.Image = palImage;
-        }
-    }
-
-    public static class Utils
-    {
-        public static int getRomAddr(int bank, int addr)
-        {
-            if (bank == 0x05)
-                return 0xC000 + addr + 0x10;
-            return addr;
-        }
-
-        public static int makeAddrPtr(byte hi, byte lo)
-        {
-            return (hi << 8) | lo;
-        }
-
-        public static int getSignedFromByte(byte b)
-        {
-            if (b < 128)
-                return b;
-            else
-                return -256 + b;
         }
     }
 
