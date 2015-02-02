@@ -8,7 +8,7 @@ public class Data : CapcomBase
     return new string[] 
     {
       "PluginMapEditor.dll",
-      "PluginChrView.dll",
+      //"PluginChrView.dll",
       "PluginEditLayout.dll",
       "PluginAnimEditor.dll",
     };
@@ -98,4 +98,16 @@ public class Data : CapcomBase
       }
       return true;
   }
+  
+  //Anim Editor
+  public static int getAnimCount()   { return 199; }
+  public static int getAnimAddrHi()  { return Utils.getRomAddr(5, 0xB4F0); }
+  public static int getAnimAddrLo()  { return Utils.getRomAddr(5, 0xB429); }
+  public static int getFrameCount()  { return 314; }
+  public static int getFrameAddrHi() { return Utils.getRomAddr(5, 0x9C45); }
+  public static int getFrameAddrLo() { return Utils.getRomAddr(5, 0x9B0B); }
+  public static int getCoordCount()  { return 208;/*256;*/ }
+  public static int getCoordAddrHi() { return Utils.getRomAddr(5, 0xAF23); }
+  public static int getCoordAddrLo() { return Utils.getRomAddr(5, 0xAE53); }
+  public static byte[] getAnimPal()  { return new byte[]{ 0x00, 0x0F, 0x30, 0x27, 0x00, 0x0F, 0x27, 0x13, 0x00, 0x0f, 0x27, 0x15, 0x00, 0x0F, 0x37, 0x07 }; }
 }

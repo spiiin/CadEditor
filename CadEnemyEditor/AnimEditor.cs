@@ -29,7 +29,6 @@ namespace CadEnemyEditor
 
         byte[] pal = new byte[16];
         //byte[] pal0 = { 0x00, 0x0F, 0x37, 0x16, 0x00, 0x0F, 0x30, 0x10, 0x00, 0x0f, 0x30, 0x29, 0x00, 0x0F, 0x37, 0x27 };
-        //byte[] pal0 = { 0x00, 0x0F, 0x30, 0x27, 0x00, 0x0F, 0x27, 0x13, 0x00, 0x0f, 0x27, 0x15, 0x00, 0x0F, 0x37, 0x07 };
         byte[] pal0 = AnimConfig.pal;
 
         private void loadData()
@@ -43,23 +42,6 @@ namespace CadEnemyEditor
 
         private void loadAnimData()
         {
-            //DWD
-            /*int ANIM_COUNT = 199;
-            int animAddrHi = Utils.getRomAddr(5, 0xB4F0);
-            int animAddrLo = Utils.getRomAddr(5, 0xB429);
-
-            int FRAME_COUNT = 314;
-            int frameAddr1Hi = Utils.getRomAddr(5, 0x9C45);
-            int frameAddr1Lo = Utils.getRomAddr(5, 0x9B0B);
-
-            int COORD_COUNT = 256;//208;
-            int coordAddrHi = Utils.getRomAddr(5, 0xAF23);
-            int coordAddrLo = Utils.getRomAddr(5, 0xAE53);
-
-            animList = new AnimData[ANIM_COUNT];
-            frameList = new FrameData[FRAME_COUNT];
-            coordList = new CoordData[COORD_COUNT];*/
-
             //CAD
             /*int ANIM_COUNT = 168;
             int animAddrHi = Utils.getRomAddr(5, 0xB55F);
