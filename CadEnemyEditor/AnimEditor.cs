@@ -57,7 +57,7 @@ namespace CadEnemyEditor
         private void loadAnimData()
         {
             //DWD
-            int ANIM_COUNT = 199;
+            /*int ANIM_COUNT = 199;
             int animAddrHi = Utils.getRomAddr(5, 0xB4F0);
             int animAddrLo = Utils.getRomAddr(5, 0xB429);
 
@@ -71,7 +71,7 @@ namespace CadEnemyEditor
 
             animList = new AnimData[ANIM_COUNT];
             frameList = new FrameData[FRAME_COUNT];
-            coordList = new CoordData[COORD_COUNT];
+            coordList = new CoordData[COORD_COUNT];*/
 
             //CAD
             /*int ANIM_COUNT = 168;
@@ -89,6 +89,23 @@ namespace CadEnemyEditor
             animList = new AnimData[ANIM_COUNT];
             frameList = new FrameData[FRAME_COUNT];
             coordList = new CoordData[COORD_COUNT];*/
+
+            //DT
+            int ANIM_COUNT = 144;
+            int animAddrHi = Utils.getRomAddr(5, 0xB257);
+            int animAddrLo = Utils.getRomAddr(5, 0xB1C7);
+
+            int FRAME_COUNT = 248;
+            int frameAddr1Hi = Utils.getRomAddr(5, 0x9779);
+            int frameAddr1Lo = Utils.getRomAddr(5, 0x9681);
+
+            int COORD_COUNT = 224;
+            int coordAddrHi = Utils.getRomAddr(5, 0xAEC1);
+            int coordAddrLo = Utils.getRomAddr(5, 0xADE1);
+
+            animList = new AnimData[ANIM_COUNT];
+            frameList = new FrameData[FRAME_COUNT];
+            coordList = new CoordData[COORD_COUNT];
 
             for (int i = 0; i < ANIM_COUNT; i++)
             {
