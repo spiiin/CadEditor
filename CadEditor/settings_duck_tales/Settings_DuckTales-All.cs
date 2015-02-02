@@ -7,17 +7,19 @@ public class Data:CapcomBase
   {
     return new string[] 
     {
-      "PluginChrView.dll",
-      "PluginEditLayout.dll"
+      //"PluginChrView.dll",
+      "PluginEditLayout.dll",
+      "PluginAnimEditor.dll",
     };
   }
+ 
   //--------------------------------------------------------------------------------------------
   public override int getBigBlocksCount() { return 512; }
   public bool isShowScrollsInLayout()     { return false; }
   
   public OffsetRec getPalOffset()       { return new OffsetRec(0x1DA44, 10  , 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x4D10 , 6   , 0xD00);  }
-  public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x4D10 , 6   , 0xD00);  }
+  public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x10   , 8   , 0xD00);  }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x7310 , 3   , 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x7B10 , 3   , 0x4000); }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x10058, 300 , 0x48);   }

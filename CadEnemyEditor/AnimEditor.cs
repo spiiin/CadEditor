@@ -168,7 +168,7 @@ namespace CadEnemyEditor
         {
             int scale = 4;
             int VideoSize = 4096;
-            int beginAddr = 0x20010 + index*0x1000;
+            int beginAddr = ConfigScript.videoObjOffset.beginAddr + index * ConfigScript.videoObjOffset.recSize;
             var videoChunk = new byte[VideoSize];
             for (int i = 0; i < VideoSize; i++)
             {
