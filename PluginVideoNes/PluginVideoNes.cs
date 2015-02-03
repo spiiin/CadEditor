@@ -109,7 +109,7 @@ namespace PluginVideoNes
                 nesColors = ConfigScript.nesColors;
         }
 
-        public Bitmap makeImageStrip(byte[] videoChunk, byte[] pallete, int subPalIndex, float scale, bool scaleAccurate = true)
+        public Bitmap makeImageStrip(byte[] videoChunk, byte[] pallete, int subPalIndex, float scale, bool scaleAccurate = true, bool withAlpha = false)
         {
             Bitmap res = new Bitmap((int)(8 * CHUNK_COUNT * scale), (int)(8 * scale));
             using (Graphics g = Graphics.FromImage(res))
@@ -126,7 +126,9 @@ namespace PluginVideoNes
                             bool bitLo = Utils.getBit(videoChunk[beginIndex + line], 8 - pixel);
                             bool bitHi = Utils.getBit(videoChunk[beginIndex + line + 8], 8 - pixel);
                             int palIndex = mixBits(bitHi, bitLo);
-                            Color c = nesColors[pallete[subPalIndex * 4 + palIndex]];
+                            int fullPalIndex = subPalIndex * 4 + palIndex;
+                            int colorNo = pallete[fullPalIndex];
+                            Color c = (withAlpha && (fullPalIndex % 4 == 0)) ? Color.FromArgb(0) : nesColors[colorNo];
                             if (scaleAccurate && (scale > 1.0f))
                             {
                                 int scaleInt = (int)scale;

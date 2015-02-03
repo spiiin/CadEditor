@@ -55,7 +55,7 @@
             // 
             // imageList1
             // 
-            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
             this.imageList1.ImageSize = new System.Drawing.Size(32, 32);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
@@ -78,19 +78,19 @@
             // 
             // imageList2
             // 
-            this.imageList2.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList2.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
             this.imageList2.ImageSize = new System.Drawing.Size(32, 32);
             this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // imageList3
             // 
-            this.imageList3.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList3.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
             this.imageList3.ImageSize = new System.Drawing.Size(32, 32);
             this.imageList3.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // imageList4
             // 
-            this.imageList4.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList4.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
             this.imageList4.ImageSize = new System.Drawing.Size(32, 32);
             this.imageList4.TransparentColor = System.Drawing.Color.Transparent;
             // 
