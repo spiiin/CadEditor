@@ -889,6 +889,7 @@ namespace CadEditor
                     }
                 }
                 FormStructures.addTileStruct(tiles);
+                cbUseStructs.Checked = true;
                 if (useStructs)
                     updateBlocksPanelVisible();
             }
