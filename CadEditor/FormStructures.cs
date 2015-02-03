@@ -77,8 +77,8 @@ namespace CadEditor
         {
             if (curTileStruct != null)
             {
-                Utils.setCbItemsCount(cbWidth, 8, 1);
-                Utils.setCbItemsCount(cbHeight, 8, 1);
+                Utils.setCbItemsCount(cbWidth, 64, 1);
+                Utils.setCbItemsCount(cbHeight, 64, 1);
                 Utils.setCbIndexWithoutUpdateLevel(cbWidth, cbWidth_SelectedIndexChanged, curTileStruct.Width - 1);
                 Utils.setCbIndexWithoutUpdateLevel(cbHeight, cbWidth_SelectedIndexChanged, curTileStruct.Height - 1);
             }

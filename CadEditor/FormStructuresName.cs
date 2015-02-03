@@ -18,8 +18,8 @@ namespace CadEditor
 
         private void FormStructuresName_Load(object sender, EventArgs e)
         {
-            Utils.setCbItemsCount(cbWidth, 8, 1);
-            Utils.setCbItemsCount(cbHeight, 8, 1);
+            Utils.setCbItemsCount(cbWidth, 64, 1);
+            Utils.setCbItemsCount(cbHeight, 64, 1);
             cbWidth.SelectedIndex = StructWidth - 1;
             cbHeight.SelectedIndex = StructHeight -1;
             cbName.Text = StructName;
