@@ -576,6 +576,30 @@ namespace CadEditor
             return screens;
         }
 
+        public static byte[] readVideoBankFromFile(string filename, int videoPageId)
+        {
+            try
+            {
+                using (FileStream f = File.OpenRead(filename))
+                {
+
+                    byte[] videodata = new byte[(int)f.Length];
+                    f.Read(videodata, 0, (int)f.Length);
+                    byte[] ans = new byte[0x1000];
+                    //read only first 16 banks
+                    int offset = (videoPageId & 0x0F) * 0x1000;
+                    for (int i = 0; i < ans.Length; i++)
+                        ans[i] = videodata[offset + i];
+                    return ans;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return null;
+        }
+
         public static void loadEnemyPictures(ref ImageList objectSprites, ref Image[] objectSpritesBig)
         {
             const int OBJECTS_COUNT = 256; //limit for now

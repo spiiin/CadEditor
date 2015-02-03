@@ -1,8 +1,5 @@
 using CadEditor;
 using System.Collections.Generic;
-using System.IO;
-using System;
-using System.Windows.Forms;
 //css_include Settings_TinyToon-Utils.cs;
 
 public class Data
@@ -46,24 +43,7 @@ public class Data
   
   public byte[] getTinyToonVideoChunk(int videoPageId)
   {
-    try
-    {
-        using (FileStream f = File.OpenRead("videoBack_TT_21.bin"))
-        {
-            byte[] videodata = new byte[0x1000];
-            f.Read(videodata, 0, 0x1000);
-            byte[] ans = new byte[0x1000];
-            int offset = (videoPageId - 0x90)*0x1000;
-            for (int i = 0; i < ans.Length; i++)
-                ans[i] = videodata[offset + i];
-            return ans;
-        }
-    }
-    catch (Exception ex)
-    {
-        MessageBox.Show(ex.Message);
-    }
-    return null;
+    return Utils.readVideoBankFromFile("videoBack_TT_21.bin", videoPageId);
   }
   
   public byte[] getBigBlocksTT(int bigTileIndex)

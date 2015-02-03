@@ -1,9 +1,7 @@
 using CadEditor;
 using System.Collections.Generic;
-using System.IO;
-using System;
-using System.Windows.Forms;
 //css_include Settings_CapcomBase.cs;
+
 public class Data:CapcomBase
 {
   public string[] getPluginNames() 
@@ -83,20 +81,7 @@ public class Data:CapcomBase
     //anim editor hack
     if (videoPageId < 0x90)
     {
-      try
-      {
-          using (FileStream f = File.OpenRead("videoObj_DT.bin"))
-          {
-              byte[] videodata = new byte[0x1000];
-              f.Read(videodata, 0, 0x1000);
-              return videodata;
-          }
-      }
-      catch (Exception ex)
-      {
-          MessageBox.Show(ex.Message);
-      }
-      return null;
+      return Utils.readVideoBankFromFile("videoObj_DT.bin", videoPageId);
     }
     
     //background
