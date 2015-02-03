@@ -6,7 +6,7 @@ public class Data:CapcomBase
   public string[] getPluginNames() 
   {
     return new string[] { 
-      //"PluginChrView.dll",
+      "PluginChrView.dll",
       "PluginLevelParamsCad.dll",
       "PluginAnimEditor.dll",
       //"PluginEditLayout.dll",

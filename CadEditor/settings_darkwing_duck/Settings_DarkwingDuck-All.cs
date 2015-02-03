@@ -8,7 +8,7 @@ public class Data : CapcomBase
     return new string[] 
     {
       "PluginMapEditor.dll",
-      //"PluginChrView.dll",
+      "PluginChrView.dll",
       "PluginEditLayout.dll",
       "PluginAnimEditor.dll",
     };
