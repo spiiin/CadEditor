@@ -8,7 +8,8 @@ public class Data:CapcomBase
     return new string[] 
     {
       "PluginChrView.dll",
-      "PluginEditLayout.dll"
+      "PluginEditLayout.dll",
+      "PluginAnimEditor.dll",
     };
   }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x1C374, 32  , 16);     }
@@ -96,4 +97,17 @@ public class Data:CapcomBase
       }
       return true;
   }
+  
+  //Anim Editor
+  public static int getAnimCount()   { return 238; }
+  public static int getAnimAddrHi()  { return Utils.getRomAddr(5, 0xBC5E); }
+  public static int getAnimAddrLo()  { return Utils.getRomAddr(5, 0xBB70); }
+  public static int getFrameCount()  { return 422; }
+  public static int getFrameAddrHi() { return Utils.getRomAddr(5, 0xA05B); }
+  public static int getFrameAddrLo() { return Utils.getRomAddr(5, 0x9EB5); }
+  public static int getCoordCount()  { return 247; }
+  public static int getCoordAddrHi() { return Utils.getRomAddr(5, 0xB5BE); }
+  public static int getCoordAddrLo() { return Utils.getRomAddr(5, 0xB4C7); }
+  public static byte[] getAnimPal()  { return new byte[]{ 0xF, 0xF, 0x27, 0x16, 0xF, 0xF, 0x30, 0x10, 0xF, 0xF, 0x30, 0x26, 0xF, 0xF, 0x30, 0x22 }; }
+  public static int getAnimBankNo()  { return 5;}
 }
