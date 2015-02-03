@@ -600,6 +600,24 @@ namespace CadEditor
             return null;
         }
 
+        public static byte[] readBinFile(string filename)
+        {
+            try
+            {
+                using (FileStream f = File.OpenRead(filename))
+                {
+                    byte[] d = new byte[(int)f.Length];
+                    f.Read(d, 0, (int)f.Length);
+                    return d;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return null;
+        }
+
         public static void loadEnemyPictures(ref ImageList objectSprites, ref Image[] objectSpritesBig)
         {
             const int OBJECTS_COUNT = 256; //limit for now

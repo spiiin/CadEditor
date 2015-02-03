@@ -1,8 +1,5 @@
 using CadEditor;
 using System.Collections.Generic;
-using System.IO;
-using System;
-using System.Windows.Forms;
 
 public class Data
 {
@@ -33,38 +30,12 @@ public class Data
   
   public byte[] getVideoChuck(int videoPageId)
   {
-    try
-    {
-        using (FileStream f = File.OpenRead("vram1.bin"))
-        {
-            byte[] d = new byte[0x10000];
-            f.Read(d, 0, 0x10000);
-            return d;
-        }
-    }
-    catch (Exception ex)
-    {
-        MessageBox.Show(ex.Message);
-    }
-    return null;
+    return Utils.readBinFile("vram1.bin");
   }
   
   public byte[] readPal(int palNo)
   {
-    try
-    {
-        using (FileStream f = File.OpenRead("pal1.bin"))
-        {
-            byte[] d = new byte[128];
-            f.Read(d, 0, 128);
-            return d;
-        }
-    }
-    catch (Exception ex)
-    {
-        MessageBox.Show(ex.Message);
-    }
-    return null;
+    return Utils.readBinFile("pal1.bin");
   }
   
   public bool isBigBlockEditorEnabled() { return false;  }

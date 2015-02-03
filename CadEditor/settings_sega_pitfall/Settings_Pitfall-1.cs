@@ -35,20 +35,7 @@ public class Data
   
   public byte[] getVideoChuck(int videoPageId)
   {
-    try
-    {
-        using (FileStream f = File.OpenRead("videoBack_1.bin"))
-        {
-            byte[] d = new byte[0x10000];
-            f.Read(d, 0, 0x10000);
-            return d;
-        }
-    }
-    catch (Exception ex)
-    {
-        MessageBox.Show(ex.Message);
-    }
-    return null;
+    return Utils.readBinFile("videoBack_1.bin");
   }
   
   public bool isBigBlockEditorEnabled() { return false;  }
