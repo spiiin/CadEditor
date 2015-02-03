@@ -618,6 +618,19 @@ namespace CadEditor
             return null;
         }
 
+        public static byte[] readVideoBankFrom16Pointers(int[] ptrs)
+        {
+            //local version for cad & dwd
+            byte[] videoChunk = new byte[Globals.VIDEO_PAGE_SIZE];
+            for (int i = 0; i < ptrs.Length; i++)
+            {
+                var ptr = ptrs[i];
+                for (int pi = 0; pi < 256; pi++)
+                  videoChunk[i*256 + pi] = Globals.romdata[ptr + pi];
+            }
+            return videoChunk;
+        }
+
         public static void loadEnemyPictures(ref ImageList objectSprites, ref Image[] objectSpritesBig)
         {
             const int OBJECTS_COUNT = 256; //limit for now
