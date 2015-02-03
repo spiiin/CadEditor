@@ -361,6 +361,14 @@ namespace CadEditor
                     drawActiveTileStruct(g, visibleRect);
                 }
             }
+            if (altPressed && selectionRect)
+            {
+                int x = Math.Min(selectionMouseX, selectionBeginMouseX);
+                int y = Math.Min(selectionMouseY, selectionBeginMouseY);
+                int w = Math.Abs(selectionMouseX - selectionBeginMouseX);
+                int h = Math.Abs(selectionMouseY - selectionBeginMouseY);
+                g.DrawRectangle(new Pen(Brushes.Black, 2.0f), new Rectangle(x, y, w, h));
+            }
         }
 
         //editor globals
@@ -404,6 +412,7 @@ namespace CadEditor
 
         //select rect if alt pressed
         private int selectionBeginX, selectionBeginY, selectionEndX, selectionEndY;
+        private int selectionBeginMouseX, selectionBeginMouseY, selectionMouseX, selectionMouseY;
         private bool selectionRect = false;
 
         private Dictionary<ToolStripButton, Func<Form>> subeditorsDict;
@@ -439,7 +448,12 @@ namespace CadEditor
         private void mapScreen_MouseMove(object sender, MouseEventArgs e)
         {
             if (selectionRect)
+            {
+                selectionMouseX = e.X;
+                selectionMouseY = e.Y;
+                mapScreen.Invalidate();
                 return;
+            }
             int WIDTH = ConfigScript.getScreenWidth(curActiveLevelForScreen);
             int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
             int dx, dy;
@@ -828,6 +842,8 @@ namespace CadEditor
                 if (Control.ModifierKeys == Keys.Alt)
                 {
                     convertMouseToDxDy(e, out selectionBeginX, out selectionBeginY);
+                    selectionBeginMouseX = e.X;
+                    selectionBeginMouseY = e.Y;
                     selectionRect = true;
                 }
                 else
