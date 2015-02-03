@@ -44,6 +44,7 @@ namespace PluginAnimEditor
             AnimConfig.coordAddrHi = (int)asm.InvokeInst(data, "*.getCoordAddrHi");
             AnimConfig.coordAddrLo = (int)asm.InvokeInst(data, "*.getCoordAddrLo");
             AnimConfig.pal = (byte[])asm.InvokeInst(data, "*.getAnimPal");
+            AnimConfig.animBankNo = (int)asm.InvokeInst(data, "*.getAnimBankNo");
         }
 
         private void btAnim_Click(object sender, EventArgs e)
@@ -70,5 +71,7 @@ namespace PluginAnimEditor
         public static int coordAddrLo;
 
         public static byte[] pal;
+
+        public static int animBankNo;
     }
 }

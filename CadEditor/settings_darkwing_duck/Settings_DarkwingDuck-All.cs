@@ -110,4 +110,5 @@ public class Data : CapcomBase
   public static int getCoordAddrHi() { return Utils.getRomAddr(5, 0xAF23); }
   public static int getCoordAddrLo() { return Utils.getRomAddr(5, 0xAE53); }
   public static byte[] getAnimPal()  { return new byte[]{ 0x00, 0x0F, 0x30, 0x27, 0x00, 0x0F, 0x27, 0x13, 0x00, 0x0f, 0x27, 0x15, 0x00, 0x0F, 0x37, 0x07 }; }
+  public static int getAnimBankNo()  { return 5;}
 }

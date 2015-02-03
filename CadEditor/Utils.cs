@@ -540,9 +540,12 @@ namespace CadEditor
             }
         }
 
+        //for capcom mmc3 mappers, only for certain banks
         public static int getRomAddr(int bank, int addr)
         {
-            if (bank == 0x05)
+            if (bank == 0x04)
+                return 0x8000 + addr + 0x10;
+            else if (bank == 0x05)
                 return 0xC000 + addr + 0x10;
             return addr;
         }

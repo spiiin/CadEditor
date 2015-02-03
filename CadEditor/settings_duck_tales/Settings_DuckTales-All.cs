@@ -186,4 +186,5 @@ public class Data:CapcomBase
   public static int getCoordAddrHi() { return Utils.getRomAddr(5, 0xAEC1); }
   public static int getCoordAddrLo() { return Utils.getRomAddr(5, 0xADE1); }
   public static byte[] getAnimPal()  { return new byte[] { 0x0F, 0x0F, 0x20, 0x16, 0x0F, 0x0F, 0x20, 0x27, 0x0F, 0x0f, 0x31, 0x27, 0x0F, 0x0F, 0x20, 0x19 }; }
+  public static int getAnimBankNo()  { return 5;}
 }

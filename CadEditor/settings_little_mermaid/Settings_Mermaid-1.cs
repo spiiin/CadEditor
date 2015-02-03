@@ -9,12 +9,13 @@ public class Data:CapcomBase
     return new string[] 
     {
       "PluginChrView.dll",
-      "PluginEditLayout.dll"
+      "PluginEditLayout.dll",
+      "PluginAnimEditor.dll",
     };
   }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x1DB53, 32  , 16);  }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0xC010, 1 , 0x1000); }
-  public OffsetRec getVideoObjOffset()  { return new OffsetRec(0xC010, 1 , 0x1000); }
+  public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x8010, 10, 0x400); }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x510 , 1 , 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x10 ,  1 , 0x4000); }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x4010,64 , 0x40);   }
@@ -32,8 +33,10 @@ public class Data:CapcomBase
   public byte[] getLMVideoChunk(int videoPageId)
   {
     byte[] videoChunk = Utils.getVideoChunk(videoPageId);
-    //fill first quarter of videoChunk with constant to all video memory data
-    for (int i = 0; i < 16 * 16 * 4; i++)
+    
+    //if background bank, fill first quarter of videoChunk with constant to all video memory data
+    if (videoPageId>=0x90)
+      for (int i = 0; i < 16 * 16 * 4; i++)
         videoChunk[i] = Globals.romdata[0xC010 + i];
     return videoChunk;
   }
@@ -41,4 +44,17 @@ public class Data:CapcomBase
   public bool isBigBlockEditorEnabled() { return true;  }
   public bool isBlockEditorEnabled()    { return true;  }
   public bool isEnemyEditorEnabled()    { return true; }
+  
+  //Anim Editor
+  public static int getAnimCount()   { return 139; }
+  public static int getAnimAddrHi()  { return Utils.getRomAddr(4, 0xA7A7); }
+  public static int getAnimAddrLo()  { return Utils.getRomAddr(4, 0xA71C); }
+  public static int getFrameCount()  { return 251; }
+  public static int getFrameAddrHi() { return Utils.getRomAddr(4, 0x93B6); }
+  public static int getFrameAddrLo() { return Utils.getRomAddr(4, 0x92BB); }
+  public static int getCoordCount()  { return 184; }
+  public static int getCoordAddrHi() { return Utils.getRomAddr(4, 0xA3D5); }
+  public static int getCoordAddrLo() { return Utils.getRomAddr(4, 0xA31D); }
+  public static byte[] getAnimPal()  { return new byte[] { 0xF, 0x5, 0x14, 0x36, 0xF, 0xB, 0x2B, 0x20, 0xF, 0x0, 0x10, 0x20, 0xF, 0x4, 0x26, 0x36  }; }
+  public static int getAnimBankNo()  { return 4;}
 }
