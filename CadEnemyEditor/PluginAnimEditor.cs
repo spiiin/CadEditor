@@ -15,7 +15,7 @@ namespace PluginAnimEditor
     {
         public string getName()
         {
-            return "Anim Editor (Chip & Dale / Darkwing Duck)";
+            return "Anim Editor (Capcom)";
         }
         public void addSubeditorButton(FormMain formMain)
         {
