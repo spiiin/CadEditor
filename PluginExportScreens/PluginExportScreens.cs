@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
 using CadEditor;
+using Newtonsoft.Json;
 
 namespace PluginExportScreens
 {
@@ -31,6 +32,11 @@ namespace PluginExportScreens
 
             var iconExportPic = (System.Drawing.Bitmap)rm.GetObject("icon_export");
             item = new ToolStripButton("Export pic", iconExportPic, bttExportPic_Click);
+            item.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            formMain.addToolButton(item);
+
+            var iconExportJson = (System.Drawing.Bitmap)rm.GetObject("icon_export");
+            item = new ToolStripButton("Export json", iconExportJson, bttExportJson_Click);
             item.DisplayStyle = ToolStripItemDisplayStyle.Image;
             formMain.addToolButton(item);
 
@@ -99,6 +105,55 @@ namespace PluginExportScreens
                     }
                 }
                 resultImage.Save(SaveScreensCount.Filename);
+            }
+        }
+
+        private void bttExportJson_Click(object sender, EventArgs e)
+        {
+            int[][] screens, screens2;
+            loadScreens(out screens, out screens2);
+
+            SaveScreensCount.ExportMode = true;
+            SaveScreensCount.Filename = "exportedScreens.json";
+            var f = new SaveScreensCount();
+            f.Text = "Export json";
+
+            formMain.subeditorOpen(f, (ToolStripButton)sender, true);
+
+            if (SaveScreensCount.Result)
+            {
+                if (SaveScreensCount.Count <= 0)
+                {
+                    MessageBox.Show("Screens count value must be greater than 0", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                int saveLastIndex = SaveScreensCount.First + SaveScreensCount.Count;
+                if (saveLastIndex > screens.Length)
+                {
+                    MessageBox.Show(string.Format("First screen + Screens Count value ({0}) must be less than Total Screen Count in the game ({1}", saveLastIndex, screens.Length), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                int first = SaveScreensCount.First;
+                int[] indexes = screens[first];
+                int[] indexes2 = null;
+                if (ConfigScript.getLayersCount() > 1)
+                    indexes2 = screens2[formMain.ScreenNo];
+                int WIDTH = ConfigScript.getScreenWidth(formMain.LevelNoForScreens);
+                int HEIGHT = ConfigScript.getScreenHeight(formMain.LevelNoForScreens);
+                int screenCount = SaveScreensCount.Count;
+                var screenParams = new { Width = WIDTH, Height = HEIGHT, Screens = new int[screenCount][] };
+                using (TextWriter tw = new StreamWriter(SaveScreensCount.Filename))
+                {
+                    for (int i = 0; i < screenCount; i++)
+                    {
+                        indexes = screens[formMain.ScreenNo + i];
+                        screenParams.Screens[i] = indexes;
+                        /*if (ConfigScript.getLayersCount() > 1)
+                            indexes2 = screens2[formMain.ScreenNo + i];*/
+                    }
+                    tw.WriteLine(JsonConvert.SerializeObject(screenParams));
+                }
             }
         }
 
