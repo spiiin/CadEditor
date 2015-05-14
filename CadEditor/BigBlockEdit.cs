@@ -295,7 +295,7 @@ namespace CadEditor
 
         protected bool saveToFile()
         {
-            ConfigScript.setBigBlocks(curTileset, bigBlockIndexes);
+            ConfigScript.setBigBlocks(curSmallBlockNo, bigBlockIndexes);
             dirty = !Globals.flushToFile();
             updateSaveVisibility();
             return !dirty;

@@ -229,6 +229,7 @@ namespace CadEditor
             }
             p.Image = makeObjImage(objIndex);
             pbActive.Image = videoSprites[curSubpalIndex].Images[curActiveBlock];
+            lbActive.Text = String.Format("({0:X})", curActiveBlock);
             dirty = true;
         }
 
@@ -299,6 +300,7 @@ namespace CadEditor
             int y = e.Y / 16;
             curActiveBlock = y * 16 + x;
             pbActive.Image = videoSprites[curSubpalIndex].Images[curActiveBlock];
+            lbActive.Text = String.Format("({0:X})", curActiveBlock);
             dirty = true;
         }
 
