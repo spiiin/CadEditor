@@ -134,7 +134,7 @@ namespace CadEditor
             }
             else
             {
-                Bitmap result = new Bitmap(64 * 256, 64); //need some hack for duck tales 1
+                Bitmap result = new Bitmap((int)(32 * formMain.CurScale * 256),(int)(32 * formMain.CurScale)); //need some hack for duck tales 1
                 using (Graphics g = Graphics.FromImage(result))
                 {
                     for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
@@ -154,7 +154,7 @@ namespace CadEditor
                                 break;
                         }*/
                         b = ConfigScript.videoNes.makeBigBlock(i, 64, 64, bigBlockIndexes, smallBlocks);
-                        g.DrawImage(b, new Point(64 * i, 0));
+                        g.DrawImage(b, new Point((int)(32 * formMain.CurScale * i), 0));
                     }
                 }
                 result.Save(fn);
