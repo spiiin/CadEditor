@@ -100,8 +100,8 @@ namespace CadEditor
             byte[] scroll = new byte[width * height];
             for (int i = 0; i < width * height; i++)
             {
-                layer[i] = Globals.romdata[layoutAddr + i];
                 scroll[i] = Globals.romdata[scrollAddr + i];
+                layer[i] = Globals.romdata[layoutAddr + i];
             }
             curLevelLayerData = new LevelLayerData(width, height, layer, scroll, null);
             curActiveBlock = 0;
@@ -270,8 +270,8 @@ namespace CadEditor
             height = curHeight;
             for (int i = 0; i < width * height; i++)
             {
-                Globals.romdata[layerAddr + i] = curLevelLayerData.layer[i];
                 Globals.romdata[scrollAddr + i] = curLevelLayerData.scroll[i];
+                Globals.romdata[layerAddr + i] = curLevelLayerData.layer[i];
             }
 
             dirty = !Globals.flushToFile();
