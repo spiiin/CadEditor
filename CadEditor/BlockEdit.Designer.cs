@@ -64,6 +64,7 @@
             this.btImport = new System.Windows.Forms.Button();
             this.btExport = new System.Windows.Forms.Button();
             this.cbShowAxis = new System.Windows.Forms.CheckBox();
+            this.lbActive = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.paletteMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -385,11 +386,21 @@
             this.cbShowAxis.UseVisualStyleBackColor = true;
             this.cbShowAxis.CheckedChanged += new System.EventHandler(this.cbShowAxis_CheckedChanged);
             // 
+            // lbActive
+            // 
+            this.lbActive.AutoSize = true;
+            this.lbActive.Location = new System.Drawing.Point(271, 151);
+            this.lbActive.Name = "lbActive";
+            this.lbActive.Size = new System.Drawing.Size(13, 13);
+            this.lbActive.TabIndex = 28;
+            this.lbActive.Text = "()";
+            // 
             // BlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(668, 515);
+            this.Controls.Add(this.lbActive);
             this.Controls.Add(this.cbShowAxis);
             this.Controls.Add(this.btExport);
             this.Controls.Add(this.btImport);
@@ -464,5 +475,6 @@
         private System.Windows.Forms.Button btImport;
         private System.Windows.Forms.Button btExport;
         private System.Windows.Forms.CheckBox cbShowAxis;
+        private System.Windows.Forms.Label lbActive;
     }
 }

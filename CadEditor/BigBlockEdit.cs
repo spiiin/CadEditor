@@ -201,6 +201,7 @@ namespace CadEditor
                 if (actualIndex < bigBlockIndexes.Length)
                     curActiveBlock = bigBlockIndexes[actualIndex];
                 pbActive.Image = smallBlocks.Images[curActiveBlock];
+                lbActive.Text = String.Format("({0:X})", curActiveBlock);
             }
         }
 
@@ -208,6 +209,7 @@ namespace CadEditor
         {
             int index = ((Button)button).ImageIndex;
             pbActive.Image = smallBlocks.Images[index];
+            lbActive.Text = String.Format("({0:X})", curActiveBlock);
             curActiveBlock = index;
         }
 

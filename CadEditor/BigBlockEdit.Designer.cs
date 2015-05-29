@@ -58,6 +58,7 @@
             this.tbbImport = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tbbDeleteAll = new System.Windows.Forms.ToolStripButton();
+            this.lbActive = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -134,7 +135,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(144, 187);
+            this.label3.Location = new System.Drawing.Point(145, 179);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(73, 13);
             this.label3.TabIndex = 14;
@@ -316,6 +317,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.lbActive);
             this.splitContainer1.Panel1.Controls.Add(this.blocksPanel);
             this.splitContainer1.Panel1.Controls.Add(this.cbTileset);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
@@ -408,6 +410,15 @@
             this.tbbDeleteAll.Text = "Clear All";
             this.tbbDeleteAll.Click += new System.EventHandler(this.btClear_Click);
             // 
+            // lbActive
+            // 
+            this.lbActive.AutoSize = true;
+            this.lbActive.Location = new System.Drawing.Point(205, 195);
+            this.lbActive.Name = "lbActive";
+            this.lbActive.Size = new System.Drawing.Size(13, 13);
+            this.lbActive.TabIndex = 59;
+            this.lbActive.Text = "()";
+            // 
             // BigBlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -469,5 +480,6 @@
         private System.Windows.Forms.ToolStripButton tbbDeleteAll;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.Label lbBigBlockNo;
+        private System.Windows.Forms.Label lbActive;
     }
 }
