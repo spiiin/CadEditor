@@ -90,6 +90,7 @@
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.tbbShowPluginInfo = new System.Windows.Forms.ToolStripButton();
+            this.tbbShowInfo = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.blockPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.blockPanel3 = new System.Windows.Forms.FlowLayoutPanel();
@@ -101,7 +102,6 @@
             this.cbLevelNo = new System.Windows.Forms.ComboBox();
             this.cbUseStructs = new System.Windows.Forms.CheckBox();
             this.lbStructures = new System.Windows.Forms.ListBox();
-            this.tbbShowInfo = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -724,6 +724,16 @@
             this.tbbShowPluginInfo.Text = "Show plugins info";
             this.tbbShowPluginInfo.Click += new System.EventHandler(this.tbbShowPluginInfo_Click);
             // 
+            // tbbShowInfo
+            // 
+            this.tbbShowInfo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbbShowInfo.Image = ((System.Drawing.Image)(resources.GetObject("tbbShowInfo.Image")));
+            this.tbbShowInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbbShowInfo.Name = "tbbShowInfo";
+            this.tbbShowInfo.Size = new System.Drawing.Size(23, 22);
+            this.tbbShowInfo.Text = "Show info";
+            this.tbbShowInfo.Click += new System.EventHandler(this.tbbShowInfo_Click);
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -880,16 +890,6 @@
             this.lbStructures.Visible = false;
             this.lbStructures.SelectedIndexChanged += new System.EventHandler(this.lbStructures_SelectedIndexChanged);
             // 
-            // tbbShowInfo
-            // 
-            this.tbbShowInfo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbbShowInfo.Image = ((System.Drawing.Image)(resources.GetObject("tbbShowInfo.Image")));
-            this.tbbShowInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbbShowInfo.Name = "tbbShowInfo";
-            this.tbbShowInfo.Size = new System.Drawing.Size(23, 22);
-            this.tbbShowInfo.Text = "Show info";
-            this.tbbShowInfo.Click += new System.EventHandler(this.tbbShowInfo_Click);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -901,7 +901,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Text = "CAD Editor v3.3";
+            this.Text = "CAD Editor v3.4";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
