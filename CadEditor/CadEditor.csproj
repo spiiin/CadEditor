@@ -131,6 +131,7 @@
     <Compile Include="SelectFile.Designer.cs">
       <DependentUpon>SelectFile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Strings.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="VideoHelper.cs" />
     <EmbeddedResource Include="BigBlockEdit.resx">

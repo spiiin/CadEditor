@@ -101,6 +101,7 @@
             this.cbLevelNo = new System.Windows.Forms.ComboBox();
             this.cbUseStructs = new System.Windows.Forms.CheckBox();
             this.lbStructures = new System.Windows.Forms.ListBox();
+            this.tbbShowInfo = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -447,7 +448,8 @@
             this.bttShowLayer2,
             this.bttLayer,
             this.toolStripSeparator7,
-            this.tbbShowPluginInfo});
+            this.tbbShowPluginInfo,
+            this.tbbShowInfo});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1073, 25);
@@ -878,6 +880,16 @@
             this.lbStructures.Visible = false;
             this.lbStructures.SelectedIndexChanged += new System.EventHandler(this.lbStructures_SelectedIndexChanged);
             // 
+            // tbbShowInfo
+            // 
+            this.tbbShowInfo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbbShowInfo.Image = ((System.Drawing.Image)(resources.GetObject("tbbShowInfo.Image")));
+            this.tbbShowInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbbShowInfo.Name = "tbbShowInfo";
+            this.tbbShowInfo.Size = new System.Drawing.Size(23, 22);
+            this.tbbShowInfo.Text = "Show info";
+            this.tbbShowInfo.Click += new System.EventHandler(this.tbbShowInfo_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -889,7 +901,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Text = "CAD Editor v3.3 by spiiin";
+            this.Text = "CAD Editor v3.3";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
@@ -983,6 +995,7 @@
         private System.Windows.Forms.ComboBox cbGroup;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ToolStripButton tbbShowInfo;
     }
 }
 

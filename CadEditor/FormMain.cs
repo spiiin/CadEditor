@@ -1037,5 +1037,17 @@ namespace CadEditor
             if (g.firstScreen < 0 || g.firstScreen <= cbScreenNo.Items.Count)
               cbScreenNo.SelectedIndex = g.firstScreen - 1;
         }
+
+        private void tbbShowInfo_Click(object sender, EventArgs e)
+        {
+            var sb = new StringBuilder();
+            sb.Append("CadEditor\n\n");
+            sb.Append("Level editor for NES, SEGA, GBA games\n");
+            sb.Append("(You need original ROMs for editing it)\n\n");
+            sb.Append("Author: spiiin (sanya.boyko@gmail.com)\n\n");
+            sb.Append("Project support: R122299008919\n");
+            sb.Append("(It's really important for project development)\n");
+            MessageBox.Show(sb.ToString());
+        }
     }
 }
