@@ -166,7 +166,7 @@ namespace CadEditor
 
         protected void mapScreen_Paint(object sender, PaintEventArgs e)
         {
-            int addIndexes = curPart * 256;
+            int addIndexes = curPart * 256 * 4;
             Graphics g = e.Graphics;
             int btc = Math.Min(ConfigScript.getBigBlocksCount(), 256);
             for (int i = 0; i < btc; i++)
@@ -182,7 +182,7 @@ namespace CadEditor
 
         protected void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
-            int addIndexes = curPart * 256;
+            int addIndexes = curPart * 256 * 4;
             dirty = true; updateSaveVisibility();
             int bx = e.X / 32;
             int by = e.Y / 32;
@@ -352,7 +352,7 @@ namespace CadEditor
 
         protected void mapScreen_MouseMove(object sender, MouseEventArgs e)
         {
-            int addIndexes = curPart * 256;
+            int addIndexesText = curPart * 256;
             int bx = e.X / 32;
             int by = e.Y / 32;
             int dx = (e.X % 32) / 16;
@@ -364,8 +364,8 @@ namespace CadEditor
             }
             else
             {
-                int actualIndex = addIndexes + ind;
-                lbBigBlockNo.Text = String.Format("({0:X})", actualIndex);
+                int actualIndex = addIndexesText + ind;
+                lbBigBlockNo.Text = String.Format("({0:X})", addIndexesText);
             }
         }
 
