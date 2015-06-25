@@ -9,7 +9,8 @@
     Tiny Toon                                       (все уровни)
     Chip & Dale 2                                   (все уровни)
   редактор экранов/макроблоков/блоков:
-    Mega Man 4                                      (8 уровней)
+    Mega Man 4                                      (все уровни)
+    Mega Man 5                                      (все уровни)
     Three Eyes Story                                (1 уровень)
     Jungle Book                                     (1-9 уровни + редактор объектов 2 уровней)
   редактор экранов картинками:
@@ -24,6 +25,7 @@
     Teenage Mutant Ninja Turtles 3                  (все уровни)
     Teenage Mutant Ninja Turtles 2                  (3 уровень)
     Teenage Mutant Ninja Turtles                    (1 уровень)
+    Banana Prince                                   (3 уровня)
     Power Blade 2                                   (1 уровень)
     Rockin' Kats                                    (1 уровень)
     Shatterhand (Tokkyuu Shirei Solbrain)           (1 уровень)
