@@ -305,6 +305,7 @@ v3.4
   Darthatron  - документаци€ по Final Fantasy Tactics Advance, кодирование.
   cah4e3      - собрание огромной базы Unpublished cheats list дл€ NES.
   Megaplex    - документаци€ по игре EarthWorm Jim 2.
+  DANGER X    - конфиги дл€ игры Banana Prince.
   Ti_         - помощь с дизассеблированием, конфиги дл€ игр Contra Force, Jungle Book, Little Nemo, Battletoads, Battletoads & Double Dragon, Shatterhand, Tom & Jerry, Ninja Cats.
   
 -------------------------------------------------------------------------------
