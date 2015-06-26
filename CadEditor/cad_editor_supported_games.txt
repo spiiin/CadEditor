@@ -27,7 +27,6 @@
     Teenage Mutant Ninja Turtles 2                  (3 уровень)
     Teenage Mutant Ninja Turtles                    (1 уровень)
     Banana Prince                                   (3 уровня)
-    Power Blade 2                                   (1 уровень)
     Rockin' Kats                                    (1 уровень)
     Shatterhand (Tokkyuu Shirei Solbrain)           (1 уровень)
     Contra Force                                    (1 уровень)
@@ -44,6 +43,10 @@
     MegaMan                                         (1 уровень)
     Raf World                                       (1 уровень)
     Bucky O'Hare                                    (1 уровень)
+    Alien 3                                         (1 уровень)
+    Terminator 2                                    (1 уровень)
+    Power Blade                                     (1 уровень)
+    Power Blade 2                                   (1 уровень)
   редактор раскладок картинками:
     Argos No Senshi                                 (все уровни)
     Fist of The Nortstar                            (3 уровня)
