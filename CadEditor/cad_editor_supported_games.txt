@@ -47,6 +47,7 @@
     Terminator 2                                    (1 уровень)
     Power Blade                                     (1 уровень)
     Power Blade 2                                   (1 уровень)
+    Castlevania                                     (1 уровень)
   редактор раскладок картинками:
     Argos No Senshi                                 (все уровни)
     Fist of The Nortstar                            (3 уровня)

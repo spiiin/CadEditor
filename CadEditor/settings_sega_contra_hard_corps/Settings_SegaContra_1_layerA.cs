@@ -18,6 +18,8 @@ public class Data
   public IList<LevelRec> getLevelRecs()  { return levelRecs;  }
   public GetLayoutFunc getLayoutFunc()   { return getLayout;  }
   
+  public int getMaxObjType()             { return 0x500; }
+  
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
     new LevelRec(0x7E1E8, 33, 1, 1, 0), 
