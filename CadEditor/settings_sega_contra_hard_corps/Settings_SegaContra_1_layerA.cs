@@ -4,13 +4,26 @@ using System.Collections.Generic;
 
 public class Data 
 { 
+  public bool isUseSegaGraphics()      { return true; }
+  public bool isBlockSize4x4()         { return true; }
   public OffsetRec getScreensOffset()  { return new OffsetRec(0x0, 1 , 256*16);   }
   public int getScreenWidth()          { return 256; }
   public int getScreenHeight()         { return 16; }
-  public string getBlocksFilename()    { return "sega_contra_1.png"; }
+  //public string getBlocksFilename()    { return "sega_contra_1.png"; }
+  
+  public int getBigBlocksCount()        { return 256; }
+  
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChuck;}
+  public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
+  
+  public GetBigBlocksFunc     getBigBlocksFunc()     { return getBigBlocks; }
+  public SetBigBlocksFunc     setBigBlocksFunc()     { return null; }
+  
+  public GetPalFunc           getPalFunc()           { return readPal;}
+  public SetPalFunc           setPalFunc()           { return null;}
   
   public bool isBigBlockEditorEnabled() { return false; }
-  public bool isBlockEditorEnabled()    { return false; }
+  public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return true; }
   
   public GetObjectsFunc getObjectsFunc() { return getObjects; }
@@ -94,7 +107,42 @@ public class Data
   LevelLayerData getLayout(int levelNo)
   {
     byte[] layer = new byte[1];
-    layer[0] = 0;
+    layer[0] = 1;
     return new LevelLayerData(1, 1, layer);
+  }
+  
+  public byte[] getVideoChuck(int videoPageId)
+  {
+    return Utils.readBinFile("vram_11.bin");
+  }
+
+  public byte[] getBigBlocks(int bigTileIndex)
+  {
+    var data = Utils.readBinFile("blocks_11.bin");
+    return data;
+    /*var bigBlockIndexes = new byte[getBigBlocksCount()*4*2];
+    int tileCount = getBigBlocksCount();
+    for (int tileNo = 0; tileNo < tileCount; tileNo++)
+    {
+      bigBlockIndexes[tileNo*8 + 0] = data[tileNo*8 + 0];
+      bigBlockIndexes[tileNo*8 + 1] = data[tileNo*8 + 1];
+      bigBlockIndexes[tileNo*8 + 2] = data[tileNo*8 + 4];
+      bigBlockIndexes[tileNo*8 + 3] = data[tileNo*8 + 5];
+      bigBlockIndexes[tileNo*8 + 4] = data[tileNo*8 + 2];
+      bigBlockIndexes[tileNo*8 + 5] = data[tileNo*8 + 3];
+      bigBlockIndexes[tileNo*8 + 6] = data[tileNo*8 + 6];
+      bigBlockIndexes[tileNo*8 + 7] = data[tileNo*8 + 7];
+    }
+    return bigBlockIndexes;*/
+  }
+
+  public void setBigBlocks(int bigTileIndex, byte[] bigBlockIndexes)
+  {
+      //
+  }
+  
+  public byte[] readPal(int palNo)
+  {
+    return Utils.readBinFile("pal_11.bin");
   }
 }
