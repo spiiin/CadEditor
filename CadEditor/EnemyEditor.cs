@@ -86,9 +86,23 @@ namespace CadEditor
             if (!ConfigScript.usePicturesInstedBlocks)
             {
                 bigBlocks.Images.Clear();
-                var bs = ConfigScript.videoNes.makeBigBlocks(curVideoNo, 0,  curBigBlockNo, curBlockNo, curPaletteNo, MapViewType.Tiles, curScale, 32, 32, curScale, MapViewType.Tiles, formMain.ShowAxis);
-                bigBlocks.Images.AddRange(bs);
+                Image[] bigImages;
+                if (ConfigScript.isUseSegaGraphics())
+                  bigImages = makeSegaBigBlocks();
+                else
+                  bigImages = ConfigScript.videoNes.makeBigBlocks(curVideoNo, 0, curBigBlockNo, curBlockNo, curPaletteNo, MapViewType.Tiles, curScale, 32, 32, curScale, MapViewType.Tiles, formMain.ShowAxis);
+                bigBlocks.Images.AddRange(bigImages);
             }
+        }
+
+        //copy-paste
+        private Image[] makeSegaBigBlocks()
+        {
+            byte[] mapping = ConfigScript.getBigBlocks(curBigBlockNo);
+            byte[] videoTiles = ConfigScript.getVideoChunk(curVideoNo);
+            byte[] pal = ConfigScript.getPal(curPaletteNo);
+            int count = ConfigScript.getBigBlocksCount();
+            return ConfigScript.videoSega.makeBigBlocks(mapping, videoTiles, pal, count, curScale, MapViewType.Tiles, formMain.ShowAxis);
         }
 
         private int calcScrNo()
