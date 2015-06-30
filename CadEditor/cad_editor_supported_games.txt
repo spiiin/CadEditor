@@ -52,7 +52,7 @@
     Argos No Senshi                                 (все уровни)
     Fist of The Nortstar                            (3 уровня)
 редактор экранов и блоков(Sega)
-    Contra Hard Corps                               (1 уровень + редактор объектов 1 уровня)
+    Contra Hard Corps                               (5 уровней + редактор объектов 5 уровней)
     EarthWorm Jim                                   (1 уровень)
     EarthWorm Jim 2                                 (1 уровень)
     Disney's Alladin                                (1 уровень)
