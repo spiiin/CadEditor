@@ -36,7 +36,7 @@ public class Data
   };
   
   private string VIDEO_NAME  = "vram_21.bin";
-  private string BLOCKS_NAME = "blocks_21.bin";
+  private string BLOCKS_NAME = "blocks_21.bin"; //1E5DD0//1E7B7A
   private string PAL_NAME    = "pal_21.bin";
   
   public List<ObjectRec> getObjects(int levelNo)

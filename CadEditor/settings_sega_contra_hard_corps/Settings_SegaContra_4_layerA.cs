@@ -6,9 +6,9 @@ public class Data
 { 
   public bool isUseSegaGraphics()      { return true; }
   public bool isBlockSize4x4()         { return true; }
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x0, 1 , 256*16);   }
-  public int getScreenWidth()          { return 256; }
-  public int getScreenHeight()         { return 16;  }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x0, 1 , 128*32);   }
+  public int getScreenWidth()          { return 128; }
+  public int getScreenHeight()         { return 32;  }
   
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChuck;}
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
@@ -32,12 +32,12 @@ public class Data
   
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
-    new LevelRec(0x7E1E8, 33, 1, 1, 0), 
+    new LevelRec(0x7DBFA, 49, 1, 1, 0), 
   };
   
-  private string VIDEO_NAME  = "vram_11.bin";
-  private string BLOCKS_NAME = "blocks_11.bin"; //1E391A//1E597C
-  private string PAL_NAME    = "pal_11.bin";
+  private string VIDEO_NAME  = "vram_4.bin";
+  private string BLOCKS_NAME = "blocks_4.bin"; //1E096C//1E2FDA
+  private string PAL_NAME    = "pal_4.bin";
   
   public List<ObjectRec> getObjects(int levelNo)
   {
