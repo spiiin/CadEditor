@@ -16,6 +16,8 @@ namespace CadEditor
             InitializeComponent();
         }
 
+        private bool editMapMode = false;
+
         int curActiveBlock = 0;
         int curActiveTile = 0;
         int curActivePalNo = 0;
@@ -28,6 +30,8 @@ namespace CadEditor
         Color[] cpal;
 
         const int SEGA_TILES_COUNT = 0x800;
+        const int BLOCK_WIDTH = 32;
+        const int BLOCK_HEIGHT = 32;
 
         private void SegaBlockEdit_Load(object sender, EventArgs e)
         {
@@ -37,7 +41,7 @@ namespace CadEditor
             Utils.setCbItemsCount(cbPalSubpart, 4);
             Utils.setCbIndexWithoutUpdateLevel(cbPalSubpart, cbPalNo_SelectedIndexChanged);
 
-            Utils.setCbItemsCount(cbBlockNo, ConfigScript.getBigBlocksCount(), inHex:true);
+            Utils.setCbItemsCount(cbBlockNo, getBlocksCount(), inHex:true);
             Utils.setCbItemsCount(cbTile, SEGA_TILES_COUNT, inHex:true);
             Utils.setCbItemsCount(cbPal, 4);
             Utils.setCbIndexWithoutUpdateLevel(cbBlockNo, cbBlockNo_SelectedIndexChanged);
@@ -46,7 +50,7 @@ namespace CadEditor
 
         void reloadTiles()
         {
-            var mapping = ConfigScript.getBigBlocks(0); //curActiveBigBlock;
+            var mapping = loadMappingData();
             tiles = Mapper.LoadMapping(mapping);
         }
 
@@ -63,6 +67,9 @@ namespace CadEditor
         {
             fillSegaTiles();
             Utils.reloadBlocksPanel(pnBlocks, ilSegaTiles, 0, SEGA_TILES_COUNT);
+            int TILE_WIDTH = getTileWidth();
+            int TILE_HEIGHT = getTileHeight();
+            mapScreen.Size = new Size(TILE_WIDTH * BLOCK_WIDTH, TILE_HEIGHT * BLOCK_HEIGHT);
             pnBlocks.Invalidate(true);
         }
 
@@ -119,11 +126,9 @@ namespace CadEditor
 
         private void mapScreen_Paint(object sender, PaintEventArgs e)
         {
-            int TILE_WIDTH = ConfigScript.isBlockSize4x4()? 4 : 2;
-            int TILE_HEIGHT = ConfigScript.isBlockSize4x4() ? 4 : 2;
+            int TILE_WIDTH = getTileWidth();
+            int TILE_HEIGHT = getTileHeight(); 
             int TILE_SIZE = TILE_WIDTH * TILE_HEIGHT;
-            int BLOCK_WIDTH = 32;
-            int BLOCK_HEIGHT = 32;
             int index = curActiveBlock * TILE_SIZE;
             var g = e.Graphics;
             
@@ -144,10 +149,8 @@ namespace CadEditor
 
         private void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
-            int BLOCK_WIDTH = 32;
-            int BLOCK_HEIGHT = 32;
-            int TILE_WIDTH = ConfigScript.isBlockSize4x4() ? 4 : 2;
-            int TILE_HEIGHT = ConfigScript.isBlockSize4x4() ? 4 : 2;
+            int TILE_WIDTH = getTileWidth();
+            int TILE_HEIGHT = getTileHeight(); 
             int TILE_SIZE = TILE_WIDTH * TILE_HEIGHT;
             int index = curActiveBlock * TILE_SIZE;
 
@@ -246,6 +249,26 @@ namespace CadEditor
             {
                 e.Cancel = true;
             }
+        }
+
+        private int getBlocksCount()
+        {
+            return editMapMode ? 1 : ConfigScript.getBigBlocksCount();
+        }
+
+        private int getTileWidth()
+        {
+            return editMapMode ? 64 : ConfigScript.isBlockSize4x4() ? 4 : 2;
+        }
+
+        private int getTileHeight()
+        {
+            return editMapMode ? 32 : ConfigScript.isBlockSize4x4() ? 4 : 2; ;
+        }
+
+        private byte[] loadMappingData()
+        {
+            return editMapMode ? Utils.loadDataFromFile("back_11.bin") : ConfigScript.getBigBlocks(0);//curActiveBigBlock;
         }
     }
 }

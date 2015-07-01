@@ -54,6 +54,7 @@
             this.tbbSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ilSegaTiles = new System.Windows.Forms.ImageList(this.components);
+            this.pnView = new System.Windows.Forms.Panel();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -64,6 +65,7 @@
             this.pnMapping.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            this.pnView.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -83,9 +85,9 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.pnView);
             this.splitContainer1.Panel2.Controls.Add(this.pnRightBottom);
             this.splitContainer1.Panel2.Controls.Add(this.pnMapping);
-            this.splitContainer1.Panel2.Controls.Add(this.mapScreen);
             this.splitContainer1.Size = new System.Drawing.Size(693, 498);
             this.splitContainer1.SplitterDistance = 451;
             this.splitContainer1.TabIndex = 0;
@@ -195,6 +197,8 @@
             // 
             // pnMapping
             // 
+            this.pnMapping.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnMapping.Controls.Add(this.cbPrior);
             this.pnMapping.Controls.Add(this.cbVFlip);
             this.pnMapping.Controls.Add(this.cbHFlip);
@@ -202,9 +206,9 @@
             this.pnMapping.Controls.Add(this.cbTile);
             this.pnMapping.Controls.Add(this.label4);
             this.pnMapping.Controls.Add(this.label3);
-            this.pnMapping.Location = new System.Drawing.Point(3, 140);
+            this.pnMapping.Location = new System.Drawing.Point(3, 359);
             this.pnMapping.Name = "pnMapping";
-            this.pnMapping.Size = new System.Drawing.Size(128, 90);
+            this.pnMapping.Size = new System.Drawing.Size(230, 90);
             this.pnMapping.TabIndex = 6;
             // 
             // cbPrior
@@ -283,7 +287,7 @@
             // 
             // mapScreen
             // 
-            this.mapScreen.Location = new System.Drawing.Point(3, 6);
+            this.mapScreen.Location = new System.Drawing.Point(0, 0);
             this.mapScreen.Name = "mapScreen";
             this.mapScreen.Size = new System.Drawing.Size(128, 128);
             this.mapScreen.TabIndex = 5;
@@ -323,6 +327,18 @@
             this.ilSegaTiles.ImageSize = new System.Drawing.Size(32, 32);
             this.ilSegaTiles.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // pnView
+            // 
+            this.pnView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnView.AutoScroll = true;
+            this.pnView.Controls.Add(this.mapScreen);
+            this.pnView.Location = new System.Drawing.Point(3, 3);
+            this.pnView.Name = "pnView";
+            this.pnView.Size = new System.Drawing.Size(230, 356);
+            this.pnView.TabIndex = 7;
+            // 
             // SegaBlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -350,6 +366,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.pnView.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -381,6 +398,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox cbPrior;
+        private System.Windows.Forms.Panel pnView;
 
     }
 }
