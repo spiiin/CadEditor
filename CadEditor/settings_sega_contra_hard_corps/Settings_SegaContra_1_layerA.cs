@@ -21,7 +21,7 @@ public class Data
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public GetBigBlocksFunc     getBigBlocksFunc()     { return getBigBlocks; }
-  public SetBigBlocksFunc     setBigBlocksFunc()     { return null; }
+  public SetBigBlocksFunc     setBigBlocksFunc()     { return setBigBlocks; }
   
   public GetPalFunc           getPalFunc()           { return readPal;}
   public SetPalFunc           setPalFunc()           { return null;}
@@ -131,6 +131,11 @@ public class Data
   public byte[] getBigBlocks(int bigTileIndex)
   {
     return Utils.readBinFile(BLOCKS_NAME);
+  }
+  
+  public void setBigBlocks(int bigTileIndex, byte[] data)
+  {
+    Utils.saveDataToFile(BLOCKS_NAME, data);
   }
   
   public byte[] readPal(int palNo)

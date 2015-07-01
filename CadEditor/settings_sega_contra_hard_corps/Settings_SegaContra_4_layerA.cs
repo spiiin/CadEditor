@@ -4,6 +4,13 @@ using System.Collections.Generic;
 
 public class Data 
 { 
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginSegaBackEditor.dll",
+    };
+  }
   public bool isUseSegaGraphics()      { return true; }
   public bool isBlockSize4x4()         { return true; }
   public OffsetRec getScreensOffset()  { return new OffsetRec(0x0, 1 , 128*32);   }
@@ -14,10 +21,13 @@ public class Data
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public GetBigBlocksFunc     getBigBlocksFunc()     { return getBigBlocks; }
-  public SetBigBlocksFunc     setBigBlocksFunc()     { return null; }
+  public SetBigBlocksFunc     setBigBlocksFunc()     { return setBigBlocks; }
   
   public GetPalFunc           getPalFunc()           { return readPal;}
   public SetPalFunc           setPalFunc()           { return null;}
+  
+  public LoadSegaBackFunc     loadSegaBackFunc()     { return loadBack;}
+  public SaveSegaBackFunc     saveSegaBackFunc()     { return saveBack;}
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }
@@ -38,6 +48,7 @@ public class Data
   private string VIDEO_NAME  = "vram_4.bin";
   private string BLOCKS_NAME = "blocks_4.bin"; //1E096C//1E2FDA
   private string PAL_NAME    = "pal_4.bin";
+  private string BACK_NAME    = "back_4.bin";  //1E19AA
   
   public List<ObjectRec> getObjects(int levelNo)
   {
@@ -122,8 +133,23 @@ public class Data
     return Utils.readBinFile(BLOCKS_NAME);
   }
   
+  public void setBigBlocks(int bigTileIndex, byte[] data)
+  {
+    Utils.saveDataToFile(BLOCKS_NAME, data);
+  }
+  
   public byte[] readPal(int palNo)
   {
     return Utils.readBinFile(PAL_NAME);
+  }
+  
+  public byte[] loadBack()
+  {
+    return Utils.loadDataFromFile(BACK_NAME);
+  }
+  
+  public void saveBack(byte[] data)
+  {
+    Utils.saveDataToFile(BACK_NAME, data);
   }
 }
