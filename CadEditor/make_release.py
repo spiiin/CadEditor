@@ -1,6 +1,6 @@
 import os, glob, shutil, zipfile
 
-VERSION        = "34"
+VERSION        = "35"
 RELEASE_FOLDER = "../Release/cad_editor_v%s" % VERSION
 ZIP_NAME       = "../Release/cad_editor_v%s.zip" % VERSION
 
@@ -15,14 +15,13 @@ COPY_FILE_LIST = [
   "Settings_Megaman3Base.cs",
   "Settings_Mermaid-Utils.cs",
   "Settings_TinyToon-Utils.cs",
-  "Settings_Flintstones-Utils.cs",
-  
+  "Settings_Flintstones-Utils.cs",  
   "readme.txt",
   "cad_editor_configs_manual.txt",
   "cad_editor_supported_games.txt",
   "cad_editor_structures.txt",
   
-  "Plugin*.dll"
+  "Plugin*.dll",
 ]
 
 COPY_FOLDER_LIST = [
