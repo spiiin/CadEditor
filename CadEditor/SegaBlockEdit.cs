@@ -16,6 +16,11 @@ namespace CadEditor
             InitializeComponent();
         }
 
+        public void changeModeToBackEdit()
+        {
+            editMapMode = true;
+        }
+
         private bool editMapMode = false;
 
         int curActiveBlock = 0;

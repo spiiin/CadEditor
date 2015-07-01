@@ -46,6 +46,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginChrView", "..\PluginC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginEditLayout", "..\PluginEditLayout\PluginEditLayout.csproj", "{0A1C83B2-823F-44F0-9ABA-9F252AC4F93B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginSegaBackEditor", "..\PluginSegaBackEditor\PluginSegaBackEditor.csproj", "{1DFBB313-4FC3-432C-A2A5-27A5315CF772}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BD2A990C-9D64-472D-9C78-1429C666604B} = {BD2A990C-9D64-472D-9C78-1429C666604B}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -165,6 +170,16 @@ Global
 		{0A1C83B2-823F-44F0-9ABA-9F252AC4F93B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0A1C83B2-823F-44F0-9ABA-9F252AC4F93B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0A1C83B2-823F-44F0-9ABA-9F252AC4F93B}.Release|x86.ActiveCfg = Release|Any CPU
+		{1DFBB313-4FC3-432C-A2A5-27A5315CF772}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DFBB313-4FC3-432C-A2A5-27A5315CF772}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DFBB313-4FC3-432C-A2A5-27A5315CF772}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1DFBB313-4FC3-432C-A2A5-27A5315CF772}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1DFBB313-4FC3-432C-A2A5-27A5315CF772}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1DFBB313-4FC3-432C-A2A5-27A5315CF772}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DFBB313-4FC3-432C-A2A5-27A5315CF772}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DFBB313-4FC3-432C-A2A5-27A5315CF772}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1DFBB313-4FC3-432C-A2A5-27A5315CF772}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1DFBB313-4FC3-432C-A2A5-27A5315CF772}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

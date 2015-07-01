@@ -4,6 +4,13 @@ using System.Collections.Generic;
 
 public class Data 
 { 
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginSegaBackEditor.dll",
+    };
+  }
   public bool isUseSegaGraphics()      { return true; }
   public bool isBlockSize4x4()         { return true; }
   public OffsetRec getScreensOffset()  { return new OffsetRec(0x0, 1 , 256*16);   }
@@ -18,6 +25,9 @@ public class Data
   
   public GetPalFunc           getPalFunc()           { return readPal;}
   public SetPalFunc           setPalFunc()           { return null;}
+  
+  public LoadSegaBackFunc     loadSegaBackFunc()     { return loadBack;}
+  public SaveSegaBackFunc     saveSegaBackFunc()     { return saveBack;}
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }
@@ -38,6 +48,7 @@ public class Data
   private string VIDEO_NAME  = "vram_11.bin";
   private string BLOCKS_NAME = "blocks_11.bin"; //1E391A//1E597C
   private string PAL_NAME    = "pal_11.bin";
+  private string BACK_NAME   = "back_11.bin";
   
   public List<ObjectRec> getObjects(int levelNo)
   {
@@ -125,5 +136,15 @@ public class Data
   public byte[] readPal(int palNo)
   {
     return Utils.readBinFile(PAL_NAME);
+  }
+  
+  public byte[] loadBack()
+  {
+    return Utils.loadDataFromFile(BACK_NAME);
+  }
+  
+  public void saveBack(byte[] data)
+  {
+    Utils.saveDataToFile(BACK_NAME, data);
   }
 }
