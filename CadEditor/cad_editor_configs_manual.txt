@@ -38,6 +38,8 @@
   setBlocksFunc = callFromScript<SetBlocksFunc>(asm, data, "*.setBlocksFunc");
   getPalFunc = callFromScript<GetPalFunc>(asm, data, "*.getPalFunc");
   setPalFunc = callFromScript<SetPalFunc>(asm, data, "*.setPalFunc");
+  loadSegaBackFunc = callFromScript<LoadSegaBackFunc>(asm, data, "*.loadSegaBackFunc");
+  saveSegaBackFunc = callFromScript<SaveSegaBackFunc>(asm, data, "*.saveSegaBackFunc");
   renderToMainScreenFunc = callFromScript<RenderToMainScreenFunc>(asm, data, "*.getRenderToMainScreenFunc");
   buildScreenFromSmallBlocks = callFromScript(asm, data, "isBuildScreenFromSmallBlocks", false);
   

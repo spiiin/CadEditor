@@ -63,6 +63,14 @@ namespace CadEditor
             return !dirty;
         }
 
+        bool saveSegaBack()
+        {
+            byte[] tileBytes = new byte[tiles.Length * 2];
+            Mapper.ApplyMapping(ref tileBytes, tiles);
+            ConfigScript.saveSegaBack(tileBytes);
+            return true;
+        }
+
         void resetControls()
         {
             fillSegaTiles();
@@ -238,14 +246,22 @@ namespace CadEditor
             dirty = true;
         }
 
+        private bool saveFunc()
+        {
+            if (editMapMode)
+                return saveSegaBack();
+            else
+                return saveTiles();
+        }
+
         private void tbbSave_Click(object sender, EventArgs e)
         {
-            saveTiles();
+            saveFunc();
         }
 
         private void SegaBlockEdit_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!Utils.askToSave(ref dirty, saveTiles, null))
+            if (!Utils.askToSave(ref dirty, saveFunc, null))
             {
                 e.Cancel = true;
             }
@@ -268,7 +284,7 @@ namespace CadEditor
 
         private byte[] loadMappingData()
         {
-            return editMapMode ? Utils.loadDataFromFile("back_11.bin") : ConfigScript.getBigBlocks(0);//curActiveBigBlock;
+            return editMapMode ? ConfigScript.loadSegaBack() : ConfigScript.getBigBlocks(0);//curActiveBigBlock;
         }
     }
 }

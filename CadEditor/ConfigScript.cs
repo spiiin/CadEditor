@@ -25,6 +25,8 @@ namespace CadEditor
     public delegate int  ConvertScreenTileFunc(int val);
     public delegate int  GetBigTileNoFromScreenFunc(int[] screenData, int index);
     public delegate void SetBigTileToScreenFunc(int[] screenData, int index, int value);
+    public delegate byte[] LoadSegaBackFunc();
+    public delegate void SaveSegaBackFunc(byte[] data);
 
     public class ConfigScript
     {
@@ -147,8 +149,8 @@ namespace CadEditor
             getBigTileNoFromScreenFunc = callFromScript<GetBigTileNoFromScreenFunc>(asm, data, "*.getBigTileNoFromScreenFunc", Utils.getBigTileNoFromScreen);
             setBigTileToScreenFunc = callFromScript<SetBigTileToScreenFunc>(asm, data, "*.setBigTileToScreenFunc", Utils.setBigTileToScreen);
             getObjectDictionaryFunc = callFromScript<GetObjectDictionaryFunc>(asm, data, "*.getObjectDictionaryFunc");
-
-
+            loadSegaBackFunc = callFromScript<LoadSegaBackFunc>(asm, data, "*.loadSegaBackFunc");
+            saveSegaBackFunc = callFromScript<SaveSegaBackFunc>(asm, data, "*.saveSegaBackFunc");
 
             renderToMainScreenFunc = callFromScript<RenderToMainScreenFunc>(asm, data, "*.getRenderToMainScreenFunc");
 
@@ -309,6 +311,15 @@ namespace CadEditor
          public static void setBigTileToScreen(int[] screenData, int index, int value)
          {
              setBigTileToScreenFunc(screenData, index, value);
+         }
+
+         public static byte[] loadSegaBack()
+         {
+             return loadSegaBackFunc();
+         }
+         public static void saveSegaBack(byte[] data)
+         {
+             saveSegaBackFunc(data);
          }
 
         public static LevelLayerData getLayout(int levelNo)
@@ -535,6 +546,8 @@ namespace CadEditor
         public static ConvertScreenTileFunc backConvertScreenTileFunc;
         public static GetBigTileNoFromScreenFunc getBigTileNoFromScreenFunc;
         public static SetBigTileToScreenFunc setBigTileToScreenFunc;
+        public static LoadSegaBackFunc loadSegaBackFunc;
+        public static SaveSegaBackFunc saveSegaBackFunc;
 
         public static bool isBigBlockEditorEnabled;
         public static bool isBlockEditorEnabled;
