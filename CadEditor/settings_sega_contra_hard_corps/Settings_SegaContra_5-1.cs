@@ -25,6 +25,7 @@ public class Data
   public bool isEnemyEditorEnabled()    { return true; }
   
   public GetObjectsFunc getObjectsFunc() { return CHCUtils.getObjects; }
+  public GetObjectDictionaryFunc getObjectDictionaryFunc() { return CHCUtils.getObjectDictionary; }
   public SetObjectsFunc setObjectsFunc() { return null; }
   public IList<LevelRec> getLevelRecs()  { return levelRecs;  }
   public GetLayoutFunc getLayoutFunc()   { return getLayout;  }

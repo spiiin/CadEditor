@@ -289,21 +289,22 @@ namespace CadEditor
         private void setObjects()
         {
             objects = ConfigScript.getObjects(getActiveLayoutNo());
-            updateAddDataVisible();
+            updateAddDataVisible(0);
             fillObjectsListBox();
         }
 
-        public void updateAddDataVisible()
+        public void updateAddDataVisible(int index)
         {
-            pnAddData.Visible = objects.Count > 0 && objects[0].additionalData != null;
+            pnAddData.Visible = objects.Count > index && objects[index].additionalData != null;
             if (pnAddData.Visible)
             {
                 int addDataCount = 0;
-                foreach (var addData in objects[0].additionalData)
+                foreach (var addData in objects[index].additionalData)
                 {
                     var key = addData.Key;
                     lbDatas[addDataCount].Text = key;
                     cbDatas[addDataCount].Tag = key;
+                    cbDatas[addDataCount].SelectedIndexChanged -= cbCoordX_SelectedIndexChanged;
                     Utils.setCbItemsCount(cbDatas[addDataCount], 256, 0, true);
                     cbDatas[addDataCount].SelectedIndexChanged += cbCoordX_SelectedIndexChanged;
                     cbDatas[addDataCount].Visible = true;
@@ -584,6 +585,7 @@ namespace CadEditor
                     Utils.setCbIndexWithoutUpdateLevel(cbObjType, cbCoordX_SelectedIndexChanged, objects[index].type - minObjType);
                     if (objects[index].additionalData != null)
                     {
+                        updateAddDataVisible(index);
                         int addDataCount = 0;
                         foreach (var addData in objects[index].additionalData)
                         {

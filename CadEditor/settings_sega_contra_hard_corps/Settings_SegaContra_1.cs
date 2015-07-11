@@ -35,7 +35,8 @@ public class Data
   public bool isEnemyEditorEnabled()    { return true; }
   
   public GetObjectsFunc getObjectsFunc() { return CHCUtils.getObjects; }
-  public SetObjectsFunc setObjectsFunc() { return null; }
+  public SetObjectsFunc setObjectsFunc() { return CHCUtils.setObjects; }
+  public GetObjectDictionaryFunc getObjectDictionaryFunc() { return CHCUtils.getObjectDictionary; }
   public IList<LevelRec> getLevelRecs()  { return levelRecs;  }
   public GetLayoutFunc getLayoutFunc()   { return getLayout;  }
   
@@ -43,7 +44,10 @@ public class Data
   
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
-    new LevelRec(0x7E1E8, 33, 1, 1, 0), 
+    //33 - game objects
+    //67 - events
+    //17 - hack for not change last boss, because my save method brake game with change it
+    new LevelRec(0x7E1E8, 33 + 67 - 17, 1, 1, 0), 
   };
   
   private string VIDEO_NAME  = "vram_11.bin";

@@ -419,12 +419,22 @@ namespace CadEditor
         //
         public static int readWord(byte[] data, int addr)
         {
-            return data[addr] << 8 | data[addr + 1];
+            return (short)(data[addr] << 8 | data[addr + 1]);
+        }
+
+        public static int readWordUnsigned(byte[] data, int addr)
+        {
+            return (data[addr] << 8 | data[addr + 1]);
         }
 
         public static int readWordLE(byte[] data, int addr)
         {
-            return data[addr+1] << 8 | data[addr];
+            return (short)(data[addr+1] << 8 | data[addr]);
+        }
+
+        public static int readWordUnsignedLE(byte[] data, int addr)
+        {
+            return data[addr + 1] << 8 | data[addr];
         }
 
         public static int readInt(byte[] data, int addr)
