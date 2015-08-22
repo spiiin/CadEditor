@@ -419,7 +419,6 @@ namespace CadEditor
             //if (ConfigScript.usePicturesInstedBlocks)
             paintBack(e.Graphics);
             var g = e.Graphics;
-            var myFont = new Font(FontFamily.GenericSansSerif, 6.0f);
             var selectedInds = lvObjects.SelectedIndices;
             for (int i = 0; i < objects.Count; i++)
             {
@@ -427,31 +426,10 @@ namespace CadEditor
                 int screenIndex = coordToScreenNo(curObject);
                 if (screenIndex == curActiveScreen)
                 {
-                    int x = curObject.x, y = curObject.y;
                     if (!useBigPictures)
-                    {
-                        if (curObject.type < objectSprites.Images.Count)
-                        {
-                            g.DrawImage(objectSprites.Images[curObject.type], new Point((int)(x * curScale) - 8, (int)(y * curScale) - 8));
-                        }
-                        else
-                        {
-                            g.FillRectangle(Brushes.Black, new Rectangle((int)(x * curScale) - 8, (int)(y * curScale) - 8, 16, 16));
-                            g.DrawString(curObject.type.ToString("X3"), myFont, Brushes.White, new Point((int)(x * curScale) - 8, (int)(y * curScale) - 8));
-                        }
-
-                        if (selectedInds.Contains(i))
-                            g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle((int)(x * curScale) - 8, (int)(y * curScale) - 8, 16, 16));
-                    }
+                        Utils.defaultDrawObject(g, curObject, selectedInds.Contains(i), curScale, objectSprites);
                     else
-                    {
-                        int xsize = objectSpritesBig[curObject.type].Size.Width;
-                        int ysize = objectSpritesBig[curObject.type].Size.Height;
-                        if (curObject.type < objectSpritesBig.Length)
-                            g.DrawImage(objectSpritesBig[curObject.type], new Rectangle((int)(x * curScale) - xsize / 2, (int)(y * curScale) - ysize / 2, xsize, ysize));
-                        if (selectedInds.Contains(i))
-                            g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle((int)(x * curScale) - xsize / 2, (int)(y * curScale) - ysize / 2, xsize, ysize));
-                    }
+                        Utils.defaultDrawObjectBig(g, curObject, selectedInds.Contains(i), curScale, objectSpritesBig);
                 }
             }
         }

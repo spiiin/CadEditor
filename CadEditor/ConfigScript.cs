@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.IO;
+using System.Windows.Forms;
 using CSScriptLibrary;
 
 namespace CadEditor
@@ -27,6 +28,8 @@ namespace CadEditor
     public delegate void SetBigTileToScreenFunc(int[] screenData, int index, int value);
     public delegate byte[] LoadSegaBackFunc();
     public delegate void SaveSegaBackFunc(byte[] data);
+    public delegate void DrawObjectFunc(Graphics g, ObjectRec curObject, bool selected, float curScale, ImageList objectSprites);
+    public delegate void DrawObjectBigFunc(Graphics g, ObjectRec curObject, bool selected, float curScale, Image[] objectSprites);
 
     public class ConfigScript
     {
@@ -151,6 +154,9 @@ namespace CadEditor
             getObjectDictionaryFunc = callFromScript<GetObjectDictionaryFunc>(asm, data, "*.getObjectDictionaryFunc");
             loadSegaBackFunc = callFromScript<LoadSegaBackFunc>(asm, data, "*.loadSegaBackFunc");
             saveSegaBackFunc = callFromScript<SaveSegaBackFunc>(asm, data, "*.saveSegaBackFunc");
+
+            drawObjectFunc = callFromScript<DrawObjectFunc>(asm, data, "*.drawObjectFunc");
+            drawObjectBigFunc = callFromScript<DrawObjectBigFunc>(asm, data, "*.drawObjectBigFunc");
 
             renderToMainScreenFunc = callFromScript<RenderToMainScreenFunc>(asm, data, "*.getRenderToMainScreenFunc");
 
@@ -320,6 +326,23 @@ namespace CadEditor
          public static void saveSegaBack(byte[] data)
          {
              saveSegaBackFunc(data);
+         }
+
+         public static void drawObject(Graphics g, ObjectRec curObject, bool selected, float curScale, ImageList objectSprites)
+         {
+             if (drawObjectFunc != null)
+                 drawObjectFunc(g, curObject, selected, curScale, objectSprites);
+             else
+                 Utils.defaultDrawObject(g, curObject, selected, curScale, objectSprites);
+         }
+
+         public static void drawObjectBig(Graphics g, ObjectRec curObject, bool selected, float curScale, Image[] objectSprites)
+         {
+             if (drawObjectBigFunc != null)
+                 drawObjectBigFunc(g, curObject, selected, curScale, objectSprites);
+             else
+                 Utils.defaultDrawObjectBig(g, curObject, selected, curScale, objectSprites);
+             
          }
 
         public static LevelLayerData getLayout(int levelNo)
@@ -548,6 +571,8 @@ namespace CadEditor
         public static SetBigTileToScreenFunc setBigTileToScreenFunc;
         public static LoadSegaBackFunc loadSegaBackFunc;
         public static SaveSegaBackFunc saveSegaBackFunc;
+        public static DrawObjectFunc drawObjectFunc;
+        public static DrawObjectBigFunc drawObjectBigFunc;
 
         public static bool isBigBlockEditorEnabled;
         public static bool isBlockEditorEnabled;

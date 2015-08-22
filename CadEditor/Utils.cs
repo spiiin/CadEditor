@@ -702,5 +702,35 @@ namespace CadEditor
                 }
             }
         }
+
+        public static  void defaultDrawObject(Graphics g, ObjectRec curObject, bool isSelected, float curScale, ImageList objectSprites)
+        {
+            int x = curObject.x, y = curObject.y;
+            var myFont = new Font(FontFamily.GenericSansSerif, 6.0f);
+            if (curObject.type < objectSprites.Images.Count)
+            {
+                g.DrawImage(objectSprites.Images[curObject.type], new Point((int)(x * curScale) - 8, (int)(y * curScale) - 8));
+            }
+            else
+            {
+                g.FillRectangle(Brushes.Black, new Rectangle((int)(x * curScale) - 8, (int)(y * curScale) - 8, 16, 16));
+                g.DrawString(curObject.type.ToString("X3"), myFont, Brushes.White, new Point((int)(x * curScale) - 8, (int)(y * curScale) - 8));
+            }
+            if (isSelected)
+                g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle((int)(x * curScale) - 8, (int)(y * curScale) - 8, 16, 16));
+            
+        }
+
+        public static void defaultDrawObjectBig(Graphics g, ObjectRec curObject, bool isSelected, float curScale, Image[] objectSpritesBig)
+        {
+            int x = curObject.x, y = curObject.y;
+            var myFont = new Font(FontFamily.GenericSansSerif, 6.0f);
+            int xsize = objectSpritesBig[curObject.type].Size.Width;
+            int ysize = objectSpritesBig[curObject.type].Size.Height;
+            if (curObject.type < objectSpritesBig.Length)
+                g.DrawImage(objectSpritesBig[curObject.type], new Rectangle((int)(x * curScale) - xsize / 2, (int)(y * curScale) - ysize / 2, xsize, ysize));
+            if (isSelected)
+                g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle((int)(x * curScale) - xsize / 2, (int)(y * curScale) - ysize / 2, xsize, ysize));
+        }
     }
 }
