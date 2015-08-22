@@ -45,7 +45,7 @@ public class Data
   
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
-    new LevelRec(0x7EC84, 15, 1, 1, 0), 
+    new LevelRec(0x7EC84, /*15*/ 62, 1, 1, 0), 
   };
   
   private string VIDEO_NAME  = "vram_54.bin";
