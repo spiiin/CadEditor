@@ -427,9 +427,9 @@ namespace CadEditor
                 if (screenIndex == curActiveScreen)
                 {
                     if (!useBigPictures)
-                        Utils.defaultDrawObject(g, curObject, selectedInds.Contains(i), curScale, objectSprites);
+                        ConfigScript.drawObject(g, curObject, selectedInds.Contains(i), curScale, objectSprites);
                     else
-                        Utils.defaultDrawObjectBig(g, curObject, selectedInds.Contains(i), curScale, objectSpritesBig);
+                        ConfigScript.drawObjectBig(g, curObject, selectedInds.Contains(i), curScale, objectSpritesBig);
                 }
             }
         }

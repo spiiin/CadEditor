@@ -155,8 +155,8 @@ namespace CadEditor
             loadSegaBackFunc = callFromScript<LoadSegaBackFunc>(asm, data, "*.loadSegaBackFunc");
             saveSegaBackFunc = callFromScript<SaveSegaBackFunc>(asm, data, "*.saveSegaBackFunc");
 
-            drawObjectFunc = callFromScript<DrawObjectFunc>(asm, data, "*.drawObjectFunc");
-            drawObjectBigFunc = callFromScript<DrawObjectBigFunc>(asm, data, "*.drawObjectBigFunc");
+            drawObjectFunc = callFromScript<DrawObjectFunc>(asm, data, "*.getDrawObjectFunc");
+            drawObjectBigFunc = callFromScript<DrawObjectBigFunc>(asm, data, "*.getDrawObjectBigFunc");
 
             renderToMainScreenFunc = callFromScript<RenderToMainScreenFunc>(asm, data, "*.getRenderToMainScreenFunc");
 

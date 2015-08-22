@@ -717,8 +717,7 @@ namespace CadEditor
                 g.DrawString(curObject.type.ToString("X3"), myFont, Brushes.White, new Point((int)(x * curScale) - 8, (int)(y * curScale) - 8));
             }
             if (isSelected)
-                g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle((int)(x * curScale) - 8, (int)(y * curScale) - 8, 16, 16));
-            
+                g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle((int)(x * curScale) - 8, (int)(y * curScale) - 8, 16, 16));       
         }
 
         public static void defaultDrawObjectBig(Graphics g, ObjectRec curObject, bool isSelected, float curScale, Image[] objectSpritesBig)
