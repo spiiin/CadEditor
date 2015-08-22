@@ -39,12 +39,13 @@ public class Data
   public SetObjectsFunc setObjectsFunc() { return null; }
   public IList<LevelRec> getLevelRecs()  { return levelRecs;  }
   public GetLayoutFunc getLayoutFunc()   { return getLayout;  }
+  public DrawObjectFunc getDrawObjectFunc() { return CHCUtils.drawObject; }
   
   public int getMaxObjType()             { return 0x500; }
   
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
-    new LevelRec(0x7E6DE, 7, 1, 1, 0), 
+    new LevelRec(0x7E6DE, 33, 1, 1, 0), 
   };
   
   private string VIDEO_NAME  = "vram_21.bin";

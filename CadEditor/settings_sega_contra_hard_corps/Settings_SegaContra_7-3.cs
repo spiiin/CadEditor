@@ -39,6 +39,7 @@ public class Data
   public SetObjectsFunc setObjectsFunc() { return null; }
   public IList<LevelRec> getLevelRecs()  { return levelRecs;  }
   public GetLayoutFunc getLayoutFunc()   { return getLayout;  }
+  public DrawObjectFunc getDrawObjectFunc() { return CHCUtils.drawObject; }
   
   public int getMaxObjType()             { return 0x500; }
   
