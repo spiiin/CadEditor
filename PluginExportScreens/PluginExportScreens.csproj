@@ -31,10 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CadEditor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CadEditor\CadEditor.exe</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CadEditor\Newtonsoft.Json.dll</HintPath>
@@ -77,6 +73,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icon-import.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CadEditor\CadEditor.csproj">
+      <Project>{bd2a990c-9d64-472d-9c78-1429c666604b}</Project>
+      <Name>CadEditor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

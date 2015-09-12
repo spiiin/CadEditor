@@ -34,9 +34,6 @@
     <Reference Include="Be.Windows.Forms.HexBox">
       <HintPath>.\Be.Windows.Forms.HexBox.dll</HintPath>
     </Reference>
-    <Reference Include="CadEditor">
-      <HintPath>..\CadEditor\CadEditor.exe</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -72,6 +69,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icon-hex.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CadEditor\CadEditor.csproj">
+      <Project>{bd2a990c-9d64-472d-9c78-1429c666604b}</Project>
+      <Name>CadEditor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
