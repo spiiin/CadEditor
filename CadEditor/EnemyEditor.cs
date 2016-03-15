@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using System.Linq;
 using Newtonsoft.Json;
 
 namespace CadEditor
@@ -296,6 +292,9 @@ namespace CadEditor
             //TODO: read all object lists from config
             objectLists[0].objects = ConfigScript.getObjects(getActiveLayoutNo());
             updateAddDataVisible(0);
+            cbObjectList.Items.Clear();
+            for (int i = 0; i < objectLists.Count; i++)
+                cbObjectList.Items.Add(objectLists[i].name);
             fillObjectsListBox();
         }
 
@@ -329,7 +328,7 @@ namespace CadEditor
 
         private void fillObjectsListBox()
         {
-            var activeObjectList = objectLists[0]; //TODO: all lists boxes
+            var activeObjectList = objectLists[curActiveObjectListIndex];
             lvObjects.Items.Clear();
             for (int i = 0; i < activeObjectList.objects.Count; i++)
                 lvObjects.Items.Add(new ListViewItem(makeStringForObject(activeObjectList.objects[i]), activeObjectList.objects[i].type));
@@ -425,21 +424,25 @@ namespace CadEditor
 
         private void mapScreen_Paint(object sender, PaintEventArgs e)
         {
-            var activeObjectList = objectLists[0]; //TODO: all
-            //if (ConfigScript.usePicturesInstedBlocks)
-            paintBack(e.Graphics);
-            var g = e.Graphics;
-            var selectedInds = lvObjects.SelectedIndices;
-            for (int i = 0; i < activeObjectList.objects.Count; i++)
+            for (int objListIndex = 0; objListIndex < objectLists.Count; objListIndex++)
             {
-                var curObject = activeObjectList.objects[i];
-                int screenIndex = coordToScreenNo(curObject);
-                if (screenIndex == curActiveScreen)
+                var activeObjectList = objectLists[objListIndex];
+                //if (ConfigScript.usePicturesInstedBlocks)
+                paintBack(e.Graphics);
+                var g = e.Graphics;
+                var selectedInds = lvObjects.SelectedIndices;
+                for (int i = 0; i < activeObjectList.objects.Count; i++)
                 {
-                    if (!useBigPictures)
-                        ConfigScript.drawObject(g, curObject, selectedInds.Contains(i), curScale, objectSprites);
-                    else
-                        ConfigScript.drawObjectBig(g, curObject, selectedInds.Contains(i), curScale, objectSpritesBig);
+                    var curObject = activeObjectList.objects[i];
+                    int screenIndex = coordToScreenNo(curObject);
+                    if (screenIndex == curActiveScreen)
+                    {
+                        bool selected = (objListIndex == curActiveObjectListIndex) && selectedInds.Contains(i);
+                        if (!useBigPictures)
+                            ConfigScript.drawObject(g, curObject, selected, curScale, objectSprites);
+                        else
+                            ConfigScript.drawObjectBig(g, curObject, selected, curScale, objectSpritesBig);
+                    }
                 }
             }
         }
@@ -742,7 +745,7 @@ namespace CadEditor
                 if (Control.ModifierKeys != Keys.Shift && Control.ModifierKeys != Keys.Control)
                     lvObjects.SelectedItems.Clear();
 
-                var activeObjectList = objectLists[0]; //TODO: all
+                var activeObjectList = objectLists[curActiveObjectListIndex]; //TODO: all
                 for (int i = 0; i < activeObjectList.objects.Count; i++)
                 {
                     var obj = activeObjectList.objects[i];
@@ -781,7 +784,7 @@ namespace CadEditor
 
             if (curTool == ToolType.Select)
             {
-                var activeObjectList = objectLists[0]; //TODO: all
+                var activeObjectList = objectLists[curActiveObjectListIndex]; //TODO: all
                 for (int i = 0; i < lvObjects.SelectedIndices.Count; i++)
                 {
                     var obj = activeObjectList.objects[lvObjects.SelectedIndices[i]];
@@ -865,7 +868,7 @@ namespace CadEditor
             }
             else if (curTool == ToolType.Delete)
             {
-                var activeObjectList = objectLists[0]; //TODO: all
+                var activeObjectList = objectLists[curActiveObjectListIndex]; //TODO: all
                 for (int i = activeObjectList.objects.Count - 1; i >= 0; i--)
                 {
                     var obj = activeObjectList.objects[i];
@@ -929,6 +932,14 @@ namespace CadEditor
         {
             loadFromJsonFile("test.json");
         }
+
+        private void cbObjectList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbObjectList.SelectedIndex == -1)
+                return;
+            curActiveObjectListIndex = cbObjectList.SelectedIndex;
+            fillObjectsListBox();
+        }
     }
 
     public class ObjectList
@@ -939,7 +950,7 @@ namespace CadEditor
             name = "Objects";
         }
         public List<ObjectRec> objects;
-        private string name;
+        public string name;
     }
 
     enum ToolType
