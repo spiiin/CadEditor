@@ -30,13 +30,15 @@ namespace CadEditor
         private int curHeight = 1;
         private float curScale = 1.0f;
 
+        private int curActiveObjectListIndex = 0;
+
         private bool bindToAxis = false;
         private bool useBigPictures = false;
 
         private ToolType curTool = ToolType.Create;
 
         private LevelLayerData curLevelLayerData = new LevelLayerData();
-        private List<ObjectRec> objects = new List<ObjectRec>();
+        private List<ObjectList> objectLists = new List<ObjectList>();
         private bool dirty = false;
         private bool readOnly = false;
 
@@ -256,16 +258,17 @@ namespace CadEditor
 
         private void deleteSelected()
         {
+            var activeObjectList = objectLists[curActiveObjectListIndex];
             var toRemove = new List<ObjectRec>();
             for (int i = 0; i < lvObjects.SelectedIndices.Count; i++)
             {
                 int index = lvObjects.SelectedIndices[i];
                 if (index == -1)
                     continue;
-                toRemove.Add(objects[index]);
+                toRemove.Add(activeObjectList.objects[index]);
             }
             for (int i = 0; i < toRemove.Count; i++)
-                objects.Remove(toRemove[i]);
+                activeObjectList.objects.Remove(toRemove[i]);
             fillObjectsListBox();
 
             btDelete.Enabled = false;
@@ -288,18 +291,22 @@ namespace CadEditor
 
         private void setObjects()
         {
-            objects = ConfigScript.getObjects(getActiveLayoutNo());
+            objectLists.Clear();
+            objectLists.Add(new ObjectList());
+            //TODO: read all object lists from config
+            objectLists[0].objects = ConfigScript.getObjects(getActiveLayoutNo());
             updateAddDataVisible(0);
             fillObjectsListBox();
         }
 
         public void updateAddDataVisible(int index)
         {
-            pnAddData.Visible = objects.Count > index && objects[index].additionalData != null;
+            var activeObjectList = objectLists[curActiveObjectListIndex];
+            pnAddData.Visible = activeObjectList.objects.Count > index && activeObjectList.objects[index].additionalData != null;
             if (pnAddData.Visible)
             {
                 int addDataCount = 0;
-                foreach (var addData in objects[index].additionalData)
+                foreach (var addData in activeObjectList.objects[index].additionalData)
                 {
                     var key = addData.Key;
                     lbDatas[addDataCount].Text = key;
@@ -322,13 +329,14 @@ namespace CadEditor
 
         private void fillObjectsListBox()
         {
+            var activeObjectList = objectLists[0]; //TODO: all lists boxes
             lvObjects.Items.Clear();
-            for (int i = 0; i < objects.Count; i++)
-                lvObjects.Items.Add(new ListViewItem(makeStringForObject(objects[i]), objects[i].type));
+            for (int i = 0; i < activeObjectList.objects.Count; i++)
+                lvObjects.Items.Add(new ListViewItem(makeStringForObject(activeObjectList.objects[i]), activeObjectList.objects[i].type));
             cbCoordX.Enabled = false;
             cbCoordY.Enabled = false;
             cbObjType.Enabled = false;
-            lbObjectsCount.Text = String.Format("Objects count: {0}/{1}", lvObjects.Items.Count, getLevelRecForGameType().objCount);
+            lbObjectsCount.Text = String.Format("objects count: {0}/{1}", lvObjects.Items.Count, getLevelRecForGameType().objCount);
         }
 
         private int coordToScreenNo(ObjectRec obj)
@@ -348,17 +356,18 @@ namespace CadEditor
 
         private void btClearObjs_Click(object sender, EventArgs e)
         {
+            var activeObjectList = objectLists[curActiveObjectListIndex];
             if (MessageBox.Show("Do you really want to delete all objects at screen?", "Confirm", MessageBoxButtons.YesNo) != DialogResult.Yes)
                 return;
             List<ObjectRec> toRemove = new List<ObjectRec>();
-            for (int i = 0; i < objects.Count; i++)
+            for (int i = 0; i < activeObjectList.objects.Count; i++)
             {
-                int screenNo = coordToScreenNo(objects[i]);
+                int screenNo = coordToScreenNo(activeObjectList.objects[i]);
                 if (screenNo == curActiveScreen)
-                    toRemove.Add(objects[i]);
+                    toRemove.Add(activeObjectList.objects[i]);
             }
             for (int i = 0; i < toRemove.Count; i++)
-                objects.Remove(toRemove[i]);
+                activeObjectList.objects.Remove(toRemove[i]);
 
             fillObjectsListBox();
             mapScreen.Invalidate();
@@ -416,13 +425,14 @@ namespace CadEditor
 
         private void mapScreen_Paint(object sender, PaintEventArgs e)
         {
+            var activeObjectList = objectLists[0]; //TODO: all
             //if (ConfigScript.usePicturesInstedBlocks)
             paintBack(e.Graphics);
             var g = e.Graphics;
             var selectedInds = lvObjects.SelectedIndices;
-            for (int i = 0; i < objects.Count; i++)
+            for (int i = 0; i < activeObjectList.objects.Count; i++)
             {
-                var curObject = objects[i];
+                var curObject = activeObjectList.objects[i];
                 int screenIndex = coordToScreenNo(curObject);
                 if (screenIndex == curActiveScreen)
                 {
@@ -436,10 +446,11 @@ namespace CadEditor
 
         private void cbCoordX_SelectedIndexChanged(object sender, EventArgs e)
         {
+            var activeObjectList = objectLists[curActiveObjectListIndex];
             if (lvObjects.SelectedItems.Count != 1)
                 return;
             int index = lvObjects.SelectedItems[0].Index;
-            var obj = objects[index];
+            var obj = activeObjectList.objects[index];
             int minCoordX = ConfigScript.getMinObjCoordX();
             int minCoordY = ConfigScript.getMinObjCoordY();
             int minObjType = ConfigScript.getMinObjType();
@@ -453,11 +464,11 @@ namespace CadEditor
                     if (cb.Visible)  //enable
                     {
                         var key = (string)cb.Tag;
-                        objects[index].additionalData[key] = cb.SelectedIndex;
+                        activeObjectList.objects[index].additionalData[key] = cb.SelectedIndex;
                     }
                 }
             }
-            objects[index] = obj;
+            activeObjectList.objects[index] = obj;
             lvObjects.SelectedItems[0].ImageIndex = obj.type;
             lvObjects.SelectedItems[0].Text = makeStringForObject(obj);
             mapScreen.Invalidate();
@@ -470,15 +481,17 @@ namespace CadEditor
             //write objects
             int addrBase = lr.objectsBeginAddr;
             int objCount = lr.objCount;
-             
-            if (objects.Count > objCount)
+
+            var activeObjectList = objectLists[0]; //TODO: all
+
+            if (activeObjectList.objects.Count > objCount)
             {
-                MessageBox.Show(String.Format("Too many objects in level ({0}). Maximum: {1}", objects.Count, lr.objCount));
+                MessageBox.Show(String.Format("Too many objects in level ({0}). Maximum: {1}", activeObjectList.objects.Count, lr.objCount));
                 return false;
             }
             try
             {
-                ConfigScript.setObjects(getActiveLayoutNo(), objects);
+                ConfigScript.setObjects(getActiveLayoutNo(), activeObjectList.objects);
             }
             catch (IndexOutOfRangeException ex)
             {
@@ -497,9 +510,10 @@ namespace CadEditor
             {
                 using (TextWriter f = new StreamWriter(fname))
                 {
-                    for (int i = 0; i < objects.Count; i++)
+                    var activeObjectList = objectLists[0]; //TODO: all
+                    for (int i = 0; i < activeObjectList.objects.Count; i++)
                     {
-                        var obj = objects[i];
+                        var obj = activeObjectList.objects[i];
                         string json = JsonConvert.SerializeObject(obj);
                         f.WriteLine(json);
                     }
@@ -517,7 +531,8 @@ namespace CadEditor
 
         private bool loadFromJsonFile(string fname)
         {
-            objects.Clear();
+            var activeObjectList = objectLists[0]; //TODO: all
+            activeObjectList.objects.Clear();
             try
             {
                 using (TextReader f = new StreamReader(fname))
@@ -526,7 +541,7 @@ namespace CadEditor
                     while ((line = f.ReadLine()) != null)
                     {
                         var obj = JsonConvert.DeserializeObject<ObjectRec>(line);
-                        objects.Add(obj);
+                        activeObjectList.objects.Add(obj);
                     }
                 }
             }
@@ -550,6 +565,8 @@ namespace CadEditor
             btSortDown.Enabled = false;
             btSortUp.Enabled = false;
 
+            var activeObjectList = objectLists[curActiveObjectListIndex];
+
             if (selectedOne)
             {
                 int index = lvObjects.SelectedItems[0].Index;
@@ -557,15 +574,15 @@ namespace CadEditor
                 int minCoordY = ConfigScript.getMinObjCoordY();
                 int minObjType = ConfigScript.getMinObjType();
                 try
-                {
-                    Utils.setCbIndexWithoutUpdateLevel(cbCoordX, cbCoordX_SelectedIndexChanged, objects[index].x - minCoordX);
-                    Utils.setCbIndexWithoutUpdateLevel(cbCoordY, cbCoordX_SelectedIndexChanged, objects[index].y - minCoordY);
-                    Utils.setCbIndexWithoutUpdateLevel(cbObjType, cbCoordX_SelectedIndexChanged, objects[index].type - minObjType);
-                    if (objects[index].additionalData != null)
+                { 
+                    Utils.setCbIndexWithoutUpdateLevel(cbCoordX, cbCoordX_SelectedIndexChanged, activeObjectList.objects[index].x - minCoordX);
+                    Utils.setCbIndexWithoutUpdateLevel(cbCoordY, cbCoordX_SelectedIndexChanged, activeObjectList.objects[index].y - minCoordY);
+                    Utils.setCbIndexWithoutUpdateLevel(cbObjType, cbCoordX_SelectedIndexChanged, activeObjectList.objects[index].type - minObjType);
+                    if (activeObjectList.objects[index].additionalData != null)
                     {
                         updateAddDataVisible(index);
                         int addDataCount = 0;
-                        foreach (var addData in objects[index].additionalData)
+                        foreach (var addData in activeObjectList.objects[index].additionalData)
                         {
                    
                             Utils.setCbIndexWithoutUpdateLevel(cbDatas[addDataCount], cbCoordX_SelectedIndexChanged, addData.Value);
@@ -580,7 +597,7 @@ namespace CadEditor
                     cbCoordX.Enabled = false;
                     cbCoordY.Enabled = false;
                     cbObjType.Enabled = false;
-                    if (objects[index].additionalData != null)
+                    if (activeObjectList.objects[index].additionalData != null)
                     {
                         foreach (var cb in cbDatas)
                           cb.Enabled = false;
@@ -589,7 +606,7 @@ namespace CadEditor
             }
             if (!selectedZero)
             {
-                btSortDown.Enabled = lvObjects.SelectedIndices[lvObjects.SelectedIndices.Count - 1] < objects.Count - 1;
+                btSortDown.Enabled = lvObjects.SelectedIndices[lvObjects.SelectedIndices.Count - 1] < activeObjectList.objects.Count - 1;
                 btSortUp.Enabled = lvObjects.SelectedIndices[0] > 0;
             }
 
@@ -624,6 +641,7 @@ namespace CadEditor
         {
             bool canMoveUp = true;
             int repeatCount = (Control.ModifierKeys == Keys.Shift) ? 10 : 1;
+            var activeObjectList = objectLists[curActiveObjectListIndex];
             for (int count = 0; count < repeatCount && canMoveUp; count++)
             {
                 var selInds = new List<int>();
@@ -631,9 +649,9 @@ namespace CadEditor
                 {
                     int ind = lvObjects.SelectedIndices[i];
                     selInds.Add(ind);
-                    var xchg = objects[ind];
-                    objects[ind] = objects[ind - 1];
-                    objects[ind - 1] = xchg;
+                    var xchg = activeObjectList.objects[ind];
+                    activeObjectList.objects[ind] = activeObjectList.objects[ind - 1];
+                    activeObjectList.objects[ind - 1] = xchg;
                 }
                 fillObjectsListBox();
                 for (int i = 0; i < selInds.Count; i++)
@@ -651,6 +669,7 @@ namespace CadEditor
         {
             bool canMoveDown = true;
             int repeatCount = (Control.ModifierKeys == Keys.Shift) ? 10 : 1;
+            var activeObjectList = objectLists[curActiveObjectListIndex];
             for (int count = 0; count < repeatCount && canMoveDown; count++)
             {
                 var selInds = new List<int>();
@@ -658,14 +677,14 @@ namespace CadEditor
                 {
                     int ind = lvObjects.SelectedIndices[i];
                     selInds.Add(ind);
-                    var xchg = objects[ind];
-                    objects[ind] = objects[ind + 1];
-                    objects[ind + 1] = xchg;
+                    var xchg = activeObjectList.objects[ind];
+                    activeObjectList.objects[ind] = activeObjectList.objects[ind + 1];
+                    activeObjectList.objects[ind + 1] = xchg;
                 }
                 fillObjectsListBox();
                 for (int i = 0; i < selInds.Count; i++)
                     lvObjects.Items[selInds[i] + 1].Selected = true;
-                canMoveDown = lvObjects.SelectedIndices[lvObjects.SelectedIndices.Count - 1] < objects.Count - 1;
+                canMoveDown = lvObjects.SelectedIndices[lvObjects.SelectedIndices.Count - 1] < activeObjectList.objects.Count - 1;
             }
             lvObjects.Select();
             dirty = true;
@@ -678,7 +697,8 @@ namespace CadEditor
         {
             if (lvObjects.SelectedIndices.Count > 0)
             {
-                btSortDown.Enabled = lvObjects.SelectedIndices[lvObjects.SelectedIndices.Count - 1] < objects.Count - 1;
+                var activeObjectList = objectLists[curActiveObjectListIndex];
+                btSortDown.Enabled = lvObjects.SelectedIndices[lvObjects.SelectedIndices.Count - 1] < activeObjectList.objects.Count - 1;
                 btSortUp.Enabled = lvObjects.SelectedIndices[0] > 0;
             }
         }
@@ -700,7 +720,8 @@ namespace CadEditor
 
         private void btSort_Click(object sender, EventArgs e)
         {
-            ConfigScript.sortObjects(getActiveLayoutNo(), objects);
+            var activeObjectList = objectLists[curActiveObjectListIndex];
+            ConfigScript.sortObjects(getActiveLayoutNo(), activeObjectList.objects);
             fillObjectsListBox();
         }
 
@@ -720,9 +741,11 @@ namespace CadEditor
             {
                 if (Control.ModifierKeys != Keys.Shift && Control.ModifierKeys != Keys.Control)
                     lvObjects.SelectedItems.Clear();
-                for (int i = 0; i < objects.Count; i++)
+
+                var activeObjectList = objectLists[0]; //TODO: all
+                for (int i = 0; i < activeObjectList.objects.Count; i++)
                 {
-                    var obj = objects[i];
+                    var obj = activeObjectList.objects[i];
                     if ((obj.sx == sx) && (obj.sy == sy) && (Math.Abs(obj.x - x) < 8) && (Math.Abs(obj.y - y) < 8))
                         lvObjects.Items[i].Selected = !lvObjects.Items[i].Selected;
                 }
@@ -758,9 +781,10 @@ namespace CadEditor
 
             if (curTool == ToolType.Select)
             {
+                var activeObjectList = objectLists[0]; //TODO: all
                 for (int i = 0; i < lvObjects.SelectedIndices.Count; i++)
                 {
-                    var obj = objects[lvObjects.SelectedIndices[i]];
+                    var obj = activeObjectList.objects[lvObjects.SelectedIndices[i]];
                     if (bindToAxis)
                     {
                         obj.x = (x / 8) * 8;
@@ -771,7 +795,7 @@ namespace CadEditor
                         obj.x = x;
                         obj.y = y;
                     }
-                    objects[lvObjects.SelectedIndices[i]] = obj;
+                    activeObjectList.objects[lvObjects.SelectedIndices[i]] = obj;
                 }
             }
             dirty = true;
@@ -833,22 +857,24 @@ namespace CadEditor
                 var obj = new ObjectRec(type, sx, sy, x, y, dictionary);
 
                 int insertPos = lvObjects.SelectedItems.Count > 0 ? lvObjects.SelectedIndices[0] + 1 : lvObjects.Items.Count;
-                objects.Insert(insertPos, obj);
+                var activeObjectList = objectLists[curActiveObjectListIndex];
+                activeObjectList.objects.Insert(insertPos, obj);
 
                 lvObjects.Items.Insert(insertPos, new ListViewItem(makeStringForObject(obj), obj.type));
-                lbObjectsCount.Text = String.Format("Objects count: {0}/{1}", lvObjects.Items.Count, getLevelRecForGameType().objCount);
+                lbObjectsCount.Text = String.Format("objects count: {0}/{1}", lvObjects.Items.Count, getLevelRecForGameType().objCount);
             }
             else if (curTool == ToolType.Delete)
             {
-                for (int i = objects.Count - 1; i >= 0; i--)
+                var activeObjectList = objectLists[0]; //TODO: all
+                for (int i = activeObjectList.objects.Count - 1; i >= 0; i--)
                 {
-                    var obj = objects[i];
+                    var obj = activeObjectList.objects[i];
                     if ((obj.sx == sx) && (obj.sy == sy) && (Math.Abs(obj.x - x) < 8) && (Math.Abs(obj.y - y) < 8))
                     {
                         if (MessageBox.Show("Do you really want to delete object?", "Confirm", MessageBoxButtons.YesNo) != DialogResult.Yes)
                             return;
                         dirty = true;
-                        objects.RemoveAt(i);
+                        activeObjectList.objects.RemoveAt(i);
                         fillObjectsListBox();
                         break;
                     }
@@ -905,7 +931,16 @@ namespace CadEditor
         }
     }
 
-
+    public class ObjectList
+    {
+        public ObjectList()
+        {
+            objects = new List<ObjectRec>();
+            name = "Objects";
+        }
+        public List<ObjectRec> objects;
+        private string name;
+    }
 
     enum ToolType
     {
