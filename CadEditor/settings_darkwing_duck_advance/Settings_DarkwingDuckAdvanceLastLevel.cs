@@ -36,7 +36,7 @@ public class Data:CapcomBase
       "6","7","8","9","A","B","C","D","E","F"
   };
   
-  public List<ObjectRec> getObjectsDwdAdvanceLastLevel(int levelNo)
+  public List<ObjectList> getObjectsDwdAdvanceLastLevel(int levelNo)
   {
       LevelRec lr = ConfigScript.getLevelRec(levelNo);
       int objCount = lr.objCount, addr = lr.objectsBeginAddr;
@@ -52,14 +52,15 @@ public class Data:CapcomBase
           var obj = new ObjectRec(v, sx, sy, x, y);
           objects.Add(obj);
       }
-      return objects;
+      return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
   }
 
-  public bool setObjectsDwdAdvanceLastLevel(int levelNo, List<ObjectRec> objects)
+  public bool setObjectsDwdAdvanceLastLevel(int levelNo, List<ObjectList> objLists)
   {
       LevelRec lr = ConfigScript.getLevelRec(levelNo);
       int addrBase = lr.objectsBeginAddr;
       int objCount = lr.objCount;
+      var objects = objLists[0].objects;
       for (int i = 0; i < objects.Count; i++)
       {
           var obj = objects[i];

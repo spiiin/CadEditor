@@ -131,7 +131,7 @@ public class Data : CapcomBase
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return true; }
   
-  public List<ObjectRec> getPrizesCad2(int levelNo)
+  public List<ObjectList> getPrizesCad2(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int addr = lr.objectsBeginAddr;
@@ -149,14 +149,15 @@ public class Data : CapcomBase
       var obj = new ObjectRec(v, sx, sy, x, y);
       objects.Add(obj);
     }
-    return objects;
+    return new List<ObjectList> { new ObjectList { objects = objects, name = "Items" } };
   }
   
-  public bool setPrizesCad2(int levelNo, List<ObjectRec> objects)
+  public bool setPrizesCad2(int levelNo, List<ObjectList> objLists)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int addrBase = lr.objectsBeginAddr;
     int objCount = lr.objCount;
+    var objects = objLists[0].objects;
     for (int i = 0; i < objects.Count; i++)
     {
       var obj = objects[i];
@@ -172,7 +173,7 @@ public class Data : CapcomBase
   }
   
   
-  public List<ObjectRec> getObjectsCad2(int levelNo)
+  public List<ObjectList> getObjectsCad2(int levelNo)
   {
     //hack for prizes
     if (levelNo >= LEVEL_REC_COUNT)
@@ -194,19 +195,19 @@ public class Data : CapcomBase
       var obj = new ObjectRec(v, sx, sy, x, y);
       objects.Add(obj);
     }
-    return objects;
+    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
   }
 
-  public bool setObjectsCad2(int levelNo, List<ObjectRec> objects)
+  public bool setObjectsCad2(int levelNo, List<ObjectList> objLists)
   {
     //hack for prizes
     if (levelNo >= LEVEL_REC_COUNT)
-      return  setPrizesCad2(levelNo, objects);
-     
-    
+      return setPrizesCad2(levelNo, objLists);
+
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int addrBase = lr.objectsBeginAddr;
     int objCount = lr.objCount;
+    var objects = objLists[0].objects;
     for (int i = 0; i < objects.Count; i++)
     {
       var obj = objects[i];

@@ -24,7 +24,7 @@ public class Data : CapcomBase
     new LevelRec(0x825B, 37, 1, 1, 0x0),
   };
   
-   public List<ObjectRec> getObjects(int levelNo)
+   public List<ObjectList> getObjects(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int baseAddr = lr.objectsBeginAddr;
@@ -43,14 +43,15 @@ public class Data : CapcomBase
         var obj = new ObjectRec(v, 0, 0, realx, realy, dataDict);
         objects.Add(obj);
     }
-    return objects;
+    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
   }
 
-  public bool setObjects(int levelNo, List<ObjectRec> objects)
+  public bool setObjects(int levelNo, List<ObjectList> objLists)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int baseAddr = lr.objectsBeginAddr;
     int objCount = lr.objCount;
+    var objects = objLists[0].objects;
     for (int i = 0; i < objects.Count; i++)
     {
       var obj = objects[i];

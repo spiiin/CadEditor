@@ -99,7 +99,7 @@ public static class ZamnUtils
     return enemyAddr;
   }
   
-  public static List<ObjectRec> getVictimsFromArray(byte[] romdata, int baseAddr, int objCount)
+  public static List<ObjectList> getVictimsFromArray(byte[] romdata, int baseAddr, int objCount)
   {
     var objects = new List<ObjectRec>();
     for (int i = 0; i < objCount; i++)
@@ -114,11 +114,12 @@ public static class ZamnUtils
         var obj = new ObjectRec(victimNo, 0, 0, x/2, y/2, dataDict);
         objects.Add(obj);
     }
-    return objects;
+    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
   }
 
-  public static bool setVictimsToArray(List<ObjectRec> objects, byte[] romdata, int baseAddr, int objCount)
+  public static bool setVictimsToArray(List<ObjectList> objLists, byte[] romdata, int baseAddr, int objCount)
   {
+    var objects = objLists[0].objects;
     for (int i = 0; i < objects.Count; i++)
     {
         var obj = objects[i];
@@ -140,7 +141,7 @@ public static class ZamnUtils
     return true;
   }
   
-  public static List<ObjectRec> getEnemiesFromArray(byte[] romdata, int baseAddr, int objCount)
+  public static List<ObjectList> getEnemiesFromArray(byte[] romdata, int baseAddr, int objCount)
   {
     var objects = new List<ObjectRec>();
     const int ENEMY_REC_LEN = 12;
@@ -158,12 +159,13 @@ public static class ZamnUtils
         var obj = new ObjectRec(victimNo, 0, 0, x/2, y/2, dataDict);
         objects.Add(obj);
     }
-    return objects;
+    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };;
   }
   
-  public static bool setEnemiesToArray(List<ObjectRec> objects, byte[] romdata, int baseAddr, int objCount)
+  public static bool setEnemiesToArray(List<ObjectList> objLists, byte[] romdata, int baseAddr, int objCount)
   {
     const int ENEMY_REC_LEN = 12;
+    var objects = objLists[0].objects;
     for (int i = 0; i < objects.Count; i++)
     {
         var obj = objects[i];
@@ -185,7 +187,7 @@ public static class ZamnUtils
     return true;
   }
   
-  public static List<ObjectRec> getItemsFromArray(byte[] romdata, int baseAddr, int objCount)
+  public static List<ObjectList> getItemsFromArray(byte[] romdata, int baseAddr, int objCount)
   {
     var objects = new List<ObjectRec>();
     const int ITEM_REC_LEN = 6;
@@ -197,11 +199,12 @@ public static class ZamnUtils
         var obj = new ObjectRec(t, 0, 0, x/2, y/2);
         objects.Add(obj);
     }
-    return objects;
+    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
   }
   
-  public static bool setItemsToArray(List<ObjectRec> objects, byte[] romdata, int baseAddr, int objCount)
+  public static bool setItemsToArray(List<ObjectList> objLists, byte[] romdata, int baseAddr, int objCount)
   {
+    var objects = objLists[0].objects;
     const int ITEM_REC_LEN = 6;
     for (int i = 0; i < objects.Count; i++)
     {
@@ -220,7 +223,7 @@ public static class ZamnUtils
   }
   
   //-----------------------------------------------------------------------------------------------
-  public static List<ObjectRec> getVictimsFromRom(int levelNo)
+  public static List<ObjectList> getVictimsFromRom(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int baseAddr = lr.objectsBeginAddr;
@@ -228,14 +231,14 @@ public static class ZamnUtils
     return getVictimsFromArray(Globals.romdata, baseAddr, objCount);
   }
   
-  public static List<ObjectRec> getVictimsFromFile(int levelNo)
+  public static List<ObjectList> getVictimsFromFile(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     byte[] data = Utils.loadDataFromFile("settings_sega_zombies_ate_my_neighbors/victims.bin");
     return getVictimsFromArray(data, 0, lr.objCount);
   }
   
-  public static bool setVictimsToRom(int levelNo, List<ObjectRec> objects)
+  public static bool setVictimsToRom(int levelNo, List<ObjectList> objects)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int baseAddr = lr.objectsBeginAddr;
@@ -243,7 +246,7 @@ public static class ZamnUtils
     return setVictimsToArray(objects, Globals.romdata, baseAddr, objCount);
   }
   
-  public static bool setVictimsToFile(int levelNo, List<ObjectRec> objects)
+  public static bool setVictimsToFile(int levelNo, List<ObjectList> objects)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int baseAddr = 0;
@@ -254,7 +257,7 @@ public static class ZamnUtils
     return true;
   }
   
-  public static List<ObjectRec> getEnemiesFromRom(int levelNo)
+  public static List<ObjectList> getEnemiesFromRom(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int baseAddr = lr.objectsBeginAddr;
@@ -262,14 +265,14 @@ public static class ZamnUtils
     return getEnemiesFromArray(Globals.romdata, baseAddr, objCount);
   }
   
-  public static List<ObjectRec> getEnemiesFromFile(int levelNo)
+  public static List<ObjectList> getEnemiesFromFile(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     byte[] data = Utils.loadDataFromFile("settings_sega_zombies_ate_my_neighbors/enemies.bin");
     return getEnemiesFromArray(data, 0, lr.objCount);
   }
   
-  public static bool setEnemiesToRom(int levelNo, List<ObjectRec> objects)
+  public static bool setEnemiesToRom(int levelNo, List<ObjectList> objects)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int baseAddr = lr.objectsBeginAddr;
@@ -277,7 +280,7 @@ public static class ZamnUtils
     return setEnemiesToArray(objects, Globals.romdata, baseAddr, objCount);
   }
   
-  public static bool setEnemiesToFile(int levelNo, List<ObjectRec> objects)
+  public static bool setEnemiesToFile(int levelNo, List<ObjectList> objects)
   {
     const int ENEMY_REC_LEN = 12;
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
@@ -289,7 +292,7 @@ public static class ZamnUtils
     return true;
   }
   
-  public static List<ObjectRec> getItemsFromRom(int levelNo)
+  public static List<ObjectList> getItemsFromRom(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int baseAddr = lr.objectsBeginAddr;
@@ -297,14 +300,14 @@ public static class ZamnUtils
     return getItemsFromArray(Globals.romdata, baseAddr, objCount);
   }
   
-  public static List<ObjectRec> getItemsFromFile(int levelNo)
+  public static List<ObjectList> getItemsFromFile(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     byte[] data = Utils.loadDataFromFile("settings_sega_zombies_ate_my_neighbors/items.bin");
     return getItemsFromArray(data, 0, lr.objCount);
   }
   
-  public static bool setItemsToRom(int levelNo, List<ObjectRec> objects)
+  public static bool setItemsToRom(int levelNo, List<ObjectList> objects)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int baseAddr = lr.objectsBeginAddr;
@@ -312,7 +315,7 @@ public static class ZamnUtils
     return setItemsToArray(objects, Globals.romdata, baseAddr, objCount);
   }
   
-  public static bool setItemsToFile(int levelNo, List<ObjectRec> objects)
+  public static bool setItemsToFile(int levelNo, List<ObjectList> objects)
   {
     const int ITEMS_REC_LEN = 6;
     LevelRec lr = ConfigScript.getLevelRec(levelNo);

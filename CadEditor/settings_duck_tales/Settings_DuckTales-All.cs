@@ -104,7 +104,7 @@ public class Data:CapcomBase
       return (byte)(objLineOffsets.Length - 1);
   }
   
-  public List<ObjectRec> getObjectsDt(int levelNo)
+  public List<ObjectList> getObjectsDt(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int objCount = lr.objCount, addr = lr.objectsBeginAddr;
@@ -124,15 +124,16 @@ public class Data:CapcomBase
         var obj = new ObjectRec(v, sx, sy, x, y);
         objects.Add(obj);
     }
-    return objects;
+    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
   }
 
-  public bool setObjectsDt(int levelNo, List<ObjectRec> objects)
+  public bool setObjectsDt(int levelNo, List<ObjectList> objLists)
   {
     //todo: add save sy coord to objLineOffsets array
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int addrBase = lr.objectsBeginAddr;
     int objCount = lr.objCount;
+    var objects = objLists[0].objects;
     for (int i = 0; i < objects.Count; i++)
     {
         var obj = objects[i];

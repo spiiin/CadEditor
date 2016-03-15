@@ -54,7 +54,7 @@ public class Data : CapcomBase
   //0x1B - Fly chairs (+1 byte)
   //0xFF - var length (checkpoints, pointers to next rooms)
   //0x12 - arrow between rooms (7 bytes per arrow)
-  public List<ObjectRec> getObjects(int levelNo)
+  public List<ObjectList> getObjects(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int objCount = lr.objCount;
@@ -70,14 +70,15 @@ public class Data : CapcomBase
       var obj = new ObjectRec(v, sx, sy, x, y);
       objects.Add(obj);
     }
-    return objects;
+    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
   }
 
-  public bool setObjects(int levelNo, List<ObjectRec> objects)
+  public bool setObjects(int levelNo, List<ObjectList> objLists)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int objCount = lr.objCount;
     int baseAddr = lr.objectsBeginAddr;
+    var objects = objLists[0].objects;
     for (int i = 0; i < objects.Count; i++)
     {
         var obj = objects[i];

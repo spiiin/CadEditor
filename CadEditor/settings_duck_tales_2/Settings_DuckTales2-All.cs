@@ -109,7 +109,7 @@ public class Data:CapcomBase
     Utils.writeDataToUnalignedArrays(data, Globals.romdata, addrPointers[0], addrPointers[1], addrPointers[2], addrPointers[3], blocksCount); 
   }
   
-  public List<ObjectRec> getObjectsDt2(int levelNo)
+  public List<ObjectList> getObjectsDt2(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int objCount = lr.objCount, addr = lr.objectsBeginAddr;
@@ -142,10 +142,10 @@ public class Data:CapcomBase
             addr += 3;
         }
     }
-    return objects;
+    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
   }
   
-  /*public bool setObjectsDt2(int levelNo, List<ObjectRec> objects)
+  /*public bool setObjectsDt2(int levelNo, List<ObjectList> objects)
   {
     //todo : add save for duck tales 2
     return true;

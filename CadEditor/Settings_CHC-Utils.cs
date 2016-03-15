@@ -31,7 +31,7 @@ public static class CHCUtils
   
   static int OBJ_SIZE = 14;  
       
-  public static List<ObjectRec> getObjects(int levelNo)
+  public static List<ObjectList> getObjects(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int objCount = lr.objCount, addr = lr.objectsBeginAddr;
@@ -91,7 +91,7 @@ public static class CHCUtils
           curAddr += commandDict[v]*2;
         }
     }
-    return objects;
+    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
   }
   
   private static ObjectRec makeCommandObject(int v, int baseAddr)
@@ -111,11 +111,12 @@ public static class CHCUtils
        Globals.romdata[baseAddr+2+i] = (byte)dataDict[String.Format("data{0}", i)];
   }
     
-  public static bool setObjects(int levelNo, List<ObjectRec> objects)
+  public static bool setObjects(int levelNo, List<ObjectList> objLists)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int objCount = lr.objCount, addr = lr.objectsBeginAddr;
     int curAddr = addr;
+    var objects = objLists[0].objects;
     for (int i = 0; i < objects.Count; i++)
     {
       var obj = objects[i];

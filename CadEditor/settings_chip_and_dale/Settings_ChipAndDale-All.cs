@@ -75,7 +75,7 @@ public class Data:CapcomBase
         "F (throwable box)"
     };
     
-    public List<ObjectRec> getObjectsCad(int levelNo)
+    public List<ObjectList> getObjectsCad(int levelNo)
     {
       LevelRec lr = ConfigScript.getLevelRec(levelNo);
       int objCount = lr.objCount, addr = lr.objectsBeginAddr;
@@ -103,15 +103,16 @@ public class Data:CapcomBase
               objects.Add(obj);
           }
       }
-      return objects;
+      return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
     }
     
-    public bool setObjectsCad(int levelNo, List<ObjectRec> objects)
+    public bool setObjectsCad(int levelNo, List<ObjectList> objLists)
     {
       LevelRec lr = ConfigScript.getLevelRec(levelNo);
       int levelDhack = (levelNo == 4) ? 1 : 0;
       int addrBase = lr.objectsBeginAddr;
       int objCount = lr.objCount;
+      var objects = objLists[0].objects;
       try
       {
           for (int i = 0; i < objects.Count; i++)

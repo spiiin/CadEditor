@@ -287,10 +287,7 @@ namespace CadEditor
 
         private void setObjects()
         {
-            objectLists.Clear();
-            objectLists.Add(new ObjectList());
-            //TODO: read all object lists from config
-            objectLists[0].objects = ConfigScript.getObjects(getActiveLayoutNo());
+            objectLists = ConfigScript.getObjects(getActiveLayoutNo());
             updateAddDataVisible(0);
             cbObjectList.Items.Clear();
             for (int i = 0; i < objectLists.Count; i++)
@@ -481,20 +478,17 @@ namespace CadEditor
         {
             var romFname = OpenFile.FileName;
             LevelRec lr = getLevelRecForGameType();
-            //write objects
-            int addrBase = lr.objectsBeginAddr;
+            //TODO: return free space checking
+            /*int addrBase = lr.objectsBeginAddr;
             int objCount = lr.objCount;
-
-            var activeObjectList = objectLists[0]; //TODO: all
-
             if (activeObjectList.objects.Count > objCount)
             {
                 MessageBox.Show(String.Format("Too many objects in level ({0}). Maximum: {1}", activeObjectList.objects.Count, lr.objCount));
                 return false;
-            }
+            }*/
             try
             {
-                ConfigScript.setObjects(getActiveLayoutNo(), activeObjectList.objects);
+                ConfigScript.setObjects(getActiveLayoutNo(), objectLists);
             }
             catch (IndexOutOfRangeException ex)
             {

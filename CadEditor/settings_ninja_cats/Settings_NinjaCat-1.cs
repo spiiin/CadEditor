@@ -46,7 +46,7 @@ public class Data
     new LevelRec(0xA5C6, 10, 4, 1, 0x0), //room 7
   };
   
-  public List<ObjectRec> getObjects(int levelNo)
+  public List<ObjectList> getObjects(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int objCount = lr.objCount;
@@ -63,14 +63,15 @@ public class Data
       var obj = new ObjectRec(v, scrx, 0, realx, realy);
       objects.Add(obj);
     }
-    return objects;
+    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
   }
 
-  public bool setObjects(int levelNo, List<ObjectRec> objects)
+  public bool setObjects(int levelNo, List<ObjectList> objLists)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int objCount = lr.objCount;
     int baseAddr = lr.objectsBeginAddr;
+    var objects = objLists[0].objects;
     for (int i = 0; i < objects.Count; i++)
     {
         var obj = objects[i];

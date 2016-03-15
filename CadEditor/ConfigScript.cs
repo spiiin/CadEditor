@@ -18,8 +18,8 @@ namespace CadEditor
     public delegate byte[] GetPalFunc(int palId);
     public delegate void   SetPalFunc(int palId, byte[] pallete);
     public delegate void   RenderToMainScreenFunc(Graphics g, int curScale);
-    public delegate List<ObjectRec> GetObjectsFunc(int levelNo);
-    public delegate bool            SetObjectsFunc(int levelNo, List<ObjectRec> objects); 
+    public delegate List<ObjectList> GetObjectsFunc(int levelNo);
+    public delegate bool            SetObjectsFunc(int levelNo, List<ObjectList> objects); 
     public delegate void            SortObjectsFunc(int levelNo, List<ObjectRec> objects);
     public delegate LevelLayerData  GetLayoutFunc(int levelNo);
     public delegate Dictionary<String, int> GetObjectDictionaryFunc(int objNo);
@@ -284,12 +284,12 @@ namespace CadEditor
             setPalFunc(palId, pallete);
         }
 
-        public static List<ObjectRec> getObjects(int levelNo)
+        public static List<ObjectList> getObjects(int levelNo)
         {
             return (getObjectsFunc ?? (_ => null))(levelNo);
         }
 
-        public static void setObjects(int levelNo, List<ObjectRec> objects)
+        public static void setObjects(int levelNo, List<ObjectList> objects)
         {
             setObjectsFunc(levelNo, objects);
         }

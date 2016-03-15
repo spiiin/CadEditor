@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public static class FliUtils
 {
   //addrs saved in ram at D7-D9-DC-DC
-  public static List<ObjectRec> getObjects(int levelNo)
+  public static List<ObjectList> getObjects(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int objCount = lr.objCount;
@@ -24,14 +24,15 @@ public static class FliUtils
       var obj = new ObjectRec(v, 0, 0, realx, realy, dataDict);
       objects.Add(obj);
     }
-    return objects;
+    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
   }
 
-  public static bool setObjects(int levelNo, List<ObjectRec> objects)
+  public static bool setObjects(int levelNo, List<ObjectList> objLists)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int objCount = lr.objCount;
     int baseAddr = lr.objectsBeginAddr;
+    var objects = objLists[0].objects;
     for (int i = 0; i < objects.Count; i++)
     {
         var obj = objects[i];

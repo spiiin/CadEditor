@@ -61,7 +61,7 @@ public class Data
     new LevelRec(0x0, 47, 1, 1, 0x0, "", 1),
   };
   
-  public List<ObjectRec> getObjectsJungleBook(int levelNo)
+  public List<ObjectList> getObjectsJungleBook(int levelNo)
   {
     if (levelNo == 0)
       return getObjectsJungleBook1(levelNo);
@@ -69,17 +69,17 @@ public class Data
       return getObjectsJungleBook2(levelNo);
   }
   
-  public bool setObjectsJungleBook(int levelNo, List<ObjectRec> objects)
+  public bool setObjectsJungleBook(int levelNo, List<ObjectList> objLists)
   {
     if (levelNo == 0)
-      return setObjectsJungleBook1(levelNo, objects);
+      return setObjectsJungleBook1(levelNo, objLists);
     else
-      return setObjectsJungleBook2(levelNo, objects);
+      return setObjectsJungleBook2(levelNo, objLists);
   }
   
   //copy-paste
   //addrs saved in ram at 77-79-7E-81
-  public List<ObjectRec> getObjectsJungleBook1(int levelNo)
+  public List<ObjectList> getObjectsJungleBook1(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int objCount = lr.objCount;
@@ -97,13 +97,14 @@ public class Data
         var obj = new ObjectRec(v, 0, 0, realx, realy, dataDict);
         objects.Add(obj);
     }
-    return objects;
+    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
   }
 
-  public bool setObjectsJungleBook1(int levelNo, List<ObjectRec> objects)
+  public bool setObjectsJungleBook1(int levelNo, List<ObjectList> objLists)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int objCount = lr.objCount;
+    var objects = objLists[0].objects;
     for (int i = 0; i < objects.Count; i++)
     {
         var obj = objects[i];
@@ -126,7 +127,7 @@ public class Data
   
   //copy-paste
    //addrs saved in ram at 77-79-7E-81
-  public List<ObjectRec> getObjectsJungleBook2(int levelNo)
+  public List<ObjectList> getObjectsJungleBook2(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int objCount = lr.objCount;
@@ -144,13 +145,14 @@ public class Data
         var obj = new ObjectRec(v, 0, 0, realx, realy, dataDict);
         objects.Add(obj);
     }
-    return objects;
+    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
   }
 
-  public bool setObjectsJungleBook2(int levelNo, List<ObjectRec> objects)
+  public bool setObjectsJungleBook2(int levelNo, List<ObjectList> objLists)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int objCount = lr.objCount;
+    var objects = objLists[0].objects;
     for (int i = 0; i < objects.Count; i++)
     {
         var obj = objects[i];
