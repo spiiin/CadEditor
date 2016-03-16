@@ -507,10 +507,9 @@ namespace CadEditor
             {
                 using (TextWriter f = new StreamWriter(fname))
                 {
-                    var activeObjectList = objectLists[0]; //TODO: all
-                    for (int i = 0; i < activeObjectList.objects.Count; i++)
+                    for (int i = 0; i < objectLists.Count; i++)
                     {
-                        var obj = activeObjectList.objects[i];
+                        var obj = objectLists[i];
                         string json = JsonConvert.SerializeObject(obj);
                         f.WriteLine(json);
                     }
@@ -528,8 +527,7 @@ namespace CadEditor
 
         private bool loadFromJsonFile(string fname)
         {
-            var activeObjectList = objectLists[0]; //TODO: all
-            activeObjectList.objects.Clear();
+            objectLists.Clear();
             try
             {
                 using (TextReader f = new StreamReader(fname))
@@ -537,8 +535,8 @@ namespace CadEditor
                     string line;
                     while ((line = f.ReadLine()) != null)
                     {
-                        var obj = JsonConvert.DeserializeObject<ObjectRec>(line);
-                        activeObjectList.objects.Add(obj);
+                        var obj = JsonConvert.DeserializeObject<ObjectList>(line);
+                        objectLists.Add(obj);
                     }
                 }
             }
