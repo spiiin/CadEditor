@@ -436,9 +436,9 @@ namespace CadEditor
                     {
                         bool selected = (objListIndex == curActiveObjectListIndex) && selectedInds.Contains(i);
                         if (!useBigPictures)
-                            ConfigScript.drawObject(g, curObject, selected, curScale, objectSprites);
+                            ConfigScript.drawObject(g, curObject, curActiveObjectListIndex, selected, curScale, objectSprites);
                         else
-                            ConfigScript.drawObjectBig(g, curObject, selected, curScale, objectSpritesBig);
+                            ConfigScript.drawObjectBig(g, curObject, curActiveObjectListIndex, selected, curScale, objectSpritesBig);
                     }
                 }
             }
@@ -716,7 +716,7 @@ namespace CadEditor
         private void btSort_Click(object sender, EventArgs e)
         {
             var activeObjectList = objectLists[curActiveObjectListIndex];
-            ConfigScript.sortObjects(getActiveLayoutNo(), activeObjectList.objects);
+            ConfigScript.sortObjects(getActiveLayoutNo(), curActiveObjectListIndex, activeObjectList.objects);
             fillObjectsListBox();
         }
 
@@ -848,7 +848,7 @@ namespace CadEditor
                     x = (x / 8) * 8;
                     y = (y / 8) * 8;
                 }
-                var dictionary = ConfigScript.getObjectDictionary(type);
+                var dictionary = ConfigScript.getObjectDictionary(curActiveObjectListIndex, type);
                 var obj = new ObjectRec(type, sx, sy, x, y, dictionary);
 
                 int insertPos = lvObjects.SelectedItems.Count > 0 ? lvObjects.SelectedIndices[0] + 1 : lvObjects.Items.Count;

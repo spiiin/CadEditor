@@ -20,16 +20,16 @@ namespace CadEditor
     public delegate void   RenderToMainScreenFunc(Graphics g, int curScale);
     public delegate List<ObjectList> GetObjectsFunc(int levelNo);
     public delegate bool            SetObjectsFunc(int levelNo, List<ObjectList> objects); 
-    public delegate void            SortObjectsFunc(int levelNo, List<ObjectRec> objects);
+    public delegate void            SortObjectsFunc(int levelNo, int listNo, List<ObjectRec> objects);
     public delegate LevelLayerData  GetLayoutFunc(int levelNo);
-    public delegate Dictionary<String, int> GetObjectDictionaryFunc(int objNo);
+    public delegate Dictionary<String, int> GetObjectDictionaryFunc(int listNo, int objNo);
     public delegate int  ConvertScreenTileFunc(int val);
     public delegate int  GetBigTileNoFromScreenFunc(int[] screenData, int index);
     public delegate void SetBigTileToScreenFunc(int[] screenData, int index, int value);
     public delegate byte[] LoadSegaBackFunc();
     public delegate void SaveSegaBackFunc(byte[] data);
-    public delegate void DrawObjectFunc(Graphics g, ObjectRec curObject, bool selected, float curScale, ImageList objectSprites);
-    public delegate void DrawObjectBigFunc(Graphics g, ObjectRec curObject, bool selected, float curScale, Image[] objectSprites);
+    public delegate void DrawObjectFunc(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, ImageList objectSprites);
+    public delegate void DrawObjectBigFunc(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, Image[] objectSprites);
 
     public class ConfigScript
     {
@@ -127,6 +127,7 @@ namespace CadEditor
             layersCount = callFromScript(asm, data, "*.getLayersCount", 1);
             levelRecs = callFromScript(asm, data,"*.getLevelRecs", new List<LevelRec>());
 
+            //todo: remove or change to many lists interface
             minObjCoordX = callFromScript(asm, data, "*.getMinObjCoordX", 0);
             minObjCoordY = callFromScript(asm, data, "*.getMinObjCoordY", 0);
             minObjType   = callFromScript(asm, data, "*.getMinObjType"  , 0);
@@ -294,9 +295,9 @@ namespace CadEditor
             setObjectsFunc(levelNo, objects);
         }
         
-        public static void sortObjects(int levelNo, List<ObjectRec> objects)
+        public static void sortObjects(int levelNo, int listNo, List<ObjectRec> objects)
         {
-            sortObjectsFunc(levelNo, objects);
+            sortObjectsFunc(levelNo, listNo, objects);
         }
 
          public static int convertScreenTile(int tile)
@@ -328,20 +329,20 @@ namespace CadEditor
              saveSegaBackFunc(data);
          }
 
-         public static void drawObject(Graphics g, ObjectRec curObject, bool selected, float curScale, ImageList objectSprites)
+         public static void drawObject(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, ImageList objectSprites)
          {
              if (drawObjectFunc != null)
-                 drawObjectFunc(g, curObject, selected, curScale, objectSprites);
+                 drawObjectFunc(g, curObject, listNo, selected, curScale, objectSprites);
              else
-                 Utils.defaultDrawObject(g, curObject, selected, curScale, objectSprites);
+                 Utils.defaultDrawObject(g, curObject, listNo, selected, curScale, objectSprites);
          }
 
-         public static void drawObjectBig(Graphics g, ObjectRec curObject, bool selected, float curScale, Image[] objectSprites)
+         public static void drawObjectBig(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, Image[] objectSprites)
          {
              if (drawObjectBigFunc != null)
-                 drawObjectBigFunc(g, curObject, selected, curScale, objectSprites);
+                 drawObjectBigFunc(g, curObject, listNo, selected, curScale, objectSprites);
              else
-                 Utils.defaultDrawObjectBig(g, curObject, selected, curScale, objectSprites);
+                 Utils.defaultDrawObjectBig(g, curObject, listNo, selected, curScale, objectSprites);
              
          }
 
@@ -350,9 +351,9 @@ namespace CadEditor
             return getLayoutFunc(levelNo);
         }
 
-        public static Dictionary<String, int> getObjectDictionary(int objType)
+        public static Dictionary<String, int> getObjectDictionary(int listNo, int objType)
         {
-            return (getObjectDictionaryFunc ?? (_ => null))(objType);
+            return (getObjectDictionaryFunc ?? ((_,__)=> null))(listNo, objType);
         }
 
         public static void renderToMainScreen(Graphics g, int scale)

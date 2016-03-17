@@ -60,7 +60,7 @@ public static class FliUtils
     return new LevelLayerData(1, 1, layer);
   }
   
-  public static Dictionary<String,int> getObjectDictionary(int type)
+  public static Dictionary<String,int> getObjectDictionary(int listNo, int type)
   {
     return new Dictionary<String, int> { {"data", 0} };
   }

@@ -109,7 +109,7 @@ public class Data
       return new LevelLayerData(width, height, layer, null, null);
   }
   
-  public static Dictionary<String,int> getObjectDictionary(int type)
+  public static Dictionary<String,int> getObjectDictionary(int listNo, int type)
   {
     return new Dictionary<String, int> { {"data", 0} };
   }

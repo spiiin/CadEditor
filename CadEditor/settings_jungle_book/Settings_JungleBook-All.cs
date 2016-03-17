@@ -173,7 +173,7 @@ public class Data
     return true;
   }
   
-  public void sortObjectsJungleBook(int levelNo, List<ObjectRec> objects)
+  public void sortObjectsJungleBook(int levelNo, int listNo, List<ObjectRec> objects)
   {
     objects.Sort((o1, o2) => { return o1.x > o2.x ? 1 : o1.x < o2.x ? -1 : o1.y < o2.y ? -1 : o1.y > o2.y ? 1 : 0; });
   }
@@ -185,7 +185,7 @@ public class Data
     return new LevelLayerData(1, 1, layer);
   }
   
-  public Dictionary<String,int> getObjectDictionary(int type)
+  public Dictionary<String,int> getObjectDictionary(int listNo, int type)
   {
     return new Dictionary<String, int> { {"data", 0} };
   }

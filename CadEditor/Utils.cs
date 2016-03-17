@@ -703,7 +703,7 @@ namespace CadEditor
             }
         }
 
-        public static  void defaultDrawObject(Graphics g, ObjectRec curObject, bool isSelected, float curScale, ImageList objectSprites)
+        public static  void defaultDrawObject(Graphics g, ObjectRec curObject, int listNo, bool isSelected, float curScale, ImageList objectSprites)
         {
             int x = curObject.x, y = curObject.y;
             var myFont = new Font(FontFamily.GenericSansSerif, 6.0f);
@@ -720,7 +720,7 @@ namespace CadEditor
                 g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle((int)(x * curScale) - 8, (int)(y * curScale) - 8, 16, 16));       
         }
 
-        public static void defaultDrawObjectBig(Graphics g, ObjectRec curObject, bool isSelected, float curScale, Image[] objectSpritesBig)
+        public static void defaultDrawObjectBig(Graphics g, ObjectRec curObject, int listNo, bool isSelected, float curScale, Image[] objectSpritesBig)
         {
             int x = curObject.x, y = curObject.y;
             var myFont = new Font(FontFamily.GenericSansSerif, 6.0f);

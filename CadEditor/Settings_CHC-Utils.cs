@@ -161,7 +161,7 @@ public static class CHCUtils
     return true;
   }
   
-  public static void drawObject(Graphics g, ObjectRec curObject, bool isSelected, float curScale, ImageList objectSprites)
+  public static void drawObject(Graphics g, ObjectRec curObject, int listNo, bool isSelected, float curScale, ImageList objectSprites)
   {
     //don't render commands
     if (curObject.type >= 0xFF00)
@@ -202,7 +202,7 @@ public static class CHCUtils
         g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle((int)(x * curScale) - 8, (int)(y * curScale) - 8, 16, 16));
   }
   
-  public static Dictionary<String,int> getObjectDictionary(int type)
+  public static Dictionary<String,int> getObjectDictionary(int listNo, int type)
   {
     return new Dictionary<String, int> { 
         {"data1", 0},

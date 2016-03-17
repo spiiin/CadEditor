@@ -79,7 +79,7 @@ public class Data : CapcomBase
     layer[0] = 0;
     return new LevelLayerData(1, 1, layer);
   }
-  public Dictionary<String,int> getObjectDictionary(int type)
+  public Dictionary<String,int> getObjectDictionary(int listNo, int type)
   {
     return new Dictionary<String, int> { {"data", 0} };
   }
