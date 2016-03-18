@@ -410,7 +410,7 @@ namespace CadEditor
                 int width = ConfigScript.getScreenWidth(scrLevelNo);
                 int height = ConfigScript.getScreenHeight(scrLevelNo);
                 var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
-                MapEditor.Render(g, bigBlocks, visibleRect, indexes, null, curScale, true, false, false, 0, width, height, ConfigScript.getScreenVertical());
+                MapEditor.Render(g, bigBlocks, formMain.BlockWidth, formMain.BlockHeight, visibleRect, indexes, null, curScale, true, false, false, 0, width, height, ConfigScript.getScreenVertical());
                 ConfigScript.renderToMainScreen(g, (int)curScale);
             }
             else

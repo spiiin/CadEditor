@@ -90,7 +90,7 @@ namespace PluginExportScreens
                 bool showLayer2 = formMain.ShowLayer2;
                 int TILE_SIZE_X = (int)(formMain.BlockWidth * curScale);
                 int TILE_SIZE_Y = (int)(formMain.BlockHeight * curScale);
-                var probeIm = MapEditor.ScreenToImage(formMain.BigBlocks, indexes, indexes2, curScale, showLayer1, showLayer2, false, 0, WIDTH, HEIGHT, ConfigScript.getScreenVertical());
+                var probeIm = MapEditor.ScreenToImage(formMain.BigBlocks, formMain.BlockWidth, formMain.BlockHeight, indexes, indexes2, curScale, showLayer1, showLayer2, false, 0, WIDTH, HEIGHT, ConfigScript.getScreenVertical());
                 int screenCount = SaveScreensCount.Count;
                 var resultImage = new Bitmap(probeIm.Width * screenCount, probeIm.Height);
                 using (var g = Graphics.FromImage(resultImage))
@@ -100,7 +100,7 @@ namespace PluginExportScreens
                         indexes = screens[formMain.ScreenNo + i];
                         if (ConfigScript.getLayersCount() > 1)
                             indexes2 = screens2[formMain.ScreenNo + i];
-                        var im = MapEditor.ScreenToImage(formMain.BigBlocks, indexes, indexes2, curScale, showLayer1, showLayer2, false, 0, WIDTH, HEIGHT, ConfigScript.getScreenVertical());
+                        var im = MapEditor.ScreenToImage(formMain.BigBlocks, formMain.BlockWidth, formMain.BlockHeight, indexes, indexes2, curScale, showLayer1, showLayer2, false, 0, WIDTH, HEIGHT, ConfigScript.getScreenVertical());
                         g.DrawImage(im, new Point(i * im.Width, 0));
                     }
                 }

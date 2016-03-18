@@ -19,7 +19,7 @@ namespace CadEditor
             mapScreen.Invalidate();
         }*/
 
-        public static void Render(Graphics g, ImageList bigBlocks, Rectangle? visibleRect, int[] screen, int[] screen2, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin, int WIDTH, int HEIGHT, bool verticalScreen)
+        public static void Render(Graphics g, ImageList bigBlocks, int blockWidth, int blockHeight, Rectangle? visibleRect, int[] screen, int[] screen2, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin, int WIDTH, int HEIGHT, bool verticalScreen)
         {
             int TILE_SIZE_X = (int)(blockWidth * CurScale);
             int TILE_SIZE_Y = (int)(blockHeight * CurScale);
@@ -62,7 +62,7 @@ namespace CadEditor
             ConfigScript.renderToMainScreen(g, (int)CurScale);
         }
 
-        public static Image ScreenToImage(ImageList bigBlocks, int[] screen, int[] screen2, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin, int WIDTH, int HEIGHT, bool verticalScreen)
+        public static Image ScreenToImage(ImageList bigBlocks, int blockWidth, int blockHeight, int[] screen, int[] screen2, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin, int WIDTH, int HEIGHT, bool verticalScreen)
         {
             int TILE_SIZE_X = (int)(blockWidth * CurScale);
             int TILE_SIZE_Y = (int)(blockHeight * CurScale);
@@ -80,7 +80,7 @@ namespace CadEditor
 
             using (var g = Graphics.FromImage(result))
             {
-                Render(g, bigBlocks, null, screen, screen2, CurScale, ShowLayer1, ShowLayer2, ShowBorder, LeftMargin, WIDTH, HEIGHT, verticalScreen);
+                Render(g, bigBlocks, blockWidth, blockHeight, null, screen, screen2, CurScale, ShowLayer1, ShowLayer2, ShowBorder, LeftMargin, WIDTH, HEIGHT, verticalScreen);
             }
             return result;
         }
@@ -97,8 +97,5 @@ namespace CadEditor
         private static PictureBox activeBlock;
         private static Panel pnView;
         private static ImageList bigBlocks;*/
-
-        private static int blockWidth = 32;
-        private static int blockHeight = 32;
     }
 }

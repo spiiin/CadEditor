@@ -314,7 +314,8 @@ namespace PluginVideoNes
             int[] indexes = Globals.getScreen(ConfigScript.screensOffset[levelNo], scrNo);
             int scrW = ConfigScript.getScreenWidth(0); //zero as screenNoForLevel
             int scrH = ConfigScript.getScreenHeight(0);
-            return new Bitmap(MapEditor.ScreenToImage(il, indexes, null, scale, true, false, false, 0, scrW, scrH, ConfigScript.getScreenVertical()));
+            //capcom hardcode
+            return new Bitmap(MapEditor.ScreenToImage(il, 32, 32, indexes, null, scale, true, false, false, 0, scrW, scrH, ConfigScript.getScreenVertical()));
         }
         #region Render Functions
         public Bitmap makeBigBlock(int i, int width, int height, byte[] bigBlockIndexes, System.Windows.Forms.ImageList smallBlocks)
