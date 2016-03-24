@@ -43,10 +43,7 @@ namespace CadEditor
         private void btOpen_Click(object sender, EventArgs e)
         {
             FileName = tbFileName.Text;
-            FileSize= (int)new FileInfo(FileName).Length;
             DumpName = tbDumpName.Text;
-            if (DumpName != "")
-              DumpSize = (int)new FileInfo(DumpName).Length;
             ConfigName = tbConfigName.Text;
             DialogResult = DialogResult.OK;
             Close();
@@ -61,8 +58,6 @@ namespace CadEditor
         public static string FileName = "";
         public static string DumpName = "";
         public static string ConfigName="";
-        public static int FileSize = 0;
-        public static int DumpSize = 0;
 
         private void OpenFile_Load(object sender, EventArgs e)
         {

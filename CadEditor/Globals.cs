@@ -19,9 +19,9 @@ namespace CadEditor
         {
             try
             {
+                int size = (int)new FileInfo(Filename).Length;
                 using (FileStream f = File.OpenRead(Filename))
                 {
-                    int size = OpenFile.FileSize;
                     romdata = new byte[size];
                     f.Read(romdata, 0, size);
                 }
@@ -35,9 +35,9 @@ namespace CadEditor
             {
                 if (Dumpfile != "")
                 {
+                    int size = (int)new FileInfo(Dumpfile).Length;
                     using (FileStream f = File.OpenRead(Dumpfile))
                     {
-                        int size = OpenFile.DumpSize;
                         dumpdata = new byte[size];
                         f.Read(dumpdata, 0, size);
                     }
@@ -66,7 +66,7 @@ namespace CadEditor
                 {
                     using (FileStream f = File.OpenWrite(OpenFile.DumpName))
                     {
-                        f.Write(Globals.dumpdata, 0, OpenFile.DumpSize);
+                        f.Write(Globals.dumpdata, 0, Globals.dumpdata.Length);
                         f.Seek(0, SeekOrigin.Begin);
 
                     }
@@ -82,7 +82,7 @@ namespace CadEditor
             {
                 using (FileStream f = File.OpenWrite(OpenFile.FileName))
                 {
-                    f.Write(Globals.romdata, 0, OpenFile.FileSize);
+                    f.Write(Globals.romdata, 0, Globals.romdata.Length);
                     f.Seek(0, SeekOrigin.Begin);
                 }
             }
