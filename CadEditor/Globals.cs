@@ -68,7 +68,6 @@ namespace CadEditor
                     {
                         f.Write(Globals.dumpdata, 0, Globals.dumpdata.Length);
                         f.Seek(0, SeekOrigin.Begin);
-
                     }
                 }
 

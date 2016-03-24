@@ -151,6 +151,21 @@ namespace PluginVideoNes
             return res;
         }
 
+        //using makeImageStrip for now. Return rectangle CHR bank image
+        public Bitmap makeImageRectangle(byte[] videoChunk, byte[] pallete, int subPalIndex, float scale, bool scaleAccurate = true, bool withAlpha = false)
+        {
+            Bitmap imageStrip = ConfigScript.videoNes.makeImageStrip(videoChunk, pallete, subPalIndex, 4, scaleAccurate, withAlpha);
+            Bitmap resultVideo = new Bitmap(512, 512);
+            using (Graphics g = Graphics.FromImage(resultVideo))
+            {
+                for (int i = 0; i < 256; i++)
+                {
+                    g.DrawImage(imageStrip, new Rectangle(i%16 * 32, (i/16) *32, 32, 32), new Rectangle(i * 32, 0, 32, 32) , GraphicsUnit.Pixel);
+                }
+            }
+            return resultVideo;
+        }
+
         public Bitmap makeObjectsStrip(byte videoPageId, byte tilesId, byte palId, float scale, MapViewType drawType, int constantSubpal = -1)
         {
             byte[] videoChunk = ConfigScript.getVideoChunk(videoPageId);

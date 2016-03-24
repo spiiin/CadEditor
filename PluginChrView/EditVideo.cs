@@ -46,16 +46,7 @@ namespace CadEditor
         {
             setPal();
             byte videoPageId = (byte)(curActiveVideo + 0x90);
-            Bitmap imageStrip = ConfigScript.videoNes.makeImageStrip(ConfigScript.getVideoChunk(videoPageId), curPal, curSubPal, 4);
-            Bitmap resultVideo = new Bitmap(512, 512);
-            using (Graphics g = Graphics.FromImage(resultVideo))
-            {
-                for (int i = 0; i < 256; i++)
-                {
-                    g.DrawImage(imageStrip, new Rectangle(i%16 * 32, (i/16) *32, 32, 32), new Rectangle(i * 32, 0, 32, 32) , GraphicsUnit.Pixel);
-                }
-            }
-            pbVideo.Image = resultVideo;
+            pbVideo.Image = ConfigScript.videoNes.makeImageRectangle(ConfigScript.getVideoChunk(videoPageId), curPal, curSubPal, 4);
         }
 
         private int curActiveVideo = 0;
