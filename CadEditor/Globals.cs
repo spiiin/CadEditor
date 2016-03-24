@@ -216,6 +216,11 @@ namespace CadEditor
             this.height = height;
         }
 
+        public override string ToString()
+        {
+            return String.Format("Start address:0x{0:X}. Records count:{1}, Record Size:{2}", beginAddr, recCount, recSize);
+        }
+
         public int beginAddr;
         public int recCount;
         public int recSize;
