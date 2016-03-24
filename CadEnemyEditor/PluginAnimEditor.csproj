@@ -53,9 +53,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CSScriptLibrary.v3.5, Version=3.5.2.0, Culture=neutral, PublicKeyToken=70fcc3d18c749033, processorArchitecture=MSIL">
+    <Reference Include="CSScriptLibrary.v3.5, Version=3.11.0.0, Culture=neutral, PublicKeyToken=70fcc3d18c749033, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CadEditor\CSScriptLibrary.v3.5.dll</HintPath>
+      <HintPath>..\libs\CSScript\NET 3.5\CSScriptLibrary.v3.5.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
