@@ -151,16 +151,18 @@ namespace PluginVideoNes
             return res;
         }
 
+        //TODO: write universal "RectangulateStripImage function"
         //using makeImageStrip for now. Return rectangle CHR bank image
         public Bitmap makeImageRectangle(byte[] videoChunk, byte[] pallete, int subPalIndex, float scale, bool scaleAccurate = true, bool withAlpha = false)
         {
-            Bitmap imageStrip = ConfigScript.videoNes.makeImageStrip(videoChunk, pallete, subPalIndex, 4, scaleAccurate, withAlpha);
-            Bitmap resultVideo = new Bitmap(512, 512);
+            Bitmap imageStrip = ConfigScript.videoNes.makeImageStrip(videoChunk, pallete, subPalIndex, scale, scaleAccurate, withAlpha);
+            Bitmap resultVideo = new Bitmap((int)(128*scale), (int)(128*scale));
             using (Graphics g = Graphics.FromImage(resultVideo))
             {
                 for (int i = 0; i < 256; i++)
                 {
-                    g.DrawImage(imageStrip, new Rectangle(i%16 * 32, (i/16) *32, 32, 32), new Rectangle(i * 32, 0, 32, 32) , GraphicsUnit.Pixel);
+                    int size = (int)(8* scale);
+                    g.DrawImage(imageStrip, new Rectangle(i%16 * size, (i/16) *size, size, size), new Rectangle(i * size, 0, size, size) , GraphicsUnit.Pixel);
                 }
             }
             return resultVideo;
@@ -235,7 +237,26 @@ namespace PluginVideoNes
                 }
             }
             return res;
+        }
 
+        //TODO: write universal "RectangulateStripImage function"
+        //using makeObjectsStrip for now. Return rectangle small blocks objects
+        public Bitmap makeObjectsRectangle(byte videoPageId, byte tilesId, byte palId, float scale, MapViewType drawType, int constantSubpal = -1)
+        {
+            Bitmap imageStrip = ConfigScript.videoNes.makeObjectsStrip(videoPageId, tilesId, palId, scale, drawType, constantSubpal);
+            //print only first 256 blocks
+            int BLOCKS_IN_ROW = 16;
+            int BLOCKS_IN_COL = 16;
+            Bitmap resultVideo = new Bitmap((int)(16*scale*BLOCKS_IN_ROW), (int)(16*scale*BLOCKS_IN_COL));
+            using (Graphics g = Graphics.FromImage(resultVideo))
+            {
+                for (int i = 0; i < 256; i++)
+                {
+                    int size = (int)(16 * scale);
+                    g.DrawImage(imageStrip, new Rectangle(i%16 * size, (i/16) *size, size, size), new Rectangle(i * size, 0, size, size) , GraphicsUnit.Pixel);
+                }
+            }
+            return resultVideo;
         }
 
 
