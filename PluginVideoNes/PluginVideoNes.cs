@@ -336,11 +336,11 @@ namespace PluginVideoNes
         }
 
         //make capcom screen image
-        public Bitmap makeScreen(int scrNo, int levelNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, float scale = 2.0f)
+        public Bitmap makeScreen(int scrNo, int levelNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, float scale = 2.0f, bool withBorders = true)
         {
             if (scrNo < 0)
                 return VideoHelper.emptyScreen((int)(ConfigScript.getScreenWidth(levelNo) * 32 * scale), (int)(ConfigScript.getScreenHeight(levelNo) * 32 * scale));
-            var bigBlocks = makeBigBlocks(videoNo, levelNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, scale, 32, 32, scale, MapViewType.Tiles, true);
+            var bigBlocks = makeBigBlocks(videoNo, levelNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, scale, 32, 32, scale, MapViewType.Tiles, withBorders);
             var il = new ImageList();
             if (bigBlocks.Length > 0)
             {
