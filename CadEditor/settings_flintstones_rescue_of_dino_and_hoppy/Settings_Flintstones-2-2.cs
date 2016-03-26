@@ -3,9 +3,9 @@ using System.Collections.Generic;
 //css_include Settings_Flintstones-Utils.cs;
 public class Data
 { 
-  public OffsetRec getScreensOffset()     { return new OffsetRec(0x1519, 1 , 8*78);   }
+  public OffsetRec getScreensOffset()     { return new OffsetRec(0x1519, 1 , 8*76);   }
   public int getScreenWidth()             { return 8; }
-  public int getScreenHeight()            { return 78; }
+  public int getScreenHeight()            { return 76; }
   public bool getScreenVertical()         { return true; }
   public string getBlocksFilename()       { return "flintstones_2.png"; }
   
