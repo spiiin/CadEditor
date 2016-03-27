@@ -259,19 +259,23 @@ namespace PluginVideoNes
             return resultVideo;
         }
 
+         public Image[] makeBigBlocks(int videoNo, int bigBlockNo, int blockNo, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
+            float smallBlockScaleFactor = 2.0f, int blockWidth = 32, int blockHeight = 32, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false)
+        {
+            byte blockIndexId = (byte)blockNo;
+            BigBlock[] bigBlockIndexes = ConfigScript.getBigBlocks(blockIndexId);
+            return makeBigBlocks(videoNo, bigBlockNo, bigBlockIndexes, palleteNo, smallObjectsViewType, smallBlockScaleFactor, blockWidth, blockHeight, curButtonScale, curViewType, showAxis);
+        }
 
-
-        public Image[] makeBigBlocks(int videoNo, int bigBlockNo, int blockNo, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
+        public Image[] makeBigBlocks(int videoNo, int bigBlockNo, BigBlock[] bigBlockIndexes, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
             float smallBlockScaleFactor = 2.0f, int blockWidth = 32, int blockHeight = 32, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false)
         {
             int blockCount = ConfigScript.getBigBlocksCount();
             var bigBlocks = new Image[blockCount];
 
             byte blockId = (byte)bigBlockNo;
-            byte blockIndexId = (byte)blockNo;
             byte backId = (byte)videoNo;
             byte palId = (byte)palleteNo;
-            BigBlock[] bigBlockIndexes = ConfigScript.getBigBlocks(blockIndexId);
 
             var im = makeObjectsStrip(backId, blockId, palId, smallBlockScaleFactor, smallObjectsViewType);
             var smallBlocks = new System.Windows.Forms.ImageList();
@@ -339,7 +343,7 @@ namespace PluginVideoNes
         {
             if (scrNo < 0)
                 return VideoHelper.emptyScreen((int)(ConfigScript.getScreenWidth(levelNo) * 32 * scale), (int)(ConfigScript.getScreenHeight(levelNo) * 32 * scale));
-            var bigBlocks = makeBigBlocks(videoNo, levelNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, scale, 32, 32, scale, MapViewType.Tiles, withBorders);
+            var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, scale, 32, 32, scale, MapViewType.Tiles, withBorders);
             var il = new ImageList();
             if (bigBlocks.Length > 0)
             {

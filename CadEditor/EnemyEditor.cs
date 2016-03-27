@@ -88,7 +88,7 @@ namespace CadEditor
                 if (ConfigScript.isUseSegaGraphics())
                   bigImages = makeSegaBigBlocks();
                 else
-                  bigImages = ConfigScript.videoNes.makeBigBlocks(curVideoNo, 0, curBigBlockNo, curBlockNo, curPaletteNo, MapViewType.Tiles, curScale, 32, 32, curScale, MapViewType.Tiles, formMain.ShowAxis);
+                  bigImages = ConfigScript.videoNes.makeBigBlocks(curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo, MapViewType.Tiles, curScale, 32, 32, curScale, MapViewType.Tiles, formMain.ShowAxis);
                 bigBlocks.Images.AddRange(bigImages);
             }
         }
