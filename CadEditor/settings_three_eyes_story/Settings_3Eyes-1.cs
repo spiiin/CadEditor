@@ -33,18 +33,6 @@ public class Data
     return Utils.readVideoBankFromFile("videoBack_3E_1.bin", videoPageId);
   }
   
-  public byte[] getBigBlocksTT(int bigTileIndex)
-  {
-    var bigBlocksAddr = ConfigScript.getBigTilesAddr(bigTileIndex);
-    return Utils.readDataFromAlignedArrays(Globals.romdata, bigBlocksAddr, getBigBlocksCount());
-  }
-  
-  public void setBigBlocksTT(int bigTileIndex, byte[] bigBlockIndexes)
-  {
-    var bigBlocksAddr = ConfigScript.getBigTilesAddr(bigTileIndex);
-    Utils.writeDataToAlignedArrays(bigBlockIndexes, Globals.romdata, bigBlocksAddr, getBigBlocksCount());
-  }
-  
   public ObjRec[] getBlocks(int tileId)
   {
     int addr = ConfigScript.getTilesAddr(tileId);
