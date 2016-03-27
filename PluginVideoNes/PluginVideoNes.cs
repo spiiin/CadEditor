@@ -311,9 +311,6 @@ namespace PluginVideoNes
                         case GameType.TT:
                             b = makeBigBlockTT(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
                             break;
-                        case GameType._3E:
-                            b = makeBigBlock3E(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocks);
-                            break;
                         default:
                             b = makeBigBlock(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocks);
                             break;
@@ -369,23 +366,6 @@ namespace PluginVideoNes
                 g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[0]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
                 g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[1]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
                 g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[2]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));
-            }
-            return b;
-        }
-
-        public Bitmap makeBigBlock3E(int i, int width, int height, BigBlock[] bigBlocks, System.Windows.Forms.ImageList smallBlocks)
-        {
-            int bbRectPosX = width / 2;
-            int bbRectSizeX = width / 2;
-            int bbRectPosY = height / 2;
-            int bbRectSizeY = height / 2;
-            var b = new Bitmap(width, height);
-            using (Graphics g = Graphics.FromImage(b))
-            {
-                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[0]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[2]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[1]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
                 g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));
             }
             return b;

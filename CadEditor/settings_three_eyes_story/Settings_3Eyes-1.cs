@@ -10,7 +10,6 @@ public class Data
       "PluginChrView.dll"
     };
   }
-  public GameType getGameType()  { return GameType._3E; }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x147F8,  1  , 0x4000);  }//153
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x14660 , 1  , 0x440);   }//102
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x14A5C , 7  , 64);      }
@@ -21,8 +20,8 @@ public class Data
   
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChunk;   }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
-  public GetBigBlocksFunc     getBigBlocksFunc()     { return Utils.getBigBlocksCapcomDefault;}
-  public SetBigBlocksFunc     setBigBlocksFunc()     { return Utils.setBigBlocksCapcomDefault;}
+  public GetBigBlocksFunc     getBigBlocksFunc()     { return getBigBlocks; }
+  public SetBigBlocksFunc     setBigBlocksFunc()     { return setBigBlocks;}
   public GetBlocksFunc        getBlocksFunc()        { return getBlocks;}
   public SetBlocksFunc        setBlocksFunc()        { return setBlocks;}
   public GetPalFunc           getPalFunc()           { return getPalleteLevel_1_1;}
@@ -61,6 +60,31 @@ public class Data
         Globals.romdata[addr + 4 * i + 3] = obj.c4;
         Globals.romdata[0x14C1C + i] = obj.typeColor;
     }
+  }
+  
+  public BigBlock[] getBigBlocks(int bigTileIndex)
+  {
+      var bblocks = Utils.getBigBlocksCapcomDefault(bigTileIndex);
+      for (int v = 0; v < bblocks.Length; v++)
+      {
+         var b = bblocks[v];
+         int temp = b.indexes[1];
+         b.indexes[1] = b.indexes[2];
+         b.indexes[2] = temp;
+      }
+      return bblocks;
+  }
+  
+  public void setBigBlocks(int bigTileIndex, BigBlock[] bigBlockIndexes)
+  {
+      for (int v = 0; v < bigBlockIndexes.Length; v++)
+      {
+         var b = bigBlockIndexes[v];
+         int temp = b.indexes[1];
+         b.indexes[1] = b.indexes[2];
+         b.indexes[2] = temp;
+      }
+      Utils.setBigBlocksCapcomDefault(bigTileIndex, bigBlockIndexes);
   }
   
   public byte[] getPalleteLevel_1_1(int palId)

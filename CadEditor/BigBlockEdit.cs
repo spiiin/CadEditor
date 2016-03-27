@@ -127,9 +127,6 @@ namespace CadEditor
                             //case GameTyp.TT:
                             //    b = ConfigScript.videoNes.makeBigBlockTT(i, 64, 64, bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
                             //    break;
-                            case GameTyp._3E:
-                                b = ConfigScript.videoNes.makeBigBlock3E(i, 64, 64, bigBlockIndexes, smallBlocks);
-                                break;
                             default:
                                 b = ConfigScript.videoNes.makeBigBlock(i, 64, 64, bigBlockIndexes, smallBlocks);
                                 break;

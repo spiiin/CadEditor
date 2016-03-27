@@ -413,7 +413,6 @@ namespace CadEditor
         Generic,
         DT2,
         TT,
-        _3E,
     };
 
     public enum MapViewType
