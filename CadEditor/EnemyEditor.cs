@@ -227,6 +227,7 @@ namespace CadEditor
             for (int i = 0; i < objectSprites.Images.Count; i++)
             {
                 var but = new Button();
+                but.FlatStyle = FlatStyle.Flat;
                 but.Size = new Size(32, 32);
                 but.ImageList = objectSprites;
                 but.ImageIndex = i;

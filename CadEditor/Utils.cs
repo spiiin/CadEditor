@@ -45,6 +45,7 @@ namespace CadEditor
             for (int i = startIndex; i < startIndex+count; i++)
             {
                 var but = new Button();
+                but.FlatStyle = FlatStyle.Flat;
                 but.Size = buttonSize;
                 but.ImageList = buttonsImages;
                 but.ImageIndex = i;

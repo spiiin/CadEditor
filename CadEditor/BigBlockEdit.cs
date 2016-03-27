@@ -33,6 +33,7 @@ namespace CadEditor
             for (int i = 0; i < SMALL_BLOCKS_COUNT; i++)
             {
                 var but = new Button();
+                but.FlatStyle = FlatStyle.Flat;
                 but.Size = new Size(32, 32);
                 but.ImageList = smallBlocks;
                 but.ImageIndex = i;
