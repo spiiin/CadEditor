@@ -20,8 +20,8 @@ public class Data
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getTinyToonVideoAddress; }
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getTinyToonVideoChunk;   }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
-  public GetBigBlocksFunc     getBigBlocksFunc()     { return getBigBlocksTT;}
-  public SetBigBlocksFunc     setBigBlocksFunc()     { return setBigBlocksTT;}
+  public GetBigBlocksFunc     getBigBlocksFunc()     { return TinyToonUtils.getBigBlocksTT;}
+  public SetBigBlocksFunc     setBigBlocksFunc()     { return TinyToonUtils.setBigBlocksTT;}
   public GetBlocksFunc        getBlocksFunc()        { return TinyToonUtils.getBlocks;}
   public SetBlocksFunc        setBlocksFunc()        { return TinyToonUtils.setBlocks;}
   public GetPalFunc           getPalFunc()           { return getPalleteLevel_3_3;}
@@ -44,18 +44,6 @@ public class Data
   public byte[] getTinyToonVideoChunk(int videoPageId)
   {
     return Utils.readVideoBankFromFile("videoBack_TT_64.bin", videoPageId);
-  }
-  
-  public byte[] getBigBlocksTT(int bigTileIndex)
-  {
-    byte[] bigBlockIndexes = new byte[getBigBlocksCount() * 4];
-    var bigBlocksAddr = Globals.getBigTilesAddr(bigTileIndex);
-    return Utils.readDataFromAlignedArrays(Globals.romdata, bigBlocksAddr, getBigBlocksCount());
-  }
-  public void setBigBlocksTT(int bigTileIndex, byte[] bigBlockIndexes)
-  {
-    var bigBlocksAddr = Globals.getBigTilesAddr(bigTileIndex);
-    Utils.writeDataToAlignedArrays(bigBlockIndexes, Globals.romdata, bigBlocksAddr, getBigBlocksCount());
   }
   
   public byte[] getPalleteLevel_3_3(int palId)

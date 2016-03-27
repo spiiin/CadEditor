@@ -46,9 +46,9 @@ namespace CadEditor
       Bitmap makeObjectsRectangle(byte videoPageId, byte tilesId, byte palId, float scale, MapViewType drawType, int constantSubpal = -1);
       Bitmap makeScreen(int scrNo, int levelNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, float scale = 2.0f, bool withBorders = true);
 
-      Bitmap makeBigBlock(int i, int width, int height, byte[] bigBlockIndexes, System.Windows.Forms.ImageList smallBlocks);
-      Bitmap makeBigBlock3E(int i, int width, int height, byte[] bigBlockIndexes, System.Windows.Forms.ImageList smallBlocks);
-      Bitmap makeBigBlockTT(int i, int width, int height, byte[] bigBlockIndexes, System.Windows.Forms.ImageList[] smallBlocksAll, byte[] smallBlocksColorBytes);
+      Bitmap makeBigBlock(int i, int width, int height, BigBlock[] bigBlocks, System.Windows.Forms.ImageList smallBlocks);
+      Bitmap makeBigBlock3E(int i, int width, int height, BigBlock[] bigBlocks, System.Windows.Forms.ImageList smallBlocks);
+      Bitmap makeBigBlockTT(int i, int width, int height, BigBlock[] bigBlocks, System.Windows.Forms.ImageList[] smallBlocksAll, byte[] smallBlocksColorBytes);
 
       Color[] NesColors { get; set; }
 

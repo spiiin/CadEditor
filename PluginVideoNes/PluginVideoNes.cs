@@ -272,7 +272,7 @@ namespace PluginVideoNes
             byte blockIndexId = (byte)blockNo;
             byte backId = (byte)videoNo;
             byte palId = (byte)palleteNo;
-            byte[] bigBlockIndexes = ConfigScript.getBigBlocks(blockIndexId);
+            BigBlock[] bigBlockIndexes = ConfigScript.getBigBlocks(blockIndexId);
 
             var im = makeObjectsStrip(backId, blockId, palId, smallBlockScaleFactor, smallObjectsViewType);
             var smallBlocks = new System.Windows.Forms.ImageList();
@@ -329,7 +329,7 @@ namespace PluginVideoNes
         {
             int btc = ConfigScript.getBigBlocksCount();
             var colorBytes = new byte[btc];
-            int addr = Globals.getBigTilesAddr(bigTileIndex);
+            int addr = ConfigScript.getBigTilesAddr(bigTileIndex);
             for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
                 colorBytes[i] = Globals.romdata[addr + btc * 4 + i];
             return colorBytes;
@@ -354,7 +354,7 @@ namespace PluginVideoNes
             return new Bitmap(MapEditor.ScreenToImage(il, 32, 32, indexes, null, scale, true, false, false, 0, scrW, scrH, ConfigScript.getScreenVertical()));
         }
         #region Render Functions
-        public Bitmap makeBigBlock(int i, int width, int height, byte[] bigBlockIndexes, System.Windows.Forms.ImageList smallBlocks)
+        public Bitmap makeBigBlock(int i, int width, int height, BigBlock[] bigBlocks, System.Windows.Forms.ImageList smallBlocks)
         {
             int bbRectPosX = width / 2;
             int bbRectSizeX = width / 2;
@@ -363,15 +363,15 @@ namespace PluginVideoNes
             var b = new Bitmap(width, height);
             using (Graphics g = Graphics.FromImage(b))
             {
-                g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[0]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[1]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[2]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));
             }
             return b;
         }
 
-        public Bitmap makeBigBlock3E(int i, int width, int height, byte[] bigBlockIndexes, System.Windows.Forms.ImageList smallBlocks)
+        public Bitmap makeBigBlock3E(int i, int width, int height, BigBlock[] bigBlocks, System.Windows.Forms.ImageList smallBlocks)
         {
             int bbRectPosX = width / 2;
             int bbRectSizeX = width / 2;
@@ -380,15 +380,15 @@ namespace PluginVideoNes
             var b = new Bitmap(width, height);
             using (Graphics g = Graphics.FromImage(b))
             {
-                g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 0]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocks.Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[0]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[1]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[2]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));
             }
             return b;
         }
 
-        public Bitmap makeBigBlockTT(int i, int width, int height, byte[] bigBlockIndexes, System.Windows.Forms.ImageList[] smallBlocksAll, byte[] smallBlocksColorBytes)
+        public Bitmap makeBigBlockTT(int i, int width, int height, BigBlock[] bigBlocks, System.Windows.Forms.ImageList[] smallBlocksAll, byte[] smallBlocksColorBytes)
         {
             int bbRectPosX = width / 2;
             int bbRectSizeX = width / 2;
@@ -398,10 +398,10 @@ namespace PluginVideoNes
             using (Graphics g = Graphics.FromImage(b))
             {
                 int scb = smallBlocksColorBytes[i];
-                g.DrawImage(smallBlocksAll[scb >> 0 & 0x3].Images[bigBlockIndexes[i * 4]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocksAll[scb >> 2 & 0x3].Images[bigBlockIndexes[i * 4 + 1]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocksAll[scb >> 4 & 0x3].Images[bigBlockIndexes[i * 4 + 2]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocksAll[scb >> 6 & 0x3].Images[bigBlockIndexes[i * 4 + 3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocksAll[scb >> 0 & 0x3].Images[bigBlocks[i].indexes[0]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocksAll[scb >> 2 & 0x3].Images[bigBlocks[i].indexes[1]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocksAll[scb >> 4 & 0x3].Images[bigBlocks[i].indexes[2]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocksAll[scb >> 6 & 0x3].Images[bigBlocks[i].indexes[3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));
             }
             return b;
         }

@@ -101,8 +101,8 @@ public class Data
   //not real layout, simple screen line
   public  LevelLayerData getLayout(int curActiveLayout)
   {
-      int width =  Globals.getLevelWidth(curActiveLayout);
-      int height = Globals.getLevelHeight(curActiveLayout);
+      int width =  ConfigScript.getLevelWidth(curActiveLayout);
+      int height = ConfigScript.getLevelHeight(curActiveLayout);
       byte[] layer = new byte[width * height];
       for (int i = 0; i < width * height; i++)
           layer[i] = (byte)i;

@@ -528,7 +528,7 @@ namespace CadEditor
             if (data == null)
                 return;
 
-            int addr = Globals.getTilesAddr(getBigBlockNo());
+            int addr = ConfigScript.getTilesAddr(getBigBlockNo());
             for (int i = 0; i < ConfigScript.getBlocksCount(); i++)
             {
                 Globals.romdata[addr + i] = data[i];

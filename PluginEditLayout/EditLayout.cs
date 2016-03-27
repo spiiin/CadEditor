@@ -92,8 +92,8 @@ namespace CadEditor
 
         private void reloadLevelLayer()
         {
-            int layoutAddr = Globals.getLayoutAddr(curActiveLayout);
-            int scrollAddr = Globals.getScrollAddr(curActiveLayout); //darkwing duck specific
+            int layoutAddr = ConfigScript.getLayoutAddr(curActiveLayout);
+            int scrollAddr = ConfigScript.getScrollAddr(curActiveLayout); //darkwing duck specific
             int width = curWidth;
             int height = curHeight;
             byte[] layer = new byte[width * height];
@@ -204,8 +204,8 @@ namespace CadEditor
                 return;
 
             curActiveLayout = cbLayoutNo.SelectedIndex;
-            curWidth = Globals.getLevelWidth(curActiveLayout);
-            curHeight = Globals.getLevelHeight(curActiveLayout);
+            curWidth = ConfigScript.getLevelWidth(curActiveLayout);
+            curHeight = ConfigScript.getLevelHeight(curActiveLayout);
 
             drawMode = MapDrawMode.Screens;
             curActiveBlock = 0;
@@ -264,8 +264,8 @@ namespace CadEditor
         private bool saveToFile()
         {
             int layerAddr, scrollAddr, width, height;
-            layerAddr = Globals.getLayoutAddr(curActiveLayout);
-            scrollAddr = Globals.getScrollAddr(curActiveLayout); //darkwing duck specific
+            layerAddr = ConfigScript.getLayoutAddr(curActiveLayout);
+            scrollAddr = ConfigScript.getScrollAddr(curActiveLayout); //darkwing duck specific
             width = curWidth;
             height = curHeight;
             for (int i = 0; i < width * height; i++)

@@ -130,7 +130,7 @@ namespace CadEditor
             var fn = f.Filename;
             if (f.getExportType() == ExportType.Binary)
             {
-                Utils.saveDataToFile(fn, bigBlockIndexes);
+                Utils.saveDataToFile(fn, Utils.linearizeBigBlocks(bigBlockIndexes));
             }
             else
             {
@@ -162,21 +162,22 @@ namespace CadEditor
         }
 
         protected int SMALL_BLOCKS_COUNT = 256;
-        protected byte[] bigBlockIndexes;
+        protected BigBlock[] bigBlockIndexes;
 
         protected void mapScreen_Paint(object sender, PaintEventArgs e)
         {
-            int addIndexes = curPart * 256 * 4;
+            int addIndexes = curPart * 256;
             Graphics g = e.Graphics;
             int btc = Math.Min(ConfigScript.getBigBlocksCount(), 256);
             for (int i = 0; i < btc; i++)
             {
                 int xb = i%16;
                 int yb = i/16;
-                g.DrawImage(smallBlocks.Images[bigBlockIndexes[addIndexes+i * 4]], new Rectangle(xb * 32, yb * 32, 16, 16));
-                g.DrawImage(smallBlocks.Images[bigBlockIndexes[addIndexes+i * 4 + 1]], new Rectangle(xb * 32 + 16, yb * 32, 15, 16));
-                g.DrawImage(smallBlocks.Images[bigBlockIndexes[addIndexes+i * 4 + 2]], new Rectangle(xb * 32, yb * 32 + 16, 16, 15));
-                g.DrawImage(smallBlocks.Images[bigBlockIndexes[addIndexes+i * 4 + 3]], new Rectangle(xb * 32 + 16, yb * 32 + 16, 15, 15));
+                var bb = bigBlockIndexes[addIndexes+i];
+                g.DrawImage(smallBlocks.Images[bb.indexes[0]], new Rectangle(xb * 32, yb * 32, 16, 16));
+                g.DrawImage(smallBlocks.Images[bb.indexes[1]], new Rectangle(xb * 32 + 16, yb * 32, 15, 16));
+                g.DrawImage(smallBlocks.Images[bb.indexes[2]], new Rectangle(xb * 32, yb * 32 + 16, 16, 15));
+                g.DrawImage(smallBlocks.Images[bb.indexes[3]], new Rectangle(xb * 32 + 16, yb * 32 + 16, 15, 15));
             }
         }
 
@@ -188,18 +189,19 @@ namespace CadEditor
             int by = e.Y / 32;
             int dx = (e.X % 32) / 16;
             int dy = (e.Y % 32) / 16;
-            int ind = (by * 16 + bx) * 4 + (dy * 2 + dx);
-            int actualIndex = addIndexes + ind;
+            int bigBlockIndex = (by * 16 + bx);
+            int insideIndex =  + (dy * 2 + dx);
+            int actualIndex = addIndexes + bigBlockIndex;
             if (e.Button == MouseButtons.Left)
             {
                 if (actualIndex < bigBlockIndexes.Length)
-                    bigBlockIndexes[actualIndex] = (byte)curActiveBlock;
+                    bigBlockIndexes[actualIndex].indexes[insideIndex] = curActiveBlock;
                 mapScreen.Invalidate();
             }
             else
             {
                 if (actualIndex < bigBlockIndexes.Length)
-                    curActiveBlock = bigBlockIndexes[actualIndex];
+                    curActiveBlock = bigBlockIndexes[actualIndex].indexes[insideIndex];
                 pbActive.Image = smallBlocks.Images[curActiveBlock];
                 lbActive.Text = String.Format("({0:X})", curActiveBlock);
             }
@@ -317,8 +319,14 @@ namespace CadEditor
         {
             if (MessageBox.Show("Are you sure want to clear all blocks?", "Clear", MessageBoxButtons.YesNo) != DialogResult.Yes)
                 return;
-            for (int i = 0; i < ConfigScript.getBigBlocksCount() * 4; i++)
-                bigBlockIndexes[i] = 0;
+            for (int i = 0; i < bigBlockIndexes.Length; i++)
+            {
+                var bb = bigBlockIndexes[i];
+                for (int j = 0; j < bb.indexes.Length; j++)
+                {
+                    bb.indexes[j] = 0;
+                }
+            }
             dirty = true;
             updateSaveVisibility();
             mapScreen.Invalidate();
@@ -339,7 +347,7 @@ namespace CadEditor
             var fn = f.Filename;
             var data = Utils.loadDataFromFile(fn);
             //duck tales 2 has other format
-            bigBlockIndexes = data;
+            bigBlockIndexes = Utils.unlinearizeBigBlocks(data, 2,2);
             reloadLevel(false);
             dirty = true;
             updateSaveVisibility();

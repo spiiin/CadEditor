@@ -156,12 +156,11 @@ namespace CadEditor
         private void setBigBlocksIndexes()
         {
           int bigTileIndex = curActiveBlockNo;
-          bigBlockIndexes = ConfigScript.getBigBlocks(bigTileIndex);
         }
 
         private Image[] makeSegaBigBlocks()
         {
-            byte[] mapping = ConfigScript.getBigBlocks(curActiveBigBlockNo);
+            byte[] mapping = ConfigScript.getSegaMapping(curActiveBigBlockNo);
             byte[] videoTiles = ConfigScript.getVideoChunk(curActiveVideoNo);
             byte[] pal = ConfigScript.getPal(curActivePalleteNo);
             int count = ConfigScript.getBigBlocksCount();
@@ -399,8 +398,6 @@ namespace CadEditor
         private bool showLayer2;
         private int[][] screens;
         private int[][] screens2;
-
-        private byte[] bigBlockIndexes;
 
         public static bool fileLoaded = false;
 

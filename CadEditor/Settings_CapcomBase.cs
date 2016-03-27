@@ -47,11 +47,11 @@ public class CapcomBase
   
   public ObjRec[] getBlocks(int blockIndex)
   {
-    return Utils.readBlocksFromAlignedArrays(Globals.romdata, Globals.getTilesAddr(blockIndex), getBlocksCount());
+    return Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount());
   }
   
   public void setBlocks(int blockIndex, ObjRec[] blocksData)
   {
-    Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, Globals.getTilesAddr(blockIndex), getBlocksCount());
+    Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount());
   }
 }

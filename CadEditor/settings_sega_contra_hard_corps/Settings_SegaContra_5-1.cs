@@ -14,8 +14,8 @@ public class Data
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChuck;}
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
-  public GetBigBlocksFunc     getBigBlocksFunc()     { return getBigBlocks; }
-  public SetBigBlocksFunc     setBigBlocksFunc()     { return setBigBlocks; }
+  public GetSegaMappingFunc     getSegaMappingFunc()     { return getBigBlocks; }
+  public SetSegaMappingFunc     setSegaMappingFunc()     { return setBigBlocks; }
   
   public GetPalFunc           getPalFunc()           { return readPal;}
   public SetPalFunc           setPalFunc()           { return null;}

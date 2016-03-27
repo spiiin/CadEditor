@@ -92,20 +92,21 @@ public class Data:CapcomBase
     return levelPointers[levelNo];
   }
   
-  public byte[] getBigBlocksDt2(int bigTileIndex)
+  public BigBlock[] getBigBlocksDt2(int bigTileIndex)
   {
     int[] addrPointers = getBigBlocksPtrsForLevel(bigTileIndex);
     int blocksCount = getBigBlocksCountForLevel(bigTileIndex);
     byte[] bigBlockIndexes = new byte[getBigBlocksCount()*4];
     byte[] tempIndexes = Utils.readDataFromUnalignedArrays(Globals.romdata, addrPointers[0], addrPointers[1], addrPointers[2], addrPointers[3], blocksCount);
-    Array.Copy(tempIndexes, bigBlockIndexes, blocksCount*4);    
-    return bigBlockIndexes;
+    Array.Copy(tempIndexes, bigBlockIndexes, blocksCount*4); 
+    return Utils.unlinearizeBigBlocks(bigBlockIndexes, 2, 2);
   }
   
-  public void setBigBlocksDt2(int bigTileIndex, byte[] data)
+  public void setBigBlocksDt2(int bigTileIndex, BigBlock[] bigBlocks)
   {
     int[] addrPointers = getBigBlocksPtrsForLevel(bigTileIndex);
     int blocksCount = getBigBlocksCountForLevel(bigTileIndex);
+    var data = Utils.linearizeBigBlocks(bigBlocks);
     Utils.writeDataToUnalignedArrays(data, Globals.romdata, addrPointers[0], addrPointers[1], addrPointers[2], addrPointers[3], blocksCount); 
   }
   
@@ -153,7 +154,7 @@ public class Data:CapcomBase
   
   public void setBlocksDt2(int blockIndex, ObjRec[] objects)
   {
-    int addr = Globals.getTilesAddr(blockIndex);
+    int addr = ConfigScript.getTilesAddr(blockIndex);
     int count = getBlocksCount();
     for (int i = 0; i < count; i++)
     {

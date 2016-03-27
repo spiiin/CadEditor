@@ -53,8 +53,8 @@ namespace CadEditor
 
         private void reloadLevelLayerData(bool resetScreenPos)
         {
-            curWidth = Globals.getLevelWidth(curActiveLayout);
-            curHeight = Globals.getLevelHeight(curActiveLayout);
+            curWidth = ConfigScript.getLevelWidth(curActiveLayout);
+            curHeight = ConfigScript.getLevelHeight(curActiveLayout);
             curActiveLayout = cbLayoutNo.SelectedIndex;
             curVideoNo = cbVideoNo.SelectedIndex + 0x90;
             curBigBlockNo = cbBigBlockNo.SelectedIndex;
@@ -96,7 +96,7 @@ namespace CadEditor
         //copy-paste
         private Image[] makeSegaBigBlocks()
         {
-            byte[] mapping = ConfigScript.getBigBlocks(curBigBlockNo);
+            byte[] mapping = ConfigScript.getSegaMapping(curBigBlockNo);
             byte[] videoTiles = ConfigScript.getVideoChunk(curVideoNo);
             byte[] pal = ConfigScript.getPal(curPaletteNo);
             int count = ConfigScript.getBigBlocksCount();

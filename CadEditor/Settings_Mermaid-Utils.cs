@@ -50,9 +50,9 @@ public static class MermaidUtils
   
   public static LevelLayerData getLayoutLinearMermaid(int curActiveLayout)
   {
-      int layoutAddr = Globals.getLayoutAddr(curActiveLayout);
-      int width =  Globals.getLevelWidth(curActiveLayout);
-      int height = Globals.getLevelHeight(curActiveLayout);
+      int layoutAddr = ConfigScript.getLayoutAddr(curActiveLayout);
+      int width =  ConfigScript.getLevelWidth(curActiveLayout);
+      int height = ConfigScript.getLevelHeight(curActiveLayout);
       byte[] layer = new byte[width * height];
       for (int i = 0; i < width * height; i++)
           layer[i] = (byte)((Globals.romdata[layoutAddr + i] + 1)%256);

@@ -226,7 +226,7 @@ public class Data
     return Utils.mergeArrays(part1, part2);
   }
   
-  public byte[] getBigBlocksJB(int bigTileIndex)
+  public BigBlock[] getBigBlocksJB(int bigTileIndex)
   {
     var bigBlockRec = BigBlocksAddrs[bigTileIndex];
     byte[] ans = new byte[256 * 4];
@@ -238,7 +238,7 @@ public class Data
     var bb2 = Utils.readDataFromAlignedArrays(Globals.romdata, bigBlocksAddr2, bigBlocksCount2);
     bb1.CopyTo(ans, 0);
     bb2.CopyTo(ans, 128*4);
-    return ans;
+    return Utils.unlinearizeBigBlocks(ans, 2, 2);
   }
   
   public void setBlocksJB(int blockIndex, ObjRec[] objects)
@@ -249,12 +249,13 @@ public class Data
     Utils.writeBlocksToAlignedArrays(secondPart, Globals.romdata, BlocksAddrs[blockIndex].loAddr, 0x80);
   }
   
-  public void setBigBlocksJB(int bigTileIndex, byte[] bigBlockIndexes)
+  public void setBigBlocksJB(int bigTileIndex, BigBlock[] bigBlockIndexes)
   {
+    var data = Utils.linearizeBigBlocks(bigBlockIndexes);
     var bigBlockRec = BigBlocksAddrs[bigTileIndex];
     var secondPart  = new byte[bigBlockRec.loCount*4];
-    Array.Copy(bigBlockIndexes, 128*4, secondPart, 0, bigBlockRec.loCount*4);
-    Utils.writeDataToAlignedArrays(bigBlockIndexes, Globals.romdata, bigBlockRec.hiAddr, bigBlockRec.hiCount);
-    Utils.writeDataToAlignedArrays(secondPart     , Globals.romdata, bigBlockRec.loAddr, bigBlockRec.loCount);
+    Array.Copy(data, 128*4, secondPart, 0, bigBlockRec.loCount*4);
+    Utils.writeDataToAlignedArrays(data      , Globals.romdata, bigBlockRec.hiAddr, bigBlockRec.hiCount);
+    Utils.writeDataToAlignedArrays(secondPart, Globals.romdata, bigBlockRec.loAddr, bigBlockRec.loCount);
   }
 }

@@ -35,19 +35,19 @@ public class Data
   
   public byte[] getBigBlocksTT(int bigTileIndex)
   {
-    var bigBlocksAddr = Globals.getBigTilesAddr(bigTileIndex);
+    var bigBlocksAddr = ConfigScript.getBigTilesAddr(bigTileIndex);
     return Utils.readDataFromAlignedArrays(Globals.romdata, bigBlocksAddr, getBigBlocksCount());
   }
   
   public void setBigBlocksTT(int bigTileIndex, byte[] bigBlockIndexes)
   {
-    var bigBlocksAddr = Globals.getBigTilesAddr(bigTileIndex);
+    var bigBlocksAddr = ConfigScript.getBigTilesAddr(bigTileIndex);
     Utils.writeDataToAlignedArrays(bigBlockIndexes, Globals.romdata, bigBlocksAddr, getBigBlocksCount());
   }
   
   public ObjRec[] getBlocks(int tileId)
   {
-    int addr = Globals.getTilesAddr(tileId);
+    int addr = ConfigScript.getTilesAddr(tileId);
     var objects = new ObjRec[getBlocksCount()];
     for (int i = 0; i < getBlocksCount(); i++)
     {
@@ -63,7 +63,7 @@ public class Data
   
   public void setBlocks(int tileId, ObjRec[] blocks)
   {
-    int addr = Globals.getTilesAddr(tileId);
+    int addr = ConfigScript.getTilesAddr(tileId);
     for (int i = 0; i < getBlocksCount(); i++)
     {
         var obj = blocks[i];

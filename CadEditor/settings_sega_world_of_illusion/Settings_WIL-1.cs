@@ -20,8 +20,6 @@ public class Data
   
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChuck;   }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
-  public GetBigBlocksFunc     getBigBlocksFunc()     { return Utils.getBigBlocksCapcomDefault;}
-  public SetBigBlocksFunc     setBigBlocksFunc()     { return Utils.setBigBlocksCapcomDefault;}
   public GetPalFunc           getPalFunc()           { return readPal;}
   public SetPalFunc           setPalFunc()           { return null;}
   public GetObjectsFunc getObjectsFunc() { return null; }

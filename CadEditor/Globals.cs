@@ -93,26 +93,6 @@ namespace CadEditor
             return true;
         }
 
-        public static int getTilesAddr(int id)
-        {
-            return ConfigScript.blocksOffset.beginAddr + ConfigScript.blocksOffset.recSize * id;
-        }
-
-        public static int getBigTilesAddr(int id)
-        {
-            return ConfigScript.bigBlocksOffset.beginAddr + ConfigScript.bigBlocksOffset.recSize * id;
-        }
-
-        public static int getLevelWidth(int levelNo)
-        {
-            return ConfigScript.getLevelRec(levelNo).width;
-        }
-
-        public static int getLevelHeight(int levelNo)
-        {
-            return ConfigScript.getLevelRec(levelNo).height;
-        }
-
         public static int[] getScreen(OffsetRec screenOffset,  int screenIndex)
         {
             var result = new int[Math.Max(64, screenOffset.recSize)];
@@ -164,16 +144,6 @@ namespace CadEditor
             int curScroll = curLevelLayerData.scroll[curIndex] >> 5;
             bool upsort = curScroll == 0;
             return upsort;
-        }
-
-        public static int getLayoutAddr(int index)
-        {
-            return ConfigScript.getLevelRec(index).layoutAddr;
-        }
-
-        public static int getScrollAddr(int index)
-        {
-            return getLayoutAddr(index) + ConfigScript.getScrollsOffsetFromLayout();
         }
 
         public static byte[] romdata;
@@ -453,4 +423,18 @@ namespace CadEditor
         ObjNumbers,
         SmallObjNumbers,
     };
+
+    public class BigBlock
+    {
+        public BigBlock(int w, int h)
+        {
+            width = w;
+            height = h;
+            indexes = new int[getSize()];
+        }
+        public int getSize() { return width*height; }
+        public int[] indexes;
+        public int width;
+        public int height;
+    }
 }

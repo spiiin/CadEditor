@@ -63,7 +63,7 @@ namespace CadEditor
         {
             byte[] tileBytes = new byte[tiles.Length*2];
             Mapper.ApplyMapping(ref tileBytes, tiles);
-            ConfigScript.setBigBlocks(0, tileBytes);
+            ConfigScript.setSegaMapping(0, tileBytes);
             dirty = !Globals.flushToFile();
             return !dirty;
         }
@@ -289,7 +289,7 @@ namespace CadEditor
 
         private byte[] loadMappingData()
         {
-            return editMapMode ? ConfigScript.loadSegaBack() : ConfigScript.getBigBlocks(0);//curActiveBigBlock;
+            return editMapMode ? ConfigScript.loadSegaBack() : ConfigScript.getSegaMapping(0);//curActiveBigBlock;
         }
     }
 }
