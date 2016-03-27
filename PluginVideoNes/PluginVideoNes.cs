@@ -381,8 +381,8 @@ namespace PluginVideoNes
             using (Graphics g = Graphics.FromImage(b))
             {
                 g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[0]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[1]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[2]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[2]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[1]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
                 g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));
             }
             return b;
