@@ -43,7 +43,7 @@ namespace CadEditor
                 blocksPanel.Controls.Add(but);
             }
             blocksPanel.ResumeLayout();
-            prepareAxisLabels();
+ 
             reloadLevel();
 
             readOnly = false; //must be read from config
@@ -71,26 +71,6 @@ namespace CadEditor
             cbPaletteNo.SelectedIndex = formMain.CurActivePalleteNo;
             cbPart.SelectedIndex = 0;
             cbViewType.SelectedIndex = Math.Min((int)formMain.CurActiveViewType, cbViewType.Items.Count - 1);
-        }
-
-        protected void prepareAxisLabels()
-        {
-            int x = mapScreen.Location.X;
-            int y = mapScreen.Location.Y;
-            for (int i = 0; i < 16; i++)
-            {
-                var l = new Label();
-                l.Size = new System.Drawing.Size(12, 12);
-                l.Location = new Point(x-16, y+10 + i*32);
-                l.Text = String.Format("{0:X}", i);
-                this.Controls.Add(l);
-
-                var l2 = new Label();
-                l2.Size = new System.Drawing.Size(12, 12);
-                l2.Location = new Point(x+8 + i*32, y-16);
-                l2.Text = String.Format("{0:X}", i);
-                this.Controls.Add(l2);
-            }
         }
 
         protected void reloadLevel(bool reloadBigBlocks = true)
@@ -165,33 +145,79 @@ namespace CadEditor
         protected int SMALL_BLOCKS_COUNT = 256;
         protected BigBlock[] bigBlockIndexes;
 
+        //hardcode
+        private int getBlockWidth()
+        {
+            return 16;
+        }
+
+        private int getBlockHeight()
+        {
+            return 16;
+        }
+
         protected void mapScreen_Paint(object sender, PaintEventArgs e)
         {
             int addIndexes = curPart * 256;
             Graphics g = e.Graphics;
             int btc = Math.Min(ConfigScript.getBigBlocksCount(), 256);
+            int bblocksInRow = 16;
+            int bblocksInCol = (btc / bblocksInRow) + 1;
+
+            var testBBlock = bigBlockIndexes[0];
+            int bWidth = getBlockWidth();
+            int bHeight = getBlockHeight();
+            int bbWidth  =  bWidth  * testBBlock.width;
+            int bbHeight =  bHeight * testBBlock.height;
+
+            var pen = new Pen(Brushes.Magenta);
+
             for (int i = 0; i < btc; i++)
             {
-                int xb = i%16;
-                int yb = i/16;
+                int xb = i % bblocksInRow;
+                int yb = i / bblocksInRow;
                 var bb = bigBlockIndexes[addIndexes+i];
-                g.DrawImage(smallBlocks.Images[bb.indexes[0]], new Rectangle(xb * 32, yb * 32, 16, 16));
-                g.DrawImage(smallBlocks.Images[bb.indexes[1]], new Rectangle(xb * 32 + 16, yb * 32, 15, 16));
-                g.DrawImage(smallBlocks.Images[bb.indexes[2]], new Rectangle(xb * 32, yb * 32 + 16, 16, 15));
-                g.DrawImage(smallBlocks.Images[bb.indexes[3]], new Rectangle(xb * 32 + 16, yb * 32 + 16, 15, 15));
+                for (int h = 0; h < bb.height; h++)
+                {
+                    for (int w = 0; w < bb.height; w++)
+                    {
+                        int sbX = w * bWidth;
+                        int sbY = h * bHeight;
+                        int idx = h * bb.width + w;
+                        var r =  new Rectangle(xb * bbWidth + sbX, yb * bbHeight + sbY, bWidth, bHeight);
+                        g.DrawImage(smallBlocks.Images[bb.indexes[idx]], r);
+                    }
+                }
+                g.DrawRectangle(pen, new Rectangle(xb * bbWidth, yb * bbHeight, bbWidth, bbHeight));
             }
         }
 
         protected void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
-            int addIndexes = curPart * 256 * 4;
+            int addIndexes = curPart * 256;
             dirty = true; updateSaveVisibility();
-            int bx = e.X / 32;
-            int by = e.Y / 32;
-            int dx = (e.X % 32) / 16;
-            int dy = (e.Y % 32) / 16;
-            int bigBlockIndex = (by * 16 + bx);
-            int insideIndex =  + (dy * 2 + dx);
+
+            int btc = Math.Min(ConfigScript.getBigBlocksCount(), 256);
+            int bblocksInRow = 16;
+            int bblocksInCol = (btc / bblocksInRow) + 1;
+
+            var testBBlock = bigBlockIndexes[0];
+            int bWidth = getBlockWidth();
+            int bHeight = getBlockHeight();
+            int bbWidth  =  bWidth  * testBBlock.width;
+            int bbHeight =  bHeight * testBBlock.height;
+
+            int bx = e.X / bbWidth;
+            int by = e.Y / bbHeight;
+            int dx = (e.X % bbWidth) / bWidth;
+            int dy = (e.Y % bbHeight) / bHeight;
+            int bigBlockIndex = by * bblocksInRow + bx;
+            int insideIndex   = dy * testBBlock.width + dx;
+            //prevent out in bounds
+            if (bigBlockIndex >= btc)
+            {
+                return;
+            }
             int actualIndex = addIndexes + bigBlockIndex;
             if (e.Button == MouseButtons.Left)
             {
@@ -362,11 +388,22 @@ namespace CadEditor
         protected void mapScreen_MouseMove(object sender, MouseEventArgs e)
         {
             int addIndexesText = curPart * 256;
-            int bx = e.X / 32;
-            int by = e.Y / 32;
-            int dx = (e.X % 32) / 16;
-            int dy = (e.Y % 32) / 16;
-            int ind = ((by * 16 + bx) * 4 + (dy * 2 + dx)) / 4;
+
+            int btc = Math.Min(ConfigScript.getBigBlocksCount(), 256);
+            int bblocksInRow = 16;
+            int bblocksInCol = (btc / bblocksInRow) + 1;
+
+            var testBBlock = bigBlockIndexes[0];
+            int bWidth = getBlockWidth();
+            int bHeight = getBlockHeight();
+            int bbWidth  =  bWidth  * testBBlock.width;
+            int bbHeight =  bHeight * testBBlock.height;
+
+            int bx = e.X / bbWidth;
+            int by = e.Y / bbHeight;
+            int dx = (e.X % bbWidth) / bWidth;
+            int dy = (e.Y % bbHeight) / bHeight;
+            int ind = ((by * bblocksInRow + bx) * testBBlock.getSize() + (dy * testBBlock.width + dx)) / testBBlock.getSize();
             if (ind > 255)
             {
                 lbBigBlockNo.Text = "()";
@@ -374,7 +411,7 @@ namespace CadEditor
             else
             {
                 int actualIndex = addIndexesText + ind;
-                lbBigBlockNo.Text = String.Format("({0:X})", addIndexesText);
+                lbBigBlockNo.Text = String.Format("({0:X})", actualIndex);
             }
         }
 

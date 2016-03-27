@@ -50,6 +50,7 @@
             this.cbViewType = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lbActive = new System.Windows.Forms.Label();
             this.lbBigBlockNo = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tbbSave = new System.Windows.Forms.ToolStripButton();
@@ -58,7 +59,6 @@
             this.tbbImport = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tbbDeleteAll = new System.Windows.Forms.ToolStripButton();
-            this.lbActive = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -70,9 +70,10 @@
             // 
             // mapScreen
             // 
-            this.mapScreen.Location = new System.Drawing.Point(3, 3);
+            this.mapScreen.Location = new System.Drawing.Point(4, 4);
+            this.mapScreen.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mapScreen.Name = "mapScreen";
-            this.mapScreen.Size = new System.Drawing.Size(512, 512);
+            this.mapScreen.Size = new System.Drawing.Size(683, 630);
             this.mapScreen.TabIndex = 5;
             this.mapScreen.TabStop = false;
             this.mapScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.mapScreen_Paint);
@@ -86,9 +87,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.blocksPanel.AutoScroll = true;
-            this.blocksPanel.Location = new System.Drawing.Point(8, 211);
+            this.blocksPanel.Location = new System.Drawing.Point(11, 260);
+            this.blocksPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.blocksPanel.Name = "blocksPanel";
-            this.blocksPanel.Size = new System.Drawing.Size(249, 330);
+            this.blocksPanel.Size = new System.Drawing.Size(242, 406);
             this.blocksPanel.TabIndex = 7;
             // 
             // cbTileset
@@ -103,18 +105,20 @@
             "Tileset4 (13000)",
             "Tileset5 (17000)",
             "Tileset6 (1B000)"});
-            this.cbTileset.Location = new System.Drawing.Point(8, 19);
+            this.cbTileset.Location = new System.Drawing.Point(11, 23);
+            this.cbTileset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbTileset.Name = "cbTileset";
-            this.cbTileset.Size = new System.Drawing.Size(251, 21);
+            this.cbTileset.Size = new System.Drawing.Size(333, 24);
             this.cbTileset.TabIndex = 8;
             this.cbTileset.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 5);
+            this.label1.Location = new System.Drawing.Point(11, 6);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 13);
+            this.label1.Size = new System.Drawing.Size(53, 17);
             this.label1.TabIndex = 9;
             this.label1.Text = "Blocks:";
             // 
@@ -126,18 +130,20 @@
             // 
             // pbActive
             // 
-            this.pbActive.Location = new System.Drawing.Point(224, 179);
+            this.pbActive.Location = new System.Drawing.Point(299, 220);
+            this.pbActive.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pbActive.Name = "pbActive";
-            this.pbActive.Size = new System.Drawing.Size(32, 32);
+            this.pbActive.Size = new System.Drawing.Size(43, 39);
             this.pbActive.TabIndex = 13;
             this.pbActive.TabStop = false;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(145, 179);
+            this.label3.Location = new System.Drawing.Point(193, 220);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(73, 13);
+            this.label3.Size = new System.Drawing.Size(95, 17);
             this.label3.TabIndex = 14;
             this.label3.Text = "Currect block:";
             // 
@@ -155,17 +161,19 @@
             this.pnGeneric.Controls.Add(this.cbPaletteNo);
             this.pnGeneric.Controls.Add(this.label7);
             this.pnGeneric.Controls.Add(this.cbVideoNo);
-            this.pnGeneric.Location = new System.Drawing.Point(8, 56);
+            this.pnGeneric.Location = new System.Drawing.Point(11, 69);
+            this.pnGeneric.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnGeneric.Name = "pnGeneric";
-            this.pnGeneric.Size = new System.Drawing.Size(251, 117);
+            this.pnGeneric.Size = new System.Drawing.Size(335, 144);
             this.pnGeneric.TabIndex = 54;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 43);
+            this.label8.Location = new System.Drawing.Point(4, 53);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(59, 13);
+            this.label8.Size = new System.Drawing.Size(76, 17);
             this.label8.TabIndex = 50;
             this.label8.Text = "Big blocks:";
             // 
@@ -190,18 +198,20 @@
             "13",
             "14",
             "15"});
-            this.cbSmallBlock.Location = new System.Drawing.Point(6, 56);
+            this.cbSmallBlock.Location = new System.Drawing.Point(8, 69);
+            this.cbSmallBlock.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbSmallBlock.Name = "cbSmallBlock";
-            this.cbSmallBlock.Size = new System.Drawing.Size(236, 21);
+            this.cbSmallBlock.Size = new System.Drawing.Size(313, 24);
             this.cbSmallBlock.TabIndex = 49;
             this.cbSmallBlock.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(3, 82);
+            this.label9.Location = new System.Drawing.Point(4, 101);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(42, 13);
+            this.label9.Size = new System.Drawing.Size(55, 17);
             this.label9.TabIndex = 48;
             this.label9.Text = "Pallete:";
             // 
@@ -226,18 +236,20 @@
             "13",
             "14",
             "15"});
-            this.cbPaletteNo.Location = new System.Drawing.Point(6, 95);
+            this.cbPaletteNo.Location = new System.Drawing.Point(8, 117);
+            this.cbPaletteNo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbPaletteNo.Name = "cbPaletteNo";
-            this.cbPaletteNo.Size = new System.Drawing.Size(236, 21);
+            this.cbPaletteNo.Size = new System.Drawing.Size(313, 24);
             this.cbPaletteNo.TabIndex = 47;
             this.cbPaletteNo.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(8, 3);
+            this.label7.Location = new System.Drawing.Point(11, 4);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(37, 13);
+            this.label7.Size = new System.Drawing.Size(48, 17);
             this.label7.TabIndex = 42;
             this.label7.Text = "Video:";
             // 
@@ -254,9 +266,10 @@
             "6",
             "7",
             "8"});
-            this.cbVideoNo.Location = new System.Drawing.Point(5, 19);
+            this.cbVideoNo.Location = new System.Drawing.Point(7, 23);
+            this.cbVideoNo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbVideoNo.Name = "cbVideoNo";
-            this.cbVideoNo.Size = new System.Drawing.Size(237, 21);
+            this.cbVideoNo.Size = new System.Drawing.Size(315, 24);
             this.cbVideoNo.TabIndex = 41;
             this.cbVideoNo.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
             // 
@@ -265,9 +278,10 @@
             this.cbPart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbPart.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPart.FormattingEnabled = true;
-            this.cbPart.Location = new System.Drawing.Point(773, 2);
+            this.cbPart.Location = new System.Drawing.Point(1031, 2);
+            this.cbPart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbPart.Name = "cbPart";
-            this.cbPart.Size = new System.Drawing.Size(38, 21);
+            this.cbPart.Size = new System.Drawing.Size(49, 24);
             this.cbPart.TabIndex = 55;
             this.cbPart.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
             // 
@@ -275,9 +289,10 @@
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(738, 5);
+            this.label5.Location = new System.Drawing.Point(984, 6);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(29, 13);
+            this.label5.Size = new System.Drawing.Size(38, 17);
             this.label5.TabIndex = 56;
             this.label5.Text = "Part:";
             // 
@@ -290,18 +305,20 @@
             "Blocks",
             "Block Types",
             "Block numbers"});
-            this.cbViewType.Location = new System.Drawing.Point(76, 184);
+            this.cbViewType.Location = new System.Drawing.Point(101, 226);
+            this.cbViewType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbViewType.Name = "cbViewType";
-            this.cbViewType.Size = new System.Drawing.Size(64, 21);
+            this.cbViewType.Size = new System.Drawing.Size(84, 24);
             this.cbViewType.TabIndex = 58;
             this.cbViewType.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(14, 187);
+            this.label6.Location = new System.Drawing.Point(19, 230);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(56, 13);
+            this.label6.Size = new System.Drawing.Size(72, 17);
             this.label6.TabIndex = 57;
             this.label6.Text = "View type:";
             // 
@@ -312,7 +329,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer1.Location = new System.Drawing.Point(3, 25);
+            this.splitContainer1.Location = new System.Drawing.Point(4, 31);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -329,24 +347,38 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.AutoScroll = true;
             this.splitContainer1.Panel2.Controls.Add(this.lbBigBlockNo);
             this.splitContainer1.Panel2.Controls.Add(this.mapScreen);
-            this.splitContainer1.Size = new System.Drawing.Size(808, 547);
+            this.splitContainer1.Size = new System.Drawing.Size(1077, 673);
             this.splitContainer1.SplitterDistance = 271;
+            this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 62;
+            // 
+            // lbActive
+            // 
+            this.lbActive.AutoSize = true;
+            this.lbActive.Location = new System.Drawing.Point(273, 240);
+            this.lbActive.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbActive.Name = "lbActive";
+            this.lbActive.Size = new System.Drawing.Size(18, 17);
+            this.lbActive.TabIndex = 59;
+            this.lbActive.Text = "()";
             // 
             // lbBigBlockNo
             // 
             this.lbBigBlockNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lbBigBlockNo.AutoSize = true;
-            this.lbBigBlockNo.Location = new System.Drawing.Point(502, 528);
+            this.lbBigBlockNo.Location = new System.Drawing.Point(760, 650);
+            this.lbBigBlockNo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbBigBlockNo.Name = "lbBigBlockNo";
-            this.lbBigBlockNo.Size = new System.Drawing.Size(13, 13);
+            this.lbBigBlockNo.Size = new System.Drawing.Size(18, 17);
             this.lbBigBlockNo.TabIndex = 59;
             this.lbBigBlockNo.Text = "()";
             // 
             // toolStrip1
             // 
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tbbSave,
             this.toolStripSeparator2,
@@ -356,7 +388,7 @@
             this.tbbDeleteAll});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(815, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1087, 27);
             this.toolStrip1.TabIndex = 63;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -366,14 +398,14 @@
             this.tbbSave.Image = ((System.Drawing.Image)(resources.GetObject("tbbSave.Image")));
             this.tbbSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbbSave.Name = "tbbSave";
-            this.tbbSave.Size = new System.Drawing.Size(23, 22);
+            this.tbbSave.Size = new System.Drawing.Size(24, 24);
             this.tbbSave.Text = "Save";
             this.tbbSave.Click += new System.EventHandler(this.btSave_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 27);
             // 
             // tbbExport
             // 
@@ -381,7 +413,7 @@
             this.tbbExport.Image = ((System.Drawing.Image)(resources.GetObject("tbbExport.Image")));
             this.tbbExport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbbExport.Name = "tbbExport";
-            this.tbbExport.Size = new System.Drawing.Size(23, 22);
+            this.tbbExport.Size = new System.Drawing.Size(24, 24);
             this.tbbExport.Text = "Export";
             this.tbbExport.Click += new System.EventHandler(this.btExport_Click);
             // 
@@ -391,14 +423,14 @@
             this.tbbImport.Image = ((System.Drawing.Image)(resources.GetObject("tbbImport.Image")));
             this.tbbImport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbbImport.Name = "tbbImport";
-            this.tbbImport.Size = new System.Drawing.Size(23, 22);
+            this.tbbImport.Size = new System.Drawing.Size(24, 24);
             this.tbbImport.Text = "Import";
             this.tbbImport.Click += new System.EventHandler(this.btImport_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
             // 
             // tbbDeleteAll
             // 
@@ -406,29 +438,21 @@
             this.tbbDeleteAll.Image = ((System.Drawing.Image)(resources.GetObject("tbbDeleteAll.Image")));
             this.tbbDeleteAll.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbbDeleteAll.Name = "tbbDeleteAll";
-            this.tbbDeleteAll.Size = new System.Drawing.Size(23, 22);
+            this.tbbDeleteAll.Size = new System.Drawing.Size(24, 24);
             this.tbbDeleteAll.Text = "Clear All";
             this.tbbDeleteAll.Click += new System.EventHandler(this.btClear_Click);
             // 
-            // lbActive
-            // 
-            this.lbActive.AutoSize = true;
-            this.lbActive.Location = new System.Drawing.Point(205, 195);
-            this.lbActive.Name = "lbActive";
-            this.lbActive.Size = new System.Drawing.Size(13, 13);
-            this.lbActive.TabIndex = 59;
-            this.lbActive.Text = "()";
-            // 
             // BigBlockEdit
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(815, 581);
+            this.ClientSize = new System.Drawing.Size(1087, 715);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.cbPart);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "BigBlockEdit";
             this.Text = "Macro Blocks Editor";
