@@ -120,7 +120,7 @@ namespace CadEditor
             byte backId = getBackId();
             for (int i = 0; i < 4; i++)
             {
-                Bitmap b = ConfigScript.videoNes.makeImageStrip(ConfigScript.getVideoChunk(backId), palette, i, 2, !showAxis);
+                Bitmap b = ConfigScript.videoNes.makeImageStrip(ConfigScript.getVideoChunk(backId), palette, i, 2, true);
                 videoSprites[i].Images.Clear();
                 videoSprites[i].Images.AddStrip(b);
             }
