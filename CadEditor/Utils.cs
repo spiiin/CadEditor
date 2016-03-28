@@ -373,9 +373,21 @@ namespace CadEditor
 
         public static byte[] readLinearBigBlockData(int bigTileIndex)
         {
-            int tileSize = ConfigScript.isBlockSize4x4() ? 16 : 4;
+            return readLinearBigBlockData(bigTileIndex, -1);
+        }
+
+
+        public static byte[] readLinearBigBlockData(int bigTileIndex, int tileSize)
+        {
+            //if tileSize == -1, try read it from config
+            if (tileSize == -1)
+            {
+                tileSize = ConfigScript.isBlockSize4x4() ? 16 : 4;
+            }
+
             int wordSize = ConfigScript.isUseSegaGraphics() ? 2 : 1;
             int size = ConfigScript.getBigBlocksCount() * tileSize * wordSize;
+
             byte[] bigBlockIndexes = new byte[size];
             var bigBlocksAddr = ConfigScript.getBigTilesAddr(bigTileIndex);
             for (int i = 0; i < size; i++)
@@ -391,9 +403,7 @@ namespace CadEditor
 
         public static void writeLinearBigBlockData(int bigTileIndex, byte[] bigBlockIndexes)
         {
-            int tileSize = ConfigScript.isBlockSize4x4() ? 16 : 4;
-            int wordSize = ConfigScript.isUseSegaGraphics() ? 2 : 1;
-            int size = ConfigScript.getBigBlocksCount() * tileSize * wordSize;
+            int size = bigBlockIndexes.Length;
             int addr = ConfigScript.getBigTilesAddr(bigTileIndex);
             for (int i = 0; i < size; i++)
                 Globals.romdata[addr + i] = bigBlockIndexes[i];
