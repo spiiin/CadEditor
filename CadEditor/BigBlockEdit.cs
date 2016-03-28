@@ -131,7 +131,7 @@ namespace CadEditor
                                 b = ConfigScript.videoNes.makeBigBlock(i, 64, 64, bigBlockIndexes, smallBlocks);
                                 break;
                         }*/
-                        b = ConfigScript.videoNes.makeBigBlock(i, 64, 64, bigBlockIndexes, smallBlocks);
+                        b = ConfigScript.videoNes.makeBigBlock(i, 64, 64, bigBlockIndexes, new ImageList[] { smallBlocks });
                         g.DrawImage(b, new Point((int)(32 * formMain.CurScale * i), 0));
                     }
                 }

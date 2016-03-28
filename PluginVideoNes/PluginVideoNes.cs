@@ -329,7 +329,7 @@ namespace PluginVideoNes
                             b = makeBigBlockTT(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocksAll);
                             break;
                         default:
-                            b = makeBigBlock(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocks);
+                            b = makeBigBlock(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, new ImageList[] { smallBlocks });
                             break;
                     }
                 }
@@ -368,13 +368,14 @@ namespace PluginVideoNes
             return new Bitmap(MapEditor.ScreenToImage(il, 32, 32, indexes, null, scale, true, false, false, 0, scrW, scrH, ConfigScript.getScreenVertical()));
         }
         #region Render Functions
-        public Bitmap makeBigBlock(int i, int width, int height, BigBlock[] bigBlocks, System.Windows.Forms.ImageList smallBlocks)
+        public Bitmap makeBigBlock(int i, int width, int height, BigBlock[] bigBlocks, System.Windows.Forms.ImageList[] smallBlockss)
         {
             int bbRectPosX = width / 2;
             int bbRectSizeX = width / 2;
             int bbRectPosY = height / 2;
             int bbRectSizeY = height / 2;
             var b = new Bitmap(width, height);
+            var smallBlocks = smallBlockss[0];
             using (Graphics g = Graphics.FromImage(b))
             {
                 g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[0]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
