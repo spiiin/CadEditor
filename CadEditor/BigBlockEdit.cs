@@ -77,9 +77,9 @@ namespace CadEditor
         protected void reloadLevel(bool reloadBigBlocks = true)
         {
             curActiveBlock = 0;
-            setSmallBlocks();
             if (reloadBigBlocks)
               setBigBlocksIndexes();
+            setSmallBlocks();
             mapScreen.Invalidate();
         }
 
@@ -93,6 +93,9 @@ namespace CadEditor
             smallBlocks.Images.Clear();
             smallBlocks.Images.AddStrip(im);
             blocksPanel.Invalidate(true);
+
+            //prerender big blocks
+            bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(backId, curTileset, bigBlockIndexes, palId, curViewType, 1, 32, 32, 1.0f, MapViewType.Tiles, false);
         }
 
         protected virtual void setBigBlocksIndexes()
@@ -166,7 +169,7 @@ namespace CadEditor
             {
                 int xb = i % bblocksInRow;
                 int yb = i / bblocksInRow;
-                var bb = bigBlockIndexes[addIndexes+i];
+                /*var bb = bigBlockIndexes[addIndexes+i];
                 for (int h = 0; h < bb.height; h++)
                 {
                     for (int w = 0; w < bb.height; w++)
@@ -177,8 +180,11 @@ namespace CadEditor
                         var r =  new Rectangle(xb * bbWidth + sbX, yb * bbHeight + sbY, bWidth, bHeight);
                         g.DrawImage(smallBlocks.Images[bb.indexes[idx]], r);
                     }
-                }
-                g.DrawRectangle(pen, new Rectangle(xb * bbWidth, yb * bbHeight, bbWidth, bbHeight));
+                }*/
+                var rr = new Rectangle(xb * bbWidth, yb * bbHeight, bbWidth, bbHeight);
+                g.DrawImage(bigBlocksImages[addIndexes + i], rr);
+
+                g.DrawRectangle(pen, rr);
             }
         }
 
@@ -222,6 +228,9 @@ namespace CadEditor
                 pbActive.Image = smallBlocks.Images[curActiveBlock];
                 lbActive.Text = String.Format("({0:X})", curActiveBlock);
             }
+            //fix current big blocks image
+            var imss = new Image[1][] { smallBlocks.Images.Cast<Image>().ToArray() };
+            bigBlocksImages[actualIndex] = ConfigScript.videoNes.makeBigBlock(actualIndex, bbWidth, bbHeight, bigBlockIndexes, imss);
         }
 
         protected void buttonObjClick(Object button, EventArgs e)
@@ -247,6 +256,8 @@ namespace CadEditor
         protected bool readOnly;
 
         protected FormMain formMain;
+
+        Image[] bigBlocksImages; //prerendered for faster rendering;
 
         protected void updateSaveVisibility()
         {

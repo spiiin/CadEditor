@@ -373,7 +373,7 @@ namespace PluginVideoNes
             switch (Globals.getGameType())
             {
                 case GameType.TT:
-                    b = makeBigBlockTT(i, width, height, bigBlocks, smallBlockss);
+                    b = (smallBlockss.Length > 1) ? makeBigBlockTT(i, width, height, bigBlocks, smallBlockss) : makeBigBlockCapcom(i, width, height, bigBlocks, smallBlockss);
                     break;
                 default:
                     b = makeBigBlockCapcom(i, width, height, bigBlocks, smallBlockss);
@@ -384,18 +384,32 @@ namespace PluginVideoNes
 
         public Bitmap makeBigBlockCapcom(int i, int width, int height, BigBlock[] bigBlocks, Image[][] smallBlockss)
         {
-            int bbRectPosX = width / 2;
+            /*int bbRectPosX = width / 2;
             int bbRectSizeX = width / 2;
             int bbRectPosY = height / 2;
-            int bbRectSizeY = height / 2;
+            int bbRectSizeY = height / 2;*/
             var b = new Bitmap(width, height);
             var smallBlocks = smallBlockss[0];
+            int bWidth = smallBlocks[0].Width;
+            int bHeight = smallBlocks[0].Height;
             using (Graphics g = Graphics.FromImage(b))
             {
-                g.DrawImage(smallBlocks[bigBlocks[i].indexes[0]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocks[bigBlocks[i].indexes[1]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocks[bigBlocks[i].indexes[2]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocks[bigBlocks[i].indexes[3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));
+                var bb = bigBlocks[i];
+                for (int h = 0; h < bb.height; h++)
+                {
+                    for (int w = 0; w < bb.height; w++)
+                    {
+                        int sbX = w * bWidth;
+                        int sbY = h * bHeight;
+                        int idx = h * bb.width + w;
+                        var r = new Rectangle(sbX, sbY, bWidth, bHeight);
+                        g.DrawImage(smallBlocks[bb.indexes[idx]], r);
+                    }
+                    /*g.DrawImage(smallBlocks[bigBlocks[i].indexes[0]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
+                    g.DrawImage(smallBlocks[bigBlocks[i].indexes[1]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
+                    g.DrawImage(smallBlocks[bigBlocks[i].indexes[2]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
+                    g.DrawImage(smallBlocks[bigBlocks[i].indexes[3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));*/
+                }
             }
             return b;
         }
