@@ -391,29 +391,9 @@ namespace CadEditor
             return levelRecs[i];
         }
 
-        public static int getMaxObjCoordX()
-        {
-            return maxObjCoordX;
-        }
-
-        public static int getMaxObjCoordY()
-        {
-            return maxObjCoordY;
-        }
-
         public static int getMaxObjType()
         {
             return maxObjType;
-        }
-
-        public static int getMinObjCoordX()
-        {
-            return minObjCoordX;
-        }
-
-        public static int getMinObjCoordY()
-        {
-            return minObjCoordY;
         }
 
         public static int getMinObjType()

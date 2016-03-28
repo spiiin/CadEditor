@@ -88,7 +88,7 @@ namespace CadEditor
                 if (ConfigScript.isUseSegaGraphics())
                   bigImages = makeSegaBigBlocks();
                 else
-                  bigImages = ConfigScript.videoNes.makeBigBlocks(curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo, MapViewType.Tiles, curScale, 32, 32, curScale, MapViewType.Tiles, formMain.ShowAxis);
+                  bigImages = ConfigScript.videoNes.makeBigBlocks(curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo, MapViewType.Tiles, curScale, curScale, MapViewType.Tiles, formMain.ShowAxis);
                 bigBlocks.Images.AddRange(bigImages);
             }
         }
@@ -157,11 +157,11 @@ namespace CadEditor
             reloadPictures();
             fillObjPanel();
 
-            int coordXCount = (ConfigScript.getMaxObjCoordX() != -1) ? ConfigScript.getMaxObjCoordX() : ConfigScript.getScreenWidth(getLevelRecForGameType().levelNo) * 32;
-            int coordYCount = (ConfigScript.getMaxObjCoordY() != -1) ? ConfigScript.getMaxObjCoordY() : ConfigScript.getScreenHeight(getLevelRecForGameType().levelNo) * 32;
+            int coordXCount = ConfigScript.getScreenWidth(getLevelRecForGameType().levelNo) * 32;
+            int coordYCount =ConfigScript.getScreenHeight(getLevelRecForGameType().levelNo) * 32;
             int objType = (ConfigScript.getMaxObjType() != -1) ? ConfigScript.getMaxObjType() : 256;
-            int minCoordX = ConfigScript.getMinObjCoordX();
-            int minCoordY = ConfigScript.getMinObjCoordY();
+            int minCoordX = 0;
+            int minCoordY = 0;
             int minObjType = ConfigScript.getMinObjType();
             if (!ConfigScript.getScreenVertical())
             {
@@ -452,8 +452,8 @@ namespace CadEditor
                 return;
             int index = lvObjects.SelectedItems[0].Index;
             var obj = activeObjectList.objects[index];
-            int minCoordX = ConfigScript.getMinObjCoordX();
-            int minCoordY = ConfigScript.getMinObjCoordY();
+            int minCoordX = 0;
+            int minCoordY = 0;
             int minObjType = ConfigScript.getMinObjType();
             obj.x = cbCoordX.SelectedIndex + minCoordX;
             obj.y = cbCoordY.SelectedIndex + minCoordY;
@@ -566,8 +566,8 @@ namespace CadEditor
             if (selectedOne)
             {
                 int index = lvObjects.SelectedItems[0].Index;
-                int minCoordX = ConfigScript.getMinObjCoordX();
-                int minCoordY = ConfigScript.getMinObjCoordY();
+                int minCoordX = 0;
+                int minCoordY = 0;
                 int minObjType = ConfigScript.getMinObjType();
                 try
                 { 
@@ -760,10 +760,10 @@ namespace CadEditor
             int y = (int)(e.Y / curScale);
 
             int scrLevelNo = getLevelRecForGameType().levelNo;
-            int coordXCount = (ConfigScript.getMaxObjCoordX() != -1) ? ConfigScript.getMaxObjCoordX() : ConfigScript.getScreenWidth(scrLevelNo) * 32;
-            int coordYCount = (ConfigScript.getMaxObjCoordY() != -1) ? ConfigScript.getMaxObjCoordY() : ConfigScript.getScreenHeight(scrLevelNo) * 32;
-            int minCoordX = ConfigScript.getMinObjCoordX();
-            int minCoordY = ConfigScript.getMinObjCoordY();
+            int coordXCount = ConfigScript.getScreenWidth(scrLevelNo) * 32;
+            int coordYCount = ConfigScript.getScreenHeight(scrLevelNo) * 32;
+            int minCoordX = 0;
+            int minCoordY = 0;
             if (!ConfigScript.getScreenVertical())
             {
                 if (x >= coordXCount || y >= coordYCount || x < minCoordX || y < minCoordY)
@@ -828,10 +828,10 @@ namespace CadEditor
             if (curTool == ToolType.Create)
             {
                 int scrLevelNo = getLevelRecForGameType().levelNo;
-                int coordXCount = (ConfigScript.getMaxObjCoordX() != -1) ? ConfigScript.getMaxObjCoordX() : ConfigScript.getScreenWidth(scrLevelNo) * 32;
-                int coordYCount = (ConfigScript.getMaxObjCoordY() != -1) ? ConfigScript.getMaxObjCoordY() : ConfigScript.getScreenHeight(scrLevelNo) * 32;
-                int minCoordX = ConfigScript.getMinObjCoordX();
-                int minCoordY = ConfigScript.getMinObjCoordY();
+                int coordXCount = ConfigScript.getScreenWidth(scrLevelNo) * 32;
+                int coordYCount = ConfigScript.getScreenHeight(scrLevelNo) * 32;
+                int minCoordX = 0;
+                int minCoordY = 0;
 
                 if (!ConfigScript.getScreenVertical())
                 {
