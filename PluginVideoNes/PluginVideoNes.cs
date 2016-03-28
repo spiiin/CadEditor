@@ -299,19 +299,25 @@ namespace PluginVideoNes
             var smallBlocks = new System.Windows.Forms.ImageList();
             smallBlocks.ImageSize = new Size((int)(16 * smallBlockScaleFactor), (int)(16 * smallBlockScaleFactor));
             smallBlocks.Images.AddStrip(im);
-            Image[] Images = smallBlocks.Images.Cast<Image>().ToArray();
+            Image[] smallBlocksPack = smallBlocks.Images.Cast<Image>().ToArray();
 
             //tt version hardcode
-            ImageList[] smallBlocksAll = null;
+            Image[][] smallBlocksAll = null;
             if (GameType.TT == Globals.getGameType())
             {
-                smallBlocksAll = new ImageList[4];
+                smallBlocksAll = new Image[4][];
                 for (int i = 0; i < 4; i++)
                 {
-                    smallBlocksAll[i] = new ImageList();
-                    smallBlocksAll[i].ImageSize = new System.Drawing.Size((int)(16 * smallBlockScaleFactor), (int)(16 * smallBlockScaleFactor));
-                    smallBlocksAll[i].Images.AddStrip(makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsViewType, i));
+                    var il = new ImageList();
+                    il.ImageSize = new System.Drawing.Size((int)(16 * smallBlockScaleFactor), (int)(16 * smallBlockScaleFactor));
+                    il.Images.AddStrip(makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsViewType, i));
+                    smallBlocksAll[i] = il.Images.Cast<Image>().ToArray();
                 }
+            }
+            else
+            {
+                smallBlocksAll = new Image[1][];
+                smallBlocksAll[0] = smallBlocksPack;
             }
 
             for (int btileId = 0; btileId < blockCount; btileId++)
@@ -323,15 +329,7 @@ namespace PluginVideoNes
                 }
                 else
                 {
-                    switch (Globals.getGameType())
-                    {
-                        case GameType.TT:
-                            b = makeBigBlockTT(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocksAll);
-                            break;
-                        default:
-                            b = makeBigBlock(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, new ImageList[] { smallBlocks });
-                            break;
-                    }
+                    b = makeBigBlock(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocksAll);
                 }
                 if (curViewType == MapViewType.ObjNumbers)
                     b = VideoHelper.addObjNumber(b, btileId);
@@ -367,8 +365,24 @@ namespace PluginVideoNes
             //capcom hardcode
             return new Bitmap(MapEditor.ScreenToImage(il, 32, 32, indexes, null, scale, true, false, false, 0, scrW, scrH, ConfigScript.getScreenVertical()));
         }
+
         #region Render Functions
-        public Bitmap makeBigBlock(int i, int width, int height, BigBlock[] bigBlocks, System.Windows.Forms.ImageList[] smallBlockss)
+        public Bitmap makeBigBlock(int i, int width, int height, BigBlock[] bigBlocks, Image[][] smallBlockss)
+        {
+            Bitmap b;
+            switch (Globals.getGameType())
+            {
+                case GameType.TT:
+                    b = makeBigBlockTT(i, width, height, bigBlocks, smallBlockss);
+                    break;
+                default:
+                    b = makeBigBlockCapcom(i, width, height, bigBlocks, smallBlockss);
+                    break;
+            }
+            return b;
+        }
+
+        public Bitmap makeBigBlockCapcom(int i, int width, int height, BigBlock[] bigBlocks, Image[][] smallBlockss)
         {
             int bbRectPosX = width / 2;
             int bbRectSizeX = width / 2;
@@ -378,15 +392,15 @@ namespace PluginVideoNes
             var smallBlocks = smallBlockss[0];
             using (Graphics g = Graphics.FromImage(b))
             {
-                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[0]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[1]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[2]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocks.Images[bigBlocks[i].indexes[3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocks[bigBlocks[i].indexes[0]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocks[bigBlocks[i].indexes[1]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocks[bigBlocks[i].indexes[2]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocks[bigBlocks[i].indexes[3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));
             }
             return b;
         }
 
-        public Bitmap makeBigBlockTT(int i, int width, int height, BigBlock[] bigBlocks, System.Windows.Forms.ImageList[] smallBlocksAll)
+        public Bitmap makeBigBlockTT(int i, int width, int height, BigBlock[] bigBlocks, Image[][] smallBlocksAll)
         {
             int bbRectPosX = width / 2;
             int bbRectSizeX = width / 2;
@@ -396,10 +410,10 @@ namespace PluginVideoNes
             using (Graphics g = Graphics.FromImage(b))
             {
                 int scb = getTTSmallBlocksColorByte(i);
-                g.DrawImage(smallBlocksAll[scb >> 0 & 0x3].Images[bigBlocks[i].indexes[0]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocksAll[scb >> 2 & 0x3].Images[bigBlocks[i].indexes[1]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocksAll[scb >> 4 & 0x3].Images[bigBlocks[i].indexes[2]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocksAll[scb >> 6 & 0x3].Images[bigBlocks[i].indexes[3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocksAll[scb >> 0 & 0x3][bigBlocks[i].indexes[0]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocksAll[scb >> 2 & 0x3][bigBlocks[i].indexes[1]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocksAll[scb >> 4 & 0x3][bigBlocks[i].indexes[2]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocksAll[scb >> 6 & 0x3][bigBlocks[i].indexes[3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));
             }
             return b;
         }

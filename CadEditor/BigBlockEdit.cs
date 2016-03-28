@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Linq;
 using System.IO;
 
 namespace CadEditor
@@ -116,22 +117,14 @@ namespace CadEditor
             else
             {
                 Bitmap result = new Bitmap((int)(32 * formMain.CurScale * 256),(int)(32 * formMain.CurScale)); //need some hack for duck tales 1
+                Image[][] smallBlocksPack = new Image[1][];
+                smallBlocksPack[0] = smallBlocks.Images.Cast<Image>().ToArray();
                 using (Graphics g = Graphics.FromImage(result))
                 {
                     for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
                     {
                         Bitmap b;
-                        /*switch (Globals.gameType)
-                        {
-                            //todo: write code to export blocks for TinyToon
-                            //case GameTyp.TT:
-                            //    b = ConfigScript.videoNes.makeBigBlockTT(i, 64, 64, bigBlockIndexes, smallBlocksAll, smallBlocksColorBytes);
-                            //    break;
-                            default:
-                                b = ConfigScript.videoNes.makeBigBlock(i, 64, 64, bigBlockIndexes, smallBlocks);
-                                break;
-                        }*/
-                        b = ConfigScript.videoNes.makeBigBlock(i, 64, 64, bigBlockIndexes, new ImageList[] { smallBlocks });
+                        b = ConfigScript.videoNes.makeBigBlock(i, 64, 64, bigBlockIndexes, smallBlocksPack);
                         g.DrawImage(b, new Point((int)(32 * formMain.CurScale * i), 0));
                     }
                 }
