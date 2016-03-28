@@ -200,7 +200,9 @@ namespace CadEditor
             if (ConfigScript.isUseSegaGraphics())
                 bigImages = makeSegaBigBlocks();
             else
-                bigImages = ConfigScript.videoNes.makeBigBlocks(backId, blockId, bigTileIndex, palId, smallObjectsType, smallBlockScaleFactor, blockWidth, blockHeight, curButtonScale, curViewType, showAxis);
+            {
+                bigImages = ConfigScript.videoNes.makeBigBlocks(backId, blockId, bigTileIndex, palId, smallObjectsType, smallBlockScaleFactor, curButtonScale, curViewType, showAxis);
+            }
             bigBlocks.Images.AddRange(bigImages);
 
             //tt add

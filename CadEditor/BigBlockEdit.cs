@@ -95,7 +95,13 @@ namespace CadEditor
             blocksPanel.Invalidate(true);
 
             //prerender big blocks
-            bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(backId, curTileset, bigBlockIndexes, palId, curViewType, 1, 32, 32, 1.0f, MapViewType.Tiles, false);
+            bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(backId, curTileset, bigBlockIndexes, palId, curViewType, 1, 2.0f, MapViewType.Tiles, false);
+            //
+            int btc = Math.Min(ConfigScript.getBigBlocksCount(), 256);
+            int bblocksInRow = 16;
+            int bblocksInCol = (btc / bblocksInRow) + 1;
+            //
+            mapScreen.Size = new Size(bigBlocksImages[0].Width* bblocksInRow, bigBlocksImages[0].Height*bblocksInCol);
         }
 
         protected virtual void setBigBlocksIndexes()
@@ -127,7 +133,7 @@ namespace CadEditor
                     for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
                     {
                         Bitmap b;
-                        b = ConfigScript.videoNes.makeBigBlock(i, 64, 64, bigBlockIndexes, smallBlocksPack);
+                        b = ConfigScript.videoNes.makeBigBlock(i, bigBlockIndexes, smallBlocksPack);
                         g.DrawImage(b, new Point((int)(32 * formMain.CurScale * i), 0));
                     }
                 }
@@ -230,7 +236,7 @@ namespace CadEditor
             }
             //fix current big blocks image
             var imss = new Image[1][] { smallBlocks.Images.Cast<Image>().ToArray() };
-            bigBlocksImages[actualIndex] = ConfigScript.videoNes.makeBigBlock(actualIndex, bbWidth, bbHeight, bigBlockIndexes, imss);
+            bigBlocksImages[actualIndex] = ConfigScript.videoNes.makeBigBlock(actualIndex, bigBlockIndexes, imss);
         }
 
         protected void buttonObjClick(Object button, EventArgs e)

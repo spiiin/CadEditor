@@ -71,7 +71,7 @@
             // mapScreen
             // 
             this.mapScreen.Location = new System.Drawing.Point(4, 4);
-            this.mapScreen.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mapScreen.Margin = new System.Windows.Forms.Padding(4);
             this.mapScreen.Name = "mapScreen";
             this.mapScreen.Size = new System.Drawing.Size(683, 630);
             this.mapScreen.TabIndex = 5;
@@ -88,7 +88,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.blocksPanel.AutoScroll = true;
             this.blocksPanel.Location = new System.Drawing.Point(11, 260);
-            this.blocksPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.blocksPanel.Margin = new System.Windows.Forms.Padding(4);
             this.blocksPanel.Name = "blocksPanel";
             this.blocksPanel.Size = new System.Drawing.Size(242, 406);
             this.blocksPanel.TabIndex = 7;
@@ -106,7 +106,7 @@
             "Tileset5 (17000)",
             "Tileset6 (1B000)"});
             this.cbTileset.Location = new System.Drawing.Point(11, 23);
-            this.cbTileset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbTileset.Margin = new System.Windows.Forms.Padding(4);
             this.cbTileset.Name = "cbTileset";
             this.cbTileset.Size = new System.Drawing.Size(333, 24);
             this.cbTileset.TabIndex = 8;
@@ -131,7 +131,7 @@
             // pbActive
             // 
             this.pbActive.Location = new System.Drawing.Point(299, 220);
-            this.pbActive.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pbActive.Margin = new System.Windows.Forms.Padding(4);
             this.pbActive.Name = "pbActive";
             this.pbActive.Size = new System.Drawing.Size(43, 39);
             this.pbActive.TabIndex = 13;
@@ -162,7 +162,7 @@
             this.pnGeneric.Controls.Add(this.label7);
             this.pnGeneric.Controls.Add(this.cbVideoNo);
             this.pnGeneric.Location = new System.Drawing.Point(11, 69);
-            this.pnGeneric.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnGeneric.Margin = new System.Windows.Forms.Padding(4);
             this.pnGeneric.Name = "pnGeneric";
             this.pnGeneric.Size = new System.Drawing.Size(335, 144);
             this.pnGeneric.TabIndex = 54;
@@ -199,7 +199,7 @@
             "14",
             "15"});
             this.cbSmallBlock.Location = new System.Drawing.Point(8, 69);
-            this.cbSmallBlock.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbSmallBlock.Margin = new System.Windows.Forms.Padding(4);
             this.cbSmallBlock.Name = "cbSmallBlock";
             this.cbSmallBlock.Size = new System.Drawing.Size(313, 24);
             this.cbSmallBlock.TabIndex = 49;
@@ -237,7 +237,7 @@
             "14",
             "15"});
             this.cbPaletteNo.Location = new System.Drawing.Point(8, 117);
-            this.cbPaletteNo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbPaletteNo.Margin = new System.Windows.Forms.Padding(4);
             this.cbPaletteNo.Name = "cbPaletteNo";
             this.cbPaletteNo.Size = new System.Drawing.Size(313, 24);
             this.cbPaletteNo.TabIndex = 47;
@@ -267,7 +267,7 @@
             "7",
             "8"});
             this.cbVideoNo.Location = new System.Drawing.Point(7, 23);
-            this.cbVideoNo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbVideoNo.Margin = new System.Windows.Forms.Padding(4);
             this.cbVideoNo.Name = "cbVideoNo";
             this.cbVideoNo.Size = new System.Drawing.Size(315, 24);
             this.cbVideoNo.TabIndex = 41;
@@ -279,7 +279,7 @@
             this.cbPart.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPart.FormattingEnabled = true;
             this.cbPart.Location = new System.Drawing.Point(1031, 2);
-            this.cbPart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbPart.Margin = new System.Windows.Forms.Padding(4);
             this.cbPart.Name = "cbPart";
             this.cbPart.Size = new System.Drawing.Size(49, 24);
             this.cbPart.TabIndex = 55;
@@ -306,7 +306,7 @@
             "Block Types",
             "Block numbers"});
             this.cbViewType.Location = new System.Drawing.Point(101, 226);
-            this.cbViewType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbViewType.Margin = new System.Windows.Forms.Padding(4);
             this.cbViewType.Name = "cbViewType";
             this.cbViewType.Size = new System.Drawing.Size(84, 24);
             this.cbViewType.TabIndex = 58;
@@ -330,7 +330,7 @@
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.Location = new System.Drawing.Point(4, 31);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -452,7 +452,7 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "BigBlockEdit";
             this.Text = "Macro Blocks Editor";

@@ -39,9 +39,9 @@ namespace CadEditor
         void updateColorsFromConfig();
 
         Image[] makeBigBlocks(int videoNo, int bigBlockNo, int blockNo, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
-            float smallBlockScaleFactor = 2.0f, int blockWidth = 32, int blockHeight = 32, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false);
+            float smallBlockScaleFactor = 2.0f, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false);
         Image[] makeBigBlocks(int videoNo, int bigBlockNo, BigBlock[] bigBlockData, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
-            float smallBlockScaleFactor = 2.0f, int blockWidth = 32, int blockHeight = 32, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false);
+            float smallBlockScaleFactor = 2.0f, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false);
 
         Bitmap makeImage(int index, byte[] videoChunk, byte[] pallete, int subPalIndex, float scale, bool scaleAccurate = true, bool withAlpha = false);
         Bitmap makeImageStrip(byte[] videoChunk, byte[] pallete, int subPalIndex, float scale, bool scaleAccurate = true, bool withAlpha = false);
@@ -53,7 +53,7 @@ namespace CadEditor
 
         Bitmap makeScreen(int scrNo, int levelNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, float scale = 2.0f, bool withBorders = true);
 
-        Bitmap makeBigBlock(int i, int width, int height, BigBlock[] bigBlocks, Image[][] smallBlocksPacks);
+        Bitmap makeBigBlock(int i, BigBlock[] bigBlocks, Image[][] smallBlocksPacks);
 
         Color[] NesColors { get; set; }
 

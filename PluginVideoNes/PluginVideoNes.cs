@@ -278,15 +278,15 @@ namespace PluginVideoNes
         }
 
          public Image[] makeBigBlocks(int videoNo, int bigBlockNo, int blockNo, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
-            float smallBlockScaleFactor = 2.0f, int blockWidth = 32, int blockHeight = 32, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false)
+            float smallBlockScaleFactor = 2.0f, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false)
         {
             byte blockIndexId = (byte)blockNo;
             BigBlock[] bigBlockIndexes = ConfigScript.getBigBlocks(blockIndexId);
-            return makeBigBlocks(videoNo, bigBlockNo, bigBlockIndexes, palleteNo, smallObjectsViewType, smallBlockScaleFactor, blockWidth, blockHeight, curButtonScale, curViewType, showAxis);
+            return makeBigBlocks(videoNo, bigBlockNo, bigBlockIndexes, palleteNo, smallObjectsViewType, smallBlockScaleFactor, curButtonScale, curViewType, showAxis);
         }
 
         public Image[] makeBigBlocks(int videoNo, int bigBlockNo, BigBlock[] bigBlockIndexes, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
-            float smallBlockScaleFactor = 2.0f, int blockWidth = 32, int blockHeight = 32, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false)
+            float smallBlockScaleFactor = 2.0f, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false)
         {
             int blockCount = ConfigScript.getBigBlocksCount();
             var bigBlocks = new Image[blockCount];
@@ -325,11 +325,12 @@ namespace PluginVideoNes
                 Image b;
                 if (ConfigScript.isBuildScreenFromSmallBlocks())
                 {
-                    b = Utils.ResizeBitmap(smallBlocks.Images[btileId], (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale));
+                    var sb = smallBlocks.Images[btileId];
+                    b = Utils.ResizeBitmap(sb, (int)(sb.Width * curButtonScale), (int)(sb.Height * curButtonScale));
                 }
                 else
                 {
-                    b = makeBigBlock(btileId, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale), bigBlockIndexes, smallBlocksAll);
+                    b = makeBigBlock(btileId, bigBlockIndexes, smallBlocksAll);
                 }
                 if (curViewType == MapViewType.ObjNumbers)
                     b = VideoHelper.addObjNumber(b, btileId);
@@ -352,7 +353,7 @@ namespace PluginVideoNes
         {
             if (scrNo < 0)
                 return VideoHelper.emptyScreen((int)(ConfigScript.getScreenWidth(levelNo) * 32 * scale), (int)(ConfigScript.getScreenHeight(levelNo) * 32 * scale));
-            var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, scale, 32, 32, scale, MapViewType.Tiles, withBorders);
+            var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, scale, scale, MapViewType.Tiles, withBorders);
             var il = new ImageList();
             if (bigBlocks.Length > 0)
             {
@@ -367,34 +368,30 @@ namespace PluginVideoNes
         }
 
         #region Render Functions
-        public Bitmap makeBigBlock(int i, int width, int height, BigBlock[] bigBlocks, Image[][] smallBlockss)
+        public Bitmap makeBigBlock(int i, BigBlock[] bigBlocks, Image[][] smallBlockss)
         {
             Bitmap b;
             switch (Globals.getGameType())
             {
                 case GameType.TT:
-                    b = (smallBlockss.Length > 1) ? makeBigBlockTT(i, width, height, bigBlocks, smallBlockss) : makeBigBlockCapcom(i, width, height, bigBlocks, smallBlockss);
+                    b = (smallBlockss.Length > 1) ? makeBigBlockTT(i, bigBlocks, smallBlockss) : makeBigBlockCapcom(i, bigBlocks, smallBlockss);
                     break;
                 default:
-                    b = makeBigBlockCapcom(i, width, height, bigBlocks, smallBlockss);
+                    b = makeBigBlockCapcom(i, bigBlocks, smallBlockss);
                     break;
             }
             return b;
         }
 
-        public Bitmap makeBigBlockCapcom(int i, int width, int height, BigBlock[] bigBlocks, Image[][] smallBlockss)
+        public Bitmap makeBigBlockCapcom(int i, BigBlock[] bigBlocks, Image[][] smallBlockss)
         {
-            /*int bbRectPosX = width / 2;
-            int bbRectSizeX = width / 2;
-            int bbRectPosY = height / 2;
-            int bbRectSizeY = height / 2;*/
-            var b = new Bitmap(width, height);
             var smallBlocks = smallBlockss[0];
             int bWidth = smallBlocks[0].Width;
             int bHeight = smallBlocks[0].Height;
+            var bb = bigBlocks[i];
+            var b = new Bitmap(bWidth*bb.width, bHeight*bb.height);
             using (Graphics g = Graphics.FromImage(b))
             {
-                var bb = bigBlocks[i];
                 for (int h = 0; h < bb.height; h++)
                 {
                     for (int w = 0; w < bb.height; w++)
@@ -405,29 +402,26 @@ namespace PluginVideoNes
                         var r = new Rectangle(sbX, sbY, bWidth, bHeight);
                         g.DrawImage(smallBlocks[bb.indexes[idx]], r);
                     }
-                    /*g.DrawImage(smallBlocks[bigBlocks[i].indexes[0]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
-                    g.DrawImage(smallBlocks[bigBlocks[i].indexes[1]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
-                    g.DrawImage(smallBlocks[bigBlocks[i].indexes[2]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
-                    g.DrawImage(smallBlocks[bigBlocks[i].indexes[3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));*/
                 }
             }
             return b;
         }
 
-        public Bitmap makeBigBlockTT(int i, int width, int height, BigBlock[] bigBlocks, Image[][] smallBlocksAll)
+        public Bitmap makeBigBlockTT(int i, BigBlock[] bigBlocks, Image[][] smallBlocksAll)
         {
-            int bbRectPosX = width / 2;
-            int bbRectSizeX = width / 2;
-            int bbRectPosY = height / 2;
-            int bbRectSizeY = height / 2;
-            var b = new Bitmap(width, height);
+            //calc size
+            var smallBlocks = smallBlocksAll[0];
+            int bWidth = smallBlocks[0].Width;
+            int bHeight = smallBlocks[0].Height;
+            var bb = bigBlocks[i];
+            var b = new Bitmap(bWidth * bb.width, bHeight * bb.height);
             using (Graphics g = Graphics.FromImage(b))
             {
                 int scb = getTTSmallBlocksColorByte(i);
-                g.DrawImage(smallBlocksAll[scb >> 0 & 0x3][bigBlocks[i].indexes[0]], new Rectangle(0, 0, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocksAll[scb >> 2 & 0x3][bigBlocks[i].indexes[1]], new Rectangle(bbRectPosX, 0, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocksAll[scb >> 4 & 0x3][bigBlocks[i].indexes[2]], new Rectangle(0, bbRectPosY, bbRectSizeX, bbRectSizeY));
-                g.DrawImage(smallBlocksAll[scb >> 6 & 0x3][bigBlocks[i].indexes[3]], new Rectangle(bbRectPosX, bbRectPosY, bbRectSizeX, bbRectSizeY));
+                g.DrawImage(smallBlocksAll[scb >> 0 & 0x3][bigBlocks[i].indexes[0]], new Rectangle(0, 0, bWidth, bHeight));
+                g.DrawImage(smallBlocksAll[scb >> 2 & 0x3][bigBlocks[i].indexes[1]], new Rectangle(bWidth, 0, bWidth, bHeight));
+                g.DrawImage(smallBlocksAll[scb >> 4 & 0x3][bigBlocks[i].indexes[2]], new Rectangle(0, bHeight, bWidth, bHeight));
+                g.DrawImage(smallBlocksAll[scb >> 6 & 0x3][bigBlocks[i].indexes[3]], new Rectangle(bWidth, bHeight, bWidth, bHeight));
             }
             return b;
         }
