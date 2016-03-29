@@ -9,7 +9,7 @@ public class Data : CapcomBase
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0, 16  , 0x1000); }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0 , 8   , 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0 , 8   , 0x4000); }
-  public OffsetRec getScreensOffset()   { return new OffsetRec(41540   , 1 , 48*84);   }
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0xA23C  , 1 , 48*84);   }
   public override int getScreenWidth()    { return 48; }
   public override int getScreenHeight()   { return 84; }
   public string getBlocksFilename() { return "tom_and_jerry_2.png"; }
