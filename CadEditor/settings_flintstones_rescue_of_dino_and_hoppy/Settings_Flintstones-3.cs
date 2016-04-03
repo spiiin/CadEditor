@@ -3,7 +3,7 @@ using System.Collections.Generic;
 //css_include Settings_Flintstones-Utils.cs;
 public class Data
 { 
-  public OffsetRec getScreensOffset()     { return new OffsetRec(0x122C7-8, 1 , 8*96);   }
+  public OffsetRec getScreensOffset()     { return new OffsetRec(0x122BF, 1 , 8*96);   }
   public int getScreenWidth()             { return 8; }
   public int getScreenHeight()            { return 96; }
   public bool getScreenVertical()         { return true; }
