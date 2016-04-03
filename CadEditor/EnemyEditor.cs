@@ -935,7 +935,7 @@ namespace CadEditor
         }
     }
 
-    public class ObjectList
+    public class ObjectList : IEquatable<ObjectList>
     {
         public ObjectList()
         {
@@ -944,6 +944,20 @@ namespace CadEditor
         }
         public List<ObjectRec> objects;
         public string name;
+
+        bool IEquatable<ObjectList>.Equals(ObjectList other)
+        {
+            if (name != other.name)
+                return false;
+            if (objects.Count != other.objects.Count)
+                return false;
+            for (int i = 0; i < objects.Count; i++)
+            {
+                if (!objects[i].Equals(other.objects[i]))
+                    return false;
+            }
+            return true;
+        }
     }
 
     enum ToolType

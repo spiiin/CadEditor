@@ -4,6 +4,7 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using System.Globalization;
+using System.Linq;
 
 using System.Drawing;
 
@@ -377,7 +378,7 @@ namespace CadEditor
         }
     }
 
-    public struct ObjectRec
+    public struct ObjectRec : IEquatable<ObjectRec>
     {
         public ObjectRec(int type, int sx, int sy, int x, int y, Dictionary<String, int> additionalData)
             :this(type, sx, sy, x,y)
@@ -405,6 +406,22 @@ namespace CadEditor
         {
             String formatStr = (type > 15) ? "{0:X} : ({1:X}:{2:X})" : "0{0:X} : ({1:X}:{2:X})";
             return String.Format(formatStr, type, sx << 8 | x, sy << 8 | y);
+        }
+
+        bool IEquatable<ObjectRec>.Equals(ObjectRec other)
+        {
+            bool fieldsEq = (type == other.type) && (x == other.x) && (y == other.y) && (sx == other.sx) && (sy == other.sy);
+            if (!fieldsEq)
+            {
+                return false;
+            }
+            if (additionalData == null)
+            {
+                return other.additionalData == null;
+            }
+            //compare all values in dictionary
+            bool addDataEq = additionalData.Count == other.additionalData.Count && !additionalData.Except(other.additionalData).Any();
+            return true;
         }
     }
 
