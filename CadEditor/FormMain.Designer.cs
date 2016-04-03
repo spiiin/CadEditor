@@ -41,7 +41,6 @@
             this.pnGeneric = new System.Windows.Forms.Panel();
             this.cbGroup = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.cbPaletteNo = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -102,6 +101,9 @@
             this.cbLevelNo = new System.Windows.Forms.ComboBox();
             this.cbUseStructs = new System.Windows.Forms.CheckBox();
             this.lbStructures = new System.Windows.Forms.ListBox();
+            this.pnAdvancedParams = new System.Windows.Forms.Panel();
+            this.cbAdvanced = new System.Windows.Forms.CheckBox();
+            this.pnGroups = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -111,6 +113,8 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.pnElements.SuspendLayout();
+            this.pnAdvancedParams.SuspendLayout();
+            this.pnGroups.SuspendLayout();
             this.SuspendLayout();
             // 
             // bigBlocks
@@ -126,17 +130,18 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.blocksPanel.AutoScroll = true;
             this.blocksPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.blocksPanel.Location = new System.Drawing.Point(3, 0);
+            this.blocksPanel.Location = new System.Drawing.Point(4, 0);
             this.blocksPanel.Margin = new System.Windows.Forms.Padding(0);
             this.blocksPanel.Name = "blocksPanel";
-            this.blocksPanel.Size = new System.Drawing.Size(290, 491);
+            this.blocksPanel.Size = new System.Drawing.Size(262, 604);
             this.blocksPanel.TabIndex = 2;
             // 
             // mapScreen
             // 
-            this.mapScreen.Location = new System.Drawing.Point(0, 4);
+            this.mapScreen.Location = new System.Drawing.Point(0, 5);
+            this.mapScreen.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mapScreen.Name = "mapScreen";
-            this.mapScreen.Size = new System.Drawing.Size(640, 512);
+            this.mapScreen.Size = new System.Drawing.Size(853, 630);
             this.mapScreen.TabIndex = 4;
             this.mapScreen.TabStop = false;
             this.mapScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
@@ -149,18 +154,20 @@
             // activeBlock
             // 
             this.activeBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.activeBlock.Location = new System.Drawing.Point(3, 16);
+            this.activeBlock.Location = new System.Drawing.Point(4, 20);
+            this.activeBlock.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.activeBlock.Name = "activeBlock";
-            this.activeBlock.Size = new System.Drawing.Size(64, 64);
+            this.activeBlock.Size = new System.Drawing.Size(85, 78);
             this.activeBlock.TabIndex = 5;
             this.activeBlock.TabStop = false;
             // 
             // lbActiveBlock
             // 
             this.lbActiveBlock.AutoSize = true;
-            this.lbActiveBlock.Location = new System.Drawing.Point(3, 0);
+            this.lbActiveBlock.Location = new System.Drawing.Point(4, 0);
+            this.lbActiveBlock.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbActiveBlock.Name = "lbActiveBlock";
-            this.lbActiveBlock.Size = new System.Drawing.Size(49, 13);
+            this.lbActiveBlock.Size = new System.Drawing.Size(64, 17);
             this.lbActiveBlock.TabIndex = 16;
             this.lbActiveBlock.Text = "Active: ()";
             // 
@@ -173,9 +180,10 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(0, 83);
+            this.label6.Location = new System.Drawing.Point(0, 102);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(61, 13);
+            this.label6.Size = new System.Drawing.Size(79, 17);
             this.label6.TabIndex = 26;
             this.label6.Text = "Screen No:";
             // 
@@ -183,28 +191,22 @@
             // 
             this.cbScreenNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbScreenNo.FormattingEnabled = true;
-            this.cbScreenNo.Location = new System.Drawing.Point(3, 99);
+            this.cbScreenNo.Location = new System.Drawing.Point(4, 122);
+            this.cbScreenNo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbScreenNo.Name = "cbScreenNo";
-            this.cbScreenNo.Size = new System.Drawing.Size(64, 21);
+            this.cbScreenNo.Size = new System.Drawing.Size(84, 24);
             this.cbScreenNo.TabIndex = 27;
             this.cbScreenNo.SelectedIndexChanged += new System.EventHandler(this.cbScreenNo_SelectedIndexChanged);
             // 
             // pnGeneric
             // 
-            this.pnGeneric.Controls.Add(this.cbGroup);
-            this.pnGeneric.Controls.Add(this.label7);
-            this.pnGeneric.Controls.Add(this.label2);
-            this.pnGeneric.Controls.Add(this.label9);
-            this.pnGeneric.Controls.Add(this.cbPaletteNo);
-            this.pnGeneric.Controls.Add(this.label8);
-            this.pnGeneric.Controls.Add(this.cbBlockNo);
-            this.pnGeneric.Controls.Add(this.label5);
-            this.pnGeneric.Controls.Add(this.cbBigBlockNo);
-            this.pnGeneric.Controls.Add(this.cbVideoNo);
-            this.pnGeneric.Controls.Add(this.label1);
-            this.pnGeneric.Location = new System.Drawing.Point(1, 213);
+            this.pnGeneric.Controls.Add(this.pnGroups);
+            this.pnGeneric.Controls.Add(this.cbAdvanced);
+            this.pnGeneric.Controls.Add(this.pnAdvancedParams);
+            this.pnGeneric.Location = new System.Drawing.Point(1, 262);
+            this.pnGeneric.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnGeneric.Name = "pnGeneric";
-            this.pnGeneric.Size = new System.Drawing.Size(72, 215);
+            this.pnGeneric.Size = new System.Drawing.Size(96, 294);
             this.pnGeneric.TabIndex = 42;
             // 
             // cbGroup
@@ -212,36 +214,30 @@
             this.cbGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbGroup.DropDownWidth = 200;
             this.cbGroup.FormattingEnabled = true;
-            this.cbGroup.Location = new System.Drawing.Point(6, 189);
+            this.cbGroup.Location = new System.Drawing.Point(4, 29);
+            this.cbGroup.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbGroup.Name = "cbGroup";
-            this.cbGroup.Size = new System.Drawing.Size(64, 21);
+            this.cbGroup.Size = new System.Drawing.Size(84, 24);
             this.cbGroup.TabIndex = 51;
             this.cbGroup.SelectedIndexChanged += new System.EventHandler(this.cbGroup_SelectedIndexChanged);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(5, 173);
+            this.label7.Location = new System.Drawing.Point(4, 8);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(49, 13);
+            this.label7.Size = new System.Drawing.Size(63, 17);
             this.label7.TabIndex = 50;
             this.label7.Text = "GROUP:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 158);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(23, 13);
-            this.label2.TabIndex = 49;
-            this.label2.Text = "OR";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(2, 120);
+            this.label9.Location = new System.Drawing.Point(4, 148);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(42, 13);
+            this.label9.Size = new System.Drawing.Size(55, 17);
             this.label9.TabIndex = 48;
             this.label9.Text = "Pallete:";
             // 
@@ -266,17 +262,19 @@
             "13",
             "14",
             "15"});
-            this.cbPaletteNo.Location = new System.Drawing.Point(6, 136);
+            this.cbPaletteNo.Location = new System.Drawing.Point(9, 167);
+            this.cbPaletteNo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbPaletteNo.Name = "cbPaletteNo";
-            this.cbPaletteNo.Size = new System.Drawing.Size(64, 21);
+            this.cbPaletteNo.Size = new System.Drawing.Size(84, 24);
             this.cbPaletteNo.TabIndex = 47;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(2, 80);
+            this.label8.Location = new System.Drawing.Point(4, 98);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(37, 13);
+            this.label8.Size = new System.Drawing.Size(46, 17);
             this.label8.TabIndex = 46;
             this.label8.Text = "Block:";
             // 
@@ -293,17 +291,19 @@
             "6",
             "7",
             "8"});
-            this.cbBlockNo.Location = new System.Drawing.Point(6, 96);
+            this.cbBlockNo.Location = new System.Drawing.Point(9, 118);
+            this.cbBlockNo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbBlockNo.Name = "cbBlockNo";
-            this.cbBlockNo.Size = new System.Drawing.Size(64, 21);
+            this.cbBlockNo.Size = new System.Drawing.Size(84, 24);
             this.cbBlockNo.TabIndex = 45;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(4, 40);
+            this.label5.Location = new System.Drawing.Point(6, 49);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(52, 13);
+            this.label5.Size = new System.Drawing.Size(66, 17);
             this.label5.TabIndex = 44;
             this.label5.Text = "BigBlock:";
             // 
@@ -320,9 +320,10 @@
             "6",
             "7",
             "8"});
-            this.cbBigBlockNo.Location = new System.Drawing.Point(6, 56);
+            this.cbBigBlockNo.Location = new System.Drawing.Point(9, 69);
+            this.cbBigBlockNo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbBigBlockNo.Name = "cbBigBlockNo";
-            this.cbBigBlockNo.Size = new System.Drawing.Size(64, 21);
+            this.cbBigBlockNo.Size = new System.Drawing.Size(84, 24);
             this.cbBigBlockNo.TabIndex = 43;
             // 
             // cbVideoNo
@@ -338,17 +339,19 @@
             "6",
             "7",
             "8"});
-            this.cbVideoNo.Location = new System.Drawing.Point(5, 16);
+            this.cbVideoNo.Location = new System.Drawing.Point(8, 20);
+            this.cbVideoNo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbVideoNo.Name = "cbVideoNo";
-            this.cbVideoNo.Size = new System.Drawing.Size(64, 21);
+            this.cbVideoNo.Size = new System.Drawing.Size(84, 24);
             this.cbVideoNo.TabIndex = 41;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(2, 0);
+            this.label1.Location = new System.Drawing.Point(4, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 13);
+            this.label1.Size = new System.Drawing.Size(82, 17);
             this.label1.TabIndex = 42;
             this.label1.Text = "VideoBlock:";
             // 
@@ -362,17 +365,19 @@
             "Block types",
             "Block numbers",
             "Small blocks numbers"});
-            this.cbViewType.Location = new System.Drawing.Point(3, 186);
+            this.cbViewType.Location = new System.Drawing.Point(4, 229);
+            this.cbViewType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbViewType.Name = "cbViewType";
-            this.cbViewType.Size = new System.Drawing.Size(64, 21);
+            this.cbViewType.Size = new System.Drawing.Size(84, 24);
             this.cbViewType.TabIndex = 45;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(0, 170);
+            this.label4.Location = new System.Drawing.Point(0, 209);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(56, 13);
+            this.label4.Size = new System.Drawing.Size(72, 17);
             this.label4.TabIndex = 44;
             this.label4.Text = "View type:";
             // 
@@ -407,9 +412,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnView.AutoScroll = true;
             this.pnView.Controls.Add(this.mapScreen);
-            this.pnView.Location = new System.Drawing.Point(3, 2);
+            this.pnView.Location = new System.Drawing.Point(4, 2);
+            this.pnView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnView.Name = "pnView";
-            this.pnView.Size = new System.Drawing.Size(687, 516);
+            this.pnView.Size = new System.Drawing.Size(1041, 635);
             this.pnView.TabIndex = 53;
             // 
             // lbCoords
@@ -417,14 +423,16 @@
             this.lbCoords.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbCoords.AutoSize = true;
-            this.lbCoords.Location = new System.Drawing.Point(5, 496);
+            this.lbCoords.Location = new System.Drawing.Point(7, 610);
+            this.lbCoords.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbCoords.Name = "lbCoords";
-            this.lbCoords.Size = new System.Drawing.Size(64, 13);
+            this.lbCoords.Size = new System.Drawing.Size(87, 17);
             this.lbCoords.TabIndex = 56;
             this.lbCoords.Text = "Coords:(0,0)";
             // 
             // toolStrip1
             // 
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bttOpen,
             this.bttSave,
@@ -452,7 +460,7 @@
             this.tbbShowInfo});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1073, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1431, 27);
             this.toolStrip1.TabIndex = 57;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -462,7 +470,7 @@
             this.bttOpen.Image = ((System.Drawing.Image)(resources.GetObject("bttOpen.Image")));
             this.bttOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttOpen.Name = "bttOpen";
-            this.bttOpen.Size = new System.Drawing.Size(23, 22);
+            this.bttOpen.Size = new System.Drawing.Size(24, 24);
             this.bttOpen.Text = "Open";
             this.bttOpen.Click += new System.EventHandler(this.btOpen_Click);
             // 
@@ -472,7 +480,7 @@
             this.bttSave.Image = ((System.Drawing.Image)(resources.GetObject("bttSave.Image")));
             this.bttSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttSave.Name = "bttSave";
-            this.bttSave.Size = new System.Drawing.Size(23, 22);
+            this.bttSave.Size = new System.Drawing.Size(24, 24);
             this.bttSave.Text = "Save";
             this.bttSave.Click += new System.EventHandler(this.btSave_Click);
             // 
@@ -482,19 +490,19 @@
             this.bttReload.Image = ((System.Drawing.Image)(resources.GetObject("bttReload.Image")));
             this.bttReload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttReload.Name = "bttReload";
-            this.bttReload.Size = new System.Drawing.Size(23, 22);
+            this.bttReload.Size = new System.Drawing.Size(24, 24);
             this.bttReload.Text = "Reload";
             this.bttReload.Click += new System.EventHandler(this.bttReload_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 27);
             // 
             // bttBigBlocks
             // 
@@ -502,7 +510,7 @@
             this.bttBigBlocks.Image = ((System.Drawing.Image)(resources.GetObject("bttBigBlocks.Image")));
             this.bttBigBlocks.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttBigBlocks.Name = "bttBigBlocks";
-            this.bttBigBlocks.Size = new System.Drawing.Size(23, 22);
+            this.bttBigBlocks.Size = new System.Drawing.Size(24, 24);
             this.bttBigBlocks.Text = "Edit BigBlocks";
             this.bttBigBlocks.Click += new System.EventHandler(this.btSubeditor_Click);
             // 
@@ -512,7 +520,7 @@
             this.bttBlocks.Image = ((System.Drawing.Image)(resources.GetObject("bttBlocks.Image")));
             this.bttBlocks.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttBlocks.Name = "bttBlocks";
-            this.bttBlocks.Size = new System.Drawing.Size(23, 22);
+            this.bttBlocks.Size = new System.Drawing.Size(24, 24);
             this.bttBlocks.Text = "Edit Blocks";
             this.bttBlocks.Click += new System.EventHandler(this.btSubeditor_Click);
             // 
@@ -522,14 +530,14 @@
             this.bttEnemies.Image = ((System.Drawing.Image)(resources.GetObject("bttEnemies.Image")));
             this.bttEnemies.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttEnemies.Name = "bttEnemies";
-            this.bttEnemies.Size = new System.Drawing.Size(23, 22);
+            this.bttEnemies.Size = new System.Drawing.Size(24, 24);
             this.bttEnemies.Text = "Edit Enemies";
             this.bttEnemies.Click += new System.EventHandler(this.btSubeditor_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 27);
             // 
             // bttStructures
             // 
@@ -537,7 +545,7 @@
             this.bttStructures.Image = ((System.Drawing.Image)(resources.GetObject("bttStructures.Image")));
             this.bttStructures.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttStructures.Name = "bttStructures";
-            this.bttStructures.Size = new System.Drawing.Size(23, 22);
+            this.bttStructures.Size = new System.Drawing.Size(24, 24);
             this.bttStructures.Text = "Make structures";
             this.bttStructures.Click += new System.EventHandler(this.bttStructures_Click);
             // 
@@ -547,14 +555,14 @@
             this.bttConfig.Image = ((System.Drawing.Image)(resources.GetObject("bttConfig.Image")));
             this.bttConfig.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttConfig.Name = "bttConfig";
-            this.bttConfig.Size = new System.Drawing.Size(23, 22);
+            this.bttConfig.Size = new System.Drawing.Size(24, 24);
             this.bttConfig.Text = "Edit Config";
             this.bttConfig.Click += new System.EventHandler(this.btSubeditor_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 27);
             // 
             // bttShowNei
             // 
@@ -565,7 +573,7 @@
             this.bttShowNei.Image = ((System.Drawing.Image)(resources.GetObject("bttShowNei.Image")));
             this.bttShowNei.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttShowNei.Name = "bttShowNei";
-            this.bttShowNei.Size = new System.Drawing.Size(23, 22);
+            this.bttShowNei.Size = new System.Drawing.Size(24, 24);
             this.bttShowNei.Text = "Show neighborns screens ";
             this.bttShowNei.CheckedChanged += new System.EventHandler(this.cbShowNeighborns_CheckedChanged);
             // 
@@ -578,7 +586,7 @@
             this.bttAxis.Image = ((System.Drawing.Image)(resources.GetObject("bttAxis.Image")));
             this.bttAxis.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttAxis.Name = "bttAxis";
-            this.bttAxis.Size = new System.Drawing.Size(23, 22);
+            this.bttAxis.Size = new System.Drawing.Size(24, 24);
             this.bttAxis.Text = "Axis";
             this.bttAxis.CheckedChanged += new System.EventHandler(this.cbShowAxis_CheckedChanged);
             // 
@@ -591,14 +599,14 @@
             this.bttShowBrush.Image = ((System.Drawing.Image)(resources.GetObject("bttShowBrush.Image")));
             this.bttShowBrush.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttShowBrush.Name = "bttShowBrush";
-            this.bttShowBrush.Size = new System.Drawing.Size(23, 22);
+            this.bttShowBrush.Size = new System.Drawing.Size(24, 24);
             this.bttShowBrush.Text = "Show active element";
             this.bttShowBrush.CheckedChanged += new System.EventHandler(this.bttShowBrush_CheckedChanged);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 27);
             // 
             // bttScale
             // 
@@ -613,50 +621,50 @@
             this.bttScale.Image = ((System.Drawing.Image)(resources.GetObject("bttScale.Image")));
             this.bttScale.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttScale.Name = "bttScale";
-            this.bttScale.Size = new System.Drawing.Size(32, 22);
+            this.bttScale.Size = new System.Drawing.Size(39, 24);
             this.bttScale.Text = "Scale";
             this.bttScale.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.bttScale_DropDownItemClicked);
             // 
             // x025ToolStripMenuItem
             // 
             this.x025ToolStripMenuItem.Name = "x025ToolStripMenuItem";
-            this.x025ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.x025ToolStripMenuItem.Size = new System.Drawing.Size(118, 26);
             this.x025ToolStripMenuItem.Text = "x0.25";
             // 
             // x05ToolStripMenuItem
             // 
             this.x05ToolStripMenuItem.Name = "x05ToolStripMenuItem";
-            this.x05ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.x05ToolStripMenuItem.Size = new System.Drawing.Size(118, 26);
             this.x05ToolStripMenuItem.Text = "x0.5";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(100, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(118, 26);
             this.toolStripMenuItem2.Text = "x1";
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(100, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(118, 26);
             this.toolStripMenuItem3.Text = "x2";
             // 
             // x3ToolStripMenuItem
             // 
             this.x3ToolStripMenuItem.Name = "x3ToolStripMenuItem";
-            this.x3ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.x3ToolStripMenuItem.Size = new System.Drawing.Size(118, 26);
             this.x3ToolStripMenuItem.Text = "x3";
             // 
             // x4ToolStripMenuItem
             // 
             this.x4ToolStripMenuItem.Name = "x4ToolStripMenuItem";
-            this.x4ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.x4ToolStripMenuItem.Size = new System.Drawing.Size(118, 26);
             this.x4ToolStripMenuItem.Text = "x4";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 27);
             // 
             // bttShowLayer1
             // 
@@ -667,7 +675,7 @@
             this.bttShowLayer1.Image = ((System.Drawing.Image)(resources.GetObject("bttShowLayer1.Image")));
             this.bttShowLayer1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttShowLayer1.Name = "bttShowLayer1";
-            this.bttShowLayer1.Size = new System.Drawing.Size(23, 22);
+            this.bttShowLayer1.Size = new System.Drawing.Size(24, 24);
             this.bttShowLayer1.Text = "Show Layer 1";
             this.bttShowLayer1.CheckedChanged += new System.EventHandler(this.bttShowLayer1_CheckedChanged);
             // 
@@ -680,7 +688,7 @@
             this.bttShowLayer2.Image = ((System.Drawing.Image)(resources.GetObject("bttShowLayer2.Image")));
             this.bttShowLayer2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttShowLayer2.Name = "bttShowLayer2";
-            this.bttShowLayer2.Size = new System.Drawing.Size(23, 22);
+            this.bttShowLayer2.Size = new System.Drawing.Size(24, 24);
             this.bttShowLayer2.Text = "Show Layer 2";
             this.bttShowLayer2.CheckedChanged += new System.EventHandler(this.bttShowLayer2_CheckedChanged);
             // 
@@ -693,26 +701,26 @@
             this.bttLayer.Image = ((System.Drawing.Image)(resources.GetObject("bttLayer.Image")));
             this.bttLayer.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttLayer.Name = "bttLayer";
-            this.bttLayer.Size = new System.Drawing.Size(29, 22);
+            this.bttLayer.Size = new System.Drawing.Size(34, 24);
             this.bttLayer.Text = "Select layer";
             this.bttLayer.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.bttLayer_DropDownItemClicked);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(80, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(92, 26);
             this.toolStripMenuItem4.Text = "1";
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(80, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(92, 26);
             this.toolStripMenuItem5.Text = "2";
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 27);
             // 
             // tbbShowPluginInfo
             // 
@@ -720,7 +728,7 @@
             this.tbbShowPluginInfo.Image = ((System.Drawing.Image)(resources.GetObject("tbbShowPluginInfo.Image")));
             this.tbbShowPluginInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbbShowPluginInfo.Name = "tbbShowPluginInfo";
-            this.tbbShowPluginInfo.Size = new System.Drawing.Size(23, 22);
+            this.tbbShowPluginInfo.Size = new System.Drawing.Size(24, 24);
             this.tbbShowPluginInfo.Text = "Show plugins info";
             this.tbbShowPluginInfo.Click += new System.EventHandler(this.tbbShowPluginInfo_Click);
             // 
@@ -730,7 +738,7 @@
             this.tbbShowInfo.Image = ((System.Drawing.Image)(resources.GetObject("tbbShowInfo.Image")));
             this.tbbShowInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbbShowInfo.Name = "tbbShowInfo";
-            this.tbbShowInfo.Size = new System.Drawing.Size(23, 22);
+            this.tbbShowInfo.Size = new System.Drawing.Size(24, 24);
             this.tbbShowInfo.Text = "Show info";
             this.tbbShowInfo.Click += new System.EventHandler(this.tbbShowInfo_Click);
             // 
@@ -741,7 +749,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 26);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 32);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -758,8 +767,9 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.pnView);
-            this.splitContainer1.Size = new System.Drawing.Size(1071, 520);
+            this.splitContainer1.Size = new System.Drawing.Size(1428, 640);
             this.splitContainer1.SplitterDistance = 373;
+            this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 5;
             // 
             // blockPanel4
@@ -772,7 +782,7 @@
             this.blockPanel4.Location = new System.Drawing.Point(0, 0);
             this.blockPanel4.Margin = new System.Windows.Forms.Padding(0);
             this.blockPanel4.Name = "blockPanel4";
-            this.blockPanel4.Size = new System.Drawing.Size(290, 491);
+            this.blockPanel4.Size = new System.Drawing.Size(262, 604);
             this.blockPanel4.TabIndex = 63;
             // 
             // blockPanel3
@@ -785,7 +795,7 @@
             this.blockPanel3.Location = new System.Drawing.Point(0, 0);
             this.blockPanel3.Margin = new System.Windows.Forms.Padding(0);
             this.blockPanel3.Name = "blockPanel3";
-            this.blockPanel3.Size = new System.Drawing.Size(290, 491);
+            this.blockPanel3.Size = new System.Drawing.Size(262, 604);
             this.blockPanel3.TabIndex = 62;
             // 
             // blockPanel2
@@ -798,16 +808,17 @@
             this.blockPanel2.Location = new System.Drawing.Point(0, 0);
             this.blockPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.blockPanel2.Name = "blockPanel2";
-            this.blockPanel2.Size = new System.Drawing.Size(290, 491);
+            this.blockPanel2.Size = new System.Drawing.Size(262, 604);
             this.blockPanel2.TabIndex = 61;
             // 
             // lbPanelNo
             // 
             this.lbPanelNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lbPanelNo.AutoSize = true;
-            this.lbPanelNo.Location = new System.Drawing.Point(152, 499);
+            this.lbPanelNo.Location = new System.Drawing.Point(203, 614);
+            this.lbPanelNo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbPanelNo.Name = "lbPanelNo";
-            this.lbPanelNo.Size = new System.Drawing.Size(72, 13);
+            this.lbPanelNo.Size = new System.Drawing.Size(96, 17);
             this.lbPanelNo.TabIndex = 60;
             this.lbPanelNo.Text = "Panel subpart";
             // 
@@ -821,9 +832,10 @@
             "1",
             "2",
             "3"});
-            this.cbPanelNo.Location = new System.Drawing.Point(230, 494);
+            this.cbPanelNo.Location = new System.Drawing.Point(307, 608);
+            this.cbPanelNo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbPanelNo.Name = "cbPanelNo";
-            this.cbPanelNo.Size = new System.Drawing.Size(61, 21);
+            this.cbPanelNo.Size = new System.Drawing.Size(80, 24);
             this.cbPanelNo.TabIndex = 7;
             this.cbPanelNo.SelectedIndexChanged += new System.EventHandler(this.cbPanelNo_SelectedIndexChanged);
             // 
@@ -842,17 +854,19 @@
             this.pnElements.Controls.Add(this.label6);
             this.pnElements.Controls.Add(this.cbScreenNo);
             this.pnElements.Controls.Add(this.pnGeneric);
-            this.pnElements.Location = new System.Drawing.Point(297, 3);
+            this.pnElements.Location = new System.Drawing.Point(272, 4);
+            this.pnElements.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnElements.Name = "pnElements";
-            this.pnElements.Size = new System.Drawing.Size(77, 515);
+            this.pnElements.Size = new System.Drawing.Size(103, 634);
             this.pnElements.TabIndex = 5;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(2, 123);
+            this.label3.Location = new System.Drawing.Point(3, 151);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 13);
+            this.label3.Size = new System.Drawing.Size(68, 17);
             this.label3.TabIndex = 58;
             this.label3.Text = "Level No:";
             // 
@@ -860,18 +874,20 @@
             // 
             this.cbLevelNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbLevelNo.FormattingEnabled = true;
-            this.cbLevelNo.Location = new System.Drawing.Point(5, 139);
+            this.cbLevelNo.Location = new System.Drawing.Point(7, 171);
+            this.cbLevelNo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbLevelNo.Name = "cbLevelNo";
-            this.cbLevelNo.Size = new System.Drawing.Size(64, 21);
+            this.cbLevelNo.Size = new System.Drawing.Size(84, 24);
             this.cbLevelNo.TabIndex = 59;
             this.cbLevelNo.SelectedIndexChanged += new System.EventHandler(this.cbLevelNo_SelectedIndexChanged);
             // 
             // cbUseStructs
             // 
             this.cbUseStructs.AutoSize = true;
-            this.cbUseStructs.Location = new System.Drawing.Point(3, 434);
+            this.cbUseStructs.Location = new System.Drawing.Point(4, 564);
+            this.cbUseStructs.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbUseStructs.Name = "cbUseStructs";
-            this.cbUseStructs.Size = new System.Drawing.Size(79, 17);
+            this.cbUseStructs.Size = new System.Drawing.Size(101, 21);
             this.cbUseStructs.TabIndex = 57;
             this.cbUseStructs.Text = "Use structs";
             this.cbUseStructs.UseVisualStyleBackColor = true;
@@ -883,22 +899,62 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbStructures.FormattingEnabled = true;
-            this.lbStructures.Location = new System.Drawing.Point(3, 4);
+            this.lbStructures.ItemHeight = 16;
+            this.lbStructures.Location = new System.Drawing.Point(4, 5);
+            this.lbStructures.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lbStructures.Name = "lbStructures";
-            this.lbStructures.Size = new System.Drawing.Size(290, 511);
+            this.lbStructures.Size = new System.Drawing.Size(261, 628);
             this.lbStructures.TabIndex = 6;
             this.lbStructures.Visible = false;
             this.lbStructures.SelectedIndexChanged += new System.EventHandler(this.lbStructures_SelectedIndexChanged);
             // 
+            // pnAdvancedParams
+            // 
+            this.pnAdvancedParams.Controls.Add(this.label1);
+            this.pnAdvancedParams.Controls.Add(this.cbVideoNo);
+            this.pnAdvancedParams.Controls.Add(this.cbBigBlockNo);
+            this.pnAdvancedParams.Controls.Add(this.label9);
+            this.pnAdvancedParams.Controls.Add(this.label5);
+            this.pnAdvancedParams.Controls.Add(this.cbPaletteNo);
+            this.pnAdvancedParams.Controls.Add(this.cbBlockNo);
+            this.pnAdvancedParams.Controls.Add(this.label8);
+            this.pnAdvancedParams.Location = new System.Drawing.Point(3, 32);
+            this.pnAdvancedParams.Name = "pnAdvancedParams";
+            this.pnAdvancedParams.Size = new System.Drawing.Size(94, 199);
+            this.pnAdvancedParams.TabIndex = 5;
+            this.pnAdvancedParams.Visible = false;
+            // 
+            // cbAdvanced
+            // 
+            this.cbAdvanced.AutoSize = true;
+            this.cbAdvanced.Location = new System.Drawing.Point(2, 4);
+            this.cbAdvanced.Margin = new System.Windows.Forms.Padding(4);
+            this.cbAdvanced.Name = "cbAdvanced";
+            this.cbAdvanced.Size = new System.Drawing.Size(93, 21);
+            this.cbAdvanced.TabIndex = 60;
+            this.cbAdvanced.Text = "Advanced";
+            this.cbAdvanced.UseVisualStyleBackColor = true;
+            this.cbAdvanced.CheckedChanged += new System.EventHandler(this.cbAdvanced_CheckedChanged);
+            // 
+            // pnGroups
+            // 
+            this.pnGroups.Controls.Add(this.label7);
+            this.pnGroups.Controls.Add(this.cbGroup);
+            this.pnGroups.Location = new System.Drawing.Point(5, 236);
+            this.pnGroups.Name = "pnGroups";
+            this.pnGroups.Size = new System.Drawing.Size(90, 59);
+            this.pnGroups.TabIndex = 5;
+            // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1073, 548);
+            this.ClientSize = new System.Drawing.Size(1431, 674);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "FormMain";
             this.Text = "CAD Editor v3.5";
@@ -917,6 +973,10 @@
             this.splitContainer1.ResumeLayout(false);
             this.pnElements.ResumeLayout(false);
             this.pnElements.PerformLayout();
+            this.pnAdvancedParams.ResumeLayout(false);
+            this.pnAdvancedParams.PerformLayout();
+            this.pnGroups.ResumeLayout(false);
+            this.pnGroups.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -994,8 +1054,10 @@
         private System.Windows.Forms.ToolStripButton tbbShowPluginInfo;
         private System.Windows.Forms.ComboBox cbGroup;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ToolStripButton tbbShowInfo;
+        private System.Windows.Forms.CheckBox cbAdvanced;
+        private System.Windows.Forms.Panel pnAdvancedParams;
+        private System.Windows.Forms.Panel pnGroups;
     }
 }
 

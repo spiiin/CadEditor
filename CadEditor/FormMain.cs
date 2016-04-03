@@ -133,6 +133,8 @@ namespace CadEditor
             bttShowLayer2.Visible = ConfigScript.getLayersCount() > 1;
             bttLayer.Visible = ConfigScript.getLayersCount() > 1;
 
+            pnGroups.Visible = ConfigScript.getGroups().Length > 0;
+
             resetMapScreenSize();
         }
 
@@ -988,6 +990,11 @@ namespace CadEditor
             resetScreens();
             resetMapScreenSize();
             mapScreen.Invalidate();
+        }
+
+        private void cbAdvanced_CheckedChanged(object sender, EventArgs e)
+        {
+            pnAdvancedParams.Visible = cbAdvanced.Checked;
         }
 
         private void cbPanelNo_SelectedIndexChanged(object sender, EventArgs e)
