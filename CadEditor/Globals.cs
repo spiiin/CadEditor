@@ -419,8 +419,9 @@ namespace CadEditor
             {
                 return other.additionalData == null;
             }
+            
             //compare all values in dictionary
-            bool addDataEq = additionalData.Count == other.additionalData.Count && !additionalData.Except(other.additionalData).Any();
+            bool addDataEq = additionalData.SequenceEqual(other.additionalData);
             return true;
         }
     }

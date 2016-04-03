@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace CadEditor
 {
@@ -949,14 +950,7 @@ namespace CadEditor
         {
             if (name != other.name)
                 return false;
-            if (objects.Count != other.objects.Count)
-                return false;
-            for (int i = 0; i < objects.Count; i++)
-            {
-                if (!objects[i].Equals(other.objects[i]))
-                    return false;
-            }
-            return true;
+            return objects.SequenceEqual(other.objects);
         }
     }
 
