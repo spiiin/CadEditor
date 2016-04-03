@@ -441,7 +441,7 @@ namespace CadEditor
         SmallObjNumbers,
     };
 
-    public class BigBlock
+    public class BigBlock : IEquatable<BigBlock>
     {
         public BigBlock(int w, int h)
         {
@@ -450,6 +450,12 @@ namespace CadEditor
             indexes = new int[getSize()];
         }
         public int getSize() { return width*height; }
+
+        bool IEquatable<BigBlock>.Equals(BigBlock other)
+        {
+            return (width == other.width) && (height == other.height) && (indexes.SequenceEqual(other.indexes));
+        }
+
         public int[] indexes;
         public int width;
         public int height;

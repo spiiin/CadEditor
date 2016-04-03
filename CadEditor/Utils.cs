@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Drawing;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace CadEditor
 {
@@ -787,6 +788,13 @@ namespace CadEditor
                 g.DrawImage(objectSpritesBig[curObject.type], new Rectangle((int)(x * curScale) - xsize / 2, (int)(y * curScale) - ysize / 2, xsize, ysize));
             if (isSelected)
                 g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle((int)(x * curScale) - xsize / 2, (int)(y * curScale) - ysize / 2, xsize, ysize));
+        }
+
+        //wrapper for calling ling function from python.net
+        public static bool seqEquals<T>(T seq1, T seq2)
+            where T : IEnumerable<T>
+        {
+            return seq1.SequenceEqual(seq2);
         }
     }
 }
