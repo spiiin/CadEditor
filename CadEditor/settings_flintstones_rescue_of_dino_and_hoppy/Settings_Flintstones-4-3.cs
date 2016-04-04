@@ -11,7 +11,7 @@ public class Data
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return false; }
-  public bool isEnemyEditorEnabled()    { return true; }
+  public bool isEnemyEditorEnabled()    { return false; } //broken get/set objects functions
   
   public GetObjectsFunc getObjectsFunc()   { return FliUtils.getObjects;  }
   public SetObjectsFunc setObjectsFunc()   { return FliUtils.setObjects;  }
