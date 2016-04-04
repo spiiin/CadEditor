@@ -394,7 +394,7 @@ namespace PluginVideoNes
             {
                 for (int h = 0; h < bb.height; h++)
                 {
-                    for (int w = 0; w < bb.height; w++)
+                    for (int w = 0; w < bb.width; w++)
                     {
                         int sbX = w * bWidth;
                         int sbY = h * bHeight;
