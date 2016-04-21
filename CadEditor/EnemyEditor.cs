@@ -140,7 +140,11 @@ namespace CadEditor
             foreach (var lr in ConfigScript.levelRecs)
                 cbLayoutNo.Items.Add(String.Format("{0}:0x{1:X} ({2}x{3})", lr.name, lr.layoutAddr, lr.width, lr.height));
             Utils.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged, curActiveLayout);
+            //reload screens
+            screens = Utils.setScreens(getLevelRecForGameType().levelNo);
+
             reloadLevel(reloadObjects);
+            resizeMapScreen();
             mapScreen.Invalidate();
         }
 
@@ -197,16 +201,20 @@ namespace CadEditor
             lbReadOnly.Visible = readOnly;
 
             btSort.Visible = ConfigScript.sortObjectsFunc != null;
+            resizeMapScreen();
 
+            Utils.setCbItemsCount(cbBigObjectNo, 256, 0, true);
+            cbLevel_SelectedIndexChanged(cbLayoutNo, new EventArgs());
+        }
+
+        private void resizeMapScreen()
+        {
             int blockWidth = ConfigScript.getBlocksPicturesWidth();
             int scrLevelNo = getLevelRecForGameType().levelNo;
             if (ConfigScript.getScreenVertical())
                 mapScreen.Size = new Size(ConfigScript.getScreenHeight(scrLevelNo) * blockWidth * 2, (ConfigScript.getScreenWidth(scrLevelNo) + 2) * 64);
             else
                 mapScreen.Size = new Size((ConfigScript.getScreenWidth(scrLevelNo) + 2) * blockWidth * 2, ConfigScript.getScreenHeight(scrLevelNo) * 64);
-
-            Utils.setCbItemsCount(cbBigObjectNo, 256, 0, true);
-            cbLevel_SelectedIndexChanged(cbLayoutNo, new EventArgs());
         }
 
         private void cbScreenNo_SelectedIndexChanged(object sender, EventArgs e)
