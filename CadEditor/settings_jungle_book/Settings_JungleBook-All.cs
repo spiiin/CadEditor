@@ -15,22 +15,22 @@ public class Data
   public OffsetRec getPalOffset()                           { return new OffsetRec(0x1CC19, 32  , 16);     }
   public OffsetRec getVideoOffset()                         { return new OffsetRec(0x30010, 16  , 0x1000); }
   public OffsetRec getVideoObjOffset()                      { return new OffsetRec(0x20010, 16  , 0x1000); }
-  public OffsetRec getBigBlocksOffset()                     { return new OffsetRec(0 , 3   , 1); }
-  public OffsetRec getBlocksOffset()                        { return new OffsetRec(0 , 3   , 1); }
+  public OffsetRec getBigBlocksOffset()                     { return new OffsetRec(0 , 4   , 1); }
+  public OffsetRec getBlocksOffset()                        { return new OffsetRec(0 , 4   , 1); }
   
   public int getLevelsCount()                               { return 9; }
   
   public OffsetRec[] getScreensOffsetsForLevels() {
     var ans = new OffsetRec[] {
-      new OffsetRec(  90441 - 96 , 1, 17*96, 96, 17),
+      new OffsetRec(0x16149 - 96 , 1, 17*96, 96, 17),
       new OffsetRec(0x18149 - 24 , 1, 24*64, 24, 64),
-      new OffsetRec(  93367 , 1  , 168*10, 168  , 10),
-      new OffsetRec(  81938 , 1  , 168*16, 168  , 16),
-      new OffsetRec(  85106 , 1  , 62*32 , 62   , 32),
+      new OffsetRec(0x16CB7 , 1  , 168*10, 168  , 10),
+      new OffsetRec(0x14012 , 1  , 168*16, 168  , 16),
+      new OffsetRec(0x14C72 , 1  , 62*32 , 62   , 32),
       new OffsetRec(0x18C21 , 1  , 64*32 , 64   , 32),
       new OffsetRec(0x12012 , 1  , 64*32 , 64   , 32),
       new OffsetRec(0x12DF6 , 1  , 33*54 , 33   , 54),
-      new OffsetRec(95542   , 1  , 64*32 , 64   , 32)
+      new OffsetRec(0x17536 , 1  , 64*32 , 64   , 32)
     };
     return ans;  
   }
@@ -190,7 +190,7 @@ public class Data
     return new Dictionary<String, int> { {"data", 0} };
   }
   
-  //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------
   struct BigBlockRec
   {
     public int hiAddr;
@@ -206,14 +206,15 @@ public class Data
   }
   
   static BlockRec[] BlocksAddrs = new BlockRec[]{
-    new BlockRec{ hiAddr = 0x1D984, loAddr = 0x16859 },
-    new BlockRec{ hiAddr = 0x1D984, loAddr = 0x1889F },
-    //new BlockRec{ hiAddr = 0x1D984, loAddr = 0x15654 },
-    new BlockRec{ hiAddr = 0x1D984, loAddr = 0x12970 },
+    new BlockRec{ hiAddr = 0x1D984, loAddr = 0x16859 }, //1,3,9
+    new BlockRec{ hiAddr = 0x1D984, loAddr = 0x15654 }, //4,5
+    new BlockRec{ hiAddr = 0x1D984, loAddr = 0x1889F }, //2,6
+    new BlockRec{ hiAddr = 0x1D984, loAddr = 0x12970 }, //7,8
   };
   
   static BigBlockRec[] BigBlocksAddrs = new BigBlockRec[] { 
-    new BigBlockRec { hiAddr = 0x1DC04, hiCount = 101, loAddr = 0x16A59 + 128, loCount = 119 }, //1,3,4,5,6,9
+    new BigBlockRec { hiAddr = 0x1DC04, hiCount = 101, loAddr = 0x16A59 + 128, loCount = 119 }, //1,3,9
+    new BigBlockRec { hiAddr = 0x1DC04, hiCount = 101, loAddr = 0x15854 + 128, loCount = 119 }, //4,5
     new BigBlockRec { hiAddr = 0x1DC04, hiCount = 101, loAddr = 0x19779 + 128, loCount = 120 }, //2,6
     new BigBlockRec { hiAddr = 0x1DC04, hiCount = 101, loAddr = 0x12B28 + 128, loCount = 83 },  //7,8
   };
