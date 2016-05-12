@@ -55,120 +55,80 @@ public class Data
   public SetVideoChunkFunc    setVideoChunkFunc()            { return Utils.setVideoChunk; }
   public GetObjectDictionaryFunc getObjectDictionaryFunc()   { return getObjectDictionary; }
   
+  public GroupRec[] getGroups()
+  {
+    return new GroupRec[] { 
+      new GroupRec("Jungle by Day"         , 14,0,0,0, 0x01),
+      new GroupRec("Great Tree"            , 11,2,2,0, 0x01),
+      new GroupRec("Dawn Patrol"           , 14,0,0,0, 0x01),
+      new GroupRec("River"                 , 14,1,1,0, 0x01),
+      new GroupRec("Baloo and River"       , 14,1,1,0, 0x01),
+      new GroupRec("Tree Village"          , 11,2,2,0, 0x01),
+      new GroupRec("Ruins"                 , 2 ,3,3,9 ,0x01),
+      new GroupRec("Falling Ruins"         , 2 ,3,3,9 ,0x01),
+      new GroupRec("Jungle by Night"       , 14,0,0,0, 0x01),
+    };
+  }
+  
   public IList<LevelRec> levelRecsJB = new List<LevelRec>() 
   {
-    new LevelRec(0x0, 47, 1, 1, 0x0, "", 0),
-    new LevelRec(0x0, 47, 1, 1, 0x0, "", 1),
+    new LevelRec(0x167D5, 48, 1, 1, 0x0, "Jungle By Day", 0),
+    new LevelRec(0x18815, 45, 1, 1, 0x0, "Great Tree", 1),
+    new LevelRec(0x173F6, 67, 1, 1, 0x0, "Dawn Patrol", 0),
+    new LevelRec(0x14B7A, 89, 1, 1, 0x0, "River", 0),
+    new LevelRec(0x1550E, 67, 1, 1, 0x0, "Baloo and River", 0),
+    new LevelRec(0x194D3, 51, 1, 1, 0x0, "Tree Village", 0),
+    new LevelRec(0x128D6, 60, 1, 1, 0x0, "Ruins", 0),
+    new LevelRec(0x13642, 111, 1, 1, 0x0, "Falling Ruins", 0),
+    new LevelRec(0x17E04, 65, 1, 1, 0x0, "Jungle By Night", 0),
+    //new LevelRec(0x10912, 74, 1, 1, 0x0, "Wastelands", 0),
   };
   
+  //addrs saved in ram at 77-79-7E-81
   public List<ObjectList> getObjectsJungleBook(int levelNo)
   {
-    if (levelNo == 0)
-      return getObjectsJungleBook1(levelNo);
-    else
-      return getObjectsJungleBook2(levelNo);
+    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    int objCount = lr.objCount;
+    int objAddr  = lr.objectsBeginAddr;
+    var objects = new List<ObjectRec>();
+    for (int i = 0; i < objCount; i++)
+    {
+        byte x    = Globals.romdata[objAddr - objCount*2 + i];
+        byte y    = Globals.romdata[objAddr - objCount*1 + i];
+        byte v    = Globals.romdata[objAddr + objCount*0 + i];
+        byte data = Globals.romdata[objAddr + objCount*1 + i];
+        int realx = x* 32 + 16;
+        int realy = y* 32 + 16;
+        var dataDict = new Dictionary<string,int>();
+        dataDict["data"] = data;
+        var obj = new ObjectRec(v, 0, 0, realx, realy, dataDict);
+        objects.Add(obj);
+    }
+    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
   }
-  
+
   public bool setObjectsJungleBook(int levelNo, List<ObjectList> objLists)
   {
-    if (levelNo == 0)
-      return setObjectsJungleBook1(levelNo, objLists);
-    else
-      return setObjectsJungleBook2(levelNo, objLists);
-  }
-  
-  //copy-paste
-  //addrs saved in ram at 77-79-7E-81
-  public List<ObjectList> getObjectsJungleBook1(int levelNo)
-  {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int objCount = lr.objCount;
-    var objects = new List<ObjectRec>();
-    for (int i = 0; i < objCount; i++)
-    {
-        byte y    = Globals.romdata[0x167A5 + i];
-        byte x    = Globals.romdata[0x16775 + i];
-        byte data = Globals.romdata[0x16805 + i];
-        byte v    = Globals.romdata[0x167D5 + i];
-        int realx = x* 32 + 16;
-        int realy = y* 32 + 16;
-        var dataDict = new Dictionary<string,int>();
-        dataDict["data"] = data;
-        var obj = new ObjectRec(v, 0, 0, realx, realy, dataDict);
-        objects.Add(obj);
-    }
-    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
-  }
-
-  public bool setObjectsJungleBook1(int levelNo, List<ObjectList> objLists)
-  {
-    LevelRec lr = ConfigScript.getLevelRec(levelNo);
-    int objCount = lr.objCount;
+    int objAddr  = lr.objectsBeginAddr;
     var objects = objLists[0].objects;
     for (int i = 0; i < objects.Count; i++)
     {
         var obj = objects[i];
         byte x = (byte)((obj.x - 16) /32);
         byte y = (byte)((obj.y - 16) /32);
-        Globals.romdata[0x167D5 + i] = (byte)obj.type;
-        Globals.romdata[0x16805 + i] = (byte)obj.additionalData["data"];
-        Globals.romdata[0x16775 + i] = x;
-        Globals.romdata[0x167A5 + i] = y;
+        Globals.romdata[objAddr + objCount*0 + i] = (byte)obj.type;
+        Globals.romdata[objAddr + objCount*1 + i] = (byte)obj.additionalData["data"];
+        Globals.romdata[objAddr - objCount*2 + i] = x;
+        Globals.romdata[objAddr - objCount*1 + i] = y;
     }
     for (int i = objects.Count; i < objCount; i++)
     {
-        Globals.romdata[0x167D5 + i] = 0xFF;
-        Globals.romdata[0x16805 + i] = 0xFF;
-        Globals.romdata[0x16775 + i] = 0xFF;
-        Globals.romdata[0x167A5 + i] = 0xFF;
-    }
-    return true;
-  }
-  
-  //copy-paste
-   //addrs saved in ram at 77-79-7E-81
-  public List<ObjectList> getObjectsJungleBook2(int levelNo)
-  {
-    LevelRec lr = ConfigScript.getLevelRec(levelNo);
-    int objCount = lr.objCount;
-    var objects = new List<ObjectRec>();
-    for (int i = 0; i < objCount; i++)
-    {
-        byte y    = Globals.romdata[0x187E8 + i];
-        byte x    = Globals.romdata[0x187BB + i];
-        byte data = Globals.romdata[0x18842 + i];
-        byte v    = Globals.romdata[0x18815 + i];
-        int realx = x* 32 + 16;
-        int realy = y* 32 + 16;
-        var dataDict = new Dictionary<string,int>();
-        dataDict["data"] = data;
-        var obj = new ObjectRec(v, 0, 0, realx, realy, dataDict);
-        objects.Add(obj);
-    }
-    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
-  }
-
-  public bool setObjectsJungleBook2(int levelNo, List<ObjectList> objLists)
-  {
-    LevelRec lr = ConfigScript.getLevelRec(levelNo);
-    int objCount = lr.objCount;
-    var objects = objLists[0].objects;
-    for (int i = 0; i < objects.Count; i++)
-    {
-        var obj = objects[i];
-        byte x = (byte)((obj.x - 16) /32);
-        byte y = (byte)((obj.y - 16) /32);
-        Globals.romdata[0x187E8 + i] = y;
-        Globals.romdata[0x187BB + i] = x;
-        Globals.romdata[0x18842 + i] = (byte)obj.additionalData["data"];
-        Globals.romdata[0x18815 + i] = (byte)obj.type;
-    }
-    for (int i = objects.Count; i < objCount; i++)
-    {
-        Globals.romdata[0x187E8 + i] = 0xFF;
-        Globals.romdata[0x187BB + i] = 0xFF;
-        Globals.romdata[0x18842 + i] = 0xFF;
-        Globals.romdata[0x18815 + i] = 0xFF;
+        Globals.romdata[objAddr + objCount*0 + i] = 0xFF;
+        Globals.romdata[objAddr + objCount*1 + i] = 0xFF;
+        Globals.romdata[objAddr - objCount*2 + i] = 0xFF;
+        Globals.romdata[objAddr - objCount*1 + i] = 0xFF;
     }
     return true;
   }
@@ -202,14 +162,16 @@ public class Data
   struct BlockRec
   {
     public int hiAddr;
+    public int hiCount;
     public int loAddr;
+    public int loCount;
   }
   
   static BlockRec[] BlocksAddrs = new BlockRec[]{
-    new BlockRec{ hiAddr = 0x1D984, loAddr = 0x16859 }, //1,3,9
-    new BlockRec{ hiAddr = 0x1D984, loAddr = 0x15654 }, //4,5
-    new BlockRec{ hiAddr = 0x1D984, loAddr = 0x1889F }, //2,6
-    new BlockRec{ hiAddr = 0x1D984, loAddr = 0x12970 }, //7,8
+    new BlockRec{ hiAddr = 0x1D984, hiCount = 128, loAddr = 0x16859, loCount = 128 }, //1,3,9
+    new BlockRec{ hiAddr = 0x1D984, hiCount = 128, loAddr = 0x15654, loCount = 128 }, //4,5
+    new BlockRec{ hiAddr = 0x1D984, hiCount = 128, loAddr = 0x1889F, loCount = 128 }, //2,6
+    new BlockRec{ hiAddr = 0x1D984, hiCount = 128, loAddr = 0x12970, loCount = 110 }, //7,8
   };
   
   static BigBlockRec[] BigBlocksAddrs = new BigBlockRec[] { 
@@ -222,9 +184,12 @@ public class Data
   //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   public static ObjRec[] getBlocksJB(int blockIndex)
   {
-    var part1 = Utils.readBlocksFromAlignedArrays(Globals.romdata, BlocksAddrs[blockIndex].hiAddr, 0x80);
-    var part2 = Utils.readBlocksFromAlignedArrays(Globals.romdata, BlocksAddrs[blockIndex].loAddr, 0x80);
-    return Utils.mergeArrays(part1, part2);
+    var part1 = Utils.readBlocksFromAlignedArrays(Globals.romdata, BlocksAddrs[blockIndex].hiAddr, BlocksAddrs[blockIndex].hiCount);
+    var part2 = Utils.readBlocksFromAlignedArrays(Globals.romdata, BlocksAddrs[blockIndex].loAddr, BlocksAddrs[blockIndex].loCount);
+    var total = new ObjRec[256];
+    Array.Copy(part1, total, part1.Length);
+    Array.Copy(part2, 0, total, BlocksAddrs[blockIndex].loCount, part2.Length); //copy to index 110, no 128!!! bug of game developers?
+    return total;
   }
   
   public BigBlock[] getBigBlocksJB(int bigTileIndex)
@@ -244,10 +209,11 @@ public class Data
   
   public void setBlocksJB(int blockIndex, ObjRec[] objects)
   {
-    var secondPart = new ObjRec[0x80];
-    Array.Copy(objects, 0x80, secondPart, 0, 0x80);
-    Utils.writeBlocksToAlignedArrays(objects   , Globals.romdata, BlocksAddrs[blockIndex].hiAddr, 0x80);
-    Utils.writeBlocksToAlignedArrays(secondPart, Globals.romdata, BlocksAddrs[blockIndex].loAddr, 0x80);
+    int loCount = BlocksAddrs[blockIndex].loCount;
+    var secondPart = new ObjRec[loCount];
+    Array.Copy(objects, loCount, secondPart, 0, loCount);
+    Utils.writeBlocksToAlignedArrays(objects   , Globals.romdata, BlocksAddrs[blockIndex].hiAddr, BlocksAddrs[blockIndex].hiCount);
+    Utils.writeBlocksToAlignedArrays(secondPart, Globals.romdata, BlocksAddrs[blockIndex].loAddr, loCount);
   }
   
   public void setBigBlocksJB(int bigTileIndex, BigBlock[] bigBlockIndexes)
