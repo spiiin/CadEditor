@@ -159,6 +159,8 @@ namespace CadEditor
             getObjectDictionaryFunc = callFromScript<GetObjectDictionaryFunc>(asm, data, "*.getObjectDictionaryFunc");
             loadSegaBackFunc = callFromScript<LoadSegaBackFunc>(asm, data, "*.loadSegaBackFunc");
             saveSegaBackFunc = callFromScript<SaveSegaBackFunc>(asm, data, "*.saveSegaBackFunc");
+            segaBackWidth  = callFromScript(asm, data, "*.getSegaBackWidth", 64);
+            segaBackHeight = callFromScript(asm, data, "*.getSegaBackHeight", 32);
 
             drawObjectFunc = callFromScript<DrawObjectFunc>(asm, data, "*.getDrawObjectFunc");
             drawObjectBigFunc = callFromScript<DrawObjectBigFunc>(asm, data, "*.getDrawObjectBigFunc");
@@ -343,7 +345,17 @@ namespace CadEditor
              saveSegaBackFunc(data);
          }
 
-         public static void drawObject(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, ImageList objectSprites)
+         public static int getSegaBackWidth()
+         {
+             return segaBackWidth;
+         }
+
+         public static int getSegaBackHeight()
+         {
+             return segaBackHeight;
+         }
+
+        public static void drawObject(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, ImageList objectSprites)
          {
              if (drawObjectFunc != null)
                  drawObjectFunc(g, curObject, listNo, selected, curScale, objectSprites);
@@ -575,6 +587,9 @@ namespace CadEditor
         public static int maxObjCoordX;
         public static int maxObjCoordY;
         public static int maxObjType;
+
+        public static int segaBackWidth;
+        public static int segaBackHeight;
 
         public static IList<LevelRec> levelRecs;
 

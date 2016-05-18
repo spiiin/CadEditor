@@ -279,12 +279,12 @@ namespace CadEditor
 
         private int getTileWidth()
         {
-            return editMapMode ? 64 : ConfigScript.isBlockSize4x4() ? 4 : 2;
+            return editMapMode ? ConfigScript.getSegaBackWidth() : ConfigScript.isBlockSize4x4() ? 4 : 2;
         }
 
         private int getTileHeight()
         {
-            return editMapMode ? 32 : ConfigScript.isBlockSize4x4() ? 4 : 2; ;
+            return editMapMode ? ConfigScript.getSegaBackHeight() : ConfigScript.isBlockSize4x4() ? 4 : 2; ;
         }
 
         private byte[] loadMappingData()
