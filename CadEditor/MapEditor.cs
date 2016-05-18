@@ -35,7 +35,7 @@ namespace CadEditor
 
                 if (visibleRect == null || visibleRect.Value.Contains(tileRect) || visibleRect.Value.IntersectsWith(tileRect))
                 {
-                    if (bigBlockNo != -1 && bigBlockNo < bigBlocks.Images.Count & ShowLayer1)
+                    if (bigBlockNo > -1 && bigBlockNo < bigBlocks.Images.Count && ShowLayer1)
                         g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
                     else
                         g.FillRectangle(Brushes.White, tileRect);
