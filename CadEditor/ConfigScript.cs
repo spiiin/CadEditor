@@ -181,13 +181,8 @@ namespace CadEditor
             blocksPicturesFilename  = callFromScript(asm, data, "getBlocksFilename", "");
             if (blocksPicturesFilename != "" && !File.Exists(blocksPicturesFilename))
                 throw new Exception("File does not exists: " + blocksPicturesFilename);
-            blocksPicturesFilenames = callFromScript<string[]>(asm, data, "getBlocksFilenames", null);
-            if (blocksPicturesFilenames!=null)
-              for (int i = 0; i < blocksPicturesFilenames.Length; i++)
-                if (!File.Exists(blocksPicturesFilenames[i]))
-                    throw new Exception("File does not exists: " + blocksPicturesFilenames[i]);
             blocksPicturesWidth = callFromScript(asm, data, "getPictureBlocksWidth", 32); 
-            usePicturesInstedBlocks = blocksPicturesFilename != "" || blocksPicturesFilenames != null;
+            usePicturesInstedBlocks = blocksPicturesFilename != "";
 
             blockTypeNames = callFromScript(asm, data, "getBlockTypeNames", defaultBlockTypeNames);
 
@@ -628,7 +623,6 @@ namespace CadEditor
 
         public static bool usePicturesInstedBlocks;
         public static string blocksPicturesFilename;
-        public static string[] blocksPicturesFilenames;
         public static int blocksPicturesWidth;
         public static string objTypesPicturesDir;
 
