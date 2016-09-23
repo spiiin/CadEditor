@@ -42,14 +42,14 @@ namespace CadEditor
         {
             dirty = false;
             reloadTiles();
-            Utils.prepareBlocksPanel(pnBlocks, ilSegaTiles.ImageSize, ilSegaTiles, buttonObjClick, 0, SEGA_TILES_COUNT);
-            Utils.setCbItemsCount(cbPalSubpart, 4);
-            Utils.setCbIndexWithoutUpdateLevel(cbPalSubpart, cbPalNo_SelectedIndexChanged);
+            UtilsGui.prepareBlocksPanel(pnBlocks, ilSegaTiles.ImageSize, ilSegaTiles, buttonObjClick, 0, SEGA_TILES_COUNT);
+            UtilsGui.setCbItemsCount(cbPalSubpart, 4);
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbPalSubpart, cbPalNo_SelectedIndexChanged);
 
-            Utils.setCbItemsCount(cbBlockNo, getBlocksCount(), inHex:true);
-            Utils.setCbItemsCount(cbTile, SEGA_TILES_COUNT, inHex:true);
-            Utils.setCbItemsCount(cbPal, 4);
-            Utils.setCbIndexWithoutUpdateLevel(cbBlockNo, cbBlockNo_SelectedIndexChanged);
+            UtilsGui.setCbItemsCount(cbBlockNo, getBlocksCount(), inHex:true);
+            UtilsGui.setCbItemsCount(cbTile, SEGA_TILES_COUNT, inHex:true);
+            UtilsGui.setCbItemsCount(cbPal, 4);
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbBlockNo, cbBlockNo_SelectedIndexChanged);
             resetControls();
         }
 
@@ -79,7 +79,7 @@ namespace CadEditor
         void resetControls()
         {
             fillSegaTiles();
-            Utils.reloadBlocksPanel(pnBlocks, ilSegaTiles, 0, SEGA_TILES_COUNT);
+            UtilsGui.reloadBlocksPanel(pnBlocks, ilSegaTiles, 0, SEGA_TILES_COUNT);
             int TILE_WIDTH = getTileWidth();
             int TILE_HEIGHT = getTileHeight();
             mapScreen.Size = new Size(TILE_WIDTH * BLOCK_WIDTH, TILE_HEIGHT * BLOCK_HEIGHT);
@@ -130,11 +130,11 @@ namespace CadEditor
         private void updateMappingControls(int index)
         {
             ushort word = tiles[index];
-            Utils.setCbIndexWithoutUpdateLevel(cbTile, cbTile_SelectedIndexChanged, Mapper.TileIdx(word));
-            Utils.setCbIndexWithoutUpdateLevel(cbPal, cbPal_SelectedIndexChanged, Mapper.PalIdx(word));
-            Utils.setCbCheckedWithoutUpdateLevel(cbHFlip, cbHFlip_CheckedChanged, Mapper.HF(word));
-            Utils.setCbCheckedWithoutUpdateLevel(cbVFlip, cbVFlip_CheckedChanged, Mapper.VF(word));
-            Utils.setCbCheckedWithoutUpdateLevel(cbPrior, cbPrior_CheckedChanged, Mapper.P(word));
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbTile, cbTile_SelectedIndexChanged, Mapper.TileIdx(word));
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbPal, cbPal_SelectedIndexChanged, Mapper.PalIdx(word));
+            UtilsGui.setCbCheckedWithoutUpdateLevel(cbHFlip, cbHFlip_CheckedChanged, Mapper.HF(word));
+            UtilsGui.setCbCheckedWithoutUpdateLevel(cbVFlip, cbVFlip_CheckedChanged, Mapper.VF(word));
+            UtilsGui.setCbCheckedWithoutUpdateLevel(cbPrior, cbPrior_CheckedChanged, Mapper.P(word));
         }
 
         private void mapScreen_Paint(object sender, PaintEventArgs e)
@@ -266,7 +266,7 @@ namespace CadEditor
 
         private void SegaBlockEdit_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!Utils.askToSave(ref dirty, saveFunc, null))
+            if (!UtilsGui.askToSave(ref dirty, saveFunc, null))
             {
                 e.Cancel = true;
             }

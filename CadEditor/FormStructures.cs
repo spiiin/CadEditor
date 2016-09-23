@@ -44,13 +44,13 @@ namespace CadEditor
 
         void resetControls(bool needToRefillBlockPanel)
         {
-            Utils.setCbItemsCount(cbPanelNo, (ConfigScript.getBigBlocksCount() + 1023) / 1024);
+            UtilsGui.setCbItemsCount(cbPanelNo, (ConfigScript.getBigBlocksCount() + 1023) / 1024);
             cbPanelNo.SelectedIndex = 0;
             lbStructures.Items.Clear();
             for (int i = 0; i < tileStructs.Count; i++)
                 lbStructures.Items.Add(tileStructs[i].Name);
             bigBlocks = formMain.getBigBlockImageList();
-            //Utils.setBlocks(bigBlocks, curButtonScale, blockWidth, blockHeight, curViewType, showAxis);
+            //UtilsGui.setBlocks(bigBlocks, curButtonScale, blockWidth, blockHeight, curViewType, showAxis);
 
             int subparts = (ConfigScript.getBigBlocksCount() + 1023) / 1024;
             FlowLayoutPanel[] blocksPanels = { blocksPanel, blockPanel2, blockPanel3, blockPanel4 };
@@ -59,7 +59,7 @@ namespace CadEditor
                 for (int i = 0; i < subparts; i++)
                 {
                     int count = (i * 1024 > ConfigScript.getBigBlocksCount()) ? (i * 1024) % ConfigScript.getBigBlocksCount() : 1024;
-                    Utils.prepareBlocksPanel(blocksPanel, new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick, i * 1024, count);
+                    UtilsGui.prepareBlocksPanel(blocksPanel, new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick, i * 1024, count);
                 }
             }
             else
@@ -67,7 +67,7 @@ namespace CadEditor
                 for (int i = 0; i < subparts; i++)
                 {
                     int count = (i * 1024 > ConfigScript.getBigBlocksCount()) ? (i * 1024) % ConfigScript.getBigBlocksCount() : 1024;
-                    Utils.reloadBlocksPanel(blocksPanel, bigBlocks, i * 1024, count);
+                    UtilsGui.reloadBlocksPanel(blocksPanel, bigBlocks, i * 1024, count);
                 }
             }
             resetTileStructControls();
@@ -77,10 +77,10 @@ namespace CadEditor
         {
             if (curTileStruct != null)
             {
-                Utils.setCbItemsCount(cbWidth, 64, 1);
-                Utils.setCbItemsCount(cbHeight, 64, 1);
-                Utils.setCbIndexWithoutUpdateLevel(cbWidth, cbWidth_SelectedIndexChanged, curTileStruct.Width - 1);
-                Utils.setCbIndexWithoutUpdateLevel(cbHeight, cbWidth_SelectedIndexChanged, curTileStruct.Height - 1);
+                UtilsGui.setCbItemsCount(cbWidth, 64, 1);
+                UtilsGui.setCbItemsCount(cbHeight, 64, 1);
+                UtilsGui.setCbIndexWithoutUpdateLevel(cbWidth, cbWidth_SelectedIndexChanged, curTileStruct.Width - 1);
+                UtilsGui.setCbIndexWithoutUpdateLevel(cbHeight, cbWidth_SelectedIndexChanged, curTileStruct.Height - 1);
             }
         }
 
@@ -129,7 +129,7 @@ namespace CadEditor
                 g.Clear(Color.Black);
                 return;
             }
-            var visibleRect = Utils.getVisibleRectangle(this, mapScreen);
+            var visibleRect = UtilsGui.getVisibleRectangle(this, mapScreen);
             g.Clear(Color.Black);
             MapEditor.Render(g, bigBlocks, blockWidth, blockHeight, visibleRect, curTileStruct.toArray(), null, 2.0f, true, false, false, 0, curTileStruct.Width, curTileStruct.Height, ConfigScript.getScreenVertical());
         }

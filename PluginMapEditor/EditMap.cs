@@ -37,7 +37,7 @@ namespace CadEditor
 
         private void EditMap_Load(object sender, EventArgs e)
         {
-            Utils.setCbItemsCount(cbScreenNo, screensInfo.Length);
+            UtilsGui.setCbItemsCount(cbScreenNo, screensInfo.Length);
             cbScreenNo.SelectedIndex = 0;
             //reloadAllData();
         }

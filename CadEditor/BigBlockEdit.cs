@@ -54,10 +54,10 @@ namespace CadEditor
 
         protected virtual void initControls()
         {
-            Utils.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
-            Utils.setCbItemsCount(cbSmallBlock, ConfigScript.blocksOffset.recCount);
-            Utils.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
-            Utils.setCbItemsCount(cbPart, Math.Max(ConfigScript.getBigBlocksCount() / 256, 1));
+            UtilsGui.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
+            UtilsGui.setCbItemsCount(cbSmallBlock, ConfigScript.blocksOffset.recCount);
+            UtilsGui.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
+            UtilsGui.setCbItemsCount(cbPart, Math.Max(ConfigScript.getBigBlocksCount() / 256, 1));
             cbTileset.Items.Clear();
             for (int i = 0; i < ConfigScript.bigBlocksOffset.recCount; i++)
             {
@@ -314,8 +314,8 @@ namespace CadEditor
             curVideo = cbVideoNo.SelectedIndex + 0x90;
             curPallete = cbPaletteNo.SelectedIndex;
             curPart = cbPart.SelectedIndex;
-            Utils.setCbItemsCount(cbPart, Math.Max(ConfigScript.getBigBlocksCount() / 256, 1));
-            Utils.setCbIndexWithoutUpdateLevel(cbPart, cbLevelPair_SelectedIndexChanged, curPart);
+            UtilsGui.setCbItemsCount(cbPart, Math.Max(ConfigScript.getBigBlocksCount() / 256, 1));
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbPart, cbLevelPair_SelectedIndexChanged, curPart);
             reloadLevel();
         }
 

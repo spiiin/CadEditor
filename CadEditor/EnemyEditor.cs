@@ -130,7 +130,7 @@ namespace CadEditor
             bool reloadObjects = realReload;
             if (!readOnly && realReload)
             {
-                if (!Utils.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
+                if (!UtilsGui.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
                     return;
             }
            
@@ -139,7 +139,7 @@ namespace CadEditor
             cbLayoutNo.Items.Clear();
             foreach (var lr in ConfigScript.levelRecs)
                 cbLayoutNo.Items.Add(String.Format("{0}:0x{1:X} ({2}x{3})", lr.name, lr.layoutAddr, lr.width, lr.height));
-            Utils.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged, curActiveLayout);
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged, curActiveLayout);
 
             //reload screens
             screens = Utils.setScreens(getLevelRecForGameType().levelNo);
@@ -155,7 +155,7 @@ namespace CadEditor
             screens = Utils.setScreens(getLevelRecForGameType().levelNo);
             if (ConfigScript.usePicturesInstedBlocks)
             {
-                Utils.setBlocks(bigBlocks, 2, 32,32, MapViewType.Tiles, formMain.ShowAxis);
+                UtilsGDI.setBlocks(bigBlocks, 2, 32,32, MapViewType.Tiles, formMain.ShowAxis);
             }
 
             cbDatas = new ComboBox[] { cbD0, cbD1, cbD2, cbD3, cbD4, cbD5 };
@@ -166,21 +166,21 @@ namespace CadEditor
 
             resetObjCheckBoxes();
 
-            Utils.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
-            Utils.setCbItemsCount(cbBigBlockNo, ConfigScript.bigBlocksOffset.recCount);
-            Utils.setCbItemsCount(cbBlockNo, ConfigScript.blocksOffset.recCount);
-            Utils.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
-            Utils.setCbItemsCount(cbScale, 2, 1);
-            Utils.setCbIndexWithoutUpdateLevel(cbVideoNo, cbLevel_SelectedIndexChanged, formMain.CurActiveVideoNo - 0x90);
-            Utils.setCbIndexWithoutUpdateLevel(cbBlockNo, cbLevel_SelectedIndexChanged, formMain.CurActiveBlockNo);
-            Utils.setCbIndexWithoutUpdateLevel(cbBigBlockNo, cbLevel_SelectedIndexChanged, formMain.CurActiveBigBlockNo);
-            Utils.setCbIndexWithoutUpdateLevel(cbPaletteNo, cbLevel_SelectedIndexChanged, formMain.CurActivePalleteNo);
-            Utils.setCbIndexWithoutUpdateLevel(cbTool, cbTool_SelectedIndexChanged);
-            Utils.setCbIndexWithoutUpdateLevel(cbScale, cbLevel_SelectedIndexChanged, 1);
+            UtilsGui.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
+            UtilsGui.setCbItemsCount(cbBigBlockNo, ConfigScript.bigBlocksOffset.recCount);
+            UtilsGui.setCbItemsCount(cbBlockNo, ConfigScript.blocksOffset.recCount);
+            UtilsGui.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
+            UtilsGui.setCbItemsCount(cbScale, 2, 1);
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbVideoNo, cbLevel_SelectedIndexChanged, formMain.CurActiveVideoNo - 0x90);
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbBlockNo, cbLevel_SelectedIndexChanged, formMain.CurActiveBlockNo);
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbBigBlockNo, cbLevel_SelectedIndexChanged, formMain.CurActiveBigBlockNo);
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbPaletteNo, cbLevel_SelectedIndexChanged, formMain.CurActivePalleteNo);
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbTool, cbTool_SelectedIndexChanged);
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbScale, cbLevel_SelectedIndexChanged, 1);
             cbLayoutNo.Items.Clear();
             foreach (var lr in ConfigScript.levelRecs)
                 cbLayoutNo.Items.Add(String.Format("{0}:0x{1:X} ({2}x{3})", lr.name, lr.layoutAddr, lr.width, lr.height));
-            Utils.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged);
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged);
 
             readOnly = ConfigScript.setObjectsFunc == null;
             btSave.Enabled = !readOnly;
@@ -189,7 +189,7 @@ namespace CadEditor
             btSort.Visible = ConfigScript.sortObjectsFunc != null;
             resizeMapScreen();
 
-            Utils.setCbItemsCount(cbBigObjectNo, 256, 0, true);
+            UtilsGui.setCbItemsCount(cbBigObjectNo, 256, 0, true);
             cbLevel_SelectedIndexChanged(cbLayoutNo, new EventArgs());
         }
 
@@ -203,15 +203,15 @@ namespace CadEditor
             int minObjType = ConfigScript.getMinObjType();
             if (!ConfigScript.getScreenVertical())
             {
-                Utils.setCbItemsCount(cbCoordX, coordXCount - minCoordX, minCoordX, true);
-                Utils.setCbItemsCount(cbCoordY, coordYCount - minCoordY, minCoordY, true);
+                UtilsGui.setCbItemsCount(cbCoordX, coordXCount - minCoordX, minCoordX, true);
+                UtilsGui.setCbItemsCount(cbCoordY, coordYCount - minCoordY, minCoordY, true);
             }
             else
             {
-                Utils.setCbItemsCount(cbCoordY, coordXCount - minCoordX, minCoordX, true);
-                Utils.setCbItemsCount(cbCoordX, coordYCount - minCoordY, minCoordY, true);
+                UtilsGui.setCbItemsCount(cbCoordY, coordXCount - minCoordX, minCoordX, true);
+                UtilsGui.setCbItemsCount(cbCoordX, coordYCount - minCoordY, minCoordY, true);
             }
-            Utils.setCbItemsCount(cbObjType, objType - minObjType, minObjType, true);
+            UtilsGui.setCbItemsCount(cbObjType, objType - minObjType, minObjType, true);
         }
 
         private void resizeMapScreen()
@@ -326,7 +326,7 @@ namespace CadEditor
                     lbDatas[addDataCount].Text = key;
                     cbDatas[addDataCount].Tag = key;
                     cbDatas[addDataCount].SelectedIndexChanged -= cbCoordX_SelectedIndexChanged;
-                    Utils.setCbItemsCount(cbDatas[addDataCount], 256, 0, true);
+                    UtilsGui.setCbItemsCount(cbDatas[addDataCount], 256, 0, true);
                     cbDatas[addDataCount].SelectedIndexChanged += cbCoordX_SelectedIndexChanged;
                     cbDatas[addDataCount].Visible = true;
                     lbDatas[addDataCount].Visible = true;
@@ -429,7 +429,7 @@ namespace CadEditor
                 int scrLevelNo = getLevelRecForGameType().levelNo;
                 int width = ConfigScript.getScreenWidth(scrLevelNo);
                 int height = ConfigScript.getScreenHeight(scrLevelNo);
-                var visibleRect = Utils.getVisibleRectangle(pnView, mapScreen);
+                var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
                 MapEditor.Render(g, bigBlocks, formMain.BlockWidth, formMain.BlockHeight, visibleRect, indexes, null, curScale, true, false, false, 0, width, height, ConfigScript.getScreenVertical());
                 ConfigScript.renderToMainScreen(g, (int)curScale);
             }
@@ -592,9 +592,9 @@ namespace CadEditor
                 int minObjType = ConfigScript.getMinObjType();
                 try
                 { 
-                    Utils.setCbIndexWithoutUpdateLevel(cbCoordX, cbCoordX_SelectedIndexChanged, activeObjectList.objects[index].x - minCoordX);
-                    Utils.setCbIndexWithoutUpdateLevel(cbCoordY, cbCoordX_SelectedIndexChanged, activeObjectList.objects[index].y - minCoordY);
-                    Utils.setCbIndexWithoutUpdateLevel(cbObjType, cbCoordX_SelectedIndexChanged, activeObjectList.objects[index].type - minObjType);
+                    UtilsGui.setCbIndexWithoutUpdateLevel(cbCoordX, cbCoordX_SelectedIndexChanged, activeObjectList.objects[index].x - minCoordX);
+                    UtilsGui.setCbIndexWithoutUpdateLevel(cbCoordY, cbCoordX_SelectedIndexChanged, activeObjectList.objects[index].y - minCoordY);
+                    UtilsGui.setCbIndexWithoutUpdateLevel(cbObjType, cbCoordX_SelectedIndexChanged, activeObjectList.objects[index].type - minObjType);
                     if (activeObjectList.objects[index].additionalData != null)
                     {
                         updateAddDataVisible(index);
@@ -602,7 +602,7 @@ namespace CadEditor
                         foreach (var addData in activeObjectList.objects[index].additionalData)
                         {
                    
-                            Utils.setCbIndexWithoutUpdateLevel(cbDatas[addDataCount], cbCoordX_SelectedIndexChanged, addData.Value);
+                            UtilsGui.setCbIndexWithoutUpdateLevel(cbDatas[addDataCount], cbCoordX_SelectedIndexChanged, addData.Value);
                             cbDatas[addDataCount].Enabled = true;
                             if (++addDataCount == cbDatas.Length)
                                 break;
@@ -650,7 +650,7 @@ namespace CadEditor
 
         private void returnCbLevelIndex()
         {
-            Utils.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged, curActiveLayout);
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged, curActiveLayout);
             //save width/height
         }
 

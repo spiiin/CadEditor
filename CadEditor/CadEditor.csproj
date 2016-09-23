@@ -133,6 +133,8 @@
     </Compile>
     <Compile Include="Strings.cs" />
     <Compile Include="Utils.cs" />
+    <Compile Include="UtilsGdi.cs" />
+    <Compile Include="UtilsGui.cs" />
     <Compile Include="VideoHelper.cs" />
     <EmbeddedResource Include="BigBlockEdit.resx">
       <DependentUpon>BigBlockEdit.cs</DependentUpon>
