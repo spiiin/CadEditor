@@ -172,7 +172,6 @@ namespace CadEditor
         private void setBlocks(bool needToRefillBlockPanel)
         {
             bigBlocks.Images.Clear();
-            //smallBlocks.Images.Clear();
             bigBlocks.ImageSize = new Size((int)(curButtonScale * blockWidth), (int)(curButtonScale * blockHeight));
 
             //if using pictures

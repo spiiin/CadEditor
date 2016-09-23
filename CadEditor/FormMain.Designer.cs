@@ -35,7 +35,6 @@
             this.mapScreen = new System.Windows.Forms.PictureBox();
             this.activeBlock = new System.Windows.Forms.PictureBox();
             this.lbActiveBlock = new System.Windows.Forms.Label();
-            this.smallBlocks = new System.Windows.Forms.ImageList(this.components);
             this.label6 = new System.Windows.Forms.Label();
             this.cbScreenNo = new System.Windows.Forms.ComboBox();
             this.pnGeneric = new System.Windows.Forms.Panel();
@@ -54,10 +53,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.cbViewType = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.smallBlocks1 = new System.Windows.Forms.ImageList(this.components);
-            this.smallBlocks2 = new System.Windows.Forms.ImageList(this.components);
-            this.smallBlocks3 = new System.Windows.Forms.ImageList(this.components);
-            this.smallBlocks4 = new System.Windows.Forms.ImageList(this.components);
             this.pnView = new System.Windows.Forms.Panel();
             this.lbCoords = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -170,12 +165,6 @@
             this.lbActiveBlock.Size = new System.Drawing.Size(64, 17);
             this.lbActiveBlock.TabIndex = 16;
             this.lbActiveBlock.Text = "Active: ()";
-            // 
-            // smallBlocks
-            // 
-            this.smallBlocks.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
-            this.smallBlocks.ImageSize = new System.Drawing.Size(16, 16);
-            this.smallBlocks.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // label6
             // 
@@ -417,30 +406,6 @@
             this.label4.Size = new System.Drawing.Size(72, 17);
             this.label4.TabIndex = 44;
             this.label4.Text = "View type:";
-            // 
-            // smallBlocks1
-            // 
-            this.smallBlocks1.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
-            this.smallBlocks1.ImageSize = new System.Drawing.Size(16, 16);
-            this.smallBlocks1.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // smallBlocks2
-            // 
-            this.smallBlocks2.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
-            this.smallBlocks2.ImageSize = new System.Drawing.Size(16, 16);
-            this.smallBlocks2.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // smallBlocks3
-            // 
-            this.smallBlocks3.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
-            this.smallBlocks3.ImageSize = new System.Drawing.Size(16, 16);
-            this.smallBlocks3.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // smallBlocks4
-            // 
-            this.smallBlocks4.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
-            this.smallBlocks4.ImageSize = new System.Drawing.Size(16, 16);
-            this.smallBlocks4.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // pnView
             // 
@@ -989,7 +954,6 @@
         private System.Windows.Forms.PictureBox activeBlock;
         private System.Windows.Forms.Label lbActiveBlock;
         private System.Windows.Forms.ImageList bigBlocks;
-        private System.Windows.Forms.ImageList smallBlocks;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cbScreenNo;
         private System.Windows.Forms.Panel pnGeneric;
@@ -1003,10 +967,6 @@
         private System.Windows.Forms.ComboBox cbVideoNo;
         private System.Windows.Forms.ComboBox cbViewType;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ImageList smallBlocks1;
-        private System.Windows.Forms.ImageList smallBlocks2;
-        private System.Windows.Forms.ImageList smallBlocks3;
-        private System.Windows.Forms.ImageList smallBlocks4;
         private System.Windows.Forms.Panel pnView;
         private System.Windows.Forms.Label lbCoords;
         private System.Windows.Forms.ToolStrip toolStrip1;

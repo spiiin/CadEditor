@@ -525,6 +525,14 @@ namespace CadEditor
             data[addr + 3] = (byte)(word & 0xFF);
         }
 
+        public static Image CropImage(Image source, Rectangle rect)
+        {
+            Bitmap bmp = new Bitmap(rect.Width, rect.Height);
+            using (var g = Graphics.FromImage(bmp))
+                g.DrawImage(source, 0, 0, rect, GraphicsUnit.Pixel);
+            return bmp;
+        }
+
         public static Image ResizeBitmap(Image sourceBMP, int width, int height)
         {
             Image result = new Bitmap(width, height);
@@ -559,10 +567,17 @@ namespace CadEditor
                 if (ConfigScript.blocksPicturesFilename != "")
                 {
                     var imSrc = Image.FromFile(ConfigScript.blocksPicturesFilename);
-                    var imResized = Utils.ResizeBitmap(imSrc, (int)(curButtonScale * blockWidth * ConfigScript.getBigBlocksCount()), (int)(curButtonScale * blockHeight));
-                    bigBlocks.Images.AddStrip(imResized);
+                    int imBlockWidth = blockWidth * 2; //default scale
+                    int imBlockHeight = blockHeight * 2; //todo: change
+                    int imCountX = imSrc.Width / imBlockWidth;
+                    for (int x = 0; x < imCountX; x++)
+                    {
+                        var imBlock = Utils.CropImage(imSrc, new Rectangle(x*imBlockWidth, 0*imBlockHeight, imBlockWidth, imBlockHeight));
+                        var imResized = Utils.ResizeBitmap(imSrc, (int)(curButtonScale * blockWidth), (int)(curButtonScale * blockHeight));
+                        bigBlocks.Images.Add(imBlock);
+                    }
                 }
-                if (ConfigScript.blocksPicturesFilenames != null)
+                /*if (ConfigScript.blocksPicturesFilenames != null)
                 {
                     for (int i = 0; i < ConfigScript.blocksPicturesFilenames.Length; i++)
                     {
@@ -573,7 +588,7 @@ namespace CadEditor
                         var imResized = imSrc;
                         bigBlocks.Images.AddStrip(imResized);
                     }
-                }
+                }*/
                 for (int i = bigBlocks.Images.Count; i < 256; i++)
                     bigBlocks.Images.Add(VideoHelper.emptyScreen((int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale)));
                 if (showAxis)
