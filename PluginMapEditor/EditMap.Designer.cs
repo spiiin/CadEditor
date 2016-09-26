@@ -34,15 +34,16 @@
             this.cbShowAxis = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cbScreenNo = new System.Windows.Forms.ComboBox();
-            this.ofOpenDialog = new System.Windows.Forms.OpenFileDialog();
+            this.sfSaveDialog = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             this.SuspendLayout();
             // 
             // mapScreen
             // 
-            this.mapScreen.Location = new System.Drawing.Point(317, 12);
+            this.mapScreen.Location = new System.Drawing.Point(423, 15);
+            this.mapScreen.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mapScreen.Name = "mapScreen";
-            this.mapScreen.Size = new System.Drawing.Size(512, 480);
+            this.mapScreen.Size = new System.Drawing.Size(683, 591);
             this.mapScreen.TabIndex = 5;
             this.mapScreen.TabStop = false;
             this.mapScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.mapScreen_Paint);
@@ -53,17 +54,19 @@
             this.blocksPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.blocksPanel.AutoScroll = true;
-            this.blocksPanel.Location = new System.Drawing.Point(12, 12);
+            this.blocksPanel.Location = new System.Drawing.Point(16, 15);
+            this.blocksPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.blocksPanel.Name = "blocksPanel";
-            this.blocksPanel.Size = new System.Drawing.Size(242, 459);
+            this.blocksPanel.Size = new System.Drawing.Size(323, 565);
             this.blocksPanel.TabIndex = 6;
             // 
             // btSave
             // 
             this.btSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btSave.Location = new System.Drawing.Point(12, 477);
+            this.btSave.Location = new System.Drawing.Point(16, 587);
+            this.btSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btSave.Name = "btSave";
-            this.btSave.Size = new System.Drawing.Size(51, 23);
+            this.btSave.Size = new System.Drawing.Size(68, 28);
             this.btSave.TabIndex = 7;
             this.btSave.Text = "Save";
             this.btSave.UseVisualStyleBackColor = true;
@@ -75,9 +78,10 @@
             this.cbShowAxis.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbShowAxis.Checked = true;
             this.cbShowAxis.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbShowAxis.Location = new System.Drawing.Point(174, 478);
+            this.cbShowAxis.Location = new System.Drawing.Point(232, 588);
+            this.cbShowAxis.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbShowAxis.Name = "cbShowAxis";
-            this.cbShowAxis.Size = new System.Drawing.Size(75, 17);
+            this.cbShowAxis.Size = new System.Drawing.Size(93, 21);
             this.cbShowAxis.TabIndex = 9;
             this.cbShowAxis.Text = "Show Axis";
             this.cbShowAxis.UseVisualStyleBackColor = true;
@@ -86,9 +90,10 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(256, 12);
+            this.label7.Location = new System.Drawing.Point(341, 15);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(59, 13);
+            this.label7.Size = new System.Drawing.Size(77, 17);
             this.label7.TabIndex = 44;
             this.label7.Text = "Screen no:";
             // 
@@ -105,29 +110,31 @@
             "6",
             "7",
             "8"});
-            this.cbScreenNo.Location = new System.Drawing.Point(259, 28);
+            this.cbScreenNo.Location = new System.Drawing.Point(345, 34);
+            this.cbScreenNo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbScreenNo.Name = "cbScreenNo";
-            this.cbScreenNo.Size = new System.Drawing.Size(52, 21);
+            this.cbScreenNo.Size = new System.Drawing.Size(68, 24);
             this.cbScreenNo.TabIndex = 43;
             this.cbScreenNo.SelectedIndexChanged += new System.EventHandler(this.cbVideoNo_SelectedIndexChanged);
             // 
-            // ofOpenDialog
+            // sfSaveDialog
             // 
-            this.ofOpenDialog.FileName = "map.bin";
+            this.sfSaveDialog.FileName = "map.bin";
             // 
             // EditMap
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(844, 504);
+            this.ClientSize = new System.Drawing.Size(1125, 620);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cbScreenNo);
             this.Controls.Add(this.cbShowAxis);
             this.Controls.Add(this.btSave);
             this.Controls.Add(this.blocksPanel);
             this.Controls.Add(this.mapScreen);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "EditMap";
-            this.Text = "Map Editor (Darkwing Duck version only)";
+            this.Text = "Map Editor (Darkwing Duck/ Duck Tales 2 version)";
             this.Load += new System.EventHandler(this.EditMap_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
             this.ResumeLayout(false);
@@ -143,6 +150,6 @@
         private System.Windows.Forms.CheckBox cbShowAxis;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cbScreenNo;
-        private System.Windows.Forms.OpenFileDialog ofOpenDialog;
+        private System.Windows.Forms.SaveFileDialog sfSaveDialog;
     }
 }

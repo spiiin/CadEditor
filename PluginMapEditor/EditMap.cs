@@ -32,12 +32,20 @@ namespace CadEditor
             }
 
             prepareBlocksPanel();
-            reloadMap();
+
+            if (GameType.DT2 == Globals.getGameType())
+            {
+                reloadMapDt2();
+            }
+            else
+            {
+                reloadMap();
+            }
         }
 
         private void EditMap_Load(object sender, EventArgs e)
         {
-            UtilsGui.setCbItemsCount(cbScreenNo, screensInfo.Length);
+            UtilsGui.setCbItemsCount(cbScreenNo, getScreenInfo().Length);
             cbScreenNo.SelectedIndex = 0;
             //reloadAllData();
         }
@@ -60,6 +68,32 @@ namespace CadEditor
                 int count = Globals.romdata[romAddr++];
                 for (int i = 0; i < count; i++)
                     mapData[videoAddr++] = Globals.romdata[romAddr++];
+            }
+            mapScreen.Invalidate();
+        }
+
+        private void reloadMapDt2()
+        {
+            int romAddr = curActiveDataAddr;
+            int readCount = 0;
+            int repeatSymbol = Globals.romdata[romAddr++];
+            while (readCount < 0x400)
+            {
+                int sym = Globals.romdata[romAddr++];
+                if (sym == repeatSymbol)
+                {
+                    int repeatsCount = Globals.romdata[romAddr++];
+                    int chunkToRepeat = Globals.romdata[romAddr++];
+                    for (int i = 0; i < repeatsCount; i++)
+                    {
+                        mapData[readCount++] = (byte)chunkToRepeat;
+                    }
+                }
+                else
+                {
+                    mapData[readCount++] = (byte)sym;
+                }
+                   
             }
             mapScreen.Invalidate();
         }
@@ -123,9 +157,64 @@ namespace CadEditor
             //
             try
             {
-                if (ofOpenDialog.ShowDialog() == DialogResult.OK)
+                if (sfSaveDialog.ShowDialog() == DialogResult.OK)
                 {
-                    var fname = ofOpenDialog.FileName;
+                    var fname = sfSaveDialog.FileName;
+                    using (FileStream f = File.OpenWrite(fname))
+                        f.Write(x, 0, (int)nn);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void saveMapDt2()
+        {
+            byte[] x = new byte[1024];
+            var s = new MemoryStream(x);
+            byte repeatCode = 0xDC;
+            s.WriteByte(repeatCode);
+            int repeatCounter = 1;
+            for (int i = 0; i < mapData.Length - 1; i++)
+            {
+                byte sym = mapData[i];
+                if ((sym == mapData[i + 1]) && (i < mapData.Length - 2))
+                {
+                    repeatCounter++; //need check if repeatCounter < repeatCode
+                }
+                else
+                {
+                    if (repeatCounter < 3)
+                    {
+                        for (int r = 0; r < repeatCounter; r++)
+                        {
+                            s.WriteByte(sym);
+                        }
+                    }
+                    else
+                    {
+                        s.WriteByte(repeatCode);
+                        s.WriteByte((byte)repeatCounter);
+                        s.WriteByte(sym);
+                    }
+                    repeatCounter = 1;
+                }
+            }
+            //write last byte
+            s.WriteByte(mapData[mapData.Length-1]);
+            //write archive end code
+            s.WriteByte(repeatCode);
+            s.WriteByte(0);
+            long nn = s.Position;
+
+            //
+            try
+            {
+                if (sfSaveDialog.ShowDialog() == DialogResult.OK)
+                {
+                    var fname = sfSaveDialog.FileName;
                     using (FileStream f = File.OpenWrite(fname))
                         f.Write(x, 0, (int)nn);
                 }
@@ -213,7 +302,14 @@ namespace CadEditor
 
         private void btSave_Click(object sender, EventArgs e)
         {
-            saveMap();
+            if (GameType.DT2 == Globals.getGameType())
+            {
+                saveMapDt2();
+            }
+            else
+            {
+                saveMap();
+            }
         }
 
         private void cbShowAxis_CheckedChanged(object sender, EventArgs e)
@@ -224,7 +320,7 @@ namespace CadEditor
 
         private void cbVideoNo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ScreenInfo si = screensInfo[cbScreenNo.SelectedIndex];
+            ScreenInfo si = getScreenInfo()[cbScreenNo.SelectedIndex];
             curActiveVideo = si.videoNo;
             curActiveDataAddr = si.dataAddr;
             curActivePalAddr = si.palAddr;
@@ -238,10 +334,20 @@ namespace CadEditor
             public int videoNo;
         }
 
-        ScreenInfo[] screensInfo = new ScreenInfo[]
+        ScreenInfo[] screensInfoDwd = new ScreenInfo[]
         { 
             new ScreenInfo(){ dataAddr = 0x80B1, palAddr = 0x1C43D, videoNo = 9 },
             new ScreenInfo(){ dataAddr = 0x83FC, palAddr = 0x8E6E , videoNo = 10 } 
         };
+
+        ScreenInfo[] screensInfoDt2 = new ScreenInfo[]
+        {
+            new ScreenInfo(){ dataAddr = 0xF200, palAddr = 0x3DCF, videoNo = 6 },
+        };
+
+        ScreenInfo[] getScreenInfo()
+        {
+            return (Globals.getGameType() == GameType.DT2) ? screensInfoDt2 : screensInfoDwd;
+        }
     }
 }

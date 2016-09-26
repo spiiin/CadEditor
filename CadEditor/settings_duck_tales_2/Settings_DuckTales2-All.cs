@@ -8,16 +8,17 @@ public class Data:CapcomBase
   {
     return new string[] 
     {
+      "PluginMapEditor.dll",
       "PluginChrView.dll",
-      "PluginEditLayout.dll"
+      "PluginEditLayout.dll",
     };
   }
   public GameType getGameType()  { return GameType.DT2; }
   public bool isShowScrollsInLayout() { return false; }
   
   public OffsetRec getPalOffset()       { return new OffsetRec(0x3E2F, 12   , 16);     }
-  public OffsetRec getVideoOffset()     { return new OffsetRec(0x4D10 , 5   , 0xD00);  }
-  public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x4D10 , 5   , 0xD00);  }
+  public OffsetRec getVideoOffset()     { return new OffsetRec(0x4D10 , 7   , 0xD00);  }
+  public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x4D10 , 7   , 0xD00);  }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x7310 , 3   , 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x1008A , 5  , 0x440);  }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x11d5a, 300 , 0x40);   }
@@ -70,7 +71,14 @@ public class Data:CapcomBase
   
   public byte[] getDuckTalesVideoChunk(int videoPageId)
   {
-    return Utils.readVideoBankFromFile("videoBack_DT2.bin", videoPageId);
+    if (videoPageId < 0x96)
+    {
+        return Utils.readVideoBankFromFile("videoBack_DT2.bin", videoPageId);
+    }
+    else
+    {
+        return Utils.readVideoBankFromFile("videoMap_DT2.bin", 0x90);
+    }
   }
   
   public int getBigBlocksCountForLevel(int levelNo)
