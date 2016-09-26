@@ -48,6 +48,7 @@
     Power Blade                                     (1 уровень)
     Power Blade 2                                   (1 уровень)
     Super Spy Hunter                                (1 уровень)
+    Micromashines                                   (1 уровень)
     Super Robin Good
     Young Indiana Jones Chronicles
     Hook
@@ -59,12 +60,12 @@
     Fist of The Nortstar                            (3 уровня)
 редактор экранов и блоков(Sega)
     Contra Hard Corps                               (все уровни + редактор объектов)
+    Jungle Book                                     (все уровни)
     EarthWorm Jim                                   (1 уровень)
     EarthWorm Jim 2                                 (1 уровень)
     Disney's Alladin                                (1 уровень)
     Mickey Mania                                    (1 уровень)
     Pitfall The Mayan Adventure                     (1 уровень)
-    Jungle Book                                     (1 уровень)
     World Of Illusion                               (1 уровень)
     Great Circus Mystery                            (1 уровень)
     Dune 2                                          (макроблоки)
