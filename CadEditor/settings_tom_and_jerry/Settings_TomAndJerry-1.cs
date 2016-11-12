@@ -12,7 +12,6 @@ public class Data : TomAndJerryBase
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x84AF , 1  , 160*47); }
   public override int getScreenWidth()     { return 160; }
   public override int getScreenHeight()    { return 47; }
-  //public string getBlocksFilename()        { return "tom_and_jerry_1.png"; }
   
   public IList<LevelRec> getLevelRecs() { return levelRecs; }
   public bool isBigBlockEditorEnabled() { return false; }
