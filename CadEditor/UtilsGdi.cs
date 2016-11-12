@@ -5,6 +5,9 @@ using System.IO;
 using System.Drawing;
 using System.Linq;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
+using ResampleTest;
+using System.Drawing.Imaging;
 
 namespace CadEditor
 {
@@ -21,11 +24,89 @@ namespace CadEditor
 
         public static Image ResizeBitmap(Image sourceBMP, int width, int height)
         {
-            Image result = new Bitmap(width, height);
-            using (Graphics g = Graphics.FromImage(result))
-                g.DrawImage(sourceBMP, 0, 0, width, height);
-            return result;
+            ResamplingService resamplingService = new ResamplingService();
+            resamplingService.Filter = ResamplingFilters.Box;
+            ushort[][,] input = ConvertBitmapToArray((Bitmap)sourceBMP);
+            ushort[][,] output = resamplingService.Resample(input, width, height);
+            Image imgCustom = (Image)ConvertArrayToBitmap(output);
+            return imgCustom;
         }
+
+        private static ushort[][,] ConvertBitmapToArray(Bitmap bmp)
+        {
+
+            ushort[][,] array = new ushort[4][,];
+
+            for (int i = 0; i < 4; i++)
+                array[i] = new ushort[bmp.Width, bmp.Height];
+
+            BitmapData bd = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            int nOffset = (bd.Stride - bd.Width * 4);
+
+            unsafe
+            {
+
+                byte* p = (byte*)bd.Scan0;
+
+                for (int y = 0; y < bd.Height; y++)
+                {
+                    for (int x = 0; x < bd.Width; x++)
+                    {
+
+                        array[3][x, y] = (ushort)p[3];
+                        array[2][x, y] = (ushort)p[2];
+                        array[1][x, y] = (ushort)p[1];
+                        array[0][x, y] = (ushort)p[0];
+
+                        p += 4;
+                    }
+
+                    p += nOffset;
+                }
+            }
+            bmp.UnlockBits(bd);
+            return array;
+        }
+
+        private static Bitmap ConvertArrayToBitmap(ushort[][,] array)
+        {
+
+            int width = array[0].GetLength(0);
+            int height = array[0].GetLength(1);
+
+            Bitmap bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+
+            BitmapData bd = bmp.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+            int nOffset = (bd.Stride - bd.Width * 4);
+
+            unsafe
+            {
+
+                byte* p = (byte*)bd.Scan0;
+
+                for (int y = 0; y < height; y++)
+                {
+                    for (int x = 0; x < width; x++)
+                    {
+
+                        p[3] = (byte)Math.Min(Math.Max(array[3][x, y], Byte.MinValue), Byte.MaxValue);
+                        p[2] = (byte)Math.Min(Math.Max(array[2][x, y], Byte.MinValue), Byte.MaxValue);
+                        p[1] = (byte)Math.Min(Math.Max(array[1][x, y], Byte.MinValue), Byte.MaxValue);
+                        p[0] = (byte)Math.Min(Math.Max(array[0][x, y], Byte.MinValue), Byte.MaxValue);
+
+                        p += 4;
+                    }
+
+                    p += nOffset;
+                }
+            }
+
+            bmp.UnlockBits(bd);
+
+            return bmp;
+        }
+
+
 
         public static void setBlocks(ImageList bigBlocks, float curButtonScale = 2, int blockWidth = 32, int blockHeight = 32, MapViewType curDrawType = MapViewType.Tiles, bool showAxis = true)
         {
