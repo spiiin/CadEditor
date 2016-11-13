@@ -24,6 +24,6 @@ public class Data : TomAndJerryBase
   
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
-    new LevelRec(0x825B, 37, 1, 1, 0x0),
+    new LevelRec(0x8257, 38, 1, 1, 0x0),
   };
 }
