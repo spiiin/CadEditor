@@ -5,11 +5,11 @@ using System.Collections.Generic;
 public class Data : TomAndJerryBase
 { 
   public OffsetRec getPalOffset()       { return new OffsetRec(0x149AF, 1  , 16  );     }
-  public OffsetRec getVideoOffset()     { return new OffsetRec(0x3C00f, 1  , 0x1000); }
+  public OffsetRec getVideoOffset()     { return new OffsetRec(0x3C010-1, 1  , 0x1000); }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0      , 16 , 0x1000);   }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0      , 8  , 0x4000);   }
-  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x19d1a, 1  , 182*4);    }
-  public OffsetRec getScreensOffset()   { return new OffsetRec(0x18550, 1  , 105*58);   }
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x19CFA, 1  , 182*4);    }
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0x18530, 1  , 105*58);   }
   public override int getScreenWidth()     { return  105; }
   public override int getScreenHeight()    { return  58; }
   

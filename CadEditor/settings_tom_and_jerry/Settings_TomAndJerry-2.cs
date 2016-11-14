@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 public class Data : TomAndJerryBase
 { 
-  public OffsetRec getPalOffset()       { return new OffsetRec(0xA20F , 1  , 16  ); }
+  public OffsetRec getPalOffset()       { return new OffsetRec(0xa217 , 1  , 16  ); }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x30010, 1  , 0x1000); }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0      , 16 , 0x1000); }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0      , 8  , 0x4000); }
-  public OffsetRec getBlocksOffset()    { return new OffsetRec(0xB8B5 , 1  , 72*4); }
-  public OffsetRec getScreensOffset()   { return new OffsetRec(0xA23C , 1  , 48*84); }
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0xb8bd , 1  , 72*4); }
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0xa244 , 1  , 48*84); }
   public override int getScreenWidth()     { return 48; }
   public override int getScreenHeight()    { return 84; }
   
@@ -24,8 +24,8 @@ public class Data : TomAndJerryBase
   
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
-    new LevelRec(0x8257, 38, 1, 1, 0x0),
+    new LevelRec(0x825b, 38, 1, 1, 0x0),
   };
   
-  public override int getCheeseAddr() { return 0x8232; }
+  public override int getCheeseAddr() { return 0x8236; }
 }

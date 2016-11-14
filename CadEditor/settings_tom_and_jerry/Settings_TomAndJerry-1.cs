@@ -8,8 +8,8 @@ public class Data : TomAndJerryBase
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x2F010, 1  , 0x1000); }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0      , 16 , 0x1000); }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0      , 8  , 0x4000); }
-  public OffsetRec getBlocksOffset()    { return new OffsetRec(0xB3F5 , 1  , 160*4); }
-  public OffsetRec getScreensOffset()   { return new OffsetRec(0x84AF , 1  , 160*47); }
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0xb3fd , 1  , 160*4); }
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0x84b7 , 1  , 160*47); }
   public override int getScreenWidth()     { return 160; }
   public override int getScreenHeight()    { return 47; }
   
