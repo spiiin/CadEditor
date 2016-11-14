@@ -443,12 +443,12 @@ namespace CadEditor
 
         private void mapScreen_Paint(object sender, PaintEventArgs e)
         {
+            var g = e.Graphics;
+            paintBack(g);
             for (int objListIndex = 0; objListIndex < objectLists.Count; objListIndex++)
             {
                 var activeObjectList = objectLists[objListIndex];
                 //if (ConfigScript.usePicturesInstedBlocks)
-                paintBack(e.Graphics);
-                var g = e.Graphics;
                 var selectedInds = lvObjects.SelectedIndices;
                 for (int i = 0; i < activeObjectList.objects.Count; i++)
                 {
@@ -456,11 +456,12 @@ namespace CadEditor
                     int screenIndex = coordToScreenNo(curObject);
                     if (screenIndex == curActiveScreen)
                     {
-                        bool selected = (objListIndex == curActiveObjectListIndex) && selectedInds.Contains(i);
+                        bool inactive = objListIndex != curActiveObjectListIndex;
+                        bool selected = !inactive && selectedInds.Contains(i);
                         if (!useBigPictures)
-                            ConfigScript.drawObject(g, curObject, curActiveObjectListIndex, selected, curScale, objectSprites);
+                            ConfigScript.drawObject(g, curObject, curActiveObjectListIndex, selected, curScale, objectSprites, inactive);
                         else
-                            ConfigScript.drawObjectBig(g, curObject, curActiveObjectListIndex, selected, curScale, objectSpritesBig);
+                            ConfigScript.drawObjectBig(g, curObject, curActiveObjectListIndex, selected, curScale, objectSpritesBig, inactive);
                     }
                 }
             }
@@ -953,6 +954,7 @@ namespace CadEditor
                 return;
             curActiveObjectListIndex = cbObjectList.SelectedIndex;
             fillObjectsListBox();
+            mapScreen.Invalidate();
         }
     }
 

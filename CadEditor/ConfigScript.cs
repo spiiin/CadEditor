@@ -350,20 +350,20 @@ namespace CadEditor
              return segaBackHeight;
          }
 
-        public static void drawObject(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, ImageList objectSprites)
+        public static void drawObject(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, ImageList objectSprites, bool inactive)
          {
              if (drawObjectFunc != null)
-                 drawObjectFunc(g, curObject, listNo, selected, curScale, objectSprites);
+                 drawObjectFunc(g, curObject, listNo, selected, curScale, objectSprites /*inactive*/);
              else
-                 Utils.defaultDrawObject(g, curObject, listNo, selected, curScale, objectSprites);
+                 Utils.defaultDrawObject(g, curObject, listNo, selected, curScale, objectSprites, inactive);
          }
 
-         public static void drawObjectBig(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, Image[] objectSprites)
+         public static void drawObjectBig(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, Image[] objectSprites, bool inactive)
          {
              if (drawObjectBigFunc != null)
-                 drawObjectBigFunc(g, curObject, listNo, selected, curScale, objectSprites);
+                 drawObjectBigFunc(g, curObject, listNo, selected, curScale, objectSprites /*inactive*/);
              else
-                 Utils.defaultDrawObjectBig(g, curObject, listNo, selected, curScale, objectSprites);
+                 Utils.defaultDrawObjectBig(g, curObject, listNo, selected, curScale, objectSprites, inactive);
              
          }
 

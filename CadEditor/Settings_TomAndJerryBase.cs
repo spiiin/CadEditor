@@ -19,10 +19,12 @@ public class TomAndJerryBase
   public virtual GetPalFunc           getPalFunc()           { return Utils.getPalleteLinear;}
   public virtual SetPalFunc           setPalFunc()           { return Utils.setPalleteLinear;}
   
-  public GetObjectsFunc getObjectsFunc()   { return getObjects;  }
-  public SetObjectsFunc setObjectsFunc()   { return setObjects;  }
-  public GetLayoutFunc getLayoutFunc()     { return getLayout;   } 
-  public GetObjectDictionaryFunc getObjectDictionaryFunc() { return getObjectDictionary; }
+  public virtual GetObjectsFunc getObjectsFunc()   { return getObjects;  }
+  public virtual SetObjectsFunc setObjectsFunc()   { return setObjects;  }
+  public virtual GetLayoutFunc getLayoutFunc()     { return getLayout;   } 
+  public virtual GetObjectDictionaryFunc getObjectDictionaryFunc() { return getObjectDictionary; }
+  
+  public virtual int getCheeseAddr() { return -1; }
   
   public ObjRec[] getBlocks(int blockIndex)
   {
@@ -34,7 +36,26 @@ public class TomAndJerryBase
     Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount());
   }
   
+  //-------------------------------------------------------------------------------
   public List<ObjectList> getObjects(int levelNo)
+  {
+      var enemies = getEnemies(levelNo);
+      var chesses = getCheese(levelNo);
+      return new List<ObjectList> { 
+        new ObjectList { objects = enemies, name = "Enemies" },
+        new ObjectList { objects = chesses, name = "Items" },
+      };
+  }
+  
+  public bool setObjects(int levelNo, List<ObjectList> objLists)
+  {
+      bool enemiesSaved = setEnemies(levelNo, objLists);
+      bool cheeseSaved  = setCheese (levelNo, objLists);
+      return enemiesSaved && cheeseSaved;
+  }
+  
+  //-------------------------------------------------------------------------------
+  public List<ObjectRec> getEnemies(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int objCount = lr.objCount;
@@ -53,10 +74,12 @@ public class TomAndJerryBase
         var obj = new ObjectRec(v, 0, 0, realx, realy, dataDict);
         objects.Add(obj);
     }
-    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
+    return objects;
+    
+    
   }
 
-  public bool setObjects(int levelNo, List<ObjectList> objLists)
+  public bool setEnemies(int levelNo, List<ObjectList> objLists)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int objCount = lr.objCount;
@@ -80,6 +103,71 @@ public class TomAndJerryBase
     return true;
   }
   
+  //-------------------------------------------------------------------------------
+  public List<ObjectRec> getCheese(int levelNo)
+  {
+    var objects = new List<ObjectRec>();
+    int baseAddr = getCheeseAddr();
+    if (baseAddr == -1)
+    {
+        return objects;
+    }
+    
+    int curAddr = baseAddr;
+    byte objType = 0;
+    while(objects.Count < 255)
+    {
+        byte b = Globals.romdata[curAddr];
+        if (b == 0xFF)
+        {
+            break;
+        }
+        if (b == 0xFE)
+        {
+            curAddr++;
+            objType = Globals.romdata[curAddr++];
+        }
+        byte x    = Globals.romdata[curAddr++];
+        byte y    = Globals.romdata[curAddr++];
+        var obj = new ObjectRec(objType, 0, 0, x*32, y*32);
+        objects.Add(obj);
+    }
+    return objects;
+  }
+
+  public bool setCheese(int levelNo, List<ObjectList> objLists)
+  {
+    int baseAddr = getCheeseAddr();
+    if (baseAddr == -1)
+    {
+        return true;
+    }
+    
+    var objects = objLists[1].objects;
+    int curAddr = baseAddr;
+    
+    var obj0 = objects[0];
+    Globals.romdata[curAddr++] = 0xFE;
+    Globals.romdata[curAddr++] = (byte)obj0.type;
+    byte prevObjType = (byte)obj0.type;
+    
+    for (int i = 1; i < objects.Count; i++)
+    {
+      var obj = objects[i];
+      if (obj.type != prevObjType)
+      {
+          Globals.romdata[curAddr++] = 0xFE;
+          Globals.romdata[curAddr++] = (byte)obj.type;
+      }
+      Globals.romdata[curAddr++] = (byte)(obj.x/32);
+      Globals.romdata[curAddr++] = (byte)(obj.y/32);
+      prevObjType = (byte)obj.type;
+    }
+    
+    Globals.romdata[curAddr++] = 0xFF;
+    return true;
+  }
+  
   LevelLayerData getLayout(int levelNo)
   {
     byte[] layer = new byte[1];
@@ -89,6 +177,13 @@ public class TomAndJerryBase
   
   public Dictionary<String,int> getObjectDictionary(int listNo, int type)
   {
-    return new Dictionary<String, int> { {"data", 0} };
+    if (listNo == 0) //enemies
+    {
+        return new Dictionary<String, int> { {"data", 0} };
+    }
+    else //items
+    {
+        return null;
+    }
   }
 }

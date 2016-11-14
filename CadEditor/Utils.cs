@@ -590,7 +590,7 @@ namespace CadEditor
             }
         }
 
-        public static  void defaultDrawObject(Graphics g, ObjectRec curObject, int listNo, bool isSelected, float curScale, ImageList objectSprites)
+        public static  void defaultDrawObject(Graphics g, ObjectRec curObject, int listNo, bool isSelected, float curScale, ImageList objectSprites, bool inactive)
         {
             int x = curObject.x, y = curObject.y;
             var myFont = new Font(FontFamily.GenericSansSerif, 6.0f);
@@ -603,20 +603,33 @@ namespace CadEditor
                 g.FillRectangle(Brushes.Black, new Rectangle((int)(x * curScale) - 8, (int)(y * curScale) - 8, 16, 16));
                 g.DrawString(curObject.type.ToString("X3"), myFont, Brushes.White, new Point((int)(x * curScale) - 8, (int)(y * curScale) - 8));
             }
+            var selectRect = new Rectangle((int)(x * curScale) - 8, (int)(y * curScale) - 8, 16, 16);
             if (isSelected)
-                g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle((int)(x * curScale) - 8, (int)(y * curScale) - 8, 16, 16));       
+                g.DrawRectangle(new Pen(Brushes.Red, 2.0f), selectRect);
+            if (inactive)
+            {
+                g.FillRectangle(new SolidBrush(Color.FromArgb(128, 255, 255, 255)), selectRect);
+                g.DrawRectangle(new Pen(Brushes.Black, 1.0f), selectRect);
+            }
         }
 
-        public static void defaultDrawObjectBig(Graphics g, ObjectRec curObject, int listNo, bool isSelected, float curScale, Image[] objectSpritesBig)
+        public static void defaultDrawObjectBig(Graphics g, ObjectRec curObject, int listNo, bool isSelected, float curScale, Image[] objectSpritesBig, bool inactive)
         {
             int x = curObject.x, y = curObject.y;
             var myFont = new Font(FontFamily.GenericSansSerif, 6.0f);
             int xsize = objectSpritesBig[curObject.type].Size.Width;
             int ysize = objectSpritesBig[curObject.type].Size.Height;
+            var rect = new Rectangle((int)(x * curScale) - xsize / 2, (int)(y * curScale) - ysize / 2, xsize, ysize);
             if (curObject.type < objectSpritesBig.Length)
-                g.DrawImage(objectSpritesBig[curObject.type], new Rectangle((int)(x * curScale) - xsize / 2, (int)(y * curScale) - ysize / 2, xsize, ysize));
+                g.DrawImage(objectSpritesBig[curObject.type], rect);
             if (isSelected)
-                g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle((int)(x * curScale) - xsize / 2, (int)(y * curScale) - ysize / 2, xsize, ysize));
+                g.DrawRectangle(new Pen(Brushes.Red, 2.0f), rect);
+
+            if (inactive)
+            {
+                g.FillRectangle(new SolidBrush(Color.FromArgb(128, 255, 255, 255)), rect);
+                g.DrawRectangle(new Pen(Brushes.Black, 1.0f), rect);
+            }
         }
 
         //wrapper for calling ling function from python.net

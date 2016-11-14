@@ -84,6 +84,8 @@
             this.pnView = new System.Windows.Forms.Panel();
             this.bigBlocks = new System.Windows.Forms.ImageList(this.components);
             this.pnObjectList = new System.Windows.Forms.Panel();
+            this.pnDataGridViewObjects = new System.Windows.Forms.Panel();
+            this.dgvObjects = new System.Windows.Forms.DataGridView();
             this.label6 = new System.Windows.Forms.Label();
             this.cbObjectList = new System.Windows.Forms.ComboBox();
             this.label19 = new System.Windows.Forms.Label();
@@ -109,6 +111,7 @@
             this.cbBigObjectNo = new System.Windows.Forms.ComboBox();
             this.cbUseBigPictures = new System.Windows.Forms.CheckBox();
             this.cbBindToAxis = new System.Windows.Forms.CheckBox();
+            this.cbShowDataGrid = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -116,6 +119,8 @@
             this.pnTools.SuspendLayout();
             this.pnView.SuspendLayout();
             this.pnObjectList.SuspendLayout();
+            this.pnDataGridViewObjects.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).BeginInit();
             this.pnAddData.SuspendLayout();
             this.pnObjects.SuspendLayout();
             this.pnBigObjects.SuspendLayout();
@@ -225,7 +230,7 @@
             this.lvObjects.Location = new System.Drawing.Point(0, 36);
             this.lvObjects.Margin = new System.Windows.Forms.Padding(4);
             this.lvObjects.Name = "lvObjects";
-            this.lvObjects.Size = new System.Drawing.Size(307, 404);
+            this.lvObjects.Size = new System.Drawing.Size(307, 362);
             this.lvObjects.SmallImageList = this.objectSprites;
             this.lvObjects.TabIndex = 38;
             this.lvObjects.UseCompatibleStateImageBehavior = false;
@@ -254,7 +259,7 @@
             this.cbCoordY.Items.AddRange(new object[] {
             "Tiles",
             "Obj types"});
-            this.cbCoordY.Location = new System.Drawing.Point(240, 442);
+            this.cbCoordY.Location = new System.Drawing.Point(240, 400);
             this.cbCoordY.Margin = new System.Windows.Forms.Padding(4);
             this.cbCoordY.Name = "cbCoordY";
             this.cbCoordY.Size = new System.Drawing.Size(60, 24);
@@ -272,7 +277,7 @@
             this.cbCoordX.Items.AddRange(new object[] {
             "Tiles",
             "Obj types"});
-            this.cbCoordX.Location = new System.Drawing.Point(140, 442);
+            this.cbCoordX.Location = new System.Drawing.Point(140, 400);
             this.cbCoordX.Margin = new System.Windows.Forms.Padding(4);
             this.cbCoordX.Name = "cbCoordX";
             this.cbCoordX.Size = new System.Drawing.Size(60, 24);
@@ -284,7 +289,7 @@
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(0, 446);
+            this.label5.Location = new System.Drawing.Point(0, 404);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(44, 17);
@@ -295,7 +300,7 @@
             // 
             this.btClearObjs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btClearObjs.Location = new System.Drawing.Point(127, 559);
+            this.btClearObjs.Location = new System.Drawing.Point(127, 517);
             this.btClearObjs.Margin = new System.Windows.Forms.Padding(4);
             this.btClearObjs.Name = "btClearObjs";
             this.btClearObjs.Size = new System.Drawing.Size(184, 30);
@@ -345,7 +350,7 @@
             // 
             this.btSortUp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSortUp.Location = new System.Drawing.Point(127, 529);
+            this.btSortUp.Location = new System.Drawing.Point(127, 487);
             this.btSortUp.Margin = new System.Windows.Forms.Padding(4);
             this.btSortUp.Name = "btSortUp";
             this.btSortUp.Size = new System.Drawing.Size(88, 27);
@@ -358,7 +363,7 @@
             // 
             this.btSortDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSortDown.Location = new System.Drawing.Point(223, 529);
+            this.btSortDown.Location = new System.Drawing.Point(223, 487);
             this.btSortDown.Margin = new System.Windows.Forms.Padding(4);
             this.btSortDown.Name = "btSortDown";
             this.btSortDown.Size = new System.Drawing.Size(88, 27);
@@ -628,7 +633,7 @@
             this.btDelete.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btDelete.Enabled = false;
-            this.btDelete.Location = new System.Drawing.Point(7, 559);
+            this.btDelete.Location = new System.Drawing.Point(7, 517);
             this.btDelete.Margin = new System.Windows.Forms.Padding(4);
             this.btDelete.Name = "btDelete";
             this.btDelete.Size = new System.Drawing.Size(116, 30);
@@ -642,7 +647,7 @@
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 614);
+            this.label7.Location = new System.Drawing.Point(7, 572);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(288, 17);
@@ -654,7 +659,7 @@
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 535);
+            this.label10.Location = new System.Drawing.Point(3, 493);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(98, 17);
@@ -675,7 +680,7 @@
             this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(7, 630);
+            this.label13.Location = new System.Drawing.Point(7, 588);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(240, 17);
@@ -687,7 +692,7 @@
             this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(11, 673);
+            this.label15.Location = new System.Drawing.Point(11, 631);
             this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(244, 17);
@@ -746,7 +751,7 @@
             this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(109, 446);
+            this.label17.Location = new System.Drawing.Point(109, 404);
             this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(21, 17);
@@ -758,7 +763,7 @@
             this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(209, 446);
+            this.label18.Location = new System.Drawing.Point(209, 404);
             this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(21, 17);
@@ -776,7 +781,7 @@
             this.cbObjType.Items.AddRange(new object[] {
             "Tiles",
             "Obj types"});
-            this.cbObjType.Location = new System.Drawing.Point(40, 442);
+            this.cbObjType.Location = new System.Drawing.Point(40, 400);
             this.cbObjType.Margin = new System.Windows.Forms.Padding(4);
             this.cbObjType.Name = "cbObjType";
             this.cbObjType.Size = new System.Drawing.Size(60, 24);
@@ -788,7 +793,7 @@
             this.lbObjectsCount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbObjectsCount.AutoSize = true;
-            this.lbObjectsCount.Location = new System.Drawing.Point(7, 593);
+            this.lbObjectsCount.Location = new System.Drawing.Point(7, 551);
             this.lbObjectsCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbObjectsCount.Name = "lbObjectsCount";
             this.lbObjectsCount.Size = new System.Drawing.Size(123, 17);
@@ -839,11 +844,30 @@
             this.pnObjectList.Controls.Add(this.label7);
             this.pnObjectList.Controls.Add(this.label10);
             this.pnObjectList.Controls.Add(this.lvObjects);
-            this.pnObjectList.Location = new System.Drawing.Point(955, 15);
+            this.pnObjectList.Controls.Add(this.pnDataGridViewObjects);
+            this.pnObjectList.Location = new System.Drawing.Point(955, 57);
             this.pnObjectList.Margin = new System.Windows.Forms.Padding(4);
             this.pnObjectList.Name = "pnObjectList";
-            this.pnObjectList.Size = new System.Drawing.Size(309, 665);
+            this.pnObjectList.Size = new System.Drawing.Size(309, 623);
             this.pnObjectList.TabIndex = 31;
+            // 
+            // pnDataGridViewObjects
+            // 
+            this.pnDataGridViewObjects.Controls.Add(this.dgvObjects);
+            this.pnDataGridViewObjects.Location = new System.Drawing.Point(0, 0);
+            this.pnDataGridViewObjects.Name = "pnDataGridViewObjects";
+            this.pnDataGridViewObjects.Size = new System.Drawing.Size(302, 393);
+            this.pnDataGridViewObjects.TabIndex = 71;
+            this.pnDataGridViewObjects.Visible = false;
+            // 
+            // dgvObjects
+            // 
+            this.dgvObjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvObjects.Location = new System.Drawing.Point(3, 22);
+            this.dgvObjects.Name = "dgvObjects";
+            this.dgvObjects.RowTemplate.Height = 24;
+            this.dgvObjects.Size = new System.Drawing.Size(302, 393);
+            this.dgvObjects.TabIndex = 0;
             // 
             // label6
             // 
@@ -872,7 +896,7 @@
             this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(7, 645);
+            this.label19.Location = new System.Drawing.Point(7, 603);
             this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(265, 17);
@@ -883,7 +907,7 @@
             // 
             this.btSort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSort.Location = new System.Drawing.Point(173, 586);
+            this.btSort.Location = new System.Drawing.Point(173, 544);
             this.btSort.Margin = new System.Windows.Forms.Padding(4);
             this.btSort.Name = "btSort";
             this.btSort.Size = new System.Drawing.Size(129, 30);
@@ -908,7 +932,7 @@
             this.pnAddData.Controls.Add(this.lbD0);
             this.pnAddData.Controls.Add(this.cbD1);
             this.pnAddData.Controls.Add(this.lbD1);
-            this.pnAddData.Location = new System.Drawing.Point(-4, 470);
+            this.pnAddData.Location = new System.Drawing.Point(-4, 428);
             this.pnAddData.Margin = new System.Windows.Forms.Padding(4);
             this.pnAddData.Name = "pnAddData";
             this.pnAddData.Size = new System.Drawing.Size(305, 57);
@@ -1194,11 +1218,23 @@
             this.cbBindToAxis.UseVisualStyleBackColor = true;
             this.cbBindToAxis.CheckedChanged += new System.EventHandler(this.cbBindToAxis_CheckedChanged);
             // 
+            // cbShowDataGrid
+            // 
+            this.cbShowDataGrid.AutoSize = true;
+            this.cbShowDataGrid.Location = new System.Drawing.Point(958, 22);
+            this.cbShowDataGrid.Name = "cbShowDataGrid";
+            this.cbShowDataGrid.Size = new System.Drawing.Size(129, 21);
+            this.cbShowDataGrid.TabIndex = 69;
+            this.cbShowDataGrid.Text = "Show Data Grid";
+            this.cbShowDataGrid.UseVisualStyleBackColor = true;
+            this.cbShowDataGrid.Visible = false;
+            // 
             // EnemyEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1259, 681);
+            this.Controls.Add(this.cbShowDataGrid);
             this.Controls.Add(this.pnTools);
             this.Controls.Add(this.pnObjects);
             this.Controls.Add(this.pnObjectList);
@@ -1222,6 +1258,8 @@
             this.pnView.ResumeLayout(false);
             this.pnObjectList.ResumeLayout(false);
             this.pnObjectList.PerformLayout();
+            this.pnDataGridViewObjects.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).EndInit();
             this.pnAddData.ResumeLayout(false);
             this.pnAddData.PerformLayout();
             this.pnObjects.ResumeLayout(false);
@@ -1314,5 +1352,8 @@
         private System.Windows.Forms.Button btSaveJson;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cbObjectList;
+        private System.Windows.Forms.Panel pnDataGridViewObjects;
+        private System.Windows.Forms.DataGridView dgvObjects;
+        private System.Windows.Forms.CheckBox cbShowDataGrid;
     }
 }
