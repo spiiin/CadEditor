@@ -149,6 +149,8 @@ public class TomAndJerryBase
     var obj0 = objects[0];
     Globals.romdata[curAddr++] = 0xFE;
     Globals.romdata[curAddr++] = (byte)obj0.type;
+    Globals.romdata[curAddr++] = (byte)(obj0.x/32);
+    Globals.romdata[curAddr++] = (byte)(obj0.y/32);
     byte prevObjType = (byte)obj0.type;
     
     for (int i = 1; i < objects.Count; i++)

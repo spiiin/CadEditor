@@ -26,4 +26,6 @@ public class Data : TomAndJerryBase
   {
     new LevelRec(0x1812D, 42, 1, 1, 0x0),
   };
+  
+  public override int getCheeseAddr() { return 0x1810A; }
 }

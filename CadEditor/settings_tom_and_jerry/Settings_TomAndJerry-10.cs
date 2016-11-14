@@ -24,6 +24,8 @@ public class Data : TomAndJerryBase
   
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
-    new LevelRec(0x18226, 100/*48*/, 1, 1, 0x0),
+    new LevelRec(0x18226, 48, 1, 1, 0x0),
   };
+  
+  public override int getCheeseAddr() { return 0x181FD; }
 }
