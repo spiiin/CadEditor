@@ -326,7 +326,7 @@ namespace PluginVideoNes
                 if (ConfigScript.isBuildScreenFromSmallBlocks())
                 {
                     var sb = smallBlocks.Images[btileId];
-                    b = UtilsGDI.ResizeBitmap(sb, (int)(sb.Width * curButtonScale), (int)(sb.Height * curButtonScale));
+                    b = UtilsGDI.ResizeBitmap(sb, (int)(sb.Width * curButtonScale * 2), (int)(sb.Height * curButtonScale * 2));
                 }
                 else
                 {
