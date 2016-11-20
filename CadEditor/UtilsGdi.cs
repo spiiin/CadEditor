@@ -131,8 +131,8 @@ namespace CadEditor
                         for (int x = 0; x < imCountX; x++)
                         {
                             var imBlock = CropImage(imSrc, new Rectangle(x * imBlockWidth, y * imBlockHeight, imBlockWidth, imBlockHeight));
-                            var imResized = ResizeBitmap(imSrc, (int)(curButtonScale * blockWidth), (int)(curButtonScale * blockHeight));
-                            bigBlocks.Images.Add(imBlock);
+                            var imResized = ResizeBitmap(imBlock, (int)(curButtonScale * blockWidth), (int)(curButtonScale * blockHeight));
+                            bigBlocks.Images.Add(imResized);
                         }
                     }
 
