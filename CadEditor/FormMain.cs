@@ -191,7 +191,7 @@ namespace CadEditor
             blockId = curActiveBigBlockNo;
             palId = curActivePalleteNo;
 
-            MapViewType smallObjectsType = 
+            MapViewType smallObjectsType =
                 curViewType == MapViewType.SmallObjNumbers ? MapViewType.ObjNumbers :
                   curViewType == MapViewType.ObjType ? MapViewType.ObjType : MapViewType.Tiles;
 
@@ -204,6 +204,10 @@ namespace CadEditor
             {
                 bigImages = ConfigScript.videoNes.makeBigBlocks(backId, blockId, bigTileIndex, palId, smallObjectsType, smallBlockScaleFactor, curButtonScale, curViewType, showAxis);
             }
+            /*for (int i = 0; i < bigImages.Length; i++)
+            {
+                bigImages[i].Save(String.Format("{0}.png", i));
+            }*/
             bigBlocks.Images.AddRange(bigImages);
 
             //tt add
