@@ -313,13 +313,13 @@ namespace CadEditor
             }
         }*/
 
-        public static byte[] readLinearBigBlockData(int bigTileIndex)
+        public static byte[] readLinearBigBlockData(int hierLevel, int bigTileIndex)
         {
-            return readLinearBigBlockData(bigTileIndex, -1);
+            return readLinearBigBlockData(hierLevel, bigTileIndex, -1);
         }
 
 
-        public static byte[] readLinearBigBlockData(int bigTileIndex, int tileSize)
+        public static byte[] readLinearBigBlockData(int hierLevel, int bigTileIndex, int tileSize)
         {
             //if tileSize == -1, try read it from config
             if (tileSize == -1)
@@ -331,7 +331,7 @@ namespace CadEditor
             int size = ConfigScript.getBigBlocksCount(0) * tileSize * wordSize;
 
             byte[] bigBlockIndexes = new byte[size];
-            var bigBlocksAddr = ConfigScript.getBigTilesAddr(bigTileIndex);
+            var bigBlocksAddr = ConfigScript.getBigTilesAddr(hierLevel, bigTileIndex);
             for (int i = 0; i < size; i++)
                 bigBlockIndexes[i] = Globals.romdata[bigBlocksAddr + i];
             return bigBlockIndexes;
@@ -339,14 +339,14 @@ namespace CadEditor
 
         public static BigBlock[] getBigBlocksCapcomDefault(int bigTileIndex)
         {
-            var data = readLinearBigBlockData(bigTileIndex);
+            var data = readLinearBigBlockData(0, bigTileIndex);
             return Utils.unlinearizeBigBlocks(data, 2, 2);
         }
 
-        public static void writeLinearBigBlockData(int bigTileIndex, byte[] bigBlockIndexes)
+        public static void writeLinearBigBlockData(int hierLevel, int bigTileIndex, byte[] bigBlockIndexes)
         {
             int size = bigBlockIndexes.Length;
-            int addr = ConfigScript.getBigTilesAddr(bigTileIndex);
+            int addr = ConfigScript.getBigTilesAddr(hierLevel, bigTileIndex);
             for (int i = 0; i < size; i++)
                 Globals.romdata[addr + i] = bigBlockIndexes[i];
         }
@@ -354,7 +354,7 @@ namespace CadEditor
         public static void setBigBlocksCapcomDefault(int bigTileIndex, BigBlock[] bigBlockIndexes)
         {
             var data = Utils.linearizeBigBlocks(bigBlockIndexes);
-            writeLinearBigBlockData(bigTileIndex, data);
+            writeLinearBigBlockData(0, bigTileIndex, data);
         }
 
         public static byte[] readDataFromAlignedArrays(byte[] romdata, int addr, int count)

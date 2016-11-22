@@ -167,7 +167,7 @@ namespace CadEditor
             resetObjCheckBoxes();
 
             UtilsGui.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
-            UtilsGui.setCbItemsCount(cbBigBlockNo, ConfigScript.bigBlocksOffset.recCount);
+            UtilsGui.setCbItemsCount(cbBigBlockNo, ConfigScript.bigBlocksOffsets[0].recCount);
             UtilsGui.setCbItemsCount(cbBlockNo, ConfigScript.blocksOffset.recCount);
             UtilsGui.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
             UtilsGui.setCbItemsCount(cbScale, 2, 1);

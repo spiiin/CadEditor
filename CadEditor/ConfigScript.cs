@@ -109,7 +109,6 @@ namespace CadEditor
             palOffset = callFromScript(asm, data,"*.getPalOffset", new OffsetRec(0,1,0));
             videoOffset = callFromScript(asm, data, "*.getVideoOffset", new OffsetRec(0, 1, 0));
             videoObjOffset = callFromScript(asm, data, "*.getVideoObjOffset", new OffsetRec(0, 1, 0));
-            bigBlocksOffset = callFromScript(asm, data, "*.getBigBlocksOffset", new OffsetRec(0, 1, 0));
             blocksOffset = callFromScript(asm, data, "*.getBlocksOffset", new OffsetRec(0, 1, 0));
             screensOffset[0]        = callFromScript(asm, data, "*.getScreensOffset", new OffsetRec(0, 1, 0));
             screensOffset[0].width  = callFromScript(asm, data, "*.getScreenWidth", 8);
@@ -137,18 +136,35 @@ namespace CadEditor
             maxObjCoordY = callFromScript(asm, data, "*.getMaxObjCoordY", -1); //ConfigScript.getScreenHeight() * 32;
             maxObjType   = callFromScript(asm, data, "*.getMaxObjType"  , -1); //256
 
+            bigBlocksHierarchyCount = callFromScript<int>(asm, data, "*.getBigBlocksHierarchyCount", 1);
+
+            bigBlocksCounts = new int[bigBlocksHierarchyCount];
+            for (int hierLevel = 0; hierLevel < bigBlocksHierarchyCount; hierLevel++)
+            {
+                bigBlocksCounts[hierLevel] = callFromScript(asm, data, "*.getBigBlocksCountHierarchy", 256, hierLevel);
+            }
+            bigBlocksCounts[0] = callFromScript(asm, data, "*.getBigBlocksCount", bigBlocksCounts[0]);
+
+            bigBlocksOffsets = new OffsetRec[bigBlocksHierarchyCount];
+            for (int hierLevel = 0; hierLevel < bigBlocksHierarchyCount; hierLevel++)
+            {
+                bigBlocksOffsets[hierLevel] = callFromScript(asm, data, "*.getBigBlocksOffsetHierarchy", new OffsetRec(0, 1, 0), hierLevel);
+            }
+            bigBlocksOffsets[0] = callFromScript(asm, data, "*.getBigBlocksOffset", bigBlocksOffsets[0]);
+
             getVideoPageAddrFunc = callFromScript <GetVideoPageAddrFunc>(asm, data, "*.getVideoPageAddrFunc");
             getVideoChunkFunc = callFromScript<GetVideoChunkFunc>(asm, data, "*.getVideoChunkFunc");
             setVideoChunkFunc = callFromScript<SetVideoChunkFunc>(asm, data, "*.setVideoChunkFunc");
 
-            bigBlocksHierarchyCount = callFromScript<int>(asm, data, "*.getBigBlocksHierarchyCount", 1);
             getBigBlocksFuncs = new GetBigBlocksFunc[bigBlocksHierarchyCount];
             setBigBlocksFuncs = new SetBigBlocksFunc[bigBlocksHierarchyCount];
-            getBigBlocksFuncs[0] = callFromScript<GetBigBlocksFunc>(asm, data, "*.getBigBlocksFunc");
-            setBigBlocksFuncs[0] = callFromScript<SetBigBlocksFunc>(asm, data, "*.setBigBlocksFunc");
+            getBigBlocksFuncs = callFromScript<GetBigBlocksFunc[]>(asm, data, "*.getBigBlocksFuncs", new GetBigBlocksFunc[1]);
+            setBigBlocksFuncs = callFromScript<SetBigBlocksFunc[]>(asm, data, "*.setBigBlocksFuncs", new SetBigBlocksFunc[1]);
+            getBigBlocksFuncs[0] = callFromScript<GetBigBlocksFunc>(asm, data, "*.getBigBlocksFunc", getBigBlocksFuncs[0]);
+            setBigBlocksFuncs[0] = callFromScript<SetBigBlocksFunc>(asm, data, "*.setBigBlocksFunc", setBigBlocksFuncs[0]);
 
-            getSegaMappingFunc = callFromScript<GetSegaMappingFunc>(asm, data, "*.getSegaMappingFunc", Utils.readLinearBigBlockData);
-            setSegaMappingFunc = callFromScript<SetSegaMappingFunc>(asm, data, "*.setSegaMappingFunc", Utils.writeLinearBigBlockData);
+            getSegaMappingFunc = callFromScript<GetSegaMappingFunc>(asm, data, "*.getSegaMappingFunc", (int index) => { return Utils.readLinearBigBlockData(0, index); });
+            setSegaMappingFunc = callFromScript<SetSegaMappingFunc>(asm, data, "*.setSegaMappingFunc", (int index, byte[] bb) => { Utils.writeLinearBigBlockData(0, index, bb); });
             getBlocksFunc = callFromScript<GetBlocksFunc>(asm,data,"*.getBlocksFunc");
             setBlocksFunc = callFromScript<SetBlocksFunc>(asm, data, "*.setBlocksFunc");
             getPalFunc = callFromScript<GetPalFunc>(asm, data, "*.getPalFunc");
@@ -179,13 +195,6 @@ namespace CadEditor
 
             showScrollsInLayout = callFromScript(asm, data, "*.isShowScrollsInLayout", true);
             scrollsOffsetFromLayout = callFromScript(asm, data, "*.getScrollsOffsetFromLayout", 0);
-
-            bigBlocksCounts = new int[bigBlocksHierarchyCount];
-            for (int hierLevel = 0; hierLevel < bigBlocksHierarchyCount; hierLevel++)
-            {
-                bigBlocksCounts[hierLevel] = callFromScript(asm, data, "*.getBigBlocksCountHierarchy", 256, hierLevel);
-            }
-            bigBlocksCounts[0] = callFromScript(asm, data, "*.getBigBlocksCount", bigBlocksCounts[0]);
 
             blocksCount    = callFromScript(asm, data, "*.getBlocksCount"   , 256);
 
@@ -266,20 +275,20 @@ namespace CadEditor
            setVideoChunkFunc(videoPageId, videoChunk);
         }
 
-        public static BigBlock[] getBigBlocks(int bigBlockId)
+        /*public static BigBlock[] getBigBlocks(int bigBlockId)
         {
             return (getBigBlocksFuncs[0] ?? (_ => null))(bigBlockId);
-        }
+        }*/
 
         public static BigBlock[] getBigBlocksRecursive(int hierarchyLevel, int bigBlockId)
         {
             return (getBigBlocksFuncs[hierarchyLevel] ?? (_ => null))(bigBlockId);
         }
 
-        public static void setBigBlocks(int bigTileIndex, BigBlock[] bigBlockIndexes)
+        /*public static void setBigBlocks(int bigTileIndex, BigBlock[] bigBlockIndexes)
         {
             setBigBlocksFuncs[0](bigTileIndex, bigBlockIndexes);
-        }
+        }*/
 
         public static void setBigBlocksHierarchy(int hierarchyLevel, int bigTileIndex, BigBlock[] bigBlockIndexes)
         {
@@ -536,9 +545,9 @@ namespace CadEditor
             return ConfigScript.blocksOffset.beginAddr + ConfigScript.blocksOffset.recSize * id;
         }
 
-        public static int getBigTilesAddr(int id)
+        public static int getBigTilesAddr(int heirarchyLevel, int id)
         {
-            return ConfigScript.bigBlocksOffset.beginAddr + ConfigScript.bigBlocksOffset.recSize * id;
+            return ConfigScript.bigBlocksOffsets[heirarchyLevel].beginAddr + ConfigScript.bigBlocksOffsets[heirarchyLevel].recSize * id;
         }
 
         public static int getLevelWidth(int levelNo)
@@ -549,6 +558,11 @@ namespace CadEditor
         public static int getLevelHeight(int levelNo)
         {
             return ConfigScript.getLevelRec(levelNo).height;
+        }
+
+        public static int getbigBlocksHierarchyCount()
+        {
+            return bigBlocksHierarchyCount;
         }
         //------------------------------------------------------------
 
@@ -579,7 +593,7 @@ namespace CadEditor
         public static OffsetRec palOffset;
         public static OffsetRec videoOffset;
         public static OffsetRec videoObjOffset;
-        public static OffsetRec bigBlocksOffset;
+        public static OffsetRec[] bigBlocksOffsets;
         public static OffsetRec blocksOffset;
         public static OffsetRec[] screensOffset;
         public static OffsetRec screensOffset2;

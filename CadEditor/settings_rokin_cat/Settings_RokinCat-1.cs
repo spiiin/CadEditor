@@ -27,10 +27,29 @@ public class Data
   public GetBlocksFunc getBlocksFunc() { return getBlocks;}
   public SetBlocksFunc setBlocksFunc() { return setBlocks;}
   //
-  public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x13383, 1  , 0x4000); }
-  public int getBigBlocksCount() { return 374; }
-  public GetBigBlocksFunc getBigBlocksFunc() { return getBigBlocks;}
-  public SetBigBlocksFunc setBigBlocksFunc() { return setBigBlocks;}
+  public int getBigBlocksHierarchyCount() { return 2; }
+  public OffsetRec getBigBlocksOffsetHierarchy(int hierarchyLevel)
+  { 
+    if (hierarchyLevel == 0) { return new OffsetRec(0x13383, 1  , 0x4000); }
+    if (hierarchyLevel == 1) { return new OffsetRec(0x13547, 1  , 0x4000); }
+    return new OffsetRec(0x0, 1  , 0x4000);
+  }
+  
+  public int getBigBlocksCountHierarchy(int hierarchyLevel)
+  { 
+    if (hierarchyLevel == 0) { return 187; }
+    if (hierarchyLevel == 1) { return 103; }
+    return 256;
+  }
+  
+  public GetBigBlocksFunc[] getBigBlocksFuncs() 
+  { 
+    return new GetBigBlocksFunc[] { getBigBlocks0, getBigBlocks1 };
+  }
+  public SetBigBlocksFunc[] setBigBlocksFuncs()
+  { 
+     return new SetBigBlocksFunc[] { setBigBlocks0, setBigBlocks1 };
+  }
   
   //-------------------------------------------------------------------------------------------------------------------
   public ObjRec[] getBlocks(int blockIndex)
@@ -43,16 +62,28 @@ public class Data
     Utils.writeBlocksLinear(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount());
   }
   
-  public static BigBlock[] getBigBlocks(int bigTileIndex)
+  public static BigBlock[] getBigBlocks0(int bigTileIndex)
   {
-    var data = Utils.readLinearBigBlockData(bigTileIndex, 2);
-    return Utils.unlinearizeBigBlocks(data, 1, 2);
+    var data = Utils.readLinearBigBlockData(0, bigTileIndex, 4);
+    return Utils.unlinearizeBigBlocks(data, 1, 4);
+  }
+  
+    public static BigBlock[] getBigBlocks1(int bigTileIndex)
+  {
+    var data = Utils.readLinearBigBlockData(1, bigTileIndex, 4);
+    return Utils.unlinearizeBigBlocks(data, 4, 1);
   }
 
-  public static void setBigBlocks(int bigTileIndex, BigBlock[] bigBlockIndexes)
+  public static void setBigBlocks0(int bigTileIndex, BigBlock[] bigBlockIndexes)
   {
     var data = Utils.linearizeBigBlocks(bigBlockIndexes);
-    Utils.writeLinearBigBlockData(bigTileIndex, data);
+    Utils.writeLinearBigBlockData(0, bigTileIndex, data);
+  }
+  
+  public static void setBigBlocks1(int bigTileIndex, BigBlock[] bigBlockIndexes)
+  {
+    var data = Utils.linearizeBigBlocks(bigBlockIndexes);
+    Utils.writeLinearBigBlockData(1, bigTileIndex, data);
   }
   
   public byte[] getPallete(int palId)

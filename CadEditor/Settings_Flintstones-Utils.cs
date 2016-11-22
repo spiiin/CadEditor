@@ -128,7 +128,7 @@ public static class FliUtils
   
   public static BigBlock[] getBigBlocks(int bigTileIndex)
   {
-    var data = Utils.readLinearBigBlockData(bigTileIndex, 16);
+    var data = Utils.readLinearBigBlockData(0, bigTileIndex, 16);
     var bblocks = Utils.unlinearizeBigBlocks(data, 4, 4);
     transposeBigBlocks(bblocks);
     return bblocks;
@@ -138,7 +138,7 @@ public static class FliUtils
   {
     transposeBigBlocks(bigBlockIndexes);
     var data = Utils.linearizeBigBlocks(bigBlockIndexes);
-    Utils.writeLinearBigBlockData(bigTileIndex, data);
+    Utils.writeLinearBigBlockData(0, bigTileIndex, data);
   }
   
   public static int getConvertScreenTile(int v)         { return (v >> 4) | (v & 0x0F) << 4;}

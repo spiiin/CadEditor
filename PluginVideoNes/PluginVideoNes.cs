@@ -278,27 +278,36 @@ namespace PluginVideoNes
         }
 
          public Image[] makeBigBlocks(int videoNo, int bigBlockNo, int blockNo, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
-            float smallBlockScaleFactor = 2.0f, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false)
+            float smallBlockScaleFactor = 2.0f, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false, int hierarchyLevel = 0)
         {
             byte blockIndexId = (byte)blockNo;
-            BigBlock[] bigBlockIndexes = ConfigScript.getBigBlocks(blockIndexId);
-            return makeBigBlocks(videoNo, bigBlockNo, bigBlockIndexes, palleteNo, smallObjectsViewType, smallBlockScaleFactor, curButtonScale, curViewType, showAxis);
+            BigBlock[] bigBlockIndexes = ConfigScript.getBigBlocksRecursive(hierarchyLevel, blockIndexId);
+            return makeBigBlocks(videoNo, bigBlockNo, bigBlockIndexes, palleteNo, smallObjectsViewType, smallBlockScaleFactor, curButtonScale, curViewType, showAxis, hierarchyLevel);
         }
 
         public Image[] makeBigBlocks(int videoNo, int bigBlockNo, BigBlock[] bigBlockIndexes, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
-            float smallBlockScaleFactor = 2.0f, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false)
+            float smallBlockScaleFactor = 2.0f, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false, int hierarchyLevel = 0)
         {
-            int blockCount = ConfigScript.getBigBlocksCount(0);
+            int blockCount = ConfigScript.getBigBlocksCount(hierarchyLevel);
             var bigBlocks = new Image[blockCount];
 
             byte blockId = (byte)bigBlockNo;
             byte backId = (byte)videoNo;
             byte palId = (byte)palleteNo;
 
-            var im = makeObjectsStrip(backId, blockId, palId, smallBlockScaleFactor, smallObjectsViewType);
             var smallBlocks = new System.Windows.Forms.ImageList();
-            smallBlocks.ImageSize = new Size((int)(16 * smallBlockScaleFactor), (int)(16 * smallBlockScaleFactor));
-            smallBlocks.Images.AddStrip(im);
+            if (hierarchyLevel == 0)
+            {
+                var im = makeObjectsStrip(backId, blockId, palId, smallBlockScaleFactor, smallObjectsViewType);
+                smallBlocks.ImageSize = new Size((int)(16 * smallBlockScaleFactor), (int)(16 * smallBlockScaleFactor));
+                smallBlocks.Images.AddStrip(im);
+            }
+            else
+            {
+                var ims = makeBigBlocks(videoNo, bigBlockNo, ConfigScript.getBigBlocksRecursive(hierarchyLevel - 1, bigBlockNo), palleteNo, smallObjectsViewType, smallBlockScaleFactor, curButtonScale, curViewType, false, hierarchyLevel - 1);
+                smallBlocks.ImageSize = ims[0].Size;
+                smallBlocks.Images.AddRange(ims);
+            }
             Image[] smallBlocksPack = smallBlocks.Images.Cast<Image>().ToArray();
 
             //tt version hardcode
@@ -344,7 +353,7 @@ namespace PluginVideoNes
         private static byte getTTSmallBlocksColorByte(int index)
         {
             int btc = ConfigScript.getBigBlocksCount(0);
-            int addr = ConfigScript.getBigTilesAddr(0);
+            int addr = ConfigScript.getBigTilesAddr(0, 0);
             return Globals.romdata[addr + btc * 4 + index];
         }
 

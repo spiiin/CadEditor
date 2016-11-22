@@ -21,16 +21,16 @@ public static class TinyToonUtils
   
   public static BigBlock[] getBigBlocksTT(int bigTileIndex)
   {
-    var bigBlocksAddr = ConfigScript.getBigTilesAddr(bigTileIndex);
-    var data = Utils.readDataFromAlignedArrays(Globals.romdata, bigBlocksAddr, ConfigScript.getBigBlocksCount());
+    var bigBlocksAddr = ConfigScript.getBigTilesAddr(0, bigTileIndex);
+    var data = Utils.readDataFromAlignedArrays(Globals.romdata, bigBlocksAddr, ConfigScript.getBigBlocksCount(0));
     return Utils.unlinearizeBigBlocks(data, 2, 2);
   }
   
   public static void setBigBlocksTT(int bigTileIndex, BigBlock[] bigBlockIndexes)
   {
-    var bigBlocksAddr = ConfigScript.getBigTilesAddr(bigTileIndex);
+    var bigBlocksAddr = ConfigScript.getBigTilesAddr(0, bigTileIndex);
     var data = Utils.linearizeBigBlocks(bigBlockIndexes);
-    Utils.writeDataToAlignedArrays(data, Globals.romdata, bigBlocksAddr, ConfigScript.getBigBlocksCount());
+    Utils.writeDataToAlignedArrays(data, Globals.romdata, bigBlocksAddr, ConfigScript.getBigBlocksCount(0));
   }
   
   static ObjRec[] readBlocksFromAlignedArraysTT(byte[] romdata, int addr, int count)

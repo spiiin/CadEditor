@@ -180,7 +180,7 @@ public class Data
   
   public BigBlock[] getBigBlocks(int bigTileIndex)
   {
-    var data = Utils.readLinearBigBlockData(bigTileIndex, 8);
+    var data = Utils.readLinearBigBlockData(0, bigTileIndex, 8);
     var bblocks = Utils.unlinearizeBigBlocks(data, 2, 4);
     transposeBigBlocks(bblocks);
     return bblocks;
@@ -190,6 +190,6 @@ public class Data
   {
     reverseTransposeBigBlocks(bigBlockIndexes);
     var data = Utils.linearizeBigBlocks(bigBlockIndexes);
-    Utils.writeLinearBigBlockData(bigTileIndex, data);
+    Utils.writeLinearBigBlockData(0, bigTileIndex, data);
   }
 }
