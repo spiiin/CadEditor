@@ -288,7 +288,7 @@ namespace PluginVideoNes
         public Image[] makeBigBlocks(int videoNo, int bigBlockNo, BigBlock[] bigBlockIndexes, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
             float smallBlockScaleFactor = 2.0f, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false)
         {
-            int blockCount = ConfigScript.getBigBlocksCount();
+            int blockCount = ConfigScript.getBigBlocksCount(0);
             var bigBlocks = new Image[blockCount];
 
             byte blockId = (byte)bigBlockNo;
@@ -343,7 +343,7 @@ namespace PluginVideoNes
 
         private static byte getTTSmallBlocksColorByte(int index)
         {
-            int btc = ConfigScript.getBigBlocksCount();
+            int btc = ConfigScript.getBigBlocksCount(0);
             int addr = ConfigScript.getBigTilesAddr(0);
             return Globals.romdata[addr + btc * 4 + index];
         }

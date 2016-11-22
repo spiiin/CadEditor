@@ -57,7 +57,7 @@ namespace CadEditor
             UtilsGui.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
             UtilsGui.setCbItemsCount(cbSmallBlock, ConfigScript.blocksOffset.recCount);
             UtilsGui.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
-            UtilsGui.setCbItemsCount(cbPart, Math.Max(ConfigScript.getBigBlocksCount() / 256, 1));
+            UtilsGui.setCbItemsCount(cbPart, Math.Max(ConfigScript.getBigBlocksCount(0) / 256, 1));
             cbTileset.Items.Clear();
             for (int i = 0; i < ConfigScript.bigBlocksOffset.recCount; i++)
             {
@@ -97,7 +97,7 @@ namespace CadEditor
             //prerender big blocks
             bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(backId, curTileset, bigBlockIndexes, palId, curViewType, 1, 2.0f, MapViewType.Tiles, false);
             //
-            int btc = Math.Min(ConfigScript.getBigBlocksCount(), 256);
+            int btc = Math.Min(ConfigScript.getBigBlocksCount(0), 256);
             int bblocksInRow = 16;
             int bblocksInCol = (btc / bblocksInRow) + 1;
             //
@@ -130,7 +130,7 @@ namespace CadEditor
                 smallBlocksPack[0] = smallBlocks.Images.Cast<Image>().ToArray();
                 using (Graphics g = Graphics.FromImage(result))
                 {
-                    for (int i = 0; i < ConfigScript.getBigBlocksCount(); i++)
+                    for (int i = 0; i < ConfigScript.getBigBlocksCount(0); i++)
                     {
                         Bitmap b;
                         b = ConfigScript.videoNes.makeBigBlock(i, bigBlockIndexes, smallBlocksPack);
@@ -159,7 +159,7 @@ namespace CadEditor
         {
             int addIndexes = curPart * 256;
             Graphics g = e.Graphics;
-            int btc = Math.Min(ConfigScript.getBigBlocksCount(), 256);
+            int btc = Math.Min(ConfigScript.getBigBlocksCount(0), 256);
             int bblocksInRow = 16;
             int bblocksInCol = (btc / bblocksInRow) + 1;
 
@@ -186,7 +186,7 @@ namespace CadEditor
             int addIndexes = curPart * 256;
             dirty = true; updateSaveVisibility();
 
-            int btc = Math.Min(ConfigScript.getBigBlocksCount(), 256);
+            int btc = Math.Min(ConfigScript.getBigBlocksCount(0), 256);
             int bblocksInRow = 16;
             int bblocksInCol = (btc / bblocksInRow) + 1;
 
@@ -301,7 +301,7 @@ namespace CadEditor
             curVideo = cbVideoNo.SelectedIndex + 0x90;
             curPallete = cbPaletteNo.SelectedIndex;
             curPart = cbPart.SelectedIndex;
-            UtilsGui.setCbItemsCount(cbPart, Math.Max(ConfigScript.getBigBlocksCount() / 256, 1));
+            UtilsGui.setCbItemsCount(cbPart, Math.Max(ConfigScript.getBigBlocksCount(0) / 256, 1));
             UtilsGui.setCbIndexWithoutUpdateLevel(cbPart, cbLevelPair_SelectedIndexChanged, curPart);
             reloadLevel();
         }
@@ -383,7 +383,7 @@ namespace CadEditor
         {
             int addIndexesText = curPart * 256;
 
-            int btc = Math.Min(ConfigScript.getBigBlocksCount(), 256);
+            int btc = Math.Min(ConfigScript.getBigBlocksCount(0), 256);
             int bblocksInRow = 16;
             int bblocksInCol = (btc / bblocksInRow) + 1;
 

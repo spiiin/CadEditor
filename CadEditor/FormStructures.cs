@@ -44,7 +44,7 @@ namespace CadEditor
 
         void resetControls(bool needToRefillBlockPanel)
         {
-            UtilsGui.setCbItemsCount(cbPanelNo, (ConfigScript.getBigBlocksCount() + 1023) / 1024);
+            UtilsGui.setCbItemsCount(cbPanelNo, (ConfigScript.getBigBlocksCount(0) + 1023) / 1024);
             cbPanelNo.SelectedIndex = 0;
             lbStructures.Items.Clear();
             for (int i = 0; i < tileStructs.Count; i++)
@@ -52,13 +52,13 @@ namespace CadEditor
             bigBlocks = formMain.getBigBlockImageList();
             //UtilsGui.setBlocks(bigBlocks, curButtonScale, blockWidth, blockHeight, curViewType, showAxis);
 
-            int subparts = (ConfigScript.getBigBlocksCount() + 1023) / 1024;
+            int subparts = (ConfigScript.getBigBlocksCount(0) + 1023) / 1024;
             FlowLayoutPanel[] blocksPanels = { blocksPanel, blockPanel2, blockPanel3, blockPanel4 };
             if (needToRefillBlockPanel)
             {
                 for (int i = 0; i < subparts; i++)
                 {
-                    int count = (i * 1024 > ConfigScript.getBigBlocksCount()) ? (i * 1024) % ConfigScript.getBigBlocksCount() : 1024;
+                    int count = (i * 1024 > ConfigScript.getBigBlocksCount(0)) ? (i * 1024) % ConfigScript.getBigBlocksCount(0) : 1024;
                     UtilsGui.prepareBlocksPanel(blocksPanel, new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick, i * 1024, count);
                 }
             }
@@ -66,7 +66,7 @@ namespace CadEditor
             {
                 for (int i = 0; i < subparts; i++)
                 {
-                    int count = (i * 1024 > ConfigScript.getBigBlocksCount()) ? (i * 1024) % ConfigScript.getBigBlocksCount() : 1024;
+                    int count = (i * 1024 > ConfigScript.getBigBlocksCount(0)) ? (i * 1024) % ConfigScript.getBigBlocksCount(0) : 1024;
                     UtilsGui.reloadBlocksPanel(blocksPanel, bigBlocks, i * 1024, count);
                 }
             }

@@ -140,10 +140,13 @@ namespace CadEditor
             getVideoPageAddrFunc = callFromScript <GetVideoPageAddrFunc>(asm, data, "*.getVideoPageAddrFunc");
             getVideoChunkFunc = callFromScript<GetVideoChunkFunc>(asm, data, "*.getVideoChunkFunc");
             setVideoChunkFunc = callFromScript<SetVideoChunkFunc>(asm, data, "*.setVideoChunkFunc");
+
             bigBlocksHierarchyCount = callFromScript<int>(asm, data, "*.getBigBlocksHierarchyCount", 1);
             getBigBlocksFuncs = new GetBigBlocksFunc[bigBlocksHierarchyCount];
+            setBigBlocksFuncs = new SetBigBlocksFunc[bigBlocksHierarchyCount];
             getBigBlocksFuncs[0] = callFromScript<GetBigBlocksFunc>(asm, data, "*.getBigBlocksFunc");
-            setBigBlocksFunc = callFromScript<SetBigBlocksFunc>(asm, data, "*.setBigBlocksFunc");
+            setBigBlocksFuncs[0] = callFromScript<SetBigBlocksFunc>(asm, data, "*.setBigBlocksFunc");
+
             getSegaMappingFunc = callFromScript<GetSegaMappingFunc>(asm, data, "*.getSegaMappingFunc", Utils.readLinearBigBlockData);
             setSegaMappingFunc = callFromScript<SetSegaMappingFunc>(asm, data, "*.setSegaMappingFunc", Utils.writeLinearBigBlockData);
             getBlocksFunc = callFromScript<GetBlocksFunc>(asm,data,"*.getBlocksFunc");
@@ -177,7 +180,13 @@ namespace CadEditor
             showScrollsInLayout = callFromScript(asm, data, "*.isShowScrollsInLayout", true);
             scrollsOffsetFromLayout = callFromScript(asm, data, "*.getScrollsOffsetFromLayout", 0);
 
-            bigBlocksCount = callFromScript(asm, data, "*.getBigBlocksCount", 256);
+            bigBlocksCounts = new int[bigBlocksHierarchyCount];
+            for (int hierLevel = 0; hierLevel < bigBlocksHierarchyCount; hierLevel++)
+            {
+                bigBlocksCounts[hierLevel] = callFromScript(asm, data, "*.getBigBlocksCountHierarchy", 256, hierLevel);
+            }
+            bigBlocksCounts[0] = callFromScript(asm, data, "*.getBigBlocksCount", bigBlocksCounts[0]);
+
             blocksCount    = callFromScript(asm, data, "*.getBlocksCount"   , 256);
 
             blocksPicturesFilename  = callFromScript(asm, data, "getBlocksFilename", "");
@@ -269,7 +278,12 @@ namespace CadEditor
 
         public static void setBigBlocks(int bigTileIndex, BigBlock[] bigBlockIndexes)
         {
-            setBigBlocksFunc(bigTileIndex, bigBlockIndexes);
+            setBigBlocksFuncs[0](bigTileIndex, bigBlockIndexes);
+        }
+
+        public static void setBigBlocksHierarchy(int hierarchyLevel, int bigTileIndex, BigBlock[] bigBlockIndexes)
+        {
+            setBigBlocksFuncs[hierarchyLevel](bigTileIndex, bigBlockIndexes);
         }
 
         public static byte[] getSegaMapping(int mappingIndex)
@@ -390,9 +404,9 @@ namespace CadEditor
                 renderToMainScreenFunc(g, scale);
         }
 
-        public static int getBigBlocksCount()
+        public static int getBigBlocksCount(int hierarchyLevel)
         {
-            return bigBlocksCount;
+            return bigBlocksCounts[hierarchyLevel];
         }
 
         public static int getBlocksCount()
@@ -571,7 +585,7 @@ namespace CadEditor
         public static OffsetRec screensOffset2;
         //public static OffsetRec boxesBackOffset;
         public static int levelsCount;
-        public static int bigBlocksCount;
+        public static int[] bigBlocksCounts;
         public static int blocksCount;
         public static bool screenVertical;
         public static int screenDataStride;
@@ -601,7 +615,7 @@ namespace CadEditor
 
         public static int bigBlocksHierarchyCount;
         public static GetBigBlocksFunc[] getBigBlocksFuncs;
-        public static SetBigBlocksFunc setBigBlocksFunc;
+        public static SetBigBlocksFunc[] setBigBlocksFuncs;
 
         public static GetSegaMappingFunc getSegaMappingFunc;
         public static SetSegaMappingFunc setSegaMappingFunc;

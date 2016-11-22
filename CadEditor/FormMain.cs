@@ -86,7 +86,7 @@ namespace CadEditor
         private void resetControls()
         {
             curActiveLevelForScreen = 0;
-            UtilsGui.setCbItemsCount(cbPanelNo, (ConfigScript.getBigBlocksCount()+1023) / 1024);
+            UtilsGui.setCbItemsCount(cbPanelNo, (ConfigScript.getBigBlocksCount(0)+1023) / 1024);
             cbPanelNo.SelectedIndex = 0;
             resetScreens();
 
@@ -165,7 +165,7 @@ namespace CadEditor
             byte[] mapping = ConfigScript.getSegaMapping(curActiveBigBlockNo);
             byte[] videoTiles = ConfigScript.getVideoChunk(curActiveVideoNo);
             byte[] pal = ConfigScript.getPal(curActivePalleteNo);
-            int count = ConfigScript.getBigBlocksCount();
+            int count = ConfigScript.getBigBlocksCount(0);
             return ConfigScript.videoSega.makeBigBlocks(mapping, videoTiles, pal, count, curScale, curViewType, showAxis);
         }
 
@@ -211,7 +211,7 @@ namespace CadEditor
             bigBlocks.Images.AddRange(bigImages);
 
             //tt add
-            for (int i = ConfigScript.getBigBlocksCount(); i < 256; i++)
+            for (int i = ConfigScript.getBigBlocksCount(0); i < 256; i++)
             {
                 bigBlocks.Images.Add(VideoHelper.emptyScreen((int)(blockWidth*curButtonScale),(int)(blockHeight*curButtonScale)));
             }
@@ -225,17 +225,17 @@ namespace CadEditor
 
         private void prepareBlocksPanel()
         {
-            int subparts = (ConfigScript.getBigBlocksCount()+1023) / 1024;
+            int subparts = (ConfigScript.getBigBlocksCount(0)+1023) / 1024;
             FlowLayoutPanel[] blocksPanels = { blocksPanel, blockPanel2, blockPanel3, blockPanel4 };
-            if (ConfigScript.getBigBlocksCount() < 1024)
+            if (ConfigScript.getBigBlocksCount(0) < 1024)
             {
-                UtilsGui.prepareBlocksPanel(blocksPanels[0], new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick, 0, ConfigScript.getBigBlocksCount());
+                UtilsGui.prepareBlocksPanel(blocksPanels[0], new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick, 0, ConfigScript.getBigBlocksCount(0));
             }
             else
             {
                 for (int i = 0; i < subparts; i++)
                 {
-                    int count = (i * 1024 > ConfigScript.getBigBlocksCount()) ? (i * 1024) % ConfigScript.getBigBlocksCount() : 1024;
+                    int count = (i * 1024 > ConfigScript.getBigBlocksCount(0)) ? (i * 1024) % ConfigScript.getBigBlocksCount(0) : 1024;
                     UtilsGui.prepareBlocksPanel(blocksPanels[i], new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick, i * 1024, count);
                 }
             }
@@ -243,17 +243,17 @@ namespace CadEditor
 
         private void reloadBlocksPanel()
         {
-             int subparts = (ConfigScript.getBigBlocksCount() + 1023) / 1024;
+             int subparts = (ConfigScript.getBigBlocksCount(0) + 1023) / 1024;
              FlowLayoutPanel[] blocksPanels = { blocksPanel, blockPanel2, blockPanel3, blockPanel4 };
-             if (ConfigScript.getBigBlocksCount() < 1024)
+             if (ConfigScript.getBigBlocksCount(0) < 1024)
              {
-                UtilsGui.reloadBlocksPanel(blocksPanels[0], bigBlocks, 0, ConfigScript.getBigBlocksCount());
+                UtilsGui.reloadBlocksPanel(blocksPanels[0], bigBlocks, 0, ConfigScript.getBigBlocksCount(0));
              }
              else
              {
                  for (int i = 0; i < subparts; i++)
                  {
-                     int count = (i * 1024 > ConfigScript.getBigBlocksCount()) ? (i * 1024) % ConfigScript.getBigBlocksCount() : 1024;
+                     int count = (i * 1024 > ConfigScript.getBigBlocksCount(0)) ? (i * 1024) % ConfigScript.getBigBlocksCount(0) : 1024;
                     UtilsGui.reloadBlocksPanel(blocksPanels[i], bigBlocks, i * 1024, count);
                  }
              }

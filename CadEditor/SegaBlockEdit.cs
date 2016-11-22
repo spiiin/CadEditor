@@ -274,7 +274,7 @@ namespace CadEditor
 
         private int getBlocksCount()
         {
-            return editMapMode ? 1 : ConfigScript.getBigBlocksCount();
+            return editMapMode ? 1 : ConfigScript.getBigBlocksCount(0);
         }
 
         private int getTileWidth()

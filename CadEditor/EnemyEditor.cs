@@ -100,7 +100,7 @@ namespace CadEditor
             byte[] mapping = ConfigScript.getSegaMapping(curBigBlockNo);
             byte[] videoTiles = ConfigScript.getVideoChunk(curVideoNo);
             byte[] pal = ConfigScript.getPal(curPaletteNo);
-            int count = ConfigScript.getBigBlocksCount();
+            int count = ConfigScript.getBigBlocksCount(0);
             return ConfigScript.videoSega.makeBigBlocks(mapping, videoTiles, pal, count, curScale, MapViewType.Tiles, formMain.ShowAxis);
         }
 
