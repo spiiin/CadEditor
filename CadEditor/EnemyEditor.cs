@@ -89,7 +89,7 @@ namespace CadEditor
                 if (ConfigScript.isUseSegaGraphics())
                   bigImages = makeSegaBigBlocks();
                 else
-                  bigImages = ConfigScript.videoNes.makeBigBlocks(curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo, MapViewType.Tiles, curScale, curScale, MapViewType.Tiles, formMain.ShowAxis);
+                  bigImages = ConfigScript.videoNes.makeBigBlocks(curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo, MapViewType.Tiles, curScale, curScale, MapViewType.Tiles, formMain.ShowAxis, ConfigScript.getbigBlocksHierarchyCount()-1);
                 bigBlocks.Images.AddRange(bigImages);
             }
         }
@@ -100,7 +100,7 @@ namespace CadEditor
             byte[] mapping = ConfigScript.getSegaMapping(curBigBlockNo);
             byte[] videoTiles = ConfigScript.getVideoChunk(curVideoNo);
             byte[] pal = ConfigScript.getPal(curPaletteNo);
-            int count = ConfigScript.getBigBlocksCount(0);
+            int count = ConfigScript.getBigBlocksCount(ConfigScript.getbigBlocksHierarchyCount()-1);
             return ConfigScript.videoSega.makeBigBlocks(mapping, videoTiles, pal, count, curScale, MapViewType.Tiles, formMain.ShowAxis);
         }
 
