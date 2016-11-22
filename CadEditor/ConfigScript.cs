@@ -140,7 +140,9 @@ namespace CadEditor
             getVideoPageAddrFunc = callFromScript <GetVideoPageAddrFunc>(asm, data, "*.getVideoPageAddrFunc");
             getVideoChunkFunc = callFromScript<GetVideoChunkFunc>(asm, data, "*.getVideoChunkFunc");
             setVideoChunkFunc = callFromScript<SetVideoChunkFunc>(asm, data, "*.setVideoChunkFunc");
-            getBigBlocksFunc = callFromScript<GetBigBlocksFunc>(asm, data, "*.getBigBlocksFunc");
+            bigBlocksHierarchyCount = callFromScript<int>(asm, data, "*.getBigBlocksHierarchyCount", 1);
+            getBigBlocksFuncs = new GetBigBlocksFunc[bigBlocksHierarchyCount];
+            getBigBlocksFuncs[0] = callFromScript<GetBigBlocksFunc>(asm, data, "*.getBigBlocksFunc");
             setBigBlocksFunc = callFromScript<SetBigBlocksFunc>(asm, data, "*.setBigBlocksFunc");
             getSegaMappingFunc = callFromScript<GetSegaMappingFunc>(asm, data, "*.getSegaMappingFunc", Utils.readLinearBigBlockData);
             setSegaMappingFunc = callFromScript<SetSegaMappingFunc>(asm, data, "*.setSegaMappingFunc", Utils.writeLinearBigBlockData);
@@ -257,7 +259,12 @@ namespace CadEditor
 
         public static BigBlock[] getBigBlocks(int bigBlockId)
         {
-            return (getBigBlocksFunc ?? (_ => null))(bigBlockId);
+            return (getBigBlocksFuncs[0] ?? (_ => null))(bigBlockId);
+        }
+
+        public static BigBlock[] getBigBlocksRecursive(int hierarchyLevel, int bigBlockId)
+        {
+            return (getBigBlocksFuncs[hierarchyLevel] ?? (_ => null))(bigBlockId);
         }
 
         public static void setBigBlocks(int bigTileIndex, BigBlock[] bigBlockIndexes)
@@ -591,26 +598,37 @@ namespace CadEditor
         public static GetVideoPageAddrFunc getVideoPageAddrFunc;
         public static GetVideoChunkFunc getVideoChunkFunc;
         public static SetVideoChunkFunc setVideoChunkFunc;
-        public static GetBigBlocksFunc getBigBlocksFunc;
+
+        public static int bigBlocksHierarchyCount;
+        public static GetBigBlocksFunc[] getBigBlocksFuncs;
         public static SetBigBlocksFunc setBigBlocksFunc;
+
         public static GetSegaMappingFunc getSegaMappingFunc;
         public static SetSegaMappingFunc setSegaMappingFunc;
+
         public static GetBlocksFunc getBlocksFunc;
         public static SetBlocksFunc setBlocksFunc;
+
         public static GetPalFunc getPalFunc;
         public static SetPalFunc setPalFunc;
+
         public static GetObjectsFunc getObjectsFunc;
         public static SetObjectsFunc setObjectsFunc;
         public static SortObjectsFunc sortObjectsFunc;
+
         public static GetLayoutFunc getLayoutFunc;
         public static GetObjectDictionaryFunc getObjectDictionaryFunc;
         public static RenderToMainScreenFunc renderToMainScreenFunc;
+
         public static ConvertScreenTileFunc convertScreenTileFunc;
         public static ConvertScreenTileFunc backConvertScreenTileFunc;
+
         public static GetBigTileNoFromScreenFunc getBigTileNoFromScreenFunc;
         public static SetBigTileToScreenFunc setBigTileToScreenFunc;
+
         public static LoadSegaBackFunc loadSegaBackFunc;
         public static SaveSegaBackFunc saveSegaBackFunc;
+
         public static DrawObjectFunc drawObjectFunc;
         public static DrawObjectBigFunc drawObjectBigFunc;
 

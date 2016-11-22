@@ -175,21 +175,8 @@ namespace CadEditor
             {
                 int xb = i % bblocksInRow;
                 int yb = i / bblocksInRow;
-                /*var bb = bigBlockIndexes[addIndexes+i];
-                for (int h = 0; h < bb.height; h++)
-                {
-                    for (int w = 0; w < bb.height; w++)
-                    {
-                        int sbX = w * bWidth;
-                        int sbY = h * bHeight;
-                        int idx = h * bb.width + w;
-                        var r =  new Rectangle(xb * bbWidth + sbX, yb * bbHeight + sbY, bWidth, bHeight);
-                        g.DrawImage(smallBlocks.Images[bb.indexes[idx]], r);
-                    }
-                }*/
                 var rr = new Rectangle(xb * bbWidth, yb * bbHeight, bbWidth, bbHeight);
                 g.DrawImage(bigBlocksImages[addIndexes + i], rr);
-
                 g.DrawRectangle(pen, rr);
             }
         }

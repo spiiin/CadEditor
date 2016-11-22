@@ -226,9 +226,25 @@ namespace CadEditor
             return data;
         }
 
-        //capcom version
+        public static ObjRec[] readBlocksLinear(byte[] romdata, int addr, int count)
+        {
+            var objects = new ObjRec[count];
+            for (int i = 0; i < count; i++)
+            {
+                byte c1, c2, c3, c4, typeColor;
+                c1 = romdata[addr + i * 5 + 0];
+                c2 = romdata[addr + i * 5 + 1];
+                c3 = romdata[addr + i * 5 + 2];
+                c4 = romdata[addr + i * 5 + 3];
+                typeColor = romdata[addr + i * 5 + 4];
+                objects[i] = new ObjRec(c1, c2, c3, c4, typeColor);
+            }
+            return objects;
+        }
+
         public static ObjRec[] readBlocksFromAlignedArrays(byte[] romdata, int addr, int count)
         {
+            //capcom version
             var objects = new ObjRec[count];
             for (int i = 0; i < count; i++)
             {
@@ -242,7 +258,7 @@ namespace CadEditor
             }
             return objects;
         }
-        
+
         /*public static ObjRec[] readBlocksFromUnalignedArrays(byte[] romdata, int addr1, int addr2, int addr3, int addr4, int addr5, int count)
         {
             var objects = new ObjRec[count];
@@ -257,6 +273,19 @@ namespace CadEditor
             }
             return objects;
         }*/
+
+        public static void writeBlocksLinear(ObjRec[] objects, byte[] romdata, int addr, int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                var obj = objects[i];
+                romdata[addr + i * 5 + 0] = obj.c1;
+                romdata[addr + i * 5 + 1] = obj.c2;
+                romdata[addr + i * 5 + 2] = obj.c3;
+                romdata[addr + i * 5 + 3] = obj.c4;
+                romdata[addr + i * 5 + 4] = obj.typeColor;
+            }
+        }
 
         public static void writeBlocksToAlignedArrays(ObjRec[] objects, byte[] romdata, int addr, int count)
         {
