@@ -27,11 +27,12 @@ public class Data
   public GetBlocksFunc getBlocksFunc() { return getBlocks;}
   public SetBlocksFunc setBlocksFunc() { return setBlocks;}
   //
-  public int getBigBlocksHierarchyCount() { return 2; }
+  public int getBigBlocksHierarchyCount() { return 3; }
   public OffsetRec getBigBlocksOffsetHierarchy(int hierarchyLevel)
   { 
     if (hierarchyLevel == 0) { return new OffsetRec(0x13383, 1  , 0x4000); }
     if (hierarchyLevel == 1) { return new OffsetRec(0x13547, 1  , 0x4000); }
+    if (hierarchyLevel == 2) { return new OffsetRec(0x136E3, 1  , 0x4000); }
     return new OffsetRec(0x0, 1  , 0x4000);
   }
   
@@ -39,16 +40,17 @@ public class Data
   { 
     if (hierarchyLevel == 0) { return 187; }
     if (hierarchyLevel == 1) { return 103; }
+    if (hierarchyLevel == 2) { return 75; }
     return 256;
   }
   
   public GetBigBlocksFunc[] getBigBlocksFuncs() 
   { 
-    return new GetBigBlocksFunc[] { getBigBlocks0, getBigBlocks1 };
+    return new GetBigBlocksFunc[] { getBigBlocks0, getBigBlocks1, getBigBlocks2 };
   }
   public SetBigBlocksFunc[] setBigBlocksFuncs()
   { 
-     return new SetBigBlocksFunc[] { setBigBlocks0, setBigBlocks1 };
+     return new SetBigBlocksFunc[] { setBigBlocks0, setBigBlocks1, setBigBlocks2 };
   }
   
   //-------------------------------------------------------------------------------------------------------------------
@@ -62,16 +64,23 @@ public class Data
     Utils.writeBlocksLinear(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount());
   }
   
+  //-------------------------------------------------------------------------------------------------------------------
   public static BigBlock[] getBigBlocks0(int bigTileIndex)
   {
     var data = Utils.readLinearBigBlockData(0, bigTileIndex, 4);
     return Utils.unlinearizeBigBlocks(data, 1, 4);
   }
   
-    public static BigBlock[] getBigBlocks1(int bigTileIndex)
+  public static BigBlock[] getBigBlocks1(int bigTileIndex)
   {
     var data = Utils.readLinearBigBlockData(1, bigTileIndex, 4);
     return Utils.unlinearizeBigBlocks(data, 4, 1);
+  }
+  
+  public static BigBlock[] getBigBlocks2(int bigTileIndex)
+  {
+    var data = Utils.readLinearBigBlockData(2, bigTileIndex, 2);
+    return Utils.unlinearizeBigBlocks(data, 2, 1);
   }
 
   public static void setBigBlocks0(int bigTileIndex, BigBlock[] bigBlockIndexes)
@@ -84,6 +93,12 @@ public class Data
   {
     var data = Utils.linearizeBigBlocks(bigBlockIndexes);
     Utils.writeLinearBigBlockData(1, bigTileIndex, data);
+  }
+  
+  public static void setBigBlocks2(int bigTileIndex, BigBlock[] bigBlockIndexes)
+  {
+    var data = Utils.linearizeBigBlocks(bigBlockIndexes);
+    Utils.writeLinearBigBlockData(2, bigTileIndex, data);
   }
   
   public byte[] getPallete(int palId)
