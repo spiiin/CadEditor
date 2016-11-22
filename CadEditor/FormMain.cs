@@ -83,15 +83,19 @@ namespace CadEditor
                 screens2 = Utils.setScreens2();
         }
 
+        private void changeBlocksSize(Image[] bigImages)
+        {
+            blockHeight = 32;
+            float ratio = bigImages[0].Width / bigImages[0].Height;
+            blockWidth = (int)(blockHeight * ratio);
+        }
+
         private void resetControls()
         {
             curActiveLevelForScreen = 0;
-            UtilsGui.setCbItemsCount(cbPanelNo, (ConfigScript.getBigBlocksCount(0)+1023) / 1024);
+            UtilsGui.setCbItemsCount(cbPanelNo, (ConfigScript.getBigBlocksCount(ConfigScript.getbigBlocksHierarchyCount()-1)+1023) / 1024);
             cbPanelNo.SelectedIndex = 0;
             resetScreens();
-
-            blockWidth = ConfigScript.getBlocksPicturesWidth();
-            blockHeight = 32;
 
             UtilsGui.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
             UtilsGui.setCbItemsCount(cbBigBlockNo, ConfigScript.bigBlocksOffsets[0].recCount);
@@ -123,7 +127,7 @@ namespace CadEditor
             prepareBlocksPanel();
 
             reloadGameType();
-            changeLevelIndex();
+            changeLevelIndex(true);
 
             bttBigBlocks.Enabled = ConfigScript.isBigBlockEditorEnabled;
             bttBlocks.Enabled = ConfigScript.isBlockEditorEnabled;
@@ -165,15 +169,12 @@ namespace CadEditor
             byte[] mapping = ConfigScript.getSegaMapping(curActiveBigBlockNo);
             byte[] videoTiles = ConfigScript.getVideoChunk(curActiveVideoNo);
             byte[] pal = ConfigScript.getPal(curActivePalleteNo);
-            int count = ConfigScript.getBigBlocksCount(0);
+            int count = ConfigScript.getBigBlocksCount(ConfigScript.getbigBlocksHierarchyCount()-1);
             return ConfigScript.videoSega.makeBigBlocks(mapping, videoTiles, pal, count, curScale, curViewType, showAxis);
         }
 
         private void setBlocks(bool needToRefillBlockPanel)
         {
-            bigBlocks.Images.Clear();
-            bigBlocks.ImageSize = new Size((int)(curButtonScale * blockWidth), (int)(curButtonScale * blockHeight));
-
             //if using pictures
             if (ConfigScript.usePicturesInstedBlocks)
             {
@@ -202,16 +203,16 @@ namespace CadEditor
                 bigImages = makeSegaBigBlocks();
             else
             {
-                bigImages = ConfigScript.videoNes.makeBigBlocks(backId, blockId, bigTileIndex, palId, smallObjectsType, smallBlockScaleFactor, curButtonScale, curViewType, showAxis);
+                bigImages = ConfigScript.videoNes.makeBigBlocks(backId, blockId, bigTileIndex, palId, smallObjectsType, smallBlockScaleFactor, curButtonScale, curViewType, showAxis, ConfigScript.getbigBlocksHierarchyCount()-1);
             }
-            /*for (int i = 0; i < bigImages.Length; i++)
-            {
-                bigImages[i].Save(String.Format("{0}.png", i));
-            }*/
+
+            changeBlocksSize(bigImages);
+            bigBlocks.Images.Clear();
+            bigBlocks.ImageSize = new Size((int)(curButtonScale * blockWidth), (int)(curButtonScale * blockHeight));
             bigBlocks.Images.AddRange(bigImages);
 
             //tt add
-            for (int i = ConfigScript.getBigBlocksCount(0); i < 256; i++)
+            for (int i = ConfigScript.getBigBlocksCount(ConfigScript.getbigBlocksHierarchyCount()-1); i < 256; i++)
             {
                 bigBlocks.Images.Add(VideoHelper.emptyScreen((int)(blockWidth*curButtonScale),(int)(blockHeight*curButtonScale)));
             }
@@ -225,17 +226,18 @@ namespace CadEditor
 
         private void prepareBlocksPanel()
         {
-            int subparts = (ConfigScript.getBigBlocksCount(0)+1023) / 1024;
+            int lastHierarchy = ConfigScript.getbigBlocksHierarchyCount() - 1;
+            int subparts = (ConfigScript.getBigBlocksCount(lastHierarchy) +1023) / 1024;
             FlowLayoutPanel[] blocksPanels = { blocksPanel, blockPanel2, blockPanel3, blockPanel4 };
-            if (ConfigScript.getBigBlocksCount(0) < 1024)
+            if (ConfigScript.getBigBlocksCount(lastHierarchy) < 1024)
             {
-                UtilsGui.prepareBlocksPanel(blocksPanels[0], new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick, 0, ConfigScript.getBigBlocksCount(0));
+                UtilsGui.prepareBlocksPanel(blocksPanels[0], new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick, 0, ConfigScript.getBigBlocksCount(lastHierarchy));
             }
             else
             {
                 for (int i = 0; i < subparts; i++)
                 {
-                    int count = (i * 1024 > ConfigScript.getBigBlocksCount(0)) ? (i * 1024) % ConfigScript.getBigBlocksCount(0) : 1024;
+                    int count = (i * 1024 > ConfigScript.getBigBlocksCount(lastHierarchy)) ? (i * 1024) % ConfigScript.getBigBlocksCount(lastHierarchy) : 1024;
                     UtilsGui.prepareBlocksPanel(blocksPanels[i], new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick, i * 1024, count);
                 }
             }
@@ -243,17 +245,18 @@ namespace CadEditor
 
         private void reloadBlocksPanel()
         {
-             int subparts = (ConfigScript.getBigBlocksCount(0) + 1023) / 1024;
+             int lastHierarchy = ConfigScript.getbigBlocksHierarchyCount() - 1;
+             int subparts = (ConfigScript.getBigBlocksCount(lastHierarchy) + 1023) / 1024;
              FlowLayoutPanel[] blocksPanels = { blocksPanel, blockPanel2, blockPanel3, blockPanel4 };
-             if (ConfigScript.getBigBlocksCount(0) < 1024)
+             if (ConfigScript.getBigBlocksCount(lastHierarchy) < 1024)
              {
-                UtilsGui.reloadBlocksPanel(blocksPanels[0], bigBlocks, 0, ConfigScript.getBigBlocksCount(0));
+                UtilsGui.reloadBlocksPanel(blocksPanels[0], bigBlocks, 0, ConfigScript.getBigBlocksCount(lastHierarchy));
              }
              else
              {
                  for (int i = 0; i < subparts; i++)
                  {
-                     int count = (i * 1024 > ConfigScript.getBigBlocksCount(0)) ? (i * 1024) % ConfigScript.getBigBlocksCount(0) : 1024;
+                     int count = (i * 1024 > ConfigScript.getBigBlocksCount(lastHierarchy)) ? (i * 1024) % ConfigScript.getBigBlocksCount(lastHierarchy) : 1024;
                     UtilsGui.reloadBlocksPanel(blocksPanels[i], bigBlocks, i * 1024, count);
                  }
              }
