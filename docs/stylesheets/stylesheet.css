@@ -231,6 +231,10 @@ a {
   text-shadow: 0 0 5px rgba(104, 182, 255, 0.5);
 }
 
+p {
+text-align: justify; /* Выравнивание по ширине */
+}
+
 /* Clearfix */
 
 .cf:before, .cf:after {
