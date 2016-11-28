@@ -6,7 +6,8 @@ using System.Drawing;
 public class Data : RockinCatsBase
 {
   public override OffsetRec getScreensOffset()  { return new OffsetRec(0x13779, 19 , 3*2);    }
-  public override OffsetRec getVideoOffset()    { return new OffsetRec(0x21010, 1  , 0x1000); }
+  public override int getVideoIndex1()          { return 4; }
+  public override int getVideoIndex2()          { return 6; }
   public override OffsetRec getBlocksOffset()   { return new OffsetRec(0x13117, 1  , 0x4000); }
   public override int getBlocksCount()          { return 124; }
   
@@ -20,7 +21,7 @@ public class Data : RockinCatsBase
   
   public override int getBigBlocksCountHierarchy(int hierarchyLevel)
   { 
-    if (hierarchyLevel == 0) { return 187; }
+    if (hierarchyLevel == 0) { return 113; }
     if (hierarchyLevel == 1) { return 103; }
     if (hierarchyLevel == 2) { return 75;  }
     return 256;
