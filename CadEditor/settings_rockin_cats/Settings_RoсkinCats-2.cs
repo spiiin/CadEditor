@@ -21,7 +21,7 @@ public class Data : RockinCatsBase
   
   public override int getBigBlocksCountHierarchy(int hierarchyLevel)
   { 
-    if (hierarchyLevel == 0) { return 30; }
+    if (hierarchyLevel == 0) { return 28; }
     if (hierarchyLevel == 1) { return 30; }
     if (hierarchyLevel == 2) { return 23;  }
     return 256;

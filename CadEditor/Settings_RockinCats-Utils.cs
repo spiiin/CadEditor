@@ -6,8 +6,10 @@ public class RockinCatsBase
 {
   public virtual OffsetRec getScreensOffset()  { return new OffsetRec(0, 0 , 3*2);   }
   public virtual OffsetRec getVideoOffset()    { return new OffsetRec(0, 1 , 0x1000);   }
+  public virtual int getBlocksCount()          { return 256; }
+  public virtual int getVideoIndex1()          { return -1; }
+  public virtual int getVideoIndex2()          { return -1; }
   public virtual OffsetRec getBlocksOffset()   { return new OffsetRec(0, 1 , 0x4000); }
-  public virtual int getBlocksCount()          { return 124; }
   
   public virtual OffsetRec getBigBlocksOffsetHierarchy(int hierarchyLevel)
   { 
@@ -42,8 +44,8 @@ public class RockinCatsBase
   public bool isEnemyEditorEnabled()    { return false; }
   //
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return Utils.getChrAddress; }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return Utils.getVideoChunk; }
-  public SetVideoChunkFunc    setVideoChunkFunc()    { return Utils.setVideoChunk; }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChunk; }
+  public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   public GetPalFunc getPalFunc() { return getPallete;}
   public SetPalFunc setPalFunc() { return null;}
   //
@@ -61,6 +63,21 @@ public class RockinCatsBase
      return new SetBigBlocksFunc[] { setBigBlocks0, setBigBlocks1, setBigBlocks2 };
   }
   
+  
+  public byte[] getVideoChunk(int _)
+  {
+    int videoPageIndex1 = getVideoIndex1();
+    int videoPageIndex2 = getVideoIndex2();
+    byte[] videoChunk = new byte[Globals.VIDEO_PAGE_SIZE];
+    int videoAddr = 0x20010 + videoPageIndex1*0x400;
+    for (int i = 0; i < Globals.VIDEO_PAGE_SIZE/2; i++)
+        videoChunk[i] = Globals.romdata[videoAddr + i];
+    videoAddr = 0x20010 + videoPageIndex2*0x400;
+    for (int i = 0; i < Globals.VIDEO_PAGE_SIZE/2; i++)
+        videoChunk[Globals.VIDEO_PAGE_SIZE/2 + i] = Globals.romdata[videoAddr + i];
+    return videoChunk;
+  }
+
   //-------------------------------------------------------------------------------------------------------------------
   public ObjRec[] getBlocks(int blockIndex)
   {

@@ -14,6 +14,7 @@ COPY_FILE_LIST = [
   "Settings_CapcomBase.cs",
   "Settings_Megaman3Base.cs",
   "Settings_TomAndJerryBase.cs",
+  "Settings_RockinCats-Utils.cs",
   "Settings_Mermaid-Utils.cs",
   "Settings_TinyToon-Utils.cs",
   "Settings_Flintstones-Utils.cs",
