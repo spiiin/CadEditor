@@ -76,11 +76,11 @@ namespace CadEditor
             if (Properties.Settings.Default["ConfigName"].ToString() != "")
                 tbConfigName.Text = Properties.Settings.Default["ConfigName"].ToString();
 
-            if (FileName == "" && ConfigScript.romName != null)
+            if (FileName == "" && ConfigScript.romName != "")
                 tbFileName.Text = ConfigScript.romName;
-            if (DumpName == "" && ConfigScript.dumpName != null)
+            if (DumpName == "" && ConfigScript.dumpName != "")
                 tbDumpName.Text = ConfigScript.dumpName;
-            if (ConfigName == "" && ConfigScript.cfgName != null)
+            if (ConfigName == "" && ConfigScript.cfgName != "")
                 tbConfigName.Text = ConfigScript.cfgName;
 
             ofOpenDialog.InitialDirectory = Environment.CurrentDirectory;
