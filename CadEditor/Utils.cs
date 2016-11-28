@@ -328,7 +328,7 @@ namespace CadEditor
             }
 
             int wordSize = ConfigScript.isUseSegaGraphics() ? 2 : 1;
-            int size = ConfigScript.getBigBlocksCount(0) * tileSize * wordSize;
+            int size = ConfigScript.getBigBlocksCount(hierLevel) * tileSize * wordSize;
 
             byte[] bigBlockIndexes = new byte[size];
             var bigBlocksAddr = ConfigScript.getBigTilesAddr(hierLevel, bigTileIndex);
