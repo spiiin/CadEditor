@@ -178,6 +178,10 @@ namespace CadEditor
             //if using pictures
             if (ConfigScript.usePicturesInstedBlocks)
             {
+                //get block size from image
+                blockWidth = ConfigScript.getBlocksPicturesWidth();
+                blockHeight = 32;
+
                 UtilsGDI.setBlocks(bigBlocks, curButtonScale, blockWidth, blockHeight, curViewType, showAxis);
                 if (needToRefillBlockPanel)
                     prepareBlocksPanel();
