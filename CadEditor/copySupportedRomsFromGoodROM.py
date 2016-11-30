@@ -31,6 +31,8 @@ fnames = [
     "Jungle Book, The (U) [!].nes",
     "Kyatto Ninja Teyandee (J).nes",
     "Little Mermaid, The (U) [!].nes",
+    "Little Nemo - The Dream Master (U) [!].nes",
+    "Little Samson (U) [!p].nes",
     "Megaman (U) [!].nes",
     "Megaman II (U) [!].nes",
     "Megaman III (U) [!].nes",
