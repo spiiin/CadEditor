@@ -60,7 +60,8 @@ fnames = [
     "Terminator 2 - Judgment Day (E) [!].nes",
     "Tiny Toon Adventures (U) [!].nes",
     "Tom & Jerry (and Tuffy) (J).nes",
-    "Young Indiana Jones Chronicles, The (U) [!].nes"
+    "Young Indiana Jones Chronicles, The (U) [!].nes",
+    "Yo! Noid (U) [!].nes"
 ]
 
 for fname in fnames:
