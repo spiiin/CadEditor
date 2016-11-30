@@ -41,6 +41,7 @@ fnames = [
     "Monster In My Pocket (U) [!].nes",
     "New Ghostbusters II (E) [!].nes",
     "Ninja Gaiden (U) [!].nes",
+    "Ninja Gaiden III - The Ancient Ship of Doom (U) [!].nes",
     "Power Blade (E) [!].nes",
     "Power Blade 2 (U) [!].nes",
     "Raf World (J).nes",
