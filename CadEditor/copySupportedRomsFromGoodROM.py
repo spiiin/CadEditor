@@ -37,6 +37,7 @@ fnames = [
     "Mickey Mouse 3 - Yume Fuusen (J).nes",
     "Mickey's Adventures in Numberland (U) [!p].nes",
     "Micro Machines (Unl) [!].nes",
+    "Mighty Final Fight (U) [!p].nes",
     "Mitsume ga Tooru (J).nes",
     "Monster In My Pocket (U) [!].nes",
     "New Ghostbusters II (E) [!].nes",
