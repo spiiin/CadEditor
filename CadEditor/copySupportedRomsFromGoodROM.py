@@ -22,6 +22,7 @@ fnames = [
     "Flintstones, The - The Rescue of Dino & Hoppy (E) [!p].nes",
     "Flintstones, The - The Surprise at Dinosaur Peak! (U) [!p].nes",
     "Goonies II, The (U) [!].nes",
+    "Gun.Smoke (U) [!].nes",
     "Hook (U) [!].nes",
     "Hudson's Adventure Island II (U) [!].nes",
     "Hudson's Adventure Island III (U) [!].nes",
