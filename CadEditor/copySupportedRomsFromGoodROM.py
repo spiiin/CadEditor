@@ -7,6 +7,7 @@ fnames = [
     "Adventures in the Magic Kingdom (E) [!].nes",
     "Alien 3 (E) [!].nes",
     "Batman (U) [!].nes",
+    "Batman III [p1].nes"
     "Battletoads & Double Dragon - The Ultimate Team (E) [!p].nes",
     "Battletoads (U) [!].nes",
     "Banana Prince (G) [!].nes",
