@@ -57,6 +57,7 @@
     Gun Smoke                                       (1 уровень)
     Little Samson                                   (1 уровень)
     Darkman                                         (1 уровень)
+    Felix the Cat                                   (1 уровень, дапм+скрипт компрессии)
     Super Robin Good
     Young Indiana Jones Chronicles
     Hook
