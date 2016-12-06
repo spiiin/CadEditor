@@ -54,6 +54,7 @@ fnames = [
     "Ninja Gaiden III - The Ancient Ship of Doom (U) [!].nes",
     "Power Blade (E) [!].nes",
     "Power Blade 2 (U) [!].nes",
+    "Predator (U) [!].nes",
     "Raf World (J).nes",
     "Rockin' Kats (U) [!].nes",
     "Shadow of the Ninja (U) [!].nes",
