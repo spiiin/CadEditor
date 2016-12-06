@@ -1,0 +1,276 @@
+Boss Hp
+
+Stage 1  =2323F  (6) {06}
+Stage 2  =23240  (8) {08}
+Stage 3  =23241 (11) {0B}
+Stage 4  =23242 (13) {0D}
+Stage 5  =23243 (15) {0F}
+Stage 6-1=23245 (10) {0A}
+Stage 6-2=23247 (10) {0A}
+
+Max (25) {37} & Ram 607
+
+///////////////////
+
+Ram 5F0 hearts & Ram 5EC limit & Ram 5EB inventory
+
+1016E Life to start (not hearts)
+10173 starting inventory
+1017A Hearts slots to start (the 6 and other heart graphic won't go down)
+101B7 starting inventory at next level
+101BE Hearts slots to start at next level
+20180 Hearts to start
+23D7D inventory after you die
+23D82 Heart and slot for after you die
+23E78 Life to start after game over
+
+//////////////////////////////////////////////
+
+Objects 1-1 example
+
+117B6-117BD = 1 x coordinate & 2 screen position (second byte only) (12121212)
+117BF-117C2 = y coordinate
+117C4-117CB = 1 subtype primary & 2 subtype second (12121212)
+
+
+subtype
+02 D0 = electricity
+03 A0 = stage 3 barrier
+06 30 = bat
+06 50 = fire that follows you
+06 10 = machine gun
+08 20 = platform small piece up-down
+08 21 = platform small piece up-down
+08 28 = platform small piece left-right
+08 29 = platform small piece left-right
+08 40 = full platform up-down
+08 41 = full platform up-down
+08 42 = full platform stand
+08 80 = platform with balance
+08 90 = platform fall down
+08 B0 = switch for barrier
+0A 60 = boulder fall
+12 70 = hot steam (Stage 5)
+
+
+in the game (down,middle,up) [object subtype]
+
+1-1   117C4-117CB
+1-2d  117DC-117DF
+1-2u  117F5-117FC
+1-3   11816-1181F
+
+2-1   none
+2-2   11840-11843
+2-3m  none
+2-3d  none
+2-3u  none
+2-4   none
+
+3-1d  none
+3-1u  none
+3-2u  11878-1187F
+3-2m  11893-11898
+3-2d  118B5-118C0
+3-3   none
+3-4u  none
+3-4m  none
+3-4d  118DA-118E3
+
+4-1   none
+4-2   11924-1192D
+4-3d  none
+4-3m  none
+4-3u  11943-1194A
+4-4u  none
+4-4d  none
+4-5   1195B-1195E
+
+5-1   1198A-1198F
+5-2u  119A0-119A3
+5-2d  none
+5-3u  119B7-119BC
+5-3d  119D0-119D5
+5-4u  none
+5-4m  119E9-119EE
+5-4d  119FF-11A02
+5-5u  none        (underground)
+5-5d  none
+
+6-1   11A22-11A27
+6-2d  11A3A-11A3F
+6-2m  none
+6-2u  none
+6-3   11A4D-11A4E
+6-4   boss 1
+6-5d  none
+6-5m  none
+6-5u  11A82-11A85
+6-6d  11AA6-11AAB
+6-6m  11A92-11A93
+6-6u  none
+6-7   11ABB-11ABE
+
+///////////////////////////////////////
+
+Enemies 1-1 example
+
+11B34-11B45=1 horizontal position & 2 enemy life and horizontal*page (first bite for life second bite for horizontal*page) (12121212)
+11B48-11B50=3 vertical position
+11B52-11B5A=4 enemy type
+
+
+types list
+
+00=pink dead guy (2)
+01=blue dead guy (3)
+02=female archer (2)
+03=standing slime attack up (4)
+04=walking skeleton (8)
+05=guy that jumps with a knife (2)
+06=cannon (X)
+07=flying drone that shocks you (2)
+08=muscle pirate that jumps (5)
+09=dead guy with uzi (2)
+0A=pirate with sword (2)
+0B=spider (4)
+0C=dead guy that throws boulders (2)
+0D=winged monster (2)
+0E=DON'T USE (ERROR)
+0F=muscle pirate that stomps (5)
+
+
+in the game (down,middle,up) [enemy type]
+
+1-1   11B52-11B5A
+1-2d  11B8E-11B92
+1-2u  11B71-11B74
+1-3   11BA6-11BA8
+
+2-1   11BC9-11BCB
+2-2   11BE5-11BE9
+2-3m  11C0F-11C10
+2-3d  11C20-11C21
+2-3u  11BFC-11BFE
+2-4   11C37-11C3A
+
+3-1d  11C6E-11C6E
+3-1u  11C5F-11C60
+3-2u  11C82-11C84
+3-2m  11C95-11C96
+3-2d  11CAA-11CAC
+3-3   11CBF-11CC1
+3-4u  11CD1-11CD2
+3-4m  11CE5-11CE7
+3-4d  11CF7-11CF8
+
+4-1   none
+4-2   11D1D-11D1F
+4-3d  11D61-11D63
+4-3m  11D4A-11D4E
+4-3u  11D2F-11D30
+4-4u  11D76-11D78
+4-4d  11D91-11D95
+4-5   11DA5-11DA6
+
+5-1   11DD2-11DD5
+5-2u  11DE2-11DE2
+5-2d  11DF2-11DF3
+5-3u  11E03-11E04
+5-3d  11E17-11E19
+5-4u  11E2C-11E2E
+5-4m  11E3E-11E3F
+5-4d  11E52-11E54
+5-5u  11E6D-11E71 (underground)
+5-5d  11E8A-11E8E
+
+6-1   11EAB-11EAD
+6-2d  11EDF-11EE0
+6-2m  11ECD-11ECF
+6-2u  11EBA-11EBA
+6-3   11EF6-11EF9
+6-4   boss 1
+6-5d  11F5D-11F5D
+6-5m  11F4D-11F50
+6-5u  11F36-11F37
+6-6d  none
+6-6m  none
+6-6u  11F6A-11F6A
+6-7   11F80-11F83
+
+////////////////////////////////////////////////
+
+Chests 1-1 example
+
+2FC36-2FC3D = 1 x coordinate & 2 screen position (12121212)
+2FC3F-2FC42 = y coordinate
+2FC44-2FC47 = chest type
+
+
+type chest
+00 = one heart
+01 = big heart
+02 = diamond
+03 = wings boot
+04 = heart expand
+05 = sword
+06 = one life
+
+
+in the game (down,middle,up) [chest type]
+
+1-1   2FC44-2FC47
+1-2d  2FC6A-2FC6D
+1-2u  2FC54-2FC54
+1-3   2FC80-2FC82
+
+2-1   2FC9D-2FC9D
+2-2   2FCB0-2FCB2
+2-3m  2FCD3-2FCD4
+2-3d  2FCE1-2FCE1
+2-3u  2FCC2-2FCC3
+2-4   2FCFA-2FCFE
+
+3-1d  none
+3-1u  2FD21-2FD21
+3-2u  2FD31-2FD32
+3-2m  none
+3-2d  2FD45-2FD47
+3-3   2FD54-2FD54
+3-4u  none
+3-4m  2FD67-2FD67
+3-4d  2FD79-2FD7A
+
+4-1   none
+4-2   2FD9B-2FD9B
+4-3d  2FDA8-2FDA8
+4-3m  2FDB8-2FDB8
+4-3u  2FDA8-2FDA8
+4-4u  2FDDD-2FDDD
+4-4d  2FDEC-2FDEC
+4-5   2FE02-2FE05
+
+5-1   2FE2A-2FE2A
+5-2u  2FE37-2FE37
+5-2d  2FE44-2FE44
+5-3u  2FE51-2FE51
+5-3d  2FE61-2FE62
+5-4u  2FE6F-2FE6F
+5-4m  2FE7C-2FE7C
+5-4d  2FE89-2FE89
+5-5u  2FE9F-2FEA2 (underground)
+5-5d  2FEB5-2FEB7
+
+6-1   2FED3-2FED4
+6-2d  2FEE1-2FEE1
+6-2m  2FEF1-2FEF1
+6-2u  2FF02-2FF04
+6-3   2FF19-2FF1C
+6-4   boss 1
+6-5d  2FF5E-2FF60
+6-5m  2FF6D-2FF6D
+6-5u  2FF7D-2FF7D
+6-6d  2FF98-2FF98
+6-6m  none
+6-6u  2FF8B-2FF8B
+6-7   2FFB1-2FFB5

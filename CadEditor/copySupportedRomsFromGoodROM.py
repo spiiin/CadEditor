@@ -47,6 +47,7 @@ fnames = [
     "Mighty Final Fight (U) [!p].nes",
     "Mitsume ga Tooru (J).nes",
     "Monster In My Pocket (U) [!].nes",
+    "Moon Crystal (J) [!].nes",
     "New Ghostbusters II (E) [!].nes",
     "Ninja Gaiden (U) [!].nes",
     "Ninja Gaiden III - The Ancient Ship of Doom (U) [!].nes",
