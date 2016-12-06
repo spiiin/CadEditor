@@ -36,6 +36,7 @@ fnames = [
     "Little Mermaid, The (U) [!].nes",
     "Little Nemo - The Dream Master (U) [!].nes",
     "Little Samson (U) [!p].nes",
+    "Mappy Kids (J).nes",
     "Megaman (U) [!].nes",
     "Megaman II (U) [!].nes",
     "Megaman III (U) [!].nes",
