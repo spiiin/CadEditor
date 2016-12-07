@@ -304,7 +304,8 @@ namespace PluginVideoNes
             }
             else
             {
-                var ims = makeBigBlocks(videoNo, bigBlockNo, ConfigScript.getBigBlocksRecursive(hierarchyLevel - 1, bigBlockNo), palleteNo, smallObjectsViewType, smallBlockScaleFactor, curButtonScale, curViewType, false, hierarchyLevel - 1);
+                var bigBlockIndexesPrev = ConfigScript.getBigBlocksRecursive(hierarchyLevel - 1, bigBlockNo);
+                var ims = makeBigBlocks(videoNo, bigBlockNo, bigBlockIndexesPrev, palleteNo, smallObjectsViewType, smallBlockScaleFactor, curButtonScale, curViewType, false, hierarchyLevel - 1);
                 smallBlocks.ImageSize = ims[0].Size;
                 smallBlocks.Images.AddRange(ims);
             }
