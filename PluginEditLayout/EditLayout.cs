@@ -98,10 +98,12 @@ namespace CadEditor
             int height = curHeight;
             byte[] layer = new byte[width * height];
             byte[] scroll = new byte[width * height];
+
+            layer = ConfigScript.getLayoutFunc(curActiveLayout).layer;
+
             for (int i = 0; i < width * height; i++)
             {
                 scroll[i] = Globals.romdata[scrollAddr + i];
-                layer[i] = Globals.romdata[layoutAddr + i];
             }
             curLevelLayerData = new LevelLayerData(width, height, layer, scroll, null);
             curActiveBlock = 0;

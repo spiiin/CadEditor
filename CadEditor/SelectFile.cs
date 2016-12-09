@@ -39,7 +39,9 @@ namespace CadEditor
         {
             tbFileName.Text = Filename;
             ofOpenDialog.FileName = Filename;
+            cbExportType.SelectedIndexChanged -= cbExportType_SelectedIndexChanged;
             cbExportType.SelectedIndex = 0;
+            cbExportType.SelectedIndexChanged += cbExportType_SelectedIndexChanged;
             Result = false;
 
             lbExportType.Visible = cbExportType.Visible = ShowExportParams;
