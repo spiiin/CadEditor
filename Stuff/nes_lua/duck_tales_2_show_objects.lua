@@ -2,10 +2,6 @@
 --Rom: Duck Tales 2 NES (All versions)
 --Author: spiiin 
 
---require math
-
-local startCrystalActivityAddr = 0x400
-
 function update()
     local camX = memory.readword(0x17)
     local scrY = memory.readbyte(0x9A)
