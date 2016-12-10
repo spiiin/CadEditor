@@ -192,7 +192,7 @@ namespace CadEditor
         public int addrOfVideo;
     }
 
-    public struct ObjRec
+    public class ObjRec
     {
         public ObjRec(byte c1, byte c2, byte c3, byte c4, byte typeColor)
         {
@@ -202,20 +202,25 @@ namespace CadEditor
             this.c4 = c4;
             this.typeColor = typeColor;
         }
+
+        public ObjRec(ObjRec other)
+        {
+            this.c1 = other.c1;
+            this.c2 = other.c2;
+            this.c3 = other.c3;
+            this.c4 = other.c4;
+            this.typeColor = other.typeColor;
+        }
+
         public byte c1, c2, c3, c4;
         public byte typeColor;
 
-        public int getSubpallete()
+        public virtual int getSubpallete()
         {
             return typeColor & 0x3;
         }
 
-        public int getTypeForDt2(int no)
-        {
-            return no < 0xA0 ? 0 : 5;
-        }
-
-        public int getType()
+        public virtual int getType()
         {
             return (typeColor & 0xF0) >> 4;
         }

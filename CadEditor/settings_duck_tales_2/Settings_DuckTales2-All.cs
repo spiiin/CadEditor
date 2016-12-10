@@ -161,6 +161,22 @@ public class Data:CapcomBase
     return true;
   }*/
   
+  public class Dt2ObjRec : ObjRec
+  {
+    public Dt2ObjRec(ObjRec b, int _index)
+        :base(b)
+    {
+        index = _index;
+    }
+    
+    public override int getType()
+    {
+        return index < 0xA0 ? 0 : 5;
+    }
+    
+    int index;
+  }
+  
   public ObjRec[] getBlocksDt2(int blockIndex)
   {
     ObjRec[] blocks = Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount());
@@ -176,6 +192,12 @@ public class Data:CapcomBase
         var palInfoByte = palInfo[i/4];
         int parByteNo = i % 4;
         blocks[i].typeColor = (byte)((palInfoByte >> parByteNo*2) & 3);
+    }
+    //
+    //rebuild blocks to dt2 blocks
+    for (int i = 0; i < blocks.Length; i++)
+    {
+        blocks[i] = new Dt2ObjRec(blocks[i], i);
     }
     //
     return blocks;

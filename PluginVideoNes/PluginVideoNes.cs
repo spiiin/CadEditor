@@ -204,16 +204,8 @@ namespace PluginVideoNes
                 g2.DrawImage(curStrip, new Rectangle(scaleInt8, scaleInt8, scaleInt8, scaleInt8), new Rectangle(co.c4 * scaleInt8, 0, scaleInt8, scaleInt8), GraphicsUnit.Pixel);
                 if (drawType == MapViewType.ObjType)
                 {
-                    if (Globals.getGameType() == GameType.DT2)
-                    {
-                        g2.FillRectangle(new SolidBrush(CadObjectTypeColors[co.getTypeForDt2(i)]), new Rectangle(0, 0, scaleInt16, scaleInt16));
-                        g2.DrawString(String.Format("{0:X}", co.getTypeForDt2(i)), new Font("Arial", 6), Brushes.White, new Point(0, 0));
-                    }
-                    else
-                    {
-                        g2.FillRectangle(new SolidBrush(CadObjectTypeColors[co.getType()]), new Rectangle(0, 0, scaleInt16, scaleInt16));
-                        g2.DrawString(String.Format("{0:X}", co.getType()), new Font("Arial", 6), Brushes.White, new Point(0, 0));
-                    }
+                    g2.FillRectangle(new SolidBrush(CadObjectTypeColors[co.getType()]), new Rectangle(0, 0, scaleInt16, scaleInt16));
+                    g2.DrawString(String.Format("{0:X}", co.getType()), new Font("Arial", 6), Brushes.White, new Point(0, 0));
                 }
                 else if (drawType == MapViewType.ObjNumbers)
                 {
