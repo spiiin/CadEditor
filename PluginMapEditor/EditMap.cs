@@ -20,7 +20,7 @@ namespace CadEditor
 
         private void reloadAllData()
         {
-            mapData = (GameType.Generic == Globals.getGameType()) ? MapUtils.reloadMapDwd(curActiveDataAddr) : MapUtils.reloadMapDt2(curActiveDataAddr);
+            mapData = MapConfig.loadMap(curActiveDataAddr);
             setPal();
             byte videoPageId = (byte)(curActiveVideo + 0x90);
             videos = new ImageList[4];
@@ -54,7 +54,7 @@ namespace CadEditor
         private void saveMap()
         {
             byte[] x;
-            int nn = (Globals.getGameType() == GameType.Generic) ? MapUtils.saveMapDwd(mapData, out x) : MapUtils.saveMapDt2(mapData, out x);
+            int nn = MapConfig.saveMap(mapData, out x);
 
             //
             try

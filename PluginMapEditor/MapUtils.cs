@@ -9,7 +9,7 @@ namespace PluginMapEditor
 {
     public static class MapUtils
     {
-       public static  byte[] reloadMapDwd(int romAddr)
+       public static  byte[] loadMapDwd(int romAddr)
         {
             byte[] mapData = new byte[1024];
             while (Globals.romdata[romAddr] != 0xFF)
@@ -82,7 +82,7 @@ namespace PluginMapEditor
         }
         //--------------------------------------------
 
-        public static byte[] reloadMapDt2(int romAddr)
+        public static byte[] loadMapDt2(int romAddr)
         {
             byte[] mapData = new byte[1024];
             int readCount = 0;

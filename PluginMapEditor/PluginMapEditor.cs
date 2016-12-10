@@ -9,6 +9,9 @@ using CSScriptLibrary;
 
 namespace PluginMapEditor
 {
+    public delegate int SaveMapFunc(byte[] mapData, out byte[] packedData);
+    public delegate byte[] LoadMapFunc(int romAddr);
+
     public class PluginMapEditor : IPlugin
     {
         public string getName()
@@ -39,6 +42,8 @@ namespace PluginMapEditor
         {
             AsmHelper asm = (AsmHelper)asmObj;
             MapConfig.mapsInfo = (MapInfo[])asm.InvokeInst(data, "*.getMapsInfo");
+            MapConfig.loadMapFunc = (LoadMapFunc)asm.InvokeInst(data, "*.getLoadMapFunc");
+            MapConfig.saveMapFunc = (SaveMapFunc)asm.InvokeInst(data, "*.getSaveMapFunc");
         }
 
         FormMain formMain;
@@ -54,5 +59,17 @@ namespace PluginMapEditor
     public static class MapConfig
     {
         public static MapInfo[] mapsInfo;
+        public static LoadMapFunc loadMapFunc;
+        public static SaveMapFunc saveMapFunc;
+
+        public static byte[] loadMap(int romAddr)
+        {
+            return loadMapFunc(romAddr);
+        }
+
+        public static int saveMap(byte[] mapData, out byte[] packedData)
+        {
+            return saveMapFunc(mapData, out packedData);
+        }
     }
 }

@@ -57,6 +57,8 @@ public class Data : CapcomBase
     };
     
   public MapInfo[] getMapsInfo() { return mapsDwd; }
+  public LoadMapFunc getLoadMapFunc() { return MapUtils.loadMapDwd; }
+  public SaveMapFunc getSaveMapFunc() { return MapUtils.saveMapDwd; }
 
   MapInfo[] mapsDwd = new MapInfo[]
   { 
