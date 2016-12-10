@@ -125,28 +125,6 @@ namespace CadEditor
             return result;
         }
 
-        private static int compareRooms(List<ScreenRec> r1, List<ScreenRec> r2)
-        {
-            if (r1.Count == 0 || r2.Count == 0)
-                return 0;
-            return r1[0].sx > r2[0].sx ? 1 : r1[0].sx < r2[0].sx ? -1 : r1[0].sy > r2[0].sy ? 1 : r1[0].sy < r2[0].sy ? -1 : 0;
-        }
-
-        private static bool getBacksort(LevelLayerData curLevelLayerData, int curIndex)
-        {
-            //int curScroll = curLevelLayerData.scroll[curIndex] >> 5;
-            int height = curIndex / curLevelLayerData.width;
-            bool backSort = curLevelLayerData.dirs[height] != 0;
-            return backSort;
-        }
-
-        private static bool getUpsort(LevelLayerData curLevelLayerData, int curIndex)
-        {
-            int curScroll = curLevelLayerData.scroll[curIndex] >> 5;
-            bool upsort = curScroll == 0;
-            return upsort;
-        }
-
         public static byte[] romdata;
         public static byte[] dumpdata;
         public static int CHUNKS_COUNT = 256;
