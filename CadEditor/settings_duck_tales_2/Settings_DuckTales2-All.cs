@@ -14,7 +14,6 @@ public class Data:CapcomBase
       "PluginEditLayout.dll",
     };
   }
-  public GameType getGameType()  { return GameType.DT2; }
   public bool isShowScrollsInLayout() { return false; }
   
   public OffsetRec getPalOffset()       { return new OffsetRec(0x3E2F, 12   , 16);     }

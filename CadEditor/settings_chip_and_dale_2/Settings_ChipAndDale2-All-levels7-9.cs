@@ -16,7 +16,6 @@ public class Data : CapcomBase
       "PluginEditLayout.dll"
     };
   }
-  public GameType getGameType(){ return GameType.DT2; }
   public OffsetRec getPalOffset()       { return new OffsetRec(0xF291 - 16  , 32  , 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x20010 , 32  , 0x1000); }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0, 16   , 0x1000); }

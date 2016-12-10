@@ -402,7 +402,6 @@ namespace CadEditor
     public enum GameType
     {
         Generic,
-        DT2,
         TT,
     };
 
