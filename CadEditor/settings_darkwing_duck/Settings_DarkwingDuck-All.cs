@@ -1,4 +1,5 @@
 using CadEditor;
+using PluginMapEditor;
 using System.Collections.Generic;
 //css_include Settings_CapcomBase.cs;
 public class Data : CapcomBase
@@ -54,6 +55,14 @@ public class Data : CapcomBase
         "0 (back)","1 (hook)","2 (platform)","3 (block)","4 (spikes)","5 (door)",
         "6","7","8","9","A","B","C","D","E","F"
     };
+    
+  public MapInfo[] getMapsInfo() { return mapsDwd; }
+
+  MapInfo[] mapsDwd = new MapInfo[]
+  { 
+      new MapInfo(){ dataAddr = 0x80B1, palAddr = 0x1C43D, videoNo = 9 },
+      new MapInfo(){ dataAddr = 0x83FC, palAddr = 0x8E6E , videoNo = 10 } 
+  };
     
   public List<ObjectList> getObjectsDwd(int levelNo)
   {

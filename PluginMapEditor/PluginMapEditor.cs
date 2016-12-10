@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Resources;
 using CadEditor;
+using CSScriptLibrary;
 
 namespace PluginMapEditor
 {
@@ -34,10 +35,24 @@ namespace PluginMapEditor
             formMain.subeditorOpen(f, (ToolStripButton)sender);
         }
 
-        public void loadFromConfig(object asm, object data)
+        public void loadFromConfig(object asmObj, object data)
         {
+            AsmHelper asm = (AsmHelper)asmObj;
+            MapConfig.mapsInfo = (MapInfo[])asm.InvokeInst(data, "*.getMapsInfo");
         }
 
         FormMain formMain;
+    }
+
+    public struct MapInfo
+    {
+        public int dataAddr;
+        public int palAddr;
+        public int videoNo;
+    }
+
+    public static class MapConfig
+    {
+        public static MapInfo[] mapsInfo;
     }
 }

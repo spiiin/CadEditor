@@ -1,4 +1,5 @@
 using CadEditor;
+using PluginMapEditor;
 using System.Collections.Generic;
 using System;
 //css_include Settings_CapcomBase.cs;
@@ -62,6 +63,14 @@ public class Data:CapcomBase
     "no","no","no","no","no","no","no","no",
     "no","no","no","no","no","no","no","no"
   };
+  
+  public MapInfo[] getMapsInfo() { return mapsDt2; }
+
+  MapInfo[] mapsDt2 = new MapInfo[]
+  { 
+      new MapInfo(){   dataAddr = 0xF200, palAddr = 0x3DCF, videoNo = 6 }
+  };
+
   
   //--------------------------------------------------------------------------------------------
   //duck tales specific
