@@ -379,9 +379,6 @@ namespace CadEditor
                 cbType.Size = new Size(120, 21);
                 cbType.Tag = i;
                 cbType.DropDownStyle = ComboBoxStyle.DropDownList;
-                if (Globals.getGameType() != GameType.DT2)
-                  cbType.SelectedIndexChanged += cbType_SelectedIndexChanged;
-                cbType.Enabled = Globals.getGameType() != GameType.DT2;
                 fp.Controls.Add(cbType);
                 mapObjects.Controls.Add(fp);
             }
