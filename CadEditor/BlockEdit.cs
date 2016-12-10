@@ -243,16 +243,6 @@ namespace CadEditor
             dirty = true;
         }
 
-        protected void cbColor_SelectedIndexChangedDt2(object sender, EventArgs e)
-        {
-            ComboBox cb = (ComboBox)sender;
-            PictureBox pb = (PictureBox)cb.Tag;
-            int index = (int)pb.Tag;
-            objects[index / 4].setSubpalleteForDt2(index % 4, cb.SelectedIndex);
-            pb.Image = makeObjImageDt2((int)pb.Tag);
-            dirty = true;
-        }
-
         protected void cbType_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
@@ -263,10 +253,6 @@ namespace CadEditor
 
         public Image makeObjImage(int index)
         {
-            if (Globals.getGameType() == GameType.DT2)
-            {
-                return makeObjImageDt2(index);
-            }
             Bitmap b = new Bitmap(32, 32);
             var obj = objects[index];
             using (Graphics g = Graphics.FromImage(b))
@@ -275,21 +261,6 @@ namespace CadEditor
                 g.DrawImage(videoSprites[obj.getSubpallete()].Images[obj.c2], new Rectangle(16, 0, 16, 16));
                 g.DrawImage(videoSprites[obj.getSubpallete()].Images[obj.c3], new Rectangle(0, 16, 16, 16));
                 g.DrawImage(videoSprites[obj.getSubpallete()].Images[obj.c4], new Rectangle(16, 16, 16, 16));
-            }
-            return b;
-        }
-
-        public Image makeObjImageDt2(int index)
-        {
-            Bitmap b = new Bitmap(32, 32);
-            var obj = objects[index];
-            var objectForColor = objects[index / 4];
-            using (Graphics g = Graphics.FromImage(b))
-            {
-                g.DrawImage(videoSprites[objectForColor.getSubpalleteForDt2(index % 4)].Images[obj.c1], new Rectangle(0, 0, 16, 16));
-                g.DrawImage(videoSprites[objectForColor.getSubpalleteForDt2(index % 4)].Images[obj.c2], new Rectangle(16, 0, 16, 16));
-                g.DrawImage(videoSprites[objectForColor.getSubpalleteForDt2(index % 4)].Images[obj.c3], new Rectangle(0, 16, 16, 16));
-                g.DrawImage(videoSprites[objectForColor.getSubpalleteForDt2(index % 4)].Images[obj.c4], new Rectangle(16, 16, 16, 16));
             }
             return b;
         }
@@ -398,10 +369,7 @@ namespace CadEditor
                 cbColor.DrawItem += new DrawItemEventHandler(cbSubpalette_DrawItemEvent);
                 cbColor.Items.AddRange(subPalItems);
                 cbColor.DropDownStyle = ComboBoxStyle.DropDownList;
-                if (Globals.getGameType() != GameType.DT2)
-                    cbColor.SelectedIndexChanged += cbColor_SelectedIndexChanged;
-                else
-                    cbColor.SelectedIndexChanged += cbColor_SelectedIndexChangedDt2;
+                cbColor.SelectedIndexChanged += cbColor_SelectedIndexChanged;
                 fp.Controls.Add(cbColor);
                 //
                 ComboBox cbType = new ComboBox();
@@ -429,7 +397,7 @@ namespace CadEditor
                 PictureBox pb = (PictureBox)p.Controls[1];
                 pb.Image = makeObjImage(i);
                 ComboBox cbColor = (ComboBox)p.Controls[2];
-                cbColor.SelectedIndex = Globals.getGameType() == GameType.DT2 ? objects[i/4].getSubpalleteForDt2(i%4) : objects[i].getSubpallete();
+                cbColor.SelectedIndex = objects[i].getSubpallete();
                 ComboBox cbType = (ComboBox)p.Controls[3];
                 cbType.SelectedIndex = objects[i].getType();
             }

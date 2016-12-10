@@ -187,15 +187,7 @@ namespace PluginVideoNes
             Bitmap curStrip;
             if (constantSubpal == -1)
             {
-                if (Globals.getGameType() == GameType.DT2)
-                {
-                    var objectForColor = objects[i / 4];
-                    curStrip = objStrips[objectForColor.getSubpalleteForDt2(i % 4)];
-                }
-                else
-                {
-                    curStrip = objStrips[co.getSubpallete()];
-                }
+                curStrip = objStrips[co.getSubpallete()];
             }
             else
             {
@@ -364,6 +356,7 @@ namespace PluginVideoNes
             if (scrNo < 0)
                 return VideoHelper.emptyScreen((int)(ConfigScript.getScreenWidth(levelNo) * 32 * scale), (int)(ConfigScript.getScreenHeight(levelNo) * 32 * scale));
             var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, scale, scale, MapViewType.Tiles, withBorders);
+            //var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.ObjType, scale, scale,MapViewType.Tiles, withBorders);
             var il = new ImageList();
             if (bigBlocks.Length > 0)
             {
