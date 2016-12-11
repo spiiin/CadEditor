@@ -107,6 +107,8 @@ namespace CadEditor
                 if (metaDataExists)
                 {
                     var scriptText = callFromScript(asm, metaData, "*.makeConfig", "");
+                    var patchDict = callFromScript(asm, metaData, "*.getPatchDictionary", new Dictionary<string, object>());
+                    scriptText = Utils.patchConfigTemplate(scriptText, patchDict);
                     asm = new AsmHelper(CSScript.LoadCode(scriptText));
                     data = asm.CreateObject("Data");
                 }

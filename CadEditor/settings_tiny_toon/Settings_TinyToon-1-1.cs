@@ -1,63 +1,20 @@
 using CadEditor;
+using System.IO;
 using System.Collections.Generic;
-//css_include Settings_TinyToon-Utils.cs;
 
-public class Data
+public class MetaData 
 {
-  public GameType getGameType()  { return GameType.TT; }
-  
-  public OffsetRec getPalOffset()       { return new OffsetRec(0xB1F0, 16, 16);     }
-  public OffsetRec getVideoOffset()     { return new OffsetRec(0x4D10 , 1   , 0xD00);  }
-  public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x4D10 , 1   , 0xD00);  }
-  public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x491F , 1   , 0x4000); }
-  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x1F1CB , 1  , 0x440);  }
-  public OffsetRec getScreensOffset()   { return new OffsetRec(0x470F, 11 ,   48);   }
-  public int getBigBlocksCount()        { return 0x40; }
-  public int getScreenWidth()           { return 8; }
-  public int getScreenHeight()          { return 6; }
-  public IList<LevelRec> getLevelRecs() { return levelRecsTT; }
-  
-  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getTinyToonVideoAddress; }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return getTinyToonVideoChunk;   }
-  public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
-  public GetBigBlocksFunc     getBigBlocksFunc()     { return TinyToonUtils.getBigBlocksTT;}
-  public SetBigBlocksFunc     setBigBlocksFunc()     { return TinyToonUtils.setBigBlocksTT;}
-  public GetBlocksFunc        getBlocksFunc()        { return TinyToonUtils.getBlocks;}
-  public SetBlocksFunc        setBlocksFunc()        { return TinyToonUtils.setBlocks;}
-  public GetPalFunc           getPalFunc()           { return getPalleteLevel_1_1;}
-  public SetPalFunc           setPalFunc()           { return null;}
-  public GetObjectsFunc getObjectsFunc() { return TinyToonUtils.getObjectsTT; }
-  public SetObjectsFunc setObjectsFunc() { return TinyToonUtils.setObjectsTT; }
-  public GetLayoutFunc  getLayoutFunc()  { return TinyToonUtils.getLayoutLinearTT;   }
-  public string getObjTypesPicturesDir() { return "obj_sprites_TT"; }
-
-  public IList<LevelRec> levelRecsTT = new List<LevelRec>() 
+  public static string makeConfig() { return File.ReadAllText(Directory.GetCurrentDirectory() + "/Settings_TinyToonTemplate.cs"); }
+  public static Dictionary<string, object> getPatchDictionary()
   {
-    new LevelRec(0x14333, 15, 11, 1, 0x0),
-  };
-  
-  public int getTinyToonVideoAddress(int id)
-  {
-    return -1;
+    return new Dictionary<string, object>{
+        { "/*OFFSET_REC_BIG_BLOCKS*/", "OffsetRec(0x491F , 1   , 0x4000)" },
+        { "/*OFFSET_REC_BLOCKS*/", "OffsetRec(0x1F1CB , 1  , 0x440)" },
+        { "/*OFFSET_REC_SCREEN*/", "OffsetRec(0x470F, 11 ,   48)"},
+        { "/*BIG_BLOCKS_COUNT*/", 0x40},
+        { "/*LEVEL_REC*/", "LevelRec(0x14333, 15, 11, 1, 0x0)" },
+        { "/*VIDEO_NAME*/", "videoBack_TT_11.bin" },
+        { "/*PALETTE*/", "byte[] { 0x31, 0x0f, 0x27, 0x2a, 0x31, 0x0f, 0x27, 0x2a, 0x31, 0x0f, 0x37, 0x17, 0x31, 0x0f, 0x20, 0x38}" }
+    };
   }
-  
-  public byte[] getTinyToonVideoChunk(int videoPageId)
-  {
-    return Utils.readVideoBankFromFile("videoBack_TT_11.bin", videoPageId);
-  }
-  
-  public byte[] getPalleteLevel_1_1(int palId)
-  {
-    //for test level 1-1
-    var pallete = new byte[] { 
-      0x31, 0x0f, 0x27, 0x2a, 0x31, 0x0f, 0x27, 0x2a,
-      0x31, 0x0f, 0x37, 0x17, 0x31, 0x0f, 0x20, 0x38
-    }; 
-    return pallete;
-  }
-  
-  public bool isBigBlockEditorEnabled() { return true;  }
-  public bool isBlockEditorEnabled()    { return true;  }
-  public bool isEnemyEditorEnabled()    { return true; }
-  //--------------------------------------------------------------------------------------------
 }
