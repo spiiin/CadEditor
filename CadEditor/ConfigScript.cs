@@ -85,22 +85,31 @@ namespace CadEditor
 
         public static void LoadFromFile(string fileName)
         {
+            programStartDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            configDirectory = Path.GetDirectoryName(fileName);
+            if (configDirectory != "")
+                changeToConfigDirectory();
+
             var asm = new AsmHelper(CSScript.Load(fileName));
             object data;
             try
             {
+                object metaData = asm.CreateObject("MetaData");
+                var scriptText = callFromScript(asm, metaData, "*.makeConfig", "");
+                asm = new AsmHelper(CSScript.LoadCode(scriptText));
                 data = asm.CreateObject("Data");
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return;
+                try
+                {
+                    data = asm.CreateObject("Data");
+                }
+                catch (Exception)
+                {
+                    return;
+                }
             }
-
-
-            programStartDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            configDirectory       = Path.GetDirectoryName(fileName);
-            if (configDirectory != "")
-                changeToConfigDirectory();
             Globals.setGameType(callFromScript(asm, data, "*.getGameType", GameType.Generic));
 
             levelsCount = callFromScript(asm, data, "*.getLevelsCount", 1);
