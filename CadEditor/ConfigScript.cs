@@ -91,15 +91,32 @@ namespace CadEditor
                 changeToConfigDirectory();
 
             var asm = new AsmHelper(CSScript.Load(fileName));
-            object data;
+            object data = null;
+            bool metaDataExists = true;
             try
             {
-                object metaData = asm.CreateObject("MetaData");
-                var scriptText = callFromScript(asm, metaData, "*.makeConfig", "");
-                asm = new AsmHelper(CSScript.LoadCode(scriptText));
-                data = asm.CreateObject("Data");
+                object metaData = null;
+                try
+                {
+                    metaData = asm.CreateObject("MetaData");
+                }
+                catch (Exception)
+                {
+                    metaDataExists = false;
+                }
+                if (metaDataExists)
+                {
+                    var scriptText = callFromScript(asm, metaData, "*.makeConfig", "");
+                    asm = new AsmHelper(CSScript.LoadCode(scriptText));
+                    data = asm.CreateObject("Data");
+                }
             }
             catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+
+            if (!metaDataExists)
             {
                 try
                 {
@@ -110,6 +127,7 @@ namespace CadEditor
                     return;
                 }
             }
+
             Globals.setGameType(callFromScript(asm, data, "*.getGameType", GameType.Generic));
 
             levelsCount = callFromScript(asm, data, "*.getLevelsCount", 1);

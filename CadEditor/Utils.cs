@@ -667,5 +667,14 @@ namespace CadEditor
         {
             return seq1.SequenceEqual(seq2);
         }
+
+        public static string patchConfigTemplate(string configText, Dictionary<string, object> patchDict)
+        {
+            foreach (var kv in patchDict)
+            {
+                configText = configText.Replace(kv.Key, kv.Value.ToString());
+            }
+            return configText;
+        }
     }
 }
