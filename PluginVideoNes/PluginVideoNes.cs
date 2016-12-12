@@ -162,21 +162,10 @@ namespace PluginVideoNes
             return res;
         }
 
-        //TODO: write universal "RectangulateStripImage function"
-        //using makeImageStrip for now. Return rectangle CHR bank image
         public Bitmap makeImageRectangle(byte[] videoChunk, byte[] pallete, int subPalIndex, float scale, bool scaleAccurate = true, bool withAlpha = false)
         {
-            Bitmap imageStrip = ConfigScript.videoNes.makeImageStrip(videoChunk, pallete, subPalIndex, scale, scaleAccurate, withAlpha);
-            Bitmap resultVideo = new Bitmap((int)(128*scale), (int)(128*scale));
-            using (Graphics g = Graphics.FromImage(resultVideo))
-            {
-                for (int i = 0; i < 256; i++)
-                {
-                    int size = (int)(8* scale);
-                    g.DrawImage(imageStrip, new Rectangle(i%16 * size, (i/16) *size, size, size), new Rectangle(i * size, 0, size, size) , GraphicsUnit.Pixel);
-                }
-            }
-            return resultVideo;
+            var images = Enumerable.Range(0, 256).Select(i => makeImage(i, videoChunk, pallete, subPalIndex, scale, scaleAccurate, withAlpha));
+            return UtilsGDI.GlueImages(images.ToArray(), 16, 16);
         }
 
         public Bitmap makeObject(int index, ObjRec[] objects, Bitmap[] objStrips, float scale, MapViewType drawType, int constantSubpal = -1)

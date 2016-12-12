@@ -32,6 +32,44 @@ namespace CadEditor
             return imgCustom;
         }
 
+        //glue image together
+        public static Bitmap GlueImages(Image[] images, int width, int height)
+        {
+            int totalImageWidth = 0;
+            int totalImageHeight = 0;
+            for (int x = 0; x < width; x++)
+            {
+                totalImageWidth += images[x].Width;
+            }
+            for (int y = 0; y < height; y++)
+            {
+                totalImageHeight += images[y * width].Height;
+            }
+
+            var totalImage = new Bitmap(totalImageWidth, totalImageHeight);
+            using (var g = Graphics.FromImage(totalImage))
+            {
+                int currentY = 0;
+                for (int y = 0; y < height; y++)
+                {
+                    int currentX = 0;
+                    int currentMaxY = 0;
+                    for (int x = 0; x < width; x++)
+                    {
+                        var im = images[y * width + x];
+                        g.DrawImage(im, new Point(currentX, currentY));
+                        currentX += im.Width;
+                        currentMaxY = Math.Max(currentMaxY, im.Height);
+                        if (x == width-1)
+                        {
+                            currentY += currentMaxY;
+                        }
+                    }
+                }
+            }
+            return totalImage;
+        }
+
         private static ushort[][,] ConvertBitmapToArray(Bitmap bmp)
         {
 
