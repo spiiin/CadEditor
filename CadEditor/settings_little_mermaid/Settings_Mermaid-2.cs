@@ -20,12 +20,12 @@ public class Data:CapcomBase
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x4490,32 , 0x40);   }
   public IList<LevelRec> getLevelRecs() { return levelRecs; }
   public override GetVideoChunkFunc    getVideoChunkFunc()    { return getLMVideoChunk; }
-  public GetObjectsFunc getObjectsFunc() { return MermaidUtils.getObjectsLM; }
-  public SetObjectsFunc setObjectsFunc() { return MermaidUtils.setObjectsLM; }
+  public GetObjectsFunc getObjectsFunc() { return getObjectsLM2; }
+  public SetObjectsFunc setObjectsFunc() { return setObjectsLM2; }
   public GetLayoutFunc  getLayoutFunc()  { return MermaidUtils.getLayoutLinearMermaid;   }  
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
-    new LevelRec(0x13930, 52/*56*/, 17, 1,  0x1DABB), //error, pointers not aligned
+    new LevelRec(0x13930, 52, 17, 1,  0x1DABB),
   };
   
   public byte[] getLMVideoChunk(int videoPageId)
@@ -37,7 +37,56 @@ public class Data:CapcomBase
     return videoChunk;
   }
   
+  public static List<ObjectList> getObjectsLM2(int levelNo)
+  {
+    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    int objCount = lr.objCount, addr = lr.objectsBeginAddr;
+    int addrSx = 0x13890;
+    int addrX  = 0x138C4;
+    int addrY  = addr - 1 * objCount;
+    var objects = new List<ObjectRec>();
+    for (int i = 0; i < objCount; i++)
+    {
+        byte v = Globals.romdata[addr + i];
+        byte sx = Globals.romdata[addrSx + i];
+        byte x = Globals.romdata[addrX + i];
+        byte y = Globals.romdata[addrY + i];
+        byte sy = 0;
+        var obj = new ObjectRec(v, sx, sy, x, y);
+        objects.Add(obj);
+    }
+    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
+  }
+
+  public static bool setObjectsLM2(int levelNo, List<ObjectList> objLists)
+  {
+    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    int addrBase = lr.objectsBeginAddr;
+    int objCount = lr.objCount;
+    var objects = objLists[0].objects;
+    
+    int addrSx = 0x13890;
+    int addrX  = 0x138C4;
+    int addrY  = addrBase - 1 * objCount;
+    for (int i = 0; i < objects.Count; i++)
+    {
+        var obj = objects[i];
+        Globals.romdata[addrBase + i] = (byte)obj.type;
+        Globals.romdata[addrY + i] = (byte)obj.y;
+        Globals.romdata[addrX + i] = (byte)obj.x;
+        Globals.romdata[addrSx + i] = (byte)obj.sx;
+    }
+    for (int i = objects.Count; i < objCount; i++)
+    {
+        Globals.romdata[addrBase + i] = 0xFF;
+        Globals.romdata[addrY  + i] = 0xFF;
+        Globals.romdata[addrX  + i] = 0xFF;
+        Globals.romdata[addrSx + i] = 0xFF;
+    }
+    return true;
+  }
+  
   public bool isBigBlockEditorEnabled() { return true;  }
   public bool isBlockEditorEnabled()    { return true;  }
-  public bool isEnemyEditorEnabled()    { return false; }
+  public bool isEnemyEditorEnabled()    { return true; }
 }
