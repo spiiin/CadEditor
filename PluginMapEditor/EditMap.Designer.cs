@@ -41,7 +41,7 @@
             // mapScreen
             // 
             this.mapScreen.Location = new System.Drawing.Point(423, 15);
-            this.mapScreen.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mapScreen.Margin = new System.Windows.Forms.Padding(4);
             this.mapScreen.Name = "mapScreen";
             this.mapScreen.Size = new System.Drawing.Size(683, 591);
             this.mapScreen.TabIndex = 5;
@@ -55,7 +55,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.blocksPanel.AutoScroll = true;
             this.blocksPanel.Location = new System.Drawing.Point(16, 15);
-            this.blocksPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.blocksPanel.Margin = new System.Windows.Forms.Padding(4);
             this.blocksPanel.Name = "blocksPanel";
             this.blocksPanel.Size = new System.Drawing.Size(323, 565);
             this.blocksPanel.TabIndex = 6;
@@ -64,7 +64,7 @@
             // 
             this.btSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btSave.Location = new System.Drawing.Point(16, 587);
-            this.btSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btSave.Margin = new System.Windows.Forms.Padding(4);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(68, 28);
             this.btSave.TabIndex = 7;
@@ -79,7 +79,7 @@
             this.cbShowAxis.Checked = true;
             this.cbShowAxis.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbShowAxis.Location = new System.Drawing.Point(232, 588);
-            this.cbShowAxis.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbShowAxis.Margin = new System.Windows.Forms.Padding(4);
             this.cbShowAxis.Name = "cbShowAxis";
             this.cbShowAxis.Size = new System.Drawing.Size(93, 21);
             this.cbShowAxis.TabIndex = 9;
@@ -111,7 +111,7 @@
             "7",
             "8"});
             this.cbScreenNo.Location = new System.Drawing.Point(345, 34);
-            this.cbScreenNo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbScreenNo.Margin = new System.Windows.Forms.Padding(4);
             this.cbScreenNo.Name = "cbScreenNo";
             this.cbScreenNo.Size = new System.Drawing.Size(68, 24);
             this.cbScreenNo.TabIndex = 43;
@@ -132,9 +132,9 @@
             this.Controls.Add(this.btSave);
             this.Controls.Add(this.blocksPanel);
             this.Controls.Add(this.mapScreen);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "EditMap";
-            this.Text = "Map Editor (Darkwing Duck/ Duck Tales 2 version)";
+            this.Text = "Map Editor (Capcom Version)";
             this.Load += new System.EventHandler(this.EditMap_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
             this.ResumeLayout(false);

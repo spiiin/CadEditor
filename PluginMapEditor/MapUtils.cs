@@ -23,6 +23,27 @@ namespace PluginMapEditor
             return mapData;
         }
 
+        public static byte[] loadMapCad(int romAddr)
+        {
+            byte[] mapData = new byte[1024];
+            while (Globals.romdata[romAddr] != 0xFF)
+            {
+                uint videoAddr = (uint)Utils.readWord(Globals.romdata, romAddr) - 0x2000;
+                if (videoAddr >= mapData.Length)
+                {
+                    break;
+                }
+                romAddr += 2;
+                int count = Globals.romdata[romAddr++]+1;
+                for (int i = 0; i < count; i++)
+                {
+                    mapData[videoAddr++] = Globals.romdata[romAddr++];
+                }
+
+            }
+            return mapData;
+        }
+
         static void foundLongestZeros(byte[] data, int startIndex, int endIndex, out int firstZeroIndex, out int lastZeroIndex)
         {
             int longestZeroLen = 0;
@@ -47,14 +68,14 @@ namespace PluginMapEditor
             lastZeroIndex = firstZeroIndex + longestZeroLen - 1;
         }
 
-        static void recursiveS(byte[] d, int first, int last, MemoryStream outBuf)
+        static void recursiveS(byte[] d, int first, int last, MemoryStream outBuf, int countAdd)
         {
             int f, e;
             foundLongestZeros(d, first, last, out f, out e);
             if (e - f >= 5)
             {
-                recursiveS(d, first, f, outBuf);
-                recursiveS(d, e + 1, last, outBuf);
+                recursiveS(d, first, f, outBuf, countAdd);
+                recursiveS(d, e + 1, last, outBuf, countAdd);
             }
             else
             {
@@ -63,7 +84,7 @@ namespace PluginMapEditor
                     int addr = first + 0x2000;
                     outBuf.WriteByte((byte)(addr >> 8));
                     outBuf.WriteByte((byte)(addr & 0xFF));
-                    outBuf.WriteByte((byte)Math.Min(last - first, 255));
+                    outBuf.WriteByte((byte)Math.Min(last - first + countAdd, 255));
                     for (int ind = 0; ind < 255 && (first + ind) < last; ind++)
                         outBuf.WriteByte(d[first + ind]);
                     first += 255;
@@ -75,7 +96,17 @@ namespace PluginMapEditor
         {
             packedData = new byte[(256 + 3) * 4];
             var s = new MemoryStream(packedData);
-            recursiveS(mapData, 0, mapData.Length, s);
+            recursiveS(mapData, 0, mapData.Length, s, 0);
+            s.WriteByte(0xFF); //write stop byte
+            long nn = s.Position;
+            return (int)nn;
+        }
+
+        public static int saveMapCad(byte[] mapData, out byte[] packedData)
+        {
+            packedData = new byte[(256 + 3) * 4];
+            var s = new MemoryStream(packedData);
+            recursiveS(mapData, 0, mapData.Length, s, 1);
             s.WriteByte(0xFF); //write stop byte
             long nn = s.Position;
             return (int)nn;

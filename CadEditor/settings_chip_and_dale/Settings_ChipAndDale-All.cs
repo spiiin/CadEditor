@@ -1,11 +1,13 @@
 using CadEditor;
+using PluginMapEditor;
 using System.Collections.Generic;
 //css_include Settings_CapcomBase.cs;
 public class Data:CapcomBase
 {
   public string[] getPluginNames() 
   {
-    return new string[] { 
+    return new string[] {
+      "PluginMapEditor.dll",
       "PluginChrView.dll",
       "PluginLevelParamsCad.dll",
       "PluginAnimEditor.dll",
@@ -39,6 +41,15 @@ public class Data:CapcomBase
   public int getScrollPtrAdd()       { return 0x10010; }
   public int getDirPtrAdd()          { return 0x8010;  }
   public int getDoorRecBaseOffset()  { return 0x1E673; }
+  
+  public MapInfo[] getMapsInfo() { return mapsCad; }
+  public LoadMapFunc getLoadMapFunc() { return MapUtils.loadMapCad; }
+  public SaveMapFunc getSaveMapFunc() { return MapUtils.saveMapCad; }
+
+  MapInfo[] mapsCad = new MapInfo[]
+  { 
+      new MapInfo(){ dataAddr = 0x8237, palAddr = 0x8871, videoNo = 15 },
+  };
   
   public IList<LevelRec> levelRecsCad = new List<LevelRec>() 
   {
