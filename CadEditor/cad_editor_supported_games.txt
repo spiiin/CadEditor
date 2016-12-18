@@ -21,6 +21,7 @@
   редактор экранов картинками:
     Ninja Cat (Cattou Ninden Teyandee)              (все уровни + редактор объектов 4 уровней)
     New Ghostbusters 2                              (1 уровень  + редактор объектов 1 уровня)
+    Mighty Final Fight                              (все уровни)
     Little Nemo                                     (все уровни)
     Battletoads & Double Dragon - The Ultimate Team (все уровни)
     Battletoads                                     (6 уровней)
@@ -51,7 +52,6 @@
     Power Blade 2                                   (1 уровень)
     Super Spy Hunter                                (1 уровень)
     Micromashines                                   (1 уровень)
-    Mighty Final Fight                              (1 уровень)
     Jackie Chan Action Kung Fu                      (1 уровень)
     Yo-Noid                                         (1 уровень)
     Gun Smoke                                       (1 уровень)
