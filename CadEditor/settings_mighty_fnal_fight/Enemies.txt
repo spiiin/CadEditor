@@ -1,0 +1,53 @@
+/////////////////// hex values
+
+Rams 5BC & 5BD
+
+Bred(melcu)     =22/28
+Two P(rapid)    =21/27
+Axl(apara)      =23/29
+Andore(muntele) =25/2B-2D
+El Gado(mosu)   =24/2A
+Poison(tarfa)   =20/26
+Thrasher(1boss) =80 (1049F)
+Kitana(2boss)   =81 (104A3)
+Abigal(3boss)   =90 (104A7)
+Kitana2(4boss)  =83 (104AB)
+Belger(5boss)   =74 (104AF) {don't use}
+
+//////////////////// hex address
+
+address-Stage-stage area-encounter
+
+10453-2-2-2,2-2-
+10457-1-1-1
+1047B-?
+1049F-Stage 1 Boss
+104A3-Stage 2 Boss
+104A7-Stage 3 Boss
+104AB-Stage 4 Boss
+104AF-Stage 5 Boss
+104B3-boss text/assist 1
+104BF-???/assist 2 (only stage 1)
+104CF-?
+104D3-?
+104EF-?
+1050B-5-2-2
+1050F-5-2-1
+1052B-?
+1052F-1-2-1,5-2-1
+10537-?
+10547-1-1-1
+10557-?
+1057F-?
+10587-1-2-1
+105C7-1-1-3
+105CB-5-2-2
+105D3-?
+105D7-4-1-3
+105DB-?
+105E3-?
+105E7-?
+105E3-?
+105F3-4-3-1
+?????
+there are many other left unfound
