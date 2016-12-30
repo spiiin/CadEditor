@@ -192,7 +192,7 @@ namespace CadEditor
         public int addrOfVideo;
     }
 
-    public class ObjRec
+    public class ObjRec : IEquatable<ObjRec>
     {
         public ObjRec(byte c1, byte c2, byte c3, byte c4, byte typeColor)
         {
@@ -223,6 +223,25 @@ namespace CadEditor
         public virtual int getType()
         {
             return (typeColor & 0xF0) >> 4;
+        }
+
+        bool IEquatable<ObjRec>.Equals(ObjRec other)
+        {
+            return (c1 == other.c1) && (c2 == other.c2) && (c3 == other.c3) && (c4 == other.c4) && (typeColor == other.typeColor);
+        }
+
+        public override bool Equals(Object obj)
+        {
+            ObjRec other = obj as ObjRec;
+            if (other == null)
+                return false;
+            else
+                return ((IEquatable<ObjRec>)this).Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return c1.GetHashCode() + c2.GetHashCode() + c3.GetHashCode() + c4.GetHashCode() + typeColor.GetHashCode();
         }
     }
 
@@ -426,6 +445,25 @@ namespace CadEditor
         bool IEquatable<BigBlock>.Equals(BigBlock other)
         {
             return (width == other.width) && (height == other.height) && (indexes.SequenceEqual(other.indexes));
+        }
+
+        public override bool Equals(Object obj)
+        {
+            BigBlock other = obj as BigBlock;
+            if (other == null)
+                return false;
+            else
+                return ((IEquatable<BigBlock>) this).Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            int hash = width.GetHashCode() + height.GetHashCode();
+            foreach(var i in indexes)
+            {
+                hash += i.GetHashCode();
+            }
+            return hash;
         }
 
         public int[] indexes;
