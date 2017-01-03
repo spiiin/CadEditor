@@ -445,6 +445,28 @@ namespace CadEditor
             return palBytes[index];
         }
 
+        public override bool smallBlocksWithPal()
+        {
+            return false;
+        }
+
+        public override Bitmap makeBigBlock(Image[][] smallBlocksAll)
+        {
+            //calc size
+            var smallBlocks = smallBlocksAll[0];
+            int bWidth = smallBlocks[0].Width;
+            int bHeight = smallBlocks[0].Height;
+            var b = new Bitmap(bWidth * this.width, bHeight * this.height);
+            using (Graphics g = Graphics.FromImage(b))
+            {
+                g.DrawImage(smallBlocksAll[this.getPalBytes(0)][this.indexes[0]], new Rectangle(0, 0, bWidth, bHeight));
+                g.DrawImage(smallBlocksAll[this.getPalBytes(1)][this.indexes[1]], new Rectangle(bWidth, 0, bWidth, bHeight));
+                g.DrawImage(smallBlocksAll[this.getPalBytes(2)][this.indexes[2]], new Rectangle(0, bHeight, bWidth, bHeight));
+                g.DrawImage(smallBlocksAll[this.getPalBytes(3)][this.indexes[3]], new Rectangle(bWidth, bHeight, bWidth, bHeight));
+            }
+            return b;
+        }
+
         public int[] palBytes;
     }
 
@@ -461,12 +483,35 @@ namespace CadEditor
 
         public virtual Bitmap makeBigBlock(Image[][] smallBlockss)
         {
-            return ConfigScript.videoNes.makeBigBlock(this, smallBlockss);
+            var smallBlocks = smallBlockss[0];
+            int bWidth = smallBlocks[0].Width;
+            int bHeight = smallBlocks[0].Height;
+            var b = new Bitmap(bWidth * this.width, bHeight * this.height);
+            using (Graphics g = Graphics.FromImage(b))
+            {
+                for (int h = 0; h < this.height; h++)
+                {
+                    for (int w = 0; w < this.width; w++)
+                    {
+                        int sbX = w * bWidth;
+                        int sbY = h * bHeight;
+                        int idx = h * this.width + w;
+                        var r = new Rectangle(sbX, sbY, bWidth, bHeight);
+                        g.DrawImage(smallBlocks[this.indexes[idx]], r);
+                    }
+                }
+            }
+            return b;
         }
 
         public virtual int getPalBytes(int index)
         {
             return 0;
+        }
+
+        public virtual bool smallBlocksWithPal()
+        {
+            return true;
         }
 
         bool IEquatable<BigBlock>.Equals(BigBlock other)

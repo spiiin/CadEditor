@@ -286,7 +286,9 @@ namespace PluginVideoNes
 
             //tt version hardcode
             Image[][] smallBlocksAll = null;
-            if (GameType.TT == Globals.getGameType())
+
+            bool smallBlockHasSubpals = bigBlockIndexes[0].smallBlocksWithPal();
+            if (!smallBlockHasSubpals)
             {
                 smallBlocksAll = new Image[4][];
                 for (int i = 0; i < 4; i++)
@@ -312,7 +314,7 @@ namespace PluginVideoNes
                 }
                 else
                 {
-                    b = makeBigBlock(btileId, bigBlockIndexes, smallBlocksAll);
+                    b = bigBlockIndexes[btileId].makeBigBlock(smallBlocksAll);
                 }
                 if (curViewType == MapViewType.ObjNumbers)
                     b = VideoHelper.addObjNumber(b, btileId);
@@ -342,88 +344,6 @@ namespace PluginVideoNes
             //capcom hardcode
             return new Bitmap(MapEditor.ScreenToImage(il, 32, 32, indexes, null, scale, true, false, false, 0, scrW, scrH, ConfigScript.getScreenVertical()));
         }
-
-        #region Render Functions
-        public Bitmap makeBigBlock(int i, BigBlock[] bigBlocks, Image[][] smallBlockss)
-        {
-            Bitmap b;
-            switch (Globals.getGameType())
-            {
-                case GameType.TT:
-                    b = makeBigBlockTT(i, bigBlocks, smallBlockss);
-                    break;
-                default:
-                    b = makeBigBlockCapcom(i, bigBlocks, smallBlockss);
-                    break;
-            }
-            return b;
-        }
-
-        public Bitmap makeBigBlock(BigBlock bigBlock, Image[][] smallBlockss)
-        {
-            Bitmap b;
-            switch (Globals.getGameType())
-            {
-                case GameType.TT:
-                    b = (smallBlockss.Length > 1) ? makeBigBlockTT(bigBlock, smallBlockss) : makeBigBlockCapcom(bigBlock, smallBlockss);
-                    break;
-                default:
-                    b = makeBigBlockCapcom(bigBlock, smallBlockss);
-                    break;
-            }
-            return b;
-        }
-
-        public Bitmap makeBigBlockCapcom(int i, BigBlock[] bigBlocks, Image[][] smallBlockss)
-        {
-            return makeBigBlockCapcom(bigBlocks[i], smallBlockss);
-        }
-
-        public Bitmap makeBigBlockCapcom(BigBlock bb, Image[][] smallBlockss)
-        {
-            var smallBlocks = smallBlockss[0];
-            int bWidth = smallBlocks[0].Width;
-            int bHeight = smallBlocks[0].Height;
-            var b = new Bitmap(bWidth * bb.width, bHeight * bb.height);
-            using (Graphics g = Graphics.FromImage(b))
-            {
-                for (int h = 0; h < bb.height; h++)
-                {
-                    for (int w = 0; w < bb.width; w++)
-                    {
-                        int sbX = w * bWidth;
-                        int sbY = h * bHeight;
-                        int idx = h * bb.width + w;
-                        var r = new Rectangle(sbX, sbY, bWidth, bHeight);
-                        g.DrawImage(smallBlocks[bb.indexes[idx]], r);
-                    }
-                }
-            }
-            return b;
-        }
-
-        public Bitmap makeBigBlockTT(int i, BigBlock[] bigBlocks, Image[][] smallBlocksAll)
-        {
-            return makeBigBlockTT(bigBlocks[i], smallBlocksAll);
-        }
-
-        public Bitmap makeBigBlockTT(BigBlock bb, Image[][] smallBlocksAll)
-        {
-            //calc size
-            var smallBlocks = smallBlocksAll[0];
-            int bWidth = smallBlocks[0].Width;
-            int bHeight = smallBlocks[0].Height;
-            var b = new Bitmap(bWidth * bb.width, bHeight * bb.height);
-            using (Graphics g = Graphics.FromImage(b))
-            {
-                g.DrawImage(smallBlocksAll[bb.getPalBytes(0)][bb.indexes[0]], new Rectangle(0, 0, bWidth, bHeight));
-                g.DrawImage(smallBlocksAll[bb.getPalBytes(1)][bb.indexes[1]], new Rectangle(bWidth, 0, bWidth, bHeight));
-                g.DrawImage(smallBlocksAll[bb.getPalBytes(2)][bb.indexes[2]], new Rectangle(0, bHeight, bWidth, bHeight));
-                g.DrawImage(smallBlocksAll[bb.getPalBytes(3)][bb.indexes[3]], new Rectangle(bWidth, bHeight, bWidth, bHeight));
-            }
-            return b;
-        }
-        #endregion
 
         public Color[] NesColors
         {

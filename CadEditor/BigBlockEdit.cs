@@ -152,7 +152,7 @@ namespace CadEditor
                     for (int i = 0; i < ConfigScript.getBigBlocksCount(curHierarchyLevel); i++)
                     {
                         Bitmap b;
-                        b = ConfigScript.videoNes.makeBigBlock(i, bigBlockIndexes, smallBlocksPack);
+                        b = bigBlockIndexes[i].makeBigBlock(smallBlocksPack);
                         g.DrawImage(b, new Point((int)(32 * formMain.CurScale * i), 0));
                     }
                 }
@@ -243,7 +243,7 @@ namespace CadEditor
             //fix current big blocks image
             var smb = smallBlocks.Images.Cast<Image>().ToArray();
             var imss = new Image[4][] {smb, smb, smb, smb };
-            bigBlocksImages[actualIndex] = ConfigScript.videoNes.makeBigBlock(actualIndex, bigBlockIndexes, imss);
+            bigBlocksImages[actualIndex] = bigBlockIndexes[actualIndex].makeBigBlock(imss);
         }
 
         protected void buttonObjClick(Object button, EventArgs e)

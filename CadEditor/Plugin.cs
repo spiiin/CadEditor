@@ -53,9 +53,6 @@ namespace CadEditor
 
         Bitmap makeScreen(int scrNo, int levelNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, float scale = 2.0f, bool withBorders = true);
 
-        Bitmap makeBigBlock(int i, BigBlock[] bigBlocks, Image[][] smallBlocksPacks);
-        Bitmap makeBigBlock(BigBlock bigBlock, Image[][] smallBlocksPacks);
-
         Color[] NesColors { get; set; }
 
         string getName();
