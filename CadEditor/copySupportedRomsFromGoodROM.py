@@ -4,11 +4,11 @@ import os
 GoodNesPath = r"d:\ROM\Dendy\GoodNES3.1\best"
 
 fnames = [
-    "Addams Family, The - Pugsley's Scavenger Hunt (U) [!p].nes"
+    "Addams Family, The - Pugsley's Scavenger Hunt (U) [!p].nes",
     "Adventures in the Magic Kingdom (E) [!].nes",
     "Alien 3 (E) [!].nes",
     "Batman (U) [!].nes",
-    "Batman III [p1].nes"
+    "Batman III [p1].nes",
     "Battletoads & Double Dragon - The Ultimate Team (E) [!p].nes",
     "Battletoads (U) [!].nes",
     "Banana Prince (G) [!].nes",
