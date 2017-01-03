@@ -118,7 +118,7 @@ public class Data:CapcomBase
     byte[] bigBlockIndexes = new byte[getBigBlocksCount()*4];
     byte[] tempIndexes = Utils.readDataFromUnalignedArrays(Globals.romdata, addrPointers[0], addrPointers[1], addrPointers[2], addrPointers[3], blocksCount);
     Array.Copy(tempIndexes, bigBlockIndexes, blocksCount*4); 
-    return Utils.unlinearizeBigBlocks(bigBlockIndexes, 2, 2);
+    return Utils.unlinearizeBigBlocks<BigBlock>(bigBlockIndexes, 2, 2);
   }
   
   public void setBigBlocksDt2(int bigTileIndex, BigBlock[] bigBlocks)

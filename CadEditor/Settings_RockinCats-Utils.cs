@@ -93,19 +93,19 @@ public class RockinCatsBase
   public static BigBlock[] getBigBlocks0(int bigTileIndex)
   {
     var data = Utils.readLinearBigBlockData(0, bigTileIndex, 4);
-    return Utils.unlinearizeBigBlocks(data, 1, 4);
+    return Utils.unlinearizeBigBlocks<BigBlock>(data, 1, 4);
   }
   
   public static BigBlock[] getBigBlocks1(int bigTileIndex)
   {
     var data = Utils.readLinearBigBlockData(1, bigTileIndex, 4);
-    return Utils.unlinearizeBigBlocks(data, 4, 1);
+    return Utils.unlinearizeBigBlocks<BigBlock>(data, 4, 1);
   }
   
   public static BigBlock[] getBigBlocks2(int bigTileIndex)
   {
     var data = Utils.readLinearBigBlockData(2, bigTileIndex, 2);
-    return Utils.unlinearizeBigBlocks(data, 2, 1);
+    return Utils.unlinearizeBigBlocks<BigBlock>(data, 2, 1);
   }
 
   public static void setBigBlocks0(int bigTileIndex, BigBlock[] bigBlockIndexes)

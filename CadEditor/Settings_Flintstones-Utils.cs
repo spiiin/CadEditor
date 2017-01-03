@@ -129,7 +129,7 @@ public static class FliUtils
   public static BigBlock[] getBigBlocks(int bigTileIndex)
   {
     var data = Utils.readLinearBigBlockData(0, bigTileIndex, 16);
-    var bblocks = Utils.unlinearizeBigBlocks(data, 4, 4);
+    var bblocks = Utils.unlinearizeBigBlocks<BigBlock>(data, 4, 4);
     transposeBigBlocks(bblocks);
     return bblocks;
   }

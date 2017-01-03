@@ -181,7 +181,7 @@ public class Data
   public BigBlock[] getBigBlocks(int bigTileIndex)
   {
     var data = Utils.readLinearBigBlockData(0, bigTileIndex, 8);
-    var bblocks = Utils.unlinearizeBigBlocks(data, 2, 4);
+    var bblocks = Utils.unlinearizeBigBlocks<BigBlock>(data, 2, 4);
     transposeBigBlocks(bblocks);
     return bblocks;
   }

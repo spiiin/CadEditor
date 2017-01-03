@@ -324,13 +324,6 @@ namespace PluginVideoNes
             return bigBlocks;
         }
 
-        private static byte getTTSmallBlocksColorByte(int index)
-        {
-            int btc = ConfigScript.getBigBlocksCount(0);
-            int addr = ConfigScript.getBigTilesAddr(0, 0);
-            return Globals.romdata[addr + btc * 4 + index];
-        }
-
         //make capcom screen image
         public Bitmap makeScreen(int scrNo, int levelNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, float scale = 2.0f, bool withBorders = true)
         {
@@ -367,13 +360,32 @@ namespace PluginVideoNes
             return b;
         }
 
+        public Bitmap makeBigBlock(BigBlock bigBlock, Image[][] smallBlockss)
+        {
+            Bitmap b;
+            switch (Globals.getGameType())
+            {
+                case GameType.TT:
+                    b = (smallBlockss.Length > 1) ? makeBigBlockTT(bigBlock, smallBlockss) : makeBigBlockCapcom(bigBlock, smallBlockss);
+                    break;
+                default:
+                    b = makeBigBlockCapcom(bigBlock, smallBlockss);
+                    break;
+            }
+            return b;
+        }
+
         public Bitmap makeBigBlockCapcom(int i, BigBlock[] bigBlocks, Image[][] smallBlockss)
+        {
+            return makeBigBlockCapcom(bigBlocks[i], smallBlockss);
+        }
+
+        public Bitmap makeBigBlockCapcom(BigBlock bb, Image[][] smallBlockss)
         {
             var smallBlocks = smallBlockss[0];
             int bWidth = smallBlocks[0].Width;
             int bHeight = smallBlocks[0].Height;
-            var bb = bigBlocks[i];
-            var b = new Bitmap(bWidth*bb.width, bHeight*bb.height);
+            var b = new Bitmap(bWidth * bb.width, bHeight * bb.height);
             using (Graphics g = Graphics.FromImage(b))
             {
                 for (int h = 0; h < bb.height; h++)
@@ -393,19 +405,22 @@ namespace PluginVideoNes
 
         public Bitmap makeBigBlockTT(int i, BigBlock[] bigBlocks, Image[][] smallBlocksAll)
         {
+            return makeBigBlockTT(bigBlocks[i], smallBlocksAll);
+        }
+
+        public Bitmap makeBigBlockTT(BigBlock bb, Image[][] smallBlocksAll)
+        {
             //calc size
             var smallBlocks = smallBlocksAll[0];
             int bWidth = smallBlocks[0].Width;
             int bHeight = smallBlocks[0].Height;
-            var bb = bigBlocks[i];
             var b = new Bitmap(bWidth * bb.width, bHeight * bb.height);
             using (Graphics g = Graphics.FromImage(b))
             {
-                int scb = getTTSmallBlocksColorByte(i);
-                g.DrawImage(smallBlocksAll[scb >> 0 & 0x3][bigBlocks[i].indexes[0]], new Rectangle(0, 0, bWidth, bHeight));
-                g.DrawImage(smallBlocksAll[scb >> 2 & 0x3][bigBlocks[i].indexes[1]], new Rectangle(bWidth, 0, bWidth, bHeight));
-                g.DrawImage(smallBlocksAll[scb >> 4 & 0x3][bigBlocks[i].indexes[2]], new Rectangle(0, bHeight, bWidth, bHeight));
-                g.DrawImage(smallBlocksAll[scb >> 6 & 0x3][bigBlocks[i].indexes[3]], new Rectangle(bWidth, bHeight, bWidth, bHeight));
+                g.DrawImage(smallBlocksAll[bb.getPalBytes(0)][bb.indexes[0]], new Rectangle(0, 0, bWidth, bHeight));
+                g.DrawImage(smallBlocksAll[bb.getPalBytes(1)][bb.indexes[1]], new Rectangle(bWidth, 0, bWidth, bHeight));
+                g.DrawImage(smallBlocksAll[bb.getPalBytes(2)][bb.indexes[2]], new Rectangle(0, bHeight, bWidth, bHeight));
+                g.DrawImage(smallBlocksAll[bb.getPalBytes(3)][bb.indexes[3]], new Rectangle(bWidth, bHeight, bWidth, bHeight));
             }
             return b;
         }

@@ -394,7 +394,7 @@ namespace CadEditor
             var fn = f.Filename;
             var data = Utils.loadDataFromFile(fn);
             //duck tales 2 has other format
-            bigBlockIndexes = Utils.unlinearizeBigBlocks(data, 2,2);
+            bigBlockIndexes = Utils.unlinearizeBigBlocks<BigBlock>(data, 2,2);
             reloadLevel(false);
             dirty = true;
             updateSaveVisibility();

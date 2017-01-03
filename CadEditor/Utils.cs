@@ -121,17 +121,18 @@ namespace CadEditor
             return result;
         }
 
-        public static BigBlock[] unlinearizeBigBlocks(byte[] data, int w, int h)
+        public static T[] unlinearizeBigBlocks<T>(byte[] data, int w, int h)
+            where T : BigBlock
         {
             if ((data == null)  || (data.Length == 0))
             {
-                return new BigBlock[0];
+                return new T[0];
             }
             int size = w*h;
-            BigBlock[] result = new BigBlock[data.Length / size];
+            T[] result = new T[data.Length / size];
             for (int i = 0; i < result.Length; i++)
             {
-                result[i] = new BigBlock(w, h);
+                result[i] = Activator.CreateInstance(typeof(T), w,h) as T;
                 Array.Copy(data, i*size, result[i].indexes, 0, size);
             }
             return result;
@@ -340,7 +341,7 @@ namespace CadEditor
         public static BigBlock[] getBigBlocksCapcomDefault(int bigTileIndex)
         {
             var data = readLinearBigBlockData(0, bigTileIndex);
-            return Utils.unlinearizeBigBlocks(data, 2, 2);
+            return Utils.unlinearizeBigBlocks<BigBlock>(data, 2, 2);
         }
 
         public static void writeLinearBigBlockData(int hierLevel, int bigTileIndex, byte[] bigBlockIndexes)

@@ -432,6 +432,22 @@ namespace CadEditor
         SmallObjNumbers,
     };
 
+    public class BigBlockWithPal : BigBlock
+    {
+        public BigBlockWithPal(int w, int h)
+            :base(w,h)
+        {
+            palBytes = new int[indexes.Length];
+        }
+
+        public override int getPalBytes(int index)
+        {
+            return palBytes[index];
+        }
+
+        public int[] palBytes;
+    }
+
     public class BigBlock : IEquatable<BigBlock>
     {
         public BigBlock(int w, int h)
@@ -440,7 +456,18 @@ namespace CadEditor
             height = h;
             indexes = new int[getSize()];
         }
+
         public int getSize() { return width*height; }
+
+        public virtual Bitmap makeBigBlock(Image[][] smallBlockss)
+        {
+            return ConfigScript.videoNes.makeBigBlock(this, smallBlockss);
+        }
+
+        public virtual int getPalBytes(int index)
+        {
+            return 0;
+        }
 
         bool IEquatable<BigBlock>.Equals(BigBlock other)
         {
