@@ -299,8 +299,7 @@ namespace PluginVideoNes
             }
             else
             {
-                smallBlocksAll = new Image[1][];
-                smallBlocksAll[0] = smallBlocksPack;
+                smallBlocksAll = new Image[4][] { smallBlocksPack, smallBlocksPack, smallBlocksPack, smallBlocksPack } ;
             }
 
             for (int btileId = 0; btileId < blockCount; btileId++)
@@ -351,7 +350,7 @@ namespace PluginVideoNes
             switch (Globals.getGameType())
             {
                 case GameType.TT:
-                    b = (smallBlockss.Length > 1) ? makeBigBlockTT(i, bigBlocks, smallBlockss) : makeBigBlockCapcom(i, bigBlocks, smallBlockss);
+                    b = makeBigBlockTT(i, bigBlocks, smallBlockss);
                     break;
                 default:
                     b = makeBigBlockCapcom(i, bigBlocks, smallBlockss);

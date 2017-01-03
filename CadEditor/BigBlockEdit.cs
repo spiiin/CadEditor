@@ -145,8 +145,8 @@ namespace CadEditor
             else
             {
                 Bitmap result = new Bitmap((int)(32 * formMain.CurScale * 256),(int)(32 * formMain.CurScale)); //need some hack for duck tales 1
-                Image[][] smallBlocksPack = new Image[1][];
-                smallBlocksPack[0] = smallBlocks.Images.Cast<Image>().ToArray();
+                var smb = smallBlocks.Images.Cast<Image>().ToArray(); ;
+                Image[][] smallBlocksPack = new Image[4][] {smb, smb, smb, smb }; 
                 using (Graphics g = Graphics.FromImage(result))
                 {
                     for (int i = 0; i < ConfigScript.getBigBlocksCount(curHierarchyLevel); i++)
@@ -241,7 +241,8 @@ namespace CadEditor
                 lbActive.Text = String.Format("({0:X})", curActiveBlock);
             }
             //fix current big blocks image
-            var imss = new Image[1][] { smallBlocks.Images.Cast<Image>().ToArray() };
+            var smb = smallBlocks.Images.Cast<Image>().ToArray();
+            var imss = new Image[4][] {smb, smb, smb, smb };
             bigBlocksImages[actualIndex] = ConfigScript.videoNes.makeBigBlock(actualIndex, bigBlockIndexes, imss);
         }
 
