@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class Data
 {
-  public GameType getGameType()  { return GameType.TT; }
-  
   public OffsetRec getPalOffset()       { return new OffsetRec(0x0, 1, 16);            }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x0 , 1   , 0x1000);    }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x0 , 1   , 0x1000);    }

@@ -130,8 +130,6 @@ namespace CadEditor
                 }
             }
 
-            Globals.setGameType(callFromScript(asm, data, "*.getGameType", GameType.Generic));
-
             levelsCount = callFromScript(asm, data, "*.getLevelsCount", 1);
             screensOffset = new OffsetRec[levelsCount];
 

@@ -132,17 +132,6 @@ namespace CadEditor
         public static int PAL_LEN = 16;
         public static int SEGA_PAL_LEN = 128;
         public static int MAX_SCREEN_LIST_LEN = 64;
-
-        public static GameType getGameType()
-        {
-            return gameType;
-        }
-        public static void setGameType(GameType _gameType)
-        {
-            gameType = _gameType;
-        }
-
-        private static GameType gameType;
     }
 
     public struct OffsetRec
@@ -417,12 +406,6 @@ namespace CadEditor
             return true;
         }
     }
-
-    public enum GameType
-    {
-        Generic,
-        TT,
-    };
 
     public enum MapViewType
     {
