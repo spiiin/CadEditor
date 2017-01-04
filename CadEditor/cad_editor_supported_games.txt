@@ -17,6 +17,7 @@
     Mega Man 5                                      (все уровни)
     Rockin' Kats                                    (все уровни)
     Three Eyes Story                                (1 уровень)
+    Ninja Gaiden 3                                  (1 уровень)
     Flintstones: The Surprise at Dinosaur Peak!     (1 уровень  + редактор объектов 1 уровня)
   редактор экранов картинками:
     Ninja Cat (Cattou Ninden Teyandee)              (все уровни + редактор объектов 4 уровней)
@@ -33,7 +34,6 @@
     Contra Force                                    (1 уровень)
     Shadow of the Ninja                             (1 уровень)
     Ninja Gaiden                                    (1 уровень)
-    Ninja Gaiden 3                                  (1 уровень)
     Super C                                         (1 уровень)
     Captain America                                 (1 уровень)
     Adventures Island 2                             (1 уровень)
