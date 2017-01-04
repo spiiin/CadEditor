@@ -99,10 +99,17 @@ namespace CadEditor
 
             if (curHierarchyLevel == 0)
             {
-                var im = ConfigScript.videoNes.makeObjectsStrip((byte)backId, (byte)curTileset, (byte)palId, 1, curViewType);
-                smallBlocks.ImageSize = new Size(16, 16);
-                smallBlocks.Images.Clear();
-                smallBlocks.Images.AddStrip(im);
+                if (hasSmallBlocksPals())
+                {
+                    var im = ConfigScript.videoNes.makeObjectsStrip((byte)backId, (byte)curTileset, (byte)palId, 1, curViewType);
+                    smallBlocks.ImageSize = new Size(16, 16);
+                    smallBlocks.Images.Clear();
+                    smallBlocks.Images.AddStrip(im);
+                }
+                else
+                {
+                    fillSmallBlockImageLists();
+                }
             }
             else
             {
@@ -121,6 +128,23 @@ namespace CadEditor
             int bblocksInCol = (btc / bblocksInRow) + 1;
             //
             mapScreen.Size = new Size(bigBlocksImages[0].Width* bblocksInRow, bigBlocksImages[0].Height*bblocksInCol);
+        }
+
+        private void fillSmallBlockImageLists()
+        {
+            int backId, palId;
+            backId = curVideo;
+            palId = curPallete;
+
+            var smils = new ImageList[]{ smallBlocks, smallBlocks2, smallBlocks3, smallBlocks4 };
+            for (int i = 0; i < 4; i++)
+            {
+                var smil = smils[i];
+                var im = ConfigScript.videoNes.makeObjectsStrip((byte)backId, (byte)curTileset, (byte)palId, 1, curViewType, i);
+                smil.ImageSize = new Size(16, 16);
+                smil.Images.Clear();
+                smil.Images.AddStrip(im);
+            }
         }
 
         protected virtual void setBigBlocksIndexes()
@@ -144,8 +168,9 @@ namespace CadEditor
             }
             else
             {
+                //todo:add BigBlockWithPal version
                 Bitmap result = new Bitmap((int)(32 * formMain.CurScale * 256),(int)(32 * formMain.CurScale)); //need some hack for duck tales 1
-                var smb = smallBlocks.Images.Cast<Image>().ToArray(); ;
+                var smb = smallBlocks.Images.Cast<Image>().ToArray();
                 Image[][] smallBlocksPack = new Image[4][] {smb, smb, smb, smb }; 
                 using (Graphics g = Graphics.FromImage(result))
                 {
@@ -200,6 +225,11 @@ namespace CadEditor
             }
         }
 
+        private bool hasSmallBlocksPals()
+        {
+            return bigBlockIndexes[0].smallBlocksWithPal();
+        }
+
         protected void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
             int addIndexes = curPart * 256;
@@ -235,14 +265,41 @@ namespace CadEditor
             }
             else
             {
+                //first action - change pal byte if it applicable
+                if (!hasSmallBlocksPals())
+                {
+                    if (actualIndex < bigBlockIndexes.Length)
+                    {
+                        var bbPal = bigBlockIndexes[actualIndex] as BigBlockWithPal;
+                        if (bbPal == null)
+                        {
+                            return;
+                        }
+                        //
+                        int palByte = bbPal.palBytes[insideIndex];
+                        if (++palByte > 3)
+                        {
+                            palByte = 0;
+                        }
+                        bbPal.palBytes[insideIndex] = palByte;
+                        //
+                    }
+                    mapScreen.Invalidate();
+                }
+                //second action - change cur active block to selected
                 if (actualIndex < bigBlockIndexes.Length)
                     curActiveBlock = bigBlockIndexes[actualIndex].indexes[insideIndex];
                 pbActive.Image = smallBlocks.Images[curActiveBlock];
                 lbActive.Text = String.Format("({0:X})", curActiveBlock);
             }
+
             //fix current big blocks image
-            var smb = smallBlocks.Images.Cast<Image>().ToArray();
-            var imss = new Image[4][] {smb, smb, smb, smb };
+            var imss = new Image[4][] {
+                smallBlocks.Images.Cast<Image>().ToArray(),
+                smallBlocks2.Images.Cast<Image>().ToArray(),
+                smallBlocks3.Images.Cast<Image>().ToArray(),
+                smallBlocks4.Images.Cast<Image>().ToArray()
+            };
             bigBlocksImages[actualIndex] = bigBlockIndexes[actualIndex].makeBigBlock(imss);
         }
 

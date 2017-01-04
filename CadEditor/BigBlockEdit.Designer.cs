@@ -50,6 +50,8 @@
             this.cbViewType = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.cbHierarchyLevel = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.lbActive = new System.Windows.Forms.Label();
             this.lbBigBlockNo = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -59,8 +61,9 @@
             this.tbbImport = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tbbDeleteAll = new System.Windows.Forms.ToolStripButton();
-            this.cbHierarchyLevel = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.smallBlocks2 = new System.Windows.Forms.ImageList(this.components);
+            this.smallBlocks3 = new System.Windows.Forms.ImageList(this.components);
+            this.smallBlocks4 = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -359,6 +362,27 @@
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 62;
             // 
+            // cbHierarchyLevel
+            // 
+            this.cbHierarchyLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbHierarchyLevel.FormattingEnabled = true;
+            this.cbHierarchyLevel.Location = new System.Drawing.Point(8, 21);
+            this.cbHierarchyLevel.Margin = new System.Windows.Forms.Padding(4);
+            this.cbHierarchyLevel.Name = "cbHierarchyLevel";
+            this.cbHierarchyLevel.Size = new System.Drawing.Size(257, 24);
+            this.cbHierarchyLevel.TabIndex = 60;
+            this.cbHierarchyLevel.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 4);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(106, 17);
+            this.label2.TabIndex = 61;
+            this.label2.Text = "Hierarchy level:";
+            // 
             // lbActive
             // 
             this.lbActive.AutoSize = true;
@@ -446,26 +470,23 @@
             this.tbbDeleteAll.Text = "Clear All";
             this.tbbDeleteAll.Click += new System.EventHandler(this.btClear_Click);
             // 
-            // cbHierarchyLevel
+            // smallBlocks2
             // 
-            this.cbHierarchyLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbHierarchyLevel.FormattingEnabled = true;
-            this.cbHierarchyLevel.Location = new System.Drawing.Point(8, 21);
-            this.cbHierarchyLevel.Margin = new System.Windows.Forms.Padding(4);
-            this.cbHierarchyLevel.Name = "cbHierarchyLevel";
-            this.cbHierarchyLevel.Size = new System.Drawing.Size(257, 24);
-            this.cbHierarchyLevel.TabIndex = 60;
-            this.cbHierarchyLevel.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
+            this.smallBlocks2.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
+            this.smallBlocks2.ImageSize = new System.Drawing.Size(16, 16);
+            this.smallBlocks2.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // label2
+            // smallBlocks3
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 4);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(106, 17);
-            this.label2.TabIndex = 61;
-            this.label2.Text = "Hierarchy level:";
+            this.smallBlocks3.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
+            this.smallBlocks3.ImageSize = new System.Drawing.Size(16, 16);
+            this.smallBlocks3.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // smallBlocks4
+            // 
+            this.smallBlocks4.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
+            this.smallBlocks4.ImageSize = new System.Drawing.Size(16, 16);
+            this.smallBlocks4.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // BigBlockEdit
             // 
@@ -532,5 +553,8 @@
         private System.Windows.Forms.Label lbActive;
         private System.Windows.Forms.ComboBox cbHierarchyLevel;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ImageList smallBlocks2;
+        private System.Windows.Forms.ImageList smallBlocks3;
+        private System.Windows.Forms.ImageList smallBlocks4;
     }
 }

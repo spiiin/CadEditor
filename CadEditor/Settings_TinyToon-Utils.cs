@@ -26,6 +26,13 @@ public static class TinyToonUtils
       return Globals.romdata[addr + btc * 4 + index];
   }
   
+    private static void setTTSmallBlocksColorByte(int index, byte colorByte)
+  {
+      int btc = ConfigScript.getBigBlocksCount(0);
+      int addr = ConfigScript.getBigTilesAddr(0, 0);
+      Globals.romdata[addr + btc * 4 + index] = colorByte;
+  }
+  
   public static BigBlock[] getBigBlocksTT(int bigTileIndex)
   {
     var bigBlocksAddr = ConfigScript.getBigTilesAddr(0, bigTileIndex);
@@ -47,6 +54,13 @@ public static class TinyToonUtils
     var bigBlocksAddr = ConfigScript.getBigTilesAddr(0, bigTileIndex);
     var data = Utils.linearizeBigBlocks(bigBlockIndexes);
     Utils.writeDataToAlignedArrays(data, Globals.romdata, bigBlocksAddr, ConfigScript.getBigBlocksCount(0));
+    //save pal bytes
+    for (int i = 0; i < bigBlockIndexes.Length; i++)
+    {
+      var bb = bigBlockIndexes[i] as BigBlockWithPal;
+      int palByte = bb.palBytes[0] | bb.palBytes[1] << 2 | bb.palBytes[2]<<4 | bb.palBytes[3]<< 6;
+      setTTSmallBlocksColorByte(i, (byte)palByte);
+    }
   }
   
   static ObjRec[] readBlocksFromAlignedArraysTT(byte[] romdata, int addr, int count)
