@@ -287,7 +287,7 @@ namespace PluginVideoNes
             //tt version hardcode
             Image[][] smallBlocksAll = null;
 
-            bool smallBlockHasSubpals = bigBlockIndexes[0].smallBlocksWithPal();
+            bool smallBlockHasSubpals = bigBlockIndexes==null ? true : bigBlockIndexes[0].smallBlocksWithPal();
             if (!smallBlockHasSubpals)
             {
                 smallBlocksAll = new Image[4][];

@@ -183,6 +183,15 @@ namespace CadEditor
 
     public class ObjRec : IEquatable<ObjRec>
     {
+        public ObjRec(int w, int h, int[] indexes, int[] palBytes)
+        {
+            //assert(getSize() == indexes.Length == palBytes.Lenghth/4)
+            this.w = w;
+            this.h = h;
+            this.indexes = indexes;
+            this.palBytes = palBytes;
+        }
+
         public ObjRec(byte c1, byte c2, byte c3, byte c4, byte typeColor)
         {
             this.indexes = new int[4];
@@ -262,8 +271,19 @@ namespace CadEditor
             }
         }
 
-        private int[] indexes;
-        private int[] palBytes;
+        public int[] indexes;
+        public int[] palBytes;
+        public int w = 2, h = 2;
+
+        public int getSize()
+        {
+            return w * h;
+        }
+
+        public virtual int getSubpallete(int i)
+        {
+            return palBytes[i] & 0x3;
+        }
 
         public virtual int getSubpallete()
         {

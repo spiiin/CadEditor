@@ -194,39 +194,16 @@ namespace CadEditor
             int y = e.Y / 16;
             PictureBox p = (PictureBox)sender;
             int objIndex = (int)p.Tag;
-            if (x == 0)
+            var obj = objects[objIndex];
+            if (x >= 0 && x < obj.w && y>=0 && y < obj.h)
             {
-                if (y == 0)
+                if (left)
                 {
-                    if (left)
-                        objects[objIndex].c1 = (byte)curActiveBlock;
-                    else
-                        curActiveBlock = objects[objIndex].c1;
+                    obj.indexes[y * obj.w + x] = curActiveBlock;
                 }
                 else
                 {
-                    if (left)
-                        objects[objIndex].c3 = (byte)curActiveBlock;
-                    else
-                        curActiveBlock = objects[objIndex].c3;
-                }
-            }
-            else
-            {
-                if (y == 0)
-                {
-                    if (left)
-                        objects[objIndex].c2 = (byte)curActiveBlock;
-                    else
-                        curActiveBlock = objects[objIndex].c2;
-                }
-                else
-                {
-                    if (left)
-                        objects[objIndex].c4 = (byte)curActiveBlock;
-                    else
-                        curActiveBlock = objects[objIndex].c4;
-
+                    curActiveBlock = obj.indexes[y * obj.w + x];
                 }
             }
             p.Image = makeObjImage(objIndex);
@@ -384,8 +361,8 @@ namespace CadEditor
                 ComboBox cbType = new ComboBox();
                 var objectTypes = ConfigScript.getBlockTypeNames();
                 cbType.Items.AddRange(objectTypes);
-                cbType.Location = new Point(156, 0);
-                cbType.Size = new Size(curPanelX, 21);
+                cbType.Location = new Point(curPanelX, 0);
+                cbType.Size = new Size(120, 21);
                 cbType.Tag = i;
                 cbType.DropDownStyle = ComboBoxStyle.DropDownList;
                 fp.Controls.Add(cbType);
