@@ -4,14 +4,88 @@ using System.Drawing;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset() { return new OffsetRec(0x4036, 6, 7*128); }
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginChrView.dll",
+    };
+  }
+  public OffsetRec getVideoOffset()   { return new OffsetRec(0x23010, 1, 0x1000); }
+  public OffsetRec getScreensOffset() { return new OffsetRec(0x4036 , 6, 7*128 ); }
+  public OffsetRec getPalOffset()     { return new OffsetRec(0x1AAEE, 16, 16   ); }
+  
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x4440 , 1  , 0x1000);  }
+  public int getBlocksCount()           { return 138; }
+  public int getPalBytesAddr()          { return 0x43B6; }
+  
   public int getScreenWidth()         { return 7; }
   public int getScreenHeight()        { return 128; }
-  public string getBlocksFilename()    { return "yonoid_1.png"; }
+  //public string getBlocksFilename()    { return "yonoid_1.png"; }
+  
+  public bool isBuildScreenFromSmallBlocks() { return true; }
+  
   public int getBigBlocksCount() { return 138; }
   public bool getScreenVertical()      { return true; }
   
   public bool isBigBlockEditorEnabled() { return false; }
-  public bool isBlockEditorEnabled()    { return false; }
+  public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
+  
+  public GetVideoPageAddrFunc getVideoPageAddrFunc()         { return Utils.getChrAddress; }
+  public GetVideoChunkFunc    getVideoChunkFunc()            { return Utils.getVideoChunk; }
+  public SetVideoChunkFunc    setVideoChunkFunc()            { return Utils.setVideoChunk; }
+  public GetPalFunc           getPalFunc() { return Utils.getPalleteLinear;}
+  public SetPalFunc           setPalFunc() { return Utils.setPalleteLinear;}
+  public GetBlocksFunc        getBlocksFunc() { return getBlocks;}
+  public SetBlocksFunc        setBlocksFunc() { return setBlocks;}
+  
+  //----------------------------------------------------------------------------------------
+  public ObjRec[] getBlocks(int blockIndex)
+  {
+    return readBlocksLinearTT(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount());
+  }
+  
+  public void setBlocks(int blockIndex, ObjRec[] blocksData)
+  {
+    writeBlocksLinearTT(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount());
+  }
+  
+  ObjRec[] readBlocksLinearTT(byte[] romdata, int addr, int count)
+  {
+    int BLOCK_W = 4;
+    int BLOCK_H = 4;
+    int BLOCK_S = BLOCK_H * BLOCK_H;
+    var objects = new ObjRec[count];
+    for (int i = 0; i < count; i++)
+    {
+      var indexes = new int[BLOCK_S];
+      var palBytes = new int[BLOCK_S/4];
+      for (int bi = 0; bi < BLOCK_S; bi++)
+      {
+        indexes[bi] = romdata[addr + i*BLOCK_S + bi];
+      }
+      int palByte = romdata[getPalBytesAddr()+i];
+      palBytes = new int[] { (palByte>>0)&3, (palByte>>2)&3, (palByte>>4)&3, (palByte>>6)&3 };
+      
+      objects[i] = new ObjRec(BLOCK_W, BLOCK_H, indexes, palBytes);
+    }
+    return objects;
+  }
+  
+  void writeBlocksLinearTT(ObjRec[] objects, byte[] romdata, int addr, int count)
+  {
+    for (int i = 0; i < count; i++)
+    {
+      var obj = objects[i];
+      int BLOCK_S = obj.indexes.Length;
+      for (int bi = 0; bi < BLOCK_S; bi++)
+      {
+         romdata[addr + i*BLOCK_S + bi] = (byte)obj.indexes[bi];
+      }
+      var objPalBytes = obj.palBytes;
+      int palByte = objPalBytes[0] | objPalBytes[1]<<2 | objPalBytes[2]<<4 | objPalBytes[3]<<6;
+      romdata[getPalBytesAddr()+i] = (byte)palByte;
+    }
+  }
 }
