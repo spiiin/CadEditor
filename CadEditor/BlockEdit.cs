@@ -199,6 +199,12 @@ namespace CadEditor
                 }
                 else
                 {
+                    //action 1
+                    int palIndex = (y >> 1) * (obj.w >> 1) + (x >> 1);
+                    int curPal = obj.palBytes[palIndex];
+                    if (++curPal > 3) { curPal = 0; }
+                    obj.palBytes[palIndex] = curPal;
+                    //action 2
                     curActiveBlock = obj.indexes[y * obj.w + x];
                 }
             }
