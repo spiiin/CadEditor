@@ -47,7 +47,7 @@ namespace CadEditor
         Bitmap makeImageStrip(byte[] videoChunk, byte[] pallete, int subPalIndex, float scale, bool scaleAccurate = true, bool withAlpha = false);
         Bitmap makeImageRectangle(byte[] videoChunk, byte[] pallete, int subPalIndex, float scale, bool scaleAccurate = true, bool withAlpha = false);
 
-        Bitmap makeObject(int index, ObjRec[] objects, Bitmap[] objStrips, float scale, MapViewType drawType, int constantSubpal = -1);
+        Bitmap makeObject(int index, ObjRec[] objects, Bitmap[][] objStrips, float scale, MapViewType drawType, int constantSubpal = -1);
         Bitmap makeObjectsStrip(byte videoPageId, byte tilesId, byte palId, float scale, MapViewType drawType, int constantSubpal = -1);
         Bitmap makeObjectsRectangle(byte videoPageId, byte tilesId, byte palId, float scale, MapViewType drawType, int constantSubpal = -1);
 

@@ -168,12 +168,14 @@ namespace PluginVideoNes
             return UtilsGDI.GlueImages(images.ToArray(), 16, 16);
         }
 
-        public Bitmap makeObject(int index, ObjRec[] objects, Bitmap[] objStrips, float scale, MapViewType drawType, int constantSubpal = -1)
+        public Bitmap makeObject(int index, ObjRec[] objects, Bitmap[][] objStrips, float scale, MapViewType drawType, int constantSubpal = -1)
         {
             int i = index;
             var mblock = new Bitmap((int)(16 * scale), (int)(16 * scale));
             var co = objects[i];
-            Bitmap curStrip;
+            int scaleInt8 = (int)(scale * 8);
+            int scaleInt16 = (int)(scale * 16);
+            Bitmap[] curStrip;
             if (constantSubpal == -1)
             {
                 curStrip = objStrips[co.getSubpallete()];
@@ -182,15 +184,12 @@ namespace PluginVideoNes
             {
                 curStrip = objStrips[constantSubpal];
             }
-
-            int scaleInt8 = (int)(scale * 8);
-            int scaleInt16 = (int)(scale * 16);
             using (Graphics g2 = Graphics.FromImage(mblock))
             {
-                g2.DrawImage(curStrip, new Rectangle(0, 0, scaleInt8, scaleInt8), new Rectangle(co.c1 * scaleInt8, 0, scaleInt8, scaleInt8), GraphicsUnit.Pixel);
-                g2.DrawImage(curStrip, new Rectangle(scaleInt8, 0, scaleInt8, scaleInt8), new Rectangle(co.c2 * scaleInt8, 0, scaleInt8, scaleInt8), GraphicsUnit.Pixel);
-                g2.DrawImage(curStrip, new Rectangle(0, scaleInt8, scaleInt8, scaleInt8), new Rectangle(co.c3 * scaleInt8, 0, scaleInt8, scaleInt8), GraphicsUnit.Pixel);
-                g2.DrawImage(curStrip, new Rectangle(scaleInt8, scaleInt8, scaleInt8, scaleInt8), new Rectangle(co.c4 * scaleInt8, 0, scaleInt8, scaleInt8), GraphicsUnit.Pixel);
+                g2.DrawImage(curStrip[co.c1], new Rectangle(0, 0, scaleInt8, scaleInt8), new Rectangle(0, 0, scaleInt8, scaleInt8), GraphicsUnit.Pixel);
+                g2.DrawImage(curStrip[co.c2], new Rectangle(scaleInt8, 0, scaleInt8, scaleInt8), new Rectangle(0, 0, scaleInt8, scaleInt8), GraphicsUnit.Pixel);
+                g2.DrawImage(curStrip[co.c3], new Rectangle(0, scaleInt8, scaleInt8, scaleInt8), new Rectangle(0, 0, scaleInt8, scaleInt8), GraphicsUnit.Pixel);
+                g2.DrawImage(curStrip[co.c4], new Rectangle(scaleInt8, scaleInt8, scaleInt8, scaleInt8), new Rectangle(0, 0, scaleInt8, scaleInt8), GraphicsUnit.Pixel);
                 if (drawType == MapViewType.ObjType)
                 {
                     g2.FillRectangle(new SolidBrush(CadObjectTypeColors[co.getType()]), new Rectangle(0, 0, scaleInt16, scaleInt16));
@@ -212,10 +211,11 @@ namespace PluginVideoNes
             ObjRec[] objects = ConfigScript.getBlocks(tilesId);
 
             byte[] palette = ConfigScript.getPal(palId);
-            var objStrip1 = makeImageStrip(videoChunk, palette, 0, scale);
-            var objStrip2 = makeImageStrip(videoChunk, palette, 1, scale);
-            var objStrip3 = makeImageStrip(videoChunk, palette, 2, scale);
-            var objStrip4 = makeImageStrip(videoChunk, palette, 3, scale);
+            var range256 = Enumerable.Range(0, 256);
+            var objStrip1 = range256.Select(i => makeImage(i, videoChunk, palette, 0, scale)).ToArray();
+            var objStrip2 = range256.Select(i => makeImage(i, videoChunk, palette, 1, scale)).ToArray();
+            var objStrip3 = range256.Select(i => makeImage(i, videoChunk, palette, 2, scale)).ToArray();
+            var objStrip4 = range256.Select(i => makeImage(i, videoChunk, palette, 3, scale)).ToArray();
             var objStrips = new[] { objStrip1, objStrip2, objStrip3, objStrip4 };
             Bitmap res = new Bitmap((int)(16 * blocksCount * scale), (int)(16 * scale));
             using (Graphics g = Graphics.FromImage(res))
