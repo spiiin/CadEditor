@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace CadEditor
 {
@@ -19,10 +20,6 @@ namespace CadEditor
         {
             showAxis = true;
             cbSubpalette.DrawItem += new DrawItemEventHandler(cbSubpalette_DrawItemEvent);
-            videoSprites[0] = videoSprites1;
-            videoSprites[1] = videoSprites2;
-            videoSprites[2] = videoSprites3;
-            videoSprites[3] = videoSprites4;
             dirty = false;
 
             reloadLevel();
@@ -118,11 +115,10 @@ namespace CadEditor
         protected void setVideo()
         {
             byte backId = getBackId();
+            var chunk = ConfigScript.getVideoChunk(backId);
             for (int i = 0; i < 4; i++)
             {
-                Bitmap b = ConfigScript.videoNes.makeImageStrip(ConfigScript.getVideoChunk(backId), palette, i, 2, true);
-                videoSprites[i].Images.Clear();
-                videoSprites[i].Images.AddStrip(b);
+                videoSprites[i] = Enumerable.Range(0,256).Select(t => ConfigScript.videoNes.makeImage(t, chunk, palette, i, 2, true)).ToArray();
             }
         }
 
@@ -135,7 +131,7 @@ namespace CadEditor
                 {
                     int x = i % 16;
                     int y = i / 16;
-                    g.DrawImage(videoSprites[curSubpalIndex].Images[i], new Rectangle(x * 16, y * 16, 16, 16));
+                    g.DrawImage(videoSprites[curSubpalIndex][i], new Rectangle(x * 16, y * 16, 16, 16));
                 }
             }
             mapScreen.Image = b;
@@ -151,7 +147,7 @@ namespace CadEditor
 
         protected byte[] palette = new byte[Globals.PAL_LEN];
         protected ObjRec[] objects = new ObjRec[256];
-        protected ImageList[] videoSprites = new ImageList[4];
+        protected Bitmap[][] videoSprites = new Bitmap[4][];
         protected bool dirty;
         protected bool readOnly;
         protected bool showAxis;
@@ -207,7 +203,7 @@ namespace CadEditor
                 }
             }
             p.Image = makeObjImage(objIndex);
-            pbActive.Image = videoSprites[curSubpalIndex].Images[curActiveBlock];
+            pbActive.Image = videoSprites[curSubpalIndex][curActiveBlock];
             lbActive.Text = String.Format("({0:X})", curActiveBlock);
             dirty = true;
         }
@@ -239,7 +235,7 @@ namespace CadEditor
                 int x = i % obj.w;
                 int y = i / obj.w;
                 int pali = (y>>1)*(obj.w>>1)+(x>>1);
-                images[i] = videoSprites[obj.getSubpallete(pali)].Images[obj.indexes[i]];
+                images[i] = videoSprites[obj.getSubpallete(pali)][obj.indexes[i]];
             }
            
             return UtilsGDI.GlueImages(images, obj.w, obj.h);
@@ -250,7 +246,7 @@ namespace CadEditor
             int x = e.X / 16;
             int y = e.Y / 16;
             curActiveBlock = y * 16 + x;
-            pbActive.Image = videoSprites[curSubpalIndex].Images[curActiveBlock];
+            pbActive.Image = videoSprites[curSubpalIndex][curActiveBlock];
             lbActive.Text = String.Format("({0:X})", curActiveBlock);
             dirty = true;
         }
