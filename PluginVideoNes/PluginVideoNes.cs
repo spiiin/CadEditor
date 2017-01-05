@@ -170,35 +170,29 @@ namespace PluginVideoNes
 
         public Bitmap makeObject(int index, ObjRec[] objects, Bitmap[][] objStrips, float scale, MapViewType drawType, int constantSubpal = -1)
         {
-            int i = index;
-            var mblock = new Bitmap((int)(16 * scale), (int)(16 * scale));
-            var co = objects[i];
-            int scaleInt8 = (int)(scale * 8);
+            var obj = objects[index];
             int scaleInt16 = (int)(scale * 16);
-            Bitmap[] curStrip;
-            if (constantSubpal == -1)
+            var images = new Image[obj.getSize()];
+            for (int i = 0; i < obj.getSize(); i++)
             {
-                curStrip = objStrips[co.getSubpallete()];
+                int x = i % obj.w;
+                int y = i / obj.w;
+                int pali = (y >> 1) * (obj.w >> 1) + (x >> 1);
+                images[i] = objStrips[obj.getSubpallete(pali)][obj.indexes[i]];
             }
-            else
-            {
-                curStrip = objStrips[constantSubpal];
-            }
+
+            var mblock = UtilsGDI.GlueImages(images, obj.w, obj.h);
             using (Graphics g2 = Graphics.FromImage(mblock))
             {
-                g2.DrawImage(curStrip[co.c1], new Rectangle(0, 0, scaleInt8, scaleInt8), new Rectangle(0, 0, scaleInt8, scaleInt8), GraphicsUnit.Pixel);
-                g2.DrawImage(curStrip[co.c2], new Rectangle(scaleInt8, 0, scaleInt8, scaleInt8), new Rectangle(0, 0, scaleInt8, scaleInt8), GraphicsUnit.Pixel);
-                g2.DrawImage(curStrip[co.c3], new Rectangle(0, scaleInt8, scaleInt8, scaleInt8), new Rectangle(0, 0, scaleInt8, scaleInt8), GraphicsUnit.Pixel);
-                g2.DrawImage(curStrip[co.c4], new Rectangle(scaleInt8, scaleInt8, scaleInt8, scaleInt8), new Rectangle(0, 0, scaleInt8, scaleInt8), GraphicsUnit.Pixel);
                 if (drawType == MapViewType.ObjType)
                 {
-                    g2.FillRectangle(new SolidBrush(CadObjectTypeColors[co.getType()]), new Rectangle(0, 0, scaleInt16, scaleInt16));
-                    g2.DrawString(String.Format("{0:X}", co.getType()), new Font("Arial", 6), Brushes.White, new Point(0, 0));
+                    g2.FillRectangle(new SolidBrush(CadObjectTypeColors[obj.getType()]), new Rectangle(0, 0, scaleInt16, scaleInt16));
+                    g2.DrawString(String.Format("{0:X}", obj.getType()), new Font("Arial", 6), Brushes.White, new Point(0, 0));
                 }
                 else if (drawType == MapViewType.ObjNumbers)
                 {
                     g2.FillRectangle(new SolidBrush(Color.FromArgb(192, 255, 255, 255)), new Rectangle(0, 0, scaleInt16, scaleInt16));
-                    g2.DrawString(String.Format("{0:X}", i), new Font("Arial", 6), Brushes.Red, new Point(0, 0));
+                    g2.DrawString(String.Format("{0:X}", index), new Font("Arial", 6), Brushes.Red, new Point(0, 0));
                 }
             }
             return mblock;
