@@ -471,11 +471,11 @@ namespace CadEditor
             var data = new byte[blocksCount * 5];
             for (int i = 0; i < blocksCount; i++)
             {
-                data[i] = objects[i].c1;
-                data[blocksCount * 1 + i] = objects[i].c2;
-                data[blocksCount * 2 + i] = objects[i].c3;
-                data[blocksCount * 3 + i] = objects[i].c4;
-                data[blocksCount * 4 + i] = objects[i].typeColor;
+                data[i] = (byte)objects[i].c1;
+                data[blocksCount * 1 + i] = (byte)objects[i].c2;
+                data[blocksCount * 2 + i] = (byte)objects[i].c3;
+                data[blocksCount * 3 + i] = (byte)objects[i].c4;
+                data[blocksCount * 4 + i] = (byte)objects[i].typeColor;
             }
 
             Utils.saveDataToFile(fn, data);

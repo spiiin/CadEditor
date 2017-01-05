@@ -84,10 +84,10 @@ public static class TinyToonUtils
     for (int i = 0; i < count; i++)
     {
       var obj = objects[i];
-      romdata[addr + i] = obj.c1;
-      romdata[addr + count * 1 + i] = obj.c3;
-      romdata[addr + count * 2 + i] = obj.c2;
-      romdata[addr + count * 3 + i] = obj.c4;
+      romdata[addr + i] = (byte)obj.c1;
+      romdata[addr + count * 1 + i] = (byte)obj.c3;
+      romdata[addr + count * 2 + i] = (byte)obj.c2;
+      romdata[addr + count * 3 + i] = (byte)obj.c4;
     }
   }
   

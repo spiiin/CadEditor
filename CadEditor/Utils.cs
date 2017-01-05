@@ -280,11 +280,11 @@ namespace CadEditor
             for (int i = 0; i < count; i++)
             {
                 var obj = objects[i];
-                romdata[addr + i * 5 + 0] = obj.c1;
-                romdata[addr + i * 5 + 1] = obj.c2;
-                romdata[addr + i * 5 + 2] = obj.c3;
-                romdata[addr + i * 5 + 3] = obj.c4;
-                romdata[addr + i * 5 + 4] = obj.typeColor;
+                romdata[addr + i * 5 + 0] = (byte)obj.c1;
+                romdata[addr + i * 5 + 1] = (byte)obj.c2;
+                romdata[addr + i * 5 + 2] = (byte)obj.c3;
+                romdata[addr + i * 5 + 3] = (byte)obj.c4;
+                romdata[addr + i * 5 + 4] = (byte)obj.typeColor;
             }
         }
 
@@ -293,11 +293,11 @@ namespace CadEditor
             for (int i = 0; i < count; i++)
             {
                 var obj = objects[i];
-                romdata[addr + i] = obj.c1;
-                romdata[addr + count * 1 + i] = obj.c2;
-                romdata[addr + count * 2 + i] = obj.c3;
-                romdata[addr + count * 3 + i] = obj.c4;
-                romdata[addr + count * 4 + i] = obj.typeColor;
+                romdata[addr + i] = (byte)obj.c1;
+                romdata[addr + count * 1 + i] = (byte)obj.c2;
+                romdata[addr + count * 2 + i] = (byte)obj.c3;
+                romdata[addr + count * 3 + i] = (byte)obj.c4;
+                romdata[addr + count * 4 + i] = (byte)obj.typeColor;
             }
         }
 

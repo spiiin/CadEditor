@@ -185,6 +185,9 @@ namespace CadEditor
     {
         public ObjRec(byte c1, byte c2, byte c3, byte c4, byte typeColor)
         {
+            this.indexes = new int[4];
+            this.palBytes = new int[indexes.Length / 4];
+
             this.c1 = c1;
             this.c2 = c2;
             this.c3 = c3;
@@ -201,8 +204,66 @@ namespace CadEditor
             this.typeColor = other.typeColor;
         }
 
-        public byte c1, c2, c3, c4;
-        public byte typeColor;
+        //TODO: remove. FOR REFACTORING PURPOSES ONLY. properties only mask access to public field indexes and palBytes
+
+        public int c1
+        {
+            get
+            {
+                return indexes[0];
+            }
+            set
+            {
+                indexes[0] = value;
+            }
+        }
+        public int c2
+        {
+            get
+            {
+                return indexes[1];
+            }
+            set
+            {
+                indexes[1] = value;
+            }
+        }
+        public int c3
+        {
+            get
+            {
+                return indexes[2];
+            }
+            set
+            {
+                indexes[2] = value;
+            }
+        }
+        public int c4
+        {
+            get
+            {
+                return indexes[3];
+            }
+            set
+            {
+                indexes[3] = value;
+            }
+        }
+        public int typeColor
+        {
+            get
+            {
+                return palBytes[0];
+            }
+            set
+            {
+                palBytes[0] = value;
+            }
+        }
+
+        private int[] indexes;
+        private int[] palBytes;
 
         public virtual int getSubpallete()
         {

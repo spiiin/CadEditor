@@ -94,10 +94,10 @@ public class Data
     for (int i = 0; i < count; i++)
     {
         var obj = objects[i];
-        romdata[addr + i * 4 + 0] = obj.c1;
-        romdata[addr + i * 4 + 1] = obj.c2;
-        romdata[addr + i * 4 + 2] = obj.c3;
-        romdata[addr + i * 4 + 3] = obj.c4;
+        romdata[addr + i * 4 + 0] = (byte)obj.c1;
+        romdata[addr + i * 4 + 1] = (byte)obj.c2;
+        romdata[addr + i * 4 + 2] = (byte)obj.c3;
+        romdata[addr + i * 4 + 3] = (byte)obj.c4;
     }
   }
   

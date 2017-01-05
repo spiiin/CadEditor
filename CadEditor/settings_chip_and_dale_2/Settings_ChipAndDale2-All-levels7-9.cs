@@ -250,10 +250,10 @@ public class Data : CapcomBase
     for (int i = 0; i < count; i++)
     {
         var obj = objects[i];
-        Globals.romdata[addr + i] = obj.c1;
-        Globals.romdata[addr + count * 1 + i] = obj.c2;
-        Globals.romdata[addr + count * 2 + i] = obj.c3;
-        Globals.romdata[addr + count * 3 + i] = obj.c4;
+        Globals.romdata[addr + i] = (byte)obj.c1;
+        Globals.romdata[addr + count * 1 + i] = (byte)obj.c2;
+        Globals.romdata[addr + count * 2 + i] = (byte)obj.c3;
+        Globals.romdata[addr + count * 3 + i] = (byte)obj.c4;
     }
     
     int palInfoCount = getBlocksCount()/4;

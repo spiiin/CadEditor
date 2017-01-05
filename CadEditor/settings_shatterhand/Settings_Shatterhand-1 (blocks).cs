@@ -61,12 +61,12 @@ public class Data
     for (int i = 0; i < getBlocksCount(); i++)
     {
         var obj = blocks[i];
-	
-	Globals.romdata[addr + 4 * i + 0] = obj.c1;
-        Globals.romdata[addr + 4 * i + 2] = obj.c2;
-        Globals.romdata[addr + 4 * i + 1] = obj.c3;
-        Globals.romdata[addr + 4 * i + 3] = obj.c4;
-        Globals.romdata[0x893f + i] = obj.typeColor;
+        
+        Globals.romdata[addr + 4 * i + 0] = (byte)obj.c1;
+        Globals.romdata[addr + 4 * i + 2] = (byte)obj.c2;
+        Globals.romdata[addr + 4 * i + 1] = (byte)obj.c3;
+        Globals.romdata[addr + 4 * i + 3] = (byte)obj.c4;
+        Globals.romdata[0x893f + i] = (byte)obj.typeColor;
     }
   }
   
