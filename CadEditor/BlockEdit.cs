@@ -234,17 +234,7 @@ namespace CadEditor
 
         public Image makeObjImage(int index)
         {
-            var obj = objects[index];
-            var images = new Image[obj.getSize()];
-            for (int i=0; i < obj.getSize(); i++)
-            {
-                int x = i % obj.w;
-                int y = i / obj.w;
-                int pali = (y>>1)*(obj.w>>1)+(x>>1);
-                images[i] = videoSprites[obj.getSubpallete(pali)][obj.indexes[i]];
-            }
-           
-            return UtilsGDI.GlueImages(images, obj.w, obj.h);
+            return ConfigScript.videoNes.makeObject(index, objects, videoSprites, 2.0f, MapViewType.Tiles);
         }
 
         protected void mapScreen_MouseClick(object sender, MouseEventArgs e)
