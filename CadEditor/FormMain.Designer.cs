@@ -409,15 +409,13 @@
             // 
             // pnView
             // 
-            this.pnView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnView.AutoScroll = true;
             this.pnView.Controls.Add(this.mapScreen);
-            this.pnView.Location = new System.Drawing.Point(4, 2);
+            this.pnView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnView.Location = new System.Drawing.Point(0, 0);
             this.pnView.Margin = new System.Windows.Forms.Padding(4);
             this.pnView.Name = "pnView";
-            this.pnView.Size = new System.Drawing.Size(1041, 635);
+            this.pnView.Size = new System.Drawing.Size(1048, 638);
             this.pnView.TabIndex = 53;
             // 
             // lbCoords

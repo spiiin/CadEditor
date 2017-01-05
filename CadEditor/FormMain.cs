@@ -42,6 +42,9 @@ namespace CadEditor
 
             ConfigScript.plugins.ForEach((p) => p.addToolButton(this));
             ConfigScript.plugins.ForEach((p) => p.addSubeditorButton(this));
+
+            splitContainer1.Width = this.Width - 21;
+            splitContainer1.Height = this.Height - 81;
         }
 
         private Form makeBigBlocksEditor()
