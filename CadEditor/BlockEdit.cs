@@ -25,9 +25,9 @@ namespace CadEditor
             videoSprites[3] = videoSprites4;
             dirty = false;
 
+            reloadLevel();
             preparePanel();
             resetControls();
-            reloadLevel();
 
             readOnly = false; //must be read from config
             btSave.Enabled = !readOnly;
@@ -156,6 +156,8 @@ namespace CadEditor
         protected bool readOnly;
         protected bool showAxis;
 
+        private const int TILE_SIZE = 16;
+
         protected string[] subPalItems = { "1", "2", "3", "4" };
 
         protected FormMain formMain;
@@ -253,16 +255,17 @@ namespace CadEditor
 
         public Image makeObjImage(int index)
         {
-            Bitmap b = new Bitmap(32, 32);
             var obj = objects[index];
-            using (Graphics g = Graphics.FromImage(b))
+            var images = new Image[obj.getSize()];
+            for (int i=0; i < obj.getSize(); i++)
             {
-                g.DrawImage(videoSprites[obj.getSubpallete()].Images[obj.c1], new Rectangle(0, 0, 16, 16));
-                g.DrawImage(videoSprites[obj.getSubpallete()].Images[obj.c2], new Rectangle(16, 0, 16, 16));
-                g.DrawImage(videoSprites[obj.getSubpallete()].Images[obj.c3], new Rectangle(0, 16, 16, 16));
-                g.DrawImage(videoSprites[obj.getSubpallete()].Images[obj.c4], new Rectangle(16, 16, 16, 16));
+                int x = i % obj.w;
+                int y = i / obj.w;
+                int pali = (y>>1)*(obj.w>>1)+(x>>1);
+                images[i] = videoSprites[obj.getSubpallete(pali)].Images[obj.indexes[i]];
             }
-            return b;
+           
+            return UtilsGDI.GlueImages(images, obj.w, obj.h);
         }
 
         protected void mapScreen_MouseClick(object sender, MouseEventArgs e)
@@ -344,26 +347,31 @@ namespace CadEditor
             mapObjects.SuspendLayout();
             for (int i = 0; i < ConfigScript.getBlocksCount(); i++)
             {
+                var obj = objects[i];
+                int curPanelX = 0;
+
                 Panel fp = new Panel();
-                fp.Size = new Size(mapObjects.Width - 25, 32);
+                fp.Size = new Size(mapObjects.Width - 25, TILE_SIZE * obj.h);
                 //
                 Label lb = new Label();
-                lb.Location = new Point(0, 0);
+                lb.Location = new Point(curPanelX, 0);
                 lb.Size = new Size(24, 32);
                 lb.Tag = i;
                 lb.Text = String.Format("{0:X}",i);
                 fp.Controls.Add(lb);
+                curPanelX += lb.Size.Width;
                 //
                 PictureBox pb = new PictureBox();
-                pb.Location = new Point(24, 0);
-                pb.Size = new Size(32, 32);
+                pb.Location = new Point(curPanelX, 0);
+                pb.Size = new Size(TILE_SIZE * obj.w, TILE_SIZE * obj.h);
                 pb.Tag = i;
                 pb.MouseClick += new MouseEventHandler(pb_MouseClick);
                 fp.Controls.Add(pb);
+                curPanelX += pb.Size.Width + 6;
                 //
                 ComboBox cbColor = new ComboBox();
                 cbColor.Size = cbSubpalette.Size;
-                cbColor.Location = new Point(60, 0);
+                cbColor.Location = new Point(curPanelX, 0);
                 cbColor.Tag = pb;
                 cbColor.DrawMode = DrawMode.OwnerDrawVariable;
                 cbColor.DrawItem += new DrawItemEventHandler(cbSubpalette_DrawItemEvent);
@@ -371,23 +379,31 @@ namespace CadEditor
                 cbColor.DropDownStyle = ComboBoxStyle.DropDownList;
                 cbColor.SelectedIndexChanged += cbColor_SelectedIndexChanged;
                 fp.Controls.Add(cbColor);
+                curPanelX += cbColor.Size.Width;
                 //
                 ComboBox cbType = new ComboBox();
                 var objectTypes = ConfigScript.getBlockTypeNames();
                 cbType.Items.AddRange(objectTypes);
                 cbType.Location = new Point(156, 0);
-                cbType.Size = new Size(120, 21);
+                cbType.Size = new Size(curPanelX, 21);
                 cbType.Tag = i;
                 cbType.DropDownStyle = ComboBoxStyle.DropDownList;
                 fp.Controls.Add(cbType);
                 mapObjects.Controls.Add(fp);
             }
             mapObjects.ResumeLayout();
+
+            refillPanel();
         }
 
         protected virtual void refillPanel()
         {
             //GUI
+            if (mapObjects.Controls.Count == 0)
+            {
+                return;
+            }
+
             for (int i = 0; i < ConfigScript.getBlocksCount(); i++)
             {
                 Panel p = (Panel)mapObjects.Controls[i];
