@@ -187,8 +187,11 @@ namespace CadEditor
             setBigBlocksFuncs = new SetBigBlocksFunc[bigBlocksHierarchyCount];
             getBigBlocksFuncs = callFromScript<GetBigBlocksFunc[]>(asm, data, "*.getBigBlocksFuncs", new GetBigBlocksFunc[1]);
             setBigBlocksFuncs = callFromScript<SetBigBlocksFunc[]>(asm, data, "*.setBigBlocksFuncs", new SetBigBlocksFunc[1]);
-            getBigBlocksFuncs[0] = callFromScript<GetBigBlocksFunc>(asm, data, "*.getBigBlocksFunc", getBigBlocksFuncs[0]);
-            setBigBlocksFuncs[0] = callFromScript<SetBigBlocksFunc>(asm, data, "*.setBigBlocksFunc", setBigBlocksFuncs[0]);
+            if (!buildScreenFromSmallBlocks)
+            {
+                getBigBlocksFuncs[0] = callFromScript<GetBigBlocksFunc>(asm, data, "*.getBigBlocksFunc", getBigBlocksFuncs[0]);
+                setBigBlocksFuncs[0] = callFromScript<SetBigBlocksFunc>(asm, data, "*.setBigBlocksFunc", setBigBlocksFuncs[0]);
+            }
 
             getSegaMappingFunc = callFromScript<GetSegaMappingFunc>(asm, data, "*.getSegaMappingFunc", (int index) => { return Utils.readLinearBigBlockData(0, index); });
             setSegaMappingFunc = callFromScript<SetSegaMappingFunc>(asm, data, "*.setSegaMappingFunc", (int index, byte[] bb) => { Utils.writeLinearBigBlockData(0, index, bb); });
@@ -234,6 +237,8 @@ namespace CadEditor
             blockTypeNames = callFromScript(asm, data, "getBlockTypeNames", defaultBlockTypeNames);
 
             groups = callFromScript(asm, data, "getGroups", new GroupRec[0]);
+
+            palBytesAddr = callFromScript(asm, data, "getPalBytesAddr", -1);
 
             loadAllPlugins(asm, data);
         }
@@ -545,6 +550,11 @@ namespace CadEditor
             return groups[i];
         }
 
+        public static int getPalBytesAddr()
+        {
+            return palBytesAddr;
+        }
+
           //------------------------------------------------------------
         //helpers
         public static int getScreenWidth(int levelNo)
@@ -700,6 +710,8 @@ namespace CadEditor
         public static string objTypesPicturesDir;
 
         public static GroupRec[] groups;
+
+        public static int palBytesAddr;
 
         public static string[] blockTypeNames;
         public static string[] defaultBlockTypeNames = new[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F" };
