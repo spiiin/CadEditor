@@ -3,15 +3,7 @@ using System;
 using System.Drawing;
 
 public class Data 
-{ 
-  public string[] getPluginNames() 
-  {
-    return new string[] 
-    {
-      "PluginChrView.dll",
-    };
-  }
-  
+{
   public OffsetRec getScreensOffset()  { return new OffsetRec(0x10, 1 , 6*40);   }
   public int getScreenWidth()          { return 6; }
   public int getScreenHeight()         { return 40; }

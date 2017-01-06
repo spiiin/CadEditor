@@ -109,6 +109,7 @@
     <Compile Include="FormStructuresName.Designer.cs">
       <DependentUpon>FormStructuresName.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameStructures.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="MapEditor.cs" />
     <Compile Include="OpenFile.cs">
