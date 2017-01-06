@@ -31,8 +31,8 @@ public class Data
   public int getBlocksCount()           { return 128; }
   public int getBigBlocksCount()           { return 128; }
   public int getPalBytesAddr()          { return 0x402b; }
-  public GetBlocksFunc        getBlocksFunc() { return getBlocks;}
-  public SetBlocksFunc        setBlocksFunc() { return setBlocks;}
+  public GetBlocksFunc        getBlocksFunc() { return Utils.getBlocksFromTiles16Pal1;}
+  public SetBlocksFunc        setBlocksFunc() { return Utils.setBlocksFromTiles16Pal1;}
   
   public GetPalFunc           getPalFunc()           { return getPallete;}
   public SetPalFunc           setPalFunc()           { return null;}
@@ -55,53 +55,5 @@ public class Data
       0x0f, 0x11, 0x01, 0x23, 0x0f, 0x1a, 0x08, 0x39
     }; 
     return pallete;
-  }
-  
-  public ObjRec[] getBlocks(int blockIndex)
-  {
-    return readBlocksLinearTT(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount());
-  }
-  
-  public void setBlocks(int blockIndex, ObjRec[] blocksData)
-  {
-    writeBlocksLinearTT(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount());
-  }
-  
-  ObjRec[] readBlocksLinearTT(byte[] romdata, int addr, int count)
-  {
-    int BLOCK_W = 4;
-    int BLOCK_H = 4;
-    int BLOCK_S = BLOCK_H * BLOCK_H;
-    var objects = new ObjRec[count];
-    for (int i = 0; i < count; i++)
-    {
-      var indexes = new int[BLOCK_S];
-      var palBytes = new int[BLOCK_S/4];
-      for (int bi = 0; bi < BLOCK_S; bi++)
-      {
-        indexes[bi] = romdata[addr + i*BLOCK_S + bi];
-      }
-      int palByte = romdata[getPalBytesAddr()+i];
-      palBytes = new int[] { (palByte>>0)&3, (palByte>>2)&3, (palByte>>4)&3, (palByte>>6)&3 };
-      
-      objects[i] = new ObjRec(BLOCK_W, BLOCK_H, indexes, palBytes);
-    }
-    return objects;
-  }
-  
-  void writeBlocksLinearTT(ObjRec[] objects, byte[] romdata, int addr, int count)
-  {
-    for (int i = 0; i < count; i++)
-    {
-      var obj = objects[i];
-      int BLOCK_S = obj.indexes.Length;
-      for (int bi = 0; bi < BLOCK_S; bi++)
-      {
-         romdata[addr + i*BLOCK_S + bi] = (byte)obj.indexes[bi];
-      }
-      var objPalBytes = obj.palBytes;
-      int palByte = objPalBytes[0] | objPalBytes[1]<<2 | objPalBytes[2]<<4 | objPalBytes[3]<<6;
-      romdata[getPalBytesAddr()+i] = (byte)palByte;
-    }
   }
 }

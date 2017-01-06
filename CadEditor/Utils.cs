@@ -408,6 +408,54 @@ namespace CadEditor
             }
         }
 
+        public static ObjRec[] getBlocksFromTiles16Pal1(int blockIndex)
+        {
+            return readBlocksLinearTiles16Pal1(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getPalBytesAddr(), ConfigScript.getBlocksCount());
+        }
+
+        public static void setBlocksFromTiles16Pal1(int blockIndex, ObjRec[] blocksData)
+        {
+            writeBlocksLinearTiles16Pal1(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getPalBytesAddr(), ConfigScript.getBlocksCount());
+        }
+
+        public static ObjRec[] readBlocksLinearTiles16Pal1(byte[] romdata, int addr, int palBytesAddr, int count)
+        {
+            int BLOCK_W = 4;
+            int BLOCK_H = 4;
+            int BLOCK_S = BLOCK_H * BLOCK_H;
+            var objects = new ObjRec[count];
+            for (int i = 0; i < count; i++)
+            {
+                var indexes = new int[BLOCK_S];
+                var palBytes = new int[BLOCK_S / 4];
+                for (int bi = 0; bi < BLOCK_S; bi++)
+                {
+                    indexes[bi] = romdata[addr + i * BLOCK_S + bi];
+                }
+                int palByte = romdata[palBytesAddr + i];
+                palBytes = new int[] { (palByte >> 0) & 3, (palByte >> 2) & 3, (palByte >> 4) & 3, (palByte >> 6) & 3 };
+
+                objects[i] = new ObjRec(BLOCK_W, BLOCK_H, indexes, palBytes);
+            }
+            return objects;
+        }
+
+        public static void writeBlocksLinearTiles16Pal1(ObjRec[] objects, byte[] romdata, int addr, int palBytesAddr, int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                var obj = objects[i];
+                int BLOCK_S = obj.indexes.Length;
+                for (int bi = 0; bi < BLOCK_S; bi++)
+                {
+                    romdata[addr + i * BLOCK_S + bi] = (byte)obj.indexes[bi];
+                }
+                var objPalBytes = obj.palBytes;
+                int palByte = objPalBytes[0] | objPalBytes[1] << 2 | objPalBytes[2] << 4 | objPalBytes[3] << 6;
+                romdata[palBytesAddr + i] = (byte)palByte;
+            }
+        }
+
         public static T[] mergeArrays<T>(T[] a, T[] b)
         {
             var c = new T[a.Length + b.Length];
