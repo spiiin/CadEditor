@@ -367,7 +367,6 @@ namespace CadEditor
                 data[i * 4 + 1] = Globals.romdata[addr + count * 1 + i];
                 data[i * 4 + 2] = Globals.romdata[addr + count * 2 + i];
                 data[i * 4 + 3] = Globals.romdata[addr + count * 3 + i];
-                //data[i *4 + 4] = Globals.romdata[addr + count*4 + i]; // for tt
             }
             return data;
         }
@@ -380,7 +379,6 @@ namespace CadEditor
                 Globals.romdata[addr + count * 1 + i] = data[i * 4 + 1];
                 Globals.romdata[addr + count * 2 + i] = data[i * 4 + 2];
                 Globals.romdata[addr + count * 3 + i] = data[i * 4 + 3];
-                //Globals.romdata[addr + count*4 + i] = data[i *4 + 4]; // for tt
             }
         }
 
@@ -598,7 +596,6 @@ namespace CadEditor
 
         public static byte[] readVideoBankFrom16Pointers(int[] ptrs)
         {
-            //local version for cad & dwd
             byte[] videoChunk = new byte[Globals.VIDEO_PAGE_SIZE];
             for (int i = 0; i < ptrs.Length; i++)
             {
