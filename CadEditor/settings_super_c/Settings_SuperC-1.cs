@@ -7,7 +7,6 @@ public class Data
   public OffsetRec getScreensOffset()  { return new OffsetRec(0xA068, 17 , 8*8);   }
   public int getScreenWidth()          { return 8; }
   public int getScreenHeight()         { return 8; }
-  //public string getBlocksFilename()    { return "superc_1.png"; }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
   
@@ -21,7 +20,7 @@ public class Data
   
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0xa4e8, 1  , 0x1000);  }
   public int getBlocksCount()           { return 244; }
-  public int getBigBlocksCount()           { return 244; }
+  public int getBigBlocksCount()        { return 244; }
   public int getPalBytesAddr()          { return 0xb428; }
   public GetBlocksFunc        getBlocksFunc() { return Utils.getBlocksFromTiles16Pal1;}
   public SetBlocksFunc        setBlocksFunc() { return Utils.setBlocksFromTiles16Pal1;}

@@ -21,7 +21,6 @@ public class Data
   
   public int getScreenWidth()         { return 7; }
   public int getScreenHeight()        { return 128; }
-  //public string getBlocksFilename()    { return "yonoid_1.png"; }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
   
