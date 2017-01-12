@@ -5,14 +5,14 @@ using System.Drawing;
 
 public class Data
 { 
-  public OffsetRec getScreensOffset()     { return new OffsetRec(166366   , 1 , 11*64);  }
+  public OffsetRec getScreensOffset()     { return new OffsetRec(0x289de, 1 , 11*64);  }
   public int getScreenWidth()    { return 64; }
   public int getScreenHeight()   { return 11; }
   public int getBigBlocksCount() { return 44; }
-  public string getBlocksFilename()       { return "battletoads_1.png"; }
+  public int getBlocksCount()    { return 44; }
   
   public bool isBigBlockEditorEnabled() { return false; }
-  public bool isBlockEditorEnabled()    { return false; }
+  public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
   
   public RenderToMainScreenFunc getRenderToMainScreenFunc() { return renderObjects; }
@@ -36,5 +36,39 @@ public class Data
         g.DrawString(String.Format("{0:X2}", b5), new Font("Arial", 8), Brushes.Red, rect.X + 16, rect.Y+16);
         g.DrawString(String.Format("{0:X2}", b6), new Font("Arial", 8), Brushes.Red, rect.X + 32, rect.Y+16);
     }
+  }
+  
+  public bool isBuildScreenFromSmallBlocks() { return true; }
+  
+  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getVideoAddress; }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChunk;   }
+  public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
+  
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x28c9e , 1  , 0x1000);  }
+  public int getPalBytesAddr()          { return 0x28F5E; } //it's before blocks descr and screens descr
+  public GetBlocksFunc        getBlocksFunc() { return Utils.getBlocksFromTiles16Pal1;}
+  public SetBlocksFunc        setBlocksFunc() { return Utils.setBlocksFromTiles16Pal1;}
+  
+  public GetPalFunc           getPalFunc()           { return getPallete;}
+  public SetPalFunc           setPalFunc()           { return null;}
+  
+  //----------------------------------------------------------------------------
+  public int getVideoAddress(int id)
+  {
+    return -1;
+  }
+  
+  public byte[] getVideoChunk(int videoPageId)
+  {
+     return Utils.readVideoBankFromFile("ppu_dump1.bin", videoPageId);
+  }
+  
+  public byte[] getPallete(int palId)
+  {
+    var pallete = new byte[] { 
+      0x0f, 0x07, 0x17, 0x27, 0x0f, 0x08, 0x17, 0x10,
+      0x0f, 0x08, 0x09, 0x07, 0x0f, 0x02, 0x12, 0x20
+    }; 
+    return pallete;
   }
 }
