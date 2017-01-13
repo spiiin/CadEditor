@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 [RUS]
 Редактор уровней для игр [NES/SEGA/SNES/GBA].
-Версия 3.9
+Версия 4.0
 -------------------------------------------------------------------------------
 Полный список поддерживаемых игр в файле cad_editor_supported_games.txt
 ------------------------------------------------------------------------------- 
@@ -363,6 +363,30 @@ v3.9
   Predator
 - Конфиги экранов картинками (автор DANGER X)
   Mighty Final Fight
+  
+v4.0
+- Фикс бага с отсуствием скролл-бара при маленьких разрешениях экрана.
+- Поддержка маленьких блоков любого размера.
+- Редактор блоков для игр (по одному уровню)
+    Yo-Noid
+    Power Blade
+    Power Blade 2
+    Contra Force
+    Batman Returns
+    Alien 3
+    Adventures Island 2
+    Adventures Island 3
+    Super C
+    Jackie Chan Action Kung Fu
+    Battletoads
+    Battletoads & Double Dragon - The Ultimate Team
+    Monster in My Pocket
+    Bucky O'Hare
+    Jackal
+    Darkman
+    Teenage Mutant Ninja Turtles
+    Teenage Mutant Ninja Turtles 2
+    Teenage Mutant Ninja Turtles 3
   
 
 -------------------------------------------------------------------------------

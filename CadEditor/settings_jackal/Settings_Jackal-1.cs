@@ -93,7 +93,7 @@ public class Data
   {
     for (int i = 0; i < blocksData.Length; i++)
     {
-      blocksData[i] = transposeObjRec(blocksData[i]);
+      blocksData[i] = transposeObjRec(blocksData[i]); //TODO: remove inplace changes
     }
     Utils.writeBlocksLinearTiles16Pal1(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getPalBytesAddr(), ConfigScript.getBlocksCount());
   }
