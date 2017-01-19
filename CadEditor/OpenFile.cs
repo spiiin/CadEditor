@@ -43,7 +43,7 @@ namespace CadEditor
         private void btOpen_Click(object sender, EventArgs e)
         {
             FileName = tbFileName.Text;
-            DumpName = tbDumpName.Text;
+            DumpName = ConfigScript.showDumpFileField ? tbDumpName.Text : "";
             ConfigName = tbConfigName.Text;
             DialogResult = DialogResult.OK;
             Close();
