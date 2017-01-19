@@ -195,7 +195,7 @@ public class Data:CapcomBase
     var palInfo = new byte[palInfoCount];
     for (int i = 0; i < palInfoCount; i++)
     {
-        palInfo[i] = blocks[i].typeColor;
+        palInfo[i] = (byte)blocks[i].typeColor;
     }
     for (int i = 0; i < blocks.Length; i++)
     {
