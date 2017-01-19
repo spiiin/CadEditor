@@ -80,6 +80,8 @@ namespace CadEditor
 
         public ObjRec(ObjRec other)
         {
+            this.indexes = new int[4];
+            this.palBytes = new int[indexes.Length / 4];
             this.c1 = other.c1;
             this.c2 = other.c2;
             this.c3 = other.c3;
