@@ -178,7 +178,8 @@ namespace PluginVideoNes
                 int x = i % obj.w;
                 int y = i / obj.w;
                 int pali = (y >> 1) * (obj.w >> 1) + (x >> 1);
-                images[i] = objStrips[obj.getSubpallete(pali)][obj.indexes[i]];
+                var objStrip = constantSubpal == -1 ? objStrips[obj.getSubpallete(pali)] : objStrips[constantSubpal];
+                images[i] = objStrip[obj.indexes[i]];
             }
 
             var mblock = UtilsGDI.GlueImages(images, obj.w, obj.h);
@@ -289,7 +290,8 @@ namespace PluginVideoNes
                 {
                     var il = new ImageList();
                     il.ImageSize = new System.Drawing.Size((int)(16 * smallBlockScaleFactor), (int)(16 * smallBlockScaleFactor));
-                    il.Images.AddStrip(makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsViewType, i));
+                    var strip = makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsViewType, i);
+                    il.Images.AddStrip(strip);
                     smallBlocksAll[i] = il.Images.Cast<Image>().ToArray();
                 }
             }

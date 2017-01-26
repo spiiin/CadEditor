@@ -261,7 +261,6 @@ namespace CadEditor
             {
                 if (actualIndex < bigBlockIndexes.Length)
                     bigBlockIndexes[actualIndex].indexes[insideIndex] = curActiveBlock;
-                mapScreen.Invalidate();
             }
             else
             {
@@ -284,7 +283,6 @@ namespace CadEditor
                         bbPal.palBytes[insideIndex] = palByte;
                         //
                     }
-                    mapScreen.Invalidate();
                 }
                 //second action - change cur active block to selected
                 if (actualIndex < bigBlockIndexes.Length)
@@ -301,6 +299,7 @@ namespace CadEditor
                 smallBlocks4.Images.Cast<Image>().ToArray()
             };
             bigBlocksImages[actualIndex] = bigBlockIndexes[actualIndex].makeBigBlock(imss);
+            mapScreen.Invalidate();
         }
 
         protected void buttonObjClick(Object button, EventArgs e)
