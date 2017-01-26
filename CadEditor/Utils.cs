@@ -81,6 +81,11 @@ namespace CadEditor
                 Globals.romdata[addr + i] = pallete[i];
         }
 
+        public static GetLayoutFunc getLayoutLinearFunc()
+        {
+            return getLayoutLinear;
+        }
+
         public static LevelLayerData getLayoutLinear(int curActiveLayout)
         {
             int layoutAddr = ConfigScript.getLayoutAddr(curActiveLayout);
