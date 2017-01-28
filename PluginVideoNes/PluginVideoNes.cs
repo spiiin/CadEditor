@@ -227,26 +227,6 @@ namespace PluginVideoNes
             return UtilsGDI.GlueImages(bitmaps, bitmaps.Length, 1);
         }
 
-        //TODO: write universal "RectangulateStripImage function"
-        //using makeObjectsStrip for now. Return rectangle small blocks objects
-        public Bitmap makeObjectsRectangle(byte videoPageId, byte tilesId, byte palId, float scale, MapViewType drawType, int constantSubpal = -1)
-        {
-            Bitmap imageStrip = ConfigScript.videoNes.makeObjectsStrip(videoPageId, tilesId, palId, scale, drawType, constantSubpal);
-            //print only first 256 blocks
-            int BLOCKS_IN_ROW = 16;
-            int BLOCKS_IN_COL = 16;
-            Bitmap resultVideo = new Bitmap((int)(16*scale*BLOCKS_IN_ROW), (int)(16*scale*BLOCKS_IN_COL));
-            using (Graphics g = Graphics.FromImage(resultVideo))
-            {
-                for (int i = 0; i < 256; i++)
-                {
-                    int size = (int)(16 * scale);
-                    g.DrawImage(imageStrip, new Rectangle(i%16 * size, (i/16) *size, size, size), new Rectangle(i * size, 0, size, size) , GraphicsUnit.Pixel);
-                }
-            }
-            return resultVideo;
-        }
-
          public Image[] makeBigBlocks(int videoNo, int bigBlockNo, int blockNo, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
             float smallBlockScaleFactor = 2.0f, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false, int hierarchyLevel = 0)
         {

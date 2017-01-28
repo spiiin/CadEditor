@@ -50,7 +50,6 @@ namespace CadEditor
         Bitmap[] makeObjects(ObjRec[] objects, Bitmap[][] objStrips, float scale, MapViewType drawType, int constantSubpal = -1);
         Bitmap makeObject(int index, ObjRec[] objects, Bitmap[][] objStrips, float scale, MapViewType drawType, int constantSubpal = -1);
         Bitmap makeObjectsStrip(byte videoPageId, byte tilesId, byte palId, float scale, MapViewType drawType, int constantSubpal = -1);
-        Bitmap makeObjectsRectangle(byte videoPageId, byte tilesId, byte palId, float scale, MapViewType drawType, int constantSubpal = -1);
 
         Bitmap makeScreen(int scrNo, int levelNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, float scale = 2.0f, bool withBorders = true);
 
