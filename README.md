@@ -21,6 +21,9 @@ https://github.com/spiiin/CadEditor/blob/master/CadEditor/cad_editor_supported_g
 More info:<br>
 http://spiiin.github.io/CadEditor/<br>
 (russian version)<br>
+
+Patreon page of editor:<br>
+https://www.patreon.com/CadEditor<br>
 <img src="http://spiiin.github.io/CadEditor/images/tut1_cad_editor_main.png"/>
 
 
