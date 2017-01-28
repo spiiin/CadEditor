@@ -168,6 +168,16 @@ namespace PluginVideoNes
             return UtilsGDI.GlueImages(images.ToArray(), 16, 16);
         }
 
+        public Bitmap[] makeObjects(ObjRec[] objects, Bitmap[][] objStrips, float scale, MapViewType drawType, int constantSubpal = -1)
+        {
+            var ans = new Bitmap[objects.Length];
+            for (int index = 0; index < objects.Length; index++)
+            {
+                ans[index] = makeObject(index, objects, objStrips, scale, drawType, constantSubpal);
+            }
+            return ans;
+        }
+
         public Bitmap makeObject(int index, ObjRec[] objects, Bitmap[][] objStrips, float scale, MapViewType drawType, int constantSubpal = -1)
         {
             var obj = objects[index];
@@ -212,17 +222,9 @@ namespace PluginVideoNes
             var objStrip3 = range256.Select(i => makeImage(i, videoChunk, palette, 2, scale)).ToArray();
             var objStrip4 = range256.Select(i => makeImage(i, videoChunk, palette, 3, scale)).ToArray();
             var objStrips = new[] { objStrip1, objStrip2, objStrip3, objStrip4 };
-            Bitmap res = new Bitmap((int)(16 * blocksCount * scale), (int)(16 * scale));
-            using (Graphics g = Graphics.FromImage(res))
-            {
-                for (int i = 0; i < blocksCount; i++)
-                {
-                    var mblock = makeObject(i, objects, objStrips, scale, drawType, constantSubpal);
-                    int scaleInt16 = (int)(scale * 16);
-                    g.DrawImage(mblock, new Rectangle(i * scaleInt16, 0, scaleInt16, scaleInt16));
-                }
-            }
-            return res;
+           
+            var bitmaps = makeObjects(objects, objStrips, scale, drawType, constantSubpal);
+            return UtilsGDI.GlueImages(bitmaps, bitmaps.Length, 1);
         }
 
         //TODO: write universal "RectangulateStripImage function"
