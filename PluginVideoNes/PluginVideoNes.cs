@@ -251,21 +251,16 @@ namespace PluginVideoNes
             byte backId = (byte)videoNo;
             byte palId = (byte)palleteNo;
 
-            var smallBlocks = new System.Windows.Forms.ImageList();
+            Image[] smallBlocksPack;
             if (hierarchyLevel == 0)
             {
-                var ims = makeObjects(backId, blockId, palId, smallBlockScaleFactor, smallObjectsViewType);
-                smallBlocks.ImageSize = ims[0].Size;
-                smallBlocks.Images.AddRange(ims);
+                smallBlocksPack = makeObjects(backId, blockId, palId, smallBlockScaleFactor, smallObjectsViewType);
             }
             else
             {
                 var bigBlockIndexesPrev = ConfigScript.getBigBlocksRecursive(hierarchyLevel - 1, bigBlockNo);
-                var ims = makeBigBlocks(videoNo, bigBlockNo, bigBlockIndexesPrev, palleteNo, smallObjectsViewType, smallBlockScaleFactor, curButtonScale, curViewType, false, hierarchyLevel - 1);
-                smallBlocks.ImageSize = ims[0].Size;
-                smallBlocks.Images.AddRange(ims);
+                smallBlocksPack = makeBigBlocks(videoNo, bigBlockNo, bigBlockIndexesPrev, palleteNo, smallObjectsViewType, smallBlockScaleFactor, curButtonScale, curViewType, false, hierarchyLevel - 1);
             }
-            Image[] smallBlocksPack = smallBlocks.Images.Cast<Image>().ToArray();
 
             //tt version hardcode
             Image[][] smallBlocksAll = null;
@@ -276,11 +271,7 @@ namespace PluginVideoNes
                 smallBlocksAll = new Image[4][];
                 for (int i = 0; i < 4; i++)
                 {
-                    var il = new ImageList();
-                    il.ImageSize = new System.Drawing.Size((int)(16 * smallBlockScaleFactor), (int)(16 * smallBlockScaleFactor));
-                    var strip = makeObjectsStrip((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsViewType, i);
-                    il.Images.AddStrip(strip);
-                    smallBlocksAll[i] = il.Images.Cast<Image>().ToArray();
+                    smallBlocksAll[i] = makeObjects((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsViewType, i);
                 }
             }
             else
@@ -293,7 +284,7 @@ namespace PluginVideoNes
                 Image b;
                 if (ConfigScript.isBuildScreenFromSmallBlocks())
                 {
-                    var sb = smallBlocks.Images[btileId];
+                    var sb = smallBlocksPack[btileId];
                     b = UtilsGDI.ResizeBitmap(sb, (int)(sb.Width * curButtonScale * 2), (int)(sb.Height * curButtonScale * 2));
                 }
                 else
