@@ -209,7 +209,7 @@ namespace PluginVideoNes
             return mblock;
         }
 
-        public Bitmap makeObjectsStrip(byte videoPageId, byte tilesId, byte palId, float scale, MapViewType drawType, int constantSubpal = -1)
+        public Bitmap[] makeObjects(byte videoPageId, byte tilesId, byte palId, float scale, MapViewType drawType, int constantSubpal = -1)
         {
             byte[] videoChunk = ConfigScript.getVideoChunk(videoPageId);
             int blocksCount = ConfigScript.getBlocksCount();
@@ -222,8 +222,14 @@ namespace PluginVideoNes
             var objStrip3 = range256.Select(i => makeImage(i, videoChunk, palette, 2, scale)).ToArray();
             var objStrip4 = range256.Select(i => makeImage(i, videoChunk, palette, 3, scale)).ToArray();
             var objStrips = new[] { objStrip1, objStrip2, objStrip3, objStrip4 };
-           
+
             var bitmaps = makeObjects(objects, objStrips, scale, drawType, constantSubpal);
+            return bitmaps;
+        }
+
+        public Bitmap makeObjectsStrip(byte videoPageId, byte tilesId, byte palId, float scale, MapViewType drawType, int constantSubpal = -1)
+        {
+            var bitmaps = makeObjects(videoPageId, tilesId, palId, scale, drawType, constantSubpal);
             return UtilsGDI.GlueImages(bitmaps, bitmaps.Length, 1);
         }
 
@@ -248,9 +254,9 @@ namespace PluginVideoNes
             var smallBlocks = new System.Windows.Forms.ImageList();
             if (hierarchyLevel == 0)
             {
-                var im = makeObjectsStrip(backId, blockId, palId, smallBlockScaleFactor, smallObjectsViewType);
-                smallBlocks.ImageSize = new Size((int)(16 * smallBlockScaleFactor), (int)(16 * smallBlockScaleFactor));
-                smallBlocks.Images.AddStrip(im);
+                var ims = makeObjects(backId, blockId, palId, smallBlockScaleFactor, smallObjectsViewType);
+                smallBlocks.ImageSize = ims[0].Size;
+                smallBlocks.Images.AddRange(ims);
             }
             else
             {
