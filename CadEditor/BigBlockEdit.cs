@@ -41,14 +41,14 @@ namespace CadEditor
         {
             blocksPanel.Controls.Clear();
             blocksPanel.SuspendLayout();
-            int sbc = smallBlocks.Images.Count;
+            int sbc = smallBlocksImages[0].Length;
             for (int i = 0; i < sbc; i++)
             {
                 var but = new Button();
                 but.FlatStyle = FlatStyle.Flat;
-                but.Size = smallBlocks.Images[i].Size;
-                but.ImageList = smallBlocks;
-                but.ImageIndex = i;
+                but.Size = smallBlocksImages[0][i].Size;
+                but.Image = smallBlocksImages[0][i];
+                but.Tag = i;
                 but.Margin = new Padding(0);
                 but.Padding = new Padding(0);
                 but.Click += new EventHandler(buttonObjClick);
@@ -97,14 +97,13 @@ namespace CadEditor
             backId = curVideo;
             palId = curPallete;
 
+            smallBlocksImages = new Image[4][];
+
             if (curHierarchyLevel == 0)
             {
                 if (hasSmallBlocksPals())
                 {
-                    var im = ConfigScript.videoNes.makeObjectsStrip((byte)backId, (byte)curTileset, (byte)palId, 1, curViewType);
-                    smallBlocks.ImageSize = new Size(16, 16);
-                    smallBlocks.Images.Clear();
-                    smallBlocks.Images.AddStrip(im);
+                    smallBlocksImages[0] = ConfigScript.videoNes.makeObjects((byte)backId, (byte)curTileset, (byte)palId, 1, curViewType);
                 }
                 else
                 {
@@ -113,10 +112,7 @@ namespace CadEditor
             }
             else
             {
-                var ims = ConfigScript.videoNes.makeBigBlocks(backId, curTileset, ConfigScript.getBigBlocksRecursive(curHierarchyLevel-1, curSmallBlockNo), palId, curViewType, 1, 2.0f, MapViewType.Tiles, false, curHierarchyLevel-1);
-                smallBlocks.ImageSize = ims[0].Size;
-                smallBlocks.Images.Clear();
-                smallBlocks.Images.AddRange(ims);
+                smallBlocksImages[0] = ConfigScript.videoNes.makeBigBlocks(backId, curTileset, ConfigScript.getBigBlocksRecursive(curHierarchyLevel-1, curSmallBlockNo), palId, curViewType, 1, 2.0f, MapViewType.Tiles, false, curHierarchyLevel-1);
             }
             blocksPanel.Invalidate(true);
 
@@ -136,14 +132,9 @@ namespace CadEditor
             backId = curVideo;
             palId = curPallete;
 
-            var smils = new ImageList[]{ smallBlocks, smallBlocks2, smallBlocks3, smallBlocks4 };
             for (int i = 0; i < 4; i++)
             {
-                var smil = smils[i];
-                var im = ConfigScript.videoNes.makeObjectsStrip((byte)backId, (byte)curTileset, (byte)palId, 1, curViewType, i);
-                smil.ImageSize = new Size(16, 16);
-                smil.Images.Clear();
-                smil.Images.AddStrip(im);
+                smallBlocksImages[i] = ConfigScript.videoNes.makeObjects((byte)backId, (byte)curTileset, (byte)palId, 1, curViewType, i);
             }
         }
 
@@ -170,14 +161,12 @@ namespace CadEditor
             {
                 //todo:add BigBlockWithPal version
                 Bitmap result = new Bitmap((int)(32 * formMain.CurScale * 256),(int)(32 * formMain.CurScale)); //need some hack for duck tales 1
-                var smb = smallBlocks.Images.Cast<Image>().ToArray();
-                Image[][] smallBlocksPack = new Image[4][] {smb, smb, smb, smb }; 
                 using (Graphics g = Graphics.FromImage(result))
                 {
                     for (int i = 0; i < ConfigScript.getBigBlocksCount(curHierarchyLevel); i++)
                     {
                         Bitmap b;
-                        b = bigBlockIndexes[i].makeBigBlock(smallBlocksPack);
+                        b = bigBlockIndexes[i].makeBigBlock(smallBlocksImages);
                         g.DrawImage(b, new Point((int)(32 * formMain.CurScale * i), 0));
                     }
                 }
@@ -191,12 +180,12 @@ namespace CadEditor
         //hardcode
         private int getBlockWidth()
         {
-            return smallBlocks.Images[0].Size.Width;
+            return smallBlocksImages[0][0].Width;
         }
 
         private int getBlockHeight()
         {
-            return smallBlocks.Images[0].Size.Height;
+            return smallBlocksImages[0][0].Height;
         }
 
         protected void mapScreen_Paint(object sender, PaintEventArgs e)
@@ -287,25 +276,19 @@ namespace CadEditor
                 //second action - change cur active block to selected
                 if (actualIndex < bigBlockIndexes.Length)
                     curActiveBlock = bigBlockIndexes[actualIndex].indexes[insideIndex];
-                pbActive.Image = smallBlocks.Images[curActiveBlock];
+                pbActive.Image = smallBlocksImages[0][curActiveBlock];
                 lbActive.Text = String.Format("({0:X})", curActiveBlock);
             }
 
             //fix current big blocks image
-            var imss = new Image[4][] {
-                smallBlocks.Images.Cast<Image>().ToArray(),
-                smallBlocks2.Images.Cast<Image>().ToArray(),
-                smallBlocks3.Images.Cast<Image>().ToArray(),
-                smallBlocks4.Images.Cast<Image>().ToArray()
-            };
-            bigBlocksImages[actualIndex] = bigBlockIndexes[actualIndex].makeBigBlock(imss);
+            bigBlocksImages[actualIndex] = bigBlockIndexes[actualIndex].makeBigBlock(smallBlocksImages);
             mapScreen.Invalidate();
         }
 
         protected void buttonObjClick(Object button, EventArgs e)
         {
-            int index = ((Button)button).ImageIndex;
-            pbActive.Image = smallBlocks.Images[index];
+            int index = (int)((Button)button).Tag;
+            pbActive.Image = smallBlocksImages[0][index];
             lbActive.Text = String.Format("({0:X})", curActiveBlock);
             curActiveBlock = index;
         }
@@ -328,6 +311,7 @@ namespace CadEditor
         protected FormMain formMain;
 
         Image[] bigBlocksImages; //prerendered for faster rendering;
+        Image[][] smallBlocksImages;
 
         protected void updateSaveVisibility()
         {

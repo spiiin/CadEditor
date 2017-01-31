@@ -34,7 +34,6 @@
             this.blocksPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.cbTileset = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.smallBlocks = new System.Windows.Forms.ImageList(this.components);
             this.pbActive = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.subPalletes = new System.Windows.Forms.ImageList(this.components);
@@ -61,9 +60,6 @@
             this.tbbImport = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tbbDeleteAll = new System.Windows.Forms.ToolStripButton();
-            this.smallBlocks2 = new System.Windows.Forms.ImageList(this.components);
-            this.smallBlocks3 = new System.Windows.Forms.ImageList(this.components);
-            this.smallBlocks4 = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -126,12 +122,6 @@
             this.label1.Size = new System.Drawing.Size(53, 17);
             this.label1.TabIndex = 9;
             this.label1.Text = "Blocks:";
-            // 
-            // smallBlocks
-            // 
-            this.smallBlocks.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
-            this.smallBlocks.ImageSize = new System.Drawing.Size(16, 16);
-            this.smallBlocks.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // pbActive
             // 
@@ -470,24 +460,6 @@
             this.tbbDeleteAll.Text = "Clear All";
             this.tbbDeleteAll.Click += new System.EventHandler(this.btClear_Click);
             // 
-            // smallBlocks2
-            // 
-            this.smallBlocks2.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
-            this.smallBlocks2.ImageSize = new System.Drawing.Size(16, 16);
-            this.smallBlocks2.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // smallBlocks3
-            // 
-            this.smallBlocks3.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
-            this.smallBlocks3.ImageSize = new System.Drawing.Size(16, 16);
-            this.smallBlocks3.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // smallBlocks4
-            // 
-            this.smallBlocks4.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
-            this.smallBlocks4.ImageSize = new System.Drawing.Size(16, 16);
-            this.smallBlocks4.TransparentColor = System.Drawing.Color.Transparent;
-            // 
             // BigBlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -526,7 +498,6 @@
         private System.Windows.Forms.FlowLayoutPanel blocksPanel;
         private System.Windows.Forms.ComboBox cbTileset;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ImageList smallBlocks;
         private System.Windows.Forms.PictureBox pbActive;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ImageList subPalletes;
@@ -553,8 +524,5 @@
         private System.Windows.Forms.Label lbActive;
         private System.Windows.Forms.ComboBox cbHierarchyLevel;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ImageList smallBlocks2;
-        private System.Windows.Forms.ImageList smallBlocks3;
-        private System.Windows.Forms.ImageList smallBlocks4;
     }
 }
