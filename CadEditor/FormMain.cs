@@ -431,23 +431,26 @@ namespace CadEditor
 
         private Dictionary<ToolStripButton, Func<Form>> subeditorsDict;
 
-        private void mapScreen_MouseClick(object sender, MouseEventArgs e)
+        private void mapScreen_MouseClick(object sender, MouseEventArgs ea)
         {
+            var ee = ea.Location;
+            if (ee.X < 0) { ee.X += 32768 * 2; }
+            if (ee.Y < 0) { ee.Y += 32768 * 2; }
             int WIDTH = ConfigScript.getScreenWidth(curActiveLevelForScreen);
             int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
             int dx, dy;
             if (ConfigScript.getScreenVertical())
             {
-                dy = e.X / (int)(blockWidth * curScale);
-                dx = e.Y / (int)(blockHeight * curScale) - 1;
+                dy = ee.X / (int)(blockWidth * curScale);
+                dx = ee.Y / (int)(blockHeight * curScale) - 1;
             }
             else
             {
-                dx = e.X / (int)(blockWidth * curScale) - 1;
-                dy = e.Y / (int)(blockHeight * curScale);
+                dx = ee.X / (int)(blockWidth * curScale) - 1;
+                dy = ee.Y / (int)(blockHeight * curScale);
             }
 
-            if (e.Button == MouseButtons.Right)
+            if (ea.Button == MouseButtons.Right)
             {
                 if (dx == WIDTH || dx == -1)
                     return;
@@ -459,12 +462,16 @@ namespace CadEditor
             }
         }
 
-        private void mapScreen_MouseMove(object sender, MouseEventArgs e)
+        private void mapScreen_MouseMove(object sender, MouseEventArgs ea)
         {
+            var ee = ea.Location;
+            if (ee.X < 0) { ee.X += 32768 * 2; }
+            if (ee.Y < 0) { ee.Y += 32768 * 2; }
+
             if (selectionRect)
             {
-                selectionMouseX = e.X;
-                selectionMouseY = e.Y;
+                selectionMouseX = ee.X;
+                selectionMouseY = ee.Y;
                 mapScreen.Invalidate();
                 return;
             }
@@ -473,13 +480,13 @@ namespace CadEditor
             int dx, dy;
             if (ConfigScript.getScreenVertical())
             {
-                dy = e.X / (int)(blockWidth * curScale);
-                dx = e.Y / (int)(blockHeight * curScale) - 1;
+                dy = ee.X / (int)(blockWidth * curScale);
+                dx = ee.Y / (int)(blockHeight * curScale) - 1;
             }
             else
             {
-                dx = e.X / (int)(blockWidth * curScale) - 1;
-                dy = e.Y / (int)(blockHeight * curScale);
+                dx = ee.X / (int)(blockWidth * curScale) - 1;
+                dy = ee.Y / (int)(blockHeight * curScale);
             }
             lbCoords.Text = String.Format("Coords:({0},{1})", dx, dy);
 
@@ -515,7 +522,10 @@ namespace CadEditor
                     if (!useStructs)
                     {
                         int index = dy * WIDTH + dx;
-                        ConfigScript.setBigTileToScreen(activeScreens[curActiveScreen], index, curActiveBlock);
+                        if (index < activeScreens[curActiveScreen].Length)
+                        {
+                            ConfigScript.setBigTileToScreen(activeScreens[curActiveScreen], index, curActiveBlock);
+                        }
                         dirty = true; updateSaveVisibility();
                     }
                     else
@@ -849,30 +859,36 @@ namespace CadEditor
             cbLevel_SelectedIndexChanged(bttScale, new EventArgs());
         }
 
-        private void mapScreen_MouseDown(object sender, MouseEventArgs e)
+        private void mapScreen_MouseDown(object sender, MouseEventArgs ea)
         {
-            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            var ee = ea.Location;
+            if (ee.X < 0) { ee.X += 32768 * 2; }
+            if (ee.Y < 0) { ee.Y += 32768 * 2; }
+            if (ea.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 if (Control.ModifierKeys == Keys.Alt)
                 {
-                    convertMouseToDxDy(e, out selectionBeginX, out selectionBeginY);
-                    selectionBeginMouseX = e.X;
-                    selectionBeginMouseY = e.Y;
+                    convertMouseToDxDy(ee, out selectionBeginX, out selectionBeginY);
+                    selectionBeginMouseX = ee.X;
+                    selectionBeginMouseY = ee.Y;
                     selectionRect = true;
                 }
                 else
                 {
                     curClicked = true;
-                    mapScreen_MouseMove(sender, e);
+                    mapScreen_MouseMove(sender, ea);
                 }
             }
         }
 
-        private void mapScreen_MouseUp(object sender, MouseEventArgs e)
+        private void mapScreen_MouseUp(object sender, MouseEventArgs ea)
         {
+            var ee = ea.Location;
+            if (ee.X < 0) { ee.X += 32768 * 2; }
+            if (ee.Y < 0) { ee.Y += 32768 * 2; }
             if (selectionRect)
             {
-                convertMouseToDxDy(e, out selectionEndX, out selectionEndY);
+                convertMouseToDxDy(ee, out selectionEndX, out selectionEndY);
                 if (selectionEndX < selectionBeginX)
                 {
                     selectionBeginX ^= selectionEndX;
@@ -911,7 +927,7 @@ namespace CadEditor
             curClicked = false;
         }
 
-        private void convertMouseToDxDy(MouseEventArgs e, out int dx, out int dy)
+        private void convertMouseToDxDy(Point e, out int dx, out int dy)
         {
             if (ConfigScript.getScreenVertical())
             {
