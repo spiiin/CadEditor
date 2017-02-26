@@ -4,7 +4,7 @@ using System.Drawing;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset() { return new OffsetRec(0x300B1, 10, 64); }
+  public OffsetRec getScreensOffset() { return new OffsetRec(0x300B1, 15, 64); }
   public int getScreenWidth()         { return 8; }
   public int getScreenHeight()        { return 8; }
   
@@ -14,9 +14,10 @@ public class Data
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
   
-  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getVideoAddress; }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChunk;   }
-  public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
+  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return Utils.getChrAddress; }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return Utils.getVideoChunk; }
+  public SetVideoChunkFunc    setVideoChunkFunc()    { return Utils.setVideoChunk; }
+  public OffsetRec getVideoOffset()                          { return new OffsetRec(0x6d010, 2  , 0x1000); }
   
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x30471 , 1  , 0x1000);  }
   public int getBlocksCount()           { return 220; }
@@ -27,24 +28,16 @@ public class Data
   
   public GetPalFunc           getPalFunc()           { return getPallete;}
   public SetPalFunc           setPalFunc()           { return null;}
+  public OffsetRec getPalOffset()       { return new OffsetRec(0, 2, 16);  }
   
   //----------------------------------------------------------------------------
-  public int getVideoAddress(int id)
-  {
-    return -1;
-  }
   
-  public byte[] getVideoChunk(int videoPageId)
-  {
-     return Utils.readVideoBankFromFile("ppu_dump1.bin", videoPageId);
-  }
   
   public byte[] getPallete(int palId)
   {
-    var pallete = new byte[] { 
-      0x0f, 0x20, 0x2a, 0x26, 0x0f, 0x37, 0x21, 0x28,
-      0x0f, 0x37, 0x21, 0x20, 0x0f, 0x37, 0x1a, 0x18
-    }; 
-    return pallete;
+      if (palId == 0)
+          return Utils.readBinFile("pal1.bin");
+      else
+          return Utils.readBinFile("pal1-2.bin");
   }
 }
