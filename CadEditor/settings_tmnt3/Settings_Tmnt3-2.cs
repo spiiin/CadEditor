@@ -12,7 +12,7 @@ public class Data
   public bool isBuildScreenFromSmallBlocks() { return true; }
   
   public bool isBigBlockEditorEnabled() { return false; }
-  public bool isBlockEditorEnabled()    { return false; }
+  public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return Utils.getChrAddress; }
