@@ -14,9 +14,10 @@ public class Data
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
   
-  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getVideoAddress; }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChunk;   }
-  public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
+  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return Utils.getChrAddress; }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return Utils.getVideoChunk; }
+  public SetVideoChunkFunc    setVideoChunkFunc()    { return Utils.setVideoChunk; }
+  public OffsetRec getVideoOffset()                          { return new OffsetRec(0x42010, 4  , 0x1000); }
   
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0xc6cd , 1  , 0x1000);  }
   public int getBlocksCount()           { return 233; }
@@ -29,22 +30,9 @@ public class Data
   public SetPalFunc           setPalFunc()           { return null;}
   
   //----------------------------------------------------------------------------
-  public int getVideoAddress(int id)
-  {
-    return -1;
-  }
-  
-  public byte[] getVideoChunk(int videoPageId)
-  {
-     return Utils.readVideoBankFromFile("ppu_dump3.bin", videoPageId);
-  }
   
   public byte[] getPallete(int palId)
   {
-    var pallete = new byte[] { 
-      0x0f, 0x00, 0x10, 0x37, 0x0f, 0x17, 0x27, 0x37,
-      0x0f, 0x1c, 0x22, 0x20, 0x0f, 0x16, 0x29, 0x20
-    }; 
-    return pallete;
+      return Utils.readBinFile("pal3.bin");
   }
 }
