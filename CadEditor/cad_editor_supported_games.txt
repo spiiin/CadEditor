@@ -17,8 +17,10 @@
     Mega Man 5                                      (все уровни)
     Rockin' Kats                                    (все уровни)
     Battletoads                                     (все уровни)
-    Teenage Mutant Ninja Turtles 2                  (все уровни)    
+    Battletoads & Double Dragon - The Ultimate Team (все уровни)
+    Teenage Mutant Ninja Turtles 2                  (все уровни)
     Teenage Mutant Ninja Turtles 3                  (все уровни)
+    Mickey's Adventures in Numberland               (все уровни)
     Three Eyes Story                                (1 уровень)
     Shatterhand (Tokkyuu Shirei Solbrain)           (1 уровень)
     Ninja Gaiden 3                                  (1 уровень)
@@ -32,7 +34,6 @@
     Adventures Island 3                             (1 уровень)
     Super C                                         (1 уровень)
     Jackie Chan Action Kung Fu                      (1 уровень)
-    Battletoads & Double Dragon - The Ultimate Team (1 уровень)
     Monster in My Pocket                            (1 уровень)
     Bucky O'Hare                                    (1 уровень)
     Jackal                                          (1 уровень)
@@ -44,7 +45,6 @@
     New Ghostbusters 2                              (1 уровень  + редактор объектов 1 уровня)
     Mighty Final Fight                              (все уровни)
     Little Nemo                                     (все уровни)
-    Battletoads & Double Dragon - The Ultimate Team (все уровни)
     Banana Prince                                   (3 уровня)
     Shadow of the Ninja                             (1 уровень)
     Ninja Gaiden                                    (1 уровень)
@@ -67,7 +67,6 @@
     Young Indiana Jones Chronicles
     Hook
     Mickey Mouse 3 Yume Fuusen
-    Mickey's Adventures in Numberland
     Gounnies 2
   редактор раскладок картинками:
     Argos No Senshi                                 (все уровни)
