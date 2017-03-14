@@ -24,7 +24,7 @@ namespace CadEditor
             using (Graphics g = Graphics.FromImage(source))
             {
                 g.FillRectangle(new SolidBrush(Color.FromArgb(192, 255, 255, 255)), new Rectangle(0, 0, source.Width, source.Height));
-                g.DrawString(String.Format("{0:X}", no), new Font("Arial", 16), Brushes.Red, new Point(0, 0));
+                g.DrawString(String.Format("{0:X}", no), new Font("Arial", source.Width/4), Brushes.Red, new Point(0, 0));
             }
             return source;
         }
