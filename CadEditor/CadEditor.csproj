@@ -66,6 +66,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
     <Compile Include="BigBlockEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +144,9 @@
     <Compile Include="UtilsGdi.cs" />
     <Compile Include="UtilsGui.cs" />
     <Compile Include="VideoHelper.cs" />
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BigBlockEdit.resx">
       <DependentUpon>BigBlockEdit.cs</DependentUpon>
     </EmbeddedResource>

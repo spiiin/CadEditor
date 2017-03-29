@@ -18,6 +18,7 @@ namespace CadEditor
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.KeyPreview = true;
             if (OpenFile.FileName == "" || OpenFile.ConfigName == "")
             {
                 if (!openFile())
@@ -1026,6 +1027,26 @@ namespace CadEditor
             pnAdvancedParams.Visible = cbAdvanced.Checked;
         }
 
+        private void FormMain_KeyDown(object sender, KeyEventArgs e)
+        {
+            /*
+            //useful for config debugging
+            if (e.KeyCode == Keys.Q)
+            {
+                ConfigScript.palBytesAddr += 16;
+                lbPalBytesAddr.Text = String.Format("PalBytesAddr:{0:X}", ConfigScript.palBytesAddr);
+                reloadLevel(true, true);
+                mapScreen.Invalidate();
+            }
+            else if (e.KeyCode == Keys.W)
+            {
+                ConfigScript.palBytesAddr -= 16;
+                lbPalBytesAddr.Text = String.Format("PalBytesAddr:{0:X}", ConfigScript.palBytesAddr);
+                reloadLevel(true, true);
+                mapScreen.Invalidate();
+            }*/
+        }
+
         private void cbPanelNo_SelectedIndexChanged(object sender, EventArgs e)
         {
             FlowLayoutPanel[] blocksPanels = { blocksPanel, blockPanel2, blockPanel3, blockPanel4 };
@@ -1075,14 +1096,7 @@ namespace CadEditor
 
         private void tbbShowInfo_Click(object sender, EventArgs e)
         {
-            var sb = new StringBuilder();
-            sb.Append("CadEditor\n\n");
-            sb.Append("Level editor for NES, SEGA, GBA games\n");
-            sb.Append("(You need original ROMs for editing it)\n\n");
-            sb.Append("Author: spiiin (sanya.boyko@gmail.com)\n\n");
-            sb.Append("Project support: R122299008919\n");
-            sb.Append("(It's really important for project development)\n");
-            MessageBox.Show(sb.ToString());
+            new About().ShowDialog();
         }
     }
 }
