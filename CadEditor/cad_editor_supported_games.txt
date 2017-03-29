@@ -41,6 +41,7 @@
     Darkman                                         (1 уровень)
     Teenage Mutant Ninja Turtles                    (1 уровень)
     Contra Spirits                                  (1 уровень, игра защищена от изменений)
+    Mickey Mania 7                                  (1 уровень, игра защищена от изменений)
     Flintstones: The Surprise at Dinosaur Peak!     (1 уровень  + редактор объектов 1 уровня)
   редактор экранов картинками:
     Ninja Cat (Cattou Ninden Teyandee)              (все уровни + редактор объектов 4 уровней)
