@@ -30,18 +30,10 @@ public class Data
   public GetBlocksFunc getBlocksFunc() { return getBlocks;}
   public SetBlocksFunc setBlocksFunc() { return setBlocks;}
   
-  public GetPalFunc getPalFunc() { return getPallete;}
-  public SetPalFunc setPalFunc() { return null;}
-  public OffsetRec getPalOffset()                    { return new OffsetRec(0x3DFBD , 1  , 16  ); }
+  public GetPalFunc getPalFunc()  { return Utils.getPalleteLinear;}
+  public SetPalFunc setPalFunc()  { return Utils.setPalleteLinear;}
+  public OffsetRec getPalOffset() { return new OffsetRec(0x29721 , 1  , 16  ); }
   //-------------------------------------------------------------------------------------------------------------------
-  public virtual byte[] getPallete(int palId)
-  {
-    var pallete = new byte[] { 
-      0x0f, 0x38, 0x28, 0x18, 0x0f, 0x37, 0x17, 0x07,
-      0x0f, 0x1c, 0x0c, 0x12, 0x0f, 0x30, 0x10, 0x00,
-    }; 
-    return pallete;
-  }
   public ObjRec[] getBlocks(int blockIndex)
   {
       var romdata = Globals.romdata;
