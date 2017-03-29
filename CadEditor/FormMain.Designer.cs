@@ -89,12 +89,12 @@
             this.tbbShowPluginInfo = new System.Windows.Forms.ToolStripButton();
             this.tbbShowInfo = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.lbPanelNo = new System.Windows.Forms.Label();
             this.cbPanelNo = new System.Windows.Forms.ComboBox();
             this.pnElements = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.cbLevelNo = new System.Windows.Forms.ComboBox();
             this.cbUseStructs = new System.Windows.Forms.CheckBox();
+            this.lbPanelNo = new System.Windows.Forms.Label();
             this.lbStructures = new System.Windows.Forms.ListBox();
             this.lbPalBytesAddr = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
@@ -767,17 +767,6 @@
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 5;
             // 
-            // lbPanelNo
-            // 
-            this.lbPanelNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lbPanelNo.AutoSize = true;
-            this.lbPanelNo.Location = new System.Drawing.Point(12, 611);
-            this.lbPanelNo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbPanelNo.Name = "lbPanelNo";
-            this.lbPanelNo.Size = new System.Drawing.Size(41, 17);
-            this.lbPanelNo.TabIndex = 60;
-            this.lbPanelNo.Text = "Page";
-            // 
             // cbPanelNo
             // 
             this.cbPanelNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -849,6 +838,17 @@
             this.cbUseStructs.UseVisualStyleBackColor = true;
             this.cbUseStructs.CheckedChanged += new System.EventHandler(this.cbUseStructs_CheckedChanged);
             // 
+            // lbPanelNo
+            // 
+            this.lbPanelNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lbPanelNo.AutoSize = true;
+            this.lbPanelNo.Location = new System.Drawing.Point(12, 611);
+            this.lbPanelNo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbPanelNo.Name = "lbPanelNo";
+            this.lbPanelNo.Size = new System.Drawing.Size(41, 17);
+            this.lbPanelNo.TabIndex = 60;
+            this.lbPanelNo.Text = "Page";
+            // 
             // lbStructures
             // 
             this.lbStructures.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -888,7 +888,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Text = "CAD Editor v4.0";
+            this.Text = "CAD Editor v4.1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormMain_KeyDown);

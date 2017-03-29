@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 [RUS]
 Редактор уровней для игр [NES/SEGA/SNES/GBA].
-Версия 4.0
+Версия 4.1
 -------------------------------------------------------------------------------
 Полный список поддерживаемых игр в файле cad_editor_supported_games.txt
 ------------------------------------------------------------------------------- 
@@ -387,7 +387,20 @@ v4.0
     Teenage Mutant Ninja Turtles
     Teenage Mutant Ninja Turtles 2
     Teenage Mutant Ninja Turtles 3
-  
+    
+v4.1
+- Поддержка большого числа блоков (до 4096) и больших размеров карты (до 65536 пикселей).
+- Плагин редактора карты улучшен (возможны настройки редактирования слоя атрибутов для игр с таким форматом, пример - Batman)
+- Конфиги блоков и экранов для всех уровней для игр:
+    Teenage Mutant Ninja Turtles 2
+    Teenage Mutant Ninja Turtles 3
+    Battletoads
+    Battletoads and Double Dragon
+    Contra Force
+    Mickey's Adventure in Numberland
+- Редакторы блоков и слоя аттрибутов для игр (по 1 уровню):
+    Batman
+    Contra Spirits
 
 -------------------------------------------------------------------------------
 Благодарности: 
@@ -400,7 +413,7 @@ v4.0
   Matrixz     - документация к megaman 4.
   Nemesis_c   - конфиги для игры Zombies Ate My Neighbors.
   Darthatron  - документация по Final Fantasy Tactics Advance, кодирование.
-  cah4e3      - собрание огромной базы Unpublished cheats list для NES.
+  cah4e3      - собрание огромной базы Unpublished cheats list для NES, формат игры Contra Spirits.
   Megaplex    - документация по игре EarthWorm Jim 2.
   DANGER X    - конфиги для игры Banana Prince, Mighty Final Fight
   Ti_         - помощь с дизассеблированием, конфиги для игр Contra Force, Jungle Book, Little Nemo, Battletoads, Battletoads & Double Dragon, Shatterhand, Tom & Jerry, Ninja Cats.
