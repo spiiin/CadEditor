@@ -60,12 +60,21 @@ namespace CadEditor
 
         public static void reloadBlocksPanel(FlowLayoutPanel blocksPanel, ImageList buttonsImages, int startIndex, int count)
         {
-            for (int i = startIndex, controlIndex = 0; i < startIndex + count; i++, controlIndex++)
+            blocksPanel.SuspendLayout();
+            int controlIndex = 0;
+            for (int i = startIndex; i < startIndex + count; i++, controlIndex++)
             {
                 var but = (Button)blocksPanel.Controls[controlIndex];
+                but.Visible = true;
                 but.ImageList = buttonsImages;
                 but.ImageIndex = i;
             }
+            for (; controlIndex < blocksPanel.Controls.Count; controlIndex++)
+            {
+                var but = (Button)blocksPanel.Controls[controlIndex];
+                but.Visible = false;
+            }
+            blocksPanel.ResumeLayout();
         }
 
         public delegate bool SaveFunction();

@@ -89,9 +89,6 @@
             this.tbbShowPluginInfo = new System.Windows.Forms.ToolStripButton();
             this.tbbShowInfo = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.blockPanel4 = new System.Windows.Forms.FlowLayoutPanel();
-            this.blockPanel3 = new System.Windows.Forms.FlowLayoutPanel();
-            this.blockPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.lbPanelNo = new System.Windows.Forms.Label();
             this.cbPanelNo = new System.Windows.Forms.ComboBox();
             this.pnElements = new System.Windows.Forms.Panel();
@@ -756,9 +753,6 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.blockPanel4);
-            this.splitContainer1.Panel1.Controls.Add(this.blockPanel3);
-            this.splitContainer1.Panel1.Controls.Add(this.blockPanel2);
             this.splitContainer1.Panel1.Controls.Add(this.cbPanelNo);
             this.splitContainer1.Panel1.Controls.Add(this.pnElements);
             this.splitContainer1.Panel1.Controls.Add(this.lbPanelNo);
@@ -772,45 +766,6 @@
             this.splitContainer1.SplitterDistance = 373;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 5;
-            // 
-            // blockPanel4
-            // 
-            this.blockPanel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.blockPanel4.AutoScroll = true;
-            this.blockPanel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.blockPanel4.Location = new System.Drawing.Point(0, 0);
-            this.blockPanel4.Margin = new System.Windows.Forms.Padding(0);
-            this.blockPanel4.Name = "blockPanel4";
-            this.blockPanel4.Size = new System.Drawing.Size(262, 604);
-            this.blockPanel4.TabIndex = 63;
-            // 
-            // blockPanel3
-            // 
-            this.blockPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.blockPanel3.AutoScroll = true;
-            this.blockPanel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.blockPanel3.Location = new System.Drawing.Point(0, 0);
-            this.blockPanel3.Margin = new System.Windows.Forms.Padding(0);
-            this.blockPanel3.Name = "blockPanel3";
-            this.blockPanel3.Size = new System.Drawing.Size(262, 604);
-            this.blockPanel3.TabIndex = 62;
-            // 
-            // blockPanel2
-            // 
-            this.blockPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.blockPanel2.AutoScroll = true;
-            this.blockPanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.blockPanel2.Location = new System.Drawing.Point(0, 0);
-            this.blockPanel2.Margin = new System.Windows.Forms.Padding(0);
-            this.blockPanel2.Name = "blockPanel2";
-            this.blockPanel2.Size = new System.Drawing.Size(262, 604);
-            this.blockPanel2.TabIndex = 61;
             // 
             // lbPanelNo
             // 
@@ -1019,9 +974,6 @@
         private System.Windows.Forms.ToolStripButton bttConfig;
         private System.Windows.Forms.Label lbPanelNo;
         private System.Windows.Forms.ComboBox cbPanelNo;
-        private System.Windows.Forms.FlowLayoutPanel blockPanel4;
-        private System.Windows.Forms.FlowLayoutPanel blockPanel3;
-        private System.Windows.Forms.FlowLayoutPanel blockPanel2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripButton tbbShowPluginInfo;
         private System.Windows.Forms.ComboBox cbGroup;

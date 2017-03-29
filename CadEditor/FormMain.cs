@@ -91,8 +91,8 @@ namespace CadEditor
         {
             curActiveLevelForScreen = 0;
             UtilsGui.setCbItemsCount(cbPanelNo, (ConfigScript.getBigBlocksCount(ConfigScript.getbigBlocksHierarchyCount()-1)+BLOCKS_PER_PAGE-1) / BLOCKS_PER_PAGE);
-            //UtilsGui.setCbIndexWithoutUpdateLevel(cbPanelNo, cbPanelNo_SelectedIndexChanged);
-            cbPanelNo.SelectedIndex = 0;
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbPanelNo, cbPanelNo_SelectedIndexChanged);
+            //cbPanelNo.SelectedIndex = 0;
             resetScreens();
 
             UtilsGui.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
@@ -222,38 +222,16 @@ namespace CadEditor
         {
             int lastHierarchy = ConfigScript.getbigBlocksHierarchyCount() - 1;
             int subparts = (ConfigScript.getBigBlocksCount(lastHierarchy) +BLOCKS_PER_PAGE-1) / BLOCKS_PER_PAGE;
-            FlowLayoutPanel[] blocksPanels = { blocksPanel, blockPanel2, blockPanel3, blockPanel4 };
-            if (ConfigScript.getBigBlocksCount(lastHierarchy) < BLOCKS_PER_PAGE)
-            {
-                UtilsGui.prepareBlocksPanel(blocksPanels[0], new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick, 0, ConfigScript.getBigBlocksCount(lastHierarchy));
-            }
-            else
-            {
-                for (int i = 0; i < subparts; i++)
-                {
-                    int count = (i * BLOCKS_PER_PAGE > ConfigScript.getBigBlocksCount(lastHierarchy)) ? (i * BLOCKS_PER_PAGE) % ConfigScript.getBigBlocksCount(lastHierarchy) : BLOCKS_PER_PAGE;
-                    UtilsGui.prepareBlocksPanel(blocksPanels[i], new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick, i * BLOCKS_PER_PAGE, count);
-                }
-            }
+            int count = (curBlocksPage * BLOCKS_PER_PAGE > ConfigScript.getBigBlocksCount(lastHierarchy)) ? (curBlocksPage * BLOCKS_PER_PAGE) % ConfigScript.getBigBlocksCount(lastHierarchy) : BLOCKS_PER_PAGE;
+            UtilsGui.prepareBlocksPanel(blocksPanel, new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick, curBlocksPage * BLOCKS_PER_PAGE, count);
         }
 
         private void reloadBlocksPanel()
         {
-             int lastHierarchy = ConfigScript.getbigBlocksHierarchyCount() - 1;
-             int subparts = (ConfigScript.getBigBlocksCount(lastHierarchy) + BLOCKS_PER_PAGE-1) / BLOCKS_PER_PAGE;
-             FlowLayoutPanel[] blocksPanels = { blocksPanel, blockPanel2, blockPanel3, blockPanel4 };
-             if (ConfigScript.getBigBlocksCount(lastHierarchy) < BLOCKS_PER_PAGE)
-             {
-                UtilsGui.reloadBlocksPanel(blocksPanels[0], bigBlocks, 0, ConfigScript.getBigBlocksCount(lastHierarchy));
-             }
-             else
-             {
-                 for (int i = 0; i < subparts; i++)
-                 {
-                     int count = (i * BLOCKS_PER_PAGE > ConfigScript.getBigBlocksCount(lastHierarchy)) ? (i * BLOCKS_PER_PAGE) % ConfigScript.getBigBlocksCount(lastHierarchy) : BLOCKS_PER_PAGE;
-                    UtilsGui.reloadBlocksPanel(blocksPanels[i], bigBlocks, i * BLOCKS_PER_PAGE, count);
-                 }
-             }
+            int lastHierarchy = ConfigScript.getbigBlocksHierarchyCount() - 1;
+            int subparts = (ConfigScript.getBigBlocksCount(lastHierarchy) + BLOCKS_PER_PAGE-1) / BLOCKS_PER_PAGE;
+            int count = ((curBlocksPage+1) * BLOCKS_PER_PAGE > ConfigScript.getBigBlocksCount(lastHierarchy)) ? ConfigScript.getBigBlocksCount(lastHierarchy)% BLOCKS_PER_PAGE : BLOCKS_PER_PAGE;
+            UtilsGui.reloadBlocksPanel(blocksPanel, bigBlocks, curBlocksPage * BLOCKS_PER_PAGE, count);
         }
 
 
@@ -411,7 +389,8 @@ namespace CadEditor
         bool curClicked = false;
         int curActiveLayer = 0;
 
-        const int BLOCKS_PER_PAGE = 1024;
+        private int curBlocksPage = 0;
+        const int BLOCKS_PER_PAGE = 256;
 
         //select rect if alt pressed
         private int selectionBeginX, selectionBeginY, selectionEndX, selectionEndY;
@@ -1032,10 +1011,8 @@ namespace CadEditor
 
         private void cbPanelNo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FlowLayoutPanel[] blocksPanels = { blocksPanel, blockPanel2, blockPanel3, blockPanel4 };
-            int index = cbPanelNo.SelectedIndex;
-            for (int i = 0; i < blocksPanels.Length; i++)
-                blocksPanels[i].Visible = i == index;
+            curBlocksPage = cbPanelNo.SelectedIndex;
+            reloadBlocksPanel();
         }
 
         public void addSubeditorButton(ToolStripItem item)
