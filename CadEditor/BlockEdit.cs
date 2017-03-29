@@ -330,7 +330,7 @@ namespace CadEditor
                 //
                 Label lb = new Label();
                 lb.Location = new Point(curPanelX, 0);
-                lb.Size = new Size(24, 32);
+                lb.Size = new Size(32, 32);
                 lb.Tag = i;
                 lb.Text = String.Format("{0:X}",i);
                 fp.Controls.Add(lb);
@@ -384,6 +384,8 @@ namespace CadEditor
             for (int i = startIndex, pi = 0; i < endIndex; i++, pi++)
             {
                 Panel p = (Panel)mapObjects.Controls[pi];
+                Label lb = (Label)p.Controls[0];
+                lb.Text = String.Format("{0:X}", i);
                 PictureBox pb = (PictureBox)p.Controls[1];
                 pb.Image = makeObjImage(i);
                 ComboBox cbColor = (ComboBox)p.Controls[2];
