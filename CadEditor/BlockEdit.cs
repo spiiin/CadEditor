@@ -194,8 +194,8 @@ namespace CadEditor
             int x = e.X / 16;
             int y = e.Y / 16;
             PictureBox p = (PictureBox)sender;
-            int objIndex = (int)p.Tag;
-            var obj = objects[objIndex];
+            int objIndex = curPageIndex * BLOCKS_PER_PAGE + (int)p.Tag;
+            var obj = objects[ objIndex];
             if (x >= 0 && x < obj.w && y>=0 && y < obj.h)
             {
                 if (left)
@@ -223,16 +223,16 @@ namespace CadEditor
         {
             ComboBox cb = (ComboBox)sender;
             PictureBox pb = (PictureBox)cb.Tag;
-            int index = (int)pb.Tag;
+            int index = curPageIndex * BLOCKS_PER_PAGE + (int)pb.Tag;
             objects[index].typeColor = (byte)(objects[index].typeColor & 0xF0 | cb.SelectedIndex);
-            pb.Image = makeObjImage((int)pb.Tag);
+            pb.Image = makeObjImage(index);
             dirty = true;
         }
 
         protected void cbType_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
-            int index = (int)cb.Tag;
+            int index = curPageIndex * BLOCKS_PER_PAGE + (int)cb.Tag;
             objects[index].typeColor = (byte)((objects[index].typeColor & 0x0F) | (cb.SelectedIndex << 4));
             dirty = true;
         }
@@ -379,6 +379,7 @@ namespace CadEditor
                 return;
             }
 
+            mapObjects.SuspendLayout();
             int startIndex = curPageIndex * BLOCKS_PER_PAGE;
             int endIndex = Math.Min(startIndex + BLOCKS_PER_PAGE, ConfigScript.getBlocksCount());
             int pi = 0;
@@ -400,6 +401,7 @@ namespace CadEditor
                 Panel p = (Panel)mapObjects.Controls[pi];
                 p.Visible = false;
             }
+            mapObjects.ResumeLayout();
         }
 
         private void VisibleOnlyChange_SelectedIndexChanged(object sender, EventArgs e)
