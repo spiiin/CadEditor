@@ -134,7 +134,7 @@
             this.Controls.Add(this.mapScreen);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "EditMap";
-            this.Text = "Map Editor (Capcom Version)";
+            this.Text = "Map Editor";
             this.Load += new System.EventHandler(this.EditMap_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
             this.ResumeLayout(false);
