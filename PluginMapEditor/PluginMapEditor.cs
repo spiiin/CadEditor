@@ -45,6 +45,7 @@ namespace PluginMapEditor
             MapConfig.loadMapFunc = (LoadMapFunc)asm.InvokeInst(data, "*.getLoadMapFunc");
             MapConfig.saveMapFunc = (SaveMapFunc)asm.InvokeInst(data, "*.getSaveMapFunc");
             MapConfig.readOnly = ConfigScript.callFromScript(asm, data, "*.isMapReadOnly", false);
+            MapConfig.sharedPal = ConfigScript.callFromScript(asm, data, "*.mapEditorSharePallete", false);
         }
 
         FormMain formMain;
@@ -64,10 +65,11 @@ namespace PluginMapEditor
         public static LoadMapFunc loadMapFunc;
         public static SaveMapFunc saveMapFunc;
         public static bool readOnly;
+        public static bool sharedPal;
 
-        public static byte[] loadMap(int romAddr)
+        public static byte[] loadMap(int mapNo)
         {
-            return loadMapFunc(romAddr);
+            return loadMapFunc(mapNo);
         }
 
         public static int saveMap(int mapNo, byte[] mapData, out byte[] packedData)

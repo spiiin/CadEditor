@@ -30,13 +30,14 @@ public class Data
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x4AA3, 1  , 0x1000);  }
   public int getBlocksCount()           { return 1024; }
   public int getBigBlocksCount()        { return 1024; }
-  public int getPalBytesAddr()          { return 0x0; }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc()         { return Utils.getChrAddress; }
   public GetVideoChunkFunc    getVideoChunkFunc()            { return Utils.getVideoChunk; }
   public SetVideoChunkFunc    setVideoChunkFunc()            { return Utils.setVideoChunk; }
-  public GetBlocksFunc getBlocksFunc() { return getBlocks;}
-  public SetBlocksFunc setBlocksFunc() { return setBlocks;}
+  
+  public GetBlocksFunc getBlocksFunc() { return Utils.getBlocksLinear2x2withoutAttrib;}
+  public SetBlocksFunc setBlocksFunc() { return Utils.setBlocksLinearWithoutAttrib;}
+  public int getPalBytesAddr()          { return 0xB296; }
   
   public GetPalFunc getPalFunc()  { return Utils.getPalleteLinear;}
   public SetPalFunc setPalFunc()  { return Utils.setPalleteLinear;}
@@ -45,54 +46,21 @@ public class Data
   //-------------------------------------------------------------------------------------------------------------------
   public MapInfo[] getMapsInfo() { return makeMapsInfo(); }
   public LoadMapFunc getLoadMapFunc() { return MapUtils.loadMapContraSpirits; }
-  public SaveMapFunc getSaveMapFunc() { return MapUtils.saveMapContraSpirits; }
+  public SaveMapFunc getSaveMapFunc() { return MapUtils.saveAttribs; }
   public bool isMapReadOnly()         { return true; }
 
   public MapInfo[] makeMapsInfo()
   {
      var mapsInfo = new MapInfo[getScreensOffset().recCount];
-     int scrSize = getScreenWidth() * getScreenHeight() * getWordLen();
+     int scrSize = ConfigScript.getScreenWidth(0) * ConfigScript.getScreenHeight(0) * ConfigScript.getWordLen();
      int attrSize = 64;
      for (int i = 0; i < mapsInfo.Length; i++)
      {
-         int da = 0x8376 + scrSize  * i;
-         int aa = 0xB296 + attrSize * i;
-         mapsInfo[i] = new MapInfo(){ dataAddr = da, palAddr = 0x29721, videoNo = 0, attribsAddr = aa};
+         int da = getScreensOffset().beginAddr + scrSize  * i;
+         int aa =  getPalBytesAddr() + attrSize * i;
+         mapsInfo[i] = new MapInfo(){ dataAddr = da, palAddr = ConfigScript.palOffset.beginAddr, videoNo = 0, attribsAddr = aa};
      }
      return mapsInfo;
   }
-  
   //-------------------------------------------------------------------------------------------------------------------
-  public ObjRec[] getBlocks(int blockIndex)
-  {
-      var romdata = Globals.romdata;
-      int addr = ConfigScript.getTilesAddr(blockIndex);
-      int count = ConfigScript.getBlocksCount();
-      var objects = new ObjRec[count];
-      for (int i = 0; i < count; i++)
-      {
-          byte c1, c2, c3, c4;
-          c1 = romdata[addr + i * 4 + 0];
-          c2 = romdata[addr + i * 4 + 1];
-          c3 = romdata[addr + i * 4 + 2];
-          c4 = romdata[addr + i * 4 + 3];
-          objects[i] = new ObjRec(c1, c2, c3, c4, 0);
-      }
-      return objects;
-  }
-  
-  public void setBlocks(int blockIndex, ObjRec[] blocksData)
-  {
-      var romdata = Globals.romdata;
-      int addr = ConfigScript.getTilesAddr(blockIndex);
-      int count = ConfigScript.getBlocksCount();
-      for (int i = 0; i < count; i++)
-      {
-          var obj = blocksData[i];
-          romdata[addr + i * 4 + 0] = (byte)obj.c1;
-          romdata[addr + i * 4 + 1] = (byte)obj.c2;
-          romdata[addr + i * 4 + 2] = (byte)obj.c3;
-          romdata[addr + i * 4 + 3] = (byte)obj.c4;
-      }
-  }
 }

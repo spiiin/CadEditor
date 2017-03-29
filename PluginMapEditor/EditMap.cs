@@ -45,11 +45,18 @@ namespace CadEditor
 
         private void setPal()
         {
-            int palAddr = MapConfig.mapsInfo[curActiveMapNo].palAddr;
-            curPal = new byte[16];
-            for (int i = 0; i < 16; i++)
-                curPal[i] = Globals.romdata[palAddr + i];
-            curPal[0] = curPal[4] = curPal[8] = curPal[12] = 0x0F;
+            if (MapConfig.sharedPal)
+            {
+                curPal = ConfigScript.getPal(0);
+            }
+            else
+            {
+                int palAddr = MapConfig.mapsInfo[curActiveMapNo].palAddr;
+                curPal = new byte[16];
+                for (int i = 0; i < 16; i++)
+                    curPal[i] = Globals.romdata[palAddr + i];
+                curPal[0] = curPal[4] = curPal[8] = curPal[12] = 0x0F;
+            }
         }
 
         private void saveMap()

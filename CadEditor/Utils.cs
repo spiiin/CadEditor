@@ -448,6 +448,21 @@ namespace CadEditor
             writeBlocksLinearTiles16Pal1(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getPalBytesAddr(), ConfigScript.getBlocksCount());
         }
 
+        public static ObjRec[] getBlocksLinear2x2withoutAttrib(int blockIndex)
+        {
+            return Utils.readBlocksLinearWithoutAttribs(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 2, 2, ConfigScript.getBlocksCount());
+        }
+
+        public static ObjRec[] getBlocksLinear4x2withoutAttrib(int blockIndex)
+        {
+            return Utils.readBlocksLinearWithoutAttribs(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 4, 2, ConfigScript.getBlocksCount());
+        }
+
+        public static void setBlocksLinearWithoutAttrib(int blockIndex, ObjRec[] blocksData)
+        {
+            writeBlocksLinearWithoutAttribs(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount());
+        }
+
         public static ObjRec[] readBlocksLinearTiles16Pal1(byte[] romdata, int addr, int palBytesAddr, int count)
         {
             int BLOCK_W = 4;

@@ -192,14 +192,36 @@ namespace PluginMapEditor
             mapData[(y * 2 + 1) * MAP_WIDTH + x * 2 + 1] = (byte)block.indexes[3];
         }
 
+        public static void applyBlock4x2ToMap(byte[] mapData, ObjRec block, int x, int y)
+        {
+            const int MAP_WIDTH = 32;
+            mapData[(y * 2 + 0) * MAP_WIDTH + x * 4 + 0] = (byte)block.indexes[0];
+            mapData[(y * 2 + 0) * MAP_WIDTH + x * 4 + 1] = (byte)block.indexes[1];
+            mapData[(y * 2 + 0) * MAP_WIDTH + x * 4 + 2] = (byte)block.indexes[2];
+            mapData[(y * 2 + 0) * MAP_WIDTH + x * 4 + 3] = (byte)block.indexes[3];
+
+            mapData[(y * 2 + 1) * MAP_WIDTH + x * 4 + 0] = (byte)block.indexes[4];
+            mapData[(y * 2 + 1) * MAP_WIDTH + x * 4 + 1] = (byte)block.indexes[5];
+            mapData[(y * 2 + 1) * MAP_WIDTH + x * 4 + 2] = (byte)block.indexes[6];
+            mapData[(y * 2 + 1) * MAP_WIDTH + x * 4 + 3] = (byte)block.indexes[7];
+        }
+
+        private static void fillAttribs(byte[] mapData, byte[] romdata, int attribAddr)
+        {
+            for (int i = 0; i < 64; i++)
+            {
+                mapData[960 + i] = Globals.romdata[attribAddr + i];
+            }
+        }
+
         public static byte[] loadMapContraSpirits(int mapNo)
         {
             int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
             int attribAddr = MapConfig.mapsInfo[mapNo].attribsAddr;
-
             byte[] mapData = new byte[1024];
             var blocks = ConfigScript.getBlocks(0);
             int scrSize = ConfigScript.getScreenWidth(0) * ConfigScript.getScreenHeight(0);
+
             //fill tiles region
             const int SCREEN_WIDTH = 16;
             for (int i = 0; i < scrSize; i++)
@@ -207,15 +229,32 @@ namespace PluginMapEditor
                 int blockIndex = Utils.readWordLE(Globals.romdata, romAddr + i * 2);
                 applyBlock2x2ToMap(mapData, blocks[blockIndex], i % SCREEN_WIDTH, i / SCREEN_WIDTH);                
             }
-            //fill attribs region
-            for (int i = 0; i < 64; i++)
-            {
-                mapData[960 + i] = (byte)Globals.romdata[attribAddr + i];
-            }
+
+            fillAttribs(mapData, Globals.romdata, attribAddr);
             return mapData;
         }
 
-        public static int saveMapContraSpirits(int mapNo, byte[] mapData, out byte[] packedData)
+        public static byte[] loadMapBatman(int mapNo)
+        {
+            int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
+            int attribAddr = MapConfig.mapsInfo[mapNo].attribsAddr;
+            byte[] mapData = new byte[1024];
+            var blocks = ConfigScript.getBlocks(0);
+            int scrSize = ConfigScript.getScreenWidth(0) * ConfigScript.getScreenHeight(0);
+
+            //fill tiles region
+            const int SCREEN_WIDTH = 8;
+            for (int i = 0; i < scrSize; i++)
+            {
+                int blockIndex = Globals.romdata[romAddr + i];
+                applyBlock4x2ToMap(mapData, blocks[blockIndex], i % SCREEN_WIDTH, i / SCREEN_WIDTH);
+            }
+
+            fillAttribs(mapData, Globals.romdata, attribAddr);
+            return mapData;
+        }
+
+        public static int saveAttribs(int mapNo, byte[] mapData, out byte[] packedData)
         {
             packedData = new byte[0];
             int attribAddr = MapConfig.mapsInfo[mapNo].attribsAddr;
