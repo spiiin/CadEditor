@@ -439,8 +439,7 @@ namespace CadEditor
                 videoChunk[beginIndex + line + 8] = Utils.ReverseBits(videoChunk[beginIndex + line + 8]); 
             }
             ConfigScript.setVideoChunk(getBackId(), videoChunk);
-            reloadLevel(false);
-            dirty = true;
+            cbLevelSelect_SelectedIndexChanged(sender, e);
         }
 
         protected void btFlipVertical_Click(object sender, EventArgs e)
@@ -457,8 +456,7 @@ namespace CadEditor
             Utils.Swap(ref videoChunk[beginIndex +10], ref videoChunk[beginIndex +13]);
             Utils.Swap(ref videoChunk[beginIndex +11], ref videoChunk[beginIndex +12]);
             ConfigScript.setVideoChunk(getBackId(), videoChunk);
-            reloadLevel(false);
-            dirty = true;
+            cbLevelSelect_SelectedIndexChanged(sender, e);
         }
 
         protected void btExport_Click(object sender, EventArgs e)
