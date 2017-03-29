@@ -43,15 +43,24 @@ public class Data
   public OffsetRec getPalOffset() { return new OffsetRec(0x29721 , 1  , 16  ); }
   
   //-------------------------------------------------------------------------------------------------------------------
-  public MapInfo[] getMapsInfo() { return mapsInfo; }
+  public MapInfo[] getMapsInfo() { return makeMapsInfo(); }
   public LoadMapFunc getLoadMapFunc() { return MapUtils.loadMapContraSpirits; }
   public SaveMapFunc getSaveMapFunc() { return MapUtils.saveMapContraSpirits; }
   public bool isMapReadOnly()         { return true; }
 
-  MapInfo[] mapsInfo = new MapInfo[]
-  { 
-      new MapInfo(){ dataAddr = 0x8376, palAddr = 0x29721, videoNo = 0, attribsAddr = 0xB296 },
-  };
+  public MapInfo[] makeMapsInfo()
+  {
+     var mapsInfo = new MapInfo[getScreensOffset().recCount];
+     int scrSize = getScreenWidth() * getScreenHeight() * getWordLen();
+     int attrSize = 64;
+     for (int i = 0; i < mapsInfo.Length; i++)
+     {
+         int da = 0x8376 + scrSize  * i;
+         int aa = 0xB296 + attrSize * i;
+         mapsInfo[i] = new MapInfo(){ dataAddr = da, palAddr = 0x29721, videoNo = 0, attribsAddr = aa};
+     }
+     return mapsInfo;
+  }
   
   //-------------------------------------------------------------------------------------------------------------------
   public ObjRec[] getBlocks(int blockIndex)
