@@ -55,8 +55,12 @@ namespace CadEditor
         private void saveMap()
         {
             byte[] x;
-            int nn = MapConfig.saveMap(mapData, out x);
+            int nn = MapConfig.saveMap(curActiveMapNo, mapData, out x);
 
+            if (MapConfig.readOnly)
+            {
+                return;
+            }
             //
             try
             {

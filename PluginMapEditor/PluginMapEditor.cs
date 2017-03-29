@@ -9,8 +9,8 @@ using CSScriptLibrary;
 
 namespace PluginMapEditor
 {
-    public delegate int SaveMapFunc(byte[] mapData, out byte[] packedData);
-    public delegate byte[] LoadMapFunc(int romAddr);
+    public delegate int SaveMapFunc(int mapNo, byte[] mapData, out byte[] packedData);
+    public delegate byte[] LoadMapFunc(int mapNo);
 
     public class PluginMapEditor : IPlugin
     {
@@ -70,9 +70,9 @@ namespace PluginMapEditor
             return loadMapFunc(romAddr);
         }
 
-        public static int saveMap(byte[] mapData, out byte[] packedData)
+        public static int saveMap(int mapNo, byte[] mapData, out byte[] packedData)
         {
-            return saveMapFunc(mapData, out packedData);
+            return saveMapFunc(mapNo, mapData, out packedData);
         }
     }
 }

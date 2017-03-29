@@ -94,7 +94,7 @@ namespace PluginMapEditor
             }
         }
 
-        public static int saveMapDwd(byte[] mapData, out byte[] packedData)
+        public static int saveMapDwd(int mapNo, byte[] mapData, out byte[] packedData)
         {
             packedData = new byte[(256 + 3) * 4];
             var s = new MemoryStream(packedData);
@@ -104,7 +104,7 @@ namespace PluginMapEditor
             return (int)nn;
         }
 
-        public static int saveMapCad(byte[] mapData, out byte[] packedData)
+        public static int saveMapCad(int mapNo, byte[] mapData, out byte[] packedData)
         {
             packedData = new byte[(256 + 3) * 4];
             var s = new MemoryStream(packedData);
@@ -115,8 +115,9 @@ namespace PluginMapEditor
         }
         //--------------------------------------------
 
-        public static byte[] loadMapDt2(int romAddr)
+        public static byte[] loadMapDt2(int mapNo)
         {
+            int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
             byte[] mapData = new byte[1024];
             int readCount = 0;
             int repeatSymbol = Globals.romdata[romAddr++];
@@ -141,7 +142,7 @@ namespace PluginMapEditor
             return mapData;
         }
 
-        public static int saveMapDt2(byte[] mapData, out byte[] packedData)
+        public static int saveMapDt2(int mapNo, byte[] mapData, out byte[] packedData)
         {
             packedData = new byte[1024];
             var s = new MemoryStream(packedData);
@@ -214,9 +215,17 @@ namespace PluginMapEditor
             return mapData;
         }
 
-        public static int saveMapContraSpirits(byte[] mapData, out byte[] packedData)
+        public static int saveMapContraSpirits(int mapNo, byte[] mapData, out byte[] packedData)
         {
             packedData = new byte[0];
+            int attribAddr = MapConfig.mapsInfo[mapNo].attribsAddr;
+            //save attrib data!!
+            for (int i = 0; i < 64; i++)
+            {
+                 Globals.romdata[attribAddr + i] = mapData[960 + i];
+            }
+            Globals.flushToFile();
+            //
             return 0;
         }
     }
