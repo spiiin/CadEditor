@@ -232,6 +232,33 @@ namespace CadEditor
             return data;
         }
 
+        public static ObjRec[] readBlocksLinearWithoutAttribs(byte[] romdata, int addr, int w, int h, int count)
+        {
+            var objects = new ObjRec[count];
+            int blockSize = w * h;
+            for (int i = 0; i < count; i++)
+            {
+                var indexes = new int[blockSize];
+                var palBytes = new int[indexes.Length / 4];
+                Array.Copy(romdata, addr + i * blockSize, indexes, 0, w * h);
+                objects[i] = new ObjRec(w, h, indexes, palBytes);
+            }
+            return objects;
+        }
+
+        public static void writeBlocksLinearWithoutAttribs(ObjRec[] objects, byte[] romdata, int addr, int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                var obj = objects[i];
+                int BLOCK_S = obj.indexes.Length;
+                for (int bi = 0; bi < BLOCK_S; bi++)
+                {
+                    romdata[addr + i * BLOCK_S + bi] = (byte)obj.indexes[bi];
+                }
+            }
+        }
+
         public static ObjRec[] readBlocksLinear(byte[] romdata, int addr, int count)
         {
             var objects = new ObjRec[count];
@@ -426,34 +453,22 @@ namespace CadEditor
             int BLOCK_W = 4;
             int BLOCK_H = 4;
             int BLOCK_S = BLOCK_H * BLOCK_H;
-            var objects = new ObjRec[count];
+            var objects = readBlocksLinearWithoutAttribs(romdata, addr, BLOCK_W, BLOCK_H, count);
             for (int i = 0; i < count; i++)
             {
-                var indexes = new int[BLOCK_S];
-                var palBytes = new int[BLOCK_S / 4];
-                for (int bi = 0; bi < BLOCK_S; bi++)
-                {
-                    indexes[bi] = romdata[addr + i * BLOCK_S + bi];
-                }
                 int palByte = romdata[palBytesAddr + i];
-                palBytes = new int[] { (palByte >> 0) & 3, (palByte >> 2) & 3, (palByte >> 4) & 3, (palByte >> 6) & 3 };
-
-                objects[i] = new ObjRec(BLOCK_W, BLOCK_H, indexes, palBytes);
+                var palBytes = new int[] { (palByte >> 0) & 3, (palByte >> 2) & 3, (palByte >> 4) & 3, (palByte >> 6) & 3 };
+                objects[i].palBytes = palBytes;
             }
             return objects;
         }
 
         public static void writeBlocksLinearTiles16Pal1(ObjRec[] objects, byte[] romdata, int addr, int palBytesAddr, int count)
         {
+            writeBlocksLinearWithoutAttribs(objects, romdata, addr, count);
             for (int i = 0; i < count; i++)
             {
-                var obj = objects[i];
-                int BLOCK_S = obj.indexes.Length;
-                for (int bi = 0; bi < BLOCK_S; bi++)
-                {
-                    romdata[addr + i * BLOCK_S + bi] = (byte)obj.indexes[bi];
-                }
-                var objPalBytes = obj.palBytes;
+                var objPalBytes = objects[i].palBytes;
                 int palByte = objPalBytes[0] | objPalBytes[1] << 2 | objPalBytes[2] << 4 | objPalBytes[3] << 6;
                 romdata[palBytesAddr + i] = (byte)palByte;
             }

@@ -396,7 +396,7 @@ namespace CadEditor
                 ComboBox cbType = (ComboBox)p.Controls[3];
                 cbType.SelectedIndex = objects[i].getType();
             }
-            for (; pi < BLOCKS_PER_PAGE; pi++)
+            for (; pi < mapObjects.Controls.Count; pi++)
             {
                 Panel p = (Panel)mapObjects.Controls[pi];
                 p.Visible = false;
