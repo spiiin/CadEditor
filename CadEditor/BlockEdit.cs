@@ -49,7 +49,7 @@ namespace CadEditor
             curActivePal = formMain.CurActivePalleteNo;
             UtilsGui.setCbIndexWithoutUpdateLevel(cbSubpalette, cbSubpalette_SelectedIndexChanged);
 
-            UtilsGui.setCbItemsCount(cbPanelNo, ConfigScript.getBlocksCount() / BLOCKS_PER_PAGE);
+            UtilsGui.setCbItemsCount(cbPanelNo, (ConfigScript.getBlocksCount() + BLOCKS_PER_PAGE  - 1)/ BLOCKS_PER_PAGE);
             UtilsGui.setCbIndexWithoutUpdateLevel(cbPanelNo, cbPanelNo_SelectedIndexChanged);
         }
 
@@ -381,9 +381,11 @@ namespace CadEditor
 
             int startIndex = curPageIndex * BLOCKS_PER_PAGE;
             int endIndex = Math.Min(startIndex + BLOCKS_PER_PAGE, ConfigScript.getBlocksCount());
-            for (int i = startIndex, pi = 0; i < endIndex; i++, pi++)
+            int pi = 0;
+            for (int i = startIndex; i < endIndex; i++, pi++)
             {
                 Panel p = (Panel)mapObjects.Controls[pi];
+                p.Visible = true;
                 Label lb = (Label)p.Controls[0];
                 lb.Text = String.Format("{0:X}", i);
                 PictureBox pb = (PictureBox)p.Controls[1];
@@ -392,6 +394,11 @@ namespace CadEditor
                 cbColor.SelectedIndex = objects[i].getSubpallete();
                 ComboBox cbType = (ComboBox)p.Controls[3];
                 cbType.SelectedIndex = objects[i].getType();
+            }
+            for (; pi < BLOCKS_PER_PAGE; pi++)
+            {
+                Panel p = (Panel)mapObjects.Controls[pi];
+                p.Visible = false;
             }
         }
 
