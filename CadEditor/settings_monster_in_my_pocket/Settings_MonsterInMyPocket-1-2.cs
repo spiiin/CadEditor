@@ -2,7 +2,7 @@ using CadEditor;
 using System.Collections.Generic;
 public class Data
 { 
-  public OffsetRec getScreensOffset()     { return new OffsetRec(0x31, 6, 64);   }
+  public OffsetRec getScreensOffset()     { return new OffsetRec(0x31, 7, 64);   }
   public int getScreenWidth()             { return 8; }
   public int getScreenHeight()            { return 8; }
   
