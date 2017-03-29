@@ -99,6 +99,7 @@
             this.cbLevelNo = new System.Windows.Forms.ComboBox();
             this.cbUseStructs = new System.Windows.Forms.CheckBox();
             this.lbStructures = new System.Windows.Forms.ListBox();
+            this.lbPalBytesAddr = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -758,9 +759,9 @@
             this.splitContainer1.Panel1.Controls.Add(this.blockPanel4);
             this.splitContainer1.Panel1.Controls.Add(this.blockPanel3);
             this.splitContainer1.Panel1.Controls.Add(this.blockPanel2);
-            this.splitContainer1.Panel1.Controls.Add(this.lbPanelNo);
             this.splitContainer1.Panel1.Controls.Add(this.cbPanelNo);
             this.splitContainer1.Panel1.Controls.Add(this.pnElements);
+            this.splitContainer1.Panel1.Controls.Add(this.lbPanelNo);
             this.splitContainer1.Panel1.Controls.Add(this.blocksPanel);
             this.splitContainer1.Panel1.Controls.Add(this.lbStructures);
             // 
@@ -815,12 +816,12 @@
             // 
             this.lbPanelNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lbPanelNo.AutoSize = true;
-            this.lbPanelNo.Location = new System.Drawing.Point(203, 614);
+            this.lbPanelNo.Location = new System.Drawing.Point(12, 611);
             this.lbPanelNo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbPanelNo.Name = "lbPanelNo";
-            this.lbPanelNo.Size = new System.Drawing.Size(96, 17);
+            this.lbPanelNo.Size = new System.Drawing.Size(41, 17);
             this.lbPanelNo.TabIndex = 60;
-            this.lbPanelNo.Text = "Panel subpart";
+            this.lbPanelNo.Text = "Page";
             // 
             // cbPanelNo
             // 
@@ -832,10 +833,10 @@
             "1",
             "2",
             "3"});
-            this.cbPanelNo.Location = new System.Drawing.Point(307, 608);
+            this.cbPanelNo.Location = new System.Drawing.Point(61, 608);
             this.cbPanelNo.Margin = new System.Windows.Forms.Padding(4);
             this.cbPanelNo.Name = "cbPanelNo";
-            this.cbPanelNo.Size = new System.Drawing.Size(80, 24);
+            this.cbPanelNo.Size = new System.Drawing.Size(54, 24);
             this.cbPanelNo.TabIndex = 7;
             this.cbPanelNo.SelectedIndexChanged += new System.EventHandler(this.cbPanelNo_SelectedIndexChanged);
             // 
@@ -908,11 +909,23 @@
             this.lbStructures.Visible = false;
             this.lbStructures.SelectedIndexChanged += new System.EventHandler(this.lbStructures_SelectedIndexChanged);
             // 
+            // lbPalBytesAddr
+            // 
+            this.lbPalBytesAddr.AutoSize = true;
+            this.lbPalBytesAddr.Location = new System.Drawing.Point(688, 9);
+            this.lbPalBytesAddr.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbPalBytesAddr.Name = "lbPalBytesAddr";
+            this.lbPalBytesAddr.Size = new System.Drawing.Size(96, 17);
+            this.lbPalBytesAddr.TabIndex = 60;
+            this.lbPalBytesAddr.Text = "Pal byte addr:";
+            this.lbPalBytesAddr.Visible = false;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1431, 674);
+            this.Controls.Add(this.lbPalBytesAddr);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.DoubleBuffered = true;
@@ -923,6 +936,7 @@
             this.Text = "CAD Editor v4.0";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormMain_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).EndInit();
             this.pnGeneric.ResumeLayout(false);
@@ -1016,6 +1030,7 @@
         private System.Windows.Forms.CheckBox cbAdvanced;
         private System.Windows.Forms.Panel pnAdvancedParams;
         private System.Windows.Forms.Panel pnGroups;
+        private System.Windows.Forms.Label lbPalBytesAddr;
     }
 }
 

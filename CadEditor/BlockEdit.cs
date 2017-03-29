@@ -41,7 +41,6 @@ namespace CadEditor
             UtilsGui.setCbItemsCount(cbTileset, ConfigScript.blocksOffset.recCount);
             UtilsGui.setCbItemsCount(cbPalette, ConfigScript.palOffset.recCount);
 
-
             UtilsGui.setCbIndexWithoutUpdateLevel(cbTileset, cbLevelSelect_SelectedIndexChanged, formMain.CurActiveBigBlockNo);  //small blocks no?
             UtilsGui.setCbIndexWithoutUpdateLevel(cbVideo, VisibleOnlyChange_SelectedIndexChanged, formMain.CurActiveVideoNo - 0x90);
             UtilsGui.setCbIndexWithoutUpdateLevel(cbPalette, VisibleOnlyChange_SelectedIndexChanged, formMain.CurActivePalleteNo);
@@ -49,6 +48,9 @@ namespace CadEditor
             curActiveVideo = formMain.CurActiveVideoNo;
             curActivePal = formMain.CurActivePalleteNo;
             UtilsGui.setCbIndexWithoutUpdateLevel(cbSubpalette, cbSubpalette_SelectedIndexChanged);
+
+            UtilsGui.setCbItemsCount(cbPanelNo, ConfigScript.getBlocksCount() / BLOCKS_PER_PAGE);
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbPanelNo, cbPanelNo_SelectedIndexChanged);
         }
 
         protected void reloadLevel(bool resetDirty = true)
@@ -144,6 +146,9 @@ namespace CadEditor
         //editor
         protected int curSubpalIndex = 0;
         protected int curActiveBlock = 0;
+
+        protected int curPageIndex = 0;
+        private const int BLOCKS_PER_PAGE = 256;
 
         protected byte[] palette = new byte[Globals.PAL_LEN];
         protected ObjRec[] objects = new ObjRec[256];
@@ -314,7 +319,8 @@ namespace CadEditor
             //GUI
             mapObjects.Controls.Clear();
             mapObjects.SuspendLayout();
-            for (int i = 0; i < ConfigScript.getBlocksCount(); i++)
+            int endIndex = Math.Min(BLOCKS_PER_PAGE, ConfigScript.getBlocksCount());
+            for (int i = 0; i < endIndex; i++)
             {
                 var obj = objects[i];
                 int curPanelX = 0;
@@ -373,9 +379,11 @@ namespace CadEditor
                 return;
             }
 
-            for (int i = 0; i < ConfigScript.getBlocksCount(); i++)
+            int startIndex = curPageIndex * BLOCKS_PER_PAGE;
+            int endIndex = Math.Min(startIndex + BLOCKS_PER_PAGE, ConfigScript.getBlocksCount());
+            for (int i = startIndex, pi = 0; i < endIndex; i++, pi++)
             {
-                Panel p = (Panel)mapObjects.Controls[i];
+                Panel p = (Panel)mapObjects.Controls[pi];
                 PictureBox pb = (PictureBox)p.Controls[1];
                 pb.Image = makeObjImage(i);
                 ComboBox cbColor = (ComboBox)p.Controls[2];
@@ -500,6 +508,12 @@ namespace CadEditor
         public void setFormMain(FormMain f)
         {
             formMain = f;
+        }
+
+        private void cbPanelNo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            curPageIndex = cbPanelNo.SelectedIndex;
+            reloadLevel(false);
         }
     }
 }

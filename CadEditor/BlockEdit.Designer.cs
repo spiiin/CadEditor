@@ -61,6 +61,8 @@
             this.btExport = new System.Windows.Forms.Button();
             this.cbShowAxis = new System.Windows.Forms.CheckBox();
             this.lbActive = new System.Windows.Forms.Label();
+            this.lbPanelNo = new System.Windows.Forms.Label();
+            this.cbPanelNo = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.paletteMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -70,7 +72,7 @@
             // paletteMap
             // 
             this.paletteMap.Location = new System.Drawing.Point(20, 166);
-            this.paletteMap.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.paletteMap.Margin = new System.Windows.Forms.Padding(4);
             this.paletteMap.Name = "paletteMap";
             this.paletteMap.Size = new System.Drawing.Size(341, 20);
             this.paletteMap.TabIndex = 0;
@@ -79,7 +81,7 @@
             // mapScreen
             // 
             this.mapScreen.Location = new System.Drawing.Point(20, 219);
-            this.mapScreen.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mapScreen.Margin = new System.Windows.Forms.Padding(4);
             this.mapScreen.Name = "mapScreen";
             this.mapScreen.Size = new System.Drawing.Size(341, 315);
             this.mapScreen.TabIndex = 6;
@@ -117,7 +119,7 @@
             "3",
             "4"});
             this.cbSubpalette.Location = new System.Drawing.Point(157, 186);
-            this.cbSubpalette.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbSubpalette.Margin = new System.Windows.Forms.Padding(4);
             this.cbSubpalette.Name = "cbSubpalette";
             this.cbSubpalette.Size = new System.Drawing.Size(119, 23);
             this.cbSubpalette.TabIndex = 9;
@@ -133,7 +135,7 @@
             // 
             this.mapObjects.AutoScroll = true;
             this.mapObjects.Location = new System.Drawing.Point(387, 43);
-            this.mapObjects.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mapObjects.Margin = new System.Windows.Forms.Padding(4);
             this.mapObjects.Name = "mapObjects";
             this.mapObjects.Size = new System.Drawing.Size(493, 546);
             this.mapObjects.TabIndex = 10;
@@ -149,7 +151,7 @@
             this.pnGeneric.Controls.Add(this.label14);
             this.pnGeneric.Controls.Add(this.cbTileset);
             this.pnGeneric.Location = new System.Drawing.Point(16, 36);
-            this.pnGeneric.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnGeneric.Margin = new System.Windows.Forms.Padding(4);
             this.pnGeneric.Name = "pnGeneric";
             this.pnGeneric.Size = new System.Drawing.Size(352, 107);
             this.pnGeneric.TabIndex = 17;
@@ -189,7 +191,7 @@
             this.cbPalette.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPalette.FormattingEnabled = true;
             this.cbPalette.Location = new System.Drawing.Point(60, 63);
-            this.cbPalette.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbPalette.Margin = new System.Windows.Forms.Padding(4);
             this.cbPalette.Name = "cbPalette";
             this.cbPalette.Size = new System.Drawing.Size(147, 24);
             this.cbPalette.TabIndex = 17;
@@ -210,7 +212,7 @@
             this.cbVideo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbVideo.FormattingEnabled = true;
             this.cbVideo.Location = new System.Drawing.Point(60, 33);
-            this.cbVideo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbVideo.Margin = new System.Windows.Forms.Padding(4);
             this.cbVideo.Name = "cbVideo";
             this.cbVideo.Size = new System.Drawing.Size(147, 24);
             this.cbVideo.TabIndex = 11;
@@ -231,7 +233,7 @@
             this.cbTileset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTileset.FormattingEnabled = true;
             this.cbTileset.Location = new System.Drawing.Point(60, 5);
-            this.cbTileset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbTileset.Margin = new System.Windows.Forms.Padding(4);
             this.cbTileset.Name = "cbTileset";
             this.cbTileset.Size = new System.Drawing.Size(147, 24);
             this.cbTileset.TabIndex = 15;
@@ -250,7 +252,7 @@
             // pbActive
             // 
             this.pbActive.Location = new System.Drawing.Point(340, 186);
-            this.pbActive.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pbActive.Margin = new System.Windows.Forms.Padding(4);
             this.pbActive.Name = "pbActive";
             this.pbActive.Size = new System.Drawing.Size(21, 20);
             this.pbActive.TabIndex = 14;
@@ -259,7 +261,7 @@
             // btSave
             // 
             this.btSave.Location = new System.Drawing.Point(16, 5);
-            this.btSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btSave.Margin = new System.Windows.Forms.Padding(4);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(79, 28);
             this.btSave.TabIndex = 0;
@@ -320,7 +322,7 @@
             // btClear
             // 
             this.btClear.Location = new System.Drawing.Point(780, 597);
-            this.btClear.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btClear.Margin = new System.Windows.Forms.Padding(4);
             this.btClear.Name = "btClear";
             this.btClear.Size = new System.Drawing.Size(100, 28);
             this.btClear.TabIndex = 23;
@@ -331,7 +333,7 @@
             // btFlipHorizontal
             // 
             this.btFlipHorizontal.Location = new System.Drawing.Point(20, 542);
-            this.btFlipHorizontal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btFlipHorizontal.Margin = new System.Windows.Forms.Padding(4);
             this.btFlipHorizontal.Name = "btFlipHorizontal";
             this.btFlipHorizontal.Size = new System.Drawing.Size(100, 28);
             this.btFlipHorizontal.TabIndex = 0;
@@ -342,7 +344,7 @@
             // btFlipVertical
             // 
             this.btFlipVertical.Location = new System.Drawing.Point(124, 542);
-            this.btFlipVertical.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btFlipVertical.Margin = new System.Windows.Forms.Padding(4);
             this.btFlipVertical.Name = "btFlipVertical";
             this.btFlipVertical.Size = new System.Drawing.Size(100, 28);
             this.btFlipVertical.TabIndex = 24;
@@ -353,7 +355,7 @@
             // btImport
             // 
             this.btImport.Location = new System.Drawing.Point(189, 5);
-            this.btImport.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btImport.Margin = new System.Windows.Forms.Padding(4);
             this.btImport.Name = "btImport";
             this.btImport.Size = new System.Drawing.Size(79, 28);
             this.btImport.TabIndex = 25;
@@ -364,7 +366,7 @@
             // btExport
             // 
             this.btExport.Location = new System.Drawing.Point(103, 5);
-            this.btExport.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btExport.Margin = new System.Windows.Forms.Padding(4);
             this.btExport.Name = "btExport";
             this.btExport.Size = new System.Drawing.Size(79, 28);
             this.btExport.TabIndex = 26;
@@ -379,7 +381,7 @@
             this.cbShowAxis.Checked = true;
             this.cbShowAxis.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbShowAxis.Location = new System.Drawing.Point(673, 602);
-            this.cbShowAxis.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbShowAxis.Margin = new System.Windows.Forms.Padding(4);
             this.cbShowAxis.Name = "cbShowAxis";
             this.cbShowAxis.Size = new System.Drawing.Size(92, 21);
             this.cbShowAxis.TabIndex = 27;
@@ -397,11 +399,41 @@
             this.lbActive.TabIndex = 28;
             this.lbActive.Text = "()";
             // 
+            // lbPanelNo
+            // 
+            this.lbPanelNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lbPanelNo.AutoSize = true;
+            this.lbPanelNo.Location = new System.Drawing.Point(386, 603);
+            this.lbPanelNo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbPanelNo.Name = "lbPanelNo";
+            this.lbPanelNo.Size = new System.Drawing.Size(41, 17);
+            this.lbPanelNo.TabIndex = 62;
+            this.lbPanelNo.Text = "Page";
+            // 
+            // cbPanelNo
+            // 
+            this.cbPanelNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cbPanelNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPanelNo.FormattingEnabled = true;
+            this.cbPanelNo.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3"});
+            this.cbPanelNo.Location = new System.Drawing.Point(432, 600);
+            this.cbPanelNo.Margin = new System.Windows.Forms.Padding(4);
+            this.cbPanelNo.Name = "cbPanelNo";
+            this.cbPanelNo.Size = new System.Drawing.Size(57, 24);
+            this.cbPanelNo.TabIndex = 61;
+            this.cbPanelNo.SelectedIndexChanged += new System.EventHandler(this.cbPanelNo_SelectedIndexChanged);
+            // 
             // BlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(891, 634);
+            this.Controls.Add(this.lbPanelNo);
+            this.Controls.Add(this.cbPanelNo);
             this.Controls.Add(this.lbActive);
             this.Controls.Add(this.cbShowAxis);
             this.Controls.Add(this.btExport);
@@ -426,7 +458,7 @@
             this.Controls.Add(this.pnGeneric);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "BlockEdit";
             this.Text = "Blocks Editor";
@@ -475,5 +507,7 @@
         private System.Windows.Forms.Button btExport;
         private System.Windows.Forms.CheckBox cbShowAxis;
         private System.Windows.Forms.Label lbActive;
+        private System.Windows.Forms.Label lbPanelNo;
+        private System.Windows.Forms.ComboBox cbPanelNo;
     }
 }
