@@ -17,6 +17,7 @@ fnames = [
     "Chip 'n Dale Rescue Rangers (U) [!].nes",
     "Chip 'n Dale Rescue Rangers 2 (U) [!].nes",
     "Contra Force (U) [!].nes",
+    "Contra Spirits (1995) (Unl).nes",
     "Darkman (U) [!].nes",
     "Darkwing Duck (U) [!].nes",
     "Duck Tales (U) [!].nes",

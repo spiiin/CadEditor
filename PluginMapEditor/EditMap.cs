@@ -131,7 +131,10 @@ namespace CadEditor
             int y = e.Y / 16;
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                mapData[y * 32 + x] = (byte)curActiveBlock;
+                if (!MapConfig.readOnly)
+                {
+                    mapData[y * 32 + x] = (byte)curActiveBlock;
+                }
             }
             else
             {

@@ -179,5 +179,46 @@ namespace PluginMapEditor
 
             return (int)s.Position;
         }
+
+        public static void applyBlock2x2ToMap(byte[] mapData, ObjRec block, int x, int y)
+        {
+            const int MAP_WIDTH = 32;
+            mapData[(y * 2 + 0) * MAP_WIDTH + x * 2 + 0] = (byte)block.indexes[0];
+            mapData[(y * 2 + 0) * MAP_WIDTH + x * 2 + 1] = (byte)block.indexes[1];
+            mapData[(y * 2 + 1) * MAP_WIDTH + x * 2 + 0] = (byte)block.indexes[2];
+            mapData[(y * 2 + 1) * MAP_WIDTH + x * 2 + 1] = (byte)block.indexes[3];
+        }
+
+        public static int getAttribAddr()
+        {
+            return MapConfig.attribAddr;
+        }
+
+        public static byte[] loadMapContraSpirits(int romAddr)
+        {
+            byte[] mapData = new byte[1024];
+            var blocks = ConfigScript.getBlocks(0);
+            int scrSize = ConfigScript.getScreenWidth(0) * ConfigScript.getScreenHeight(0);
+            //fill tiles region
+            const int SCREEN_WIDTH = 16;
+            for (int i = 0; i < scrSize; i++)
+            {
+                int blockIndex = Utils.readWordLE(Globals.romdata, romAddr + i * 2);
+                applyBlock2x2ToMap(mapData, blocks[blockIndex], i % SCREEN_WIDTH, i / SCREEN_WIDTH);                
+            }
+            //fill attribs region
+            int attribAddr = getAttribAddr();
+            for (int i = 0; i < 64; i++)
+            {
+                mapData[960 + i] = (byte)Globals.romdata[attribAddr + i];
+            }
+            return mapData;
+        }
+
+        public static int saveMapContraSpirits(byte[] mapData, out byte[] packedData)
+        {
+            packedData = new byte[0];
+            return 0;
+        }
     }
 }

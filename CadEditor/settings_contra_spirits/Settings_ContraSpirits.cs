@@ -1,9 +1,17 @@
 using CadEditor;
 using System;
 using System.Drawing;
+using PluginMapEditor;
 
 public class Data 
 { 
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginMapEditor.dll",
+    };
+  }
   public OffsetRec getScreensOffset()  { return new OffsetRec(0x8376, 24 , 16*15); }
   public int getScreenWidth()          { return 16; }
   public int getScreenHeight()         { return 15; }
@@ -33,6 +41,19 @@ public class Data
   public GetPalFunc getPalFunc()  { return Utils.getPalleteLinear;}
   public SetPalFunc setPalFunc()  { return Utils.setPalleteLinear;}
   public OffsetRec getPalOffset() { return new OffsetRec(0x29721 , 1  , 16  ); }
+  
+  //-------------------------------------------------------------------------------------------------------------------
+  public MapInfo[] getMapsInfo() { return mapsInfo; }
+  public LoadMapFunc getLoadMapFunc() { return MapUtils.loadMapContraSpirits; }
+  public SaveMapFunc getSaveMapFunc() { return MapUtils.saveMapContraSpirits; }
+  public int getAttribsAddr()         { return 0xB296; }
+  public bool isMapReadOnly()         { return true; }
+
+  MapInfo[] mapsInfo = new MapInfo[]
+  { 
+      new MapInfo(){ dataAddr = 0x8376, palAddr = 0x29721, videoNo = 0 },
+  };
+  
   //-------------------------------------------------------------------------------------------------------------------
   public ObjRec[] getBlocks(int blockIndex)
   {
