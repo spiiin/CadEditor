@@ -46,12 +46,11 @@ public class Data
   public MapInfo[] getMapsInfo() { return mapsInfo; }
   public LoadMapFunc getLoadMapFunc() { return MapUtils.loadMapContraSpirits; }
   public SaveMapFunc getSaveMapFunc() { return MapUtils.saveMapContraSpirits; }
-  public int getAttribsAddr()         { return 0xB296; }
   public bool isMapReadOnly()         { return true; }
 
   MapInfo[] mapsInfo = new MapInfo[]
   { 
-      new MapInfo(){ dataAddr = 0x8376, palAddr = 0x29721, videoNo = 0 },
+      new MapInfo(){ dataAddr = 0x8376, palAddr = 0x29721, videoNo = 0, attribsAddr = 0xB296 },
   };
   
   //-------------------------------------------------------------------------------------------------------------------

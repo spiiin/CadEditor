@@ -9,8 +9,9 @@ namespace PluginMapEditor
 {
     public static class MapUtils
     {
-       public static  byte[] loadMapDwd(int romAddr)
+       public static  byte[] loadMapDwd(int mapNo)
         {
+            int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
             byte[] mapData = new byte[1024];
             while (Globals.romdata[romAddr] != 0xFF)
             {
@@ -23,8 +24,9 @@ namespace PluginMapEditor
             return mapData;
         }
 
-        public static byte[] loadMapCad(int romAddr)
+        public static byte[] loadMapCad(int mapNo)
         {
+            int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
             byte[] mapData = new byte[1024];
             while (Globals.romdata[romAddr] != 0xFF)
             {
@@ -189,13 +191,11 @@ namespace PluginMapEditor
             mapData[(y * 2 + 1) * MAP_WIDTH + x * 2 + 1] = (byte)block.indexes[3];
         }
 
-        public static int getAttribAddr()
+        public static byte[] loadMapContraSpirits(int mapNo)
         {
-            return MapConfig.attribAddr;
-        }
+            int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
+            int attribAddr = MapConfig.mapsInfo[mapNo].attribsAddr;
 
-        public static byte[] loadMapContraSpirits(int romAddr)
-        {
             byte[] mapData = new byte[1024];
             var blocks = ConfigScript.getBlocks(0);
             int scrSize = ConfigScript.getScreenWidth(0) * ConfigScript.getScreenHeight(0);
@@ -207,7 +207,6 @@ namespace PluginMapEditor
                 applyBlock2x2ToMap(mapData, blocks[blockIndex], i % SCREEN_WIDTH, i / SCREEN_WIDTH);                
             }
             //fill attribs region
-            int attribAddr = getAttribAddr();
             for (int i = 0; i < 64; i++)
             {
                 mapData[960 + i] = (byte)Globals.romdata[attribAddr + i];

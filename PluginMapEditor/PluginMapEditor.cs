@@ -44,8 +44,7 @@ namespace PluginMapEditor
             MapConfig.mapsInfo = (MapInfo[])asm.InvokeInst(data, "*.getMapsInfo");
             MapConfig.loadMapFunc = (LoadMapFunc)asm.InvokeInst(data, "*.getLoadMapFunc");
             MapConfig.saveMapFunc = (SaveMapFunc)asm.InvokeInst(data, "*.getSaveMapFunc");
-            MapConfig.attribAddr = ConfigScript.callFromScript(asm, data, "*.getAttribsAddr", 0);
-            MapConfig.readOnly = ConfigScript.callFromScript(asm, data, "*.isReadOnly", false);
+            MapConfig.readOnly = ConfigScript.callFromScript(asm, data, "*.isMapReadOnly", false);
         }
 
         FormMain formMain;
@@ -56,6 +55,7 @@ namespace PluginMapEditor
         public int dataAddr;
         public int palAddr;
         public int videoNo;
+        public int attribsAddr; //for separate attrib layer games
     }
 
     public static class MapConfig
@@ -64,7 +64,6 @@ namespace PluginMapEditor
         public static LoadMapFunc loadMapFunc;
         public static SaveMapFunc saveMapFunc;
         public static bool readOnly;
-        public static int attribAddr; //for separate attrib layer games
 
         public static byte[] loadMap(int romAddr)
         {

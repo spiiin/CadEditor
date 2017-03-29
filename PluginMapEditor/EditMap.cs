@@ -20,7 +20,7 @@ namespace CadEditor
 
         private void reloadAllData()
         {
-            mapData = MapConfig.loadMap(curActiveDataAddr);
+            mapData = MapConfig.loadMap(curActiveMapNo);
             setPal();
             byte videoPageId = (byte)(curActiveVideo + 0x90);
             videos = new ImageList[4];
@@ -45,9 +45,10 @@ namespace CadEditor
 
         private void setPal()
         {
+            int palAddr = MapConfig.mapsInfo[curActiveMapNo].palAddr;
             curPal = new byte[16];
             for (int i = 0; i < 16; i++)
-                curPal[i] = Globals.romdata[curActivePalAddr + i];
+                curPal[i] = Globals.romdata[palAddr + i];
             curPal[0] = curPal[4] = curPal[8] = curPal[12] = 0x0F;
         }
 
@@ -95,8 +96,7 @@ namespace CadEditor
         }
 
         byte[] curPal;
-        int curActiveDataAddr = 0;
-        int curActivePalAddr = 0;
+        int curActiveMapNo = 0;
         int curActiveVideo = 10;
         int curActiveBlock = 0;
         ImageList[] videos;
@@ -164,9 +164,8 @@ namespace CadEditor
         private void cbVideoNo_SelectedIndexChanged(object sender, EventArgs e)
         {
             MapInfo si = MapConfig.mapsInfo[cbScreenNo.SelectedIndex];
+            curActiveMapNo = cbScreenNo.SelectedIndex;
             curActiveVideo = si.videoNo;
-            curActiveDataAddr = si.dataAddr;
-            curActivePalAddr = si.palAddr;
             reloadAllData();
         }
     }
