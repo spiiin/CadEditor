@@ -67,7 +67,7 @@ public class Data
   //-------------------------------------------------------------------------------------------------------------------
   public MapInfo[] getMapsInfo()      { return makeMapsInfo(); }
   public LoadMapFunc getLoadMapFunc() { return MapUtils.loadMapNinjaCrusaders; }
-  public SaveMapFunc getSaveMapFunc() { return MapUtils.saveAttribs; }
+  public SaveMapFunc getSaveMapFunc() { return MapUtils.saveAttribsNinjaCrusaders; }
   public bool isMapReadOnly()         { return true; }
   public bool mapEditorSharePallete() { return true; }
 

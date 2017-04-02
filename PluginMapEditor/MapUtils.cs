@@ -238,6 +238,26 @@ namespace PluginMapEditor
             }
         }
 
+        public static int saveAttribsNinjaCrusaders(int mapNo, byte[] mapData, out byte[] packedData)
+        {
+            packedData = new byte[0];
+            int attribAddr = MapConfig.mapsInfo[mapNo].attribsAddr;
+            //save attrib data!!
+            int HEIGHT = 6;
+            int WIDTH = 8;
+            for (int i = 0; i < HEIGHT * WIDTH; i++)
+            {
+                int x = i / HEIGHT;
+                int y = i % HEIGHT;
+                int ind = x * HEIGHT + y;
+                int tind = y * WIDTH + x;
+                Globals.romdata[attribAddr + ind] = mapData[960 + tind];
+            }
+            Globals.flushToFile();
+            //
+            return 0;
+        }
+
         public static byte[] loadMapContraSpirits(int mapNo)
         {
             int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
