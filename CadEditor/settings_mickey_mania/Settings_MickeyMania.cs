@@ -41,7 +41,7 @@ public class Data
   
   public GetPalFunc getPalFunc()  { return Utils.getPalleteLinear;}
   public SetPalFunc setPalFunc()  { return Utils.setPalleteLinear;}
-  public OffsetRec getPalOffset() { return new OffsetRec(0x3EF5E , 1  , 16  ); }
+  public OffsetRec getPalOffset() { return new OffsetRec(0x3EF2E , 1  , 16  ); }
   
   //-------------------------------------------------------------------------------------------------------------------
   public MapInfo[] getMapsInfo() { return makeMapsInfo(); }
