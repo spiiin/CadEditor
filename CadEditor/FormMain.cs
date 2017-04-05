@@ -82,9 +82,19 @@ namespace CadEditor
 
         private void changeBlocksSize(Image[] bigImages)
         {
-            blockHeight = 32;
-            float ratio = bigImages[0].Width / bigImages[0].Height;
-            blockWidth = (int)(blockHeight * ratio);
+            //TODO: remove hardcode logic for size
+            if (blockWidth > blockHeight)
+            {
+                blockHeight = 32;
+                float ratio = bigImages[0].Width / bigImages[0].Height;
+                blockWidth = (int)(blockHeight * ratio);
+            }
+            else
+            {
+                blockWidth = bigImages[0].Height < 256 ? 32 : 4; //hack
+                float ratio = bigImages[0].Height / bigImages[0].Width;
+                blockHeight = (int)(blockWidth * ratio);
+            }
         }
 
         private void resetControls()
@@ -222,7 +232,7 @@ namespace CadEditor
         {
             int lastHierarchy = ConfigScript.getbigBlocksHierarchyCount() - 1;
             int subparts = (ConfigScript.getBigBlocksCount(lastHierarchy) +BLOCKS_PER_PAGE-1) / BLOCKS_PER_PAGE;
-            int count = (curBlocksPage * BLOCKS_PER_PAGE > ConfigScript.getBigBlocksCount(lastHierarchy)) ? (curBlocksPage * BLOCKS_PER_PAGE) % ConfigScript.getBigBlocksCount(lastHierarchy) : BLOCKS_PER_PAGE;
+            int count = ((curBlocksPage + 1) * BLOCKS_PER_PAGE > ConfigScript.getBigBlocksCount(lastHierarchy)) ? ConfigScript.getBigBlocksCount(lastHierarchy) % BLOCKS_PER_PAGE : BLOCKS_PER_PAGE;
             UtilsGui.prepareBlocksPanel(blocksPanel, new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick, curBlocksPage * BLOCKS_PER_PAGE, count);
         }
 

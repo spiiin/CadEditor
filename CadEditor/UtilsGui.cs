@@ -43,7 +43,8 @@ namespace CadEditor
         {
             blocksPanel.Controls.Clear();
             blocksPanel.SuspendLayout();
-            for (int i = startIndex; i < startIndex + count; i++)
+            int i = startIndex;
+            for (; i < startIndex + count; i++)
             {
                 var but = new Button();
                 but.FlatStyle = FlatStyle.Flat;
@@ -54,6 +55,11 @@ namespace CadEditor
                 but.Margin = new Padding(0);
                 but.Padding = new Padding(0);
                 blocksPanel.Controls.Add(but);
+            }
+            for (; i < blocksPanel.Controls.Count; i++)
+            {
+                var but = (Button)blocksPanel.Controls[i];
+                but.Visible = false;
             }
             blocksPanel.ResumeLayout();
         }
