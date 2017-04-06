@@ -218,47 +218,20 @@ namespace PluginMapEditor
             return (int)s.Position;
         }
 
-        public static void applyBlock2x2ToMap(int[] mapData, ObjRec block, int x, int y)
-        {
-            const int MAP_WIDTH = 32;
-            mapData[(y * 2 + 0) * MAP_WIDTH + x * 2 + 0] =block.indexes[0];
-            mapData[(y * 2 + 0) * MAP_WIDTH + x * 2 + 1] =block.indexes[1];
-            mapData[(y * 2 + 1) * MAP_WIDTH + x * 2 + 0] =block.indexes[2];
-            mapData[(y * 2 + 1) * MAP_WIDTH + x * 2 + 1] =block.indexes[3];
-        }
+        //------------------------------------------------------------------------------------------------
 
-        public static void applyBlock4x2ToMap(int[] mapData, ObjRec block, int x, int y)
+        private static void applyBlockToMap(int[] mapData, ObjRec block, int x, int y, int mapWidth)
         {
-            const int MAP_WIDTH = 32;
-            mapData[(y * 2 + 0) * MAP_WIDTH + x * 4 + 0] = block.indexes[0];
-            mapData[(y * 2 + 0) * MAP_WIDTH + x * 4 + 1] = block.indexes[1];
-            mapData[(y * 2 + 0) * MAP_WIDTH + x * 4 + 2] = block.indexes[2];
-            mapData[(y * 2 + 0) * MAP_WIDTH + x * 4 + 3] = block.indexes[3];
-
-            mapData[(y * 2 + 1) * MAP_WIDTH + x * 4 + 0] = block.indexes[4];
-            mapData[(y * 2 + 1) * MAP_WIDTH + x * 4 + 1] = block.indexes[5];
-            mapData[(y * 2 + 1) * MAP_WIDTH + x * 4 + 2] = block.indexes[6];
-            mapData[(y * 2 + 1) * MAP_WIDTH + x * 4 + 3] = block.indexes[7];
-        }
-
-        public static void applyBlock1x20ToMap(int[] mapData, ObjRec block, int x, int y)
-        {
-            const int MAP_WIDTH = 256;
-            for (int addY = 0; addY < 20; addY++)
+            int width = block.w;
+            int height = block.h;
+            for (int w = 0; w < width; w++)
             {
-                mapData[(y * 20 + addY) * MAP_WIDTH + x * 1 + 0] = block.indexes[addY];
+                for (int h = 0; h < height; h++)
+                {
+                    mapData[(y * height + h) * mapWidth + x * width + w] = block.indexes[width * h + w];
+                }
             }
         }
-
-        public static void applyBlock4x1ToMap(int[] mapData, ObjRec block, int x, int y)
-        {
-            const int MAP_WIDTH = 32;
-            mapData[(y * 1 + 0) * MAP_WIDTH + x * 4 + 0] = block.indexes[0];
-            mapData[(y * 1 + 0) * MAP_WIDTH + x * 4 + 1] = block.indexes[1];
-            mapData[(y * 1 + 0) * MAP_WIDTH + x * 4 + 2] = block.indexes[2];
-            mapData[(y * 1 + 0) * MAP_WIDTH + x * 4 + 3] = block.indexes[3];
-        }
-
 
         private static void fillAttribs(int[] attrData, byte[] romdata, int attribAddr)
         {
@@ -312,10 +285,11 @@ namespace PluginMapEditor
 
             //fill tiles region
             int SCREEN_WIDTH = ConfigScript.getScreenWidth(0);
+            int MAP_WIDTH = 32;
             for (int i = 0; i < scrSize; i++)
             {
                 int blockIndex = Utils.readWordLE(Globals.romdata, romAddr + i * 2);
-                applyBlock2x2ToMap(mapData, blocks[blockIndex], i % SCREEN_WIDTH, i / SCREEN_WIDTH);                
+                applyBlockToMap(mapData, blocks[blockIndex], i % SCREEN_WIDTH, i / SCREEN_WIDTH, MAP_WIDTH); 
             }
 
             fillAttribs(attrData, Globals.romdata, attribAddr);
@@ -333,10 +307,11 @@ namespace PluginMapEditor
 
             //fill tiles region
             int SCREEN_WIDTH = ConfigScript.getScreenWidth(0);
+            int MAP_WIDTH = 32;
             for (int i = 0; i < scrSize; i++)
             {
                 int blockIndex = Globals.romdata[romAddr + i];
-                applyBlock4x2ToMap(mapData, blocks[blockIndex], i % SCREEN_WIDTH, i / SCREEN_WIDTH);
+                applyBlockToMap(mapData, blocks[blockIndex], i % SCREEN_WIDTH, i / SCREEN_WIDTH, MAP_WIDTH);
             }
 
             fillAttribs(attrData, Globals.romdata, attribAddr);
@@ -354,11 +329,12 @@ namespace PluginMapEditor
 
             //fill tiles region
             int SCREEN_HEIGHT = ConfigScript.getScreenWidth(0); //width is height for when getScreenVertical()==true; %)
+            int MAP_WIDTH = 32;
             for (int i = 0; i < scrSize; i++)
             {
                 int blockIndex = Globals.romdata[romAddr + i];
                 //vertical -> invert x and y parameters
-                applyBlock4x1ToMap(mapData, blocks[blockIndex], i / SCREEN_HEIGHT, i % SCREEN_HEIGHT);
+                applyBlockToMap(mapData, blocks[blockIndex], i / SCREEN_HEIGHT, i % SCREEN_HEIGHT, MAP_WIDTH);
             }
 
             fillAttribsNinjaCrusaders(attrData, Globals.romdata, attribAddr);
@@ -376,10 +352,11 @@ namespace PluginMapEditor
 
             //fill tiles region
             int SCREEN_WIDTH = ConfigScript.getScreenWidth(0);
+            int MAP_WIDTH = 256;
             for (int i = 0; i < scrSize; i++)
             {
                 int blockIndex = Globals.romdata[romAddr + i];
-                applyBlock1x20ToMap(mapData, blocks[blockIndex], i % SCREEN_WIDTH, i / SCREEN_WIDTH);
+                applyBlockToMap(mapData, blocks[blockIndex], i % SCREEN_WIDTH, i / SCREEN_WIDTH, MAP_WIDTH);
             }
 
             fillAttribs(attrData, Globals.romdata, attribAddr);
