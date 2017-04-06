@@ -35,15 +35,17 @@
             this.label7 = new System.Windows.Forms.Label();
             this.cbScreenNo = new System.Windows.Forms.ComboBox();
             this.sfSaveDialog = new System.Windows.Forms.SaveFileDialog();
+            this.mapPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
+            this.mapPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // mapScreen
             // 
-            this.mapScreen.Location = new System.Drawing.Point(423, 15);
+            this.mapScreen.Location = new System.Drawing.Point(4, 30);
             this.mapScreen.Margin = new System.Windows.Forms.Padding(4);
             this.mapScreen.Name = "mapScreen";
-            this.mapScreen.Size = new System.Drawing.Size(683, 591);
+            this.mapScreen.Size = new System.Drawing.Size(639, 536);
             this.mapScreen.TabIndex = 5;
             this.mapScreen.TabStop = false;
             this.mapScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.mapScreen_Paint);
@@ -57,13 +59,13 @@
             this.blocksPanel.Location = new System.Drawing.Point(16, 15);
             this.blocksPanel.Margin = new System.Windows.Forms.Padding(4);
             this.blocksPanel.Name = "blocksPanel";
-            this.blocksPanel.Size = new System.Drawing.Size(323, 565);
+            this.blocksPanel.Size = new System.Drawing.Size(323, 661);
             this.blocksPanel.TabIndex = 6;
             // 
             // btSave
             // 
             this.btSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btSave.Location = new System.Drawing.Point(16, 587);
+            this.btSave.Location = new System.Drawing.Point(16, 683);
             this.btSave.Margin = new System.Windows.Forms.Padding(4);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(68, 28);
@@ -74,11 +76,12 @@
             // 
             // cbShowAxis
             // 
+            this.cbShowAxis.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbShowAxis.AutoSize = true;
             this.cbShowAxis.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbShowAxis.Checked = true;
             this.cbShowAxis.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbShowAxis.Location = new System.Drawing.Point(232, 588);
+            this.cbShowAxis.Location = new System.Drawing.Point(246, 688);
             this.cbShowAxis.Margin = new System.Windows.Forms.Padding(4);
             this.cbShowAxis.Name = "cbShowAxis";
             this.cbShowAxis.Size = new System.Drawing.Size(93, 21);
@@ -121,22 +124,34 @@
             // 
             this.sfSaveDialog.FileName = "map.bin";
             // 
+            // mapPanel
+            // 
+            this.mapPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mapPanel.AutoScroll = true;
+            this.mapPanel.Controls.Add(this.mapScreen);
+            this.mapPanel.Location = new System.Drawing.Point(430, 18);
+            this.mapPanel.Name = "mapPanel";
+            this.mapPanel.Size = new System.Drawing.Size(850, 691);
+            this.mapPanel.TabIndex = 45;
+            // 
             // EditMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1125, 620);
+            this.ClientSize = new System.Drawing.Size(1292, 716);
+            this.Controls.Add(this.mapPanel);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cbScreenNo);
             this.Controls.Add(this.cbShowAxis);
             this.Controls.Add(this.btSave);
             this.Controls.Add(this.blocksPanel);
-            this.Controls.Add(this.mapScreen);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "EditMap";
             this.Text = "Map Editor";
             this.Load += new System.EventHandler(this.EditMap_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
+            this.mapPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -151,5 +166,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cbScreenNo;
         private System.Windows.Forms.SaveFileDialog sfSaveDialog;
+        private System.Windows.Forms.Panel mapPanel;
     }
 }

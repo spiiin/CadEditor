@@ -33,6 +33,7 @@ namespace CadEditor
             }
 
             prepareBlocksPanel();
+            mapScreen.Size = new Size(mapData.width * 16, mapData.height * 16);
             mapScreen.Invalidate();
         }
 
