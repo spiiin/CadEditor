@@ -302,7 +302,7 @@ namespace PluginMapEditor
             int scrSize = ConfigScript.getScreenWidth(0) * ConfigScript.getScreenHeight(0);
 
             //fill tiles region
-            const int SCREEN_WIDTH = 16;
+            int SCREEN_WIDTH = ConfigScript.getScreenWidth(0);
             for (int i = 0; i < scrSize; i++)
             {
                 int blockIndex = Utils.readWordLE(Globals.romdata, romAddr + i * 2);
@@ -323,7 +323,7 @@ namespace PluginMapEditor
             int scrSize = ConfigScript.getScreenWidth(0) * ConfigScript.getScreenHeight(0);
 
             //fill tiles region
-            const int SCREEN_WIDTH = 8;
+            int SCREEN_WIDTH = ConfigScript.getScreenWidth(0);
             for (int i = 0; i < scrSize; i++)
             {
                 int blockIndex = Globals.romdata[romAddr + i];
@@ -344,7 +344,7 @@ namespace PluginMapEditor
             int scrSize = ConfigScript.getScreenWidth(0) * ConfigScript.getScreenHeight(0);
 
             //fill tiles region
-            const int SCREEN_HEIGHT = 24;
+            int SCREEN_HEIGHT = ConfigScript.getScreenWidth(0); //width is height for when getScreenVertical()==true; %)
             for (int i = 0; i < scrSize; i++)
             {
                 int blockIndex = Globals.romdata[romAddr + i];
