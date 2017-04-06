@@ -1,7 +1,16 @@
 using CadEditor;
 using System.Collections.Generic;
+using PluginMapEditor;
+
 public class Data
-{ 
+{
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginMapEditor.dll",
+    };
+  }
   public OffsetRec getScreensOffset()  { return new OffsetRec(0xC0A8, 1 , 256);   }
   public int getScreenWidth()          { return 256; }
   public int getScreenHeight()         { return 1; }
@@ -37,5 +46,18 @@ public class Data
         b.palBytes = new int[10];
       }
       return bb;
+  }
+  
+  public MapInfo[] getMapsInfo() { return getMaps(); }
+  public LoadMapFunc getLoadMapFunc() { return MapUtils.loadMapAddamsFamily; }
+  public SaveMapFunc getSaveMapFunc() { return MapUtils.saveAttribs; }
+  public bool isMapReadOnly()         { return true; }
+
+  MapInfo[] getMaps()
+  {
+    return new MapInfo[]
+    { 
+        new MapInfo(){ dataAddr = getScreensOffset().beginAddr, palAddr = getPalOffset().beginAddr, videoNo = 0, attribsAddr = getPalBytesAddr() },
+    };
   }
 }

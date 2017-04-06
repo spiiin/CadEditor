@@ -140,6 +140,11 @@ namespace CadEditor
         {
             int x = e.X / 16;
             int y = e.Y / 16;
+            if ((x < 0) || (x >= mapData.width) || (y < 0) || (y >= mapData.height))
+            {
+                return;
+            }
+
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 if (!MapConfig.readOnly)

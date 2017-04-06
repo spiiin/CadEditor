@@ -241,6 +241,15 @@ namespace PluginMapEditor
             mapData[(y * 2 + 1) * MAP_WIDTH + x * 4 + 3] = block.indexes[7];
         }
 
+        public static void applyBlock1x20ToMap(int[] mapData, ObjRec block, int x, int y)
+        {
+            const int MAP_WIDTH = 256;
+            for (int addY = 0; addY < 20; addY++)
+            {
+                mapData[(y * 20 + addY) * MAP_WIDTH + x * 1 + 0] = block.indexes[addY];
+            }
+        }
+
         public static void applyBlock4x1ToMap(int[] mapData, ObjRec block, int x, int y)
         {
             const int MAP_WIDTH = 32;
@@ -253,7 +262,7 @@ namespace PluginMapEditor
 
         private static void fillAttribs(int[] attrData, byte[] romdata, int attribAddr)
         {
-            for (int i = 0; i < 64; i++)
+            for (int i = 0; i < attrData.Length; i++)
             {
                 attrData[i] = Globals.romdata[attribAddr + i];
             }
@@ -354,6 +363,27 @@ namespace PluginMapEditor
 
             fillAttribsNinjaCrusaders(attrData, Globals.romdata, attribAddr);
             return new MapData(mapData, attrData, 32);
+        }
+
+        public static MapData loadMapAddamsFamily(int mapNo)
+        {
+            int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
+            int attribAddr = MapConfig.mapsInfo[mapNo].attribsAddr;
+            int[] mapData = new int[256*20];
+            int[] attrData = new int[64*5];
+            var blocks = ConfigScript.getBlocks(0);
+            int scrSize = ConfigScript.getScreenWidth(0) * ConfigScript.getScreenHeight(0);
+
+            //fill tiles region
+            int SCREEN_WIDTH = ConfigScript.getScreenWidth(0);
+            for (int i = 0; i < scrSize; i++)
+            {
+                int blockIndex = Globals.romdata[romAddr + i];
+                applyBlock1x20ToMap(mapData, blocks[blockIndex], i % SCREEN_WIDTH, i / SCREEN_WIDTH);
+            }
+
+            fillAttribs(attrData, Globals.romdata, attribAddr);
+            return new MapData(mapData, attrData, 256);
         }
 
         public static int saveAttribs(int mapNo, MapData mapData, out byte[] packedData)
