@@ -83,7 +83,7 @@ namespace CadEditor
         private void changeBlocksSize(Image[] bigImages)
         {
             //TODO: remove hardcode logic for size
-            if (blockWidth > blockHeight)
+            if (blockWidth >= blockHeight)
             {
                 blockHeight = 32;
                 float ratio = bigImages[0].Width / bigImages[0].Height;
