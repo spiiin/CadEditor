@@ -111,7 +111,7 @@ namespace CadEditor
         int curActiveVideo = 10;
         int curActiveBlock = 0;
         ImageList[] videos;
-        byte[] mapData;
+        MapData mapData;
         bool showAxis = true;
 
         private void mapScreen_Paint(object sender, PaintEventArgs e)
@@ -121,9 +121,9 @@ namespace CadEditor
             {
                 int x = i % 32;
                 int y = i / 32;
-                int colorByte = mapData[0x3C0 + x / 4 + 8* (y / 4)];
+                int colorByte = mapData.attrData[x / 4 + 8* (y / 4)];
                 int subPal = (colorByte >> (x%4/2*2 + y%4/2*4))& 0x03;
-                g.DrawImage(videos[subPal].Images[mapData[i]], new Point(x * 16, y * 16));
+                g.DrawImage(videos[subPal].Images[mapData.mapData[i]], new Point(x * 16, y * 16));
             }
 
             //add axis
@@ -144,19 +144,20 @@ namespace CadEditor
             {
                 if (!MapConfig.readOnly)
                 {
-                    mapData[y * 32 + x] = (byte)curActiveBlock;
+                    mapData.mapData[y * 32 + x] = (byte)curActiveBlock;
                 }
             }
             else
             {
                 //bit magic!!!
-                int colorByte = mapData[0x3C0 + x / 4 + 8 * (y / 4)];
+                int attrIndex = x / 4 + 8 * (y / 4);
+                int colorByte = mapData.attrData[attrIndex];
                 int startBitIndex = x % 4 / 2 * 2 + y % 4 / 2 * 4;  //get start bit index
                 int subPal = (colorByte >> startBitIndex) & 0x03;   //get 2 bits for subpal
                 subPal = (subPal + 1) & 0x3;                        //round increment it
                 colorByte &= ~(3 << startBitIndex);                 //clear 2 bits in color byte
                 colorByte |= (subPal << startBitIndex);             //set 2 bits according subpal
-                mapData[0x3C0 + x / 4 + 8 * (y / 4)] = (byte)colorByte;
+                mapData.attrData[attrIndex] = (byte)colorByte;
             }
             mapScreen.Invalidate();
         }

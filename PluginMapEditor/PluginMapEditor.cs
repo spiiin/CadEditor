@@ -9,8 +9,8 @@ using CSScriptLibrary;
 
 namespace PluginMapEditor
 {
-    public delegate int SaveMapFunc(int mapNo, byte[] mapData, out byte[] packedData);
-    public delegate byte[] LoadMapFunc(int mapNo);
+    public delegate int SaveMapFunc(int mapNo, MapData mapData, out byte[] packedData);
+    public delegate MapData LoadMapFunc(int mapNo);
 
     public class PluginMapEditor : IPlugin
     {
@@ -67,12 +67,12 @@ namespace PluginMapEditor
         public static bool readOnly;
         public static bool sharedPal;
 
-        public static byte[] loadMap(int mapNo)
+        public static MapData loadMap(int mapNo)
         {
             return loadMapFunc(mapNo);
         }
 
-        public static int saveMap(int mapNo, byte[] mapData, out byte[] packedData)
+        public static int saveMap(int mapNo, MapData mapData, out byte[] packedData)
         {
             return saveMapFunc(mapNo, mapData, out packedData);
         }
