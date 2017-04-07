@@ -157,11 +157,7 @@ public class Data
     for (int i = 0; i < bblocks.Length; i++)
     {
         var bb = bblocks[i];
-        var newIndexes = new int[] { 
-          bb.indexes[0], bb.indexes[4], bb.indexes[1], bb.indexes[5],
-          bb.indexes[2], bb.indexes[6], bb.indexes[3], bb.indexes[7]
-        };
-        bb.indexes = newIndexes;
+        bb.indexes = Utils.transpose(bb.indexes, 2, 4);
     }
   }
   
@@ -170,11 +166,7 @@ public class Data
     for (int i = 0; i < bblocks.Length; i++)
     {
         var bb = bblocks[i];
-        var newIndexes = new int[] { 
-          bb.indexes[0], bb.indexes[2], bb.indexes[4], bb.indexes[6],
-          bb.indexes[1], bb.indexes[3], bb.indexes[5], bb.indexes[7]
-        };
-        bb.indexes = newIndexes;
+        bb.indexes = Utils.transpose(bb.indexes, 4, 2);
     }
   }
   

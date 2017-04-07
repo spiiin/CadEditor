@@ -52,7 +52,7 @@ public class Data
     return pallete;
   }
   
-  public ObjRec transposeObjRec(ObjRec obj)
+  public ObjRec vertMirror(ObjRec obj)
   {
      var ind = new int[16];
      
@@ -84,7 +84,7 @@ public class Data
       var bb = Utils.readBlocksLinearTiles16Pal1(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getPalBytesAddr(), ConfigScript.getBlocksCount());
       for (int i = 0; i < bb.Length; i++)
       {
-        bb[i] = transposeObjRec(bb[i]);
+        bb[i] = vertMirror(bb[i]);
       }
       return bb;
   }
@@ -93,7 +93,7 @@ public class Data
   {
     for (int i = 0; i < blocksData.Length; i++)
     {
-      blocksData[i] = transposeObjRec(blocksData[i]); //TODO: remove inplace changes
+      blocksData[i] = vertMirror(blocksData[i]); //TODO: remove inplace changes
     }
     Utils.writeBlocksLinearTiles16Pal1(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getPalBytesAddr(), ConfigScript.getBlocksCount());
   }

@@ -117,12 +117,7 @@ public static class FliUtils
     for (int i = 0; i < bblocks.Length; i++)
     {
         var bb = bblocks[i];
-        xchg(bb.indexes, 1, 4);
-        xchg(bb.indexes, 2, 8);
-        xchg(bb.indexes, 3, 12);
-        xchg(bb.indexes, 6, 9);
-        xchg(bb.indexes, 7, 13);
-        xchg(bb.indexes, 11, 14);
+        bb.indexes = Utils.transpose(bb.indexes, 4, 4);
     }
   }
   
