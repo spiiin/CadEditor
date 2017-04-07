@@ -9,7 +9,9 @@ namespace PluginMapEditor
 {
     public static class MapUtils
     {
-       public static MapData loadMapDwd(int mapNo)
+        public delegate void FillAttribDelegate(int[] attrData, byte[] romdata, int attribAddr);
+
+        public static MapData loadMapDwd(int mapNo)
         {
             int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
             int[] mapData = new int[960];
@@ -274,93 +276,74 @@ namespace PluginMapEditor
             return 0;
         }
 
-        public static MapData loadMapContraSpirits(int mapNo)
+        private static int readBlockIndexFromMap(byte[] arrayWithData, int romAddr, int index)
+        {
+            int wordLen = ConfigScript.getWordLen();
+            bool littleEndian = ConfigScript.isLittleEndian();
+            int dataStride = ConfigScript.getScreenDataStride();
+            if (wordLen == 1)
+            {
+                return ConfigScript.convertScreenTile(arrayWithData[romAddr + index*dataStride]);
+            }
+            else if (wordLen == 2)
+            {
+                if (littleEndian)
+                {
+                    return ConfigScript.convertScreenTile(Utils.readWordLE(arrayWithData, romAddr + index * (dataStride * wordLen)));
+                }
+                else
+                {
+                    return ConfigScript.convertScreenTile(Utils.readWord(arrayWithData, romAddr + index * (dataStride * wordLen)));
+                }
+            }
+            return -1;
+        }
+
+        public static MapData loadMapFromBlocks(int mapNo, int mapSizeInBytes, int attrSizeInBytes, int mapWidth, bool vertical, FillAttribDelegate fillAttribDelegate)
         {
             int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
             int attribAddr = MapConfig.mapsInfo[mapNo].attribsAddr;
-            int[] mapData = new int[960];
-            int[] attrData = new int[64];
+            int[] mapData = new int[mapSizeInBytes];
+            int[] attrData = new int[attrSizeInBytes];
             var blocks = ConfigScript.getBlocks(0);
             int scrSize = ConfigScript.getScreenWidth(0) * ConfigScript.getScreenHeight(0);
 
             //fill tiles region
             int SCREEN_WIDTH = ConfigScript.getScreenWidth(0);
-            int MAP_WIDTH = 32;
             for (int i = 0; i < scrSize; i++)
             {
-                int blockIndex = Utils.readWordLE(Globals.romdata, romAddr + i * 2);
-                applyBlockToMap(mapData, blocks[blockIndex], i % SCREEN_WIDTH, i / SCREEN_WIDTH, MAP_WIDTH); 
+                int blockIndex = readBlockIndexFromMap(Globals.romdata, romAddr, i);
+                int bx = i % SCREEN_WIDTH;
+                int by = i / SCREEN_WIDTH;
+                if (vertical)
+                {
+                    Utils.Swap(ref bx, ref by);
+                }
+                applyBlockToMap(mapData, blocks[blockIndex], bx, by, mapWidth);
             }
 
-            fillAttribs(attrData, Globals.romdata, attribAddr);
-            return new MapData(mapData, attrData, 32);
+            fillAttribDelegate(attrData, Globals.romdata, attribAddr);
+            return new MapData(mapData, attrData, mapWidth);
+        }
+
+        public static MapData loadMapContraSpirits(int mapNo)
+        {
+            return loadMapFromBlocks(mapNo, 960, 64, 32, false, fillAttribs);
         }
 
         public static MapData loadMapBatman(int mapNo)
         {
-            int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
-            int attribAddr = MapConfig.mapsInfo[mapNo].attribsAddr;
-            int[] mapData = new int[960];
-            int[] attrData = new int[64];
-            var blocks = ConfigScript.getBlocks(0);
-            int scrSize = ConfigScript.getScreenWidth(0) * ConfigScript.getScreenHeight(0);
-
-            //fill tiles region
-            int SCREEN_WIDTH = ConfigScript.getScreenWidth(0);
-            int MAP_WIDTH = 32;
-            for (int i = 0; i < scrSize; i++)
-            {
-                int blockIndex = Globals.romdata[romAddr + i];
-                applyBlockToMap(mapData, blocks[blockIndex], i % SCREEN_WIDTH, i / SCREEN_WIDTH, MAP_WIDTH);
-            }
-
-            fillAttribs(attrData, Globals.romdata, attribAddr);
-            return new MapData(mapData, attrData, 32);
+            return loadMapFromBlocks(mapNo, 960, 64, 32, false, fillAttribs);
         }
 
         public static MapData loadMapNinjaCrusaders(int mapNo)
         {
-            int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
-            int attribAddr = MapConfig.mapsInfo[mapNo].attribsAddr;
-            int[] mapData = new int[960];
-            int[] attrData = new int[64];
-            var blocks = ConfigScript.getBlocks(0);
-            int scrSize = ConfigScript.getScreenWidth(0) * ConfigScript.getScreenHeight(0);
-
-            //fill tiles region
-            int SCREEN_HEIGHT = ConfigScript.getScreenWidth(0); //width is height for when getScreenVertical()==true; %)
-            int MAP_WIDTH = 32;
-            for (int i = 0; i < scrSize; i++)
-            {
-                int blockIndex = Globals.romdata[romAddr + i];
-                //vertical -> invert x and y parameters
-                applyBlockToMap(mapData, blocks[blockIndex], i / SCREEN_HEIGHT, i % SCREEN_HEIGHT, MAP_WIDTH);
-            }
-
-            fillAttribsNinjaCrusaders(attrData, Globals.romdata, attribAddr);
-            return new MapData(mapData, attrData, 32);
+            return loadMapFromBlocks(mapNo, 960, 64, 32, true, fillAttribsNinjaCrusaders);
         }
 
         public static MapData loadMapAddamsFamily(int mapNo)
         {
-            int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
-            int attribAddr = MapConfig.mapsInfo[mapNo].attribsAddr;
-            int[] mapData = new int[256*20];
-            int[] attrData = new int[64*5];
-            var blocks = ConfigScript.getBlocks(0);
-            int scrSize = ConfigScript.getScreenWidth(0) * ConfigScript.getScreenHeight(0);
-
-            //fill tiles region
-            int SCREEN_WIDTH = ConfigScript.getScreenWidth(0);
-            int MAP_WIDTH = 256;
-            for (int i = 0; i < scrSize; i++)
-            {
-                int blockIndex = Globals.romdata[romAddr + i];
-                applyBlockToMap(mapData, blocks[blockIndex], i % SCREEN_WIDTH, i / SCREEN_WIDTH, MAP_WIDTH);
-            }
-
-            fillAttribs(attrData, Globals.romdata, attribAddr);
-            return new MapData(mapData, attrData, 256);
+            return loadMapFromBlocks(mapNo, 256 * 20, 64 * 5, 256, false, fillAttribs);
         }
 
         public static int saveAttribs(int mapNo, MapData mapData, out byte[] packedData)
