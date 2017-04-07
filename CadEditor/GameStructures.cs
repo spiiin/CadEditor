@@ -157,6 +157,7 @@ namespace CadEditor
         }
 
         public virtual int getSubpallete(int i)
+
         {
             return palBytes[i] & 0x3;
         }

@@ -26,7 +26,19 @@ namespace CadEditor
                 return ans;
             else
                 return defaultVal;
+        }
 
+        public static int[] transpose(int[] matrix, int w, int h)
+        {
+            var result = new int[h * w];
+            for (int i = 0; i < w; i++)
+            {
+                for (int j = 0; j < h; j++)
+                {
+                    result[j * w + i] = matrix[i * h + j];
+                }
+            }
+            return result;
         }
 
         public static int getChrAddress(int id)
