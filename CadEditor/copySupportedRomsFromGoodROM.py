@@ -4,6 +4,7 @@ import os
 GoodNesPath = r"d:\ROM\Dendy\GoodNES3.1\best"
 
 fnames = [
+    "Abadox - The Deadly Inner War (U) [!].nes",
     "Addams Family, The (E) [!].nes",
     "Addams Family, The - Pugsley's Scavenger Hunt (U) [!p].nes",
     "Adventures in the Magic Kingdom (E) [!].nes",
