@@ -94,6 +94,29 @@ namespace CadEditor
             return true;
         }
 
+        public static int readBlockIndexFromMap(byte[] arrayWithData, int romAddr, int index)
+        {
+            int wordLen = ConfigScript.getWordLen();
+            bool littleEndian = ConfigScript.isLittleEndian();
+            int dataStride = ConfigScript.getScreenDataStride();
+            if (wordLen == 1)
+            {
+                return ConfigScript.convertScreenTile(arrayWithData[romAddr + index * dataStride]);
+            }
+            else if (wordLen == 2)
+            {
+                if (littleEndian)
+                {
+                    return ConfigScript.convertScreenTile(Utils.readWordLE(arrayWithData, romAddr + index * (dataStride * wordLen)));
+                }
+                else
+                {
+                    return ConfigScript.convertScreenTile(Utils.readWord(arrayWithData, romAddr + index * (dataStride * wordLen)));
+                }
+            }
+            return -1;
+        }
+
         public static int[] getScreen(OffsetRec screenOffset,  int screenIndex)
         {
             var result = new int[Math.Max(64, screenOffset.recSize)];
@@ -102,26 +125,8 @@ namespace CadEditor
             int wordLen = ConfigScript.getWordLen();
             bool littleEndian = ConfigScript.isLittleEndian();
             int beginAddr = screenOffset.beginAddr + screenIndex * screenOffset.recSize * dataStride * wordLen;
-            if (wordLen == 1)
-            {
-                for (int i = 0; i < screenOffset.recSize; i++)
-                    result[i] = ConfigScript.convertScreenTile(arrayWithData[beginAddr + i * dataStride]);
-                for (int i = screenOffset.recSize; i < 64; i++)
-                    result[i] = ConfigScript.convertScreenTile(0); //need this?
-            }
-            else if (wordLen == 2)
-            {
-                if (littleEndian)
-                {
-                    for (int i = 0; i < screenOffset.recSize; i++)
-                        result[i] = ConfigScript.convertScreenTile(Utils.readWordLE(arrayWithData, beginAddr + i * (dataStride * wordLen)));
-                }
-                else
-                {
-                    for (int i = 0; i < screenOffset.recSize; i++)
-                        result[i] = ConfigScript.convertScreenTile(Utils.readWord(arrayWithData, beginAddr + i * (dataStride * wordLen)));
-                }
-            }
+            for (int i = 0; i < screenOffset.recSize; i++)
+                result[i] = readBlockIndexFromMap(arrayWithData, beginAddr, i);
             return result;
         }
 

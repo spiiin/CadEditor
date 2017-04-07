@@ -276,29 +276,6 @@ namespace PluginMapEditor
             return 0;
         }
 
-        private static int readBlockIndexFromMap(byte[] arrayWithData, int romAddr, int index)
-        {
-            int wordLen = ConfigScript.getWordLen();
-            bool littleEndian = ConfigScript.isLittleEndian();
-            int dataStride = ConfigScript.getScreenDataStride();
-            if (wordLen == 1)
-            {
-                return ConfigScript.convertScreenTile(arrayWithData[romAddr + index*dataStride]);
-            }
-            else if (wordLen == 2)
-            {
-                if (littleEndian)
-                {
-                    return ConfigScript.convertScreenTile(Utils.readWordLE(arrayWithData, romAddr + index * (dataStride * wordLen)));
-                }
-                else
-                {
-                    return ConfigScript.convertScreenTile(Utils.readWord(arrayWithData, romAddr + index * (dataStride * wordLen)));
-                }
-            }
-            return -1;
-        }
-
         public static MapData loadMapFromBlocks(int mapNo, int mapSizeInBytes, int attrSizeInBytes, int mapWidth, bool vertical, FillAttribDelegate fillAttribDelegate)
         {
             int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
@@ -312,7 +289,7 @@ namespace PluginMapEditor
             int SCREEN_WIDTH = ConfigScript.getScreenWidth(0);
             for (int i = 0; i < scrSize; i++)
             {
-                int blockIndex = readBlockIndexFromMap(Globals.romdata, romAddr, i);
+                int blockIndex = Globals.readBlockIndexFromMap(Globals.romdata, romAddr, i);
                 int bx = i % SCREEN_WIDTH;
                 int by = i / SCREEN_WIDTH;
                 if (vertical)
