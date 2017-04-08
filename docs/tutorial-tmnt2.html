@@ -1,0 +1,258 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+
+    <title>Добавление настроек игр для редактора CadEditor на примере игры Teenage Mutant Ninja Turtles 2 [NES]</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Добавление новой игр в редактор CadEditor на примере игры Teenage Mutant Ninja Turtles 2</h1>
+        <h2>Обучающий пример добавления в редактор новой игры для платформы NES</h2>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+
+<p>
+В этой статье будет рассказано о том, как добавить в редактор <b>CadEditor</b> настройки (конфиг) для открытия и редактирования новой игры с нуля, на примере игры <b>Teenage Mutant Ninja Turtles 2</b> [NES].<br>Как будет показано в статье, другие игры с похожим форматом, добавляются очень похоже, так что материал подходит для разных игр (список будет приведён ниже).
+</p>
+
+<p>
+Задача добавления состоит из двух частей:<br>
+1. <b>Разбор формата данных уровней игры.</b><br>
+Необходимо понять, как именно строится уровень в игре, и получить адреса данных, которые потребуются для её редактирования.<br>
+2. <b>Написание файла настроек (конфига) для редактора</b><br>
+В этом файле необходимо указать найденные адреса и способ загрузки данных, понятный для редактора.<br>
+
+Итак, начнём.
+</p>
+
+<p>
+<h2><a id="razbor" class="anchor" href="#razbor" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Разбор формата данных уровней игры</h2>
+</p>
+
+<p>
+<h3>Инструменты</h3>
+Для определения формата данных методами, описанными в статье, нам понадобятся:
+<ul>
+<li><b>ROM-файл</b> Teenage Mutant Ninja Turtles II - The Arcade Game (U) [!].nes, другие региональные версии тоже подойдут, но адреса могут слегка отличаться.</li>
+<li><b>Эмулятор</b> <a href="http://www.fceux.com/web/home.html">FCEUX</a> свежей версии.</li>
+<li><b>Программа поиска блоков</b> <a href="https://github.com/spiiin/NesBlockFinder/archive/master.zip">NesBlockFinder</a>. Для её работы надо установить интерпретатор языка <a href="https://www.python.org/ftp/python/2.7.13/python-2.7.13.msi">Python</a>. После его установки можно будет запускать py-файлы двойным щелчком мышки, как обычные программы.</li>
+<li><b>Тайловый редактор</b> <a href="http://www.romhacking.net/utilities/108/">Tile Layer Pro</a>. С помощью него можно определить номер и адрес в ROM-файле CHR-банка графики.</li>
+</ul>
+</p>
+
+<p>
+<h3>Шаг 1. Получаем дамп видеопамяти</h3>
+Открываем в эмуляторе ROM-файл и запускаем уровень, который хотим добавить в редактор:
+</p>
+<img src="images/c1_fceux_tmnt2.png" alt="ром в эмуляторе">
+
+<p>
+Теперь необходимо сделать дамп видеопамяти, он потребуется для поиска блоков в программе <b>NesBlockFinder</b>. В меню эмулятора выбираем <b><i>Debug->Hex Editor</i></b>, и в появившемся окне в меню выбираем <b><i>File->Dump to file->PPU Memory</i></b>, сохраняем дамп памяти в файл с именем по умолчанию:
+</p>
+<img src="images/c1_dump_ppu_memory.png" alt="дамп видеопамяти">
+
+<p>
+<h3>Шаг 2. Находим блоки в программе NesBlockFinder</h3>
+Запускаем скачанную программу <b>NesBlockFinder.py</b>, указываем для неё ROM-файл и сохранённый дамп памяти, после чего нажимаем кнопку Run:
+</p>
+<img src="images/c1_block_finder_blocks.png" alt="поиск блоков">
+
+<p>
+Далее изучаем результаты поиска блоков разных типов. В основном находится один и тот же массив адресов, какой бы тип блоков ни был выбран, в этом состоит интересная особенность программы – она умеет находить блоки даже тех типов, для которых изначально не предназначалась. На скриншоте красным прямоугольником выделен найденный программой адрес (0xC6DD), который предстоит проверить в эмуляторе.
+</p>
+
+<p>
+<h3>Шаг 3. Уточняем тип блоков и адрес начала массива</h3>
+Снова возвращаемся к работе с эмулятором, в открытом окне <b>Hex Editor</b> переключаемся на просмотр исходного ROM-файла (в меню <b><i>View->Rom File</i></b>) и переходим на найденным адрес (меню <b><i>File->Goto Address</i></b> и вбить адрес <b>0xC6DD</b>). Для проверки заменяем байты начиная с этого адреса на какие-нибудь случайные:
+</p>
+<img src="images/c1_hex_corrupt_block.png" alt="коррапт блока">
+
+<p>
+Теперь перезапустим игру (в меню эмулятора <b><i>NES->Reset</i></b>, нужно именно перезапустить игру, а не открыть ROM заново, иначе изменения, сделанные в Hex-редакторе затрутся), и снова загрузить уровень, чтобы проверить результат внесённых изменений. Если всё было сделано правильно, вы увидите на экране:
+</p>
+<img src="images/c1_emu_corrupt_block.png" alt="результат коррапта блока">
+
+<p>
+Результат получился идеальным – сразу же удалось обнаружить, что 16 изменённых байт описывают блок размером 4x4 тайла на экране. Иногда может получиться, что по изменениям на экране не сразу понятен тип блоков, тогда следует вернуться на экран <b>Hex Editor</b>, там отменить внесённые изменения (нажимая Ctrl+Z), и пробуя менять на несколько байт больше или меньше. Подробнее про нестандартные случаи будет рассказано в одном из следующих уроков.
+</p>
+
+<p>
+В данном же случае осталось только уточнить некоторые дополнительные данные.<br>
+Во-первых - программа <b>NesBlockFinder</b> находит только блоки, которые находятся на экране, а для редактора нам надо знать начало массива описания блоков, даже если первых блоков из массива нету на экране. Чтобы узнать о них, можно применить несколько различных техник, но для первого примера можно воспользоваться небольшой хитростью. Очень часто разработчики делают первый блок состоящим из одних нулей - обычно это чисто чёрный неиспользуемый при построении уровня тайл. Его легко найти - посмотрите снова на скриншот окна <b>Hex Editor</b> измененными байтами и обратите внимание, что перед изменёнными данными как раз идёт последовательность из нулей - последние 16 нулей в ней и есть описание первого блока.
+</p>
+
+<p>
+Это работает для многих игр - берётся адрес, найденный с помощью NesBlockFinder и дальше память просто просматривается вверх до тех пор, пока не будет найден такой нулевой блок. Таким образом, <b>итоговый адрес начала массива блоков 0xC6CD</b>. Эта информация пригодится уже пригодится нам для составления файла конфига, однако необходимо собрать ещё немного данных.
+</p>
+
+<p>
+<h3>Шаг 4. Нахождение аттрибутов блоков</h3>
+Номера тайлов блоков, которые мы нашли, не полностью задают цвет блока, графика на NES устроена так, что на каждые 4 тайла необходимо задать ещё 2 общие для этих тайлов бита уточняюшие индекс в палитре. Таким образом, для блока размером 16 тайлов необходимо задать 8 бит (1 байт) индексов в палитре.
+Пример того, как биты палитры "докрашивают" блок, состоящий из тайлов с номерами от 0 до F:
+</p>
+<img src="images/c1_block_16x1.png" alt="блок 16 тайлов + 1 байт палитры">
+
+<p>
+Первые два биты кодируют цвет тайлов 0,1,4,5, следующие - тайлов 2,3,6,7, следующие - 8,9,C,D, последние 2 бита  - для цвета тайлов A,B,E,F.
+</p>
+
+<p>
+Эти аттрибуты блоков могут кодироваться разными способами, но чаще всего хранятся отдельным массивом либо сразу за массивом описания блоков, либо сразу после него.
+Действительно, для TMNT 2 нашлись данные об аттрибутах перед началом массива данных о блоках:
+</p>
+<img src="images/c1_attr_search.png" alt="поиск атрибутов">
+
+<p>
+После небольшой серии экспериментов в <b>Hex Editor</b>'е можно подобрать адрес начала массива аттрибутов, и его размер:
+</p>
+<img src="images/c1_attr_corrupt.png" alt="результат коррапта аттрибутов">
+<p>
+На этом скриншоте выделен весь найденный массив и в нём изменён один байт 0xC5E5, отвечающий за тот блок, который мы изменили ранее. Значение 0x71 подобрано так, чтобы все 4 пары бит в нём были разные (11 10 00 01) - результат этого виден в окне эмулятора, каждая квадрант блока открашен в разные цвета, хотя весь блок состоит из 16 одинаковых тайлов.
+</p>
+<p>
+Запоминаем <b>адрес начала массива аттрибутов</b> (0xC5E4) и его размер (233 блока) и переходим к следующему шагу.
+</p>
+
+<p>
+<h3>Шаг 5. Нахождение описания экранов</h3>
+Кроме описания самих блоков необходимо найти также и описание целого игрового экрана, с помощью индексов этих блоков. Специпально для игр с блоками 4x4 вместе с <b>NesBlockFinder</b> идёт программа <b>NesScreenFinder.py</b>. Запускаем её, аналогично шагу 2 указываем путь к ROM-файлу и дампу памяти и дополнительно указываем адрес начала массива блоков. После чего жмём кнопку Run и радуемся результату:
+</p>
+<img src="images/c1_screen_finder.png" alt="поиск экранов">
+
+<p>
+Проверяем результат корраптом байт в <b>Hex Editor</b>:
+</p>
+<img src="images/c1_screen_corrupt.png" alt="коррапт экранов">
+
+<p>
+Всё точно – изменение одного байта меняет на экране целый блок 4x4! Записываем <b>адрес начала описаний экранов</b> (0xD55D), а также размеры одного игрового экрана – 8 байт в ширину и 6 в высоту.
+</p>
+
+<p>
+<h3>Шаг 6. Нахождение адреса банка видеопамяти и палитры уровня</h3>
+Последнее, что осталось найти – банк памяти и палитру, с помощью которых игра отрисовывает блоки и экраны.
+Открываем окно просмотра PPU в эмуляторе (меню <b><i>Debug->PPU Viewer</i></b>) и подбираем значение Display on Scanline в диапазоне от 0 до 240 так, чтобы в окне просмотра отобразился именно тот банк, с помощью которого отрисован уровень:
+</p>
+<img src="images/c1_ppu_view.png" alt="просмотр ppu">
+<p>
+Далее открываем ROM-файл с игрой в программе <b>Tile Layer Pro</b> и в ней просто пролистываем банки до тех пор, пока не найдётся нужный:
+</p>
+<img src="images/c1_find_chr.png" alt="поиск chr">
+<p>
+В данном конкретном случае даже листать не пришлось, первый уровень использует первый же банк графики, его адрес в ROM (0x40010) выделен на скриншоте. Такой метод поиска адресов CHR-банков работает не для всех игр, иногда требуются дополнительные усилия для получения искомого адреса, либо же банк не хранится целиком в ROM и необходимо распаковывать его или брать готовый дамп из видеопамяти, но эти методы выходят за рамки первой учебной статьи.
+</p>
+
+<p>
+Последнее, что необходимо получить – палитру уровня. Это также несложно - в окне <b>PPU Viewer</b> мышкой можно навести на цвет палитры и посмотреть номер этого цвета. Записываем все 16 номеров и переходим в окно <b>Hex Editor</b>. В нём переходим в меню выбираем <b><i>Edit</i></b> и ищем в ROM-файле записанные номера:
+</p>
+<img src="images/c1_find_pal.png" alt="поиск палитры">
+<p>
+Как видно из скриншота, <b>адрес палитры в ROM</b> – 0x3D5E3. Поздравляю, теперь мы собрали все необходимые данные для добавления игры в редактор.
+</p>
+
+<p>
+<h2><a id="config" class="anchor" href="#config" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Составление файла конфига для добавления игры в редактор CadEditor</h2>
+</p>
+
+<p>
+Конфигурационный файл для добавления в редактор на самом деле представляет из себя обычный файл на языке C#, в котором описаны функции, которые загрузят необходимые данные в редактор. Большая часть функций работает одинаково для многих игр, поэтому библиотека редактор уже содержит все готовые функции, так что нам не нужно будет писать свои, а лишь правильно указать их названия. В этой статье я просто приведу пример готового конфига с небольшими комментариями, куда будут вставлены найденные нами в первой части статьи адреса. Для большей части игр с похожим устройством конфиги будут отличаться только лишь другими адресами, остальная часть останется неизменной. Вот всё содержимое файла конфига для уровня 1 игры Teenage Mutant Ninja Turtles 2:<br>
+<a href="https://github.com/spiiin/CadEditor/blob/master/CadEditor/settings_tmnt2/Settings_Tmnt2-1.cs">Settings_Tmnt2-1</a>
+</p>
+
+<p>
+Разберём все значащие строчки:<br>
+</p>
+
+<pre class="csharp" style="font-family:monospace;"><span style="color: #008080; font-style: italic;">//здесь указывается адрес начала описания экранов,</span>
+<span style="color: #008080; font-style: italic;">//общее количество экранов на уровне,</span>
+<span style="color: #008080; font-style: italic;">//а также высота и ширина одного экрана  </span>
+<span style="color: #0600FF; font-weight: bold;">public</span> OffsetRec getScreensOffset<span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span> <span style="color: #0600FF; font-weight: bold;">return</span> <span style="color: #008000;">new</span> OffsetRec<span style="color: #008000;">&#40;</span>0xD55D, <span style="color: #FF0000;">9</span>, <span style="color: #FF0000;">8</span><span style="color: #008000;">*</span><span style="color: #FF0000;">6</span><span style="color: #008000;">&#41;</span><span style="color: #008000;">;</span> <span style="color: #008000;">&#125;</span>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">int</span> getScreenWidth<span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span>         <span style="color: #008000;">&#123;</span> <span style="color: #0600FF; font-weight: bold;">return</span> <span style="color: #FF0000;">8</span><span style="color: #008000;">;</span> <span style="color: #008000;">&#125;</span>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">int</span> getScreenHeight<span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span>        <span style="color: #008000;">&#123;</span> <span style="color: #0600FF; font-weight: bold;">return</span> <span style="color: #FF0000;">6</span><span style="color: #008000;">;</span> <span style="color: #008000;">&#125;</span></pre>
+
+<pre class="csharp" style="font-family:monospace;"><span style="color: #008080; font-style: italic;">//указываем, что экран состоит из обычных блоков, без макроблоков</span>
+<span style="color: #008080; font-style: italic;">//(это пока неважно)</span>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">bool</span> isBuildScreenFromSmallBlocks<span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span> <span style="color: #0600FF; font-weight: bold;">return</span> <span style="color: #0600FF; font-weight: bold;">true</span><span style="color: #008000;">;</span> <span style="color: #008000;">&#125;</span></pre>
+
+<pre class="csharp" style="font-family:monospace;"><span style="color: #008080; font-style: italic;">//Здесь указана стандартная функция загрузки видеобанка,</span>
+<span style="color: #008080; font-style: italic;">//а также указан найденный адрес видеобанка</span>
+<span style="color: #0600FF; font-weight: bold;">public</span> GetVideoPageAddrFunc getVideoPageAddrFunc<span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span> <span style="color: #0600FF; font-weight: bold;">return</span> Utils<span style="color: #008000;">.</span><span style="color: #0000FF;">getChrAddress</span><span style="color: #008000;">;</span> <span style="color: #008000;">&#125;</span>
+<span style="color: #0600FF; font-weight: bold;">public</span> GetVideoChunkFunc    getVideoChunkFunc<span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span>    <span style="color: #008000;">&#123;</span> <span style="color: #0600FF; font-weight: bold;">return</span> Utils<span style="color: #008000;">.</span><span style="color: #0000FF;">getVideoChunk</span><span style="color: #008000;">;</span> <span style="color: #008000;">&#125;</span>
+<span style="color: #0600FF; font-weight: bold;">public</span> SetVideoChunkFunc    setVideoChunkFunc<span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span>    <span style="color: #008000;">&#123;</span> <span style="color: #0600FF; font-weight: bold;">return</span> Utils<span style="color: #008000;">.</span><span style="color: #0000FF;">setVideoChunk</span><span style="color: #008000;">;</span> <span style="color: #008000;">&#125;</span>
+<span style="color: #0600FF; font-weight: bold;">public</span> OffsetRec getVideoOffset<span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span>                  <span style="color: #008000;">&#123;</span> <span style="color: #0600FF; font-weight: bold;">return</span> <span style="color: #008000;">new</span> OffsetRec<span style="color: #008000;">&#40;</span>0x40010, <span style="color: #FF0000;">4</span>  , 0x1000<span style="color: #008000;">&#41;</span><span style="color: #008000;">;</span> <span style="color: #008000;">&#125;</span></pre>
+
+<pre class="csharp" style="font-family:monospace;"><span style="color: #008080; font-style: italic;">//Аналогично, адрес палитры и способ её загрузки</span>
+<span style="color: #0600FF; font-weight: bold;">public</span> GetPalFunc getPalFunc<span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span>  <span style="color: #008000;">&#123;</span> <span style="color: #0600FF; font-weight: bold;">return</span> Utils<span style="color: #008000;">.</span><span style="color: #0000FF;">getPalleteLinear</span><span style="color: #008000;">;</span><span style="color: #008000;">&#125;</span>
+<span style="color: #0600FF; font-weight: bold;">public</span> SetPalFunc setPalFunc<span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span>  <span style="color: #008000;">&#123;</span> <span style="color: #0600FF; font-weight: bold;">return</span> Utils<span style="color: #008000;">.</span><span style="color: #0000FF;">setPalleteLinear</span><span style="color: #008000;">;</span><span style="color: #008000;">&#125;</span>
+<span style="color: #0600FF; font-weight: bold;">public</span> OffsetRec getPalOffset<span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span> <span style="color: #0600FF; font-weight: bold;">return</span> <span style="color: #008000;">new</span> OffsetRec<span style="color: #008000;">&#40;</span>0x3d5e3, <span style="color: #FF0000;">1</span>, <span style="color: #FF0000;">16</span><span style="color: #008000;">&#41;</span><span style="color: #008000;">;</span>  <span style="color: #008000;">&#125;</span></pre>
+
+<pre class="csharp" style="font-family:monospace;"><span style="color: #008080; font-style: italic;">//наконец, указываем адреса блоков,</span>
+<span style="color: #008080; font-style: italic;">//их количество,</span>
+<span style="color: #008080; font-style: italic;">//а также адрес массива аттрибутов</span>
+<span style="color: #0600FF; font-weight: bold;">public</span> OffsetRec getBlocksOffset<span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span>    <span style="color: #008000;">&#123;</span> <span style="color: #0600FF; font-weight: bold;">return</span> <span style="color: #008000;">new</span> OffsetRec<span style="color: #008000;">&#40;</span>0xC6CD , <span style="color: #FF0000;">1</span>  , 0x1000<span style="color: #008000;">&#41;</span><span style="color: #008000;">;</span>  <span style="color: #008000;">&#125;</span>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">int</span> getBlocksCount<span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span>           <span style="color: #008000;">&#123;</span> <span style="color: #0600FF; font-weight: bold;">return</span> <span style="color: #FF0000;">233</span><span style="color: #008000;">;</span> <span style="color: #008000;">&#125;</span>
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">int</span> getPalBytesAddr<span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span>          <span style="color: #008000;">&#123;</span> <span style="color: #0600FF; font-weight: bold;">return</span> 0xC5E4<span style="color: #008000;">;</span> <span style="color: #008000;">&#125;</span>
+&nbsp;
+<span style="color: #008080; font-style: italic;">//и говорим редактору, о том, какие именно это блоки:</span>
+<span style="color: #008080; font-style: italic;">//getBlocksFromTiles16Pal1 - это</span>
+<span style="color: #008080; font-style: italic;">//стандартная функция для блоков 4x4 и байтом аттрибутов</span>
+<span style="color: #008080; font-style: italic;">//она встречается в большом количестве игр</span>
+<span style="color: #0600FF; font-weight: bold;">public</span> GetBlocksFunc        getBlocksFunc<span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span> <span style="color: #0600FF; font-weight: bold;">return</span> Utils<span style="color: #008000;">.</span><span style="color: #0000FF;">getBlocksFromTiles16Pal1</span><span style="color: #008000;">;</span><span style="color: #008000;">&#125;</span>
+<span style="color: #0600FF; font-weight: bold;">public</span> SetBlocksFunc        setBlocksFunc<span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span> <span style="color: #0600FF; font-weight: bold;">return</span> Utils<span style="color: #008000;">.</span><span style="color: #0000FF;">setBlocksFromTiles16Pal1</span><span style="color: #008000;">;</span><span style="color: #008000;">&#125;</span></pre>
+
+<p>
+Вот и всё. Данный конфиг можно загрузить в редактор CadEditor и отредактировать уровень.
+</p>
+<img src="images/c1_cad_tmnt2.png" alt="редактор">
+<p>
+А потом посмотреть на него в эмуляторе:
+<img src="images/c1_result.png" alt="результат">
+</p>
+
+<p>
+<h2><a id="config" class="anchor" href="#config" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Игры с таким же форматом блоков</h2>
+</p>
+
+<p>
+Собственно, описанный в статье формат блоков хорош тем, что встречается в большом количестве игр от разных разработчиков, вот небольшой список проверенных на данный момент:
+<ul>
+<li><b>Power Blade 1-2</b> (разработчик Natsume)</li>
+<li><b>Adventure Island 1-3</b> (Hudson soft)</li>
+<li><b>Yo-Noid</b> (Now production)</li>
+<li><b>Jackie Chan Action Kung Fu</b> (Now production)</li>
+<li><b>Contra Force</b> (Konami)</li>
+<li><b>Batman Returns</b> (Konami)</li>
+<li><b>Super C</b> (Konami)</li>
+<li><b>Monster in My Pocket</b> (Konami)</li>
+<li><b>Bucky O'Hare</b> (Konami)</li>
+<li><b>Jackal</b> (Konami)</li>
+<li><b>Teenage Mutant Ninja Turtles 1-3</b> (Konami)</li>
+<li><b>Alien 3</b> (Probe entertaiment)</li>
+<li><b>Battletoads</b> (Rare)</li>
+<li><b>Battletoads & Double Dragon</b> (Rare)</li>
+<li><b>Darkman</b> (Ocean software)</li>
+</ul>
+Конфиги некоторых уровней из них можно изучить в готовых примерах редактора <a hre="https://github.com/spiiin/CadEditor">CadEditor</a>.
+Скорее всего, существует ещё несколько десятков игр с таким же форматом, которые возможно добавить по описанному алгоритму.
+</p>
+
+<p>
+Пока всё, для первой статьи хватит.</br>
+</p>
+<img src="images/c1_end.jpg" alt="конец">
+
+  </section>
+  </div>
+  </body>
+</html>
