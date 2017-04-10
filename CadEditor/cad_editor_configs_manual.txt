@@ -21,9 +21,7 @@
   blocksOffset = callFromScript(asm, data, "*.getBlocksOffset", new OffsetRec(0, 1, 0));
   screensOffset = callFromScript(asm, data, "*.getScreensOffset", new OffsetRec(0, 1, 0));
   screensOffset = callFromScript(asm, data, "*.getScreensOffsetsForLevels", new OffsetRec[1]); //возможность загрузить несколько типов экранов.
-  
-  convertScreenTileFunc = callFromScript<ConvertScreenTileFunc>(asm, data, "*.getConvertScreenTileFunc"); //функция конвертации индекса экрана после загрузки.
-  backConvertScreenTileFunc = callFromScript<ConvertScreenTileFunc>(asm, data, "*.getBackConvertScreenTileFunc"); //обратная конвертация перед сохранением
+  screensOffset2 = callFromScript(asm, data, "*.getScreensOffset2", new OffsetRec(0, 1, 0)); //возможность загрузить второй слой индексов экрана.
   
 набор функций get*Offset позволяет передать структуру типа OffsetRec, которая описывает начальный адрес массива данных, количество массивов и их размер и количество (количество массивов соответствует количеству уровней в игре, если конфиг описывает только один уровень, то второй параметр будет всегда равен единице).
 
@@ -55,7 +53,9 @@
   blocksPicturesFilename = callFromScript(asm, data, "getBlocksFilename", "");        //имя файла с набором картинок
   blocksPicturesFilenames = callFromScript(asm, data, "getBlocksFilenames", null);    //массив с набором имён файлов картинок (нужен, если длина файла с картинками настолько большая, что невозможно сохранить их в одном файле).
   blocksPicturesWidth = callFromScript(asm, data, "getPictureBlocksWidth", 32);       //размер в ширину одного блока (для прямоугольных блоков)
-  
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Другие опиции.
   screenWidth = callFromScript(asm, data, "*.getScreenWidth", 8);                    //размер одного экрана уровня в длину 
   screenHeight = callFromScript(asm, data, "*.getScreenHeight", 8);                  //и в ширину
   screenVertical = callFromScript(asm, data, "*.getScreenVertical", false);          //описывают ли данные экран справа налево или сверху вниз
@@ -92,10 +92,26 @@
   isEnemyEditorEnabled = callFromScript(asm, data, "*.isEnemyEditorEnabled", true);
   objTypesPicturesDir = callFromScript(asm, data, "*.getObjTypesPicturesDir", "obj_sprites");
 
-Позволяют ограничить число игровых макроблоков и блоков (на случай, если в игре они идут последовательно и их меньше 256, чтобы пользователь редактируя один уровень случайно не перерисовал блоки соседнего):
-  bigBlocksCount = callFromScript(asm, data, "*.getBigBlocksCount", 256);
-  blocksCount    = callFromScript(asm, data, "*.getBlocksCount"   , 256);
+Позволяют описать иерархию макроблоков в игре, описав каждый уровень макроблоков (последующий уровень строится из макроблоков предыдущего уровня):
+
+  bigBlocksHierarchyCount = callFromScript<int>(asm, data, "*.getBigBlocksHierarchyCount", 1); //глубина иерархий макроблоков, по умолчанию 1.
+
+  bigBlocksCounts = new int[bigBlocksHierarchyCount];                                          //количество макроблоков каждой глубины вложенности
+  for (int hierLevel = 0; hierLevel < bigBlocksHierarchyCount; hierLevel++)
+  {
+      bigBlocksCounts[hierLevel] = callFromScript(asm, data, "*.getBigBlocksCountHierarchy", 256, hierLevel);
+  }
+  bigBlocksCounts[0] = callFromScript(asm, data, "*.getBigBlocksCount", bigBlocksCounts[0]);
   
+  bigBlocksOffsets = new OffsetRec[bigBlocksHierarchyCount];                                   //адреса каждой из групп макроблоков
+  for (int hierLevel = 0; hierLevel < bigBlocksHierarchyCount; hierLevel++)
+  {
+      bigBlocksOffsets[hierLevel] = callFromScript(asm, data, "*.getBigBlocksOffsetHierarchy", new OffsetRec(0, 1, 0), hierLevel);
+  }
+  bigBlocksOffsets[0] = callFromScript(asm, data, "*.getBigBlocksOffset", bigBlocksOffsets[0]);
 Подсказка по типам блоков, чтобы вместо цифр высвечивались строки с названием типов (например: провал/шипы/стена/фон):
   blockTypeNames = callFromScript(asm, data, "getBlockTypeNames", defaultBlockTypeNames);
+  
+  getBigBlocksFuncs = callFromScript<GetBigBlocksFunc[]>(asm, data, "*.getBigBlocksFuncs", new GetBigBlocksFunc[1]); //фунции загрузки и сохранения всех типов макроблоков.
+  setBigBlocksFuncs = callFromScript<SetBigBlocksFunc[]>(asm, data, "*.setBigBlocksFuncs", new SetBigBlocksFunc[1]);
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
