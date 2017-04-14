@@ -100,9 +100,6 @@ namespace CadEditor
         private void resetControls()
         {
             curActiveLevelForScreen = 0;
-            UtilsGui.setCbItemsCount(cbPanelNo, (ConfigScript.getBigBlocksCount(ConfigScript.getbigBlocksHierarchyCount()-1)+BLOCKS_PER_PAGE-1) / BLOCKS_PER_PAGE);
-            UtilsGui.setCbIndexWithoutUpdateLevel(cbPanelNo, cbPanelNo_SelectedIndexChanged);
-            //cbPanelNo.SelectedIndex = 0;
             resetScreens();
 
             UtilsGui.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
@@ -130,7 +127,6 @@ namespace CadEditor
             showLayer2 = true;
             useStructs = false;
             curActiveLayer = 0;
-            prepareBlocksPanel();
 
             reloadGameType();
             changeLevelIndex(true);
@@ -162,7 +158,7 @@ namespace CadEditor
             setBlocks(reloadBlockPanel);
             if (reloadScreens)
                 resetScreens();
-            updateMap();
+            mapScreen.Invalidate();
         }
 
         private void setBigBlocksIndexes()
@@ -189,10 +185,7 @@ namespace CadEditor
                 blockHeight = 32;
 
                 UtilsGDI.setBlocks(bigBlocks, curButtonScale, blockWidth, blockHeight, curViewType, showAxis);
-                if (needToRefillBlockPanel)
-                    prepareBlocksPanel();
-                else
-                    reloadBlocksPanel();
+                resizeBlocksScreen();
                 return;
             }
 
@@ -221,35 +214,26 @@ namespace CadEditor
             bigBlocks.ImageSize = new Size((int)(curButtonScale * blockWidth), (int)(curButtonScale * blockHeight));
             bigBlocks.Images.AddRange(bigImages);
             curActiveBlock = 0;
-
-            if (needToRefillBlockPanel)
-                prepareBlocksPanel();
-            else
-                reloadBlocksPanel();
+            resizeBlocksScreen();
         }
 
-        private void prepareBlocksPanel()
+        private void resizeBlocksScreen()
         {
-            int lastHierarchy = ConfigScript.getbigBlocksHierarchyCount() - 1;
-            int subparts = (ConfigScript.getBigBlocksCount(lastHierarchy) +BLOCKS_PER_PAGE-1) / BLOCKS_PER_PAGE;
-            int count = ((curBlocksPage + 1) * BLOCKS_PER_PAGE > ConfigScript.getBigBlocksCount(lastHierarchy)) ? ConfigScript.getBigBlocksCount(lastHierarchy) % BLOCKS_PER_PAGE : BLOCKS_PER_PAGE;
-            UtilsGui.prepareBlocksPanel(blocksPanel, new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick, curBlocksPage * BLOCKS_PER_PAGE, count);
+            int TILE_SIZE_X = (int)(blockWidth * curScale);
+            int TILE_SIZE_Y = (int)(blockHeight * curScale);
+            int blocksOnRow = blocksScreen.Width / TILE_SIZE_X;
+            if (blocksOnRow == 0)
+            {
+                blocksOnRow = 1;
+            }
+            int blocksOnCol = bigBlocks.Images.Count / blocksOnRow;
+            blocksScreen.Height = blocksOnCol * TILE_SIZE_Y;
         }
 
-        private void reloadBlocksPanel()
+        private void updateBlocksImages()
         {
-            int lastHierarchy = ConfigScript.getbigBlocksHierarchyCount() - 1;
-            int subparts = (ConfigScript.getBigBlocksCount(lastHierarchy) + BLOCKS_PER_PAGE-1) / BLOCKS_PER_PAGE;
-            int count = ((curBlocksPage+1) * BLOCKS_PER_PAGE > ConfigScript.getBigBlocksCount(lastHierarchy)) ? ConfigScript.getBigBlocksCount(lastHierarchy)% BLOCKS_PER_PAGE : BLOCKS_PER_PAGE;
-            UtilsGui.reloadBlocksPanel(blocksPanel, bigBlocks, curBlocksPage * BLOCKS_PER_PAGE, count);
-        }
-
-
-
-        private void updateMap()
-        {
-            mapScreen.Invalidate();
-            blocksPanel.Invalidate(true);
+            resizeBlocksScreen();
+            blocksScreen.Invalidate();
         }
 
         private void buttonBlockClick(Object button, EventArgs e)
@@ -258,6 +242,8 @@ namespace CadEditor
             activeBlock.Image = bigBlocks.Images[index];
             curActiveBlock = index;
             lbActiveBlock.Text = String.Format("Label: ({0:X})", index);
+
+            blocksScreen.Invalidate();
         }
 
         private void renderNeighbornLine(Graphics g, int screenNo, int line, int X)
@@ -399,9 +385,6 @@ namespace CadEditor
         bool curClicked = false;
         int curActiveLayer = 0;
 
-        private int curBlocksPage = 0;
-        const int BLOCKS_PER_PAGE = 256;
-
         //select rect if alt pressed
         private int selectionBeginX, selectionBeginY, selectionEndX, selectionEndY;
         private int selectionBeginMouseX, selectionBeginMouseY, selectionMouseX, selectionMouseY;
@@ -436,6 +419,7 @@ namespace CadEditor
                 curActiveBlock = ConfigScript.getBigTileNoFromScreen(screens[curActiveScreen], index);
                 activeBlock.Image = bigBlocks.Images[curActiveBlock];
                 lbActiveBlock.Text = String.Format("Label: {0:X}", curActiveBlock);
+                blocksScreen.Invalidate();
                 return;
             }
         }
@@ -615,6 +599,7 @@ namespace CadEditor
                     mapScreen.Size = new Size((int)(ConfigScript.getScreenHeight(curActiveLevelForScreen) * blockWidth * curScale), (int)((ConfigScript.getScreenWidth(curActiveLevelForScreen) + 2) * blockHeight * curScale));
                 else
                     mapScreen.Size = new Size((int)((ConfigScript.getScreenWidth(curActiveLevelForScreen) + 2) * blockWidth * curScale), (int)(ConfigScript.getScreenHeight(curActiveLevelForScreen) * blockHeight * curScale));
+                updateBlocksImages();
             }
         }
 
@@ -941,7 +926,7 @@ namespace CadEditor
 
         private void updateBlocksPanelVisible()
         {
-            blocksPanel.Visible = !useStructs;
+            pnBlocks.Visible = !useStructs;
             lbStructures.Visible = useStructs;
             if (useStructs)
             {
@@ -1019,10 +1004,39 @@ namespace CadEditor
             }*/
         }
 
-        private void cbPanelNo_SelectedIndexChanged(object sender, EventArgs e)
+        private void blocksScreen_Paint(object sender, PaintEventArgs e)
         {
-            curBlocksPage = cbPanelNo.SelectedIndex;
-            reloadBlocksPanel();
+            if (!fileLoaded)
+                return;
+            var g = e.Graphics;
+            var visibleRect = UtilsGui.getVisibleRectangle(pnBlocks, blocksScreen);
+            MapEditor.RenderAllBlocks(e.Graphics, blocksScreen, bigBlocks, blockWidth, blockHeight, visibleRect, curScale, curActiveBlock);
+            //show active block
+        }
+
+        private void blocksScreen_MouseDown(object sender, MouseEventArgs e)
+        {
+            var p = blocksScreen.PointToClient(Cursor.Position);
+            int x = p.X, y = p.Y;
+            int TILE_SIZE_X = (int)(blockWidth * CurScale);
+            int TILE_SIZE_Y = (int)(blockHeight * CurScale);
+            int tx = x / TILE_SIZE_X, ty = y / TILE_SIZE_Y;
+            int maxtX = blocksScreen.Width / TILE_SIZE_X;
+            int index = ty * maxtX + tx;
+            if ((tx < 0) || (tx >= maxtX) || (index < 0) || (index > bigBlocks.Images.Count))
+            {
+                return;
+            }
+
+            activeBlock.Image = bigBlocks.Images[index];
+            curActiveBlock = index;
+            lbActiveBlock.Text = String.Format("Label: ({0:X})", index);
+            blocksScreen.Invalidate();
+        }
+
+        private void pnBlocks_SizeChanged(object sender, EventArgs e)
+        {
+            updateBlocksImages();
         }
 
         public void addSubeditorButton(ToolStripItem item)

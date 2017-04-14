@@ -234,7 +234,7 @@ namespace CadEditor
                     bigBlocks.Images.Add(VideoHelper.emptyScreen((int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale)));
                 if (showAxis)
                 {
-                    for (int i = 0; i < 256; i++)
+                    for (int i = 0; i < bigBlocks.Images.Count; i++)
                     {
                         var im1 = bigBlocks.Images[i];
                         using (var g = Graphics.FromImage(im1))

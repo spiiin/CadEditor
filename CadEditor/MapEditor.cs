@@ -62,6 +62,36 @@ namespace CadEditor
             ConfigScript.renderToMainScreen(g, (int)CurScale);
         }
 
+        public static void RenderAllBlocks(Graphics g, PictureBox parentControl, ImageList bigBlocks, int blockWidth, int blockHeight, Rectangle? visibleRect, float CurScale, int activeBlock)
+        {
+            int TILE_SIZE_X = (int)(blockWidth * CurScale);
+            int TILE_SIZE_Y = (int)(blockHeight * CurScale);
+            int WIDTH = parentControl.Width / TILE_SIZE_X;
+            if (WIDTH == 0)
+            {
+                return;
+            }
+
+            for (int i = 0; i < bigBlocks.Images.Count; i++)
+            {
+                int bigBlockNo = i;
+                Rectangle tileRect = new Rectangle((i % WIDTH) * TILE_SIZE_X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
+
+                if (visibleRect == null || visibleRect.Value.Contains(tileRect) || visibleRect.Value.IntersectsWith(tileRect))
+                {
+                    if (bigBlockNo > -1 && bigBlockNo < bigBlocks.Images.Count)
+                        g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
+                    else
+                        g.FillRectangle(Brushes.White, tileRect);
+
+                    if (i == activeBlock)
+                    {
+                        g.DrawRectangle(new Pen(Brushes.Red, 2.0f), tileRect);
+                    }
+                }
+            }
+        }
+
         public static Image ScreenToImage(ImageList bigBlocks, int blockWidth, int blockHeight, int[] screen, int[] screen2, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin, int WIDTH, int HEIGHT, bool verticalScreen)
         {
             int TILE_SIZE_X = (int)(blockWidth * CurScale);
