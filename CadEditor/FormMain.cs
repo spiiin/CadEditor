@@ -184,7 +184,7 @@ namespace CadEditor
                 blockWidth = ConfigScript.getBlocksPicturesWidth();
                 blockHeight = 32;
                 bigBlocks = UtilsGDI.setBlocksForPictures(curButtonScale, blockWidth, blockHeight, curViewType, showAxis);
-                resizeBlocksScreen();
+                updateBlocksImages();
                 return;
             }
 
@@ -211,29 +211,12 @@ namespace CadEditor
 
             changeBlocksSize(bigBlocks);
             curActiveBlock = 0;
-            resizeBlocksScreen();
-        }
-
-        private void resizeBlocksScreen()
-        {
-            if (bigBlocks.Length == 0)
-            {
-                return;
-            }
-            int TILE_SIZE_X = (int)(blockWidth * curScale);
-            int TILE_SIZE_Y = (int)(blockHeight * curScale);
-            int blocksOnRow = blocksScreen.Width / TILE_SIZE_X;
-            if (blocksOnRow == 0)
-            {
-                blocksOnRow = 1;
-            }
-            int blocksOnCol = bigBlocks.Length / blocksOnRow;
-            blocksScreen.Height = blocksOnCol * TILE_SIZE_Y;
+            updateBlocksImages();
         }
 
         private void updateBlocksImages()
         {
-            resizeBlocksScreen();
+            UtilsGui.resizeBlocksScreen(bigBlocks, blocksScreen, blockWidth, blockHeight, curScale);
             blocksScreen.Invalidate();
         }
 

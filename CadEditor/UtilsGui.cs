@@ -83,6 +83,23 @@ namespace CadEditor
             blocksPanel.ResumeLayout();
         }
 
+        public static void resizeBlocksScreen(Image[] bigBlocks, PictureBox blocksScreen, int blockWidth, int blockHeight, float curScale)
+        {
+            if (bigBlocks.Length == 0)
+            {
+                return;
+            }
+            int TILE_SIZE_X = (int)(blockWidth * curScale);
+            int TILE_SIZE_Y = (int)(blockHeight * curScale);
+            int blocksOnRow = blocksScreen.Width / TILE_SIZE_X;
+            if (blocksOnRow == 0)
+            {
+                blocksOnRow = 1;
+            }
+            int blocksOnCol = bigBlocks.Length / blocksOnRow;
+            blocksScreen.Height = blocksOnCol * TILE_SIZE_Y;
+        }
+
         public delegate bool SaveFunction();
         public delegate void ReturnComboBoxIndexFunction();
         public static bool askToSave(ref bool dirty, SaveFunction saveToFile, ReturnComboBoxIndexFunction returnCbLevelIndex)

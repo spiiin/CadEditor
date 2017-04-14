@@ -47,25 +47,8 @@ namespace CadEditor
             for (int i = 0; i < tileStructs.Count; i++)
                 lbStructures.Items.Add(tileStructs[i].Name);
             bigBlocks = formMain.getBigBlockImages();
-            resizeBlocksScreen();
+            UtilsGui.resizeBlocksScreen(bigBlocks, blocksScreen, blockWidth, blockHeight, curScale);
             resetTileStructControls();
-        }
-
-        private void resizeBlocksScreen()
-        {
-            if (bigBlocks.Length == 0)
-            {
-                return;
-            }
-            int TILE_SIZE_X = (int)(blockWidth * curScale);
-            int TILE_SIZE_Y = (int)(blockHeight * curScale);
-            int blocksOnRow = blocksScreen.Width / TILE_SIZE_X;
-            if (blocksOnRow == 0)
-            {
-                blocksOnRow = 1;
-            }
-            int blocksOnCol = bigBlocks.Length / blocksOnRow;
-            blocksScreen.Height = blocksOnCol * TILE_SIZE_Y;
         }
 
         private void resetTileStructControls()
