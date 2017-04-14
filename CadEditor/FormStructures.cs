@@ -20,11 +20,11 @@ namespace CadEditor
 
         int blockWidth;
         int blockHeight;
-        int curButtonScale;
         int curActiveBlock;
         float curScale;
         //MapViewType curViewType;
         //bool showAxis;
+        Image[] bigBlocks;
         TileStructure curTileStruct;
         static List<TileStructure> tileStructs = new List<TileStructure>();
         FormMain formMain;
@@ -33,7 +33,6 @@ namespace CadEditor
         {
             blockWidth = ConfigScript.getBlocksPicturesWidth();
             blockHeight = 32;
-            curButtonScale = 2;
             curActiveBlock = 0;
             //curViewType = MapViewType.Tiles;
             curScale = 2.0f;
@@ -44,33 +43,29 @@ namespace CadEditor
 
         void resetControls(bool needToRefillBlockPanel)
         {
-            UtilsGui.setCbItemsCount(cbPanelNo, (ConfigScript.getBigBlocksCount(0) + 1023) / 1024);
-            cbPanelNo.SelectedIndex = 0;
             lbStructures.Items.Clear();
             for (int i = 0; i < tileStructs.Count; i++)
                 lbStructures.Items.Add(tileStructs[i].Name);
-            bigBlocks = formMain.getBigBlockImageList();
-            //UtilsGui.setBlocks(bigBlocks, curButtonScale, blockWidth, blockHeight, curViewType, showAxis);
-
-            int subparts = (ConfigScript.getBigBlocksCount(0) + 1023) / 1024;
-            FlowLayoutPanel[] blocksPanels = { blocksPanel, blockPanel2, blockPanel3, blockPanel4 };
-            if (needToRefillBlockPanel)
-            {
-                for (int i = 0; i < subparts; i++)
-                {
-                    int count = (i * 1024 > ConfigScript.getBigBlocksCount(0)) ? (i * 1024) % ConfigScript.getBigBlocksCount(0) : 1024;
-                    UtilsGui.prepareBlocksPanel(blocksPanel, new Size((int)(blockWidth * curButtonScale + 1), (int)(blockHeight * curButtonScale + 1)), bigBlocks, buttonBlockClick, i * 1024, count);
-                }
-            }
-            else
-            {
-                for (int i = 0; i < subparts; i++)
-                {
-                    int count = (i * 1024 > ConfigScript.getBigBlocksCount(0)) ? (i * 1024) % ConfigScript.getBigBlocksCount(0) : 1024;
-                    UtilsGui.reloadBlocksPanel(blocksPanel, bigBlocks, i * 1024, count);
-                }
-            }
+            bigBlocks = formMain.getBigBlockImages();
+            resizeBlocksScreen();
             resetTileStructControls();
+        }
+
+        private void resizeBlocksScreen()
+        {
+            if (bigBlocks.Length == 0)
+            {
+                return;
+            }
+            int TILE_SIZE_X = (int)(blockWidth * curScale);
+            int TILE_SIZE_Y = (int)(blockHeight * curScale);
+            int blocksOnRow = blocksScreen.Width / TILE_SIZE_X;
+            if (blocksOnRow == 0)
+            {
+                blocksOnRow = 1;
+            }
+            int blocksOnCol = bigBlocks.Length / blocksOnRow;
+            blocksScreen.Height = blocksOnCol * TILE_SIZE_Y;
         }
 
         private void resetTileStructControls()
@@ -87,9 +82,7 @@ namespace CadEditor
         private void buttonBlockClick(Object button, EventArgs e)
         {
             int index = ((Button)button).ImageIndex;
-            //activeBlock.Image = bigBlocks.Images[index];
             curActiveBlock = index;
-            //lbActiveBlock.Text = String.Format("Label: ({0:X})", index);
         }
 
         private void mapScreen_MouseClick(object sender, MouseEventArgs e)
@@ -284,14 +277,29 @@ namespace CadEditor
             formMain = f;
         }
 
-        private void cbPanelNo_SelectedIndexChanged(object sender, EventArgs e)
+        private void blocksScreen_Paint(object sender, PaintEventArgs e)
         {
-            FlowLayoutPanel[] blocksPanels = { blocksPanel, blockPanel2, blockPanel3, blockPanel4 };
-            int index = cbPanelNo.SelectedIndex;
-            for (int i = 0; i < blocksPanels.Length; i++)
-                blocksPanels[i].Visible = i == index;
+            var visibleRect = UtilsGui.getVisibleRectangle(pnBlocks, blocksScreen);
+            MapEditor.RenderAllBlocks(e.Graphics, blocksScreen, bigBlocks, blockWidth, blockHeight, visibleRect, curScale, curActiveBlock);
         }
 
+        private void blocksScreen_MouseDown(object sender, MouseEventArgs e)
+        {
+            var p = blocksScreen.PointToClient(Cursor.Position);
+            int x = p.X, y = p.Y;
+            int TILE_SIZE_X = (int)(blockWidth * curScale);
+            int TILE_SIZE_Y = (int)(blockHeight * curScale);
+            int tx = x / TILE_SIZE_X, ty = y / TILE_SIZE_Y;
+            int maxtX = blocksScreen.Width / TILE_SIZE_X;
+            int index = ty * maxtX + tx;
+            if ((tx < 0) || (tx >= maxtX) || (index < 0) || (index > bigBlocks.Length))
+            {
+                return;
+            }
+
+            curActiveBlock = index;
+            blocksScreen.Invalidate();
+        }
     }
 
     [Serializable]

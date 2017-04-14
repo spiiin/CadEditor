@@ -44,7 +44,8 @@ namespace CadEditor
         Label[] lbDatas;
 
         private Image[] objectSpritesBig;
-
+        private Image[] bigBlocks;
+            
         const int MAX_SIZE = 64;
 
         bool objectDragged = false;
@@ -84,13 +85,10 @@ namespace CadEditor
         {
             if (!ConfigScript.usePicturesInstedBlocks)
             {
-                bigBlocks.Images.Clear();
-                Image[] bigImages;
                 if (ConfigScript.isUseSegaGraphics())
-                  bigImages = makeSegaBigBlocks();
+                    bigBlocks = makeSegaBigBlocks();
                 else
-                  bigImages = ConfigScript.videoNes.makeBigBlocks(curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo, MapViewType.Tiles, curScale, curScale, MapViewType.Tiles, formMain.ShowAxis, ConfigScript.getbigBlocksHierarchyCount()-1);
-                bigBlocks.Images.AddRange(bigImages);
+                    bigBlocks = ConfigScript.videoNes.makeBigBlocks(curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo, MapViewType.Tiles, curScale, curScale, MapViewType.Tiles, formMain.ShowAxis, ConfigScript.getbigBlocksHierarchyCount()-1);
             }
         }
 
@@ -155,7 +153,7 @@ namespace CadEditor
             screens = Utils.setScreens(getLevelRecForGameType().levelNo);
             if (ConfigScript.usePicturesInstedBlocks)
             {
-                UtilsGDI.setBlocks(bigBlocks, 2, 32,32, MapViewType.Tiles, formMain.ShowAxis);
+                bigBlocks = UtilsGDI.setBlocksForPictures(2, 32,32, MapViewType.Tiles, formMain.ShowAxis);
             }
 
             cbDatas = new ComboBox[] { cbD0, cbD1, cbD2, cbD3, cbD4, cbD5 };

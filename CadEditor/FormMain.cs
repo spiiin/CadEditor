@@ -83,7 +83,7 @@ namespace CadEditor
         private void changeBlocksSize(Image[] bigImages)
         {
             //TODO: remove hardcode logic for size
-            if (bigImages[0].Width >= bigImages[0].Height)
+            /*if (bigImages[0].Width >= bigImages[0].Height)
             {
                 blockHeight = 32;
                 float ratio = bigImages[0].Width / bigImages[0].Height;
@@ -94,7 +94,7 @@ namespace CadEditor
                 blockWidth = bigImages[0].Height < 256 ? 32 : 4; //hack
                 float ratio = bigImages[0].Height / bigImages[0].Width;
                 blockHeight = (int)(blockWidth * ratio);
-            }
+            }*/
         }
 
         private void resetControls()
@@ -183,8 +183,7 @@ namespace CadEditor
                 //get block size from image
                 blockWidth = ConfigScript.getBlocksPicturesWidth();
                 blockHeight = 32;
-
-                UtilsGDI.setBlocks(bigBlocks, curButtonScale, blockWidth, blockHeight, curViewType, showAxis);
+                bigBlocks = UtilsGDI.setBlocksForPictures(curButtonScale, blockWidth, blockHeight, curViewType, showAxis);
                 resizeBlocksScreen();
                 return;
             }
@@ -201,24 +200,26 @@ namespace CadEditor
 
             float smallBlockScaleFactor = curButtonScale;
             int bigTileIndex = curActiveBlockNo;
-            Image[] bigImages;
             if (ConfigScript.isUseSegaGraphics())
-                bigImages = makeSegaBigBlocks();
+            {
+                bigBlocks = makeSegaBigBlocks();
+            }
             else
             {
-                bigImages = ConfigScript.videoNes.makeBigBlocks(backId, blockId, bigTileIndex, palId, smallObjectsType, smallBlockScaleFactor, curButtonScale, curViewType, showAxis, ConfigScript.getbigBlocksHierarchyCount()-1);
+                bigBlocks = ConfigScript.videoNes.makeBigBlocks(backId, blockId, bigTileIndex, palId, smallObjectsType, smallBlockScaleFactor, curButtonScale, curViewType, showAxis, ConfigScript.getbigBlocksHierarchyCount() - 1);
             }
 
-            changeBlocksSize(bigImages);
-            bigBlocks.Images.Clear();
-            bigBlocks.ImageSize = new Size((int)(curButtonScale * blockWidth), (int)(curButtonScale * blockHeight));
-            bigBlocks.Images.AddRange(bigImages);
+            changeBlocksSize(bigBlocks);
             curActiveBlock = 0;
             resizeBlocksScreen();
         }
 
         private void resizeBlocksScreen()
         {
+            if (bigBlocks.Length == 0)
+            {
+                return;
+            }
             int TILE_SIZE_X = (int)(blockWidth * curScale);
             int TILE_SIZE_Y = (int)(blockHeight * curScale);
             int blocksOnRow = blocksScreen.Width / TILE_SIZE_X;
@@ -226,7 +227,7 @@ namespace CadEditor
             {
                 blocksOnRow = 1;
             }
-            int blocksOnCol = bigBlocks.Images.Count / blocksOnRow;
+            int blocksOnCol = bigBlocks.Length / blocksOnRow;
             blocksScreen.Height = blocksOnCol * TILE_SIZE_Y;
         }
 
@@ -239,7 +240,7 @@ namespace CadEditor
         private void buttonBlockClick(Object button, EventArgs e)
         {
             int index = ((Button)button).ImageIndex;
-            activeBlock.Image = bigBlocks.Images[index];
+            activeBlock.Image = bigBlocks[index];
             curActiveBlock = index;
             lbActiveBlock.Text = String.Format("Label: ({0:X})", index);
 
@@ -260,8 +261,8 @@ namespace CadEditor
                 {
                     int index = indexesPrev[i];
                     int bigBlockNo = ConfigScript.getBigTileNoFromScreen(indexesPrev, i);
-                    if (bigBlockNo < bigBlocks.Images.Count)
-                        g.DrawImage(bigBlocks.Images[bigBlockNo], new Rectangle(X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y));
+                    if (bigBlockNo < bigBlocks.Length)
+                        g.DrawImage(bigBlocks[bigBlockNo], new Rectangle(X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y));
                 }
             }
         }
@@ -287,8 +288,8 @@ namespace CadEditor
 
                         if ((visibleRect.Contains(tileRect)) || (visibleRect.IntersectsWith(tileRect)))
                         {
-                            if ((index!=-1) && (index < bigBlocks.Images.Count))
-                                g.DrawImage(bigBlocks.Images[index], tileRect);
+                            if ((index!=-1) && (index < bigBlocks.Length))
+                                g.DrawImage(bigBlocks[index], tileRect);
                         }
                     }
                 }
@@ -329,9 +330,9 @@ namespace CadEditor
                 if (!useStructs)
                 {
                     if (!ConfigScript.getScreenVertical())
-                        g.DrawImage(bigBlocks.Images[curActiveBlock], (curDx + 1) * TILE_SIZE_X, curDy * TILE_SIZE_Y);
+                        g.DrawImage(bigBlocks[curActiveBlock], (curDx + 1) * TILE_SIZE_X, curDy * TILE_SIZE_Y);
                     else
-                        g.DrawImage(bigBlocks.Images[curActiveBlock], curDy * TILE_SIZE_X, (curDx + 1) * TILE_SIZE_Y);
+                        g.DrawImage(bigBlocks[curActiveBlock], curDy * TILE_SIZE_X, (curDx + 1) * TILE_SIZE_Y);
                 }
                 else
                 {
@@ -391,6 +392,7 @@ namespace CadEditor
         private bool selectionRect = false;
 
         private Dictionary<ToolStripButton, Func<Form>> subeditorsDict;
+        private Image[] bigBlocks = new Image[0];
 
         private void mapScreen_MouseClick(object sender, MouseEventArgs ea)
         {
@@ -417,7 +419,7 @@ namespace CadEditor
                     return;
                 int index = dy * WIDTH + dx;
                 curActiveBlock = ConfigScript.getBigTileNoFromScreen(screens[curActiveScreen], index);
-                activeBlock.Image = bigBlocks.Images[curActiveBlock];
+                activeBlock.Image = bigBlocks[curActiveBlock];
                 lbActiveBlock.Text = String.Format("Label: {0:X}", curActiveBlock);
                 blocksScreen.Invalidate();
                 return;
@@ -797,12 +799,12 @@ namespace CadEditor
             get { return blockHeight; }
         }
 
-        public ImageList BigBlocks
+        public Image[] BigBlocks
         {
             get { return bigBlocks; }
         }
 
-        public ImageList getBigBlockImageList()
+        public Image[] getBigBlockImages()
         {
             return bigBlocks;
         }
@@ -1008,10 +1010,8 @@ namespace CadEditor
         {
             if (!fileLoaded)
                 return;
-            var g = e.Graphics;
             var visibleRect = UtilsGui.getVisibleRectangle(pnBlocks, blocksScreen);
             MapEditor.RenderAllBlocks(e.Graphics, blocksScreen, bigBlocks, blockWidth, blockHeight, visibleRect, curScale, curActiveBlock);
-            //show active block
         }
 
         private void blocksScreen_MouseDown(object sender, MouseEventArgs e)
@@ -1023,12 +1023,12 @@ namespace CadEditor
             int tx = x / TILE_SIZE_X, ty = y / TILE_SIZE_Y;
             int maxtX = blocksScreen.Width / TILE_SIZE_X;
             int index = ty * maxtX + tx;
-            if ((tx < 0) || (tx >= maxtX) || (index < 0) || (index > bigBlocks.Images.Count))
+            if ((tx < 0) || (tx >= maxtX) || (index < 0) || (index > bigBlocks.Length))
             {
                 return;
             }
 
-            activeBlock.Image = bigBlocks.Images[index];
+            activeBlock.Image = bigBlocks[index];
             curActiveBlock = index;
             lbActiveBlock.Text = String.Format("Label: ({0:X})", index);
             blocksScreen.Invalidate();

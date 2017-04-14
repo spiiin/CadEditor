@@ -6,20 +6,7 @@ namespace CadEditor
 {
     public class MapEditor
     {
-        /*public MapEditor(PictureBox _mapScreen, PictureBox _activeBlock, Panel _pnView, ImageList _bigBlocks)
-        {
-            mapScreen = _mapScreen;
-            activeBlock = _activeBlock;
-            pnView = _pnView;
-            bigBlocks = _bigBlocks;
-        }*/
-
-        /*public void Update()
-        {
-            mapScreen.Invalidate();
-        }*/
-
-        public static void Render(Graphics g, ImageList bigBlocks, int blockWidth, int blockHeight, Rectangle? visibleRect, int[] screen, int[] screen2, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin, int WIDTH, int HEIGHT, bool verticalScreen)
+        public static void Render(Graphics g, Image[] bigBlocks, int blockWidth, int blockHeight, Rectangle? visibleRect, int[] screen, int[] screen2, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin, int WIDTH, int HEIGHT, bool verticalScreen)
         {
             int TILE_SIZE_X = (int)(blockWidth * CurScale);
             int TILE_SIZE_Y = (int)(blockHeight * CurScale);
@@ -35,15 +22,15 @@ namespace CadEditor
 
                 if (visibleRect == null || visibleRect.Value.Contains(tileRect) || visibleRect.Value.IntersectsWith(tileRect))
                 {
-                    if (bigBlockNo > -1 && bigBlockNo < bigBlocks.Images.Count && ShowLayer1)
-                        g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
+                    if (bigBlockNo > -1 && bigBlockNo < bigBlocks.Length && ShowLayer1)
+                        g.DrawImage(bigBlocks[bigBlockNo], tileRect);
                     else
                         g.FillRectangle(Brushes.White, tileRect);
                     if (screen2 != null && ShowLayer2)
                     {
                         int bigBlockNo2 = ConfigScript.getBigTileNoFromScreen(screen2, i);
-                        if (bigBlockNo2 != -1 && bigBlockNo2 < bigBlocks.Images.Count)
-                            g.DrawImage(bigBlocks.Images[bigBlockNo2], tileRect);
+                        if (bigBlockNo2 != -1 && bigBlockNo2 < bigBlocks.Length)
+                            g.DrawImage(bigBlocks[bigBlockNo2], tileRect);
                         else
                             g.FillRectangle(Brushes.White, tileRect);
                     }
@@ -62,7 +49,7 @@ namespace CadEditor
             ConfigScript.renderToMainScreen(g, (int)CurScale);
         }
 
-        public static void RenderAllBlocks(Graphics g, PictureBox parentControl, ImageList bigBlocks, int blockWidth, int blockHeight, Rectangle? visibleRect, float CurScale, int activeBlock)
+        public static void RenderAllBlocks(Graphics g, PictureBox parentControl, Image[] bigBlocks, int blockWidth, int blockHeight, Rectangle? visibleRect, float CurScale, int activeBlock)
         {
             int TILE_SIZE_X = (int)(blockWidth * CurScale);
             int TILE_SIZE_Y = (int)(blockHeight * CurScale);
@@ -72,15 +59,15 @@ namespace CadEditor
                 return;
             }
 
-            for (int i = 0; i < bigBlocks.Images.Count; i++)
+            for (int i = 0; i < bigBlocks.Length; i++)
             {
                 int bigBlockNo = i;
                 Rectangle tileRect = new Rectangle((i % WIDTH) * TILE_SIZE_X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
 
                 if (visibleRect == null || visibleRect.Value.Contains(tileRect) || visibleRect.Value.IntersectsWith(tileRect))
                 {
-                    if (bigBlockNo > -1 && bigBlockNo < bigBlocks.Images.Count)
-                        g.DrawImage(bigBlocks.Images[bigBlockNo], tileRect);
+                    if (bigBlockNo > -1 && bigBlockNo < bigBlocks.Length)
+                        g.DrawImage(bigBlocks[bigBlockNo], tileRect);
                     else
                         g.FillRectangle(Brushes.White, tileRect);
 
@@ -92,7 +79,7 @@ namespace CadEditor
             }
         }
 
-        public static Image ScreenToImage(ImageList bigBlocks, int blockWidth, int blockHeight, int[] screen, int[] screen2, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin, int WIDTH, int HEIGHT, bool verticalScreen)
+        public static Image ScreenToImage(Image[] bigBlocks, int blockWidth, int blockHeight, int[] screen, int[] screen2, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin, int WIDTH, int HEIGHT, bool verticalScreen)
         {
             int TILE_SIZE_X = (int)(blockWidth * CurScale);
             int TILE_SIZE_Y = (int)(blockHeight * CurScale);

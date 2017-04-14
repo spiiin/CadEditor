@@ -28,9 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            this.bigBlocks = new System.Windows.Forms.ImageList(this.components);
             this.mapScreen = new System.Windows.Forms.PictureBox();
             this.activeBlock = new System.Windows.Forms.PictureBox();
             this.lbActiveBlock = new System.Windows.Forms.Label();
@@ -92,10 +90,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cbLevelNo = new System.Windows.Forms.ComboBox();
             this.cbUseStructs = new System.Windows.Forms.CheckBox();
-            this.lbStructures = new System.Windows.Forms.ListBox();
-            this.lbPalBytesAddr = new System.Windows.Forms.Label();
             this.pnBlocks = new System.Windows.Forms.Panel();
             this.blocksScreen = new System.Windows.Forms.PictureBox();
+            this.lbStructures = new System.Windows.Forms.ListBox();
+            this.lbPalBytesAddr = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -110,12 +108,6 @@
             this.pnBlocks.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.blocksScreen)).BeginInit();
             this.SuspendLayout();
-            // 
-            // bigBlocks
-            // 
-            this.bigBlocks.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
-            this.bigBlocks.ImageSize = new System.Drawing.Size(64, 64);
-            this.bigBlocks.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // mapScreen
             // 
@@ -807,6 +799,31 @@
             this.cbUseStructs.UseVisualStyleBackColor = true;
             this.cbUseStructs.CheckedChanged += new System.EventHandler(this.cbUseStructs_CheckedChanged);
             // 
+            // pnBlocks
+            // 
+            this.pnBlocks.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnBlocks.AutoScroll = true;
+            this.pnBlocks.Controls.Add(this.blocksScreen);
+            this.pnBlocks.Location = new System.Drawing.Point(4, 5);
+            this.pnBlocks.Name = "pnBlocks";
+            this.pnBlocks.Size = new System.Drawing.Size(261, 628);
+            this.pnBlocks.TabIndex = 61;
+            this.pnBlocks.SizeChanged += new System.EventHandler(this.pnBlocks_SizeChanged);
+            // 
+            // blocksScreen
+            // 
+            this.blocksScreen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.blocksScreen.Location = new System.Drawing.Point(3, 3);
+            this.blocksScreen.Name = "blocksScreen";
+            this.blocksScreen.Size = new System.Drawing.Size(255, 332);
+            this.blocksScreen.TabIndex = 5;
+            this.blocksScreen.TabStop = false;
+            this.blocksScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.blocksScreen_Paint);
+            this.blocksScreen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.blocksScreen_MouseDown);
+            // 
             // lbStructures
             // 
             this.lbStructures.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -832,31 +849,6 @@
             this.lbPalBytesAddr.TabIndex = 60;
             this.lbPalBytesAddr.Text = "Pal byte addr:";
             this.lbPalBytesAddr.Visible = false;
-            // 
-            // pnBlocks
-            // 
-            this.pnBlocks.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnBlocks.AutoScroll = true;
-            this.pnBlocks.Controls.Add(this.blocksScreen);
-            this.pnBlocks.Location = new System.Drawing.Point(4, 5);
-            this.pnBlocks.Name = "pnBlocks";
-            this.pnBlocks.Size = new System.Drawing.Size(261, 628);
-            this.pnBlocks.TabIndex = 61;
-            this.pnBlocks.SizeChanged += new System.EventHandler(this.pnBlocks_SizeChanged);
-            // 
-            // blocksScreen
-            // 
-            this.blocksScreen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.blocksScreen.Location = new System.Drawing.Point(3, 3);
-            this.blocksScreen.Name = "blocksScreen";
-            this.blocksScreen.Size = new System.Drawing.Size(255, 332);
-            this.blocksScreen.TabIndex = 5;
-            this.blocksScreen.TabStop = false;
-            this.blocksScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.blocksScreen_Paint);
-            this.blocksScreen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.blocksScreen_MouseDown);
             // 
             // FormMain
             // 
@@ -902,7 +894,6 @@
         private System.Windows.Forms.PictureBox mapScreen;
         private System.Windows.Forms.PictureBox activeBlock;
         private System.Windows.Forms.Label lbActiveBlock;
-        private System.Windows.Forms.ImageList bigBlocks;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cbScreenNo;
         private System.Windows.Forms.Panel pnGeneric;

@@ -82,10 +82,7 @@
             this.cbObjType = new System.Windows.Forms.ComboBox();
             this.lbObjectsCount = new System.Windows.Forms.Label();
             this.pnView = new System.Windows.Forms.Panel();
-            this.bigBlocks = new System.Windows.Forms.ImageList(this.components);
             this.pnObjectList = new System.Windows.Forms.Panel();
-            this.pnDataGridViewObjects = new System.Windows.Forms.Panel();
-            this.dgvObjects = new System.Windows.Forms.DataGridView();
             this.label6 = new System.Windows.Forms.Label();
             this.cbObjectList = new System.Windows.Forms.ComboBox();
             this.label19 = new System.Windows.Forms.Label();
@@ -103,6 +100,8 @@
             this.lbD0 = new System.Windows.Forms.Label();
             this.cbD1 = new System.Windows.Forms.ComboBox();
             this.lbD1 = new System.Windows.Forms.Label();
+            this.pnDataGridViewObjects = new System.Windows.Forms.Panel();
+            this.dgvObjects = new System.Windows.Forms.DataGridView();
             this.pnObjects = new System.Windows.Forms.Panel();
             this.btLoadJson = new System.Windows.Forms.Button();
             this.btSaveJson = new System.Windows.Forms.Button();
@@ -119,9 +118,9 @@
             this.pnTools.SuspendLayout();
             this.pnView.SuspendLayout();
             this.pnObjectList.SuspendLayout();
+            this.pnAddData.SuspendLayout();
             this.pnDataGridViewObjects.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).BeginInit();
-            this.pnAddData.SuspendLayout();
             this.pnObjects.SuspendLayout();
             this.pnBigObjects.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbBigObject)).BeginInit();
@@ -813,12 +812,6 @@
             this.pnView.Size = new System.Drawing.Size(683, 655);
             this.pnView.TabIndex = 68;
             // 
-            // bigBlocks
-            // 
-            this.bigBlocks.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
-            this.bigBlocks.ImageSize = new System.Drawing.Size(64, 64);
-            this.bigBlocks.TransparentColor = System.Drawing.Color.Transparent;
-            // 
             // pnObjectList
             // 
             this.pnObjectList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -850,24 +843,6 @@
             this.pnObjectList.Name = "pnObjectList";
             this.pnObjectList.Size = new System.Drawing.Size(309, 623);
             this.pnObjectList.TabIndex = 31;
-            // 
-            // pnDataGridViewObjects
-            // 
-            this.pnDataGridViewObjects.Controls.Add(this.dgvObjects);
-            this.pnDataGridViewObjects.Location = new System.Drawing.Point(0, 0);
-            this.pnDataGridViewObjects.Name = "pnDataGridViewObjects";
-            this.pnDataGridViewObjects.Size = new System.Drawing.Size(302, 393);
-            this.pnDataGridViewObjects.TabIndex = 71;
-            this.pnDataGridViewObjects.Visible = false;
-            // 
-            // dgvObjects
-            // 
-            this.dgvObjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvObjects.Location = new System.Drawing.Point(3, 22);
-            this.dgvObjects.Name = "dgvObjects";
-            this.dgvObjects.RowTemplate.Height = 24;
-            this.dgvObjects.Size = new System.Drawing.Size(302, 393);
-            this.dgvObjects.TabIndex = 0;
             // 
             // label6
             // 
@@ -1106,6 +1081,24 @@
             this.lbD1.TabIndex = 68;
             this.lbD1.Text = "D1:";
             // 
+            // pnDataGridViewObjects
+            // 
+            this.pnDataGridViewObjects.Controls.Add(this.dgvObjects);
+            this.pnDataGridViewObjects.Location = new System.Drawing.Point(0, 0);
+            this.pnDataGridViewObjects.Name = "pnDataGridViewObjects";
+            this.pnDataGridViewObjects.Size = new System.Drawing.Size(302, 393);
+            this.pnDataGridViewObjects.TabIndex = 71;
+            this.pnDataGridViewObjects.Visible = false;
+            // 
+            // dgvObjects
+            // 
+            this.dgvObjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvObjects.Location = new System.Drawing.Point(3, 22);
+            this.dgvObjects.Name = "dgvObjects";
+            this.dgvObjects.RowTemplate.Height = 24;
+            this.dgvObjects.Size = new System.Drawing.Size(302, 393);
+            this.dgvObjects.TabIndex = 0;
+            // 
             // pnObjects
             // 
             this.pnObjects.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1258,10 +1251,10 @@
             this.pnView.ResumeLayout(false);
             this.pnObjectList.ResumeLayout(false);
             this.pnObjectList.PerformLayout();
-            this.pnDataGridViewObjects.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).EndInit();
             this.pnAddData.ResumeLayout(false);
             this.pnAddData.PerformLayout();
+            this.pnDataGridViewObjects.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).EndInit();
             this.pnObjects.ResumeLayout(false);
             this.pnObjects.PerformLayout();
             this.pnBigObjects.ResumeLayout(false);
@@ -1323,7 +1316,6 @@
         private System.Windows.Forms.ComboBox cbObjType;
         private System.Windows.Forms.Label lbObjectsCount;
         private System.Windows.Forms.Panel pnView;
-        private System.Windows.Forms.ImageList bigBlocks;
         private System.Windows.Forms.Panel pnObjectList;
         private System.Windows.Forms.Panel pnObjects;
         private System.Windows.Forms.Panel pnAddData;

@@ -307,17 +307,11 @@ namespace PluginVideoNes
                 return VideoHelper.emptyScreen((int)(ConfigScript.getScreenWidth(levelNo) * 32 * scale), (int)(ConfigScript.getScreenHeight(levelNo) * 32 * scale));
             var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, scale, scale, MapViewType.Tiles, withBorders);
             //var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.ObjType, scale, scale,MapViewType.Tiles, withBorders);
-            var il = new ImageList();
-            if (bigBlocks.Length > 0)
-            {
-                il.ImageSize = bigBlocks[0].Size;
-                il.Images.AddRange(bigBlocks);
-            }
             int[] indexes = Globals.getScreen(ConfigScript.screensOffset[levelNo], scrNo);
             int scrW = ConfigScript.getScreenWidth(0); //zero as screenNoForLevel
             int scrH = ConfigScript.getScreenHeight(0);
             //capcom hardcode
-            return new Bitmap(MapEditor.ScreenToImage(il, 32, 32, indexes, null, scale, true, false, false, 0, scrW, scrH, ConfigScript.getScreenVertical()));
+            return new Bitmap(MapEditor.ScreenToImage(bigBlocks, 32, 32, indexes, null, scale, true, false, false, 0, scrW, scrH, ConfigScript.getScreenVertical()));
         }
 
         public Color[] NesColors
