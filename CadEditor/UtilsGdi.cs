@@ -199,8 +199,6 @@ namespace CadEditor
             return bmp;
         }
 
-
-
         public static Image[] setBlocksForPictures(float curButtonScale = 2, int blockWidth = 32, int blockHeight = 32, MapViewType curDrawType = MapViewType.Tiles, bool showAxis = true)
         {
             //only if using pictures

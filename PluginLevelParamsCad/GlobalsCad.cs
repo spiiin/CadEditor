@@ -27,7 +27,6 @@ namespace CadEditor
         //cad specific
         public static int LEVELS_COUNT = 11;
         public static int DOORS_COUNT = 25;
-        public static int MAX_SCREEN_LIST_LEN = 64;
 
         public static OffsetRec boxesBackOffset;
         public static int LevelRecBaseOffset;
