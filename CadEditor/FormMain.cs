@@ -83,7 +83,7 @@ namespace CadEditor
         private void changeBlocksSize(Image[] bigImages)
         {
             //TODO: remove hardcode logic for size
-            /*if (bigImages[0].Width >= bigImages[0].Height)
+            if (bigImages[0].Width >= bigImages[0].Height)
             {
                 blockHeight = 32;
                 float ratio = bigImages[0].Width / bigImages[0].Height;
@@ -94,7 +94,7 @@ namespace CadEditor
                 blockWidth = bigImages[0].Height < 256 ? 32 : 4; //hack
                 float ratio = bigImages[0].Height / bigImages[0].Width;
                 blockHeight = (int)(blockWidth * ratio);
-            }*/
+            }
         }
 
         private void resetControls()
@@ -329,10 +329,10 @@ namespace CadEditor
             {
                 if (!useStructs)
                 {
-                    if (!ConfigScript.getScreenVertical())
-                        g.DrawImage(bigBlocks[curActiveBlock], (curDx + 1) * TILE_SIZE_X, curDy * TILE_SIZE_Y);
-                    else
-                        g.DrawImage(bigBlocks[curActiveBlock], curDy * TILE_SIZE_X, (curDx + 1) * TILE_SIZE_Y);
+                    var tx = ConfigScript.getScreenVertical() ? curDy * TILE_SIZE_X : (curDx + 1) * TILE_SIZE_X;
+                    var ty = ConfigScript.getScreenVertical() ? (curDx + 1) * TILE_SIZE_Y : curDy * TILE_SIZE_Y;
+                    var tileRect = new Rectangle(tx, ty, TILE_SIZE_X, TILE_SIZE_Y);
+                    g.DrawImage(bigBlocks[curActiveBlock], tileRect);
                 }
                 else
                 {
