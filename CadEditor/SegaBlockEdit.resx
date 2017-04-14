@@ -124,22 +124,19 @@
   <data name="tbbSave.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAI/SURBVDhPrZLda5JxFMetfyHYxS66DLop2HURjVFZmS+b
-        ztmczsfp1C3xdW4zX6ZLc74smW4ytLItYaaxKLFgA4Ne6GVGN0HQTZQKuRvxTh6+PY+Y7mrzogMffhfn
-        nA/nHH6M/xJTC6kf+shO9QshIIsEnyzKhsji+CBZlPI6SLjk3hiH/CzmkOrFJ3/EuvXvrXbGMWM4V7mm
-        CuHnJL8riKU3kDsyZbq3KdD7cpXpta/oNqSeAoi5jY5A63teUa/sodFooF6vHwpdI3btQDKfKrUFU+6n
-        ZeXyh2ayVqsdCl0jsr+EwLTREcgpgdz/tjXg0SGcfwGBPnFA4MyUx72vu56AP7MNvibeEdAHGXPvtvxH
-        B8+QAU+x9rstoA9y0/EKIlseCnMQBvs9mOzLsLgimFtchdUTa75KcwgcXRps7RbYimhHIDZtloTWHIap
-        3XzBCMw2P4TqIB4kH6NQKCCfzyObzcLuugvWdArXNZtgyoMdgcCQKPEtzzBE7RaOxmFyrICpfAjvUhjp
-        dBrJZBKxWAyGGRuuqh5RuSSuiA8KqIPwjFlwqd38oVXcmg00BVb7HUSjUQQCAbjdbkxq9Lg8cR+XiAQG
-        Rry//gmO35CFvvFpgW4LDpcPszYPJrRO3LYvwOl0wmKxQKvVQiJTU81xDEjXcVHobv/E3p6TffLzbNP7
-        cyzjJ9Goen+UYoSCJVLs84aJKk9AVLkCWZU5KKn29as+nu3XvDtzQbFN9Z6gBbSll+IUxekuoWt7GAwG
-        4y+9jzf4lJwJJwAAAABJRU5ErkJggg==
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAI+SURBVDhPrZLda5JxFMef+heCXeyiy6Cbgl0X0RiVpXNa
+        OnU6lzqduiW+zm3my3Rpzpcl002GVrYlzDQWJRYsMOhtji66CYJuolTI3Yh38vDtecR0V5sXHfjwuzjn
+        fDjn8CP+S0wvpn8Yoru1fSmXLEk5ZGl8hCxJ2GRJPNxljEXuiZjkZyGT1Cw9+yPRb3xvtxMnTJF89YY6
+        jJ9TvJ6QL7+Hwpmt0L0tgcGfr86sf0WvMeEtQj6/2RXo/C+rmtUvaDabaDQaR0LXSNy7kC6kyx3BtOd5
+        RbWy10rW6/UjoWtEjtfgmze7AgUlUAQ+tAc8PgQLr8A3JA8JXNnKbd+7nifgze6Ap010BfRBxj1v2/7j
+        g2vMgqtc/90R0AcZc76ByF6A0hKC0fEAZscKrO4o5pfWYPPGW6/KEsaIPgO2bhtsZawrkJi3ygJbHqPU
+        bv5QFBZ7AAJNCI9ST1EsFlEoFJDL5eBw3wdrJg2mdgsMRagr4BuTZZ71BW5Ru0ViCZidq2CoHsO3HEEm
+        k0EqlUI8Hodx1o7r6idULoVrksMC6iBcUw4cardAeA135oItgc1xD7FYDMFgEB6PB1NaA65OPsQVeRJD
+        Qt+vf4KTw7LwNx4t0G/D6fZjzu7FpM6Fu45FuFwuWK1W6HQ6SGUaqjmBoYkNXBZ4Oj+xv+/0gOIi2/zp
+        Asu0LxJrDsQUQgqWSHnAHZXXuHx5jcOX1Rg3pbWBQXXp/KD247lLyh2q9xQtoC39FGcozvYIXdtHEATx
+        FwN4N4A13eSdAAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="ilSegaTiles.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>122, 17</value>
-  </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAIAEBAAAAAAIABoBAAAJgAAACAgAAAAACAAqBAAAI4EAAAoAAAAEAAAACAAAAABACAAAAAAAEAE

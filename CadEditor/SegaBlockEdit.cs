@@ -34,15 +34,16 @@ namespace CadEditor
         byte[] videoChunk;
         Color[] cpal;
 
+        Image[] bigBlocks = new Image[0];
+
         const int SEGA_TILES_COUNT = 0x800;
-        const int BLOCK_WIDTH = 32;
-        const int BLOCK_HEIGHT = 32;
+        const int blockWidth = 32;
+        const int blockHeight = 32;
 
         private void SegaBlockEdit_Load(object sender, EventArgs e)
         {
             dirty = false;
             reloadTiles();
-            UtilsGui.prepareBlocksPanel(pnBlocks, ilSegaTiles.ImageSize, ilSegaTiles, buttonObjClick, 0, SEGA_TILES_COUNT);
             UtilsGui.setCbItemsCount(cbPalSubpart, 4);
             UtilsGui.setCbIndexWithoutUpdateLevel(cbPalSubpart, cbPalNo_SelectedIndexChanged);
 
@@ -79,18 +80,10 @@ namespace CadEditor
         void resetControls()
         {
             fillSegaTiles();
-            UtilsGui.reloadBlocksPanel(pnBlocks, ilSegaTiles, 0, SEGA_TILES_COUNT);
             int TILE_WIDTH = getTileWidth();
             int TILE_HEIGHT = getTileHeight();
-            mapScreen.Size = new Size(TILE_WIDTH * BLOCK_WIDTH, TILE_HEIGHT * BLOCK_HEIGHT);
-            pnBlocks.Invalidate(true);
-        }
-
-        private void buttonObjClick(Object button, EventArgs e)
-        {
-            int index = ((Button)button).ImageIndex;
-            pbActive.Image = ilSegaTiles.Images[index];
-            curActiveTile = index;
+            mapScreen.Size = new Size(TILE_WIDTH * blockWidth, TILE_HEIGHT * blockHeight);
+            updateBlocksImages();
         }
 
         private void fillSegaTiles()
@@ -98,10 +91,10 @@ namespace CadEditor
             videoChunk = ConfigScript.getVideoChunk(0);
             byte[] pal = ConfigScript.getPal(0);
             cpal = ConfigScript.videoSega.GetPalette(pal);
-            ilSegaTiles.Images.Clear();
+            bigBlocks = new Image[SEGA_TILES_COUNT];
             for (ushort idx = 0; idx < SEGA_TILES_COUNT; idx++)
             {
-                ilSegaTiles.Images.Add(ConfigScript.videoSega.GetZoomTile(videoChunk, idx, cpal, (byte)curActivePalNo, false, false, curScale));
+                bigBlocks[idx] = ConfigScript.videoSega.GetZoomTile(videoChunk, idx, cpal, (byte)curActivePalNo, false, false, curScale);
             }
         }
 
@@ -148,7 +141,7 @@ namespace CadEditor
             for (int i = 0; i < TILE_SIZE; i++)
             {
                 ushort word = tiles[index + i];
-                var tileRect = new Rectangle(i % TILE_WIDTH * BLOCK_WIDTH, i / TILE_WIDTH * BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
+                var tileRect = new Rectangle(i % TILE_WIDTH * blockWidth, i / TILE_WIDTH * blockHeight, blockWidth, blockHeight);
                 ushort tileIdx = Mapper.TileIdx(word);
                 byte pal = Mapper.PalIdx(word);
                 bool hf = Mapper.HF(word);
@@ -167,8 +160,8 @@ namespace CadEditor
             int TILE_SIZE = TILE_WIDTH * TILE_HEIGHT;
             int index = curActiveBlock * TILE_SIZE;
 
-            int dx = e.X / (int)(BLOCK_WIDTH);
-            int dy = e.Y / (int)(BLOCK_HEIGHT);
+            int dx = e.X / (int)(blockWidth);
+            int dy = e.Y / (int)(blockHeight);
             if (dx < 0 || dx >= TILE_WIDTH || dy < 0 || dy >= TILE_HEIGHT)
                 return;
             int tileIdx = dy * TILE_WIDTH + dx;
@@ -186,7 +179,8 @@ namespace CadEditor
             else
             {
                 curActiveTile = Mapper.TileIdx(tiles[changeIndex]);
-                pbActive.Image = ilSegaTiles.Images[curActiveTile];
+                pbActive.Image = bigBlocks[curActiveTile];
+                blocksScreen.Invalidate();
             }
             //
 
@@ -290,6 +284,43 @@ namespace CadEditor
         private byte[] loadMappingData()
         {
             return editMapMode ? ConfigScript.loadSegaBack() : ConfigScript.getSegaMapping(0);//curActiveBigBlock;
+        }
+
+        private void blocksScreen_Paint(object sender, PaintEventArgs e)
+        {
+            var visibleRect = UtilsGui.getVisibleRectangle(pnBlocks, blocksScreen);
+            MapEditor.RenderAllBlocks(e.Graphics, blocksScreen, bigBlocks, blockWidth, blockHeight, visibleRect, 1.0f, curActiveTile);
+        }
+
+        private void blocksScreen_MouseDown(object sender, MouseEventArgs e)
+        {
+            var p = blocksScreen.PointToClient(Cursor.Position);
+            int x = p.X, y = p.Y;
+            int TILE_SIZE_X = (int)(blockWidth * 1.0f);
+            int TILE_SIZE_Y = (int)(blockHeight * 1.0f);
+            int tx = x / TILE_SIZE_X, ty = y / TILE_SIZE_Y;
+            int maxtX = blocksScreen.Width / TILE_SIZE_X;
+            int index = ty * maxtX + tx;
+            if ((tx < 0) || (tx >= maxtX) || (index < 0) || (index > bigBlocks.Length))
+            {
+                return;
+            }
+
+            pbActive.Image = bigBlocks[index];
+            //!
+            curActiveTile = index;
+            blocksScreen.Invalidate();
+        }
+
+        private void updateBlocksImages()
+        {
+            UtilsGui.resizeBlocksScreen(bigBlocks, blocksScreen, 16, 16, 1.0f);
+            blocksScreen.Invalidate();
+        }
+
+        private void pnBlocks_SizeChanged(object sender, EventArgs e)
+        {
+            updateBlocksImages();
         }
     }
 }
