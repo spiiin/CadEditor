@@ -283,6 +283,11 @@ namespace CadEditor
             curActiveBlock = index;
             blocksScreen.Invalidate();
         }
+
+        private void FormStructures_Resize(object sender, EventArgs e)
+        {
+            blocksScreen.Invalidate();
+        }
     }
 
     [Serializable]

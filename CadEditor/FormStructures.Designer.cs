@@ -197,6 +197,7 @@
             this.Text = "Structures Editor (beta)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormStructures_FormClosing);
             this.Load += new System.EventHandler(this.FormStructures_Load);
+            this.Resize += new System.EventHandler(this.FormStructures_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
             this.pnBlocks.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.blocksScreen)).EndInit();
