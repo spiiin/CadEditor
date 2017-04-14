@@ -235,7 +235,7 @@ namespace PluginMapEditor
             }
         }
 
-        private static void fillAttribs(int[] attrData, byte[] romdata, int attribAddr)
+        public static void fillAttribs(int[] attrData, byte[] romdata, int attribAddr)
         {
             for (int i = 0; i < attrData.Length; i++)
             {
@@ -321,6 +321,11 @@ namespace PluginMapEditor
         public static MapData loadMapAddamsFamily(int mapNo)
         {
             return loadMapFromBlocks(mapNo, 256 * 20, 64 * 5, 256, false, fillAttribs);
+        }
+
+        public static MapData loadMapAddamsFamilyFloor(int mapNo)
+        {
+            return loadMapFromBlocks(mapNo, 256 * 6, 64 * 3, 256, false, fillAttribs);
         }
 
         public static int saveAttribs(int mapNo, MapData mapData, out byte[] packedData)
