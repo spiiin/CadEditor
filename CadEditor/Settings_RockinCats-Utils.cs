@@ -81,12 +81,12 @@ public class RockinCatsBase
   //-------------------------------------------------------------------------------------------------------------------
   public ObjRec[] getBlocks(int blockIndex)
   {
-    return Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount());
+    return Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount(), true);
   }
   
   public void setBlocks(int blockIndex, ObjRec[] blocksData)
   {
-    Utils.writeBlocksLinear(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount());
+    Utils.writeBlocksLinear(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount(), true);
   }
   
   //-------------------------------------------------------------------------------------------------------------------

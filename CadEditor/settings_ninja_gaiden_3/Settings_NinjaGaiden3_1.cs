@@ -57,43 +57,13 @@ public class Data
   
   public ObjRec[] getBlocks(int blockIndex)
   {
-    return readBlocksLinearTT(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount());
+    return Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(), false);
   }
   
   public void setBlocks(int blockIndex, ObjRec[] blocksData)
   {
-    writeBlocksLinearTT(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount());
+    Utils.writeBlocksLinear(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(), false);
   }
-  
-  ObjRec[] readBlocksLinearTT(byte[] romdata, int addr, int count)
-  {
-    var objects = new ObjRec[count];
-    for (int i = 0; i < count; i++)
-    {
-        byte c1, c2, c3, c4, typeColor;
-        c1 = romdata[addr + i * 4 + 0];
-        c2 = romdata[addr + i * 4 + 1];
-        c3 = romdata[addr + i * 4 + 2];
-        c4 = romdata[addr + i * 4 + 3];
-        typeColor = 0;
-        objects[i] = new ObjRec(c1, c2, c3, c4, typeColor);
-    }
-    return objects;
-  }
-  
-  void writeBlocksLinearTT(ObjRec[] objects, byte[] romdata, int addr, int count)
-  {
-    for (int i = 0; i < count; i++)
-    {
-        var obj = objects[i];
-        romdata[addr + i * 4 + 0] = (byte)obj.c1;
-        romdata[addr + i * 4 + 1] = (byte)obj.c2;
-        romdata[addr + i * 4 + 2] = (byte)obj.c3;
-        romdata[addr + i * 4 + 3] = (byte)obj.c4;
-    }
-  }
-  
-  //
   
   private byte getTTSmallBlocksColorByte(int index)
   {

@@ -23,7 +23,7 @@ public static class BlockUtils
   public static ObjRec[] getBlocksDt2(int blockIndex)
   {
     ObjRec[] blocks = Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount());
-    //decode typeColor
+    //decode palByte
     int palInfoCount = ConfigScript.getBlocksCount()/4;
     var palInfo = new byte[palInfoCount];
     for (int i = 0; i < palInfoCount; i++)

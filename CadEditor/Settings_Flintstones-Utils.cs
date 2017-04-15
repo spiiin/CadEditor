@@ -76,16 +76,12 @@ public static class FliUtils
   {
     int count = ConfigScript.getBlocksCount();
     int addr  = ConfigScript.getTilesAddr(blockIndex);
-    var objects = new ObjRec[count];
-    for (int i = 0; i < count; i++)
+    var objects = Utils.readBlocksLinear(Globals.romdata, addr, count, false);
+    for(int i = 0; i < objects.Length; i++)
     {
-        byte c1, c2, c3, c4, typeColor;
-        c1 = Globals.romdata[addr + i*4 + 0];
-        c2 = Globals.romdata[addr + i*4 + 2];
-        c3 = Globals.romdata[addr + i*4 + 1];
-        c4 = Globals.romdata[addr + i*4 + 3];
-        typeColor = Globals.romdata[addr + count * 4 + i];
-        objects[i] = new ObjRec(c1, c2, c3, c4, typeColor);
+        var o = objects[i];
+        o.indexes = Utils.transpose(o.indexes, 2, 2);
+        o.palBytes[0] = Globals.romdata[addr + count * 4 + i];
     }
     return objects;
   }
@@ -97,19 +93,12 @@ public static class FliUtils
     for (int i = 0; i < count; i++)
     {
         var obj = blocksData[i];
-        Globals.romdata[addr + i*4 + 0] = (byte)obj.c1;
-        Globals.romdata[addr + i*4 + 2] = (byte)obj.c2;
-        Globals.romdata[addr + i*4 + 1] = (byte)obj.c3;
-        Globals.romdata[addr + i*4 + 3] = (byte)obj.c4;
-        Globals.romdata[addr + count * 4 + i] = (byte)obj.typeColor;
+        Globals.romdata[addr + i*4 + 0] = (byte)obj.indexes[0];
+        Globals.romdata[addr + i*4 + 2] = (byte)obj.indexes[1];
+        Globals.romdata[addr + i*4 + 1] = (byte)obj.indexes[2];
+        Globals.romdata[addr + i*4 + 3] = (byte)obj.indexes[3];
+        Globals.romdata[addr + count * 4 + i] = (byte)obj.palBytes[0];
     }
-  }
-  
-  private static void xchg(int[] arr, int i1, int i2)
-  {
-      int tmp = arr[i1];
-      arr[i1] = arr[i2];
-      arr[i2] = tmp;
   }
   
   private static void transposeBigBlocks(BigBlock[] bblocks)

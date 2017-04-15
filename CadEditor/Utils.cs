@@ -271,17 +271,18 @@ namespace CadEditor
             }
         }
 
-        public static ObjRec[] readBlocksLinear(byte[] romdata, int addr, int count)
+        public static ObjRec[] readBlocksLinear(byte[] romdata, int addr, int count, bool withAttribs)
         {
             var objects = new ObjRec[count];
+            int step = withAttribs ? 5 : 4;
             for (int i = 0; i < count; i++)
             {
                 byte c1, c2, c3, c4, typeColor;
-                c1 = romdata[addr + i * 5 + 0];
-                c2 = romdata[addr + i * 5 + 1];
-                c3 = romdata[addr + i * 5 + 2];
-                c4 = romdata[addr + i * 5 + 3];
-                typeColor = romdata[addr + i * 5 + 4];
+                c1 = romdata[addr + i * step + 0];
+                c2 = romdata[addr + i * step + 1];
+                c3 = romdata[addr + i * step + 2];
+                c4 = romdata[addr + i * step + 3];
+                typeColor = withAttribs ? romdata[addr + i * step + 4] : (byte)0;
                 objects[i] = new ObjRec(c1, c2, c3, c4, typeColor);
             }
             return objects;
@@ -319,16 +320,20 @@ namespace CadEditor
             return objects;
         }*/
 
-        public static void writeBlocksLinear(ObjRec[] objects, byte[] romdata, int addr, int count)
+        public static void writeBlocksLinear(ObjRec[] objects, byte[] romdata, int addr, int count, bool withAttribs)
         {
+            int step = withAttribs ? 5 : 4;
             for (int i = 0; i < count; i++)
             {
                 var obj = objects[i];
-                romdata[addr + i * 5 + 0] = (byte)obj.c1;
-                romdata[addr + i * 5 + 1] = (byte)obj.c2;
-                romdata[addr + i * 5 + 2] = (byte)obj.c3;
-                romdata[addr + i * 5 + 3] = (byte)obj.c4;
-                romdata[addr + i * 5 + 4] = (byte)obj.typeColor;
+                romdata[addr + i * step + 0] = (byte)obj.c1;
+                romdata[addr + i * step + 1] = (byte)obj.c2;
+                romdata[addr + i * step + 2] = (byte)obj.c3;
+                romdata[addr + i * step + 3] = (byte)obj.c4;
+                if (withAttribs)
+                {
+                    romdata[addr + i * step + 4] = (byte)obj.typeColor;
+                }
             }
         }
 

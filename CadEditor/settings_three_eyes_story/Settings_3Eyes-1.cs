@@ -35,15 +35,10 @@ public class Data
   public ObjRec[] getBlocks(int tileId)
   {
     int addr = ConfigScript.getTilesAddr(tileId);
-    var objects = new ObjRec[getBlocksCount()];
-    for (int i = 0; i < getBlocksCount(); i++)
+    var objects = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), false);
+    for (int i = 0; i < objects.Length; i++)
     {
-        byte c1 = Globals.romdata[addr + 4 * i + 0];
-        byte c2 = Globals.romdata[addr + 4 * i + 1];
-        byte c3 = Globals.romdata[addr + 4 * i + 2];
-        byte c4 = Globals.romdata[addr + 4 * i + 3];
-        byte typeColor = Globals.romdata[0x14C1C + i];
-        objects[i] = new ObjRec(c1, c2, c3, c4, typeColor);
+        objects[i].palBytes[0] = Globals.romdata[0x14C1C + i];
     }
     return objects;
   }
@@ -51,14 +46,10 @@ public class Data
   public void setBlocks(int tileId, ObjRec[] blocks)
   {
     int addr = ConfigScript.getTilesAddr(tileId);
+    Utils.writeBlocksLinear(blocks, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), false);
     for (int i = 0; i < getBlocksCount(); i++)
     {
-        var obj = blocks[i];
-        Globals.romdata[addr + 4 * i + 0] = (byte)obj.c1;
-        Globals.romdata[addr + 4 * i + 1] = (byte)obj.c2;
-        Globals.romdata[addr + 4 * i + 2] = (byte)obj.c3;
-        Globals.romdata[addr + 4 * i + 3] = (byte)obj.c4;
-        Globals.romdata[0x14C1C + i] = (byte)obj.typeColor;
+        Globals.romdata[0x14C1C + i] = (byte)blocks[i].palBytes[0];
     }
   }
   
