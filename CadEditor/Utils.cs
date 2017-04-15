@@ -244,7 +244,7 @@ namespace CadEditor
             return data;
         }
 
-        public static ObjRec[] readBlocksLinearWithoutAttribs(byte[] romdata, int addr, int w, int h, int count, bool withAttribs)
+        public static ObjRec[] readBlocksLinear(byte[] romdata, int addr, int w, int h, int count, bool withAttribs)
         {
             var objects = new ObjRec[count];
             int blockSize = w * h;
@@ -288,11 +288,6 @@ namespace CadEditor
                     }
                 }
             }
-        }
-
-        public static ObjRec[] readBlocksLinear(byte[] romdata, int addr, int w, int h, int count, bool withAttribs)
-        {
-            return readBlocksLinearWithoutAttribs(romdata, addr, w, h, count, withAttribs);
         }
 
         public static ObjRec[] readBlocksFromAlignedArrays(byte[] romdata, int addr, int count)
@@ -429,12 +424,12 @@ namespace CadEditor
 
         public static ObjRec[] getBlocksLinear2x2withoutAttrib(int blockIndex)
         {
-            return Utils.readBlocksLinearWithoutAttribs(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 2, 2, ConfigScript.getBlocksCount(), false);
+            return Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 2, 2, ConfigScript.getBlocksCount(), false);
         }
 
         public static ObjRec[] getBlocksLinear4x2withoutAttrib(int blockIndex)
         {
-            return Utils.readBlocksLinearWithoutAttribs(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 4, 2, ConfigScript.getBlocksCount(), false);
+            return Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 4, 2, ConfigScript.getBlocksCount(), false);
         }
 
         public static void setBlocksLinearWithoutAttrib(int blockIndex, ObjRec[] blocksData)
@@ -447,7 +442,7 @@ namespace CadEditor
             int BLOCK_W = 4;
             int BLOCK_H = 4;
             int BLOCK_S = BLOCK_H * BLOCK_H;
-            var objects = readBlocksLinearWithoutAttribs(romdata, addr, BLOCK_W, BLOCK_H, count, false);
+            var objects = readBlocksLinear(romdata, addr, BLOCK_W, BLOCK_H, count, false);
             for (int i = 0; i < count; i++)
             {
                 int palByte = romdata[palBytesAddr + i];
