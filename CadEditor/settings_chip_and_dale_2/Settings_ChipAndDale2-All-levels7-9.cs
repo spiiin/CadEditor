@@ -225,13 +225,13 @@ public class Data : CapcomBase
     var palInfo = new byte[palInfoCount];
     for (int i = 0; i < palInfoCount; i++)
     {
-        palInfo[i] = (byte)blocks[i].typeColor;
+        palInfo[i] = (byte)blocks[i].palBytes[0];
     }
     for (int i = 0; i < blocks.Length; i++)
     {
         var palInfoByte = palInfo[i/4];
         int parByteNo = i % 4;
-        blocks[i].typeColor = (byte)((palInfoByte >> parByteNo*2) & 3);
+        blocks[i].palBytes[0] = (byte)((palInfoByte >> parByteNo*2) & 3);
     }
     //
     //rebuild blocks to dt2 blocks
@@ -250,20 +250,20 @@ public class Data : CapcomBase
     for (int i = 0; i < count; i++)
     {
         var obj = objects[i];
-        Globals.romdata[addr + i] = (byte)obj.c1;
-        Globals.romdata[addr + count * 1 + i] = (byte)obj.c2;
-        Globals.romdata[addr + count * 2 + i] = (byte)obj.c3;
-        Globals.romdata[addr + count * 3 + i] = (byte)obj.c4;
+        Globals.romdata[addr + count * 0 + i] = (byte)obj.indexes[0];
+        Globals.romdata[addr + count * 1 + i] = (byte)obj.indexes[1];
+        Globals.romdata[addr + count * 2 + i] = (byte)obj.indexes[2];
+        Globals.romdata[addr + count * 3 + i] = (byte)obj.indexes[3];
     }
     
     int palInfoCount = getBlocksCount()/4;
     for (int i = 0; i < palInfoCount; i++)
     {
         var palInfoByte = 
-          (objects[i*4+0].typeColor<<0) | 
-          (objects[i*4+1].typeColor<<2) |
-          (objects[i*4+2].typeColor<<4) | 
-          (objects[i*4+3].typeColor<<6);
+          (objects[i*4+0].palBytes[0]<<0) | 
+          (objects[i*4+1].palBytes[0]<<2) |
+          (objects[i*4+2].palBytes[0]<<4) | 
+          (objects[i*4+3].palBytes[0]<<6);
           
         Globals.romdata[addr + count * 4 + i] = (byte)palInfoByte;
     }
