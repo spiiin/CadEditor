@@ -19,6 +19,7 @@ COPY_FILE_LIST = [
   "Settings_TinyToon-Utils.cs",
   "Settings_Flintstones-Utils.cs",
   "Settings_CHC-Utils.cs",
+  "Settings_Dt2Cad2.cs,"
   "readme.txt",
   "cad_editor_configs_manual.txt",
   "cad_editor_supported_games.txt",
