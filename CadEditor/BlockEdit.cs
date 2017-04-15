@@ -224,7 +224,7 @@ namespace CadEditor
             ComboBox cb = (ComboBox)sender;
             PictureBox pb = (PictureBox)cb.Tag;
             int index = curPageIndex * BLOCKS_PER_PAGE + (int)pb.Tag;
-            objects[index].typeColor = (byte)(objects[index].typeColor & 0xF0 | cb.SelectedIndex);
+            objects[index].palBytes[0] = (byte)(objects[index].palBytes[0] & 0xF0 | cb.SelectedIndex);
             pb.Image = makeObjImage(index);
             dirty = true;
         }
@@ -233,7 +233,7 @@ namespace CadEditor
         {
             ComboBox cb = (ComboBox)sender;
             int index = curPageIndex * BLOCKS_PER_PAGE + (int)cb.Tag;
-            objects[index].typeColor = (byte)((objects[index].typeColor & 0x0F) | (cb.SelectedIndex << 4));
+            objects[index].palBytes[0] = (byte)((objects[index].palBytes[0] & 0x0F) | (cb.SelectedIndex << 4));
             dirty = true;
         }
 
@@ -457,55 +457,6 @@ namespace CadEditor
             Utils.Swap(ref videoChunk[beginIndex +11], ref videoChunk[beginIndex +12]);
             ConfigScript.setVideoChunk(getBackId(), videoChunk);
             cbLevelSelect_SelectedIndexChanged(sender, e);
-        }
-
-        protected void btExport_Click(object sender, EventArgs e)
-        {
-            var f = new SelectFile();
-            f.Filename = "exportedBlocks.bin";
-            //f.ShowExportParams = true;
-            f.ShowDialog();
-            if (!f.Result)
-                return;
-            var fn = f.Filename;
-            byte blockId = getBigBlockNo();
-            int blocksCount = ConfigScript.getBlocksCount();
-            var data = new byte[blocksCount * 5];
-            for (int i = 0; i < blocksCount; i++)
-            {
-                data[i] = (byte)objects[i].c1;
-                data[blocksCount * 1 + i] = (byte)objects[i].c2;
-                data[blocksCount * 2 + i] = (byte)objects[i].c3;
-                data[blocksCount * 3 + i] = (byte)objects[i].c4;
-                data[blocksCount * 4 + i] = (byte)objects[i].typeColor;
-            }
-
-            Utils.saveDataToFile(fn, data);
-        }
-
-        protected void btImport_Click(object sender, EventArgs e)
-        {
-            var f = new SelectFile();
-            f.Filename = "exportedBlocks.bin";
-            f.ShowDialog();
-            if (!f.Result)
-                return;
-            var fn = f.Filename;
-            var data = Utils.loadDataFromFile(fn);
-            if (data == null)
-                return;
-
-            int addr = ConfigScript.getTilesAddr(getBigBlockNo());
-            for (int i = 0; i < ConfigScript.getBlocksCount(); i++)
-            {
-                Globals.romdata[addr + i] = data[i];
-                Globals.romdata[addr + 0x100 + i] = data[i + 0x100];
-                Globals.romdata[addr + 0x200 + i] = data[i + 0x200];
-                Globals.romdata[addr + 0x300 + i] = data[i + 0x300];
-                Globals.romdata[addr + 0x400 + i] = data[i + 0x400];
-            }
-            reloadLevel(false);
-            dirty = true;
         }
 
         protected void cbShowAxis_CheckedChanged(object sender, EventArgs e)

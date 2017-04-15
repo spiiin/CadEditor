@@ -71,80 +71,21 @@ namespace CadEditor
             this.indexes = new int[4];
             this.palBytes = new int[indexes.Length / 4];
 
-            this.c1 = c1;
-            this.c2 = c2;
-            this.c3 = c3;
-            this.c4 = c4;
-            this.typeColor = typeColor;
+            this.indexes[0] = c1;
+            this.indexes[1] = c2;
+            this.indexes[2] = c3;
+            this.indexes[3] = c4;
+            this.palBytes[0] = typeColor;
         }
 
         public ObjRec(ObjRec other)
         {
-            this.indexes = new int[4];
-            this.palBytes = new int[indexes.Length / 4];
-            this.c1 = other.c1;
-            this.c2 = other.c2;
-            this.c3 = other.c3;
-            this.c4 = other.c4;
-            this.typeColor = other.typeColor;
-        }
-
-        //TODO: remove. FOR REFACTORING PURPOSES ONLY. properties only mask access to public field indexes and palBytes
-
-        public int c1
-        {
-            get
-            {
-                return indexes[0];
-            }
-            set
-            {
-                indexes[0] = value;
-            }
-        }
-        public int c2
-        {
-            get
-            {
-                return indexes[1];
-            }
-            set
-            {
-                indexes[1] = value;
-            }
-        }
-        public int c3
-        {
-            get
-            {
-                return indexes[2];
-            }
-            set
-            {
-                indexes[2] = value;
-            }
-        }
-        public int c4
-        {
-            get
-            {
-                return indexes[3];
-            }
-            set
-            {
-                indexes[3] = value;
-            }
-        }
-        public int typeColor
-        {
-            get
-            {
-                return palBytes[0];
-            }
-            set
-            {
-                palBytes[0] = value;
-            }
+            this.w = other.w;
+            this.h = other.h;
+            this.indexes = new int[other.indexes.Length];
+            this.palBytes = new int[other.palBytes.Length];
+            Array.Copy(this.indexes, other.indexes, this.indexes.Length);
+            Array.Copy(this.palBytes, other.palBytes, this.palBytes.Length);
         }
 
         public int[] indexes;
@@ -164,17 +105,31 @@ namespace CadEditor
 
         public virtual int getSubpallete()
         {
-            return typeColor & 0x3;
+            return palBytes[0] & 0x3;
         }
 
         public virtual int getType()
         {
-            return (typeColor & 0xF0) >> 4;
+            return (palBytes[0] & 0xF0) >> 4;
         }
 
         bool IEquatable<ObjRec>.Equals(ObjRec other)
         {
-            return (c1 == other.c1) && (c2 == other.c2) && (c3 == other.c3) && (c4 == other.c4) && (typeColor == other.typeColor);
+            if ((w != other.w) || (h!=other.h))
+            {
+                return false;
+            }
+            for (int i = 0; i < indexes.Length; i++)
+            {
+                if (indexes[i] != other.indexes[i])
+                    return false;
+            }
+            for (int p = 0; p < palBytes.Length; p++)
+            {
+                if (palBytes[p] != other.palBytes[p])
+                    return false;
+            }
+            return true;
         }
 
         public override bool Equals(Object obj)
@@ -188,7 +143,16 @@ namespace CadEditor
 
         public override int GetHashCode()
         {
-            return c1.GetHashCode() + c2.GetHashCode() + c3.GetHashCode() + c4.GetHashCode() + typeColor.GetHashCode();
+            int hash = 0;
+            foreach (var i in indexes)
+            {
+                hash += i.GetHashCode();
+            }
+            foreach(var p in palBytes)
+            {
+                hash += p.GetHashCode();
+            }
+            return hash;
         }
     }
 

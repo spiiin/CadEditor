@@ -57,12 +57,12 @@
             this.btClear = new System.Windows.Forms.Button();
             this.btFlipHorizontal = new System.Windows.Forms.Button();
             this.btFlipVertical = new System.Windows.Forms.Button();
-            this.btImport = new System.Windows.Forms.Button();
-            this.btExport = new System.Windows.Forms.Button();
             this.cbShowAxis = new System.Windows.Forms.CheckBox();
             this.lbActive = new System.Windows.Forms.Label();
             this.lbPanelNo = new System.Windows.Forms.Label();
             this.cbPanelNo = new System.Windows.Forms.ComboBox();
+            this.btImport = new System.Windows.Forms.Button();
+            this.btExport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.paletteMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -352,28 +352,6 @@
             this.btFlipVertical.UseVisualStyleBackColor = true;
             this.btFlipVertical.Click += new System.EventHandler(this.btFlipVertical_Click);
             // 
-            // btImport
-            // 
-            this.btImport.Location = new System.Drawing.Point(189, 5);
-            this.btImport.Margin = new System.Windows.Forms.Padding(4);
-            this.btImport.Name = "btImport";
-            this.btImport.Size = new System.Drawing.Size(79, 28);
-            this.btImport.TabIndex = 25;
-            this.btImport.Text = "import";
-            this.btImport.UseVisualStyleBackColor = true;
-            this.btImport.Click += new System.EventHandler(this.btImport_Click);
-            // 
-            // btExport
-            // 
-            this.btExport.Location = new System.Drawing.Point(103, 5);
-            this.btExport.Margin = new System.Windows.Forms.Padding(4);
-            this.btExport.Name = "btExport";
-            this.btExport.Size = new System.Drawing.Size(79, 28);
-            this.btExport.TabIndex = 26;
-            this.btExport.Text = "export";
-            this.btExport.UseVisualStyleBackColor = true;
-            this.btExport.Click += new System.EventHandler(this.btExport_Click);
-            // 
             // cbShowAxis
             // 
             this.cbShowAxis.AutoSize = true;
@@ -426,6 +404,28 @@
             this.cbPanelNo.Size = new System.Drawing.Size(57, 24);
             this.cbPanelNo.TabIndex = 61;
             this.cbPanelNo.SelectedIndexChanged += new System.EventHandler(this.cbPanelNo_SelectedIndexChanged);
+            // 
+            // btImport
+            // 
+            this.btImport.Enabled = false;
+            this.btImport.Location = new System.Drawing.Point(189, 5);
+            this.btImport.Margin = new System.Windows.Forms.Padding(4);
+            this.btImport.Name = "btImport";
+            this.btImport.Size = new System.Drawing.Size(79, 28);
+            this.btImport.TabIndex = 25;
+            this.btImport.Text = "import";
+            this.btImport.UseVisualStyleBackColor = true;
+            // 
+            // btExport
+            // 
+            this.btExport.Enabled = false;
+            this.btExport.Location = new System.Drawing.Point(103, 5);
+            this.btExport.Margin = new System.Windows.Forms.Padding(4);
+            this.btExport.Name = "btExport";
+            this.btExport.Size = new System.Drawing.Size(79, 28);
+            this.btExport.TabIndex = 26;
+            this.btExport.Text = "export";
+            this.btExport.UseVisualStyleBackColor = true;
             // 
             // BlockEdit
             // 
@@ -503,11 +503,11 @@
         private System.Windows.Forms.Button btClear;
         private System.Windows.Forms.Button btFlipHorizontal;
         private System.Windows.Forms.Button btFlipVertical;
-        private System.Windows.Forms.Button btImport;
-        private System.Windows.Forms.Button btExport;
         private System.Windows.Forms.CheckBox cbShowAxis;
         private System.Windows.Forms.Label lbActive;
         private System.Windows.Forms.Label lbPanelNo;
         private System.Windows.Forms.ComboBox cbPanelNo;
+        private System.Windows.Forms.Button btImport;
+        private System.Windows.Forms.Button btExport;
     }
 }

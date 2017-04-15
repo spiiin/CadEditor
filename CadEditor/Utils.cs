@@ -326,13 +326,13 @@ namespace CadEditor
             for (int i = 0; i < count; i++)
             {
                 var obj = objects[i];
-                romdata[addr + i * step + 0] = (byte)obj.c1;
-                romdata[addr + i * step + 1] = (byte)obj.c2;
-                romdata[addr + i * step + 2] = (byte)obj.c3;
-                romdata[addr + i * step + 3] = (byte)obj.c4;
+                romdata[addr + i * step + 0] = (byte)obj.indexes[0];
+                romdata[addr + i * step + 1] = (byte)obj.indexes[1];
+                romdata[addr + i * step + 2] = (byte)obj.indexes[2];
+                romdata[addr + i * step + 3] = (byte)obj.indexes[3];
                 if (withAttribs)
                 {
-                    romdata[addr + i * step + 4] = (byte)obj.typeColor;
+                    romdata[addr + i * step + 4] = (byte)obj.palBytes[0];
                 }
             }
         }
@@ -342,11 +342,11 @@ namespace CadEditor
             for (int i = 0; i < count; i++)
             {
                 var obj = objects[i];
-                romdata[addr + i] = (byte)obj.c1;
-                romdata[addr + count * 1 + i] = (byte)obj.c2;
-                romdata[addr + count * 2 + i] = (byte)obj.c3;
-                romdata[addr + count * 3 + i] = (byte)obj.c4;
-                romdata[addr + count * 4 + i] = (byte)obj.typeColor;
+                romdata[addr + i] = (byte)obj.indexes[0];
+                romdata[addr + count * 1 + i] = (byte)obj.indexes[1];
+                romdata[addr + count * 2 + i] = (byte)obj.indexes[2];
+                romdata[addr + count * 3 + i] = (byte)obj.indexes[3];
+                romdata[addr + count * 4 + i] = (byte)obj.palBytes[0];
             }
         }
 
