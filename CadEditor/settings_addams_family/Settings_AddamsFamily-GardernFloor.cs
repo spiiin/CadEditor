@@ -41,7 +41,7 @@ public class Data
   //-------------------------------------------------------------------------------------------------------------------
   public static ObjRec[] getBlocksLinear1x6withoutAttrib(int blockIndex)
   {
-      return Utils.readBlocksLinearWithoutAttribs(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 1, 6, ConfigScript.getBlocksCount());
+      return Utils.readBlocksLinearWithoutAttribs(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 1, 6, ConfigScript.getBlocksCount(), false);
   }
   
   public MapInfo[] getMapsInfo() { return getMaps(); }

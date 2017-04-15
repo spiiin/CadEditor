@@ -244,50 +244,55 @@ namespace CadEditor
             return data;
         }
 
-        public static ObjRec[] readBlocksLinearWithoutAttribs(byte[] romdata, int addr, int w, int h, int count)
+        public static ObjRec[] readBlocksLinearWithoutAttribs(byte[] romdata, int addr, int w, int h, int count, bool withAttribs)
         {
             var objects = new ObjRec[count];
             int blockSize = w * h;
+            int pw = (int)Math.Ceiling(w / 2.0);
+            int ph = (int)Math.Ceiling(h / 2.0);
+            int palSize = pw * ph;
+            int fullSize = withAttribs ? blockSize + palSize : blockSize;
             for (int i = 0; i < count; i++)
             {
                 var indexes = new int[blockSize];
-                int pw = (int)Math.Ceiling(w / 2.0);
-                int ph = (int)Math.Ceiling(h / 2.0);
-                var palBytes = new int[pw*ph];
-                Array.Copy(romdata, addr + i * blockSize, indexes, 0, w * h);
+                var palBytes = new int[palSize];
+                int baseAddr = addr + i * fullSize;
+                Array.Copy(romdata, baseAddr, indexes, 0, blockSize);
+                if (withAttribs)
+                {
+                    Array.Copy(romdata, baseAddr + blockSize, palBytes, 0, palSize);
+                }
                 objects[i] = new ObjRec(w, h, indexes, palBytes);
             }
             return objects;
         }
 
-        public static void writeBlocksLinearWithoutAttribs(ObjRec[] objects, byte[] romdata, int addr, int count)
+        public static void writeBlocksLinearWithoutAttribs(ObjRec[] objects, byte[] romdata, int addr, int count, bool withAttribs)
         {
+            int blockSize = objects[0].indexes.Length;
+            int palSize = objects[0].indexes.Length;
+            int fullSize = blockSize + (withAttribs ? palSize : 0);
             for (int i = 0; i < count; i++)
             {
                 var obj = objects[i];
-                int BLOCK_S = obj.indexes.Length;
-                for (int bi = 0; bi < BLOCK_S; bi++)
+                int baseAddr = addr + i * fullSize;
+                for (int bi = 0; bi < blockSize; bi++)
                 {
-                    romdata[addr + i * BLOCK_S + bi] = (byte)obj.indexes[bi];
+                    romdata[baseAddr + bi] = (byte)obj.indexes[bi];
+                }
+                if (withAttribs)
+                {
+                    for (int pi = 0; pi < palSize; pi++)
+                    {
+                        romdata[baseAddr + blockSize + pi] = (byte)obj.palBytes[pi];
+                    }
                 }
             }
         }
 
         public static ObjRec[] readBlocksLinear(byte[] romdata, int addr, int count, bool withAttribs)
         {
-            var objects = new ObjRec[count];
-            int step = withAttribs ? 5 : 4;
-            for (int i = 0; i < count; i++)
-            {
-                byte c1, c2, c3, c4, typeColor;
-                c1 = romdata[addr + i * step + 0];
-                c2 = romdata[addr + i * step + 1];
-                c3 = romdata[addr + i * step + 2];
-                c4 = romdata[addr + i * step + 3];
-                typeColor = withAttribs ? romdata[addr + i * step + 4] : (byte)0;
-                objects[i] = new ObjRec(c1, c2, c3, c4, typeColor);
-            }
-            return objects;
+            return readBlocksLinearWithoutAttribs(romdata, addr, 2, 2, count, withAttribs);
         }
 
         public static ObjRec[] readBlocksFromAlignedArrays(byte[] romdata, int addr, int count)
@@ -307,36 +312,9 @@ namespace CadEditor
             return objects;
         }
 
-        /*public static ObjRec[] readBlocksFromUnalignedArrays(byte[] romdata, int addr1, int addr2, int addr3, int addr4, int addr5, int count)
-        {
-            var objects = new ObjRec[count];
-            for (int i = 0; i < count; i++)
-            {
-                byte c1, c2, c3, c4, typeColor;
-                c1 = romdata[addr1 + i];
-                c2 = romdata[addr2 + i];
-                c3 = romdata[addr3 + i];
-                c4 = romdata[addr4 + i];
-                typeColor = romdata[addr5 + i]; ;
-            }
-            return objects;
-        }*/
-
         public static void writeBlocksLinear(ObjRec[] objects, byte[] romdata, int addr, int count, bool withAttribs)
         {
-            int step = withAttribs ? 5 : 4;
-            for (int i = 0; i < count; i++)
-            {
-                var obj = objects[i];
-                romdata[addr + i * step + 0] = (byte)obj.indexes[0];
-                romdata[addr + i * step + 1] = (byte)obj.indexes[1];
-                romdata[addr + i * step + 2] = (byte)obj.indexes[2];
-                romdata[addr + i * step + 3] = (byte)obj.indexes[3];
-                if (withAttribs)
-                {
-                    romdata[addr + i * step + 4] = (byte)obj.palBytes[0];
-                }
-            }
+            writeBlocksLinearWithoutAttribs(objects, romdata, addr, count, withAttribs);
         }
 
         public static void writeBlocksToAlignedArrays(ObjRec[] objects, byte[] romdata, int addr, int count)
@@ -351,19 +329,6 @@ namespace CadEditor
                 romdata[addr + count * 4 + i] = (byte)obj.palBytes[0];
             }
         }
-
-        /*public static void writeBlocksToUnalignedArrays(ObjRec[] objects, byte[] romdata, int addr1, int addr2, int addr3, int addr4, int addr5, int count)
-        {
-            for (int i = 0; i < count; i++)
-            {
-                var obj = objects[i];
-                romdata[addr1 + i] = obj.c1;
-                romdata[addr2 + i] = obj.c2;
-                romdata[addr3 + i] = obj.c3;
-                romdata[addr4 + i] = obj.c4;
-                romdata[addr5 + i] = obj.typeColor;
-            }
-        }*/
 
         public static byte[] readLinearBigBlockData(int hierLevel, int bigTileIndex)
         {
@@ -469,17 +434,17 @@ namespace CadEditor
 
         public static ObjRec[] getBlocksLinear2x2withoutAttrib(int blockIndex)
         {
-            return Utils.readBlocksLinearWithoutAttribs(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 2, 2, ConfigScript.getBlocksCount());
+            return Utils.readBlocksLinearWithoutAttribs(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 2, 2, ConfigScript.getBlocksCount(), false);
         }
 
         public static ObjRec[] getBlocksLinear4x2withoutAttrib(int blockIndex)
         {
-            return Utils.readBlocksLinearWithoutAttribs(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 4, 2, ConfigScript.getBlocksCount());
+            return Utils.readBlocksLinearWithoutAttribs(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 4, 2, ConfigScript.getBlocksCount(), false);
         }
 
         public static void setBlocksLinearWithoutAttrib(int blockIndex, ObjRec[] blocksData)
         {
-            writeBlocksLinearWithoutAttribs(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount());
+            writeBlocksLinearWithoutAttribs(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(), false);
         }
 
         public static ObjRec[] readBlocksLinearTiles16Pal1(byte[] romdata, int addr, int palBytesAddr, int count)
@@ -487,7 +452,7 @@ namespace CadEditor
             int BLOCK_W = 4;
             int BLOCK_H = 4;
             int BLOCK_S = BLOCK_H * BLOCK_H;
-            var objects = readBlocksLinearWithoutAttribs(romdata, addr, BLOCK_W, BLOCK_H, count);
+            var objects = readBlocksLinearWithoutAttribs(romdata, addr, BLOCK_W, BLOCK_H, count, false);
             for (int i = 0; i < count; i++)
             {
                 int palByte = romdata[palBytesAddr + i];
@@ -499,7 +464,7 @@ namespace CadEditor
 
         public static void writeBlocksLinearTiles16Pal1(ObjRec[] objects, byte[] romdata, int addr, int palBytesAddr, int count)
         {
-            writeBlocksLinearWithoutAttribs(objects, romdata, addr, count);
+            writeBlocksLinearWithoutAttribs(objects, romdata, addr, count, false);
             for (int i = 0; i < count; i++)
             {
                 var objPalBytes = objects[i].palBytes;
