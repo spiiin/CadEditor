@@ -56,12 +56,7 @@ public class Data
   
   public static ObjRec[] getBlocksLinear4x1withoutAttrib(int blockIndex)
   {
-      var bb = Utils.readBlocksLinearWithoutAttribs(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 4, 1, ConfigScript.getBlocksCount());
-      foreach (var b in bb)
-      {
-        b.palBytes = new int[2];
-      }
-      return bb;
+      return Utils.readBlocksLinearWithoutAttribs(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 4, 1, ConfigScript.getBlocksCount());
   }
   
   //-------------------------------------------------------------------------------------------------------------------

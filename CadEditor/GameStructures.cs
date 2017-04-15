@@ -59,7 +59,7 @@ namespace CadEditor
     {
         public ObjRec(int w, int h, int[] indexes, int[] palBytes)
         {
-            //assert(getSize() == indexes.Length == palBytes.Lenghth/4)
+            //getSize() == indexes.Length == (if square) palBytes.Lenghth/4
             this.w = w;
             this.h = h;
             this.indexes = indexes;
@@ -69,7 +69,7 @@ namespace CadEditor
         public ObjRec(byte c1, byte c2, byte c3, byte c4, byte typeColor)
         {
             this.indexes = new int[4];
-            this.palBytes = new int[indexes.Length / 4];
+            this.palBytes = new int[1];
 
             this.indexes[0] = c1;
             this.indexes[1] = c2;

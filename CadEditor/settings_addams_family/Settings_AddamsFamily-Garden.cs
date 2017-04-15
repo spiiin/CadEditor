@@ -40,12 +40,7 @@ public class Data
   //-------------------------------------------------------------------------------------------------------------------
   public static ObjRec[] getBlocksLinear1x20withoutAttrib(int blockIndex)
   {
-      var bb = Utils.readBlocksLinearWithoutAttribs(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 1, 20, ConfigScript.getBlocksCount());
-      foreach (var b in bb)
-      {
-        b.palBytes = new int[10];
-      }
-      return bb;
+      return Utils.readBlocksLinearWithoutAttribs(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 1, 20, ConfigScript.getBlocksCount());
   }
   
   public MapInfo[] getMapsInfo() { return getMaps(); }

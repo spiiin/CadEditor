@@ -251,7 +251,9 @@ namespace CadEditor
             for (int i = 0; i < count; i++)
             {
                 var indexes = new int[blockSize];
-                var palBytes = new int[indexes.Length / 4];
+                int pw = (int)Math.Ceiling(w / 2.0);
+                int ph = (int)Math.Ceiling(h / 2.0);
+                var palBytes = new int[pw*ph];
                 Array.Copy(romdata, addr + i * blockSize, indexes, 0, w * h);
                 objects[i] = new ObjRec(w, h, indexes, palBytes);
             }
