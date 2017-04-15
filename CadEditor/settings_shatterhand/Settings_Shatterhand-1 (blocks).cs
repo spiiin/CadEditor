@@ -40,7 +40,7 @@ public class Data
 
   public ObjRec[] getBlocks(int tileId)
   {
-    var objects = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), false);
+    var objects = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), 2, 2, ConfigScript.getBlocksCount(), false);
     for (int i = 0; i < getBlocksCount(); i++)
     {
         var o = objects[i];

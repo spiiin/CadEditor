@@ -76,7 +76,7 @@ public static class FliUtils
   {
     int count = ConfigScript.getBlocksCount();
     int addr  = ConfigScript.getTilesAddr(blockIndex);
-    var objects = Utils.readBlocksLinear(Globals.romdata, addr, count, false);
+    var objects = Utils.readBlocksLinear(Globals.romdata, addr, 2, 2, count, false);
     for(int i = 0; i < objects.Length; i++)
     {
         var o = objects[i];

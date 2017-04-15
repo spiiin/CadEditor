@@ -116,7 +116,7 @@ public class Data
   {
     int count = getBlocksCount();
     int addr  = getBlocksOffset().beginAddr;
-    var objects = Utils.readBlocksLinear(Globals.romdata, addr, count, false);
+    var objects = Utils.readBlocksLinear(Globals.romdata, addr, 2, 2, count, false);
     for(int i = 0; i < objects.Length; i++)
     {
         var o = objects[i];

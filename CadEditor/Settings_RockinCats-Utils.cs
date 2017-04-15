@@ -81,7 +81,7 @@ public class RockinCatsBase
   //-------------------------------------------------------------------------------------------------------------------
   public ObjRec[] getBlocks(int blockIndex)
   {
-    return Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount(), true);
+    return Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 2, 2, getBlocksCount(), true);
   }
   
   public void setBlocks(int blockIndex, ObjRec[] blocksData)

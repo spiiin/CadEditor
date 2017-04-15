@@ -267,7 +267,7 @@ namespace CadEditor
             return objects;
         }
 
-        public static void writeBlocksLinearWithoutAttribs(ObjRec[] objects, byte[] romdata, int addr, int count, bool withAttribs)
+        public static void writeBlocksLinear(ObjRec[] objects, byte[] romdata, int addr, int count, bool withAttribs)
         {
             int blockSize = objects[0].indexes.Length;
             int palSize = objects[0].indexes.Length;
@@ -290,9 +290,9 @@ namespace CadEditor
             }
         }
 
-        public static ObjRec[] readBlocksLinear(byte[] romdata, int addr, int count, bool withAttribs)
+        public static ObjRec[] readBlocksLinear(byte[] romdata, int addr, int w, int h, int count, bool withAttribs)
         {
-            return readBlocksLinearWithoutAttribs(romdata, addr, 2, 2, count, withAttribs);
+            return readBlocksLinearWithoutAttribs(romdata, addr, w, h, count, withAttribs);
         }
 
         public static ObjRec[] readBlocksFromAlignedArrays(byte[] romdata, int addr, int count)
@@ -310,11 +310,6 @@ namespace CadEditor
                 objects[i] = new ObjRec(c1, c2, c3, c4, typeColor);
             }
             return objects;
-        }
-
-        public static void writeBlocksLinear(ObjRec[] objects, byte[] romdata, int addr, int count, bool withAttribs)
-        {
-            writeBlocksLinearWithoutAttribs(objects, romdata, addr, count, withAttribs);
         }
 
         public static void writeBlocksToAlignedArrays(ObjRec[] objects, byte[] romdata, int addr, int count)
@@ -444,7 +439,7 @@ namespace CadEditor
 
         public static void setBlocksLinearWithoutAttrib(int blockIndex, ObjRec[] blocksData)
         {
-            writeBlocksLinearWithoutAttribs(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(), false);
+            writeBlocksLinear(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(), false);
         }
 
         public static ObjRec[] readBlocksLinearTiles16Pal1(byte[] romdata, int addr, int palBytesAddr, int count)
@@ -464,7 +459,7 @@ namespace CadEditor
 
         public static void writeBlocksLinearTiles16Pal1(ObjRec[] objects, byte[] romdata, int addr, int palBytesAddr, int count)
         {
-            writeBlocksLinearWithoutAttribs(objects, romdata, addr, count, false);
+            writeBlocksLinear(objects, romdata, addr, count, false);
             for (int i = 0; i < count; i++)
             {
                 var objPalBytes = objects[i].palBytes;
