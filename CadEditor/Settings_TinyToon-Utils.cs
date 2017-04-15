@@ -65,16 +65,11 @@ public static class TinyToonUtils
   
   static ObjRec[] readBlocksFromAlignedArraysTT(byte[] romdata, int addr, int count)
   {
-      var objects = new ObjRec[count];
-      byte c1, c2, c3, c4, typeColor;
-      for (int i = 0; i < count; i++)
+      var objects = Utils.readBlocksFromAlignedArrays(romdata, addr, count);
+      foreach (var o in objects)
       {
-          c1 = romdata[addr + i];
-          c3 = romdata[addr + count*1 + i]; //tt version
-          c2 = romdata[addr + count*2 + i];
-          c4 = romdata[addr + count*3 + i];
-          typeColor = 0;
-          objects[i] = new ObjRec(c1, c2, c3, c4, typeColor);
+          o.indexes = Utils.transpose(o.indexes, 2, 2);
+          o.palBytes[0] = 0;
       }
       return objects;
   }
@@ -84,10 +79,10 @@ public static class TinyToonUtils
     for (int i = 0; i < count; i++)
     {
       var obj = objects[i];
-      romdata[addr + i] = (byte)obj.c1;
-      romdata[addr + count * 1 + i] = (byte)obj.c3;
-      romdata[addr + count * 2 + i] = (byte)obj.c2;
-      romdata[addr + count * 3 + i] = (byte)obj.c4;
+      romdata[addr + count * 0 + i] = (byte)obj.indexes[0];
+      romdata[addr + count * 1 + i] = (byte)obj.indexes[2];
+      romdata[addr + count * 2 + i] = (byte)obj.indexes[1];
+      romdata[addr + count * 3 + i] = (byte)obj.indexes[3];
     }
   }
   
