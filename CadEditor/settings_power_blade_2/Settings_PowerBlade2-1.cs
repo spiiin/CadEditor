@@ -10,9 +10,9 @@ public class Data
       "PluginChrView.dll",
     };
   }
-  public OffsetRec getPalOffset()       { return new OffsetRec(0, 32  , 16);     }
-  public OffsetRec getVideoOffset()     { return new OffsetRec(0, 16  , 0x1000); }
-  public OffsetRec getScreensOffset()   { return new OffsetRec(0x4E44 , 32 , 8*5);   }
+  public OffsetRec getPalOffset()       { return new OffsetRec(0, 1  , 16);     }
+  public OffsetRec getVideoOffset()     { return new OffsetRec(0, 2  , 0x1000); }
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0x4E44 , 34 , 8*5);   }
   public int getScreenWidth()    { return 8; }
   public int getScreenHeight()   { return 5; }
   public IList<LevelRec> getLevelRecs() { return null; }
@@ -28,8 +28,8 @@ public class Data
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x40FC , 1  , 0x1000);  }
-  public int getBlocksCount()           { return 128; }
-  public int getBigBlocksCount()        { return 128; }
+  public int getBlocksCount()           { return 209; }
+  public int getBigBlocksCount()        { return 209; }
   public int getPalBytesAddr()          { return 0x402b; }
   public GetBlocksFunc        getBlocksFunc() { return Utils.getBlocksFromTiles16Pal1;}
   public SetBlocksFunc        setBlocksFunc() { return Utils.setBlocksFromTiles16Pal1;}
@@ -45,7 +45,15 @@ public class Data
   
   public byte[] getVideoChunk(int videoPageId)
   {
-     return Utils.readVideoBankFromFile("ppu_dump1.bin", videoPageId);
+     if (videoPageId == 0x90)
+     {
+        return Utils.readVideoBankFromFile("ppu_dump1-1.bin", 0);
+     }
+     else if (videoPageId == 0x91)
+     {
+       return Utils.readVideoBankFromFile("ppu_dump1-2.bin", 0);
+     }
+     return new byte[0];
   }
   
   public byte[] getPallete(int palId)
