@@ -35,7 +35,7 @@ public class Data
   public ObjRec[] getBlocks(int tileId)
   {
     int addr = ConfigScript.getTilesAddr(tileId);
-    var objects = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), 2, 2, ConfigScript.getBlocksCount(), false);
+    var objects = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), 2, 2, ConfigScript.getBlocksCount(), false, false);
     for (int i = 0; i < objects.Length; i++)
     {
         objects[i].palBytes[0] = Globals.romdata[0x14C1C + i];
@@ -46,7 +46,7 @@ public class Data
   public void setBlocks(int tileId, ObjRec[] blocks)
   {
     int addr = ConfigScript.getTilesAddr(tileId);
-    Utils.writeBlocksLinear(blocks, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), false);
+    Utils.writeBlocksLinear(blocks, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), false, false);
     for (int i = 0; i < getBlocksCount(); i++)
     {
         Globals.romdata[0x14C1C + i] = (byte)blocks[i].palBytes[0];

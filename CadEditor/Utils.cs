@@ -244,7 +244,7 @@ namespace CadEditor
             return data;
         }
 
-        public static ObjRec[] readBlocksLinear(byte[] romdata, int addr, int w, int h, int count, bool withAttribs)
+        public static ObjRec[] readBlocksLinear(byte[] romdata, int addr, int w, int h, int count, bool withAttribs, bool transposeIndexes = false)
         {
             var objects = new ObjRec[count];
             int blockSize = w * h;
@@ -262,23 +262,34 @@ namespace CadEditor
                 {
                     Array.Copy(romdata, baseAddr + blockSize, palBytes, 0, palSize);
                 }
+                if (transposeIndexes)
+                {
+                    indexes = Utils.transpose(indexes, w, h);
+                }
                 objects[i] = new ObjRec(w, h, indexes, palBytes);
             }
             return objects;
         }
 
-        public static void writeBlocksLinear(ObjRec[] objects, byte[] romdata, int addr, int count, bool withAttribs)
+        public static void writeBlocksLinear(ObjRec[] objects, byte[] romdata, int addr, int count, bool withAttribs, bool transposeIndexes = false)
         {
-            int blockSize = objects[0].indexes.Length;
-            int palSize = objects[0].indexes.Length;
+            var block0 = objects[0];
+            int bw = block0.w, bh = block0.h;
+            int blockSize = block0.indexes.Length;
+            int palSize = block0.palBytes.Length;
             int fullSize = blockSize + (withAttribs ? palSize : 0);
             for (int i = 0; i < count; i++)
             {
                 var obj = objects[i];
+                var indexes = obj.indexes;
+                if (transposeIndexes)
+                {
+                    indexes = Utils.transpose(indexes, bw, bh);
+                }
                 int baseAddr = addr + i * fullSize;
                 for (int bi = 0; bi < blockSize; bi++)
                 {
-                    romdata[baseAddr + bi] = (byte)obj.indexes[bi];
+                    romdata[baseAddr + bi] = (byte)indexes[bi];
                 }
                 if (withAttribs)
                 {
