@@ -12,7 +12,7 @@ public class Data
   }
   public OffsetRec getPalOffset()       { return new OffsetRec(0, 32  , 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0, 16  , 0x1000); }
-  public OffsetRec getScreensOffset()   { return new OffsetRec(0x4E45  , 32 , 8*5);   }
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0x4E44 , 32 , 8*5);   }
   public int getScreenWidth()    { return 8; }
   public int getScreenHeight()   { return 5; }
   public IList<LevelRec> getLevelRecs() { return null; }
