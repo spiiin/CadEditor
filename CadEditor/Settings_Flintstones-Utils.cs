@@ -76,12 +76,10 @@ public static class FliUtils
   {
     int count = ConfigScript.getBlocksCount();
     int addr  = ConfigScript.getTilesAddr(blockIndex);
-    var objects = Utils.readBlocksLinear(Globals.romdata, addr, 2, 2, count, false);
+    var objects = Utils.readBlocksLinear(Globals.romdata, addr, 2, 2, count, false, true);
     for(int i = 0; i < objects.Length; i++)
     {
-        var o = objects[i];
-        o.indexes = Utils.transpose(o.indexes, 2, 2);
-        o.palBytes[0] = Globals.romdata[addr + count * 4 + i];
+        objects[i].palBytes[0] = Globals.romdata[addr + count * 4 + i];
     }
     return objects;
   }
@@ -90,14 +88,10 @@ public static class FliUtils
   {
     int count = ConfigScript.getBlocksCount();
     int addr  = ConfigScript.getTilesAddr(blockIndex);
+    Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, false, true);
     for (int i = 0; i < count; i++)
     {
-        var obj = blocksData[i];
-        Globals.romdata[addr + i*4 + 0] = (byte)obj.indexes[0];
-        Globals.romdata[addr + i*4 + 2] = (byte)obj.indexes[1];
-        Globals.romdata[addr + i*4 + 1] = (byte)obj.indexes[2];
-        Globals.romdata[addr + i*4 + 3] = (byte)obj.indexes[3];
-        Globals.romdata[addr + count * 4 + i] = (byte)obj.palBytes[0];
+        Globals.romdata[addr + count * 4 + i] = (byte)blocksData[i].palBytes[0];
     }
   }
   
