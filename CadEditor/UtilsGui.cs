@@ -52,7 +52,7 @@ namespace CadEditor
             {
                 blocksOnRow = 1;
             }
-            int blocksOnCol = bigBlocks.Length / blocksOnRow;
+            int blocksOnCol = (int)Math.Ceiling(bigBlocks.Length *1.0f / blocksOnRow);
             blocksScreen.Height = blocksOnCol * TILE_SIZE_Y;
         }
 
