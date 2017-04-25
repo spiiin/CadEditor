@@ -1,6 +1,6 @@
 import os, glob, shutil, zipfile
 
-VERSION        = "41"
+VERSION        = "42"
 RELEASE_FOLDER = "../Release/cad_editor_v%s" % VERSION
 ZIP_NAME       = "../Release/cad_editor_v%s.zip" % VERSION
 
@@ -19,7 +19,7 @@ COPY_FILE_LIST = [
   "Settings_TinyToon-Utils.cs",
   "Settings_Flintstones-Utils.cs",
   "Settings_CHC-Utils.cs",
-  "Settings_Dt2Cad2.cs,"
+  "Settings_Dt2Cad2.cs",
   "readme.txt",
   "cad_editor_configs_manual.txt",
   "cad_editor_supported_games.txt",
