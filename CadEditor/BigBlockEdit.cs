@@ -39,22 +39,15 @@ namespace CadEditor
 
         protected void reloadBlocksPanel()
         {
-            blocksPanel.Controls.Clear();
-            blocksPanel.SuspendLayout();
-            int sbc = smallBlocksImages[0].Length;
-            for (int i = 0; i < sbc; i++)
+            if (smallBlocksImages == null)
             {
-                var but = new Button();
-                but.FlatStyle = FlatStyle.Flat;
-                but.Size = smallBlocksImages[0][i].Size;
-                but.Image = smallBlocksImages[0][i];
-                but.Tag = i;
-                but.Margin = new Padding(0);
-                but.Padding = new Padding(0);
-                but.Click += new EventHandler(buttonObjClick);
-                blocksPanel.Controls.Add(but);
+                return;
             }
-            blocksPanel.ResumeLayout();
+            var sb0 = smallBlocksImages[0];
+            int sbw = sb0[0].Width;
+            int sbh = sb0[0].Height;
+            UtilsGui.resizeBlocksScreen(sb0, blocksScreen, sbw, sbh, 1.0f);
+            blocksScreen.Invalidate();
         }
 
         protected virtual void initControls()
@@ -114,7 +107,7 @@ namespace CadEditor
             {
                 smallBlocksImages[0] = ConfigScript.videoNes.makeBigBlocks(backId, curTileset, ConfigScript.getBigBlocksRecursive(curHierarchyLevel-1, curSmallBlockNo), palId, curViewType, 1, 2.0f, MapViewType.Tiles, false, curHierarchyLevel-1);
             }
-            blocksPanel.Invalidate(true);
+            reloadBlocksPanel();
 
             //prerender big blocks
             bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(backId, curTileset, bigBlockIndexes, palId, curViewType, 1, 2.0f, MapViewType.Tiles, false, curHierarchyLevel);
@@ -278,6 +271,7 @@ namespace CadEditor
                     curActiveBlock = bigBlockIndexes[actualIndex].indexes[insideIndex];
                 pbActive.Image = smallBlocksImages[0][curActiveBlock];
                 lbActive.Text = String.Format("({0:X})", curActiveBlock);
+                blocksScreen.Invalidate();
             }
 
             //fix current big blocks image
@@ -479,6 +473,42 @@ namespace CadEditor
         protected void mapScreen_MouseLeave(object sender, EventArgs e)
         {
             lbBigBlockNo.Text = "()";
+        }
+
+        private void blocksScreen_Paint(object sender, PaintEventArgs e)
+        {
+            var visibleRect = UtilsGui.getVisibleRectangle(pnBlocks, blocksScreen);
+            var sb0 = smallBlocksImages[0];
+            int sbw = sb0[0].Width;
+            int sbh = sb0[0].Height;
+            MapEditor.RenderAllBlocks(e.Graphics, blocksScreen, smallBlocksImages[0], sbw, sbh, visibleRect, 1.0f, curActiveBlock);
+        }
+
+        private void blocksScreen_MouseDown(object sender, MouseEventArgs e)
+        {
+            var p = blocksScreen.PointToClient(Cursor.Position);
+            int x = p.X, y = p.Y;
+            var sb0 = smallBlocksImages[0];
+            int sbw = sb0[0].Width;
+            int sbh = sb0[0].Height;
+            int TILE_SIZE_X = (int)(sbw * 1.0f);
+            int TILE_SIZE_Y = (int)(sbh * 1.0f);
+            int tx = x / TILE_SIZE_X, ty = y / TILE_SIZE_Y;
+            int maxtX = blocksScreen.Width / TILE_SIZE_X;
+            int index = ty * maxtX + tx;
+            if ((tx < 0) || (tx >= maxtX) || (index < 0) || (index > sb0.Length))
+            {
+                return;
+            }
+
+            curActiveBlock = index;
+            lbActive.Text = String.Format("Active: ({0:X})", index);
+            blocksScreen.Invalidate();
+        }
+
+        private void pnBlocks_SizeChanged(object sender, EventArgs e)
+        {
+            reloadBlocksPanel();
         }
     }
 }

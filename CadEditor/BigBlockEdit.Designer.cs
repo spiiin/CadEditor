@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BigBlockEdit));
             this.mapScreen = new System.Windows.Forms.PictureBox();
-            this.blocksPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.cbTileset = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.pbActive = new System.Windows.Forms.PictureBox();
@@ -60,6 +59,8 @@
             this.tbbImport = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tbbDeleteAll = new System.Windows.Forms.ToolStripButton();
+            this.pnBlocks = new System.Windows.Forms.Panel();
+            this.blocksScreen = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -67,6 +68,8 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.pnBlocks.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.blocksScreen)).BeginInit();
             this.SuspendLayout();
             // 
             // mapScreen
@@ -81,18 +84,6 @@
             this.mapScreen.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseClick);
             this.mapScreen.MouseLeave += new System.EventHandler(this.mapScreen_MouseLeave);
             this.mapScreen.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseMove);
-            // 
-            // blocksPanel
-            // 
-            this.blocksPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.blocksPanel.AutoScroll = true;
-            this.blocksPanel.Location = new System.Drawing.Point(11, 303);
-            this.blocksPanel.Margin = new System.Windows.Forms.Padding(4);
-            this.blocksPanel.Name = "blocksPanel";
-            this.blocksPanel.Size = new System.Drawing.Size(242, 363);
-            this.blocksPanel.TabIndex = 7;
             // 
             // cbTileset
             // 
@@ -330,10 +321,10 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.pnBlocks);
             this.splitContainer1.Panel1.Controls.Add(this.cbHierarchyLevel);
             this.splitContainer1.Panel1.Controls.Add(this.label2);
             this.splitContainer1.Panel1.Controls.Add(this.lbActive);
-            this.splitContainer1.Panel1.Controls.Add(this.blocksPanel);
             this.splitContainer1.Panel1.Controls.Add(this.cbTileset);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.pnGeneric);
@@ -460,6 +451,31 @@
             this.tbbDeleteAll.Text = "Clear All";
             this.tbbDeleteAll.Click += new System.EventHandler(this.btClear_Click);
             // 
+            // pnBlocks
+            // 
+            this.pnBlocks.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnBlocks.AutoScroll = true;
+            this.pnBlocks.Controls.Add(this.blocksScreen);
+            this.pnBlocks.Location = new System.Drawing.Point(8, 298);
+            this.pnBlocks.Name = "pnBlocks";
+            this.pnBlocks.Size = new System.Drawing.Size(261, 370);
+            this.pnBlocks.TabIndex = 62;
+            this.pnBlocks.SizeChanged += new System.EventHandler(this.pnBlocks_SizeChanged);
+            // 
+            // blocksScreen
+            // 
+            this.blocksScreen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.blocksScreen.Location = new System.Drawing.Point(3, 3);
+            this.blocksScreen.Name = "blocksScreen";
+            this.blocksScreen.Size = new System.Drawing.Size(254, 332);
+            this.blocksScreen.TabIndex = 5;
+            this.blocksScreen.TabStop = false;
+            this.blocksScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.blocksScreen_Paint);
+            this.blocksScreen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.blocksScreen_MouseDown);
+            // 
             // BigBlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -487,6 +503,8 @@
             this.splitContainer1.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.pnBlocks.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.blocksScreen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -495,7 +513,6 @@
         #endregion
 
         private System.Windows.Forms.PictureBox mapScreen;
-        private System.Windows.Forms.FlowLayoutPanel blocksPanel;
         private System.Windows.Forms.ComboBox cbTileset;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pbActive;
@@ -524,5 +541,7 @@
         private System.Windows.Forms.Label lbActive;
         private System.Windows.Forms.ComboBox cbHierarchyLevel;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel pnBlocks;
+        private System.Windows.Forms.PictureBox blocksScreen;
     }
 }
