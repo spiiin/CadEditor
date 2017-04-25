@@ -1,24 +1,37 @@
 using CadEditor;
 using System.Collections.Generic;
 //css_include Settings_CapcomBase.cs;
-public class Data : CapcomBase
+public class Data
 { 
-  public OffsetRec getPalOffset()       { return new OffsetRec(0, 1  , 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0, 1  , 0x1000); }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0, 1  , 0x1000); }
-  public OffsetRec getBigBlocksOffset() { return new OffsetRec(0 , 1   , 0x4000); }
-  public OffsetRec getBlocksOffset()    { return new OffsetRec(0 , 1   , 0x4000); }
+  public OffsetRec getBigBlocksOffset() { return new OffsetRec(0, 1  , 0x4000); }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x77C1 - 16*15*8  , 13 , 16*15);   }
-  public override int getScreenWidth()    { return 16; }
-  public override int getScreenHeight()   { return 15; }
-  public string getBlocksFilename() { return "gb2_1.png"; }
+  public int getScreenWidth()    { return 16; }
+  public int getScreenHeight()   { return 15; }
+  //public string getBlocksFilename() { return "gb2_1.png"; }
   
   public bool isBigBlockEditorEnabled() { return false; }
-  public bool isBlockEditorEnabled()    { return false; }
+  public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return true; }
+  
+  public bool isBuildScreenFromSmallBlocks() { return true; }
+  
+  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getVideoAddress; }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChunk;   }
+  public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
+  
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x6B51, 1  , 0x1000);  }
+  public int getBlocksCount()           { return 240; }
+  public int getBigBlocksCount()        { return 240; }
   
   public GetObjectsFunc getObjectsFunc()   { return getObjects;  }
   public SetObjectsFunc setObjectsFunc()   { return setObjects;  }
+  
+  public GetBlocksFunc        getBlocksFunc() { return getBlocks;}
+  public SetBlocksFunc        setBlocksFunc() { return setBlocks;}
+  public GetPalFunc           getPalFunc()           { return getPallete;}
+  public SetPalFunc           setPalFunc()           { return null;}
   
   public GetLayoutFunc getLayoutFunc()     { return getLayout;   } 
   LevelLayerData getLayout(int levelNo)
@@ -47,6 +60,8 @@ public class Data : CapcomBase
     //new LevelRec(0x6AC5, 0, 5, 4, 0x0),
     //new LevelRec(0x6AD1, 5, 5, 4, 0xA),
   };
+  
+  //----------------------------------------------------------------------------
   
   //Read only standart enemies (5 bytes per enemy)
   //other types:
@@ -97,6 +112,34 @@ public class Data : CapcomBase
         Globals.romdata[baseAddr + 5*i + 4] = 0xff;
     }
     return true;
+  }
+  
+  public static ObjRec[] getBlocks(int tileId)
+  {
+      return Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount());
+  }
+  
+  public static void setBlocks(int tileId, ObjRec[] blocksData)
+  {
+      Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount());
+  }
+  
+  public byte[] getPallete(int palId)
+  {
+      return new byte[] {
+        0x0f, 0x30, 0x10, 0x00, 0x0f, 0x30, 0x1a, 0x17,
+        0x0f, 0x37, 0x27, 0x17, 0x0f, 0x30, 0x05, 0x17,
+    }; 
+  }
+  
+  public int getVideoAddress(int id)
+  {
+    return -1;
+  }
+  
+  public byte[] getVideoChunk(int videoPageId)
+  {
+     return Utils.readVideoBankFromFile("chr1.bin", videoPageId);
   }
  
 }
