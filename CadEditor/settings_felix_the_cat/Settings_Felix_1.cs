@@ -52,7 +52,7 @@ public class Data
         Globals.romdata[addr + count * 2 + i] = (byte)obj.indexes[2];
         Globals.romdata[addr + count * 3 + i] = (byte)obj.indexes[3];
         int t = Globals.romdata[palAddr + i];
-        t =  t &  0x4F | (blocksData[i].palBytes[0]<<6);
+        t =  t &  0x3F | (blocksData[i].palBytes[0]<<6);
         Globals.romdata[palAddr + i] = (byte)t; //save only pal bits, not physics
     }
   }

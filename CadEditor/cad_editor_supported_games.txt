@@ -52,6 +52,7 @@
     Shadow of the Ninja                             (1 уровень)
     Contra Spirits                                  (1 уровень, игра защищена от изменений)
     Mickey Mania 7                                  (1 уровень, игра защищена от изменений)
+    Felix the Cat                                   (1 уровень, дамп+скрипт компрессии)
     Flintstones: The Surprise at Dinosaur Peak!     (1 уровень  + редактор объектов 1 уровня)
     New Ghostbusters 2                              (1 уровень  + редактор объектов 1 уровня)
   редактор экранов картинками:
@@ -64,7 +65,6 @@
     Micromashines                                   (1 уровень)
     Gun Smoke                                       (1 уровень)
     Little Samson                                   (1 уровень)
-    Felix the Cat                                   (1 уровень, дамп+скрипт компрессии)
     Addams Family, The - Pugsley's Scavenger Hunt
     Moon Crystal
     Mappy Kids
