@@ -23,6 +23,7 @@
     Mickey's Adventures in Numberland               (все уровни)
     Contra Force                                    (все уровни)
     Mickey Mouse 3 Yume Fuusen                      (все уровни)
+    Felix the Cat                                   (все уровни, дампы+скрипт компрессии)
     Three Eyes Story                                (1 уровень)
     Shatterhand (Tokkyuu Shirei Solbrain)           (1 уровень)
     Ninja Gaiden                                    (1 уровень)
@@ -52,7 +53,6 @@
     Shadow of the Ninja                             (1 уровень)
     Contra Spirits                                  (1 уровень, игра защищена от изменений)
     Mickey Mania 7                                  (1 уровень, игра защищена от изменений)
-    Felix the Cat                                   (1 уровень, дамп+скрипт компрессии)
     Flintstones: The Surprise at Dinosaur Peak!     (1 уровень  + редактор объектов 1 уровня)
     New Ghostbusters 2                              (1 уровень  + редактор объектов 1 уровня)
   редактор экранов картинками:
