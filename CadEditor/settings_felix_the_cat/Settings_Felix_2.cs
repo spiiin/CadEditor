@@ -5,7 +5,7 @@ using System;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec( 0x0, 1 , 24*256*3);   }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x0, 1 , 24*256*3);   }
   public int getScreenWidth()          { return 24; }
   public int getScreenHeight()         { return 256*3; }
   public bool getScreenVertical()      { return true;   }
@@ -20,7 +20,7 @@ public class Data
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
   
-  public OffsetRec getBlocksOffset()    { return new OffsetRec(  0x16dfb, 1  , 0x1000);  }
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x16dfb, 1  , 0x1000);  }
   public int getBlocksCount()           { return 128; }
   public int getBigBlocksCount()        { return 128; }
   

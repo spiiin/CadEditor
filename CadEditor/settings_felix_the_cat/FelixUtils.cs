@@ -35,7 +35,7 @@ public class FelixUtils
   
   public static GetPalFunc readPalFromBin(string fname)
   {
-      return (int _)=> { return Utils.readBinFile("pal1.bin"); };
+      return (int _)=> { return Utils.readBinFile(fname); };
   }
   
   public static GetVideoPageAddrFunc fakeVideoAddr()
@@ -45,6 +45,6 @@ public class FelixUtils
   
   public static GetVideoChunkFunc getVideoChunk(string fname)
   {
-     return (int _)=> { return Utils.readVideoBankFromFile("chr1.bin", 0); };
+     return (int _)=> { return Utils.readVideoBankFromFile(fname, 0); };
   }
 }
