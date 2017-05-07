@@ -23,6 +23,7 @@
     Mickey's Adventures in Numberland               (все уровни)
     Contra Force                                    (все уровни)
     Mickey Mouse 3 Yume Fuusen                      (все уровни)
+    Moon Crystal                                    (все уровни)
     Felix the Cat                                   (все уровни, дампы+скрипт компрессии)
     Three Eyes Story                                (1 уровень)
     Shatterhand (Tokkyuu Shirei Solbrain)           (1 уровень)
@@ -59,14 +60,13 @@
     Ninja Cat (Cattou Ninden Teyandee)              (все уровни + редактор объектов 4 уровней)
     Mighty Final Fight                              (все уровни)
     Little Nemo                                     (все уровни)
-    Banana Prince                                   (3 уровня)
+    Banana Prince                                   (все уровни)
     MegaMan                                         (1 уровень)
     Super Spy Hunter                                (1 уровень)
     Micromashines                                   (1 уровень)
     Gun Smoke                                       (1 уровень)
     Little Samson                                   (1 уровень)
     Addams Family, The - Pugsley's Scavenger Hunt
-    Moon Crystal
     Mappy Kids
     Predator
     Super Robin Good

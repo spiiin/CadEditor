@@ -2,7 +2,6 @@ using CadEditor;
 using System;
 //css_include settings_felix_the_cat/FelixUtils.cs;
 
-
 public class Data 
 { 
   public OffsetRec getScreensOffset()  { return new OffsetRec(0x0, 1 , 24*256*3);   }
