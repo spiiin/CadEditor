@@ -62,6 +62,7 @@ fnames = [
     "Predator (U) [!].nes",
     "Raf World (J).nes",
     "Rockin' Kats (U) [!].nes",
+    "SD Hero Soukessen - Taose! Aku no Gundan (J) [!].nes",
     "Shadow of the Ninja (U) [!].nes",
     "Shatterhand (U) [!].nes",
     "Super C (U) [!].nes",
