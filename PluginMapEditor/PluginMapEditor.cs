@@ -16,7 +16,7 @@ namespace PluginMapEditor
     {
         public string getName()
         {
-            return "Map Editor (Darkwing Duck version)";
+            return "Map Editor";
         }
         public void addSubeditorButton(FormMain formMain)
         {

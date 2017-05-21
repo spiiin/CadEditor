@@ -230,7 +230,12 @@ namespace PluginMapEditor
             {
                 for (int h = 0; h < height; h++)
                 {
-                    mapData[(y * height + h) * mapWidth + x * width + w] = block.indexes[width * h + w];
+                    int mdIndex = (y * height + h) * mapWidth + x * width + w;
+                    int bIndex = width * h + w;
+                    if ((mdIndex >= 0) && (mdIndex < mapData.Length))
+                    {
+                        mapData[mdIndex] = block.indexes[bIndex];
+                    }
                 }
             }
         }

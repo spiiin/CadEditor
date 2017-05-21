@@ -118,22 +118,27 @@ namespace CadEditor
         private void mapScreen_Paint(object sender, PaintEventArgs e)
         {
             var g = e.Graphics;
+            var visibleRect = UtilsGui.getVisibleRectangle(mapPanel, mapScreen);
             for (int i = 0; i < mapData.width * mapData.height; i++)
             {
                 int x = i % mapData.width;
                 int y = i / mapData.width;
                 int colorByte = mapData.attrData[x / 4 + mapData.width/4* (y / 4)];
                 int subPal = (colorByte >> (x%4/2*2 + y%4/2*4))& 0x03;
-                g.DrawImage(videos[subPal].Images[mapData.mapData[i]], new Point(x * 16, y * 16));
+                var tileRect = new Rectangle(new Point(x * 16, y * 16), new Size(16,16));
+                if (visibleRect == null || visibleRect.Contains(tileRect) || visibleRect.IntersectsWith(tileRect))
+                {
+                    g.DrawImage(videos[subPal].Images[mapData.mapData[i]], tileRect);
+                }
             }
 
             //add axis
             if (showAxis)
             {
                 for (int x = 0; x < mapData.width; x++)
-                    g.DrawLine(new Pen(Color.White, 1.0f), new Point(x * 32, 0), new Point(x * 32, 32 * 30));
+                    g.DrawLine(new Pen(Color.White, 1.0f), new Point(x * 32, 0), new Point(x * 32, 32 * mapData.height));
                 for (int y = 0; y < mapData.height; y++)
-                    g.DrawLine(new Pen(Color.White, 1.0f), new Point(0, y * 32), new Point(32 * 32, y * 32));
+                    g.DrawLine(new Pen(Color.White, 1.0f), new Point(0, y * 32), new Point(32 * mapData.width, y * 32));
             }
         }
 
