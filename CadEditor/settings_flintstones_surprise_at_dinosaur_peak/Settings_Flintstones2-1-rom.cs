@@ -18,7 +18,6 @@ public class Data
   public int getScreenWidth()             { return 8; }
   public int getScreenHeight()            { return 96; }
   public bool getScreenVertical()         { return true; }
-  //public string getBlocksFilename()       { return "flintstones2_1.png"; }
   public int    getPictureBlocksWidth()   { return 16; }
   
   public int getBlocksCount()    { return 163; }

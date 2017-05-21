@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 [RUS]
 Редактор уровней для игр [NES/SEGA/SNES/GBA].
-Версия 4.2
+Версия 4.2.1
 -------------------------------------------------------------------------------
 
 Полный список поддерживаемых игр в файле cad_editor_supported_games.txt
@@ -420,6 +420,18 @@ v4.2
     Mickey Mania (1 уровень)
     Ninja Crusaders (1 уровень)
     Addams' Family (1 уровень)
+    
+v4.2.1
+- Конфиги блоков для игр [NES]:
+  Felix The Cat (все уровни и компрессор/декомпрессор)
+  Jurassic Park (1 уровень, редактор дампа, без компрессора)
+  Little Samson (1 уровень)
+  Super Spy Hunter (1 уровень)
+  Mappy Kids (1 уровень)
+  Moon Crystal (все уровни)
+- Редактирование экранов и блоков картинками [NES]:
+  SD Hero Soukessen (все уровни)
+  
 
 
 -------------------------------------------------------------------------------
@@ -435,7 +447,7 @@ v4.2
   Darthatron  - документация по Final Fantasy Tactics Advance, кодирование.
   cah4e3      - собрание огромной базы Unpublished cheats list для NES, формат игры Contra Spirits/Mickey Mania.
   Megaplex    - документация по игре EarthWorm Jim 2.
-  DANGER X    - конфиги для игры Banana Prince, Mighty Final Fight
+  DANGER X    - конфиги для игры Banana Prince, Mighty Final Fight, SD Hero Soukessen
   Ti_         - помощь с дизассеблированием, конфиги для игр Contra Force, Jungle Book, Little Nemo, Battletoads, Battletoads & Double Dragon, Shatterhand, Tom & Jerry, Ninja Cats.
   Alxr        - разбор формата уровней Rockin' Kats.
   Proton      - финансовая поддержка, конфиги для Shatterhand

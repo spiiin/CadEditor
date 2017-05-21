@@ -9,7 +9,6 @@ public class Data
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x77C1 - 16*15*8  , 13 , 16*15);   }
   public int getScreenWidth()    { return 16; }
   public int getScreenHeight()   { return 15; }
-  //public string getBlocksFilename() { return "gb2_1.png"; }
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }
