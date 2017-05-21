@@ -1,6 +1,6 @@
 #script for compare two cdl files produces by FCEUX code-data log and show difference between logged data by ranges
-name1 = "file1.cdl"
-name2 = "file2.cdl"
+name1 = "f1.cdl"
+name2 = "f2.cdl"
 with open(name1, "rb") as f:
     d1 = f.read()
 with open(name2, "rb") as f:
