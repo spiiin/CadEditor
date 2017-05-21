@@ -222,6 +222,15 @@ hr {
   background: url("../images/blacktocat.png") 0 0 no-repeat;
 }
 
+.dashed {
+  background: rgba(0, 0, 0, 0.1);
+  width: 100%;
+  /*border-bottom: 1px dashed #b5e853;*/
+  border-top: 1px dashed #b5e853;
+  padding: 20px 0;
+  margin: 0 0 40px 0;
+}
+
 /* Links
    a, a:hover, a:visited
 */
