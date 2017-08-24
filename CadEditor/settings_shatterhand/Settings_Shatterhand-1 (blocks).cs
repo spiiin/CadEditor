@@ -52,7 +52,7 @@ public class Data
   {
     int addr = ConfigScript.getTilesAddr(tileId);
     int count = getBlocksCount();
-    Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, false, true);
+    Utils.writeBlocksLinear(blocks, Globals.romdata, addr, count, false, true);
     for (int i = 0; i < count; i++)
     {
         Globals.romdata[0x893f + i] = (byte)blocks[i].palBytes[0];
