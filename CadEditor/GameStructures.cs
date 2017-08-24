@@ -281,7 +281,7 @@ namespace CadEditor
         }
     }
 
-    public struct ObjectRec : IEquatable<ObjectRec>
+    public class ObjectRec : IEquatable<ObjectRec>
     {
         public ObjectRec(int type, int sx, int sy, int x, int y, Dictionary<String, int> additionalData)
             : this(type, sx, sy, x, y)
@@ -298,18 +298,22 @@ namespace CadEditor
             this.y = y;
             this.additionalData = null;
         }
-        public int type;
-        public int x;
-        public int y;
-        public int sx;
-        public int sy;
-        public Dictionary<String, int> additionalData;
 
-        public override String ToString()
+        public ObjectRec(ObjectRec other)
         {
-            String formatStr = (type > 15) ? "{0:X} : ({1:X}:{2:X})" : "0{0:X} : ({1:X}:{2:X})";
-            return String.Format(formatStr, type, sx << 8 | x, sy << 8 | y);
+            this.type = other.type;
+            this.sx = other.sx;
+            this.sy = other.sy;
+            this.x = other.x;
+            this.y = other.y;
+            this.additionalData = new Dictionary<String,int>(other.additionalData);
         }
+        public int type { get; set; }
+        public int x { get; set; }
+        public int y { get; set; }
+        public int sx { get; set; }
+        public int sy { get; set; }
+        public Dictionary<String, int> additionalData;
 
         bool IEquatable<ObjectRec>.Equals(ObjectRec other)
         {

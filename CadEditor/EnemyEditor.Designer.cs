@@ -32,12 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnemyEditor));
             this.mapScreen = new System.Windows.Forms.PictureBox();
             this.objPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.lvObjects = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.objectSprites = new System.Windows.Forms.ImageList(this.components);
-            this.cbCoordY = new System.Windows.Forms.ComboBox();
-            this.cbCoordX = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.activeBlock = new System.Windows.Forms.PictureBox();
             this.btSave = new System.Windows.Forms.Button();
@@ -68,13 +64,11 @@
             this.pnTools = new System.Windows.Forms.Panel();
             this.label16 = new System.Windows.Forms.Label();
             this.cbTool = new System.Windows.Forms.ComboBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.cbObjType = new System.Windows.Forms.ComboBox();
             this.lbObjectsCount = new System.Windows.Forms.Label();
             this.pnView = new System.Windows.Forms.Panel();
             this.pnObjectList = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
+            this.dgvObjects = new System.Windows.Forms.DataGridView();
             this.cbObjectList = new System.Windows.Forms.ComboBox();
             this.label19 = new System.Windows.Forms.Label();
             this.btSort = new System.Windows.Forms.Button();
@@ -91,8 +85,6 @@
             this.lbD0 = new System.Windows.Forms.Label();
             this.cbD1 = new System.Windows.Forms.ComboBox();
             this.lbD1 = new System.Windows.Forms.Label();
-            this.pnDataGridViewObjects = new System.Windows.Forms.Panel();
-            this.dgvObjects = new System.Windows.Forms.DataGridView();
             this.pnObjects = new System.Windows.Forms.Panel();
             this.btLoadJson = new System.Windows.Forms.Button();
             this.btSaveJson = new System.Windows.Forms.Button();
@@ -101,16 +93,14 @@
             this.cbBigObjectNo = new System.Windows.Forms.ComboBox();
             this.cbUseBigPictures = new System.Windows.Forms.CheckBox();
             this.cbBindToAxis = new System.Windows.Forms.CheckBox();
-            this.cbShowDataGrid = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
             this.pnTools.SuspendLayout();
             this.pnView.SuspendLayout();
             this.pnObjectList.SuspendLayout();
-            this.pnAddData.SuspendLayout();
-            this.pnDataGridViewObjects.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).BeginInit();
+            this.pnAddData.SuspendLayout();
             this.pnObjects.SuspendLayout();
             this.pnBigObjects.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbBigObject)).BeginInit();
@@ -143,25 +133,6 @@
             this.objPanel.Size = new System.Drawing.Size(229, 213);
             this.objPanel.TabIndex = 37;
             // 
-            // lvObjects
-            // 
-            this.lvObjects.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvObjects.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1});
-            this.lvObjects.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.lvObjects.Location = new System.Drawing.Point(0, 36);
-            this.lvObjects.Margin = new System.Windows.Forms.Padding(4);
-            this.lvObjects.Name = "lvObjects";
-            this.lvObjects.Size = new System.Drawing.Size(307, 362);
-            this.lvObjects.SmallImageList = this.objectSprites;
-            this.lvObjects.TabIndex = 38;
-            this.lvObjects.UseCompatibleStateImageBehavior = false;
-            this.lvObjects.View = System.Windows.Forms.View.Details;
-            this.lvObjects.SelectedIndexChanged += new System.EventHandler(this.lvObjects_SelectedIndexChanged);
-            this.lvObjects.KeyUp += new System.Windows.Forms.KeyEventHandler(this.lbObjects_KeyUp);
-            // 
             // columnHeader1
             // 
             this.columnHeader1.Width = 170;
@@ -171,54 +142,6 @@
             this.objectSprites.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
             this.objectSprites.ImageSize = new System.Drawing.Size(16, 16);
             this.objectSprites.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // cbCoordY
-            // 
-            this.cbCoordY.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbCoordY.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbCoordY.DropDownWidth = 100;
-            this.cbCoordY.Enabled = false;
-            this.cbCoordY.FormattingEnabled = true;
-            this.cbCoordY.Items.AddRange(new object[] {
-            "Tiles",
-            "Obj types"});
-            this.cbCoordY.Location = new System.Drawing.Point(240, 400);
-            this.cbCoordY.Margin = new System.Windows.Forms.Padding(4);
-            this.cbCoordY.Name = "cbCoordY";
-            this.cbCoordY.Size = new System.Drawing.Size(60, 24);
-            this.cbCoordY.TabIndex = 42;
-            this.cbCoordY.SelectedIndexChanged += new System.EventHandler(this.cbCoordX_SelectedIndexChanged);
-            // 
-            // cbCoordX
-            // 
-            this.cbCoordX.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbCoordX.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbCoordX.DropDownWidth = 100;
-            this.cbCoordX.Enabled = false;
-            this.cbCoordX.FormattingEnabled = true;
-            this.cbCoordX.Items.AddRange(new object[] {
-            "Tiles",
-            "Obj types"});
-            this.cbCoordX.Location = new System.Drawing.Point(140, 400);
-            this.cbCoordX.Margin = new System.Windows.Forms.Padding(4);
-            this.cbCoordX.Name = "cbCoordX";
-            this.cbCoordX.Size = new System.Drawing.Size(60, 24);
-            this.cbCoordX.TabIndex = 41;
-            this.cbCoordX.SelectedIndexChanged += new System.EventHandler(this.cbCoordX_SelectedIndexChanged);
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(0, 404);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(44, 17);
-            this.label5.TabIndex = 40;
-            this.label5.Text = "Type:";
             // 
             // label3
             // 
@@ -261,10 +184,10 @@
             // 
             this.btSortUp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSortUp.Location = new System.Drawing.Point(127, 487);
+            this.btSortUp.Location = new System.Drawing.Point(109, 511);
             this.btSortUp.Margin = new System.Windows.Forms.Padding(4);
             this.btSortUp.Name = "btSortUp";
-            this.btSortUp.Size = new System.Drawing.Size(88, 27);
+            this.btSortUp.Size = new System.Drawing.Size(74, 27);
             this.btSortUp.TabIndex = 47;
             this.btSortUp.Text = "↑";
             this.btSortUp.UseVisualStyleBackColor = true;
@@ -274,10 +197,10 @@
             // 
             this.btSortDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSortDown.Location = new System.Drawing.Point(223, 487);
+            this.btSortDown.Location = new System.Drawing.Point(191, 510);
             this.btSortDown.Margin = new System.Windows.Forms.Padding(4);
             this.btSortDown.Name = "btSortDown";
-            this.btSortDown.Size = new System.Drawing.Size(88, 27);
+            this.btSortDown.Size = new System.Drawing.Size(77, 27);
             this.btSortDown.TabIndex = 48;
             this.btSortDown.Text = "↓";
             this.btSortDown.UseVisualStyleBackColor = true;
@@ -517,10 +440,10 @@
             this.btDelete.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btDelete.Enabled = false;
-            this.btDelete.Location = new System.Drawing.Point(7, 517);
+            this.btDelete.Location = new System.Drawing.Point(7, 540);
             this.btDelete.Margin = new System.Windows.Forms.Padding(4);
             this.btDelete.Name = "btDelete";
-            this.btDelete.Size = new System.Drawing.Size(116, 30);
+            this.btDelete.Size = new System.Drawing.Size(155, 30);
             this.btDelete.TabIndex = 56;
             this.btDelete.Text = "delete selected";
             this.btDelete.UseVisualStyleBackColor = true;
@@ -531,7 +454,7 @@
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 572);
+            this.label7.Location = new System.Drawing.Point(7, 595);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(288, 17);
@@ -543,7 +466,7 @@
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 493);
+            this.label10.Location = new System.Drawing.Point(3, 516);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(98, 17);
@@ -564,7 +487,7 @@
             this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(7, 588);
+            this.label13.Location = new System.Drawing.Point(7, 611);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(240, 17);
@@ -576,7 +499,7 @@
             this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(11, 631);
+            this.label15.Location = new System.Drawing.Point(11, 654);
             this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(244, 17);
@@ -630,54 +553,12 @@
             this.cbTool.TabIndex = 29;
             this.cbTool.SelectedIndexChanged += new System.EventHandler(this.cbTool_SelectedIndexChanged);
             // 
-            // label17
-            // 
-            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(109, 404);
-            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(21, 17);
-            this.label17.TabIndex = 64;
-            this.label17.Text = "X:";
-            // 
-            // label18
-            // 
-            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(209, 404);
-            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(21, 17);
-            this.label18.TabIndex = 65;
-            this.label18.Text = "Y:";
-            // 
-            // cbObjType
-            // 
-            this.cbObjType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbObjType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbObjType.DropDownWidth = 100;
-            this.cbObjType.Enabled = false;
-            this.cbObjType.FormattingEnabled = true;
-            this.cbObjType.Items.AddRange(new object[] {
-            "Tiles",
-            "Obj types"});
-            this.cbObjType.Location = new System.Drawing.Point(40, 400);
-            this.cbObjType.Margin = new System.Windows.Forms.Padding(4);
-            this.cbObjType.Name = "cbObjType";
-            this.cbObjType.Size = new System.Drawing.Size(60, 24);
-            this.cbObjType.TabIndex = 66;
-            this.cbObjType.SelectedIndexChanged += new System.EventHandler(this.cbCoordX_SelectedIndexChanged);
-            // 
             // lbObjectsCount
             // 
             this.lbObjectsCount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbObjectsCount.AutoSize = true;
-            this.lbObjectsCount.Location = new System.Drawing.Point(7, 551);
+            this.lbObjectsCount.Location = new System.Drawing.Point(7, 574);
             this.lbObjectsCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbObjectsCount.Name = "lbObjectsCount";
             this.lbObjectsCount.Size = new System.Drawing.Size(123, 17);
@@ -694,7 +575,7 @@
             this.pnView.Location = new System.Drawing.Point(264, 21);
             this.pnView.Margin = new System.Windows.Forms.Padding(4);
             this.pnView.Name = "pnView";
-            this.pnView.Size = new System.Drawing.Size(683, 655);
+            this.pnView.Size = new System.Drawing.Size(700, 655);
             this.pnView.TabIndex = 68;
             // 
             // pnObjectList
@@ -702,17 +583,12 @@
             this.pnObjectList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnObjectList.Controls.Add(this.label6);
+            this.pnObjectList.Controls.Add(this.dgvObjects);
             this.pnObjectList.Controls.Add(this.cbObjectList);
             this.pnObjectList.Controls.Add(this.label19);
             this.pnObjectList.Controls.Add(this.btSort);
             this.pnObjectList.Controls.Add(this.pnAddData);
             this.pnObjectList.Controls.Add(this.lbObjectsCount);
-            this.pnObjectList.Controls.Add(this.cbObjType);
-            this.pnObjectList.Controls.Add(this.label5);
-            this.pnObjectList.Controls.Add(this.label18);
-            this.pnObjectList.Controls.Add(this.cbCoordX);
-            this.pnObjectList.Controls.Add(this.label17);
-            this.pnObjectList.Controls.Add(this.cbCoordY);
             this.pnObjectList.Controls.Add(this.btSortUp);
             this.pnObjectList.Controls.Add(this.label15);
             this.pnObjectList.Controls.Add(this.btSortDown);
@@ -720,33 +596,49 @@
             this.pnObjectList.Controls.Add(this.label13);
             this.pnObjectList.Controls.Add(this.label7);
             this.pnObjectList.Controls.Add(this.label10);
-            this.pnObjectList.Controls.Add(this.lvObjects);
-            this.pnObjectList.Controls.Add(this.pnDataGridViewObjects);
-            this.pnObjectList.Location = new System.Drawing.Point(955, 57);
+            this.pnObjectList.Location = new System.Drawing.Point(972, 22);
             this.pnObjectList.Margin = new System.Windows.Forms.Padding(4);
             this.pnObjectList.Name = "pnObjectList";
-            this.pnObjectList.Size = new System.Drawing.Size(309, 623);
+            this.pnObjectList.Size = new System.Drawing.Size(363, 646);
             this.pnObjectList.TabIndex = 31;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(11, 7);
+            this.label6.Location = new System.Drawing.Point(21, 7);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(74, 17);
             this.label6.TabIndex = 59;
             this.label6.Text = "Object list:";
             // 
+            // dgvObjects
+            // 
+            this.dgvObjects.AllowUserToOrderColumns = true;
+            this.dgvObjects.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvObjects.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
+            this.dgvObjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvObjects.Location = new System.Drawing.Point(3, 31);
+            this.dgvObjects.Name = "dgvObjects";
+            this.dgvObjects.RowTemplate.Height = 24;
+            this.dgvObjects.Size = new System.Drawing.Size(357, 413);
+            this.dgvObjects.TabIndex = 0;
+            this.dgvObjects.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvObjects_CellFormatting);
+            this.dgvObjects.CellParsing += new System.Windows.Forms.DataGridViewCellParsingEventHandler(this.dgvObjects_CellParsing);
+            this.dgvObjects.SelectionChanged += new System.EventHandler(this.dgvObjects_SelectionChanged);
+            this.dgvObjects.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgvObjects_KeyUp);
+            // 
             // cbObjectList
             // 
             this.cbObjectList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbObjectList.DropDownWidth = 220;
             this.cbObjectList.FormattingEnabled = true;
-            this.cbObjectList.Location = new System.Drawing.Point(93, 4);
+            this.cbObjectList.Location = new System.Drawing.Point(127, 4);
             this.cbObjectList.Margin = new System.Windows.Forms.Padding(4);
             this.cbObjectList.Name = "cbObjectList";
-            this.cbObjectList.Size = new System.Drawing.Size(198, 24);
+            this.cbObjectList.Size = new System.Drawing.Size(228, 24);
             this.cbObjectList.TabIndex = 58;
             this.cbObjectList.SelectedIndexChanged += new System.EventHandler(this.cbObjectList_SelectedIndexChanged);
             // 
@@ -755,7 +647,7 @@
             this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(7, 603);
+            this.label19.Location = new System.Drawing.Point(7, 626);
             this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(265, 17);
@@ -766,10 +658,10 @@
             // 
             this.btSort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSort.Location = new System.Drawing.Point(173, 544);
+            this.btSort.Location = new System.Drawing.Point(170, 540);
             this.btSort.Margin = new System.Windows.Forms.Padding(4);
             this.btSort.Name = "btSort";
-            this.btSort.Size = new System.Drawing.Size(129, 30);
+            this.btSort.Size = new System.Drawing.Size(159, 30);
             this.btSort.TabIndex = 69;
             this.btSort.Text = "autosort objects";
             this.btSort.UseVisualStyleBackColor = true;
@@ -791,10 +683,10 @@
             this.pnAddData.Controls.Add(this.lbD0);
             this.pnAddData.Controls.Add(this.cbD1);
             this.pnAddData.Controls.Add(this.lbD1);
-            this.pnAddData.Location = new System.Drawing.Point(-4, 428);
+            this.pnAddData.Location = new System.Drawing.Point(-4, 451);
             this.pnAddData.Margin = new System.Windows.Forms.Padding(4);
             this.pnAddData.Name = "pnAddData";
-            this.pnAddData.Size = new System.Drawing.Size(305, 57);
+            this.pnAddData.Size = new System.Drawing.Size(359, 57);
             this.pnAddData.TabIndex = 68;
             // 
             // cbD4
@@ -810,7 +702,7 @@
             this.cbD4.Location = new System.Drawing.Point(144, 30);
             this.cbD4.Margin = new System.Windows.Forms.Padding(4);
             this.cbD4.Name = "cbD4";
-            this.cbD4.Size = new System.Drawing.Size(60, 24);
+            this.cbD4.Size = new System.Drawing.Size(56, 24);
             this.cbD4.TabIndex = 79;
             // 
             // lbD4
@@ -838,7 +730,7 @@
             this.cbD5.Location = new System.Drawing.Point(244, 30);
             this.cbD5.Margin = new System.Windows.Forms.Padding(4);
             this.cbD5.Name = "cbD5";
-            this.cbD5.Size = new System.Drawing.Size(60, 24);
+            this.cbD5.Size = new System.Drawing.Size(55, 24);
             this.cbD5.TabIndex = 77;
             // 
             // lbD5
@@ -866,7 +758,7 @@
             this.cbD2.Location = new System.Drawing.Point(244, 4);
             this.cbD2.Margin = new System.Windows.Forms.Padding(4);
             this.cbD2.Name = "cbD2";
-            this.cbD2.Size = new System.Drawing.Size(60, 24);
+            this.cbD2.Size = new System.Drawing.Size(55, 24);
             this.cbD2.TabIndex = 75;
             // 
             // lbD2
@@ -894,7 +786,7 @@
             this.cbD3.Location = new System.Drawing.Point(44, 30);
             this.cbD3.Margin = new System.Windows.Forms.Padding(4);
             this.cbD3.Name = "cbD3";
-            this.cbD3.Size = new System.Drawing.Size(60, 24);
+            this.cbD3.Size = new System.Drawing.Size(61, 24);
             this.cbD3.TabIndex = 73;
             // 
             // lbD3
@@ -922,7 +814,7 @@
             this.cbD0.Location = new System.Drawing.Point(44, 4);
             this.cbD0.Margin = new System.Windows.Forms.Padding(4);
             this.cbD0.Name = "cbD0";
-            this.cbD0.Size = new System.Drawing.Size(60, 24);
+            this.cbD0.Size = new System.Drawing.Size(61, 24);
             this.cbD0.TabIndex = 71;
             // 
             // lbD0
@@ -950,7 +842,7 @@
             this.cbD1.Location = new System.Drawing.Point(144, 4);
             this.cbD1.Margin = new System.Windows.Forms.Padding(4);
             this.cbD1.Name = "cbD1";
-            this.cbD1.Size = new System.Drawing.Size(60, 24);
+            this.cbD1.Size = new System.Drawing.Size(55, 24);
             this.cbD1.TabIndex = 69;
             // 
             // lbD1
@@ -964,24 +856,6 @@
             this.lbD1.Size = new System.Drawing.Size(30, 17);
             this.lbD1.TabIndex = 68;
             this.lbD1.Text = "D1:";
-            // 
-            // pnDataGridViewObjects
-            // 
-            this.pnDataGridViewObjects.Controls.Add(this.dgvObjects);
-            this.pnDataGridViewObjects.Location = new System.Drawing.Point(0, 0);
-            this.pnDataGridViewObjects.Name = "pnDataGridViewObjects";
-            this.pnDataGridViewObjects.Size = new System.Drawing.Size(302, 393);
-            this.pnDataGridViewObjects.TabIndex = 71;
-            this.pnDataGridViewObjects.Visible = false;
-            // 
-            // dgvObjects
-            // 
-            this.dgvObjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvObjects.Location = new System.Drawing.Point(3, 22);
-            this.dgvObjects.Name = "dgvObjects";
-            this.dgvObjects.RowTemplate.Height = 24;
-            this.dgvObjects.Size = new System.Drawing.Size(302, 393);
-            this.dgvObjects.TabIndex = 0;
             // 
             // pnObjects
             // 
@@ -1094,26 +968,14 @@
             this.cbBindToAxis.UseVisualStyleBackColor = true;
             this.cbBindToAxis.CheckedChanged += new System.EventHandler(this.cbBindToAxis_CheckedChanged);
             // 
-            // cbShowDataGrid
-            // 
-            this.cbShowDataGrid.AutoSize = true;
-            this.cbShowDataGrid.Location = new System.Drawing.Point(958, 22);
-            this.cbShowDataGrid.Name = "cbShowDataGrid";
-            this.cbShowDataGrid.Size = new System.Drawing.Size(129, 21);
-            this.cbShowDataGrid.TabIndex = 69;
-            this.cbShowDataGrid.Text = "Show Data Grid";
-            this.cbShowDataGrid.UseVisualStyleBackColor = true;
-            this.cbShowDataGrid.Visible = false;
-            // 
             // EnemyEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1259, 681);
-            this.Controls.Add(this.cbShowDataGrid);
+            this.ClientSize = new System.Drawing.Size(1348, 681);
+            this.Controls.Add(this.pnObjectList);
             this.Controls.Add(this.pnTools);
             this.Controls.Add(this.pnObjects);
-            this.Controls.Add(this.pnObjectList);
             this.Controls.Add(this.pnView);
             this.Controls.Add(this.label12);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1132,10 +994,9 @@
             this.pnView.ResumeLayout(false);
             this.pnObjectList.ResumeLayout(false);
             this.pnObjectList.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).EndInit();
             this.pnAddData.ResumeLayout(false);
             this.pnAddData.PerformLayout();
-            this.pnDataGridViewObjects.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).EndInit();
             this.pnObjects.ResumeLayout(false);
             this.pnObjects.PerformLayout();
             this.pnBigObjects.ResumeLayout(false);
@@ -1149,11 +1010,7 @@
 
         private System.Windows.Forms.PictureBox mapScreen;
         private System.Windows.Forms.FlowLayoutPanel objPanel;
-        private System.Windows.Forms.ListView lvObjects;
         private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ComboBox cbCoordY;
-        private System.Windows.Forms.ComboBox cbCoordX;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ImageList objectSprites;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox activeBlock;
@@ -1183,9 +1040,6 @@
         private System.Windows.Forms.Panel pnTools;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.ComboBox cbTool;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.ComboBox cbObjType;
         private System.Windows.Forms.Label lbObjectsCount;
         private System.Windows.Forms.Panel pnView;
         private System.Windows.Forms.Panel pnObjectList;
@@ -1216,8 +1070,6 @@
         private System.Windows.Forms.Button btSaveJson;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cbObjectList;
-        private System.Windows.Forms.Panel pnDataGridViewObjects;
         private System.Windows.Forms.DataGridView dgvObjects;
-        private System.Windows.Forms.CheckBox cbShowDataGrid;
     }
 }
