@@ -39,8 +39,6 @@ namespace CadEditor
         private bool readOnly = false;
 
         private FormMain formMain;
-        ComboBox[] cbDatas;
-        Label[] lbDatas;
 
         private Image[] objectSpritesBig;
         private Image[] bigBlocks;
@@ -150,9 +148,6 @@ namespace CadEditor
             {
                 bigBlocks = UtilsGDI.setBlocksForPictures(2, 32,32, MapViewType.Tiles, formMain.ShowAxis);
             }
-
-            cbDatas = new ComboBox[] { cbD0, cbD1, cbD2, cbD3, cbD4, cbD5 };
-            lbDatas = new Label[]    { lbD0, lbD1, lbD2, lbD3, lbD4, lbD5 };
 
             reloadPictures();
             fillObjPanel();
@@ -264,58 +259,10 @@ namespace CadEditor
         private void setObjects()
         {
             objectLists = ConfigScript.getObjects(getActiveLayoutNo());
-            updateAddDataVisible(0);
             cbObjectList.Items.Clear();
             for (int i = 0; i < objectLists.Count; i++)
                 cbObjectList.Items.Add(objectLists[i].name);
             fillObjectsDataGrid();
-        }
-
-        private void cbCoordX_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var activeObjectList = objectLists[curActiveObjectListIndex];
-            int index = dgvObjects.SelectedRows[0].Index;
-            var obj = activeObjectList.objects[index];
-            if (obj.additionalData != null)
-            {
-                foreach (var cb in cbDatas)
-                {
-                    if (cb.Visible)  //enable
-                    {
-                        var key = (string)cb.Tag;
-                        activeObjectList.objects[index].additionalData[key] = cb.SelectedIndex;
-                    }
-                }
-            }
-            mapScreen.Invalidate();
-        }
-
-        public void updateAddDataVisible(int index)
-        {
-            var activeObjectList = objectLists[curActiveObjectListIndex];
-            pnAddData.Visible = activeObjectList.objects.Count > index && activeObjectList.objects[index].additionalData != null;
-            if (pnAddData.Visible)
-            {
-                int addDataCount = 0;
-                foreach (var addData in activeObjectList.objects[index].additionalData)
-                {
-                    var key = addData.Key;
-                    lbDatas[addDataCount].Text = key;
-                    cbDatas[addDataCount].Tag = key;
-                    cbDatas[addDataCount].SelectedIndexChanged -= cbCoordX_SelectedIndexChanged;
-                    UtilsGui.setCbItemsCount(cbDatas[addDataCount], 256, 0, true);
-                    cbDatas[addDataCount].SelectedIndexChanged += cbCoordX_SelectedIndexChanged;
-                    cbDatas[addDataCount].Visible = true;
-                    lbDatas[addDataCount].Visible = true;
-                    if (++addDataCount == cbDatas.Length)
-                        break;
-                }
-                for (int i = addDataCount; i < cbDatas.Length; i++ )
-                {
-                    cbDatas[i].Visible = false;
-                    lbDatas[i].Visible = false;
-                }
-            }
         }
 
         private void fillObjectsDataGrid()
@@ -324,14 +271,30 @@ namespace CadEditor
             var activeObjectList = objectLists[curActiveObjectListIndex];
             dgvObjects.DataSource = activeObjectList.objects;
 
-            //add icon column
-            if (dgvObjects.Columns.Count != 6)
+            if (dgvObjects.Columns.Count < ObjectRec.FIELD_COUNT)
             {
+                //add icon column
                 DataGridViewImageColumn iconColumn = new DataGridViewImageColumn();
                 iconColumn.Name = "Icon";
                 iconColumn.HeaderText = "Icon";
                 dgvObjects.Columns.Insert(0, iconColumn);
 
+                //add values from dictionary
+                if (activeObjectList.objects.Count > 0)
+                {
+                    var defObject = activeObjectList.objects[0];
+                    var dict = defObject.additionalData;
+                    if (dict != null)
+                    {
+                        foreach (var k in dict.Keys)
+                        {
+                            var dictColumn = new DataGridViewTextBoxColumn();
+                            dictColumn.Name = k;
+                            dictColumn.HeaderText = k;
+                            dgvObjects.Columns.Add(dictColumn);
+                        }
+                    }
+                }
             }
 
             for (int i = 0; i < dgvObjects.Columns.Count; i++)
@@ -873,6 +836,29 @@ namespace CadEditor
 
         private void dgvObjects_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
+            if (e.ColumnIndex == 1)
+            {
+                var row = dgvObjects.Rows[e.RowIndex];
+                int cell0 = Convert.ToInt32(row.Cells[1].Value);
+
+                if (row.Cells.Count >= ObjectRec.FIELD_COUNT)
+                {
+                    //update icon
+                    row.Cells[0].Value = objectSprites.Images[cell0];
+
+                    //update dictionary
+                    var activeObjectList = objectLists[curActiveObjectListIndex];
+                    var dict = activeObjectList.objects[e.RowIndex].additionalData;
+                    if (dict != null)
+                    {
+                        foreach (var k in dict.Keys)
+                        {
+                            row.Cells[k].Value = dict[k];
+                        }
+                    }
+                }
+            }
+
             if (e.Value != null)
             {
                 long value = 0;
@@ -880,17 +866,6 @@ namespace CadEditor
                 {
                     e.Value = "0x" + value.ToString("X");
                     e.FormattingApplied = true;
-                }
-            }
-
-            if (e.ColumnIndex == 1)
-            {
-                var row = dgvObjects.Rows[e.RowIndex];
-                int cell0 = Convert.ToInt32(row.Cells[1].Value);
-
-                if (row.Cells.Count == 6)
-                {
-                    row.Cells[0].Value = objectSprites.Images[cell0];
                 }
             }
         }
@@ -914,47 +889,39 @@ namespace CadEditor
                     }
                 }
             }
+
+            if (e != null && e.Value != null)
+            {
+                try
+                {
+                    //check dict fields
+                    if (e.ColumnIndex >= ObjectRec.FIELD_COUNT)
+                    {
+                        var activeObjectList = objectLists[curActiveObjectListIndex];
+                        var dict = activeObjectList.objects[e.RowIndex].additionalData;
+                        if (dict != null)
+                        {
+                            var v = e.Value.ToString();
+                            bool isHex = (v.StartsWith("0x") || v.StartsWith("0X"));
+                            int intValue = isHex ? (int)Convert.ToInt32(v.ToString(), 16) : (int)Convert.ToInt32(v.ToString(), 10);
+                            dict[dgvObjects.Columns[e.ColumnIndex].Name] = intValue;
+                        }
+                    }
+                }
+                catch
+                {
+                    //error at parse dictionary
+                }
+            }
         }
 
         private void dgvObjects_SelectionChanged(object sender, EventArgs e)
         {
             bool selectedZero = dgvObjects.SelectedRows.Count == 0;
-            bool selectedOne = dgvObjects.SelectedRows.Count == 1;
-            bool selectedMany = dgvObjects.SelectedRows.Count > 1;
             btDelete.Enabled = !selectedZero;
             btSortDown.Enabled = false;
             btSortUp.Enabled = false;
 
-            var activeObjectList = objectLists[curActiveObjectListIndex];
-
-            if (selectedOne)
-            {
-                int index = dgvObjects.SelectedRows[0].Index;
-                try
-                {
-                    if (activeObjectList.objects[index].additionalData != null)
-                    {
-                        updateAddDataVisible(index);
-                        int addDataCount = 0;
-                        foreach (var addData in activeObjectList.objects[index].additionalData)
-                        {
-
-                            UtilsGui.setCbIndexWithoutUpdateLevel(cbDatas[addDataCount], cbCoordX_SelectedIndexChanged, addData.Value);
-                            cbDatas[addDataCount].Enabled = true;
-                            if (++addDataCount == cbDatas.Length)
-                                break;
-                        }
-                    }
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                    if (activeObjectList.objects[index].additionalData != null)
-                    {
-                        foreach (var cb in cbDatas)
-                            cb.Enabled = false;
-                    }
-                }
-            }
             if (!selectedZero)
             {
                 btSortDown.Enabled = dgvObjects.SelectedRows.Cast<DataGridViewRow>().All(r => r.Index < dgvObjects.RowCount - 1); ;

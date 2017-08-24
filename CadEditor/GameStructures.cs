@@ -315,6 +315,8 @@ namespace CadEditor
         public int sy { get; set; }
         public Dictionary<String, int> additionalData;
 
+        public static int FIELD_COUNT = 6;
+
         bool IEquatable<ObjectRec>.Equals(ObjectRec other)
         {
             bool fieldsEq = (type == other.type) && (x == other.x) && (y == other.y) && (sx == other.sx) && (sy == other.sy);

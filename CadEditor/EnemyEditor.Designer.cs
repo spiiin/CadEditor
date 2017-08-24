@@ -72,19 +72,6 @@
             this.cbObjectList = new System.Windows.Forms.ComboBox();
             this.label19 = new System.Windows.Forms.Label();
             this.btSort = new System.Windows.Forms.Button();
-            this.pnAddData = new System.Windows.Forms.Panel();
-            this.cbD4 = new System.Windows.Forms.ComboBox();
-            this.lbD4 = new System.Windows.Forms.Label();
-            this.cbD5 = new System.Windows.Forms.ComboBox();
-            this.lbD5 = new System.Windows.Forms.Label();
-            this.cbD2 = new System.Windows.Forms.ComboBox();
-            this.lbD2 = new System.Windows.Forms.Label();
-            this.cbD3 = new System.Windows.Forms.ComboBox();
-            this.lbD3 = new System.Windows.Forms.Label();
-            this.cbD0 = new System.Windows.Forms.ComboBox();
-            this.lbD0 = new System.Windows.Forms.Label();
-            this.cbD1 = new System.Windows.Forms.ComboBox();
-            this.lbD1 = new System.Windows.Forms.Label();
             this.pnObjects = new System.Windows.Forms.Panel();
             this.btLoadJson = new System.Windows.Forms.Button();
             this.btSaveJson = new System.Windows.Forms.Button();
@@ -100,7 +87,6 @@
             this.pnView.SuspendLayout();
             this.pnObjectList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).BeginInit();
-            this.pnAddData.SuspendLayout();
             this.pnObjects.SuspendLayout();
             this.pnBigObjects.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbBigObject)).BeginInit();
@@ -587,7 +573,6 @@
             this.pnObjectList.Controls.Add(this.cbObjectList);
             this.pnObjectList.Controls.Add(this.label19);
             this.pnObjectList.Controls.Add(this.btSort);
-            this.pnObjectList.Controls.Add(this.pnAddData);
             this.pnObjectList.Controls.Add(this.lbObjectsCount);
             this.pnObjectList.Controls.Add(this.btSortUp);
             this.pnObjectList.Controls.Add(this.label15);
@@ -623,7 +608,7 @@
             this.dgvObjects.Location = new System.Drawing.Point(3, 31);
             this.dgvObjects.Name = "dgvObjects";
             this.dgvObjects.RowTemplate.Height = 24;
-            this.dgvObjects.Size = new System.Drawing.Size(357, 413);
+            this.dgvObjects.Size = new System.Drawing.Size(357, 472);
             this.dgvObjects.TabIndex = 0;
             this.dgvObjects.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvObjects_CellFormatting);
             this.dgvObjects.CellParsing += new System.Windows.Forms.DataGridViewCellParsingEventHandler(this.dgvObjects_CellParsing);
@@ -666,196 +651,6 @@
             this.btSort.Text = "autosort objects";
             this.btSort.UseVisualStyleBackColor = true;
             this.btSort.Click += new System.EventHandler(this.btSort_Click);
-            // 
-            // pnAddData
-            // 
-            this.pnAddData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnAddData.Controls.Add(this.cbD4);
-            this.pnAddData.Controls.Add(this.lbD4);
-            this.pnAddData.Controls.Add(this.cbD5);
-            this.pnAddData.Controls.Add(this.lbD5);
-            this.pnAddData.Controls.Add(this.cbD2);
-            this.pnAddData.Controls.Add(this.lbD2);
-            this.pnAddData.Controls.Add(this.cbD3);
-            this.pnAddData.Controls.Add(this.lbD3);
-            this.pnAddData.Controls.Add(this.cbD0);
-            this.pnAddData.Controls.Add(this.lbD0);
-            this.pnAddData.Controls.Add(this.cbD1);
-            this.pnAddData.Controls.Add(this.lbD1);
-            this.pnAddData.Location = new System.Drawing.Point(-4, 451);
-            this.pnAddData.Margin = new System.Windows.Forms.Padding(4);
-            this.pnAddData.Name = "pnAddData";
-            this.pnAddData.Size = new System.Drawing.Size(359, 57);
-            this.pnAddData.TabIndex = 68;
-            // 
-            // cbD4
-            // 
-            this.cbD4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbD4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbD4.DropDownWidth = 100;
-            this.cbD4.Enabled = false;
-            this.cbD4.FormattingEnabled = true;
-            this.cbD4.Items.AddRange(new object[] {
-            "\\"});
-            this.cbD4.Location = new System.Drawing.Point(144, 30);
-            this.cbD4.Margin = new System.Windows.Forms.Padding(4);
-            this.cbD4.Name = "cbD4";
-            this.cbD4.Size = new System.Drawing.Size(56, 24);
-            this.cbD4.TabIndex = 79;
-            // 
-            // lbD4
-            // 
-            this.lbD4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbD4.AutoSize = true;
-            this.lbD4.Location = new System.Drawing.Point(107, 33);
-            this.lbD4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbD4.Name = "lbD4";
-            this.lbD4.Size = new System.Drawing.Size(30, 17);
-            this.lbD4.TabIndex = 78;
-            this.lbD4.Text = "D1:";
-            // 
-            // cbD5
-            // 
-            this.cbD5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbD5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbD5.DropDownWidth = 100;
-            this.cbD5.Enabled = false;
-            this.cbD5.FormattingEnabled = true;
-            this.cbD5.Items.AddRange(new object[] {
-            "\\"});
-            this.cbD5.Location = new System.Drawing.Point(244, 30);
-            this.cbD5.Margin = new System.Windows.Forms.Padding(4);
-            this.cbD5.Name = "cbD5";
-            this.cbD5.Size = new System.Drawing.Size(55, 24);
-            this.cbD5.TabIndex = 77;
-            // 
-            // lbD5
-            // 
-            this.lbD5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbD5.AutoSize = true;
-            this.lbD5.Location = new System.Drawing.Point(208, 33);
-            this.lbD5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbD5.Name = "lbD5";
-            this.lbD5.Size = new System.Drawing.Size(30, 17);
-            this.lbD5.TabIndex = 76;
-            this.lbD5.Text = "D1:";
-            // 
-            // cbD2
-            // 
-            this.cbD2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbD2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbD2.DropDownWidth = 100;
-            this.cbD2.Enabled = false;
-            this.cbD2.FormattingEnabled = true;
-            this.cbD2.Items.AddRange(new object[] {
-            "\\"});
-            this.cbD2.Location = new System.Drawing.Point(244, 4);
-            this.cbD2.Margin = new System.Windows.Forms.Padding(4);
-            this.cbD2.Name = "cbD2";
-            this.cbD2.Size = new System.Drawing.Size(55, 24);
-            this.cbD2.TabIndex = 75;
-            // 
-            // lbD2
-            // 
-            this.lbD2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbD2.AutoSize = true;
-            this.lbD2.Location = new System.Drawing.Point(207, 7);
-            this.lbD2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbD2.Name = "lbD2";
-            this.lbD2.Size = new System.Drawing.Size(30, 17);
-            this.lbD2.TabIndex = 74;
-            this.lbD2.Text = "D1:";
-            // 
-            // cbD3
-            // 
-            this.cbD3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbD3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbD3.DropDownWidth = 100;
-            this.cbD3.Enabled = false;
-            this.cbD3.FormattingEnabled = true;
-            this.cbD3.Items.AddRange(new object[] {
-            "\\"});
-            this.cbD3.Location = new System.Drawing.Point(44, 30);
-            this.cbD3.Margin = new System.Windows.Forms.Padding(4);
-            this.cbD3.Name = "cbD3";
-            this.cbD3.Size = new System.Drawing.Size(61, 24);
-            this.cbD3.TabIndex = 73;
-            // 
-            // lbD3
-            // 
-            this.lbD3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbD3.AutoSize = true;
-            this.lbD3.Location = new System.Drawing.Point(4, 33);
-            this.lbD3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbD3.Name = "lbD3";
-            this.lbD3.Size = new System.Drawing.Size(30, 17);
-            this.lbD3.TabIndex = 72;
-            this.lbD3.Text = "D1:";
-            // 
-            // cbD0
-            // 
-            this.cbD0.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbD0.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbD0.DropDownWidth = 100;
-            this.cbD0.Enabled = false;
-            this.cbD0.FormattingEnabled = true;
-            this.cbD0.Items.AddRange(new object[] {
-            "\\"});
-            this.cbD0.Location = new System.Drawing.Point(44, 4);
-            this.cbD0.Margin = new System.Windows.Forms.Padding(4);
-            this.cbD0.Name = "cbD0";
-            this.cbD0.Size = new System.Drawing.Size(61, 24);
-            this.cbD0.TabIndex = 71;
-            // 
-            // lbD0
-            // 
-            this.lbD0.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbD0.AutoSize = true;
-            this.lbD0.Location = new System.Drawing.Point(4, 7);
-            this.lbD0.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbD0.Name = "lbD0";
-            this.lbD0.Size = new System.Drawing.Size(30, 17);
-            this.lbD0.TabIndex = 70;
-            this.lbD0.Text = "D1:";
-            // 
-            // cbD1
-            // 
-            this.cbD1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbD1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbD1.DropDownWidth = 100;
-            this.cbD1.Enabled = false;
-            this.cbD1.FormattingEnabled = true;
-            this.cbD1.Items.AddRange(new object[] {
-            "\\"});
-            this.cbD1.Location = new System.Drawing.Point(144, 4);
-            this.cbD1.Margin = new System.Windows.Forms.Padding(4);
-            this.cbD1.Name = "cbD1";
-            this.cbD1.Size = new System.Drawing.Size(55, 24);
-            this.cbD1.TabIndex = 69;
-            // 
-            // lbD1
-            // 
-            this.lbD1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbD1.AutoSize = true;
-            this.lbD1.Location = new System.Drawing.Point(107, 7);
-            this.lbD1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbD1.Name = "lbD1";
-            this.lbD1.Size = new System.Drawing.Size(30, 17);
-            this.lbD1.TabIndex = 68;
-            this.lbD1.Text = "D1:";
             // 
             // pnObjects
             // 
@@ -995,8 +790,6 @@
             this.pnObjectList.ResumeLayout(false);
             this.pnObjectList.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).EndInit();
-            this.pnAddData.ResumeLayout(false);
-            this.pnAddData.PerformLayout();
             this.pnObjects.ResumeLayout(false);
             this.pnObjects.PerformLayout();
             this.pnBigObjects.ResumeLayout(false);
@@ -1044,21 +837,8 @@
         private System.Windows.Forms.Panel pnView;
         private System.Windows.Forms.Panel pnObjectList;
         private System.Windows.Forms.Panel pnObjects;
-        private System.Windows.Forms.Panel pnAddData;
-        private System.Windows.Forms.ComboBox cbD1;
-        private System.Windows.Forms.Label lbD1;
         private System.Windows.Forms.Button btSort;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.ComboBox cbD4;
-        private System.Windows.Forms.Label lbD4;
-        private System.Windows.Forms.ComboBox cbD5;
-        private System.Windows.Forms.Label lbD5;
-        private System.Windows.Forms.ComboBox cbD2;
-        private System.Windows.Forms.Label lbD2;
-        private System.Windows.Forms.ComboBox cbD3;
-        private System.Windows.Forms.Label lbD3;
-        private System.Windows.Forms.ComboBox cbD0;
-        private System.Windows.Forms.Label lbD0;
         private System.Windows.Forms.CheckBox cbBindToAxis;
         private System.Windows.Forms.CheckBox cbUseBigPictures;
         private System.Windows.Forms.Panel pnBigObjects;
