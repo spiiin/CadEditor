@@ -249,7 +249,7 @@ namespace CadEditor
             for (int i = 0; i < toRemove.Count; i++)
                 activeObjectList.objects.Remove(toRemove[i]);
 
-            fillObjectsListBox();
+            fillObjectsDataGrid();
 
             btDelete.Enabled = false;
             mapScreen.Invalidate();
@@ -268,7 +268,7 @@ namespace CadEditor
             cbObjectList.Items.Clear();
             for (int i = 0; i < objectLists.Count; i++)
                 cbObjectList.Items.Add(objectLists[i].name);
-            fillObjectsListBox();
+            fillObjectsDataGrid();
         }
 
         private void cbCoordX_SelectedIndexChanged(object sender, EventArgs e)
@@ -316,11 +316,6 @@ namespace CadEditor
                     lbDatas[i].Visible = false;
                 }
             }
-        }
-
-        private void fillObjectsListBox()
-        {
-            fillObjectsDataGrid();
         }
 
         private void fillObjectsDataGrid()
@@ -568,7 +563,7 @@ namespace CadEditor
                     activeObjectList.objects[ind] = activeObjectList.objects[ind - 1];
                     activeObjectList.objects[ind - 1] = xchg;
                 }
-                fillObjectsListBox();
+                fillObjectsDataGrid();
 
                 //correct selection
                 for (int i = 0; i < selInds.Count; i++)
@@ -608,7 +603,7 @@ namespace CadEditor
                     activeObjectList.objects[ind + 1] = xchg;
                 }
 
-                fillObjectsListBox();
+                fillObjectsDataGrid();
 
                 //correct selection
                 for (int i = 0; i < selInds.Count; i++)
@@ -645,7 +640,7 @@ namespace CadEditor
         {
             var activeObjectList = objectLists[curActiveObjectListIndex];
             ConfigScript.sortObjects(getActiveLayoutNo(), curActiveObjectListIndex, activeObjectList.objects);
-            fillObjectsListBox();
+            fillObjectsDataGrid();
         }
 
         private int getActiveLayoutNo()
@@ -798,7 +793,7 @@ namespace CadEditor
                 activeObjectList.objects.Insert(insertPos, obj);
 
                 dgvObjects.DataSource = null;
-                fillObjectsListBox();
+                fillObjectsDataGrid();
             }
             else if (curTool == ToolType.Delete)
             {
@@ -813,7 +808,7 @@ namespace CadEditor
                         dirty = true;
                         dgvObjects.DataSource = null;
                         activeObjectList.objects.RemoveAt(i);
-                        fillObjectsListBox();
+                        fillObjectsDataGrid();
                         break;
                     }
                 }
@@ -872,7 +867,7 @@ namespace CadEditor
             if (cbObjectList.SelectedIndex == -1)
                 return;
             curActiveObjectListIndex = cbObjectList.SelectedIndex;
-            fillObjectsListBox();
+            fillObjectsDataGrid();
             mapScreen.Invalidate();
         }
 
