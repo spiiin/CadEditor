@@ -972,29 +972,4 @@ namespace CadEditor
             }
         }
     }
-
-    public class ObjectList : IEquatable<ObjectList>
-    {
-        public ObjectList()
-        {
-            objects = new List<ObjectRec>();
-            name = "Objects";
-        }
-        public List<ObjectRec> objects;
-        public string name;
-
-        bool IEquatable<ObjectList>.Equals(ObjectList other)
-        {
-            if (name != other.name)
-                return false;
-            return objects.SequenceEqual(other.objects);
-        }
-    }
-
-    enum ToolType
-    {
-        Create,
-        Select,
-        Delete
-    }
 }
