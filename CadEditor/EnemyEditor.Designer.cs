@@ -31,12 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnemyEditor));
             this.mapScreen = new System.Windows.Forms.PictureBox();
-            this.btLeft = new System.Windows.Forms.Button();
-            this.btRight = new System.Windows.Forms.Button();
-            this.btUp = new System.Windows.Forms.Button();
-            this.btDown = new System.Windows.Forms.Button();
-            this.cbScreenNo = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.objPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.lvObjects = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -44,7 +38,6 @@
             this.cbCoordY = new System.Windows.Forms.ComboBox();
             this.cbCoordX = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.btClearObjs = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.activeBlock = new System.Windows.Forms.PictureBox();
             this.btSave = new System.Windows.Forms.Button();
@@ -64,8 +57,6 @@
             this.cbBigBlockNo = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cbVideoNo = new System.Windows.Forms.ComboBox();
-            this.pnSelectScreen = new System.Windows.Forms.Panel();
-            this.lbScrNo = new System.Windows.Forms.Label();
             this.lbActive = new System.Windows.Forms.Label();
             this.btDelete = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
@@ -114,7 +105,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
-            this.pnSelectScreen.SuspendLayout();
             this.pnTools.SuspendLayout();
             this.pnView.SuspendLayout();
             this.pnObjectList.SuspendLayout();
@@ -140,71 +130,6 @@
             this.mapScreen.MouseLeave += new System.EventHandler(this.mapScreen_MouseLeave);
             this.mapScreen.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseMove);
             this.mapScreen.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseUp);
-            // 
-            // btLeft
-            // 
-            this.btLeft.Location = new System.Drawing.Point(19, 26);
-            this.btLeft.Margin = new System.Windows.Forms.Padding(4);
-            this.btLeft.Name = "btLeft";
-            this.btLeft.Size = new System.Drawing.Size(71, 27);
-            this.btLeft.TabIndex = 31;
-            this.btLeft.Text = "←";
-            this.btLeft.UseVisualStyleBackColor = true;
-            this.btLeft.Click += new System.EventHandler(this.btLeft_Click);
-            // 
-            // btRight
-            // 
-            this.btRight.Location = new System.Drawing.Point(165, 26);
-            this.btRight.Margin = new System.Windows.Forms.Padding(4);
-            this.btRight.Name = "btRight";
-            this.btRight.Size = new System.Drawing.Size(71, 27);
-            this.btRight.TabIndex = 32;
-            this.btRight.Text = "→";
-            this.btRight.UseVisualStyleBackColor = true;
-            this.btRight.Click += new System.EventHandler(this.btRight_Click);
-            // 
-            // btUp
-            // 
-            this.btUp.Location = new System.Drawing.Point(92, 0);
-            this.btUp.Margin = new System.Windows.Forms.Padding(4);
-            this.btUp.Name = "btUp";
-            this.btUp.Size = new System.Drawing.Size(71, 27);
-            this.btUp.TabIndex = 33;
-            this.btUp.Text = "↑";
-            this.btUp.UseVisualStyleBackColor = true;
-            this.btUp.Click += new System.EventHandler(this.btUp_Click);
-            // 
-            // btDown
-            // 
-            this.btDown.Location = new System.Drawing.Point(92, 62);
-            this.btDown.Margin = new System.Windows.Forms.Padding(4);
-            this.btDown.Name = "btDown";
-            this.btDown.Size = new System.Drawing.Size(71, 27);
-            this.btDown.TabIndex = 34;
-            this.btDown.Text = "↓";
-            this.btDown.UseVisualStyleBackColor = true;
-            this.btDown.Click += new System.EventHandler(this.btDown_Click);
-            // 
-            // cbScreenNo
-            // 
-            this.cbScreenNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbScreenNo.FormattingEnabled = true;
-            this.cbScreenNo.Location = new System.Drawing.Point(92, 28);
-            this.cbScreenNo.Margin = new System.Windows.Forms.Padding(4);
-            this.cbScreenNo.Name = "cbScreenNo";
-            this.cbScreenNo.Size = new System.Drawing.Size(69, 24);
-            this.cbScreenNo.TabIndex = 35;
-            this.cbScreenNo.SelectedIndexChanged += new System.EventHandler(this.cbScreenNo_SelectedIndexChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 6);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(79, 17);
-            this.label1.TabIndex = 36;
-            this.label1.Text = "Screen No:";
             // 
             // objPanel
             // 
@@ -294,19 +219,6 @@
             this.label5.Size = new System.Drawing.Size(44, 17);
             this.label5.TabIndex = 40;
             this.label5.Text = "Type:";
-            // 
-            // btClearObjs
-            // 
-            this.btClearObjs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btClearObjs.Location = new System.Drawing.Point(127, 517);
-            this.btClearObjs.Margin = new System.Windows.Forms.Padding(4);
-            this.btClearObjs.Name = "btClearObjs";
-            this.btClearObjs.Size = new System.Drawing.Size(184, 30);
-            this.btClearObjs.TabIndex = 39;
-            this.btClearObjs.Text = "clear all objects on screen";
-            this.btClearObjs.UseVisualStyleBackColor = true;
-            this.btClearObjs.Click += new System.EventHandler(this.btClearObjs_Click);
             // 
             // label3
             // 
@@ -588,33 +500,6 @@
             this.cbVideoNo.TabIndex = 41;
             this.cbVideoNo.SelectedIndexChanged += new System.EventHandler(this.cbLevel_SelectedIndexChanged);
             // 
-            // pnSelectScreen
-            // 
-            this.pnSelectScreen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnSelectScreen.Controls.Add(this.lbScrNo);
-            this.pnSelectScreen.Controls.Add(this.label1);
-            this.pnSelectScreen.Controls.Add(this.btLeft);
-            this.pnSelectScreen.Controls.Add(this.btRight);
-            this.pnSelectScreen.Controls.Add(this.btUp);
-            this.pnSelectScreen.Controls.Add(this.btDown);
-            this.pnSelectScreen.Controls.Add(this.cbScreenNo);
-            this.pnSelectScreen.Location = new System.Drawing.Point(-7, 181);
-            this.pnSelectScreen.Margin = new System.Windows.Forms.Padding(4);
-            this.pnSelectScreen.Name = "pnSelectScreen";
-            this.pnSelectScreen.Size = new System.Drawing.Size(237, 96);
-            this.pnSelectScreen.TabIndex = 52;
-            // 
-            // lbScrNo
-            // 
-            this.lbScrNo.AutoSize = true;
-            this.lbScrNo.Location = new System.Drawing.Point(171, 68);
-            this.lbScrNo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbScrNo.Name = "lbScrNo";
-            this.lbScrNo.Size = new System.Drawing.Size(18, 17);
-            this.lbScrNo.TabIndex = 55;
-            this.lbScrNo.Text = "()";
-            // 
             // lbActive
             // 
             this.lbActive.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -822,7 +707,6 @@
             this.pnObjectList.Controls.Add(this.btSort);
             this.pnObjectList.Controls.Add(this.pnAddData);
             this.pnObjectList.Controls.Add(this.lbObjectsCount);
-            this.pnObjectList.Controls.Add(this.btClearObjs);
             this.pnObjectList.Controls.Add(this.cbObjType);
             this.pnObjectList.Controls.Add(this.label5);
             this.pnObjectList.Controls.Add(this.label18);
@@ -1115,7 +999,6 @@
             this.pnObjects.Controls.Add(this.btSave);
             this.pnObjects.Controls.Add(this.lbActive);
             this.pnObjects.Controls.Add(this.pnGeneric);
-            this.pnObjects.Controls.Add(this.pnSelectScreen);
             this.pnObjects.Location = new System.Drawing.Point(12, 7);
             this.pnObjects.Margin = new System.Windows.Forms.Padding(4);
             this.pnObjects.Name = "pnObjects";
@@ -1244,8 +1127,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).EndInit();
             this.pnGeneric.ResumeLayout(false);
             this.pnGeneric.PerformLayout();
-            this.pnSelectScreen.ResumeLayout(false);
-            this.pnSelectScreen.PerformLayout();
             this.pnTools.ResumeLayout(false);
             this.pnTools.PerformLayout();
             this.pnView.ResumeLayout(false);
@@ -1267,19 +1148,12 @@
         #endregion
 
         private System.Windows.Forms.PictureBox mapScreen;
-        private System.Windows.Forms.Button btLeft;
-        private System.Windows.Forms.Button btRight;
-        private System.Windows.Forms.Button btUp;
-        private System.Windows.Forms.Button btDown;
-        private System.Windows.Forms.ComboBox cbScreenNo;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.FlowLayoutPanel objPanel;
         private System.Windows.Forms.ListView lvObjects;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ComboBox cbCoordY;
         private System.Windows.Forms.ComboBox cbCoordX;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button btClearObjs;
         private System.Windows.Forms.ImageList objectSprites;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox activeBlock;
@@ -1297,8 +1171,6 @@
         private System.Windows.Forms.ComboBox cbBigBlockNo;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbVideoNo;
-        private System.Windows.Forms.Panel pnSelectScreen;
-        private System.Windows.Forms.Label lbScrNo;
         private System.Windows.Forms.CheckBox cbPlus256;
         private System.Windows.Forms.Label lbActive;
         private System.Windows.Forms.Button btDelete;

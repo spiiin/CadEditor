@@ -6,7 +6,7 @@ namespace CadEditor
 {
     public class MapEditor
     {
-        public static void Render(Graphics g, Image[] bigBlocks, int blockWidth, int blockHeight, Rectangle? visibleRect, int[] screen, int[] screen2, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin, int WIDTH, int HEIGHT, bool verticalScreen)
+        public static void Render(Graphics g, Image[] bigBlocks, int blockWidth, int blockHeight, Rectangle? visibleRect, int[] screen, int[] screen2, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin, int TopMargin, int WIDTH, int HEIGHT, bool verticalScreen)
         {
             int TILE_SIZE_X = (int)(blockWidth * CurScale);
             int TILE_SIZE_Y = (int)(blockHeight * CurScale);
@@ -16,9 +16,9 @@ namespace CadEditor
                 int bigBlockNo = ConfigScript.getBigTileNoFromScreen(screen, i);
                 Rectangle tileRect;
                 if (verticalScreen)
-                    tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X, (i % WIDTH) * TILE_SIZE_Y + LeftMargin, TILE_SIZE_X, TILE_SIZE_Y);
+                    tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X + TopMargin, (i % WIDTH) * TILE_SIZE_Y + LeftMargin, TILE_SIZE_X, TILE_SIZE_Y);
                 else
-                    tileRect = new Rectangle((i % WIDTH) * TILE_SIZE_X + LeftMargin, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
+                    tileRect = new Rectangle((i % WIDTH) * TILE_SIZE_X + LeftMargin, i / WIDTH * TILE_SIZE_Y + TopMargin, TILE_SIZE_X, TILE_SIZE_Y);
 
                 if (visibleRect == null || visibleRect.Value.Contains(tileRect) || visibleRect.Value.IntersectsWith(tileRect))
                 {
@@ -79,7 +79,7 @@ namespace CadEditor
             }
         }
 
-        public static Image ScreenToImage(Image[] bigBlocks, int blockWidth, int blockHeight, int[] screen, int[] screen2, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin, int WIDTH, int HEIGHT, bool verticalScreen)
+        public static Image ScreenToImage(Image[] bigBlocks, int blockWidth, int blockHeight, int[] screen, int[] screen2, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin, int TopMargin, int WIDTH, int HEIGHT, bool verticalScreen)
         {
             int TILE_SIZE_X = (int)(blockWidth * CurScale);
             int TILE_SIZE_Y = (int)(blockHeight * CurScale);
@@ -97,7 +97,7 @@ namespace CadEditor
 
             using (var g = Graphics.FromImage(result))
             {
-                Render(g, bigBlocks, blockWidth, blockHeight, null, screen, screen2, CurScale, ShowLayer1, ShowLayer2, ShowBorder, LeftMargin, WIDTH, HEIGHT, verticalScreen);
+                Render(g, bigBlocks, blockWidth, blockHeight, null, screen, screen2, CurScale, ShowLayer1, ShowLayer2, ShowBorder, LeftMargin, TopMargin, WIDTH, HEIGHT, verticalScreen);
             }
             return result;
         }

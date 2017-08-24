@@ -30,8 +30,8 @@ namespace CadEditor
     public delegate void SetBigTileToScreenFunc(int[] screenData, int index, int value);
     public delegate byte[] LoadSegaBackFunc();
     public delegate void SaveSegaBackFunc(byte[] data);
-    public delegate void DrawObjectFunc(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, ImageList objectSprites);
-    public delegate void DrawObjectBigFunc(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, Image[] objectSprites);
+    public delegate void DrawObjectFunc(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, ImageList objectSprites, bool inactive, int leftMargin, int topMargin);
+    public delegate void DrawObjectBigFunc(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, Image[] objectSprites, bool inactive, int leftMargin, int topMargin);
 
     public class ConfigScript
     {
@@ -412,20 +412,20 @@ namespace CadEditor
              return segaBackHeight;
          }
 
-        public static void drawObject(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, ImageList objectSprites, bool inactive)
+        public static void drawObject(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, ImageList objectSprites, bool inactive, int leftMargin, int topMargin)
          {
              if (drawObjectFunc != null)
-                 drawObjectFunc(g, curObject, listNo, selected, curScale, objectSprites /*inactive*/);
+                 drawObjectFunc(g, curObject, listNo, selected, curScale, objectSprites, inactive, leftMargin, topMargin);
              else
-                 Utils.defaultDrawObject(g, curObject, listNo, selected, curScale, objectSprites, inactive);
+                 Utils.defaultDrawObject(g, curObject, listNo, selected, curScale, objectSprites, inactive, leftMargin, topMargin);
          }
 
-         public static void drawObjectBig(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, Image[] objectSprites, bool inactive)
+         public static void drawObjectBig(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, Image[] objectSprites, bool inactive, int leftMargin, int topMargin)
          {
              if (drawObjectBigFunc != null)
-                 drawObjectBigFunc(g, curObject, listNo, selected, curScale, objectSprites /*inactive*/);
+                 drawObjectBigFunc(g, curObject, listNo, selected, curScale, objectSprites, inactive, leftMargin, topMargin);
              else
-                 Utils.defaultDrawObjectBig(g, curObject, listNo, selected, curScale, objectSprites, inactive);
+                 Utils.defaultDrawObjectBig(g, curObject, listNo, selected, curScale, objectSprites, inactive, leftMargin, topMargin);
              
          }
 

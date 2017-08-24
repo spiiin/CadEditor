@@ -685,20 +685,20 @@ namespace CadEditor
             }
         }
 
-        public static  void defaultDrawObject(Graphics g, ObjectRec curObject, int listNo, bool isSelected, float curScale, ImageList objectSprites, bool inactive)
+        public static  void defaultDrawObject(Graphics g, ObjectRec curObject, int listNo, bool isSelected, float curScale, ImageList objectSprites, bool inactive, int leftMargin, int topMargin)
         {
             int x = curObject.x, y = curObject.y;
             var myFont = new Font(FontFamily.GenericSansSerif, 6.0f);
             if (curObject.type < objectSprites.Images.Count)
             {
-                g.DrawImage(objectSprites.Images[curObject.type], new Point((int)(x * curScale) - 8, (int)(y * curScale) - 8));
+                g.DrawImage(objectSprites.Images[curObject.type], new Point((int)(x * curScale) - 8 + leftMargin, (int)(y * curScale) - 8 + topMargin));
             }
             else
             {
-                g.FillRectangle(Brushes.Black, new Rectangle((int)(x * curScale) - 8, (int)(y * curScale) - 8, 16, 16));
-                g.DrawString(curObject.type.ToString("X3"), myFont, Brushes.White, new Point((int)(x * curScale) - 8, (int)(y * curScale) - 8));
+                g.FillRectangle(Brushes.Black, new Rectangle((int)(x * curScale) - 8 + leftMargin, (int)(y * curScale) - 8 + topMargin, 16, 16));
+                g.DrawString(curObject.type.ToString("X3"), myFont, Brushes.White, new Point((int)(x * curScale) - 8 + leftMargin, (int)(y * curScale) - 8 + topMargin));
             }
-            var selectRect = new Rectangle((int)(x * curScale) - 8, (int)(y * curScale) - 8, 16, 16);
+            var selectRect = new Rectangle((int)(x * curScale) - 8 + leftMargin, (int)(y * curScale) - 8 + topMargin, 16, 16);
             if (isSelected)
                 g.DrawRectangle(new Pen(Brushes.Red, 2.0f), selectRect);
             if (inactive)
@@ -708,13 +708,13 @@ namespace CadEditor
             }
         }
 
-        public static void defaultDrawObjectBig(Graphics g, ObjectRec curObject, int listNo, bool isSelected, float curScale, Image[] objectSpritesBig, bool inactive)
+        public static void defaultDrawObjectBig(Graphics g, ObjectRec curObject, int listNo, bool isSelected, float curScale, Image[] objectSpritesBig, bool inactive, int leftMargin, int topMargin)
         {
             int x = curObject.x, y = curObject.y;
             var myFont = new Font(FontFamily.GenericSansSerif, 6.0f);
             int xsize = objectSpritesBig[curObject.type].Size.Width;
             int ysize = objectSpritesBig[curObject.type].Size.Height;
-            var rect = new Rectangle((int)(x * curScale) - xsize / 2, (int)(y * curScale) - ysize / 2, xsize, ysize);
+            var rect = new Rectangle((int)(x * curScale) - xsize / 2 + leftMargin, (int)(y * curScale) - ysize / 2 + topMargin, xsize, ysize);
             if (curObject.type < objectSpritesBig.Length)
                 g.DrawImage(objectSpritesBig[curObject.type], rect);
             if (isSelected)

@@ -161,7 +161,7 @@ public static class CHCUtils
     return true;
   }
   
-  public static void drawObject(Graphics g, ObjectRec curObject, int listNo, bool isSelected, float curScale, ImageList objectSprites)
+  public static void drawObject(Graphics g, ObjectRec curObject, int listNo, bool isSelected, float curScale, ImageList objectSprites, bool inactive, int leftMargin, int topMargin)
   {
     //don't render commands
     if (curObject.type >= 0xFF00)

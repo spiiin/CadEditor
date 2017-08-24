@@ -16,7 +16,6 @@ namespace CadEditor
         }
 
         private int curActiveBlock = 0;
-        private int curActiveScreen = 0;
 
         private int curActiveLayout = 0;
         private int curVideoNo = 0x90;
@@ -53,7 +52,7 @@ namespace CadEditor
         //render back
         private int[][] screens = null;
 
-        private void reloadLevelLayerData(bool resetScreenPos)
+        private void reloadLevelLayerData()
         {
             curWidth = ConfigScript.getLevelWidth(curActiveLayout);
             curHeight = ConfigScript.getLevelHeight(curActiveLayout);
@@ -62,16 +61,7 @@ namespace CadEditor
             curBigBlockNo = cbBigBlockNo.SelectedIndex;
             curBlockNo = cbBlockNo.SelectedIndex;
             curPaletteNo = cbPaletteNo.SelectedIndex;
-            curActiveScreen = cbScreenNo.SelectedIndex;
             curLevelLayerData = (ConfigScript.getLayoutFunc != null) ? ConfigScript.getLayout(curActiveLayout) : Utils.getLayoutLinear(curActiveLayout);
-
-            if (resetScreenPos)
-            {
-                cbScreenNo.Items.Clear();
-                for (int i = 0; i < curLevelLayerData.width * curLevelLayerData.height; i++)
-                    cbScreenNo.Items.Add(String.Format("{0:X}", i));
-                cbScreenNo.SelectedIndex = findStartPosition();
-            }
         }
 
         private int findStartPosition()
@@ -102,17 +92,23 @@ namespace CadEditor
             return ConfigScript.videoSega.makeBigBlocks(mapping, videoTiles, pal, count, curScale, MapViewType.Tiles, formMain.ShowAxis);
         }
 
-        private int calcScrNo()
+        private int calcScrNo(int noInLayout)
         {
-            int scrNo = curLevelLayerData.layer[curActiveScreen];
+            int scrNo = curLevelLayerData.layer[noInLayout];
             if (cbPlus256.Checked)
                 scrNo += 256;
-            return scrNo - 1;
+
+            //hack: for capcom games -= 1
+            if (!ConfigScript.usePicturesInstedBlocks)
+            {
+                scrNo -= 1;
+            }
+            return scrNo;
         }
 
         private void reloadLevel(bool reloadObjects)
         {
-            reloadLevelLayerData(reloadObjects);
+            reloadLevelLayerData();
             reloadBigBlocks();
             if (reloadObjects)
               setObjects();
@@ -214,26 +210,19 @@ namespace CadEditor
 
         private void resizeMapScreen()
         {
-            int blockWidth = ConfigScript.getBlocksPicturesWidth();
+            int blockWidth = formMain.BlockWidth;
+            int blockHeight = formMain.BlockHeight;
             int scrLevelNo = getLevelRecForGameType().levelNo;
-            if (ConfigScript.getScreenVertical())
-                mapScreen.Size = new Size(ConfigScript.getScreenHeight(scrLevelNo) * blockWidth * 2, (ConfigScript.getScreenWidth(scrLevelNo) + 2) * 64);
-            else
-                mapScreen.Size = new Size((ConfigScript.getScreenWidth(scrLevelNo) + 2) * blockWidth * 2, ConfigScript.getScreenHeight(scrLevelNo) * 64);
-            //mapScreen.Size = back3.Size;
-        }
 
-        private void cbScreenNo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            curActiveScreen = cbScreenNo.SelectedIndex;
-            int w = curLevelLayerData.width;
-            int h = curLevelLayerData.height;
-            btLeft.Enabled = curActiveScreen % w != 0;
-            btRight.Enabled = curActiveScreen % w != w - 1;
-            btUp.Enabled = curActiveScreen >= w;
-            btDown.Enabled = curActiveScreen < w * (h - 1);
-            lbScrNo.Text = String.Format("({0:X})", calcScrNo());
-            mapScreen.Invalidate();
+            int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
+            int scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);
+
+            int screensInWidth = curLevelLayerData.width;
+            int screensInHeight = curLevelLayerData.height;
+            if (!ConfigScript.getScreenVertical())
+                mapScreen.Size = new Size(scrWidth * screensInWidth, scrHeight * screensInHeight);
+            else
+                mapScreen.Size = new Size(scrHeight * screensInWidth, scrWidth * screensInHeight);
         }
 
         private void fillObjPanel()
@@ -366,101 +355,93 @@ namespace CadEditor
             return ans;
         }
 
-        private void btClearObjs_Click(object sender, EventArgs e)
+        private Point mouseCoordToSxSyCoord(Point mouseCoord)
         {
-            var activeObjectList = objectLists[curActiveObjectListIndex];
-            if (MessageBox.Show("Do you really want to delete all objects at screen?", "Confirm", MessageBoxButtons.YesNo) != DialogResult.Yes)
-                return;
-            List<ObjectRec> toRemove = new List<ObjectRec>();
-            for (int i = 0; i < activeObjectList.objects.Count; i++)
-            {
-                int screenNo = coordToScreenNo(activeObjectList.objects[i]);
-                if (screenNo == curActiveScreen)
-                    toRemove.Add(activeObjectList.objects[i]);
-            }
-            for (int i = 0; i < toRemove.Count; i++)
-                activeObjectList.objects.Remove(toRemove[i]);
-
-            fillObjectsListBox();
-            mapScreen.Invalidate();
-            dirty = true;
+            int blockWidth = formMain.BlockWidth;
+            int blockHeight = formMain.BlockHeight;
+            int scrLevelNo = getLevelRecForGameType().levelNo;
+            int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
+            int scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);
+            int scrX = mouseCoord.X / scrWidth;
+            int scrY = mouseCoord.Y / scrHeight;
+            return new Point(scrX, scrY);
         }
 
-        private void btLeft_Click(object sender, EventArgs e)
+        private Point mouseCoordToCoordInsideScreen(Point mouseCoord)
         {
-            cbScreenNo.SelectedIndex = --curActiveScreen; ;
-        }
-
-        private void btRight_Click(object sender, EventArgs e)
-        {
-            cbScreenNo.SelectedIndex = ++curActiveScreen;
-        }
-
-        private void btUp_Click(object sender, EventArgs e)
-        {
-            curActiveScreen -= curLevelLayerData.width;
-            cbScreenNo.SelectedIndex = curActiveScreen;
-        }
-
-        private void btDown_Click(object sender, EventArgs e)
-        {
-            curActiveScreen += curLevelLayerData.width;
-            cbScreenNo.SelectedIndex = curActiveScreen;
-        }
-
-        private Point screenNoToCoord()
-        {
-            int width = curLevelLayerData.width;
-            int height = curLevelLayerData.height;
-            return new Point(curActiveScreen % width, curActiveScreen / width);
+            int blockWidth = formMain.BlockWidth;
+            int blockHeight = formMain.BlockHeight;
+            int scrLevelNo = getLevelRecForGameType().levelNo;
+            int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
+            int scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);
+            int oX = mouseCoord.X % scrWidth;
+            int oY = mouseCoord.Y % scrHeight;
+            return new Point(oX, oY);
         }
 
         //Image back3 = Image.FromFile("back_tunnel_3.png");
 
         private void paintBack(Graphics g)
         {
-            //temp hack for compatibility. for cad-games scrNo -= 1 !!!
-            int scrNo = ConfigScript.usePicturesInstedBlocks ? curLevelLayerData.layer[curActiveScreen] : calcScrNo(); 
-            if (scrNo < screens.Length && scrNo >= 0)
-            {
-                int[] indexes = screens[scrNo];
-                int scrLevelNo = getLevelRecForGameType().levelNo;
-                int width = ConfigScript.getScreenWidth(scrLevelNo);
-                int height = ConfigScript.getScreenHeight(scrLevelNo);
-                var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
-                MapEditor.Render(g, bigBlocks, formMain.BlockWidth, formMain.BlockHeight, visibleRect, indexes, null, curScale, true, false, false, 0, width, height, ConfigScript.getScreenVertical());
-                ConfigScript.renderToMainScreen(g, (int)curScale);
-            }
-            else
-            {
-                g.FillRectangle(Brushes.Black, new Rectangle(0, 0, 512, 512));
-            }
+            int blockWidth = formMain.BlockWidth;
+            int blockHeight = formMain.BlockHeight;
+            int scrLevelNo = getLevelRecForGameType().levelNo;
+            int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
+            int scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);
 
-            //mapScreen.Image = back3;
+            for (int x = 0; x < curLevelLayerData.width; x++)
+            {
+                for (int y = 0; y < curLevelLayerData.height; y++)
+                {
+                    int noInLayout = y * curLevelLayerData.width + x;
+                    int scrNo = calcScrNo(noInLayout);
+                    if (scrNo < screens.Length && scrNo >= 0)
+                    {
+                        int[] indexes = screens[scrNo];
+                        int width = ConfigScript.getScreenWidth(scrLevelNo);
+                        int height = ConfigScript.getScreenHeight(scrLevelNo);
+                        var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
+                        int leftMargin = scrWidth * x;
+                        int topMargin = scrHeight * y;
+                        MapEditor.Render(g, bigBlocks, formMain.BlockWidth, formMain.BlockHeight, visibleRect, indexes, null, curScale, true, false, false, leftMargin, topMargin, width, height, ConfigScript.getScreenVertical());
+                        //ConfigScript.renderToMainScreen(g, (int)curScale);
+                    }
+                    else
+                    {
+                        //g.FillRectangle(Brushes.Black, new Rectangle(0, 0, 512, 512));
+                    }
+                }
+            }
         }
 
         private void mapScreen_Paint(object sender, PaintEventArgs e)
         {
             var g = e.Graphics;
             paintBack(g);
+
+            int blockWidth = formMain.BlockWidth;
+            int blockHeight = formMain.BlockHeight;
+            int scrLevelNo = getLevelRecForGameType().levelNo;
+            int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
+            int scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);
+
             for (int objListIndex = 0; objListIndex < objectLists.Count; objListIndex++)
             {
                 var activeObjectList = objectLists[objListIndex];
-                //if (ConfigScript.usePicturesInstedBlocks)
+
                 var selectedInds = lvObjects.SelectedIndices;
                 for (int i = 0; i < activeObjectList.objects.Count; i++)
                 {
                     var curObject = activeObjectList.objects[i];
-                    int screenIndex = coordToScreenNo(curObject);
-                    if (screenIndex == curActiveScreen)
-                    {
-                        bool inactive = objListIndex != curActiveObjectListIndex;
-                        bool selected = !inactive && selectedInds.Contains(i);
-                        if (!useBigPictures)
-                            ConfigScript.drawObject(g, curObject, curActiveObjectListIndex, selected, curScale, objectSprites, inactive);
-                        else
-                            ConfigScript.drawObjectBig(g, curObject, curActiveObjectListIndex, selected, curScale, objectSpritesBig, inactive);
-                    }
+                    int leftMargin = scrWidth * curObject.sx;
+                    int topMargin = scrHeight * curObject.sy;
+
+                    bool inactive = objListIndex != curActiveObjectListIndex;
+                    bool selected = !inactive && selectedInds.Contains(i);
+                    if (!useBigPictures)
+                        ConfigScript.drawObject(g, curObject, curActiveObjectListIndex, selected, curScale, objectSprites, inactive, leftMargin, topMargin);
+                    else
+                        ConfigScript.drawObjectBig(g, curObject, curActiveObjectListIndex, selected, curScale, objectSpritesBig, inactive, leftMargin, topMargin);
                 }
             }
         }
@@ -748,11 +729,13 @@ namespace CadEditor
 
         private void mapScreen_MouseDown(object sender, MouseEventArgs e)
         {
-            Point coord = screenNoToCoord();
+            var mouseCoord = new Point(e.X, e.Y);
+            Point coord = mouseCoordToSxSyCoord(mouseCoord);
+            Point ocoord = mouseCoordToCoordInsideScreen(mouseCoord);
             int type = curActiveBlock;
             int sx = coord.X, sy = coord.Y;
-            int x = (int)(e.X / curScale);
-            int y = (int)(e.Y / curScale);
+            int x = (int)(ocoord.X / curScale);
+            int y = (int)(ocoord.Y / curScale);
             if (curTool == ToolType.Select)
             {
                 if (Control.ModifierKeys != Keys.Shift && Control.ModifierKeys != Keys.Control)
@@ -774,10 +757,12 @@ namespace CadEditor
         {
             if (!objectDragged)
                 return;
-            Point coord = screenNoToCoord();
-           // int sx = coord.X, sy = coord.Y;
-            int x = (int)(e.X / curScale);
-            int y = (int)(e.Y / curScale);
+            var mouseCoord = new Point(e.X, e.Y);
+            Point coord = mouseCoordToSxSyCoord(mouseCoord);
+            Point ocoord = mouseCoordToCoordInsideScreen(mouseCoord);
+            int sx = coord.X, sy = coord.Y;
+            int x = (int)(ocoord.X / curScale);
+            int y = (int)(ocoord.Y / curScale);
 
             int scrLevelNo = getLevelRecForGameType().levelNo;
             int coordXCount = ConfigScript.getScreenWidth(scrLevelNo) * 32;
@@ -839,11 +824,13 @@ namespace CadEditor
 
         private void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
-            Point coord = screenNoToCoord();
+            var mouseCoord = new Point(e.X, e.Y);
+            Point coord = mouseCoordToSxSyCoord(mouseCoord);
+            Point ocoord = mouseCoordToCoordInsideScreen(mouseCoord);
             int type = curActiveBlock;
             int sx = coord.X, sy = coord.Y;
-            int x = (int)(e.X / curScale);
-            int y = (int)(e.Y / curScale);
+            int x = (int)(ocoord.X / curScale);
+            int y = (int)(ocoord.Y / curScale);
 
             if (curTool == ToolType.Create)
             {

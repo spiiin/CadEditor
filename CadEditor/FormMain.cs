@@ -284,7 +284,7 @@ namespace CadEditor
             int TILE_SIZE_Y = (int)(blockHeight * curScale);
             int SIZE = WIDTH * HEIGHT;
             var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
-            MapEditor.Render(e.Graphics, bigBlocks, blockWidth, blockHeight, visibleRect, indexes, indexes2, curScale, showLayer1, showLayer2, true, ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X, WIDTH, HEIGHT, ConfigScript.getScreenVertical());
+            MapEditor.Render(e.Graphics, bigBlocks, blockWidth, blockHeight, visibleRect, indexes, indexes2, curScale, showLayer1, showLayer2, true, ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X, 0, WIDTH, HEIGHT, ConfigScript.getScreenVertical());
 
             if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen > 0) && showLayer1)
             {

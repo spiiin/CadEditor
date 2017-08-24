@@ -107,7 +107,7 @@ namespace CadEditor
             }
             var visibleRect = UtilsGui.getVisibleRectangle(this, mapScreen);
             g.Clear(Color.Black);
-            MapEditor.Render(g, bigBlocks, blockWidth, blockHeight, visibleRect, curTileStruct.toArray(), null, 2.0f, true, false, false, 0, curTileStruct.Width, curTileStruct.Height, ConfigScript.getScreenVertical());
+            MapEditor.Render(g, bigBlocks, blockWidth, blockHeight, visibleRect, curTileStruct.toArray(), null, 2.0f, true, false, false, 0, 0, curTileStruct.Width, curTileStruct.Height, ConfigScript.getScreenVertical());
         }
 
         private void cbWidth_SelectedIndexChanged(object sender, EventArgs e)
