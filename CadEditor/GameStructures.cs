@@ -478,4 +478,10 @@ namespace CadEditor
         Select,
         Delete
     }
+
+
+    public class BlockLayer
+    {
+        public int[][] screens;
+    }
 }

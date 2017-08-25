@@ -75,9 +75,9 @@ namespace CadEditor
             else if (oldScreenNo < cbScreenNo.Items.Count)
                 cbScreenNo.SelectedIndex = oldScreenNo;
 
-            screens = Utils.setScreens(curActiveLevelForScreen);
+            layers[0].screens = Utils.setScreens(curActiveLevelForScreen);
             if (ConfigScript.getLayersCount() > 1)
-                screens2 = Utils.setScreens2();
+                layers[1].screens = Utils.setScreens2();
         }
 
         private void changeBlocksSize(Image[] bigImages)
@@ -226,7 +226,7 @@ namespace CadEditor
             int TILE_SIZE_X = (int)(blockWidth * curScale);
             int TILE_SIZE_Y = (int)(blockHeight * curScale);
             int SIZE = WIDTH * HEIGHT;
-            int[] indexesPrev = screens[screenNo];
+            int[] indexesPrev = layers[0].screens[screenNo];
             for (int i = 0; i < SIZE; i++)
             {
                 if (i % WIDTH == line)
@@ -272,11 +272,9 @@ namespace CadEditor
         {
             if (!fileLoaded)
                 return;
-            int[] indexes = screens[curActiveScreen];
-            int[] indexes2 = null;
+            int[] indexes = layers[0].screens[curActiveScreen];
+            int[] indexes2 = (ConfigScript.getLayersCount() > 1) ? layers[1].screens[curActiveScreen] : null;
             var g = e.Graphics;
-            if (ConfigScript.getLayersCount() > 1)
-                indexes2 = screens2[curActiveScreen];
 
             int WIDTH = ConfigScript.getScreenWidth(curActiveLevelForScreen);
             int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
@@ -347,8 +345,7 @@ namespace CadEditor
         private bool showBrush;
         private bool showLayer1;
         private bool showLayer2;
-        private int[][] screens;
-        private int[][] screens2;
+        private BlockLayer[] layers = new BlockLayer[2] { new BlockLayer(), new BlockLayer() };
 
         public static bool fileLoaded = false;
 
@@ -390,7 +387,7 @@ namespace CadEditor
                 if (dx == WIDTH || dx == -1)
                     return;
                 int index = dy * WIDTH + dx;
-                curActiveBlock = ConfigScript.getBigTileNoFromScreen(screens[curActiveScreen], index);
+                curActiveBlock = ConfigScript.getBigTileNoFromScreen(layers[0].screens[curActiveScreen], index);
                 activeBlock.Image = bigBlocks[curActiveBlock];
                 lbActiveBlock.Text = String.Format("Label: {0:X}", curActiveBlock);
                 blocksScreen.Invalidate();
@@ -434,7 +431,7 @@ namespace CadEditor
             }
             if (curClicked)
             {
-                var activeScreens = curActiveLayer == 0 ? screens : screens2;
+                var activeScreens = layers[curActiveLayer].screens;
                 if (dx == WIDTH)
                 {
                     if (curActiveScreen < ConfigScript.screensOffset[curActiveLevelForScreen].recCount - 1)
@@ -480,7 +477,7 @@ namespace CadEditor
             int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
             int TILE_SIZE_X = (int)(blockWidth * curScale);
             int TILE_SIZE_Y = (int)(blockHeight * curScale);
-            var activeScreens = curActiveLayer == 0 ? screens : screens2;
+            var activeScreens = layers[curActiveLayer].screens;
             if (curTileStruct!=null)
             {
                 int WIDTH1 = curTileStruct.Width;
@@ -548,9 +545,9 @@ namespace CadEditor
 
         private bool saveToFile()
         {
-            saveScreens(ConfigScript.screensOffset[curActiveLevelForScreen], screens);
+            saveScreens(ConfigScript.screensOffset[curActiveLevelForScreen], layers[0].screens);
             if (ConfigScript.getLayersCount() > 1)
-                saveScreens(ConfigScript.screensOffset2, screens2);
+                saveScreens(ConfigScript.screensOffset2, layers[1].screens);
             dirty = !Globals.flushToFile(); updateSaveVisibility();
             return !dirty;
         }
@@ -784,7 +781,7 @@ namespace CadEditor
         //warnging! danger direct function. do not use it
         public void SetScreens(int[][] screens)
         {
-            this.screens = screens;
+            this.layers[0].screens = screens;
         }
 
         private void bttScale_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -841,7 +838,7 @@ namespace CadEditor
                 int [][] tiles = new int[deltaY][];
                 for (int arrs = 0; arrs < tiles.Length; arrs++)
                     tiles[arrs] = new int[deltaX];
-                var curScreen = screens[curActiveScreen]; //screens2?
+                var curScreen = layers[0].screens[curActiveScreen]; //screens2?
                 for (int i = 0; i < deltaX; i++)
                 {
                     for (int j = 0; j < deltaY; j++)
