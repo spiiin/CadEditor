@@ -112,8 +112,6 @@ namespace CadEditor
             showNeiScreens = true;
             showAxis = true;
             showBrush = true;
-            showLayer1 = true;
-            showLayer2 = true;
             useStructs = false;
             curActiveLayer = 0;
 
@@ -282,13 +280,13 @@ namespace CadEditor
             int TILE_SIZE_Y = (int)(blockHeight * curScale);
             int SIZE = WIDTH * HEIGHT;
             var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
-            MapEditor.Render(e.Graphics, bigBlocks, blockWidth, blockHeight, visibleRect, indexes, indexes2, curScale, showLayer1, showLayer2, true, ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X, 0, WIDTH, HEIGHT, ConfigScript.getScreenVertical());
+            MapEditor.Render(e.Graphics, bigBlocks, blockWidth, blockHeight, visibleRect, layers[0], layers[1], curActiveScreen, curScale, true, ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X, 0, WIDTH, HEIGHT, ConfigScript.getScreenVertical());
 
-            if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen > 0) && showLayer1)
+            if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen > 0) && layers[0].showLayer)
             {
                 renderNeighbornLine(g, curActiveScreen - 1, (WIDTH - 1), 0);
             }
-            if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen < ConfigScript.screensOffset[curActiveLevelForScreen].recCount - 1) && showLayer1)
+            if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen < ConfigScript.screensOffset[curActiveLevelForScreen].recCount - 1) && layers[0].showLayer)
             {
                 renderNeighbornLine(g, curActiveScreen + 1, 0 , (WIDTH + 1) * TILE_SIZE_X);
             }
@@ -343,8 +341,6 @@ namespace CadEditor
         private bool showNeiScreens;
         private bool showAxis;
         private bool showBrush;
-        private bool showLayer1;
-        private bool showLayer2;
         private BlockLayer[] layers = new BlockLayer[2] { new BlockLayer(), new BlockLayer() };
 
         public static bool fileLoaded = false;
@@ -748,7 +744,7 @@ namespace CadEditor
             get { return curScale; }
         }
 
-        public bool ShowLayer1
+        /*public bool ShowLayer1
         {
             get { return showLayer1; }
         }
@@ -756,7 +752,7 @@ namespace CadEditor
         public bool ShowLayer2
         {
             get { return showLayer2; }
-        }
+        }*/
 
         public int BlockWidth
         {
@@ -872,13 +868,13 @@ namespace CadEditor
 
         private void bttShowLayer1_CheckedChanged(object sender, EventArgs e)
         {
-            showLayer1 = bttShowLayer1.Checked;
+            layers[0].showLayer = bttShowLayer1.Checked;
             mapScreen.Invalidate();
         }
 
         private void bttShowLayer2_CheckedChanged(object sender, EventArgs e)
         {
-            showLayer2 = bttShowLayer2.Checked;
+            layers[1].showLayer = bttShowLayer2.Checked;
             mapScreen.Invalidate();
         }
 

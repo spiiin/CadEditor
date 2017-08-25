@@ -367,7 +367,8 @@ namespace CadEditor
                         var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
                         int leftMargin = scrWidth * x;
                         int topMargin = scrHeight * y;
-                        MapEditor.Render(g, bigBlocks, formMain.BlockWidth, formMain.BlockHeight, visibleRect, indexes, null, curScale, true, false, false, leftMargin, topMargin, width, height, ConfigScript.getScreenVertical());
+                        var blockLayer1 = new BlockLayer() { screens = new int[1][] { indexes }, showLayer = true };
+                        MapEditor.Render(g, bigBlocks, formMain.BlockWidth, formMain.BlockHeight, visibleRect, blockLayer1, null, 0, curScale, true, leftMargin, topMargin, width, height, ConfigScript.getScreenVertical());
                         //ConfigScript.renderToMainScreen(g, (int)curScale);
                     }
                     else

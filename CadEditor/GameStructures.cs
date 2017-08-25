@@ -483,5 +483,12 @@ namespace CadEditor
     public class BlockLayer
     {
         public int[][] screens;
+        public bool showLayer;
+
+        public BlockLayer()
+        {
+            screens = null;
+            showLayer = true;
+        }
     }
 }

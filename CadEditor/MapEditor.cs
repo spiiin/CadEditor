@@ -6,14 +6,14 @@ namespace CadEditor
 {
     public class MapEditor
     {
-        public static void Render(Graphics g, Image[] bigBlocks, int blockWidth, int blockHeight, Rectangle? visibleRect, int[] screen, int[] screen2, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin, int TopMargin, int WIDTH, int HEIGHT, bool verticalScreen)
+        public static void Render(Graphics g, Image[] bigBlocks, int blockWidth, int blockHeight, Rectangle? visibleRect, BlockLayer layer1, BlockLayer layer2, int scrNo, float CurScale, bool ShowBorder, int LeftMargin, int TopMargin, int WIDTH, int HEIGHT, bool verticalScreen)
         {
             int TILE_SIZE_X = (int)(blockWidth * CurScale);
             int TILE_SIZE_Y = (int)(blockHeight * CurScale);
             int SIZE = WIDTH * HEIGHT;
             for (int i = 0; i < SIZE; i++)
             {
-                int bigBlockNo = ConfigScript.getBigTileNoFromScreen(screen, i);
+                int bigBlockNo = ConfigScript.getBigTileNoFromScreen(layer1.screens[scrNo], i);
                 Rectangle tileRect;
                 if (verticalScreen)
                     tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X + TopMargin, (i % WIDTH) * TILE_SIZE_Y + LeftMargin, TILE_SIZE_X, TILE_SIZE_Y);
@@ -22,13 +22,13 @@ namespace CadEditor
 
                 if (visibleRect == null || visibleRect.Value.Contains(tileRect) || visibleRect.Value.IntersectsWith(tileRect))
                 {
-                    if (bigBlockNo > -1 && bigBlockNo < bigBlocks.Length && ShowLayer1)
+                    if (bigBlockNo > -1 && bigBlockNo < bigBlocks.Length && layer1.showLayer)
                         g.DrawImage(bigBlocks[bigBlockNo], tileRect);
                     else
                         g.FillRectangle(Brushes.White, tileRect);
-                    if (screen2 != null && ShowLayer2)
+                    if (layer2.screens[scrNo] != null && layer2.showLayer)
                     {
-                        int bigBlockNo2 = ConfigScript.getBigTileNoFromScreen(screen2, i);
+                        int bigBlockNo2 = ConfigScript.getBigTileNoFromScreen(layer2.screens[scrNo], i);
                         if (bigBlockNo2 != -1 && bigBlockNo2 < bigBlocks.Length)
                             g.DrawImage(bigBlocks[bigBlockNo2], tileRect);
                         else
@@ -97,7 +97,9 @@ namespace CadEditor
 
             using (var g = Graphics.FromImage(result))
             {
-                Render(g, bigBlocks, blockWidth, blockHeight, null, screen, screen2, CurScale, ShowLayer1, ShowLayer2, ShowBorder, LeftMargin, TopMargin, WIDTH, HEIGHT, verticalScreen);
+                var blockLayer1 = new BlockLayer() { screens = new int[1][] { screen  }, showLayer = true };
+                var blockLayer2 = new BlockLayer() { screens = new int[1][] { screen2 }, showLayer = true };
+                Render(g, bigBlocks, blockWidth, blockHeight, null, blockLayer1, blockLayer2, 0, CurScale, ShowBorder, LeftMargin, TopMargin, WIDTH, HEIGHT, verticalScreen);
             }
             return result;
         }
