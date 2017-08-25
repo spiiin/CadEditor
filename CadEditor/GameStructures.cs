@@ -484,11 +484,15 @@ namespace CadEditor
     {
         public int[][] screens;
         public bool showLayer;
+        public int blockWidth;
+        public int blockHeight;
 
         public BlockLayer()
         {
             screens = null;
             showLayer = true;
+            blockWidth = 32;
+            blockHeight = 32;
         }
     }
 }

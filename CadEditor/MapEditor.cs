@@ -6,11 +6,11 @@ namespace CadEditor
 {
     public class MapEditor
     {
-        public static void Render(Graphics g, Image[] bigBlocks, int blockWidth, int blockHeight, Rectangle? visibleRect, BlockLayer layer1, BlockLayer layer2, int scrNo, float CurScale, bool ShowBorder, int LeftMargin, int TopMargin, int WIDTH, int HEIGHT)
+        public static void Render(Graphics g, Image[] bigBlocks, Rectangle? visibleRect, BlockLayer layer1, BlockLayer layer2, int scrNo, float CurScale, bool ShowBorder, int LeftMargin, int TopMargin, int WIDTH, int HEIGHT)
         {
             bool verticalScreen = ConfigScript.getScreenVertical();
-            int TILE_SIZE_X = (int)(blockWidth * CurScale);
-            int TILE_SIZE_Y = (int)(blockHeight * CurScale);
+            int TILE_SIZE_X = (int)(layer1.blockWidth * CurScale);
+            int TILE_SIZE_Y = (int)(layer1.blockHeight * CurScale);
             int SIZE = WIDTH * HEIGHT;
             for (int i = 0; i < SIZE; i++)
             {
@@ -80,11 +80,11 @@ namespace CadEditor
             }
         }
 
-        public static Image ScreenToImage(Image[] bigBlocks, int blockWidth, int blockHeight, BlockLayer layer1, BlockLayer layer2, int scrNo, float CurScale, bool ShowBorder, int LeftMargin, int TopMargin, int WIDTH, int HEIGHT)
+        public static Image ScreenToImage(Image[] bigBlocks, BlockLayer layer1, BlockLayer layer2, int scrNo, float CurScale, bool ShowBorder, int LeftMargin, int TopMargin, int WIDTH, int HEIGHT)
         {
             bool verticalScreen = ConfigScript.getScreenVertical();
-            int TILE_SIZE_X = (int)(blockWidth * CurScale);
-            int TILE_SIZE_Y = (int)(blockHeight * CurScale);
+            int TILE_SIZE_X = (int)(layer1.blockWidth * CurScale);
+            int TILE_SIZE_Y = (int)(layer1.blockHeight * CurScale);
             int SIZE = WIDTH * HEIGHT;
 
             Image result;
@@ -95,7 +95,7 @@ namespace CadEditor
 
             using (var g = Graphics.FromImage(result))
             {
-                Render(g, bigBlocks, blockWidth, blockHeight, null, layer1, layer2, scrNo, CurScale, ShowBorder, LeftMargin, TopMargin, WIDTH, HEIGHT);
+                Render(g, bigBlocks, null, layer1, layer2, scrNo, CurScale, ShowBorder, LeftMargin, TopMargin, WIDTH, HEIGHT);
             }
             return result;
         }

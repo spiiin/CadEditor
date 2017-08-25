@@ -47,9 +47,6 @@ namespace CadEditor
 
         bool objectDragged = false;
 
-        //render back
-        private BlockLayer backLayer = new BlockLayer();
-
         private void reloadLevelLayerData()
         {
             curWidth = ConfigScript.getLevelWidth(curActiveLayout);
@@ -133,9 +130,6 @@ namespace CadEditor
                 cbLayoutNo.Items.Add(String.Format("{0}:0x{1:X} ({2}x{3})", lr.name, lr.layoutAddr, lr.width, lr.height));
             UtilsGui.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged, curActiveLayout);
 
-            //reload screens
-            backLayer.screens = Utils.setScreens(getLevelRecForGameType().levelNo);
-
             reloadLevel(reloadObjects);
             resizeMapScreen();
             mapScreen.Invalidate();
@@ -143,7 +137,6 @@ namespace CadEditor
 
         private void EnemyEditor_Load(object sender, EventArgs e)
         {
-            backLayer.screens = Utils.setScreens(getLevelRecForGameType().levelNo);
             if (ConfigScript.usePicturesInstedBlocks)
             {
                 bigBlocks = UtilsGDI.setBlocksForPictures(2, 32,32, MapViewType.Tiles, formMain.ShowAxis);
@@ -181,8 +174,8 @@ namespace CadEditor
 
         private void resizeMapScreen()
         {
-            int blockWidth = formMain.BlockWidth;
-            int blockHeight = formMain.BlockHeight;
+            int blockWidth = formMain.Layer1.blockWidth;
+            int blockHeight = formMain.Layer1.blockHeight;
             int scrLevelNo = getLevelRecForGameType().levelNo;
 
             int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
@@ -323,8 +316,8 @@ namespace CadEditor
 
         private Point mouseCoordToSxSyCoord(Point mouseCoord)
         {
-            int blockWidth = formMain.BlockWidth;
-            int blockHeight = formMain.BlockHeight;
+            int blockWidth = formMain.Layer1.blockWidth;
+            int blockHeight = formMain.Layer1.blockHeight;
             int scrLevelNo = getLevelRecForGameType().levelNo;
             int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
             int scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);
@@ -335,8 +328,8 @@ namespace CadEditor
 
         private Point mouseCoordToCoordInsideScreen(Point mouseCoord)
         {
-            int blockWidth = formMain.BlockWidth;
-            int blockHeight = formMain.BlockHeight;
+            int blockWidth = formMain.Layer1.blockWidth;
+            int blockHeight = formMain.Layer1.blockHeight;
             int scrLevelNo = getLevelRecForGameType().levelNo;
             int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
             int scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);
@@ -347,8 +340,8 @@ namespace CadEditor
 
         private void paintBack(Graphics g)
         {
-            int blockWidth = formMain.BlockWidth;
-            int blockHeight = formMain.BlockHeight;
+            int blockWidth = formMain.Layer1.blockWidth;
+            int blockHeight = formMain.Layer1.blockHeight;
             int scrLevelNo = getLevelRecForGameType().levelNo;
             int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
             int scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);
@@ -359,14 +352,14 @@ namespace CadEditor
                 {
                     int noInLayout = y * curLevelLayerData.width + x;
                     int scrNo = calcScrNo(noInLayout);
-                    if (scrNo < backLayer.screens.Length && scrNo >= 0)
+                    if (scrNo < formMain.Layer1.screens.Length && scrNo >= 0)
                     {
                         int width = ConfigScript.getScreenWidth(scrLevelNo);
                         int height = ConfigScript.getScreenHeight(scrLevelNo);
                         var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
                         int leftMargin = scrWidth * x;
                         int topMargin = scrHeight * y;
-                        MapEditor.Render(g, bigBlocks, formMain.BlockWidth, formMain.BlockHeight, visibleRect, backLayer, null, scrNo, curScale, false, leftMargin, topMargin, width, height);
+                        MapEditor.Render(g, bigBlocks, visibleRect, formMain.Layer1, null, scrNo, curScale, false, leftMargin, topMargin, width, height);
                         //ConfigScript.renderToMainScreen(g, (int)curScale);
                     }
                     else
@@ -382,8 +375,8 @@ namespace CadEditor
             var g = e.Graphics;
             paintBack(g);
 
-            int blockWidth = formMain.BlockWidth;
-            int blockHeight = formMain.BlockHeight;
+            int blockWidth = formMain.Layer1.blockWidth;
+            int blockHeight = formMain.Layer1.blockHeight;
             int scrLevelNo = getLevelRecForGameType().levelNo;
             int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
             int scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);
