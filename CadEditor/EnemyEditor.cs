@@ -48,7 +48,7 @@ namespace CadEditor
         bool objectDragged = false;
 
         //render back
-        private int[][] screens = null;
+        private BlockLayer backLayer = new BlockLayer();
 
         private void reloadLevelLayerData()
         {
@@ -134,7 +134,7 @@ namespace CadEditor
             UtilsGui.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged, curActiveLayout);
 
             //reload screens
-            screens = Utils.setScreens(getLevelRecForGameType().levelNo);
+            backLayer.screens = Utils.setScreens(getLevelRecForGameType().levelNo);
 
             reloadLevel(reloadObjects);
             resizeMapScreen();
@@ -143,7 +143,7 @@ namespace CadEditor
 
         private void EnemyEditor_Load(object sender, EventArgs e)
         {
-            screens = Utils.setScreens(getLevelRecForGameType().levelNo);
+            backLayer.screens = Utils.setScreens(getLevelRecForGameType().levelNo);
             if (ConfigScript.usePicturesInstedBlocks)
             {
                 bigBlocks = UtilsGDI.setBlocksForPictures(2, 32,32, MapViewType.Tiles, formMain.ShowAxis);
@@ -359,16 +359,14 @@ namespace CadEditor
                 {
                     int noInLayout = y * curLevelLayerData.width + x;
                     int scrNo = calcScrNo(noInLayout);
-                    if (scrNo < screens.Length && scrNo >= 0)
+                    if (scrNo < backLayer.screens.Length && scrNo >= 0)
                     {
-                        int[] indexes = screens[scrNo];
                         int width = ConfigScript.getScreenWidth(scrLevelNo);
                         int height = ConfigScript.getScreenHeight(scrLevelNo);
                         var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
                         int leftMargin = scrWidth * x;
                         int topMargin = scrHeight * y;
-                        var blockLayer1 = new BlockLayer() { screens = new int[1][] { indexes }, showLayer = true };
-                        MapEditor.Render(g, bigBlocks, formMain.BlockWidth, formMain.BlockHeight, visibleRect, blockLayer1, null, 0, curScale, false, leftMargin, topMargin, width, height, ConfigScript.getScreenVertical());
+                        MapEditor.Render(g, bigBlocks, formMain.BlockWidth, formMain.BlockHeight, visibleRect, backLayer, null, scrNo, curScale, false, leftMargin, topMargin, width, height);
                         //ConfigScript.renderToMainScreen(g, (int)curScale);
                     }
                     else
