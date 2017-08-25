@@ -368,7 +368,7 @@ namespace CadEditor
                         int leftMargin = scrWidth * x;
                         int topMargin = scrHeight * y;
                         var blockLayer1 = new BlockLayer() { screens = new int[1][] { indexes }, showLayer = true };
-                        MapEditor.Render(g, bigBlocks, formMain.BlockWidth, formMain.BlockHeight, visibleRect, blockLayer1, null, 0, curScale, true, leftMargin, topMargin, width, height, ConfigScript.getScreenVertical());
+                        MapEditor.Render(g, bigBlocks, formMain.BlockWidth, formMain.BlockHeight, visibleRect, blockLayer1, null, 0, curScale, false, leftMargin, topMargin, width, height, ConfigScript.getScreenVertical());
                         //ConfigScript.renderToMainScreen(g, (int)curScale);
                     }
                     else

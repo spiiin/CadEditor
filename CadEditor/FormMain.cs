@@ -744,15 +744,15 @@ namespace CadEditor
             get { return curScale; }
         }
 
-        /*public bool ShowLayer1
+        public BlockLayer Layer1
         {
-            get { return showLayer1; }
+            get { return layers[0]; }
         }
 
-        public bool ShowLayer2
+        public BlockLayer Layer2
         {
-            get { return showLayer2; }
-        }*/
+            get { return layers[1]; }
+        }
 
         public int BlockWidth
         {

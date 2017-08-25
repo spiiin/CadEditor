@@ -26,7 +26,7 @@ namespace CadEditor
                         g.DrawImage(bigBlocks[bigBlockNo], tileRect);
                     else
                         g.FillRectangle(Brushes.White, tileRect);
-                    if (layer2.screens[scrNo] != null && layer2.showLayer)
+                    if (layer2 != null && layer2.screens != null && layer2.screens[scrNo] != null && layer2.showLayer)
                     {
                         int bigBlockNo2 = ConfigScript.getBigTileNoFromScreen(layer2.screens[scrNo], i);
                         if (bigBlockNo2 != -1 && bigBlockNo2 < bigBlocks.Length)
@@ -79,15 +79,11 @@ namespace CadEditor
             }
         }
 
-        public static Image ScreenToImage(Image[] bigBlocks, int blockWidth, int blockHeight, int[] screen, int[] screen2, float CurScale, bool ShowLayer1, bool ShowLayer2, bool ShowBorder, int LeftMargin, int TopMargin, int WIDTH, int HEIGHT, bool verticalScreen)
+        public static Image ScreenToImage(Image[] bigBlocks, int blockWidth, int blockHeight, BlockLayer layer1, BlockLayer layer2, int scrNo, float CurScale, bool ShowBorder, int LeftMargin, int TopMargin, int WIDTH, int HEIGHT, bool verticalScreen)
         {
             int TILE_SIZE_X = (int)(blockWidth * CurScale);
             int TILE_SIZE_Y = (int)(blockHeight * CurScale);
             int SIZE = WIDTH * HEIGHT;
-
-            int[] indexes2 = null;
-            if (ConfigScript.getLayersCount() > 1)
-                indexes2 = screen2;
 
             Image result;
             if (verticalScreen)
@@ -97,9 +93,7 @@ namespace CadEditor
 
             using (var g = Graphics.FromImage(result))
             {
-                var blockLayer1 = new BlockLayer() { screens = new int[1][] { screen  }, showLayer = true };
-                var blockLayer2 = new BlockLayer() { screens = new int[1][] { screen2 }, showLayer = true };
-                Render(g, bigBlocks, blockWidth, blockHeight, null, blockLayer1, blockLayer2, 0, CurScale, ShowBorder, LeftMargin, TopMargin, WIDTH, HEIGHT, verticalScreen);
+                Render(g, bigBlocks, blockWidth, blockHeight, null, layer1, layer2, scrNo, CurScale, ShowBorder, LeftMargin, TopMargin, WIDTH, HEIGHT, verticalScreen);
             }
             return result;
         }
