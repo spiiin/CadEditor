@@ -84,6 +84,8 @@ namespace CadEditor
         {
             layers[0].blockWidth = (int)(bigImages[0].Width / curScale);
             layers[0].blockHeight = (int)(bigImages[0].Height / curScale);
+            layers[1].blockWidth = layers[0].blockWidth;
+            layers[1].blockHeight = layers[0].blockHeight;
         }
 
         private void resetControls()
@@ -170,6 +172,8 @@ namespace CadEditor
                 //get block size from image
                 layers[0].blockWidth = ConfigScript.getBlocksPicturesWidth();
                 layers[0].blockHeight = 32;
+                layers[1].blockWidth = ConfigScript.getBlocksPicturesWidth();
+                layers[1].blockHeight = 32;
                 bigBlocks = UtilsGDI.setBlocksForPictures(curButtonScale, layers[0].blockWidth, layers[0].blockHeight, curViewType, showAxis);
                 updateBlocksImages();
                 return;
@@ -280,7 +284,7 @@ namespace CadEditor
             int TILE_SIZE_Y = (int)(layers[0].blockHeight * curScale);
             int SIZE = WIDTH * HEIGHT;
             var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
-            MapEditor.Render(e.Graphics, bigBlocks, visibleRect, layers[0], layers[1], curActiveScreen, curScale, true, ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X, 0, WIDTH, HEIGHT);
+            MapEditor.Render(e.Graphics, bigBlocks, visibleRect, new BlockLayer[] { layers[0], layers[1] }, curActiveScreen, curScale, true, ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X, 0, WIDTH, HEIGHT);
 
             if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen > 0) && layers[0].showLayer)
             {
