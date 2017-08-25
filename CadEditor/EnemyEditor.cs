@@ -685,6 +685,10 @@ namespace CadEditor
                 {
                     int selIndex = dgvObjects.SelectedRows[i].Index;
                     var obj = activeObjectList.objects[selIndex];
+
+                    obj.sx = sx;
+                    obj.sy = sy;
+
                     if (bindToAxis)
                     {
                         obj.x = (x / 8) * 8;
