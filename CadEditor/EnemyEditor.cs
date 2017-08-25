@@ -641,7 +641,12 @@ namespace CadEditor
                 }
             }
             objectDragged = true;
+            oldX = x;
+            oldY = y;
         }
+
+        private int oldX;
+        private int oldY;
 
         private void mapScreen_MouseMove(object sender, MouseEventArgs e)
         {
@@ -653,6 +658,9 @@ namespace CadEditor
             int sx = coord.X, sy = coord.Y;
             int x = (int)(ocoord.X / curScale);
             int y = (int)(ocoord.Y / curScale);
+
+            int dx = x - oldX;
+            int dy = y - oldY;
 
             int scrLevelNo = getLevelRecForGameType().levelNo;
             int coordXCount = ConfigScript.getScreenWidth(scrLevelNo) * 32;
@@ -684,12 +692,14 @@ namespace CadEditor
                     }
                     else
                     {
-                        obj.x = x;
-                        obj.y = y;
+                        obj.x += dx;
+                        obj.y += dy;
                     }
                     activeObjectList.objects[selIndex] = obj;
                 }
             }
+            oldX = x;
+            oldY = y;
             dirty = true;
             mapScreen.Invalidate();
         }
@@ -844,17 +854,27 @@ namespace CadEditor
                 if (row.Cells.Count >= ObjectRec.FIELD_COUNT)
                 {
                     //update icon
-                    row.Cells[0].Value = objectSprites.Images[cell0];
+                    if ((cell0 >= 0) && (cell0 < objectSprites.Images.Count))
+                    {
+                        row.Cells[0].Value = objectSprites.Images[cell0];
+                    }
 
                     //update dictionary
-                    var activeObjectList = objectLists[curActiveObjectListIndex];
-                    var dict = activeObjectList.objects[e.RowIndex].additionalData;
-                    if (dict != null)
+                    try
                     {
-                        foreach (var k in dict.Keys)
+                        var activeObjectList = objectLists[curActiveObjectListIndex];
+                        var dict = activeObjectList.objects[e.RowIndex].additionalData;
+                        if (dict != null)
                         {
-                            row.Cells[k].Value = dict[k];
+                            foreach (var k in dict.Keys)
+                            {
+                                row.Cells[k].Value = dict[k];
+                            }
                         }
+                    }
+                    catch
+                    {
+
                     }
                 }
             }

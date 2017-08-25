@@ -689,6 +689,8 @@ namespace CadEditor
         {
             int x = curObject.x, y = curObject.y;
             var myFont = new Font(FontFamily.GenericSansSerif, 6.0f);
+            var selectRect = new Rectangle((int)(x * curScale) - 8 + leftMargin, (int)(y * curScale) - 8 + topMargin, 16, 16);
+
             if (curObject.type < objectSprites.Images.Count)
             {
                 g.DrawImage(objectSprites.Images[curObject.type], new Point((int)(x * curScale) - 8 + leftMargin, (int)(y * curScale) - 8 + topMargin));
@@ -698,9 +700,17 @@ namespace CadEditor
                 g.FillRectangle(Brushes.Black, new Rectangle((int)(x * curScale) - 8 + leftMargin, (int)(y * curScale) - 8 + topMargin, 16, 16));
                 g.DrawString(curObject.type.ToString("X3"), myFont, Brushes.White, new Point((int)(x * curScale) - 8 + leftMargin, (int)(y * curScale) - 8 + topMargin));
             }
-            var selectRect = new Rectangle((int)(x * curScale) - 8 + leftMargin, (int)(y * curScale) - 8 + topMargin, 16, 16);
+
+
             if (isSelected)
+            {
                 g.DrawRectangle(new Pen(Brushes.Red, 2.0f), selectRect);
+            }
+            else
+            {
+                g.DrawRectangle(new Pen(Brushes.White, 1.0f), selectRect);
+            }
+
             if (inactive)
             {
                 g.FillRectangle(new SolidBrush(Color.FromArgb(128, 255, 255, 255)), selectRect);
