@@ -311,7 +311,9 @@ namespace PluginVideoNes
             int scrW = ConfigScript.getScreenWidth(0); //zero as screenNoForLevel
             int scrH = ConfigScript.getScreenHeight(0);
             //capcom hardcode
-            return new Bitmap(MapEditor.ScreenToImage(bigBlocks, 32, 32, indexes, null, scale, true, false, false, 0, scrW, scrH, ConfigScript.getScreenVertical()));
+
+            var blockLayer1 = new BlockLayer() { screens = new int[1][] { indexes }, showLayer = true, blockWidth = 32, blockHeight = 32 };
+            return new Bitmap(MapEditor.ScreenToImage(bigBlocks, new BlockLayer[] { blockLayer1 }, 0, scale, false, 0, 0, scrW, scrH));
         }
 
         public Color[] NesColors

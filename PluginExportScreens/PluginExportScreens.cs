@@ -86,11 +86,9 @@ namespace PluginExportScreens
                 int WIDTH = ConfigScript.getScreenWidth(formMain.LevelNoForScreens);
                 int HEIGHT = ConfigScript.getScreenHeight(formMain.LevelNoForScreens);
                 float curScale = formMain.CurScale;
-                bool showLayer1 = formMain.ShowLayer1;
-                bool showLayer2 = formMain.ShowLayer2;
-                int TILE_SIZE_X = (int)(formMain.BlockWidth * curScale);
-                int TILE_SIZE_Y = (int)(formMain.BlockHeight * curScale);
-                var probeIm = MapEditor.ScreenToImage(formMain.BigBlocks, formMain.BlockWidth, formMain.BlockHeight, indexes, indexes2, curScale, showLayer1, showLayer2, false, 0, WIDTH, HEIGHT, ConfigScript.getScreenVertical());
+                int TILE_SIZE_X = (int)(formMain.Layer1.blockWidth * curScale);
+                int TILE_SIZE_Y = (int)(formMain.Layer1.blockHeight * curScale);
+                var probeIm = MapEditor.ScreenToImage(formMain.BigBlocks, new BlockLayer[] { formMain.Layer1, formMain.Layer2 }, formMain.ScreenNo, curScale, true, 0, 0, WIDTH, HEIGHT);
                 int screenCount = SaveScreensCount.Count;
                 var resultImage = new Bitmap(probeIm.Width * screenCount, probeIm.Height);
                 using (var g = Graphics.FromImage(resultImage))
@@ -100,7 +98,7 @@ namespace PluginExportScreens
                         indexes = screens[formMain.ScreenNo + i];
                         if (ConfigScript.getLayersCount() > 1)
                             indexes2 = screens2[formMain.ScreenNo + i];
-                        var im = MapEditor.ScreenToImage(formMain.BigBlocks, formMain.BlockWidth, formMain.BlockHeight, indexes, indexes2, curScale, showLayer1, showLayer2, false, 0, WIDTH, HEIGHT, ConfigScript.getScreenVertical());
+                        var im = MapEditor.ScreenToImage(formMain.BigBlocks, new BlockLayer[] { formMain.Layer1, formMain.Layer2 }, formMain.ScreenNo, curScale, true, 0, 0, WIDTH, HEIGHT);
                         g.DrawImage(im, new Point(i * im.Width, 0));
                     }
                 }
