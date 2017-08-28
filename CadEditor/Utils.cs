@@ -106,12 +106,20 @@ namespace CadEditor
         public static LevelLayerData getLayoutLinear(int curActiveLayout)
         {
             int layoutAddr = ConfigScript.getLayoutAddr(curActiveLayout);
+            int scrollAddr = ConfigScript.getScrollAddr(curActiveLayout);
             int width =  ConfigScript.getLevelWidth(curActiveLayout);
             int height = ConfigScript.getLevelHeight(curActiveLayout);
             int[] layer = new int[width * height];
             for (int i = 0; i < width * height; i++)
                 layer[i] = Globals.romdata[layoutAddr + i];
-            return new LevelLayerData(width, height, layer, null, null);
+            bool needScrolls = ConfigScript.getScrollsOffsetFromLayout() != 0;
+            var scrolls = new int[width * height];
+            if (needScrolls)
+            {
+                for (int i = 0; i < width * height; i++)
+                    scrolls[i] = Globals.romdata[scrollAddr + i];
+            }
+            return new LevelLayerData(width, height, layer, needScrolls ? scrolls : null, null);
         }
 
         public static bool setLayoutLinear(LevelLayerData curActiveLayerData, int curActiveLayout)

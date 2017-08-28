@@ -92,20 +92,7 @@ namespace CadEditor
 
         private void reloadLevelLayer()
         {
-            int layoutAddr = ConfigScript.getLayoutAddr(curActiveLayout);
-            int scrollAddr = ConfigScript.getScrollAddr(curActiveLayout); //darkwing duck specific
-            int width = curWidth;
-            int height = curHeight;
-            int[] layer = new int[width * height];
-            int[] scroll = new int[width * height];
-
-            layer = ConfigScript.getLayoutFunc(curActiveLayout).layer;
-
-            for (int i = 0; i < width * height; i++)
-            {
-                scroll[i] = Globals.romdata[scrollAddr + i];
-            }
-            curLevelLayerData = new LevelLayerData(width, height, layer, scroll, null);
+            curLevelLayerData = ConfigScript.getLayoutFunc(curActiveLayout);
             curActiveBlock = 0;
             pbMap.Invalidate();
         }
@@ -146,7 +133,7 @@ namespace CadEditor
                     int scroll = curLevelLayerData.scroll[y * w + x];
                     int scrollIndex = scroll >> 5;
                     int doorIndex = scroll & 0x01F;
-                    g.DrawImage(screenImages.Images[index], new Rectangle(x*64, y*64, 64, 64));
+                    g.DrawImage(screenImages.Images[index % 256], new Rectangle(x*64, y*64, 64, 64));
                     if (showScrolls)
                       g.DrawString(String.Format("{0:X}", scroll), new Font("Arial", 8), new SolidBrush(Color.Red), new Rectangle(x * 64 + 24, y * 64 + 24, 32, 16));
                 }
@@ -265,15 +252,9 @@ namespace CadEditor
 
         private bool saveToFile()
         {
-            int layerAddr, scrollAddr, width, height;
-            layerAddr = ConfigScript.getLayoutAddr(curActiveLayout);
-            scrollAddr = ConfigScript.getScrollAddr(curActiveLayout); //darkwing duck specific
-            width = curWidth;
-            height = curHeight;
-            for (int i = 0; i < width * height; i++)
+            if (!ConfigScript.setLayout(curLevelLayerData, curActiveLayout))
             {
-                Globals.romdata[scrollAddr + i] = (byte)curLevelLayerData.scroll[i];
-                Globals.romdata[layerAddr + i] = (byte)curLevelLayerData.layer[i];
+                return false;
             }
 
             dirty = !Globals.flushToFile();
