@@ -95,7 +95,7 @@ namespace CadEditor
 
         private int calcScrNo(int noInLayout)
         {
-            return curLevelLayerData.layer[noInLayout];
+            return curLevelLayerData.layer[noInLayout] - 1;
         }
 
         private void reloadLevel(bool reloadObjects)
