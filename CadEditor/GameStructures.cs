@@ -85,8 +85,8 @@ namespace CadEditor
             this.h = other.h;
             this.indexes = new int[other.indexes.Length];
             this.palBytes = new int[other.palBytes.Length];
-            Array.Copy(this.indexes, other.indexes, this.indexes.Length);
-            Array.Copy(this.palBytes, other.palBytes, this.palBytes.Length);
+            Array.Copy(other.indexes, this.indexes, this.indexes.Length);
+            Array.Copy(other.palBytes, this.palBytes, this.palBytes.Length);
         }
 
         public int[] indexes;
