@@ -24,6 +24,7 @@ public class Data:CapcomBase
   public GetObjectsFunc getObjectsFunc() { return MermaidUtils.getObjectsLM; }
   public SetObjectsFunc setObjectsFunc() { return MermaidUtils.setObjectsLM; }
   public override GetLayoutFunc  getLayoutFunc()  { return MermaidUtils.getLayoutLinearMermaid;   }
+  public override SetLayoutFunc  setLayoutFunc()  { return MermaidUtils.setLayoutLinearMermaid;   }
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
     new LevelRec(0x13ABA, 46, 18, 1,  0x1DAE2), 

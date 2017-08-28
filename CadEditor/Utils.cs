@@ -114,6 +114,27 @@ namespace CadEditor
             return new LevelLayerData(width, height, layer, null, null);
         }
 
+        public static bool setLayoutLinear(LevelLayerData curActiveLayerData, int curActiveLayout)
+        {
+            int layerAddr, scrollAddr, width, height;
+            layerAddr = ConfigScript.getLayoutAddr(curActiveLayout);
+            scrollAddr = ConfigScript.getScrollAddr(curActiveLayout); //darkwing duck specific
+            width = curActiveLayerData.width;
+            height = curActiveLayerData.height;
+            for (int i = 0; i < width * height; i++)
+            {
+                Globals.romdata[layerAddr + i] = (byte)curActiveLayerData.layer[i];
+            }
+            if (curActiveLayerData.scroll != null)
+            {
+                for (int i = 0; i < width * height; i++)
+                {
+                    Globals.romdata[scrollAddr + i] = (byte)curActiveLayerData.scroll[i];
+                }
+            }
+            return true;
+        }
+
         public static LevelLayerData getDefaultLayout(int curActiveLayout)
         {
             int[] layer = new int[1];

@@ -45,6 +45,7 @@ public class CapcomBase
   public virtual GetPalFunc           getPalFunc()           { return Utils.getPalleteLinear;}
   public virtual SetPalFunc           setPalFunc()           { return Utils.setPalleteLinear;}
   public virtual GetLayoutFunc        getLayoutFunc()        { return Utils.getLayoutLinear; }
+  public virtual SetLayoutFunc        setLayoutFunc()        { return Utils.setLayoutLinear; }
   
   public ObjRec[] getBlocks(int blockIndex)
   {

@@ -24,6 +24,7 @@ namespace CadEditor
     public delegate bool            SetObjectsFunc(int levelNo, List<ObjectList> objects); 
     public delegate void            SortObjectsFunc(int levelNo, int listNo, List<ObjectRec> objects);
     public delegate LevelLayerData  GetLayoutFunc(int levelNo);
+    public delegate bool SetLayoutFunc(LevelLayerData date, int levelNo);
     public delegate Dictionary<String, int> GetObjectDictionaryFunc(int listNo, int objNo);
     public delegate int  ConvertScreenTileFunc(int val);
     public delegate int  GetBigTileNoFromScreenFunc(int[] screenData, int index);
@@ -203,6 +204,7 @@ namespace CadEditor
             setObjectsFunc = callFromScript<SetObjectsFunc>(asm, data, "*.setObjectsFunc");
             sortObjectsFunc = callFromScript<SortObjectsFunc>(asm, data, "*.sortObjectsFunc");
             getLayoutFunc = callFromScript<GetLayoutFunc>(asm, data, "*.getLayoutFunc", Utils.getDefaultLayoutFunc());
+            setLayoutFunc = callFromScript<SetLayoutFunc>(asm, data, "*.setLayoutFunc", null);
             convertScreenTileFunc = callFromScript<ConvertScreenTileFunc>(asm, data, "*.getConvertScreenTileFunc");
             backConvertScreenTileFunc = callFromScript<ConvertScreenTileFunc>(asm, data, "*.getBackConvertScreenTileFunc");
             getBigTileNoFromScreenFunc = callFromScript<GetBigTileNoFromScreenFunc>(asm, data, "*.getBigTileNoFromScreenFunc", Utils.getBigTileNoFromScreen);
@@ -432,6 +434,11 @@ namespace CadEditor
         public static LevelLayerData getLayout(int levelNo)
         {
             return getLayoutFunc(levelNo);
+        }
+
+        public static bool setLayout(LevelLayerData layerData, int levelNo)
+        {
+            return (setLayoutFunc ?? ((_,__) => true))(layerData, levelNo);
         }
 
         public static Dictionary<String, int> getObjectDictionary(int listNo, int objType)
@@ -682,6 +689,7 @@ namespace CadEditor
         public static SortObjectsFunc sortObjectsFunc;
 
         public static GetLayoutFunc getLayoutFunc;
+        public static SetLayoutFunc setLayoutFunc;
         public static GetObjectDictionaryFunc getObjectDictionaryFunc;
         public static RenderToMainScreenFunc renderToMainScreenFunc;
 
