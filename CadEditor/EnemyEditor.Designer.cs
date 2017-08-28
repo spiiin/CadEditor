@@ -72,7 +72,6 @@
             this.btSort = new System.Windows.Forms.Button();
             this.pnObjects = new System.Windows.Forms.Panel();
             this.pnBigObjects = new System.Windows.Forms.Panel();
-            this.pbBigObject = new System.Windows.Forms.PictureBox();
             this.cbBigObjectNo = new System.Windows.Forms.ComboBox();
             this.cbUseBigPictures = new System.Windows.Forms.CheckBox();
             this.cbBindToAxis = new System.Windows.Forms.CheckBox();
@@ -83,6 +82,7 @@
             this.bttImport = new System.Windows.Forms.ToolStripButton();
             this.ofJson = new System.Windows.Forms.OpenFileDialog();
             this.sfJson = new System.Windows.Forms.SaveFileDialog();
+            this.pbBigObject = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -92,8 +92,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).BeginInit();
             this.pnObjects.SuspendLayout();
             this.pnBigObjects.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbBigObject)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBigObject)).BeginInit();
             this.SuspendLayout();
             // 
             // mapScreen
@@ -117,10 +117,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.objPanel.AutoScroll = true;
-            this.objPanel.Location = new System.Drawing.Point(5, 351);
+            this.objPanel.Location = new System.Drawing.Point(9, 260);
             this.objPanel.Margin = new System.Windows.Forms.Padding(4);
             this.objPanel.Name = "objPanel";
-            this.objPanel.Size = new System.Drawing.Size(229, 206);
+            this.objPanel.Size = new System.Drawing.Size(229, 318);
             this.objPanel.TabIndex = 37;
             // 
             // columnHeader1
@@ -138,7 +138,7 @@
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(121, 563);
+            this.label3.Location = new System.Drawing.Point(120, 613);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(50, 17);
@@ -150,7 +150,7 @@
             this.activeBlock.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.activeBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.activeBlock.Location = new System.Drawing.Point(183, 563);
+            this.activeBlock.Location = new System.Drawing.Point(182, 613);
             this.activeBlock.Margin = new System.Windows.Forms.Padding(4);
             this.activeBlock.Name = "activeBlock";
             this.activeBlock.Size = new System.Drawing.Size(42, 39);
@@ -405,7 +405,7 @@
             this.lbActive.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbActive.AutoSize = true;
-            this.lbActive.Location = new System.Drawing.Point(121, 581);
+            this.lbActive.Location = new System.Drawing.Point(152, 632);
             this.lbActive.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbActive.Name = "lbActive";
             this.lbActive.Size = new System.Drawing.Size(18, 17);
@@ -487,10 +487,10 @@
             // 
             this.pnTools.Controls.Add(this.label16);
             this.pnTools.Controls.Add(this.cbTool);
-            this.pnTools.Location = new System.Drawing.Point(9, 292);
+            this.pnTools.Location = new System.Drawing.Point(7, 189);
             this.pnTools.Margin = new System.Windows.Forms.Padding(4);
             this.pnTools.Name = "pnTools";
-            this.pnTools.Size = new System.Drawing.Size(237, 37);
+            this.pnTools.Size = new System.Drawing.Size(234, 37);
             this.pnTools.TabIndex = 52;
             // 
             // label16
@@ -636,9 +636,10 @@
             this.pnObjects.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.pnObjects.Controls.Add(this.pnBigObjects);
-            this.pnObjects.Controls.Add(this.cbUseBigPictures);
-            this.pnObjects.Controls.Add(this.cbBindToAxis);
             this.pnObjects.Controls.Add(this.objPanel);
+            this.pnObjects.Controls.Add(this.cbUseBigPictures);
+            this.pnObjects.Controls.Add(this.pnTools);
+            this.pnObjects.Controls.Add(this.cbBindToAxis);
             this.pnObjects.Controls.Add(this.activeBlock);
             this.pnObjects.Controls.Add(this.label3);
             this.pnObjects.Controls.Add(this.lbActive);
@@ -646,31 +647,19 @@
             this.pnObjects.Location = new System.Drawing.Point(12, 26);
             this.pnObjects.Margin = new System.Windows.Forms.Padding(4);
             this.pnObjects.Name = "pnObjects";
-            this.pnObjects.Size = new System.Drawing.Size(244, 665);
+            this.pnObjects.Size = new System.Drawing.Size(244, 662);
             this.pnObjects.TabIndex = 31;
             // 
             // pnBigObjects
             // 
             this.pnBigObjects.Controls.Add(this.pbBigObject);
             this.pnBigObjects.Controls.Add(this.cbBigObjectNo);
-            this.pnBigObjects.Location = new System.Drawing.Point(7, 342);
+            this.pnBigObjects.Location = new System.Drawing.Point(5, 263);
             this.pnBigObjects.Margin = new System.Windows.Forms.Padding(4);
             this.pnBigObjects.Name = "pnBigObjects";
-            this.pnBigObjects.Size = new System.Drawing.Size(228, 215);
+            this.pnBigObjects.Size = new System.Drawing.Size(228, 322);
             this.pnBigObjects.TabIndex = 31;
             this.pnBigObjects.Visible = false;
-            // 
-            // pbBigObject
-            // 
-            this.pbBigObject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbBigObject.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbBigObject.Location = new System.Drawing.Point(1, 37);
-            this.pbBigObject.Margin = new System.Windows.Forms.Padding(4);
-            this.pbBigObject.Name = "pbBigObject";
-            this.pbBigObject.Size = new System.Drawing.Size(94, 82);
-            this.pbBigObject.TabIndex = 66;
-            this.pbBigObject.TabStop = false;
             // 
             // cbBigObjectNo
             // 
@@ -688,7 +677,7 @@
             this.cbUseBigPictures.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cbUseBigPictures.AutoSize = true;
-            this.cbUseBigPictures.Location = new System.Drawing.Point(7, 322);
+            this.cbUseBigPictures.Location = new System.Drawing.Point(5, 234);
             this.cbUseBigPictures.Margin = new System.Windows.Forms.Padding(4);
             this.cbUseBigPictures.Name = "cbUseBigPictures";
             this.cbUseBigPictures.Size = new System.Drawing.Size(128, 21);
@@ -703,12 +692,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cbBindToAxis.AutoSize = true;
             this.cbBindToAxis.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbBindToAxis.Location = new System.Drawing.Point(85, 606);
+            this.cbBindToAxis.Location = new System.Drawing.Point(1, 612);
             this.cbBindToAxis.Margin = new System.Windows.Forms.Padding(4);
             this.cbBindToAxis.Name = "cbBindToAxis";
-            this.cbBindToAxis.Size = new System.Drawing.Size(137, 21);
+            this.cbBindToAxis.Size = new System.Drawing.Size(112, 21);
             this.cbBindToAxis.TabIndex = 64;
-            this.cbBindToAxis.Text = "Align per 8 pixels";
+            this.cbBindToAxis.Text = "8-pixels align";
             this.cbBindToAxis.UseVisualStyleBackColor = true;
             this.cbBindToAxis.CheckedChanged += new System.EventHandler(this.cbBindToAxis_CheckedChanged);
             // 
@@ -771,6 +760,16 @@
             this.sfJson.FileName = "objects.json";
             this.sfJson.Filter = "json|*.json";
             // 
+            // pbBigObject
+            // 
+            this.pbBigObject.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbBigObject.Location = new System.Drawing.Point(4, 41);
+            this.pbBigObject.Margin = new System.Windows.Forms.Padding(4);
+            this.pbBigObject.Name = "pbBigObject";
+            this.pbBigObject.Size = new System.Drawing.Size(113, 107);
+            this.pbBigObject.TabIndex = 68;
+            this.pbBigObject.TabStop = false;
+            // 
             // EnemyEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -778,7 +777,6 @@
             this.ClientSize = new System.Drawing.Size(1348, 693);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.pnObjectList);
-            this.Controls.Add(this.pnTools);
             this.Controls.Add(this.pnObjects);
             this.Controls.Add(this.pnView);
             this.Controls.Add(this.label12);
@@ -802,9 +800,9 @@
             this.pnObjects.ResumeLayout(false);
             this.pnObjects.PerformLayout();
             this.pnBigObjects.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pbBigObject)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBigObject)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -851,7 +849,6 @@
         private System.Windows.Forms.CheckBox cbBindToAxis;
         private System.Windows.Forms.CheckBox cbUseBigPictures;
         private System.Windows.Forms.Panel pnBigObjects;
-        private System.Windows.Forms.PictureBox pbBigObject;
         private System.Windows.Forms.ComboBox cbBigObjectNo;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ComboBox cbScale;
@@ -865,5 +862,6 @@
         private System.Windows.Forms.ToolStripButton bttImport;
         private System.Windows.Forms.OpenFileDialog ofJson;
         private System.Windows.Forms.SaveFileDialog sfJson;
+        private System.Windows.Forms.PictureBox pbBigObject;
     }
 }
