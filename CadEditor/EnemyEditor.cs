@@ -95,16 +95,7 @@ namespace CadEditor
 
         private int calcScrNo(int noInLayout)
         {
-            int scrNo = curLevelLayerData.layer[noInLayout];
-            if (cbPlus256.Checked)
-                scrNo += 256;
-
-            //hack: for capcom games -= 1
-            if (!ConfigScript.usePicturesInstedBlocks)
-            {
-                scrNo -= 1;
-            }
-            return scrNo;
+            return curLevelLayerData.layer[noInLayout];
         }
 
         private void reloadLevel(bool reloadObjects)

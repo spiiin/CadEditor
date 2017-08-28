@@ -48,7 +48,6 @@ public class Data
   public GetObjectsFunc getObjectsFunc()   { return getObjectsJungleBook;  }
   public SetObjectsFunc setObjectsFunc()   { return setObjectsJungleBook;  }
   public SortObjectsFunc sortObjectsFunc() { return sortObjectsJungleBook; }
-  public GetLayoutFunc getLayoutFunc()     { return getLayoutJungleBook;   }
   public GetPalFunc           getPalFunc() { return Utils.getPalleteLinear;}
   public SetPalFunc           setPalFunc() { return Utils.setPalleteLinear;}
   public GetVideoPageAddrFunc getVideoPageAddrFunc()         { return Utils.getChrAddress; }
@@ -137,13 +136,6 @@ public class Data
   public void sortObjectsJungleBook(int levelNo, int listNo, List<ObjectRec> objects)
   {
     objects.Sort((o1, o2) => { return o1.x > o2.x ? 1 : o1.x < o2.x ? -1 : o1.y < o2.y ? -1 : o1.y > o2.y ? 1 : 0; });
-  }
-  
-  LevelLayerData getLayoutJungleBook(int levelNo)
-  {
-    int[] layer = new int[1];
-    layer[0] = 1;
-    return new LevelLayerData(1, 1, layer);
   }
   
   public Dictionary<String,int> getObjectDictionary(int listNo, int type)

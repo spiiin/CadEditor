@@ -39,7 +39,6 @@
             this.pnGeneric = new System.Windows.Forms.Panel();
             this.label14 = new System.Windows.Forms.Label();
             this.cbScale = new System.Windows.Forms.ComboBox();
-            this.cbPlus256 = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.cbLayoutNo = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -162,7 +161,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnGeneric.Controls.Add(this.label14);
             this.pnGeneric.Controls.Add(this.cbScale);
-            this.pnGeneric.Controls.Add(this.cbPlus256);
             this.pnGeneric.Controls.Add(this.label11);
             this.pnGeneric.Controls.Add(this.cbLayoutNo);
             this.pnGeneric.Controls.Add(this.label9);
@@ -202,18 +200,6 @@
             this.cbScale.Size = new System.Drawing.Size(59, 24);
             this.cbScale.TabIndex = 56;
             this.cbScale.SelectedIndexChanged += new System.EventHandler(this.cbLevel_SelectedIndexChanged);
-            // 
-            // cbPlus256
-            // 
-            this.cbPlus256.AutoSize = true;
-            this.cbPlus256.CheckAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.cbPlus256.Location = new System.Drawing.Point(128, 5);
-            this.cbPlus256.Margin = new System.Windows.Forms.Padding(4);
-            this.cbPlus256.Name = "cbPlus256";
-            this.cbPlus256.Size = new System.Drawing.Size(98, 38);
-            this.cbPlus256.TabIndex = 55;
-            this.cbPlus256.Text = "+256 screens";
-            this.cbPlus256.UseVisualStyleBackColor = true;
             // 
             // label11
             // 
@@ -798,7 +784,6 @@
         private System.Windows.Forms.ComboBox cbBigBlockNo;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbVideoNo;
-        private System.Windows.Forms.CheckBox cbPlus256;
         private System.Windows.Forms.Label lbActive;
         private System.Windows.Forms.Button btDelete;
         private System.Windows.Forms.Label label7;

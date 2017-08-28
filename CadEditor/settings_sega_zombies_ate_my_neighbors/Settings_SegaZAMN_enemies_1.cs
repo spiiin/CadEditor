@@ -14,7 +14,6 @@ public class Data
   public IList<LevelRec> getLevelRecs()    { return levelRecs; }
   public GetObjectsFunc getObjectsFunc()   { return ZamnUtils.getEnemiesFromRom;/*getEnemiesFromFile*/ }
   public SetObjectsFunc setObjectsFunc()   { return ZamnUtils.setEnemiesToRom;/*setEnemiesToFile;*/ }
-  public GetLayoutFunc getLayoutFunc()     { return ZamnUtils.getSingleLayout;   }
   
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {

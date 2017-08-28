@@ -326,13 +326,4 @@ public static class ZamnUtils
     Utils.saveDataToFile("settings_sega_zombies_ate_my_neighbors/items.bin", data);
     return true;
   }
-  
-  
-  public static LevelLayerData getSingleLayout(int levelNo)
-  {
-    int[] layer = new int[1];
-    layer[0] = 0;
-    return new LevelLayerData(1, 1, layer);
-  }
-  
 }

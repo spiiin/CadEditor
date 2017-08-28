@@ -21,7 +21,6 @@ public class TomAndJerryBase
   
   public virtual GetObjectsFunc getObjectsFunc()   { return getObjects;  }
   public virtual SetObjectsFunc setObjectsFunc()   { return setObjects;  }
-  public virtual GetLayoutFunc getLayoutFunc()     { return getLayout;   } 
   public virtual GetObjectDictionaryFunc getObjectDictionaryFunc() { return getObjectDictionary; }
   
   public virtual int getCheeseAddr() { return -1; }
@@ -168,13 +167,6 @@ public class TomAndJerryBase
     
     Globals.romdata[curAddr++] = 0xFF;
     return true;
-  }
-  
-  LevelLayerData getLayout(int levelNo)
-  {
-    var layer = new int[1];
-    layer[0] = 1;
-    return new LevelLayerData(1, 1, layer);
   }
   
   public Dictionary<String,int> getObjectDictionary(int listNo, int type)

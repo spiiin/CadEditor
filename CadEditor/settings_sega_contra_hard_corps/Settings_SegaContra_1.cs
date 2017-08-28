@@ -38,7 +38,6 @@ public class Data
   public SetObjectsFunc setObjectsFunc() { return CHCUtils.setObjects; }
   public GetObjectDictionaryFunc getObjectDictionaryFunc() { return CHCUtils.getObjectDictionary; }
   public IList<LevelRec> getLevelRecs()  { return levelRecs;  }
-  public GetLayoutFunc getLayoutFunc()   { return getLayout;  }
   public DrawObjectFunc getDrawObjectFunc() { return CHCUtils.drawObject; }
   
   public int getMaxObjType()             { return 0x500; }
@@ -55,13 +54,6 @@ public class Data
   private string BLOCKS_NAME = "blocks_11.bin"; //1E391A//1E597C
   private string PAL_NAME    = "pal_11.bin";
   private string BACK_NAME   = "back_11.bin";
-  
-  LevelLayerData getLayout(int levelNo)
-  {
-    int[] layer = new int[1];
-    layer[0] = 1;
-    return new LevelLayerData(1, 1, layer);
-  }
   
   public byte[] getVideoChuck(int videoPageId)
   {

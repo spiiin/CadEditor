@@ -98,6 +98,11 @@ namespace CadEditor
             return getLayoutLinear;
         }
 
+        public static GetLayoutFunc getDefaultLayoutFunc()
+        {
+            return getDefaultLayout;
+        }
+
         public static LevelLayerData getLayoutLinear(int curActiveLayout)
         {
             int layoutAddr = ConfigScript.getLayoutAddr(curActiveLayout);
@@ -107,6 +112,13 @@ namespace CadEditor
             for (int i = 0; i < width * height; i++)
                 layer[i] = Globals.romdata[layoutAddr + i];
             return new LevelLayerData(width, height, layer, null, null);
+        }
+
+        public static LevelLayerData getDefaultLayout(int curActiveLayout)
+        {
+            int[] layer = new int[1];
+            layer[0] = 1;
+            return new LevelLayerData(1, 1, layer);
         }
 
         public static int getBigTileNoFromScreen(int[] screenData, int index)

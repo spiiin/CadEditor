@@ -60,13 +60,6 @@ public static class FliUtils
     return new LevelLayerData(1, 1, layer);
   }
   
-  public static LevelLayerData getLayoutRom(int levelNo)
-  {
-    int[] layer = new int[1];
-    layer[0] = 1;
-    return new LevelLayerData(1, 1, layer);
-  }
-  
   public static Dictionary<String,int> getObjectDictionary(int listNo, int type)
   {
     return new Dictionary<String, int> { {"data", 0} };

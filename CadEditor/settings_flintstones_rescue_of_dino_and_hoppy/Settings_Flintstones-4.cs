@@ -36,7 +36,6 @@ public class Data
   public SetBigBlocksFunc setBigBlocksFunc() { return FliUtils.setBigBlocks;}
   public GetObjectsFunc getObjectsFunc()   { return FliUtils.getObjects;  }
   public SetObjectsFunc setObjectsFunc()   { return FliUtils.setObjects;  }
-  public GetLayoutFunc getLayoutFunc()     { return FliUtils.getLayoutRom;   } 
   public GetObjectDictionaryFunc getObjectDictionaryFunc() { return FliUtils.getObjectDictionary; }
   public ConvertScreenTileFunc getConvertScreenTileFunc()     { return FliUtils.getConvertScreenTile; }
   public ConvertScreenTileFunc getBackConvertScreenTileFunc() { return FliUtils.getBackConvertScreenTile; }

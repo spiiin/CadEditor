@@ -202,7 +202,7 @@ namespace CadEditor
             getObjectsFunc = callFromScript<GetObjectsFunc>(asm, data, "*.getObjectsFunc");
             setObjectsFunc = callFromScript<SetObjectsFunc>(asm, data, "*.setObjectsFunc");
             sortObjectsFunc = callFromScript<SortObjectsFunc>(asm, data, "*.sortObjectsFunc");
-            getLayoutFunc = callFromScript<GetLayoutFunc>(asm, data, "*.getLayoutFunc", Utils.getLayoutLinearFunc());
+            getLayoutFunc = callFromScript<GetLayoutFunc>(asm, data, "*.getLayoutFunc", Utils.getDefaultLayoutFunc());
             convertScreenTileFunc = callFromScript<ConvertScreenTileFunc>(asm, data, "*.getConvertScreenTileFunc");
             backConvertScreenTileFunc = callFromScript<ConvertScreenTileFunc>(asm, data, "*.getBackConvertScreenTileFunc");
             getBigTileNoFromScreenFunc = callFromScript<GetBigTileNoFromScreenFunc>(asm, data, "*.getBigTileNoFromScreenFunc", Utils.getBigTileNoFromScreen);
