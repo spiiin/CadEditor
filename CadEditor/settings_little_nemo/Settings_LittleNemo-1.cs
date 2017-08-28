@@ -28,6 +28,7 @@ public class Data
   public SetObjectsFunc setObjectsFunc() { return LittleNemoUtils.setObjectsNemo; }
   
   public GetLayoutFunc getLayoutFunc() { return LittleNemoUtils.getLayoutLinearPlusOne; }
+  public SetLayoutFunc setLayoutFunc() { return LittleNemoUtils.setLayoutLinearPlusOne; }
   public int getPalBytesAddr()         { return 0x11E0; }
   
   public IList<LevelRec> getLevelRecs() { return levelRecs; }
