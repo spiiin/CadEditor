@@ -59,6 +59,12 @@ namespace CadEditor
             curLevelLayerData = (ConfigScript.getLayoutFunc != null) ? ConfigScript.getLayout(curActiveLayout) : Utils.getLayoutLinear(curActiveLayout);
         }
 
+        private void setDirty()
+        {
+            dirty = true;
+            bttSave.Enabled = bttSave.Enabled = ConfigScript.setObjectsFunc != null;
+        }
+
         private int findStartPosition()
         {
             int w = curLevelLayerData.width;
@@ -161,9 +167,7 @@ namespace CadEditor
                 cbLayoutNo.Items.Add(String.Format("{0}:0x{1:X} ({2}x{3})", lr.name, lr.layoutAddr, lr.width, lr.height));
             UtilsGui.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged);
 
-            readOnly = ConfigScript.setObjectsFunc == null;
-            btSave.Enabled = !readOnly;
-            lbReadOnly.Visible = readOnly;
+            bttSave.Enabled = ConfigScript.setObjectsFunc != null;
 
             btSort.Visible = ConfigScript.sortObjectsFunc != null;
             resizeMapScreen();
@@ -241,7 +245,7 @@ namespace CadEditor
 
             btDelete.Enabled = false;
             mapScreen.Invalidate();
-            dirty = true;
+            setDirty();
         }
 
         private LevelRec getLevelRecForGameType()
@@ -425,6 +429,8 @@ namespace CadEditor
             }
 
             dirty = !Globals.flushToFile();
+            bttSave.Enabled = false;
+
             return !dirty;
         }
 
@@ -449,7 +455,6 @@ namespace CadEditor
                 return false;
             }
 
-            //dirty = !Globals.flushToFile();
             return true;
         }
 
@@ -473,12 +478,10 @@ namespace CadEditor
                 MessageBox.Show(ex.Message, "Load error");
                 return false;
             }
-            return true;
-        }
 
-        private void btSave_Click(object sender, EventArgs e)
-        {
-            saveToFile();
+            fillObjectsDataGrid();
+
+            return true;
         }
 
         private void EnemyEditor_FormClosing(object sender, FormClosingEventArgs e)
@@ -531,7 +534,7 @@ namespace CadEditor
                 }
                 canMoveUp = dgvObjects.SelectedRows.Cast<DataGridViewRow>().All(r => r.Index > 0);
             }
-            dirty = true;
+            setDirty();
             dgvObjects.Invalidate();
             //dgvObjects.FirstDisplayedScrollingRowIndex = dgvObjects.Rows[dgvObjects.SelectedRows[0].Index].Index;
         }
@@ -571,7 +574,7 @@ namespace CadEditor
                 }
                 canMoveDown = dgvObjects.SelectedRows.Cast<DataGridViewRow>().All(r => r.Index < dgvObjects.RowCount - 1);
             }
-            dirty = true;
+            setDirty();
             dgvObjects.Invalidate();
             //dgvObjects.FirstDisplayedScrollingRowIndex = dgvObjects.Rows[dgvObjects.SelectedRows[0].Index].Index;
         }
@@ -696,7 +699,7 @@ namespace CadEditor
             }
             oldX = x;
             oldY = y;
-            dirty = true;
+            setDirty();
             mapScreen.Invalidate();
         }
 
@@ -748,7 +751,7 @@ namespace CadEditor
                     if (y >= coordXCount || x >= coordYCount || y < minCoordX || x < minCoordY)
                         return;
                 }
-                dirty = true;
+                setDirty();
                 if (bindToAxis)
                 {
                     x = (x / 8) * 8;
@@ -774,7 +777,7 @@ namespace CadEditor
                     {
                         if (MessageBox.Show("Do you really want to delete object?", "Confirm", MessageBoxButtons.YesNo) != DialogResult.Yes)
                             return;
-                        dirty = true;
+                        setDirty();
                         dgvObjects.DataSource = null;
                         activeObjectList.objects.RemoveAt(i);
                         fillObjectsDataGrid();
@@ -819,16 +822,6 @@ namespace CadEditor
             pbBigObject.Image = objectSpritesBig[curActiveBlock];
             activeBlock.Image = objectSprites.Images[curActiveBlock];
             lbActive.Text = String.Format("({0:X2})", curActiveBlock);
-        }
-
-        private void btSaveJson_Click(object sender, EventArgs e)
-        {
-            saveToJsonFile("test.json");
-        }
-
-        private void btLoadJson_Click(object sender, EventArgs e)
-        {
-            loadFromJsonFile("test.json");
         }
 
         private void cbObjectList_SelectedIndexChanged(object sender, EventArgs e)
@@ -952,6 +945,27 @@ namespace CadEditor
             if (e.KeyCode == Keys.Delete)
             {
                 deleteSelected();
+            }
+        }
+
+        private void tbbSave_Click(object sender, EventArgs e)
+        {
+            saveToFile();
+        }
+
+        private void bttExport_Click(object sender, EventArgs e)
+        {
+            if (sfJson.ShowDialog() == DialogResult.OK)
+            {
+                saveToJsonFile(sfJson.FileName);
+            }
+        }
+
+        private void bttImport_Click(object sender, EventArgs e)
+        {
+            if (ofJson.ShowDialog() == DialogResult.OK)
+            {
+                loadFromJsonFile(ofJson.FileName);
             }
         }
     }

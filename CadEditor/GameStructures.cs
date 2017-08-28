@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
 using System.Linq;
+using Newtonsoft.Json;
 
 using System.Drawing;
 
@@ -283,6 +284,7 @@ namespace CadEditor
 
     public class ObjectRec : IEquatable<ObjectRec>
     {
+        [JsonConstructor]
         public ObjectRec(int type, int sx, int sy, int x, int y, Dictionary<String, int> additionalData)
             : this(type, sx, sy, x, y)
         {
