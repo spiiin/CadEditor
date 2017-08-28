@@ -83,6 +83,7 @@
             this.ofJson = new System.Windows.Forms.OpenFileDialog();
             this.sfJson = new System.Windows.Forms.SaveFileDialog();
             this.pbBigObject = new System.Windows.Forms.PictureBox();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -94,6 +95,9 @@
             this.pnBigObjects.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbBigObject)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // mapScreen
@@ -159,9 +163,8 @@
             // 
             // btSortUp
             // 
-            this.btSortUp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSortUp.Location = new System.Drawing.Point(109, 502);
+            this.btSortUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btSortUp.Location = new System.Drawing.Point(109, 485);
             this.btSortUp.Margin = new System.Windows.Forms.Padding(4);
             this.btSortUp.Name = "btSortUp";
             this.btSortUp.Size = new System.Drawing.Size(74, 27);
@@ -172,9 +175,8 @@
             // 
             // btSortDown
             // 
-            this.btSortDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSortDown.Location = new System.Drawing.Point(191, 501);
+            this.btSortDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btSortDown.Location = new System.Drawing.Point(191, 484);
             this.btSortDown.Margin = new System.Windows.Forms.Padding(4);
             this.btSortDown.Name = "btSortDown";
             this.btSortDown.Size = new System.Drawing.Size(77, 27);
@@ -417,7 +419,7 @@
             this.btDelete.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btDelete.Enabled = false;
-            this.btDelete.Location = new System.Drawing.Point(7, 531);
+            this.btDelete.Location = new System.Drawing.Point(7, 514);
             this.btDelete.Margin = new System.Windows.Forms.Padding(4);
             this.btDelete.Name = "btDelete";
             this.btDelete.Size = new System.Drawing.Size(155, 30);
@@ -431,7 +433,7 @@
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 586);
+            this.label7.Location = new System.Drawing.Point(7, 569);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(288, 17);
@@ -443,7 +445,7 @@
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 507);
+            this.label10.Location = new System.Drawing.Point(3, 490);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(98, 17);
@@ -464,7 +466,7 @@
             this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(7, 602);
+            this.label13.Location = new System.Drawing.Point(7, 585);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(240, 17);
@@ -476,7 +478,7 @@
             this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(11, 645);
+            this.label15.Location = new System.Drawing.Point(11, 628);
             this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(244, 17);
@@ -523,7 +525,7 @@
             this.lbObjectsCount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbObjectsCount.AutoSize = true;
-            this.lbObjectsCount.Location = new System.Drawing.Point(7, 565);
+            this.lbObjectsCount.Location = new System.Drawing.Point(7, 548);
             this.lbObjectsCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbObjectsCount.Name = "lbObjectsCount";
             this.lbObjectsCount.Size = new System.Drawing.Size(123, 17);
@@ -537,15 +539,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnView.AutoScroll = true;
             this.pnView.Controls.Add(this.mapScreen);
-            this.pnView.Location = new System.Drawing.Point(264, 43);
+            this.pnView.Location = new System.Drawing.Point(8, 4);
             this.pnView.Margin = new System.Windows.Forms.Padding(4);
             this.pnView.Name = "pnView";
-            this.pnView.Size = new System.Drawing.Size(700, 645);
+            this.pnView.Size = new System.Drawing.Size(692, 626);
             this.pnView.TabIndex = 68;
             // 
             // pnObjectList
             // 
-            this.pnObjectList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.pnObjectList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnObjectList.Controls.Add(this.label6);
             this.pnObjectList.Controls.Add(this.dgvObjects);
@@ -560,10 +563,10 @@
             this.pnObjectList.Controls.Add(this.label13);
             this.pnObjectList.Controls.Add(this.label7);
             this.pnObjectList.Controls.Add(this.label10);
-            this.pnObjectList.Location = new System.Drawing.Point(972, 43);
+            this.pnObjectList.Location = new System.Drawing.Point(4, 4);
             this.pnObjectList.Margin = new System.Windows.Forms.Padding(4);
             this.pnObjectList.Name = "pnObjectList";
-            this.pnObjectList.Size = new System.Drawing.Size(363, 637);
+            this.pnObjectList.Size = new System.Drawing.Size(363, 620);
             this.pnObjectList.TabIndex = 31;
             // 
             // label6
@@ -587,7 +590,7 @@
             this.dgvObjects.Location = new System.Drawing.Point(3, 31);
             this.dgvObjects.Name = "dgvObjects";
             this.dgvObjects.RowTemplate.Height = 24;
-            this.dgvObjects.Size = new System.Drawing.Size(357, 463);
+            this.dgvObjects.Size = new System.Drawing.Size(357, 446);
             this.dgvObjects.TabIndex = 0;
             this.dgvObjects.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvObjects_CellFormatting);
             this.dgvObjects.CellParsing += new System.Windows.Forms.DataGridViewCellParsingEventHandler(this.dgvObjects_CellParsing);
@@ -596,6 +599,8 @@
             // 
             // cbObjectList
             // 
+            this.cbObjectList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbObjectList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbObjectList.DropDownWidth = 220;
             this.cbObjectList.FormattingEnabled = true;
@@ -611,7 +616,7 @@
             this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(7, 617);
+            this.label19.Location = new System.Drawing.Point(7, 600);
             this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(265, 17);
@@ -622,7 +627,7 @@
             // 
             this.btSort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btSort.Location = new System.Drawing.Point(170, 531);
+            this.btSort.Location = new System.Drawing.Point(170, 514);
             this.btSort.Margin = new System.Windows.Forms.Padding(4);
             this.btSort.Name = "btSort";
             this.btSort.Size = new System.Drawing.Size(159, 30);
@@ -770,15 +775,34 @@
             this.pbBigObject.TabIndex = 68;
             this.pbBigObject.TabStop = false;
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.splitContainer1.Location = new System.Drawing.Point(263, 50);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.pnView);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.pnObjectList);
+            this.splitContainer1.Size = new System.Drawing.Size(1073, 636);
+            this.splitContainer1.SplitterDistance = 706;
+            this.splitContainer1.TabIndex = 70;
+            // 
             // EnemyEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1348, 693);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.pnObjectList);
             this.Controls.Add(this.pnObjects);
-            this.Controls.Add(this.pnView);
             this.Controls.Add(this.label12);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -803,6 +827,9 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbBigObject)).EndInit();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -863,5 +890,6 @@
         private System.Windows.Forms.OpenFileDialog ofJson;
         private System.Windows.Forms.SaveFileDialog sfJson;
         private System.Windows.Forms.PictureBox pbBigObject;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }
