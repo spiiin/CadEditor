@@ -2,6 +2,7 @@ using CadEditor;
 using PluginMapEditor;
 using System.Collections.Generic;
 //css_include Settings_CapcomBase.cs;
+
 public class Data : CapcomBase
 { 
   public string[] getPluginNames() 
@@ -26,6 +27,7 @@ public class Data : CapcomBase
   public GetObjectsFunc getObjectsFunc() { return getObjectsDwd; }
   public SetObjectsFunc setObjectsFunc() { return setObjectsDwd; }
   public string getObjTypesPicturesDir() { return "obj_sprites_dwd"; }
+  public GetLayoutFunc getLayoutFunc() { return dwdGetLayout; }
   public IList<LevelRec> levelRecsDwd = new List<LevelRec>() 
   {
     new LevelRec(0x10315, 51, 17, 4,  0x1DFA0),
@@ -109,6 +111,22 @@ public class Data : CapcomBase
           Globals.romdata[addrBase - 1 * objCount + i] = 0xFF;
       }
       return true;
+  }
+  
+  public LevelLayerData dwdGetLayout(int curActiveLayout)
+  {
+      if (curActiveLayout < 6)
+      {
+          return Utils.getLayoutLinear(curActiveLayout);
+      }
+      
+      int layoutAddr = ConfigScript.getLayoutAddr(curActiveLayout);
+      int width =  ConfigScript.getLevelWidth(curActiveLayout);
+      int height = ConfigScript.getLevelHeight(curActiveLayout);
+      int[] layer = new int[width * height];
+      for (int i = 0; i < width * height; i++)
+          layer[i] = Globals.romdata[layoutAddr + i] + 256;
+      return new LevelLayerData(width, height, layer, null, null);
   }
   
   //Anim Editor

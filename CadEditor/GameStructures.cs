@@ -232,7 +232,7 @@ namespace CadEditor
 
     public struct LevelLayerData
     {
-        public LevelLayerData(int width, int height, byte[] layer, byte[] scroll, byte[] dirs)
+        public LevelLayerData(int width, int height, int[] layer, int[] scroll, int[] dirs)
         {
             this.width = width;
             this.height = height;
@@ -241,7 +241,7 @@ namespace CadEditor
             this.dirs = dirs;
         }
 
-        public LevelLayerData(int width, int height, byte[] layer)
+        public LevelLayerData(int width, int height, int[] layer)
         {
             this.width = width;
             this.height = height;
@@ -250,16 +250,16 @@ namespace CadEditor
             this.dirs = null;
         }
 
-        public byte getDirForIndex(int index)
+        public int getDirForIndex(int index)
         {
             int line = index / width;
             return dirs[line];
         }
         public int width;
         public int height;
-        public byte[] layer;
-        public byte[] scroll;
-        public byte[] dirs;
+        public int[] layer;
+        public int[] scroll;
+        public int[] dirs;
     }
 
     public struct GroupRec

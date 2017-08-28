@@ -35,7 +35,7 @@ public class Data
   public GetLayoutFunc getLayoutFunc()     { return getLayout;   } 
   LevelLayerData getLayout(int levelNo)
   {
-    byte[] layer = new byte[20] { 
+    int[] layer = new int[20] { 
       0xFF, 0xFF, 0x01, 0xFF, 0xFF,
       0xFF, 0xFF, 0x0B, 0xFF, 0xFF,
       0xFF, 0x02, 0x03, 0x04, 0x05,

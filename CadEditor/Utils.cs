@@ -103,7 +103,7 @@ namespace CadEditor
             int layoutAddr = ConfigScript.getLayoutAddr(curActiveLayout);
             int width =  ConfigScript.getLevelWidth(curActiveLayout);
             int height = ConfigScript.getLevelHeight(curActiveLayout);
-            byte[] layer = new byte[width * height];
+            int[] layer = new int[width * height];
             for (int i = 0; i < width * height; i++)
                 layer[i] = Globals.romdata[layoutAddr + i];
             return new LevelLayerData(width, height, layer, null, null);

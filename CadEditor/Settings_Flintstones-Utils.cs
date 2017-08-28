@@ -55,14 +55,14 @@ public static class FliUtils
   
   public static LevelLayerData getLayout(int levelNo)
   {
-    byte[] layer = new byte[1];
+    int[] layer = new int[1];
     layer[0] = 0;
     return new LevelLayerData(1, 1, layer);
   }
   
   public static LevelLayerData getLayoutRom(int levelNo)
   {
-    byte[] layer = new byte[1];
+    int[] layer = new int[1];
     layer[0] = 1;
     return new LevelLayerData(1, 1, layer);
   }

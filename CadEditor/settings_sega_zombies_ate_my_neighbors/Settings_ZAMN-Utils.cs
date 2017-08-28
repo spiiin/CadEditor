@@ -330,7 +330,7 @@ public static class ZamnUtils
   
   public static LevelLayerData getSingleLayout(int levelNo)
   {
-    byte[] layer = new byte[1];
+    int[] layer = new int[1];
     layer[0] = 0;
     return new LevelLayerData(1, 1, layer);
   }

@@ -21,18 +21,18 @@ public class Data
   public GetLayoutFunc getLayoutFunc()     { return getLayout;   }
   LevelLayerData getLayout(int levelNo)
   {
-    var levelLayers = new byte[][]
+    var levelLayers = new int[][]
     {
-        new byte[] { 0,1 },
-        new byte[] { 2,3,4 },
-        new byte[] { 5,6,7 },
-        new byte[] { 8 },
-        new byte[] { 9, 10, 11 },
-        new byte[] { 13 },
-        new byte[] { 12 },
-        new byte[] { 14,15,16, },
-        new byte[] { 17,18, 19 },
-        new byte[] { 20 },
+        new int[] { 0,1 },
+        new int[] { 2,3,4 },
+        new int[] { 5,6,7 },
+        new int[] { 8 },
+        new int[] { 9, 10, 11 },
+        new int[] { 13 },
+        new int[] { 12 },
+        new int[] { 14,15,16, },
+        new int[] { 17,18, 19 },
+        new int[] { 20 },
     };
     return new LevelLayerData(levelLayers[levelNo].Length, 1, levelLayers[levelNo]);
   }

@@ -141,7 +141,7 @@ public class Data
   
   LevelLayerData getLayoutJungleBook(int levelNo)
   {
-    byte[] layer = new byte[1];
+    int[] layer = new int[1];
     layer[0] = 1;
     return new LevelLayerData(1, 1, layer);
   }

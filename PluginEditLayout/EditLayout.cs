@@ -96,8 +96,8 @@ namespace CadEditor
             int scrollAddr = ConfigScript.getScrollAddr(curActiveLayout); //darkwing duck specific
             int width = curWidth;
             int height = curHeight;
-            byte[] layer = new byte[width * height];
-            byte[] scroll = new byte[width * height];
+            int[] layer = new int[width * height];
+            int[] scroll = new int[width * height];
 
             layer = ConfigScript.getLayoutFunc(curActiveLayout).layer;
 
@@ -272,8 +272,8 @@ namespace CadEditor
             height = curHeight;
             for (int i = 0; i < width * height; i++)
             {
-                Globals.romdata[scrollAddr + i] = curLevelLayerData.scroll[i];
-                Globals.romdata[layerAddr + i] = curLevelLayerData.layer[i];
+                Globals.romdata[scrollAddr + i] = (byte)curLevelLayerData.scroll[i];
+                Globals.romdata[layerAddr + i] = (byte)curLevelLayerData.layer[i];
             }
 
             dirty = !Globals.flushToFile();

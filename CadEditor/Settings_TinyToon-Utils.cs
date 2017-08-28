@@ -133,9 +133,9 @@ public static class TinyToonUtils
       int layoutAddr = ConfigScript.getLayoutAddr(curActiveLayout);
       int width = ConfigScript.getLevelWidth(curActiveLayout);
       int height = ConfigScript.getLevelHeight(curActiveLayout);
-      byte[] layer = new byte[width * height];
+      var layer = new int[width * height];
       for (int i = 0; i < width * height; i++)
-          layer[i] = (byte)(i + 1);
+          layer[i] = i + 1;
       return new LevelLayerData(width, height, layer, null, null);
   }
   //--------------------------------------------------------------------------------------------------------------
