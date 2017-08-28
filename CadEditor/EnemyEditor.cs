@@ -211,7 +211,6 @@ namespace CadEditor
         private void buttonObjClick(Object button, EventArgs e)
         {
             int index = ((Button)button).ImageIndex;
-            activeBlock.Image = objectSprites.Images[index];
             lbActive.Text = String.Format("({0:X2})", index);
             curActiveBlock = index;
         }
@@ -793,11 +792,6 @@ namespace CadEditor
             formMain = f;
         }
 
-        private void cbBindToAxis_CheckedChanged(object sender, EventArgs e)
-        {
-            bindToAxis = cbBindToAxis.Checked;
-        }
-
         private void cbUseBigPictures_CheckedChanged(object sender, EventArgs e)
         {
             useBigPictures = cbUseBigPictures.Checked;
@@ -812,7 +806,6 @@ namespace CadEditor
             cbBigObjectNo.SelectedIndex = 0;
             curActiveBlock = 0;
             pbBigObject.Image = objectSpritesBig[curActiveBlock];
-            activeBlock.Image = objectSprites.Images[curActiveBlock];
             lbActive.Text = String.Format("({0:X2})", curActiveBlock);
         }
 
@@ -820,7 +813,6 @@ namespace CadEditor
         {
             curActiveBlock = cbBigObjectNo.SelectedIndex;
             pbBigObject.Image = objectSpritesBig[curActiveBlock];
-            activeBlock.Image = objectSprites.Images[curActiveBlock];
             lbActive.Text = String.Format("({0:X2})", curActiveBlock);
         }
 
@@ -967,6 +959,11 @@ namespace CadEditor
             {
                 loadFromJsonFile(ofJson.FileName);
             }
+        }
+
+        private void bttAlign8_Click(object sender, EventArgs e)
+        {
+            bindToAxis = bttAlign8.Checked;
         }
     }
 }

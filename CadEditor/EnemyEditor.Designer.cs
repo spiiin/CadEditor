@@ -34,8 +34,6 @@
             this.objPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.objectSprites = new System.Windows.Forms.ImageList(this.components);
-            this.label3 = new System.Windows.Forms.Label();
-            this.activeBlock = new System.Windows.Forms.PictureBox();
             this.btSortUp = new System.Windows.Forms.Button();
             this.btSortDown = new System.Windows.Forms.Button();
             this.pnGeneric = new System.Windows.Forms.Panel();
@@ -59,9 +57,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.pnTools = new System.Windows.Forms.Panel();
-            this.label16 = new System.Windows.Forms.Label();
-            this.cbTool = new System.Windows.Forms.ComboBox();
             this.lbObjectsCount = new System.Windows.Forms.Label();
             this.pnView = new System.Windows.Forms.Panel();
             this.pnObjectList = new System.Windows.Forms.Panel();
@@ -72,29 +67,29 @@
             this.btSort = new System.Windows.Forms.Button();
             this.pnObjects = new System.Windows.Forms.Panel();
             this.pnBigObjects = new System.Windows.Forms.Panel();
+            this.pbBigObject = new System.Windows.Forms.PictureBox();
             this.cbBigObjectNo = new System.Windows.Forms.ComboBox();
             this.cbUseBigPictures = new System.Windows.Forms.CheckBox();
-            this.cbBindToAxis = new System.Windows.Forms.CheckBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.bttSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.bttExport = new System.Windows.Forms.ToolStripButton();
             this.bttImport = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ofJson = new System.Windows.Forms.OpenFileDialog();
             this.sfJson = new System.Windows.Forms.SaveFileDialog();
-            this.pbBigObject = new System.Windows.Forms.PictureBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.cbTool = new System.Windows.Forms.ToolStripComboBox();
+            this.bttAlign8 = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
-            this.pnTools.SuspendLayout();
             this.pnView.SuspendLayout();
             this.pnObjectList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvObjects)).BeginInit();
             this.pnObjects.SuspendLayout();
             this.pnBigObjects.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbBigObject)).BeginInit();
+            this.toolStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -124,7 +119,7 @@
             this.objPanel.Location = new System.Drawing.Point(9, 260);
             this.objPanel.Margin = new System.Windows.Forms.Padding(4);
             this.objPanel.Name = "objPanel";
-            this.objPanel.Size = new System.Drawing.Size(229, 318);
+            this.objPanel.Size = new System.Drawing.Size(229, 389);
             this.objPanel.TabIndex = 37;
             // 
             // columnHeader1
@@ -136,30 +131,6 @@
             this.objectSprites.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit;
             this.objectSprites.ImageSize = new System.Drawing.Size(16, 16);
             this.objectSprites.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(120, 613);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(50, 17);
-            this.label3.TabIndex = 44;
-            this.label3.Text = "Active:";
-            // 
-            // activeBlock
-            // 
-            this.activeBlock.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.activeBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.activeBlock.Location = new System.Drawing.Point(182, 613);
-            this.activeBlock.Margin = new System.Windows.Forms.Padding(4);
-            this.activeBlock.Name = "activeBlock";
-            this.activeBlock.Size = new System.Drawing.Size(42, 39);
-            this.activeBlock.TabIndex = 43;
-            this.activeBlock.TabStop = false;
             // 
             // btSortUp
             // 
@@ -407,7 +378,7 @@
             this.lbActive.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbActive.AutoSize = true;
-            this.lbActive.Location = new System.Drawing.Point(152, 632);
+            this.lbActive.Location = new System.Drawing.Point(213, 238);
             this.lbActive.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbActive.Name = "lbActive";
             this.lbActive.Size = new System.Drawing.Size(18, 17);
@@ -484,41 +455,6 @@
             this.label15.Size = new System.Drawing.Size(244, 17);
             this.label15.TabIndex = 62;
             this.label15.Text = "Don\'t forget sort objects in right order";
-            // 
-            // pnTools
-            // 
-            this.pnTools.Controls.Add(this.label16);
-            this.pnTools.Controls.Add(this.cbTool);
-            this.pnTools.Location = new System.Drawing.Point(7, 189);
-            this.pnTools.Margin = new System.Windows.Forms.Padding(4);
-            this.pnTools.Name = "pnTools";
-            this.pnTools.Size = new System.Drawing.Size(234, 37);
-            this.pnTools.TabIndex = 52;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(11, 7);
-            this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(40, 17);
-            this.label16.TabIndex = 28;
-            this.label16.Text = "Tool:";
-            // 
-            // cbTool
-            // 
-            this.cbTool.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbTool.FormattingEnabled = true;
-            this.cbTool.Items.AddRange(new object[] {
-            "Create",
-            "Select",
-            "Delete"});
-            this.cbTool.Location = new System.Drawing.Point(64, 4);
-            this.cbTool.Margin = new System.Windows.Forms.Padding(4);
-            this.cbTool.Name = "cbTool";
-            this.cbTool.Size = new System.Drawing.Size(164, 24);
-            this.cbTool.TabIndex = 29;
-            this.cbTool.SelectedIndexChanged += new System.EventHandler(this.cbTool_SelectedIndexChanged);
             // 
             // lbObjectsCount
             // 
@@ -643,10 +579,6 @@
             this.pnObjects.Controls.Add(this.pnBigObjects);
             this.pnObjects.Controls.Add(this.objPanel);
             this.pnObjects.Controls.Add(this.cbUseBigPictures);
-            this.pnObjects.Controls.Add(this.pnTools);
-            this.pnObjects.Controls.Add(this.cbBindToAxis);
-            this.pnObjects.Controls.Add(this.activeBlock);
-            this.pnObjects.Controls.Add(this.label3);
             this.pnObjects.Controls.Add(this.lbActive);
             this.pnObjects.Controls.Add(this.pnGeneric);
             this.pnObjects.Location = new System.Drawing.Point(12, 26);
@@ -662,9 +594,19 @@
             this.pnBigObjects.Location = new System.Drawing.Point(5, 263);
             this.pnBigObjects.Margin = new System.Windows.Forms.Padding(4);
             this.pnBigObjects.Name = "pnBigObjects";
-            this.pnBigObjects.Size = new System.Drawing.Size(228, 322);
+            this.pnBigObjects.Size = new System.Drawing.Size(228, 386);
             this.pnBigObjects.TabIndex = 31;
             this.pnBigObjects.Visible = false;
+            // 
+            // pbBigObject
+            // 
+            this.pbBigObject.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbBigObject.Location = new System.Drawing.Point(4, 41);
+            this.pbBigObject.Margin = new System.Windows.Forms.Padding(4);
+            this.pbBigObject.Name = "pbBigObject";
+            this.pbBigObject.Size = new System.Drawing.Size(113, 107);
+            this.pbBigObject.TabIndex = 68;
+            this.pbBigObject.TabStop = false;
             // 
             // cbBigObjectNo
             // 
@@ -691,21 +633,6 @@
             this.cbUseBigPictures.UseVisualStyleBackColor = true;
             this.cbUseBigPictures.CheckedChanged += new System.EventHandler(this.cbUseBigPictures_CheckedChanged);
             // 
-            // cbBindToAxis
-            // 
-            this.cbBindToAxis.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbBindToAxis.AutoSize = true;
-            this.cbBindToAxis.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbBindToAxis.Location = new System.Drawing.Point(1, 612);
-            this.cbBindToAxis.Margin = new System.Windows.Forms.Padding(4);
-            this.cbBindToAxis.Name = "cbBindToAxis";
-            this.cbBindToAxis.Size = new System.Drawing.Size(112, 21);
-            this.cbBindToAxis.TabIndex = 64;
-            this.cbBindToAxis.Text = "8-pixels align";
-            this.cbBindToAxis.UseVisualStyleBackColor = true;
-            this.cbBindToAxis.CheckedChanged += new System.EventHandler(this.cbBindToAxis_CheckedChanged);
-            // 
             // toolStrip1
             // 
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -713,10 +640,13 @@
             this.bttSave,
             this.toolStripSeparator1,
             this.bttExport,
-            this.bttImport});
+            this.bttImport,
+            this.toolStripSeparator2,
+            this.cbTool,
+            this.bttAlign8});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1348, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(1348, 28);
             this.toolStrip1.TabIndex = 69;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -726,14 +656,14 @@
             this.bttSave.Image = ((System.Drawing.Image)(resources.GetObject("bttSave.Image")));
             this.bttSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttSave.Name = "bttSave";
-            this.bttSave.Size = new System.Drawing.Size(24, 24);
+            this.bttSave.Size = new System.Drawing.Size(24, 25);
             this.bttSave.Text = "Save";
             this.bttSave.Click += new System.EventHandler(this.tbbSave_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 28);
             // 
             // bttExport
             // 
@@ -741,7 +671,7 @@
             this.bttExport.Image = ((System.Drawing.Image)(resources.GetObject("bttExport.Image")));
             this.bttExport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttExport.Name = "bttExport";
-            this.bttExport.Size = new System.Drawing.Size(24, 24);
+            this.bttExport.Size = new System.Drawing.Size(24, 25);
             this.bttExport.Text = "Export";
             this.bttExport.Click += new System.EventHandler(this.bttExport_Click);
             // 
@@ -751,9 +681,14 @@
             this.bttImport.Image = ((System.Drawing.Image)(resources.GetObject("bttImport.Image")));
             this.bttImport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttImport.Name = "bttImport";
-            this.bttImport.Size = new System.Drawing.Size(24, 24);
+            this.bttImport.Size = new System.Drawing.Size(24, 25);
             this.bttImport.Text = "Import";
             this.bttImport.Click += new System.EventHandler(this.bttImport_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 28);
             // 
             // ofJson
             // 
@@ -764,16 +699,6 @@
             // 
             this.sfJson.FileName = "objects.json";
             this.sfJson.Filter = "json|*.json";
-            // 
-            // pbBigObject
-            // 
-            this.pbBigObject.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbBigObject.Location = new System.Drawing.Point(4, 41);
-            this.pbBigObject.Margin = new System.Windows.Forms.Padding(4);
-            this.pbBigObject.Name = "pbBigObject";
-            this.pbBigObject.Size = new System.Drawing.Size(113, 107);
-            this.pbBigObject.TabIndex = 68;
-            this.pbBigObject.TabStop = false;
             // 
             // splitContainer1
             // 
@@ -795,6 +720,28 @@
             this.splitContainer1.SplitterDistance = 706;
             this.splitContainer1.TabIndex = 70;
             // 
+            // cbTool
+            // 
+            this.cbTool.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTool.Items.AddRange(new object[] {
+            "Create",
+            "Select",
+            "Delete"});
+            this.cbTool.Name = "cbTool";
+            this.cbTool.Size = new System.Drawing.Size(121, 28);
+            this.cbTool.SelectedIndexChanged += new System.EventHandler(this.cbTool_SelectedIndexChanged);
+            // 
+            // bttAlign8
+            // 
+            this.bttAlign8.CheckOnClick = true;
+            this.bttAlign8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttAlign8.Image = ((System.Drawing.Image)(resources.GetObject("bttAlign8.Image")));
+            this.bttAlign8.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttAlign8.Name = "bttAlign8";
+            this.bttAlign8.Size = new System.Drawing.Size(24, 25);
+            this.bttAlign8.Text = "8-pixel align";
+            this.bttAlign8.Click += new System.EventHandler(this.bttAlign8_Click);
+            // 
             // EnemyEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -812,11 +759,8 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EnemyEditor_FormClosing);
             this.Load += new System.EventHandler(this.EnemyEditor_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).EndInit();
             this.pnGeneric.ResumeLayout(false);
             this.pnGeneric.PerformLayout();
-            this.pnTools.ResumeLayout(false);
-            this.pnTools.PerformLayout();
             this.pnView.ResumeLayout(false);
             this.pnObjectList.ResumeLayout(false);
             this.pnObjectList.PerformLayout();
@@ -824,9 +768,9 @@
             this.pnObjects.ResumeLayout(false);
             this.pnObjects.PerformLayout();
             this.pnBigObjects.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbBigObject)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbBigObject)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
@@ -841,8 +785,6 @@
         private System.Windows.Forms.FlowLayoutPanel objPanel;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ImageList objectSprites;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.PictureBox activeBlock;
         private System.Windows.Forms.Button btSortUp;
         private System.Windows.Forms.Button btSortDown;
         private System.Windows.Forms.Panel pnGeneric;
@@ -864,16 +806,12 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Panel pnTools;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.ComboBox cbTool;
         private System.Windows.Forms.Label lbObjectsCount;
         private System.Windows.Forms.Panel pnView;
         private System.Windows.Forms.Panel pnObjectList;
         private System.Windows.Forms.Panel pnObjects;
         private System.Windows.Forms.Button btSort;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.CheckBox cbBindToAxis;
         private System.Windows.Forms.CheckBox cbUseBigPictures;
         private System.Windows.Forms.Panel pnBigObjects;
         private System.Windows.Forms.ComboBox cbBigObjectNo;
@@ -891,5 +829,8 @@
         private System.Windows.Forms.SaveFileDialog sfJson;
         private System.Windows.Forms.PictureBox pbBigObject;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripComboBox cbTool;
+        private System.Windows.Forms.ToolStripButton bttAlign8;
     }
 }
