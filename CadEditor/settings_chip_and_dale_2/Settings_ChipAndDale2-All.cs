@@ -29,7 +29,7 @@ public class Data : CapcomBase
   public override SetBlocksFunc        setBlocksFunc()        { return BlockUtils.setBlocksDt2;}
   public override GetVideoPageAddrFunc getVideoPageAddrFunc() { return getChrAddress; }
   public bool isBuildScreenFromSmallBlocks() { return true; }
-  public GetLayoutFunc getLayoutFunc()     { return getLayout;   }
+  public override GetLayoutFunc getLayoutFunc()     { return getLayout;   }
   
   const int LEVEL_REC_COUNT = 30;
   

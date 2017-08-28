@@ -27,7 +27,7 @@ public class Data : CapcomBase
   public GetObjectsFunc getObjectsFunc() { return getObjectsDwd; }
   public SetObjectsFunc setObjectsFunc() { return setObjectsDwd; }
   public string getObjTypesPicturesDir() { return "obj_sprites_dwd"; }
-  public GetLayoutFunc getLayoutFunc() { return dwdGetLayout; }
+  public override GetLayoutFunc getLayoutFunc() { return dwdGetLayout; }
   public IList<LevelRec> levelRecsDwd = new List<LevelRec>() 
   {
     new LevelRec(0x10315, 51, 17, 4,  0x1DFA0),

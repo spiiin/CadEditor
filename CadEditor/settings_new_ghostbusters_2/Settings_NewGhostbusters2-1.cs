@@ -1,6 +1,6 @@
 using CadEditor;
 using System.Collections.Generic;
-//css_include Settings_CapcomBase.cs;
+
 public class Data
 { 
   public OffsetRec getVideoOffset()     { return new OffsetRec(0, 1  , 0x1000); }
