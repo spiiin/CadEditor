@@ -1,6 +1,7 @@
 using CadEditor;
 using System;
-using System.Drawing;
+using System.Collections.Generic;
+//css_include settings_little_nemo/LittleNemoUtils.cs;
 
 public class Data 
 { 
@@ -11,5 +12,19 @@ public class Data
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return false; }
-  public bool isEnemyEditorEnabled()    { return false; }
+  public bool isEnemyEditorEnabled()    { return true; }
+  
+  public GetObjectsFunc getObjectsFunc()   { return LittleNemoUtils.getObjectsNemo; }
+  public SetObjectsFunc setObjectsFunc()   { return LittleNemoUtils.setObjectsNemo; }
+  public SortObjectsFunc sortObjectsFunc() { return LittleNemoUtils.sortObjectsNemo; }
+  
+  public GetLayoutFunc getLayoutFunc() { return LittleNemoUtils.getLayoutLinearPlusOne; }
+  public SetLayoutFunc setLayoutFunc() { return LittleNemoUtils.setLayoutLinearPlusOne; }
+  public int getPalBytesAddr()         { return 0x9240; }
+  
+  public IList<LevelRec> getLevelRecs() { return levelRecs; }
+  public IList<LevelRec> levelRecs = new List<LevelRec>() 
+  {
+    new LevelRec(0x92b1, 55, 16, 7, 0x9150), 
+  };
 }
