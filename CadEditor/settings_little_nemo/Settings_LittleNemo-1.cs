@@ -35,6 +35,6 @@ public class Data
   public IList<LevelRec> getLevelRecs() { return levelRecs; }
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
-    new LevelRec(0x1221, 45, 16, 4,  0x1150), 
+    new LevelRec(0x1221, 47, 16, 4,  0x1150), 
   };
 }
