@@ -15,7 +15,7 @@ public class Data
   
   //11d0 - pallete
   
-  public OffsetRec getScreensOffset()  { return new OffsetRec(2320, 33 , 8*8);   }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x910, 33 , 8*8);   }
   public int getScreenWidth()          { return 8; }
   public int getScreenHeight()         { return 8; }
   public string getBlocksFilename()    { return "little_nemo_1.png"; }

@@ -68,6 +68,10 @@ public class LittleNemoUtils
       for (int screenIndex = 0; screenIndex < screenIndexValues.Length-1; screenIndex++)
       {
           totalSx += screenIndexValues[screenIndex];
+          if (totalSx >= objCount)
+          {
+              break;
+          }
           Globals.romdata[objScreenAddr + screenIndex + 1] = (byte)totalSx;
       }
       return true;
