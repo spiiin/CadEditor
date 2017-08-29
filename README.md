@@ -24,7 +24,8 @@ http://spiiin.github.io/CadEditor/<br>
 
 Patreon page of editor:<br>
 https://www.patreon.com/CadEditor<br>
+
+Screenshots:<br>
 <img src="http://spiiin.github.io/CadEditor/images/tut1_cad_editor_main.png"/>
 
-
-
+<img src="https://user-images.githubusercontent.com/1622049/29832521-2a975efa-8cf1-11e7-8b98-46acef1ce36f.png"/>
