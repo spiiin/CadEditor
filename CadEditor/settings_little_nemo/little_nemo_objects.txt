@@ -1,0 +1,728 @@
+
+Кодируются двумя байтами: 1 - тип объекта, 2 - положение объекта на экране (1-й нибл - позиция X, 2-й - позиция Y на экране). 
+
+Номер экрана кодируется не напрямую, а списком экранов - для каждого экрана в раскладке задан максимальный индекс объекта на этом экране (разница между 2 соседними экранами - количество объектов на конкретном экране). Внимание - для последних экранов в раскладке значения могут быть пропущены (как только список объектов закончился, кодируется индекс 0, следом за ним могут идти другие данные, чаще всего сразу же начинается список объектов).
+
+RAM:
+8C - количество собранных ключей
+
+Типы объектов:
+A0 - стреляющий моллюск справа
+B0 - 
+C0 - 
+D0 - немо прыгает и появляется вверху экрана
+F0 - немо прыгает и появляется вверху экрана
+01 - тритончик (можно кормить)
+02 - ящерка    (можно кормить) тонет
+03 - крот      (можно кормить)
+04 - краб      (можно кормить) не может ходить на некоторых платформах
+05 - рыба      (можно кормить) плавает в воде, на земле тоже но в пределах платформы при касании конца экрана персонаж умирает
+06 - горилла   (можно кормить) тонет
+07 - мышь      (можно кормить) тонет
+08 - пчёлка    (можно кормить) тонет
+09 - немо бесконечно кидает конфеты которые тормозят врагов
+0a - немо бьёт врагов руками
+0b - немо стреляет по диалогонали бесконечно как из жезла и бьёт врагов этим
+0c - немо бьёт врагов прыжками
+0d - немо бьёт врагов руками
+0e - немо бьёт врагов руками
+0f - немо бьёт врагов руками
+10 - немо не может кидать конфеты
+11 - из немо летят бесконечно конфеты и наносят урон врагам
+12 - немо ложится в постель
+13 - аллигатор (не может плавать на земле)
+14 - злой пень
+15 - ?
+16 - летяга
+17 - летучая мышь
+18 - оса
+19 - заяц кидающий яйца с лягушками
+1a - ?
+1b - лягушка
+1c - злая рыба (не может плавать на земле)
+1d - змейка
+1e - стреляющий моллюск снизу
+1f - стреляющий моллюск справа
+20 - стреляющий моллюск слева
+21 - телепорт?
+22 - ёж на верёвке малый
+23 - ёж на верёвке средний
+24 - ёж на верёвке длинный
+25 - колючая рыба (может плавать везде, даже в воздухе)
+26 - ?
+27 - кальмары (появляются снизу по несколько штук и взлетают вверх)
+28 - летучая рыба
+29 - ворона с корзинкой яиц
+2a - ?
+2b - злая пушинка
+2c - птица кидающая бочки
+2d - ?
+2e - обезья с тарелками
+2f - ?
+30 - улитка
+31 - падающий сверху камень
+32 - пламя из потолка
+33 - пламя из пола
+34 - пламя из стены вправо
+35 - пламя из стены влево
+36 - груз на верёвке 
+37 - самолётик высоко
+38 - самолётик низко
+39 - самолётик очень низко
+3a - самолётик ещё ниже
+3b - самолётик совсем ещё ниже
+3c - воздушный шар кидающий бомбы
+3d - ?
+3e - босс пингвин
+3f - ?
+40 - пузыри пингвина
+41 - ?
+42 - босс скат (может быть даже в обычном уровне)
+43 - ломает экран
+44 - босс Король Кошмаров
+45 - ?
+46 - ?
+47 - ?
+48 - прозрачная платформа в уровне паровоза
+49 - прозрачная маленькая платформа в уровне паровоза
+50 - облако?
+51 - ?
+52 - ?
+53 - ? 
+54 - маленькая аптечка
+55 - большая аптечка
+56 - 1up
+57 - квестовый ключ
+58 - дверные замки
+59 - гном из первого уровня
+5A - козлик из второго уровня
+5B - клоун из второго уровня
+5C - обезья из четвёртого уровня
+5D - медведь из шестого уровня
+5E - пёс из пятого уровня
+4b - облако вниз
+4c - облако вправо
+4d - облако по диагонали влево
+4e - облако вниз
+4f - облако вниз
+
+Stage objects
+
+1 Mushroom Forest
+
+Stage objects
+
+001221
+
+5779  key
+306E  snail
+579F  key
+564E  1up
+1B99  frogling
+575A  key
+5785  key
+186E  bee
+3096  snail
+3074  snail
+55AD  big kit
+30CD  snail
+306F  snail
+1886  bee
+03EF  mole
+1B19  frogling
+1B39  frogling
+1BC5  frogling
+1BF5  frogling 
+54BA  mini kit
+1B8B  frogling
+1BCB  frogling
+54C0  mini kit
+1B29  frogling
+184A  bee
+02C6  lizard
+58B6  door locks
+59EA  flip (red gnome)
+01F6  triton
+30D3  snail
+3088  snail 
+30B0  snail
+5478  mini kit
+5570  big kit
+3070  snail
+0180  triton
+3042  snail
+3090  snail
+572A  key
+57E4  key
+1736  bat
+17B8  bat
+55CB  big kit
+18C0  bee
+014B  triton
+
+Stage Underground 
+
+00127b
+
+566A  1up
+023A  lizard
+
+
+
+2 Flower Garden
+
+Stage Tree
+
+00320d
+
+0248  lizard 
+2BA8  evil feather  
+57D5  key
+5470  mini kit
+5496  mini kit
+2BA6  evil feather
+
+Stage objects
+
+003219
+
+1DCF  snake
+1D5C  snake
+2287  hedgehog on a rope small
+24E4  hedgehog on a rope large
+54E3  mini kit
+068A  gorilla
+571A  key
+544C  mini kit
+2904  crow with a basket of eggs
+2966  crow with a basket of eggs
+2B28  evil feather
+19CA  rabbit with frogs
+5724  key
+54D4  mini kit
+29F2  crow with a basket of eggs
+0246  lizard
+2305  hedgehog on a rope medium
+2358  hedgehog on a rope medium
+2468  hedgehog on a rope large
+1DCF  snake
+5756  key
+5ADA  goat (purple goat) 
+1D67  snake
+1DC7  snake
+06E7  gorilla
+1D22  snake
+1D86  snake
+5472  mini kit
+18E3  bee
+2B66  evil feather 
+08C8  bumblebee
+57FB  key
+0810  bumblebee
+1C46  piranha
+1C82  piranha
+5599  big kit
+58B0  door locks
+
+Stage underwater 1
+
+003263
+
+5BCA  oompi (clown)
+
+Stage underwater 2
+	
+003265
+
+142A  evil tree stump
+56A8  1up
+1726  bat
+1766  bat
+57C7  key
+3150  rockfall
+3190  rockfall
+
+3 House of Toys
+
+Stage objects
+
+0058a1
+
+5765  key
+5797  key
+30DA  snail
+5763  key
+4808  train platform
+497A  train platform
+48E8  train platform
+3721  toy airplane
+3832  toy airplane
+37E1  toy airplane
+499A  train platform
+3903  toy airplane
+3721  toy airplane
+3CE1  toy aerostat
+4808  train platform
+497A  train platform
+48E8  train platform
+3C82  toy aerostat
+5615  1up
+5555  big kit
+3A54  toy airplane
+3BC3  toy airplane
+4808  train platform
+497A  train platform
+48E8  train platform
+3A05  toy airplane
+55C4  big kit
+3721  toy airplane 
+3832  toy airplane
+3943  toy airplane
+5624  1up
+36D2  the load on the rope
+3632  the load on the rope
+3692  the load on the rope
+36D2  the load on the rope
+1634  flying squirrel
+1684  flying squirrel
+370C  toy airplane
+3869  toy airplane
+39D7  toy airplane
+3C88  toy aerostat
+3788  toy airplane  
+39AA  toy airplane
+3CCA  toy aerostat
+37CC  toy airplane
+4828  train platform
+48A8  train platform
+3B65  toy airplane
+3AA5  toy airplane
+5687  1up
+58B5  door locks
+5736  key
+5756  key
+57E3  key
+3C42  toy aerostat
+3C04  toy aerostat
+3C88  toy aerostat
+37C8  toy airplane
+4906  train platform
+4808  train platform
+4986  train platform
+4888  train platform
+57C4  key
+4808  train platform
+4888  train platform
+3A20  toy airplane
+3BA0  toy airplane
+5764  key
+5764  key
+497A  train platform
+497A  train platform
+37E1  toy airplane
+5566  big kit
+37E1  toy airplane
+3BE1  toy airplane
+37E1  toy airplane
+5563  big kit
+
+4 Night Sea
+
+Stage objects
+
+007351
+
+55EB  big kit
+2508  barbed fish
+25FC  barbed fish
+5CD8  ape (orange ape)
+576A  key
+1FEC  polyp
+058E  fish
+1C0C  piranha
+54D8  mini kit
+204C  polyp
+012A  triton
+5795  key
+550C  big kit
+1FAC  polyp
+54C8  mini kit
+2809  flying fish
+2869  flying fish
+2879  flying fish
+28A9  flying fish
+58B8  door locks
+5648  1up
+5734  key
+250C  barbed fish
+274A  squid
+278A  squid
+27CA  squid
+04A2  hermit Crab
+54EA  mini kit
+1CA4  piranha
+1FE4  polyp
+209C  polyp
+1EFF  polyp
+5450  mini kit
+1C4A  piranha
+1C86  piranha
+1FA0  polyp
+1FB4  polyp
+57AF  key
+048A  hermit Crab
+1C22  piranha
+1CA6  piranha
+5465  mini kit
+5770  key
+0490  hermit Crab
+27E2  squid
+2762  squid
+
+Stage underwater 1
+
+0073ad
+
+562A  1up
+146A  evil tree stump
+
+
+
+5 Nemo's House
+
+0092b1
+
+Stage attic 1
+
+
+36D2  the load on the rope 
+07DA  mouse
+3612  the load on the rope
+
+Stage attic 2
+
+0092b7
+
+36B2  the load on the rope
+55CA  big kit
+3612  the load on the rope
+3652  the load on the rope
+57F6  key
+
+Stage objects
+
+0092c1
+
+1794  bat
+542C  mini kit
+1714  bat
+5726  key
+57EB  key
+2ECB  monkey with a soup bowl
+2CE2  flying turtle
+2E6A  monkey with a soup bowl
+5735  key
+2CC2  flying turtle
+2E6A  monkey with a soup bowl
+55F8  big kit
+5741  key
+083E  bumblebee
+5899  door locks
+014D  triton
+5734  key
+1720  bat
+17A0  bat
+306D  snail
+2CF4  flying turtle
+30E4  snail
+17CE  bat
+54E4  mini kit
+1730  bat
+1756  bat
+17D0  bat
+17F6  bat
+170E  bat
+174E  bat
+55AB  big kit
+1770  bat
+1796  bat
+2EED  monkey with a soup bowl
+549E  mini kit
+5EBA  dog (yellow dog)
+30EA  snail
+2EC3  monkey with a soup bowl
+2E83  monkey with a soup bowl
+2E63  monkey with a soup bowl
+
+Stage underground 1
+
+009311
+
+0829  bumblebee
+579C  key
+55B7  big kit
+5642  1up
+3652  the load on the rope
+3692  the load on the rope
+02DA  lizard
+
+
+6 Cloud Ruins
+
+Stage objects
+
+00afef
+
+304E  snail  
+2BA2  evil feather
+16E9  flying squirrel
+1629  flying squirrel
+164F  flying squirrel
+168F  flying squirrel
+2BA2  evil feather
+0298  lizard
+55CE  big kit
+3036  snail
+2B80  evil feather
+549B  mini kit
+3064  snail
+0184  triton
+50A6  cloud
+5089  cloud
+50CF  cloud
+5038  cloud
+2B60  evil feather
+502D  cloud
+5083  cloud
+29F2  crow with a basket of eggs
+29FA  crow with a basket of eggs
+5083  cloud
+5047  cloud
+50AD  cloud
+50CB  cloud
+5087  cloud
+29FA  crow with a basket of eggs
+5086  cloud
+504D  cloud
+50ED  cloud
+5089  cloud
+5045  cloud
+29F4  crow with a basket of eggs
+50A4  cloud
+5049  cloud
+50C9  cloud
+50E9  cloud
+5081  cloud
+29F4  crow with a basket of eggs
+56A8  1up
+5028  cloud
+502E  cloud
+5062  cloud
+508E  cloud
+565D  1up
+50CB  cloud
+5087  cloud
+5078  cloud
+506E  cloud
+5DA8  bear (brown bear)
+2B40  evil feather
+30C4  snail
+4B12  cloud
+08F2  bumblebee
+2B00  evil feather
+4D70  cloud
+4C68  cloud
+4CA6  cloud
+1B30  frogling
+5530  big kit
+50B7  cloud
+1B28  frogling
+0148  triton
+5022  cloud
+50A8  cloud
+50C6  cloud
+50F8  cloud
+5026  cloud
+30E6  snail
+5714  key
+5725  key
+5736  key
+5747  key
+5758  key
+5769  key
+58BA  door locks
+
+7 Topsy-Turvy
+
+Stage attic 1
+
+00d15e
+
+07EA  mouse
+5720  key
+2BAE  evil feather
+2BE4  evil feather
+2BC4  evil feather
+557A  big kit
+
+Stage attic 2
+
+00d16a
+
+561A  1up
+2E57  monkey with a soup bowl
+
+Stage attic 3
+
+00d16c
+
+2EB7  monkey with a soup bowl
+57FA  key
+
+Stage objects
+
+00d172
+
+019C  triton
+5736  key
+1B8C  frogling
+1BEE  frogling
+1B2C  frogling
+2B04  evil feather
+2B64  evil feather
+2BA6  evil feather
+08CE  bumblebee
+165C  flying squirrel
+16DC  flying squirrel
+2ECD  monkey with a soup bowl
+2E1F  monkey with a soup bowl
+577D  key
+2B08  evil feather
+2BE8  evil feather
+0895  bumblebee
+2968  crow with a basket of eggs
+2B0C  evil feather
+2968  crow with a basket of eggs
+292C  crow with a basket of eggs
+57B7  key
+5730  key
+2E13  monkey with a soup bowl
+5434  mini kit
+0151  triton
+5602  1up
+5542  big kit
+0812  bumblebee
+4BA3  cloud
+4BD1  cloud
+576A  key
+4C14  cloud
+58B6  door locks
+
+8 Nightmare Lands
+
+Stage objects 1
+
+00edfc
+
+17EF  bat
+173F  bat
+177E  bat
+1B79  frogling 
+1B68  frogling
+1B88  frogling
+551F  big kit
+02AB  lizard
+1B63  frogling
+0266  lizard
+1B21  frogling
+338B  flames
+33AB  flames
+33CB  flames
+1BB6  frogling
+1B46  frogling
+3345  flames
+3375  flames
+33B5  flames
+3EE8  boss King Penguin
+
+Stage objects 2
+
+010fa1
+
+56FF  1up
+55CD  big kit
+2B4C  evil feather
+33FF  flames
+2B88  evil feather
+333F  flames
+321A  flames
+325A  flames
+2B8E  evil feather
+13AA  alligator
+1868  bee
+1868  bee
+13CA  alligator
+5577  big kit
+42E6  boss Fire Stingray
+55DC  big kit 
+2BEC  evil feather
+304A  snail
+56CF  1up
+56FF  1up
+3029  snail
+30AF  snail
+2BCA  evil feather
+0121  triton
+3296  flames
+337D  flames
+2B1C  evil feather
+34BD  flames
+2B8E  evil feather
+13E8  alligator
+2B82  evil feather
+2B64  evil feather
+34B2  flames
+335D  flames
+02E6  lizard
+13EA  alligator
+56DA  1up
+137A  alligator
+
+Stage objects 3
+
+01315c
+
+3326  flames
+3336  flames
+33A6  flames
+33B6  flames
+29C0  crow with a basket of eggs
+3326  flames
+3336  flames
+33A6  flames
+33B6  flames
+29C0  crow with a basket of eggs
+3326  flames
+3336  flames
+33A6  flames
+33B6  flames
+29C0  crow with a basket of eggs
+3326  flames
+3336  flames
+33A6  flames
+33B6  flames
+29C0  crow with a basket of eggs
+07EA  mouse
+369D  the load on the rope
+36DD  the load on the rope
+361D  the load on the rope
+1728  bat
+1769  bat
+17A9  bat
+080B  bumblebee
+44F8  boss The King of Nightmares  
+1869  bee
+1703  bat
+1765  bat
+17A5  bat
+024B  lizard
