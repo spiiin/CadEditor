@@ -75,11 +75,11 @@
             this.bttExport = new System.Windows.Forms.ToolStripButton();
             this.bttImport = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.cbTool = new System.Windows.Forms.ToolStripComboBox();
+            this.bttAlign8 = new System.Windows.Forms.ToolStripButton();
             this.ofJson = new System.Windows.Forms.OpenFileDialog();
             this.sfJson = new System.Windows.Forms.SaveFileDialog();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.cbTool = new System.Windows.Forms.ToolStripComboBox();
-            this.bttAlign8 = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             this.pnGeneric.SuspendLayout();
             this.pnView.SuspendLayout();
@@ -676,6 +676,28 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 28);
             // 
+            // cbTool
+            // 
+            this.cbTool.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTool.Items.AddRange(new object[] {
+            "Create",
+            "Select",
+            "Delete"});
+            this.cbTool.Name = "cbTool";
+            this.cbTool.Size = new System.Drawing.Size(121, 28);
+            this.cbTool.SelectedIndexChanged += new System.EventHandler(this.cbTool_SelectedIndexChanged);
+            // 
+            // bttAlign8
+            // 
+            this.bttAlign8.CheckOnClick = true;
+            this.bttAlign8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttAlign8.Image = ((System.Drawing.Image)(resources.GetObject("bttAlign8.Image")));
+            this.bttAlign8.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttAlign8.Name = "bttAlign8";
+            this.bttAlign8.Size = new System.Drawing.Size(24, 25);
+            this.bttAlign8.Text = "8-pixel align";
+            this.bttAlign8.Click += new System.EventHandler(this.bttAlign8_Click);
+            // 
             // ofJson
             // 
             this.ofJson.FileName = "objects.json";
@@ -706,28 +728,6 @@
             this.splitContainer1.SplitterDistance = 706;
             this.splitContainer1.TabIndex = 70;
             // 
-            // cbTool
-            // 
-            this.cbTool.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbTool.Items.AddRange(new object[] {
-            "Create",
-            "Select",
-            "Delete"});
-            this.cbTool.Name = "cbTool";
-            this.cbTool.Size = new System.Drawing.Size(121, 28);
-            this.cbTool.SelectedIndexChanged += new System.EventHandler(this.cbTool_SelectedIndexChanged);
-            // 
-            // bttAlign8
-            // 
-            this.bttAlign8.CheckOnClick = true;
-            this.bttAlign8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttAlign8.Image = ((System.Drawing.Image)(resources.GetObject("bttAlign8.Image")));
-            this.bttAlign8.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttAlign8.Name = "bttAlign8";
-            this.bttAlign8.Size = new System.Drawing.Size(24, 25);
-            this.bttAlign8.Text = "8-pixel align";
-            this.bttAlign8.Click += new System.EventHandler(this.bttAlign8_Click);
-            // 
             // EnemyEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -739,7 +739,6 @@
             this.Controls.Add(this.label12);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.MaximizeBox = false;
             this.Name = "EnemyEditor";
             this.Text = "Enemy Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EnemyEditor_FormClosing);

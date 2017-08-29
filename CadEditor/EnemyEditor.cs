@@ -289,6 +289,7 @@ namespace CadEditor
                 dgvObjects.Columns[i].Width = 35;
             }
 
+            dgvObjects.Invalidate();
             lbObjectsCount.Text = String.Format("objects count: {0}/{1}", dgvObjects.RowCount, getLevelRecForGameType().objCount);
         }
 
