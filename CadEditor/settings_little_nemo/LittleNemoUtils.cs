@@ -93,4 +93,15 @@ public class LittleNemoUtils
           Globals.romdata[layoutAddr + i] = (byte)(layerData.layer[i] - 1);
       return true;
   }
+  
+  public static void sortObjectsNemo(int levelNo, int listNo, List<ObjectRec> objects)
+  {
+    objects.Sort((o1, o2) => { 
+        return o1.sy > o2.sy ? 1 : o1.sy < o2.sy ? -1 :
+               o1.sx > o2.sx ? 1 : o1.sx < o2.sx ? -1 :
+               o1.y > o2.y ? 1 : o1.y < o2.y ? -1 : 
+               o1.x > o2.x ? 1 : o1.x < o2.x ? -1 :
+               0;
+    });
+  }
 }

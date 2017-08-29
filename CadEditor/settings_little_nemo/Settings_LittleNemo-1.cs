@@ -24,8 +24,9 @@ public class Data
   public bool isBlockEditorEnabled()    { return false; }
   public bool isEnemyEditorEnabled()    { return true; }
   
-  public GetObjectsFunc getObjectsFunc() { return LittleNemoUtils.getObjectsNemo; }
-  public SetObjectsFunc setObjectsFunc() { return LittleNemoUtils.setObjectsNemo; }
+  public GetObjectsFunc getObjectsFunc()   { return LittleNemoUtils.getObjectsNemo; }
+  public SetObjectsFunc setObjectsFunc()   { return LittleNemoUtils.setObjectsNemo; }
+  public SortObjectsFunc sortObjectsFunc() { return LittleNemoUtils.sortObjectsNemo; }
   
   public GetLayoutFunc getLayoutFunc() { return LittleNemoUtils.getLayoutLinearPlusOne; }
   public SetLayoutFunc setLayoutFunc() { return LittleNemoUtils.setLayoutLinearPlusOne; }
