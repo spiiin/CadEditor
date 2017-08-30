@@ -39,9 +39,10 @@
             // 
             // tbFileName
             // 
-            this.tbFileName.Location = new System.Drawing.Point(81, 6);
+            this.tbFileName.Location = new System.Drawing.Point(108, 7);
+            this.tbFileName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbFileName.Name = "tbFileName";
-            this.tbFileName.Size = new System.Drawing.Size(206, 20);
+            this.tbFileName.Size = new System.Drawing.Size(273, 22);
             this.tbFileName.TabIndex = 10;
             this.tbFileName.Text = "exportedScreens.bin";
             this.tbFileName.Click += new System.EventHandler(this.tbFileName_Click);
@@ -49,17 +50,19 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(16, 11);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 13);
+            this.label1.Size = new System.Drawing.Size(73, 17);
             this.label1.TabIndex = 9;
             this.label1.Text = "File name:";
             // 
             // btSelect
             // 
-            this.btSelect.Location = new System.Drawing.Point(12, 64);
+            this.btSelect.Location = new System.Drawing.Point(16, 79);
+            this.btSelect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btSelect.Name = "btSelect";
-            this.btSelect.Size = new System.Drawing.Size(275, 23);
+            this.btSelect.Size = new System.Drawing.Size(367, 28);
             this.btSelect.TabIndex = 12;
             this.btSelect.Text = "Select";
             this.btSelect.UseVisualStyleBackColor = true;
@@ -75,28 +78,29 @@
             this.cbExportType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbExportType.FormattingEnabled = true;
             this.cbExportType.Items.AddRange(new object[] {
-            "Binary",
             "Picture"});
-            this.cbExportType.Location = new System.Drawing.Point(81, 32);
+            this.cbExportType.Location = new System.Drawing.Point(108, 39);
+            this.cbExportType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbExportType.Name = "cbExportType";
-            this.cbExportType.Size = new System.Drawing.Size(206, 21);
+            this.cbExportType.Size = new System.Drawing.Size(273, 24);
             this.cbExportType.TabIndex = 13;
             this.cbExportType.SelectedIndexChanged += new System.EventHandler(this.cbExportType_SelectedIndexChanged);
             // 
             // lbExportType
             // 
             this.lbExportType.AutoSize = true;
-            this.lbExportType.Location = new System.Drawing.Point(12, 35);
+            this.lbExportType.Location = new System.Drawing.Point(16, 43);
+            this.lbExportType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbExportType.Name = "lbExportType";
-            this.lbExportType.Size = new System.Drawing.Size(63, 13);
+            this.lbExportType.Size = new System.Drawing.Size(83, 17);
             this.lbExportType.TabIndex = 14;
             this.lbExportType.Text = "Export type:";
             // 
             // SelectFile
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(299, 99);
+            this.ClientSize = new System.Drawing.Size(399, 122);
             this.Controls.Add(this.lbExportType);
             this.Controls.Add(this.cbExportType);
             this.Controls.Add(this.btSelect);
@@ -104,6 +108,7 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MinimizeBox = false;
             this.Name = "SelectFile";
             this.Text = "Select File";

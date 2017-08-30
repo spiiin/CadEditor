@@ -145,20 +145,21 @@ namespace CadEditor
 
         protected virtual void exportBlocks()
         {
-            //duck tales 2 has other format
             var f = new SelectFile() { Filename = "exportedBigBlocks.bin", ShowExportParams = true };
             f.ShowDialog();
             if (!f.Result)
                 return;
             var fn = f.Filename;
-            if (f.getExportType() == ExportType.Binary)
+            exportPictures(fn);
+            /*if (f.getExportType() == ExportType.Binary)
             {
+                //move to configs?
                 Utils.saveDataToFile(fn, Utils.linearizeBigBlocks(bigBlockIndexes));
             }
             else
             {
                 exportPictures(fn);
-            }
+            }*/
         }
 
         protected int SMALL_BLOCKS_COUNT = 256;
@@ -421,7 +422,7 @@ namespace CadEditor
                 return;
             var fn = f.Filename;
             var data = Utils.loadDataFromFile(fn);
-            //duck tales 2 has other format
+            //move to configs?
             bigBlockIndexes = Utils.unlinearizeBigBlocks<BigBlock>(data, 2,2);
             reloadLevel(false);
             dirty = true;

@@ -66,7 +66,7 @@ namespace CadEditor
 
     public enum ExportType
     {
-        Binary,
         Picture,
+        Binary,
     }
 }

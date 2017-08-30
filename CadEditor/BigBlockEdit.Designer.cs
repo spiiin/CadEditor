@@ -48,6 +48,8 @@
             this.cbViewType = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.pnBlocks = new System.Windows.Forms.Panel();
+            this.blocksScreen = new System.Windows.Forms.PictureBox();
             this.cbHierarchyLevel = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lbActive = new System.Windows.Forms.Label();
@@ -59,17 +61,15 @@
             this.tbbImport = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tbbDeleteAll = new System.Windows.Forms.ToolStripButton();
-            this.pnBlocks = new System.Windows.Forms.Panel();
-            this.blocksScreen = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).BeginInit();
             this.pnGeneric.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
             this.pnBlocks.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.blocksScreen)).BeginInit();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // mapScreen
@@ -343,6 +343,31 @@
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 62;
             // 
+            // pnBlocks
+            // 
+            this.pnBlocks.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnBlocks.AutoScroll = true;
+            this.pnBlocks.Controls.Add(this.blocksScreen);
+            this.pnBlocks.Location = new System.Drawing.Point(8, 298);
+            this.pnBlocks.Name = "pnBlocks";
+            this.pnBlocks.Size = new System.Drawing.Size(261, 370);
+            this.pnBlocks.TabIndex = 62;
+            this.pnBlocks.SizeChanged += new System.EventHandler(this.pnBlocks_SizeChanged);
+            // 
+            // blocksScreen
+            // 
+            this.blocksScreen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.blocksScreen.Location = new System.Drawing.Point(3, 3);
+            this.blocksScreen.Name = "blocksScreen";
+            this.blocksScreen.Size = new System.Drawing.Size(254, 332);
+            this.blocksScreen.TabIndex = 5;
+            this.blocksScreen.TabStop = false;
+            this.blocksScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.blocksScreen_Paint);
+            this.blocksScreen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.blocksScreen_MouseDown);
+            // 
             // cbHierarchyLevel
             // 
             this.cbHierarchyLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -429,6 +454,7 @@
             // tbbImport
             // 
             this.tbbImport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbbImport.Enabled = false;
             this.tbbImport.Image = ((System.Drawing.Image)(resources.GetObject("tbbImport.Image")));
             this.tbbImport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbbImport.Name = "tbbImport";
@@ -450,31 +476,6 @@
             this.tbbDeleteAll.Size = new System.Drawing.Size(24, 24);
             this.tbbDeleteAll.Text = "Clear All";
             this.tbbDeleteAll.Click += new System.EventHandler(this.btClear_Click);
-            // 
-            // pnBlocks
-            // 
-            this.pnBlocks.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnBlocks.AutoScroll = true;
-            this.pnBlocks.Controls.Add(this.blocksScreen);
-            this.pnBlocks.Location = new System.Drawing.Point(8, 298);
-            this.pnBlocks.Name = "pnBlocks";
-            this.pnBlocks.Size = new System.Drawing.Size(261, 370);
-            this.pnBlocks.TabIndex = 62;
-            this.pnBlocks.SizeChanged += new System.EventHandler(this.pnBlocks_SizeChanged);
-            // 
-            // blocksScreen
-            // 
-            this.blocksScreen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.blocksScreen.Location = new System.Drawing.Point(3, 3);
-            this.blocksScreen.Name = "blocksScreen";
-            this.blocksScreen.Size = new System.Drawing.Size(254, 332);
-            this.blocksScreen.TabIndex = 5;
-            this.blocksScreen.TabStop = false;
-            this.blocksScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.blocksScreen_Paint);
-            this.blocksScreen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.blocksScreen_MouseDown);
             // 
             // BigBlockEdit
             // 
@@ -501,10 +502,10 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
             this.splitContainer1.ResumeLayout(false);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             this.pnBlocks.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.blocksScreen)).EndInit();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
