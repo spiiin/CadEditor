@@ -34,7 +34,7 @@ namespace CadEditor
 
             readOnly = false; //must be read from config
             tbbSave.Enabled = !readOnly;
-            tbbImport.Enabled = !readOnly;
+            //tbbImport.Enabled = !readOnly;
         }
 
         protected void reloadBlocksPanel()
@@ -145,7 +145,7 @@ namespace CadEditor
 
         protected virtual void exportBlocks()
         {
-            var f = new SelectFile() { Filename = "exportedBigBlocks.bin", ShowExportParams = true };
+            var f = new SelectFile() { Filename = "exportedBigBlocks.png", ShowExportParams = true };
             f.ShowDialog();
             if (!f.Result)
                 return;

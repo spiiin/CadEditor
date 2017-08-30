@@ -31,8 +31,7 @@ namespace CadEditor
             lbReadOnly.Visible = readOnly;
             btFlipHorizontal.Visible = !readOnly;
             btFlipVertical.Visible = !readOnly;
-            btImport.Visible = !readOnly;
-            //btExport.Visible = !readOnly;
+            //btImport.Visible = !readOnly;
         }
 
         protected virtual void resetControls()

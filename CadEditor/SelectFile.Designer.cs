@@ -44,7 +44,7 @@
             this.tbFileName.Name = "tbFileName";
             this.tbFileName.Size = new System.Drawing.Size(273, 22);
             this.tbFileName.TabIndex = 10;
-            this.tbFileName.Text = "exportedScreens.bin";
+            this.tbFileName.Text = "exportedScreens.png";
             this.tbFileName.Click += new System.EventHandler(this.tbFileName_Click);
             // 
             // label1
