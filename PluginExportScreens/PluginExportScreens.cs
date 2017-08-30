@@ -125,10 +125,6 @@ namespace PluginExportScreens
                 }
 
                 int first = SaveScreensCount.First;
-                int[] indexes = screens[first];
-                int[] indexes2 = null;
-                if (ConfigScript.getLayersCount() > 1)
-                    indexes2 = screens2[formMain.ScreenNo];
                 int WIDTH = ConfigScript.getScreenWidth(formMain.LevelNoForScreens);
                 int HEIGHT = ConfigScript.getScreenHeight(formMain.LevelNoForScreens);
                 int screenCount = SaveScreensCount.Count;
@@ -137,10 +133,7 @@ namespace PluginExportScreens
                 {
                     for (int i = 0; i < screenCount; i++)
                     {
-                        indexes = screens[formMain.ScreenNo + i];
-                        screenParams.Screens[i] = indexes;
-                        /*if (ConfigScript.getLayersCount() > 1)
-                            indexes2 = screens2[formMain.ScreenNo + i];*/
+                        screenParams.Screens[i] = screens[first + i];
                     }
                     tw.WriteLine(JsonConvert.SerializeObject(screenParams));
                 }
