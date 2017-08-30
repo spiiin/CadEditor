@@ -146,9 +146,7 @@ namespace CadEditor
         protected virtual void exportBlocks()
         {
             //duck tales 2 has other format
-            var f = new SelectFile();
-            f.Filename = "exportedBigBlocks.bin";
-            f.ShowExportParams = true;
+            var f = new SelectFile() { Filename = "exportedBigBlocks.bin", ShowExportParams = true };
             f.ShowDialog();
             if (!f.Result)
                 return;
@@ -417,8 +415,7 @@ namespace CadEditor
 
         protected void btImport_Click(object sender, EventArgs e)
         {
-            var f = new SelectFile();
-            f.Filename = "exportedBigBlocks.bin";
+            var f = new SelectFile() { Filename = "exportedBigBlocks.bin" };
             f.ShowDialog();
             if (!f.Result)
                 return;
