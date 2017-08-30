@@ -136,6 +136,13 @@ namespace CadEditor
             bigBlockIndexes = ConfigScript.getBigBlocksRecursive(curHierarchyLevel, curSmallBlockNo);
         }
 
+        private void exportPictures(string filename)
+        {
+            bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(curVideo, curTileset, bigBlockIndexes, curPallete, curViewType, 1, 2.0f, MapViewType.Tiles, false, curHierarchyLevel);
+            var result = UtilsGDI.GlueImages(bigBlocksImages,bigBlocksImages.Length, 1);
+            result.Save(filename);
+        }
+
         protected virtual void exportBlocks()
         {
             //duck tales 2 has other format
@@ -152,18 +159,7 @@ namespace CadEditor
             }
             else
             {
-                //todo:add BigBlockWithPal version
-                Bitmap result = new Bitmap((int)(32 * formMain.CurScale * 256),(int)(32 * formMain.CurScale)); //need some hack for duck tales 1
-                using (Graphics g = Graphics.FromImage(result))
-                {
-                    for (int i = 0; i < ConfigScript.getBigBlocksCount(curHierarchyLevel); i++)
-                    {
-                        Bitmap b;
-                        b = bigBlockIndexes[i].makeBigBlock(smallBlocksImages);
-                        g.DrawImage(b, new Point((int)(32 * formMain.CurScale * i), 0));
-                    }
-                }
-                result.Save(fn);
+                exportPictures(fn);
             }
         }
 
