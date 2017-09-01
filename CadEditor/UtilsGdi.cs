@@ -202,12 +202,12 @@ namespace CadEditor
         public static Image[] setBlocksForPictures(float curButtonScale = 2, int blockWidth = 32, int blockHeight = 32, MapViewType curDrawType = MapViewType.Tiles, bool showAxis = true)
         {
             //only if using pictures
-            if (!ConfigScript.usePicturesInstedBlocks || ConfigScript.blocksPicturesFilename == "")
+            if (!ConfigScript.usePicturesInstedBlocks || ConfigScript.getBlocksPicturesFilename() == "")
             {
                 return null;
             }
             MapViewType curViewType = curDrawType;
-            var imSrc = Image.FromFile(ConfigScript.blocksPicturesFilename);
+            var imSrc = Image.FromFile(ConfigScript.getBlocksPicturesFilename());
             int imBlockWidth = blockWidth * 2; //default scale
             int imBlockHeight = blockHeight * 2;
             int imCountX = imSrc.Width / imBlockWidth;

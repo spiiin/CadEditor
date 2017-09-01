@@ -86,10 +86,8 @@ namespace CadEditor
 
         public static void LoadFromFile(string fileName)
         {
-            programStartDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            configDirectory = Path.GetDirectoryName(fileName);
-            if (configDirectory != "")
-                changeToConfigDirectory();
+            programStartDirectory = AppDomain.CurrentDomain.BaseDirectory + "/";
+            configDirectory = Path.GetDirectoryName(fileName) + "/";
 
             var asm = new AsmHelper(CSScript.Load(fileName));
             object data = null;
@@ -231,8 +229,13 @@ namespace CadEditor
             blocksCount    = callFromScript(asm, data, "*.getBlocksCount"   , 256);
 
             blocksPicturesFilename  = callFromScript(asm, data, "getBlocksFilename", "");
-            if (blocksPicturesFilename != "" && !File.Exists(blocksPicturesFilename))
-                throw new Exception("File does not exists: " + blocksPicturesFilename);
+            if (blocksPicturesFilename != "")
+            {
+                if (!File.Exists(ConfigScript.getBlocksPicturesFilename()))
+                {
+                    throw new Exception("File does not exists: " + ConfigScript.getBlocksPicturesFilename());
+                }
+            }
             blocksPicturesWidth = callFromScript(asm, data, "getPictureBlocksWidth", 32); 
             usePicturesInstedBlocks = blocksPicturesFilename != "";
 
@@ -247,11 +250,9 @@ namespace CadEditor
 
         private static void loadAllPlugins(AsmHelper asm, object data)
         {
-            changeToProgramDirectory();
             cleanPlugins();
             loadGlobalPlugins();
             loadPluginsFromCurrentConfig(asm, data);
-            changeToConfigDirectory();
         }
 
         private static void cleanPlugins()
@@ -517,6 +518,11 @@ namespace CadEditor
             return blocksPicturesWidth;
         }
 
+        public static string getBlocksPicturesFilename()
+        {
+            return configDirectory + blocksPicturesFilename;
+        }
+
         public static int getLayersCount()
         {
             return layersCount;
@@ -562,7 +568,7 @@ namespace CadEditor
             return palBytesAddr;
         }
 
-          //------------------------------------------------------------
+        //------------------------------------------------------------
         //helpers
         public static int getScreenWidth(int levelNo)
         {
@@ -622,17 +628,11 @@ namespace CadEditor
             }
         }
 
-        public static void changeToProgramDirectory()
-        {
-            Directory.SetCurrentDirectory(programStartDirectory);
-        }
-        public static void changeToConfigDirectory()
-        {
-            Directory.SetCurrentDirectory(configDirectory);
-        }
-
         private static string programStartDirectory;
         private static string configDirectory;
+
+        public static string ProgramDirectory { get { return programStartDirectory; } }
+        public static string ConfigDirectory  { get { return configDirectory; } }
 
         public static OffsetRec palOffset;
         public static OffsetRec videoOffset;
@@ -713,9 +713,9 @@ namespace CadEditor
         public static int scrollsOffsetFromLayout;
 
         public static bool usePicturesInstedBlocks;
-        public static string blocksPicturesFilename;
         public static int blocksPicturesWidth;
         public static string objTypesPicturesDir;
+        private static string blocksPicturesFilename;
 
         public static GroupRec[] groups;
 

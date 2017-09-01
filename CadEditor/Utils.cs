@@ -253,6 +253,7 @@ namespace CadEditor
         {
             try
             {
+                fn = ConfigScript.ConfigDirectory + fn;
                 using (FileStream f = File.Open(fn, FileMode.Create))
                 {
                     f.Write(data, 0, data.Length);
@@ -271,6 +272,7 @@ namespace CadEditor
             byte[] data = null;
             try
             {
+                fn = ConfigScript.ConfigDirectory + fn;
                 using (FileStream f = File.OpenRead(fn))
                 {
                     int size = (int)new FileInfo(fn).Length;
@@ -617,6 +619,8 @@ namespace CadEditor
         {
             try
             {
+                filename = ConfigScript.ConfigDirectory + filename;
+
                 using (FileStream f = File.OpenRead(filename))
                 {
 
@@ -641,6 +645,7 @@ namespace CadEditor
         {
             try
             {
+                filename = ConfigScript.ConfigDirectory + filename;
                 using (FileStream f = File.OpenRead(filename))
                 {
                     byte[] d = new byte[(int)f.Length];
@@ -676,7 +681,7 @@ namespace CadEditor
             var templBig = objSpritesDir + "/object{0}b.png";
             var templGenericBig = objSpritesDirGeneric + "/object{0}b.png";
             objectSprites.Images.Clear();
-            objectSprites.Images.AddStrip(Image.FromFile("../" + objSpritesDirGeneric + "/objSprites.png"));
+            objectSprites.Images.AddStrip(Image.FromFile(objSpritesDirGeneric + "/objSprites.png"));
             objectSpritesBig = new Image[256];
             for (int i = 0; i < OBJECTS_COUNT; i++)
             {
