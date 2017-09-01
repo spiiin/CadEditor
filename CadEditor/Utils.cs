@@ -673,31 +673,22 @@ namespace CadEditor
             var objSpritesDir = ConfigScript.getObjTypesPicturesDir();
             var objSpritesDirGeneric = "obj_sprites";
             var templ = objSpritesDir + "/object{0}.png";
-            var templGeneric = objSpritesDirGeneric + "/object{0}.png";
             var templBig = objSpritesDir + "/object{0}b.png";
             var templGenericBig = objSpritesDirGeneric + "/object{0}b.png";
             objectSprites.Images.Clear();
+            objectSprites.Images.AddStrip(Image.FromFile("../" + objSpritesDirGeneric + "/objSprites.png"));
             objectSpritesBig = new Image[256];
             for (int i = 0; i < OBJECTS_COUNT; i++)
             {
                 var fname = String.Format(templ, i);
-                var fnameGeneric = String.Format(templGeneric, i);
                 //".." hack for WinXP compatibility
                 if (File.Exists(fname))
                 {
-                    objectSprites.Images.Add(Image.FromFile(fname));
+                    objectSprites.Images[i] = Image.FromFile(fname);
                 }
                 else if (File.Exists("../" + fname))
                 {
-                    objectSprites.Images.Add(Image.FromFile("../" + fname));
-                }
-                else if (File.Exists(fnameGeneric))
-                {
-                    objectSprites.Images.Add(Image.FromFile(fnameGeneric));
-                }
-                else if (File.Exists("../" + fnameGeneric))
-                {
-                    objectSprites.Images.Add(Image.FromFile("../" + fnameGeneric));
+                    objectSprites.Images[i] = Image.FromFile("../" + fname);
                 }
 
                 //
