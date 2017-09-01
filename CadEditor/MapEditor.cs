@@ -36,8 +36,8 @@ namespace CadEditor
                     {
                         if (bigBlockNo > -1 && bigBlockNo < bigBlocks.Length)
                             g.DrawImage(bigBlocks[bigBlockNo], tileRect);
-                        else
-                            g.FillRectangle(Brushes.White, tileRect);
+                        //else
+                        //    g.FillRectangle(Brushes.White, tileRect);
                     }
                 }
             }

@@ -389,8 +389,11 @@ namespace CadEditor
                     return;
                 int index = dy * WIDTH + dx;
                 curActiveBlock = ConfigScript.getBigTileNoFromScreen(layers[0].screens[curActiveScreen], index);
-                activeBlock.Image = bigBlocks[curActiveBlock];
-                lbActiveBlock.Text = String.Format("Label: {0:X}", curActiveBlock);
+                if (curActiveBlock != -1)
+                {
+                    activeBlock.Image = bigBlocks[curActiveBlock];
+                    lbActiveBlock.Text = String.Format("Label: {0:X}", curActiveBlock);
+                }
                 blocksScreen.Invalidate();
                 return;
             }
