@@ -209,7 +209,7 @@ namespace PluginVideoNes
             return mblock;
         }
 
-        public Bitmap[] makeObjects(byte videoPageId, byte tilesId, byte palId, float scale, MapViewType drawType, int constantSubpal = -1)
+        public Bitmap[] makeObjects(int videoPageId, int tilesId, int palId, float scale, MapViewType drawType, int constantSubpal = -1)
         {
             byte[] videoChunk = ConfigScript.getVideoChunk(videoPageId);
             int blocksCount = ConfigScript.getBlocksCount();
@@ -227,7 +227,7 @@ namespace PluginVideoNes
             return bitmaps;
         }
 
-        public Bitmap makeObjectsStrip(byte videoPageId, byte tilesId, byte palId, float scale, MapViewType drawType, int constantSubpal = -1)
+        public Bitmap makeObjectsStrip(int videoPageId, int tilesId, int palId, float scale, MapViewType drawType, int constantSubpal = -1)
         {
             var bitmaps = makeObjects(videoPageId, tilesId, palId, scale, drawType, constantSubpal);
             return UtilsGDI.GlueImages(bitmaps, bitmaps.Length, 1);
@@ -236,8 +236,7 @@ namespace PluginVideoNes
          public Image[] makeBigBlocks(int videoNo, int bigBlockNo, int blockNo, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
             float smallBlockScaleFactor = 2.0f, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false, int hierarchyLevel = 0)
         {
-            byte blockIndexId = (byte)blockNo;
-            BigBlock[] bigBlockIndexes = ConfigScript.getBigBlocksRecursive(hierarchyLevel, blockIndexId);
+            BigBlock[] bigBlockIndexes = ConfigScript.getBigBlocksRecursive(hierarchyLevel, blockNo);
             return makeBigBlocks(videoNo, bigBlockNo, bigBlockIndexes, palleteNo, smallObjectsViewType, smallBlockScaleFactor, curButtonScale, curViewType, showAxis, hierarchyLevel);
         }
 
@@ -247,14 +246,10 @@ namespace PluginVideoNes
             int blockCount = ConfigScript.getBigBlocksCount(hierarchyLevel);
             var bigBlocks = new Image[blockCount];
 
-            byte blockId = (byte)bigBlockNo;
-            byte backId = (byte)videoNo;
-            byte palId = (byte)palleteNo;
-
             Image[] smallBlocksPack;
             if (hierarchyLevel == 0)
             {
-                smallBlocksPack = makeObjects(backId, blockId, palId, smallBlockScaleFactor, smallObjectsViewType);
+                smallBlocksPack = makeObjects(videoNo, bigBlockNo, palleteNo, smallBlockScaleFactor, smallObjectsViewType);
             }
             else
             {
@@ -271,7 +266,7 @@ namespace PluginVideoNes
                 smallBlocksAll = new Image[4][];
                 for (int i = 0; i < 4; i++)
                 {
-                    smallBlocksAll[i] = makeObjects((byte)backId, (byte)blockId, (byte)palId, smallBlockScaleFactor, smallObjectsViewType, i);
+                    smallBlocksAll[i] = makeObjects(videoNo, bigBlockNo, palleteNo, smallBlockScaleFactor, smallObjectsViewType, i);
                 }
             }
             else

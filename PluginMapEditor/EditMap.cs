@@ -22,7 +22,7 @@ namespace CadEditor
         {
             mapData = MapConfig.loadMap(curActiveMapNo);
             setPal();
-            byte videoPageId = (byte)(curActiveVideo + 0x90);
+            int videoPageId = curActiveVideo + 0x90;
             videos = new ImageList[4];
             for (int i = 0; i < 4; i++)
             {
@@ -155,7 +155,7 @@ namespace CadEditor
             {
                 if (!MapConfig.readOnly)
                 {
-                    mapData.mapData[y * mapData.width + x] = (byte)curActiveBlock;
+                    mapData.mapData[y * mapData.width + x] = curActiveBlock;
                 }
             }
             else
@@ -168,7 +168,7 @@ namespace CadEditor
                 subPal = (subPal + 1) & 0x3;                        //round increment it
                 colorByte &= ~(3 << startBitIndex);                 //clear 2 bits in color byte
                 colorByte |= (subPal << startBitIndex);             //set 2 bits according subpal
-                mapData.attrData[attrIndex] = (byte)colorByte;
+                mapData.attrData[attrIndex] = colorByte;
             }
             mapScreen.Invalidate();
         }

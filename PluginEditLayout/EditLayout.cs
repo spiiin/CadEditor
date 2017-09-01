@@ -156,11 +156,11 @@ namespace CadEditor
             int index = dy * curLevelLayerData.width + dx;
 
             if (drawMode == MapDrawMode.Screens)
-                curLevelLayerData.layer[index] = (byte)(curActiveBlock & 0xFF);
+                curLevelLayerData.layer[index] = curActiveBlock & 0xFF;
             else if (drawMode == MapDrawMode.Scrolls)
                 changeScroll(index);
             else if (drawMode == MapDrawMode.Doors)
-                curLevelLayerData.scroll[index] = (byte)((curActiveBlock & 0x1F) | (curLevelLayerData.scroll[index] & 0xE0));
+                curLevelLayerData.scroll[index] = (curActiveBlock & 0x1F) | (curLevelLayerData.scroll[index] & 0xE0);
             pbMap.Invalidate();
         }
 

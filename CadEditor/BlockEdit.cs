@@ -210,7 +210,7 @@ namespace CadEditor
             ComboBox cb = (ComboBox)sender;
             PictureBox pb = (PictureBox)cb.Tag;
             int index = curPageIndex * BLOCKS_PER_PAGE + (int)pb.Tag;
-            objects[index].palBytes[0] = (byte)(objects[index].palBytes[0] & 0xF0 | cb.SelectedIndex);
+            objects[index].palBytes[0] = objects[index].palBytes[0] & 0xF0 | cb.SelectedIndex;
             pb.Image = makeObjImage(index);
             dirty = true;
         }
@@ -219,7 +219,7 @@ namespace CadEditor
         {
             ComboBox cb = (ComboBox)sender;
             int index = curPageIndex * BLOCKS_PER_PAGE + (int)cb.Tag;
-            objects[index].palBytes[0] = (byte)((objects[index].palBytes[0] & 0x0F) | (cb.SelectedIndex << 4));
+            objects[index].palBytes[0] = (objects[index].palBytes[0] & 0x0F) | (cb.SelectedIndex << 4);
             dirty = true;
         }
 

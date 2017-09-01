@@ -166,11 +166,11 @@ namespace PluginMapEditor
                 {
                     if (readCount < mapData.Length)
                     {
-                        mapData[readCount++] = (byte)sym;
+                        mapData[readCount++] = sym;
                     }
                     else
                     {
-                        attrData[-960 + readCount++] = (byte)sym;
+                        attrData[-960 + readCount++] = sym;
                     }
                 }
 

@@ -94,7 +94,7 @@ namespace CadEditor
             {
                 if (hasSmallBlocksPals())
                 {
-                    smallBlocksImages[0] = ConfigScript.videoNes.makeObjects((byte)curVideo, (byte)curTileset, (byte)curPallete, 1, curViewType);
+                    smallBlocksImages[0] = ConfigScript.videoNes.makeObjects(curVideo, curTileset, curPallete, 1, curViewType);
                 }
                 else
                 {
@@ -121,7 +121,7 @@ namespace CadEditor
         {
             for (int i = 0; i < 4; i++)
             {
-                smallBlocksImages[i] = ConfigScript.videoNes.makeObjects((byte)curVideo, (byte)curTileset, (byte)curPallete, 1, curViewType, i);
+                smallBlocksImages[i] = ConfigScript.videoNes.makeObjects(curVideo, curTileset, curPallete, 1, curViewType, i);
             }
         }
 
