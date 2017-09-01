@@ -78,7 +78,9 @@ namespace CadEditor
         {
             curActiveBlock = 0;
             if (reloadBigBlocks)
-              setBigBlocksIndexes();
+            {
+                bigBlockIndexes = ConfigScript.getBigBlocksRecursive(curHierarchyLevel, curSmallBlockNo);
+            }
             setSmallBlocks();
             reloadBlocksPanel();
             mapScreen.Invalidate();
@@ -86,17 +88,13 @@ namespace CadEditor
 
         protected virtual void setSmallBlocks()
         {
-            int backId, palId;
-            backId = curVideo;
-            palId = curPallete;
-
             smallBlocksImages = new Image[4][];
 
             if (curHierarchyLevel == 0)
             {
                 if (hasSmallBlocksPals())
                 {
-                    smallBlocksImages[0] = ConfigScript.videoNes.makeObjects((byte)backId, (byte)curTileset, (byte)palId, 1, curViewType);
+                    smallBlocksImages[0] = ConfigScript.videoNes.makeObjects((byte)curVideo, (byte)curTileset, (byte)curPallete, 1, curViewType);
                 }
                 else
                 {
@@ -105,12 +103,12 @@ namespace CadEditor
             }
             else
             {
-                smallBlocksImages[0] = ConfigScript.videoNes.makeBigBlocks(backId, curTileset, ConfigScript.getBigBlocksRecursive(curHierarchyLevel-1, curSmallBlockNo), palId, curViewType, 1, 2.0f, MapViewType.Tiles, false, curHierarchyLevel-1);
+                smallBlocksImages[0] = ConfigScript.videoNes.makeBigBlocks(curVideo, curTileset, ConfigScript.getBigBlocksRecursive(curHierarchyLevel-1, curSmallBlockNo), curPallete, curViewType, 1, 2.0f, MapViewType.Tiles, false, curHierarchyLevel-1);
             }
             reloadBlocksPanel();
 
             //prerender big blocks
-            bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(backId, curTileset, bigBlockIndexes, palId, curViewType, 1, 2.0f, MapViewType.Tiles, false, curHierarchyLevel);
+            bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(curVideo, curTileset, bigBlockIndexes, curPallete, curViewType, 1, 2.0f, MapViewType.Tiles, false, curHierarchyLevel);
             //
             int btc = Math.Min(ConfigScript.getBigBlocksCount(curHierarchyLevel), 256);
             int bblocksInRow = 16;
@@ -121,19 +119,10 @@ namespace CadEditor
 
         private void fillSmallBlockImageLists()
         {
-            int backId, palId;
-            backId = curVideo;
-            palId = curPallete;
-
             for (int i = 0; i < 4; i++)
             {
-                smallBlocksImages[i] = ConfigScript.videoNes.makeObjects((byte)backId, (byte)curTileset, (byte)palId, 1, curViewType, i);
+                smallBlocksImages[i] = ConfigScript.videoNes.makeObjects((byte)curVideo, (byte)curTileset, (byte)curPallete, 1, curViewType, i);
             }
-        }
-
-        protected virtual void setBigBlocksIndexes()
-        {
-            bigBlockIndexes = ConfigScript.getBigBlocksRecursive(curHierarchyLevel, curSmallBlockNo);
         }
 
         private void exportPictures(string filename)
@@ -150,19 +139,10 @@ namespace CadEditor
             if (!f.Result)
                 return;
             var fn = f.Filename;
+            //TODO: add export binaries //if (f.getExportType() == ExportType.Binary)
             exportPictures(fn);
-            /*if (f.getExportType() == ExportType.Binary)
-            {
-                //move to configs?
-                Utils.saveDataToFile(fn, Utils.linearizeBigBlocks(bigBlockIndexes));
-            }
-            else
-            {
-                exportPictures(fn);
-            }*/
         }
 
-        protected int SMALL_BLOCKS_COUNT = 256;
         protected BigBlock[] bigBlockIndexes;
 
         //hardcode
@@ -416,7 +396,7 @@ namespace CadEditor
 
         protected void btImport_Click(object sender, EventArgs e)
         {
-            var f = new SelectFile() { Filename = "exportedBigBlocks.bin" };
+            /*var f = new SelectFile() { Filename = "exportedBigBlocks.bin" };
             f.ShowDialog();
             if (!f.Result)
                 return;
@@ -426,7 +406,7 @@ namespace CadEditor
             bigBlockIndexes = Utils.unlinearizeBigBlocks<BigBlock>(data, 2,2);
             reloadLevel(false);
             dirty = true;
-            updateSaveVisibility();
+            updateSaveVisibility();*/
         }
 
         public void setFormMain(FormMain f)
