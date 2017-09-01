@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Drawing.Imaging;
 using CadEditor;
 
 namespace PluginVideoSega
@@ -56,16 +57,28 @@ namespace PluginVideoSega
         //
         public Bitmap GetTileFromArray(byte[] Tiles, ref int Position, Color[] Palette, byte PalIndex)
         {
-            Bitmap retn = new Bitmap(8, 8, System.Drawing.Imaging.PixelFormat.Format16bppRgb555);
+            Bitmap retn = new Bitmap(8, 8, PixelFormat.Format24bppRgb);
+            BitmapData data = retn.LockBits(new Rectangle(0, 0, retn.Width, retn.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+            int stride = data.Stride;
+            unsafe
+            {
+                byte* ptr = (byte*)data.Scan0;
 
-            for (int h = 0; h < 8; h++)
-                for (int w = 0; w < 4; w++)
-                {
-                    byte B = Tiles[Position++];
-
-                    retn.SetPixel(w * 2, h, Palette[PalIndex * 0x10 + (byte)((B & 0xF0) >> 4)]);
-                    retn.SetPixel(w * 2 + 1, h, Palette[PalIndex * 0x10 + (byte)(B & 0xF)]);
-                }
+                for (int h = 0; h < 8; h++)
+                    for (int w = 0; w < 4; w++)
+                    {
+                        byte B = Tiles[Position++];
+                        Color c1 = Palette[PalIndex * 0x10 + (byte)((B & 0xF0) >> 4)];
+                        Color c2 = Palette[PalIndex * 0x10 + (byte)(B & 0xF)];
+                        ptr[(w * 6 + 0) + h * stride] = c1.B;
+                        ptr[(w * 6 + 1) + h * stride] = c1.G;
+                        ptr[(w * 6 + 2) + h * stride] = c1.R;
+                        ptr[(w * 6 + 3) + h * stride] = c2.B;
+                        ptr[(w * 6 + 4) + h * stride] = c2.G;
+                        ptr[(w * 6 + 5) + h * stride] = c2.R;
+                    }
+            }
+            retn.UnlockBits(data);
             return retn;
         }
 
