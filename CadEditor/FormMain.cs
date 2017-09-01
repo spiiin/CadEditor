@@ -30,6 +30,7 @@ namespace CadEditor
             else
             {
                 Globals.loadData(OpenFile.FileName, OpenFile.DumpName, OpenFile.ConfigName);
+                curScale = curButtonScale =  ConfigScript.isBuildScreenFromSmallBlocks() ? 1 : 2;
                 fileLoaded = true;
                 resetControls();
             }
@@ -633,6 +634,7 @@ namespace CadEditor
             if (f.ShowDialog() == DialogResult.OK)
             {
                 Globals.loadData(OpenFile.FileName, OpenFile.DumpName, OpenFile.ConfigName);
+                curScale = curButtonScale = ConfigScript.isBuildScreenFromSmallBlocks() ? 1 : 2;
                 fileLoaded = true;
                 resetControls();
             }
