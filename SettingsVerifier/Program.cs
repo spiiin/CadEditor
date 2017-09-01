@@ -16,7 +16,9 @@ namespace SettingsEditor
             {
                 string[] fileNames = System.IO.Directory.GetFiles(dirName, "Settings_*.cs");
                 foreach (var f in fileNames)
+                {
                     checkAndPrint(f);
+                }
             }
             Console.ResetColor();
             Console.WriteLine("Done!");
