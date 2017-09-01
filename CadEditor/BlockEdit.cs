@@ -69,8 +69,7 @@ namespace CadEditor
 
         protected void setPal()
         {
-            byte palId = getPalNo();
-            palette = ConfigScript.getPal(palId);
+            palette = ConfigScript.getPal(curActivePal);
             //set image for pallete
             var b = new Bitmap(16 * 16, 16);
             using (Graphics g = Graphics.FromImage(b))
@@ -96,27 +95,15 @@ namespace CadEditor
             }
         }
 
-        protected virtual byte getPalNo()
-        {
-            return (byte)curActivePal;
-        }
-
-        protected virtual byte getBigBlockNo()
-        {
-            return (byte)curActiveBigBlock;
-        }
-
         private void setObjects()
         {
-            byte bigBlockId = getBigBlockNo();
-            objects = ConfigScript.getBlocks(bigBlockId);
+            objects = ConfigScript.getBlocks(curActiveBigBlock);
             refillPanel();
         }
 
         protected void setVideo()
         {
-            byte backId = getBackId();
-            var chunk = ConfigScript.getVideoChunk(backId);
+            var chunk = ConfigScript.getVideoChunk(curActiveVideo);
             for (int i = 0; i < 4; i++)
             {
                 videoSprites[i] = Enumerable.Range(0,256).Select(t => ConfigScript.videoNes.makeImage(t, chunk, palette, i, 2, true)).ToArray();
@@ -253,8 +240,7 @@ namespace CadEditor
 
         protected virtual bool saveToFile()
         {
-            byte blockId = getBigBlockNo();
-            ConfigScript.setBlocks(blockId, objects);
+            ConfigScript.setBlocks(curActiveBigBlock, objects);
             dirty = !Globals.flushToFile();
             return !dirty;
         }
@@ -422,28 +408,22 @@ namespace CadEditor
             refillPanel();
         }
 
-        protected virtual byte getBackId()
-        {
-            byte backId = (byte)curActiveVideo;
-            return backId;
-        }
-
         protected void btFlipHorizontal_Click(object sender, EventArgs e)
         {
-            var videoChunk = ConfigScript.getVideoChunk(getBackId());
+            var videoChunk = ConfigScript.getVideoChunk(curActiveVideo);
             int beginIndex = 16 * curActiveBlock;
             for (int line = 0; line < 8; line++)
             {
                 videoChunk[beginIndex + line    ] = Utils.ReverseBits(videoChunk[beginIndex + line]);
                 videoChunk[beginIndex + line + 8] = Utils.ReverseBits(videoChunk[beginIndex + line + 8]); 
             }
-            ConfigScript.setVideoChunk(getBackId(), videoChunk);
+            ConfigScript.setVideoChunk(curActiveVideo, videoChunk);
             cbLevelSelect_SelectedIndexChanged(sender, e);
         }
 
         protected void btFlipVertical_Click(object sender, EventArgs e)
         {
-            var videoChunk = ConfigScript.getVideoChunk(getBackId());
+            var videoChunk = ConfigScript.getVideoChunk(curActiveVideo);
             int beginIndex = 16 * curActiveBlock;
             Utils.Swap(ref videoChunk[beginIndex + 0], ref videoChunk[beginIndex + 7]);
             Utils.Swap(ref videoChunk[beginIndex + 1], ref videoChunk[beginIndex + 6]);
@@ -454,7 +434,7 @@ namespace CadEditor
             Utils.Swap(ref videoChunk[beginIndex + 9], ref videoChunk[beginIndex +14]);
             Utils.Swap(ref videoChunk[beginIndex +10], ref videoChunk[beginIndex +13]);
             Utils.Swap(ref videoChunk[beginIndex +11], ref videoChunk[beginIndex +12]);
-            ConfigScript.setVideoChunk(getBackId(), videoChunk);
+            ConfigScript.setVideoChunk(curActiveVideo, videoChunk);
             cbLevelSelect_SelectedIndexChanged(sender, e);
         }
 
