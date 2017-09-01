@@ -26,6 +26,7 @@ http://spiiin.github.io/CadEditor/<br>
 
 <b>Patreon page of editor</b><br>
 https://www.patreon.com/CadEditor<br>
+<a href="https://www.patreon.com/bePatron?u=3158003" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
 
 <b>Screenshots</b><br>
 <img src="http://spiiin.github.io/CadEditor/images/tut1_cad_editor_main.png"/>
