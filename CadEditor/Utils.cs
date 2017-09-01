@@ -672,10 +672,10 @@ namespace CadEditor
             const int OBJECTS_COUNT = 256; //limit for now
             var objSpritesDir = ConfigScript.getObjTypesPicturesDir();
             var objSpritesDirGeneric = "obj_sprites";
-            var templ = objSpritesDir + "\\object{0}.png";
-            var templGeneric = objSpritesDirGeneric + "\\object{0}.png";
-            var templBig = objSpritesDir + "\\object{0}b.png";
-            var templGenericBig = objSpritesDirGeneric + "\\object{0}b.png";
+            var templ = objSpritesDir + "/object{0}.png";
+            var templGeneric = objSpritesDirGeneric + "/object{0}.png";
+            var templBig = objSpritesDir + "/object{0}b.png";
+            var templGenericBig = objSpritesDirGeneric + "/object{0}b.png";
             objectSprites.Images.Clear();
             objectSpritesBig = new Image[256];
             for (int i = 0; i < OBJECTS_COUNT; i++)
@@ -687,17 +687,17 @@ namespace CadEditor
                 {
                     objectSprites.Images.Add(Image.FromFile(fname));
                 }
-                else if (File.Exists("..\\" + fname))
+                else if (File.Exists("../" + fname))
                 {
-                    objectSprites.Images.Add(Image.FromFile("..\\" + fname));
+                    objectSprites.Images.Add(Image.FromFile("../" + fname));
                 }
                 else if (File.Exists(fnameGeneric))
                 {
                     objectSprites.Images.Add(Image.FromFile(fnameGeneric));
                 }
-                else if (File.Exists("..\\" + fnameGeneric))
+                else if (File.Exists("../" + fnameGeneric))
                 {
-                    objectSprites.Images.Add(Image.FromFile("..\\" + fnameGeneric));
+                    objectSprites.Images.Add(Image.FromFile("../" + fnameGeneric));
                 }
 
                 //
@@ -707,17 +707,17 @@ namespace CadEditor
                 {
                     objectSpritesBig[i] = Image.FromFile(fnameBig);
                 }
-                else if (File.Exists("..\\" + fnameBig))
+                else if (File.Exists("../" + fnameBig))
                 {
-                    objectSpritesBig[i] = Image.FromFile("..\\" + fnameBig);
+                    objectSpritesBig[i] = Image.FromFile("../" + fnameBig);
                 }
                 else if (File.Exists(fnameGenericBig))
                 {
                     objectSpritesBig[i] = Image.FromFile(fnameGenericBig);
                 }
-                else if (File.Exists("..\\" + fnameGenericBig))
+                else if (File.Exists("../" + fnameGenericBig))
                 {
-                    objectSpritesBig[i] = Image.FromFile("..\\" + fnameGenericBig);
+                    objectSpritesBig[i] = Image.FromFile("../" + fnameGenericBig);
                 }
                 else
                 {
