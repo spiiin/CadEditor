@@ -1,6 +1,6 @@
 using CadEditor;
 using System.Collections.Generic;
-//css_include Settings_CapcomBase.cs;
+
 public class Data
 { 
   public string[] getPluginNames() 

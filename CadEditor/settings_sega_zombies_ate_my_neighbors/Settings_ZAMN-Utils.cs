@@ -234,7 +234,7 @@ public static class ZamnUtils
   public static List<ObjectList> getVictimsFromFile(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
-    byte[] data = Utils.loadDataFromFile("settings_sega_zombies_ate_my_neighbors/victims.bin");
+    byte[] data = Utils.loadDataFromFile("victims.bin");
     return getVictimsFromArray(data, 0, lr.objCount);
   }
   
@@ -253,7 +253,7 @@ public static class ZamnUtils
     int objCount = lr.objCount;
     byte[] data = new byte[objCount*12];
     setVictimsToArray(objects, data, baseAddr, objCount);
-    Utils.saveDataToFile("settings_sega_zombies_ate_my_neighbors/victims.bin", data);
+    Utils.saveDataToFile("victims.bin", data);
     return true;
   }
   
@@ -268,7 +268,7 @@ public static class ZamnUtils
   public static List<ObjectList> getEnemiesFromFile(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
-    byte[] data = Utils.loadDataFromFile("settings_sega_zombies_ate_my_neighbors/enemies.bin");
+    byte[] data = Utils.loadDataFromFile("enemies.bin");
     return getEnemiesFromArray(data, 0, lr.objCount);
   }
   
@@ -288,7 +288,7 @@ public static class ZamnUtils
     int objCount = lr.objCount;
     byte[] data = new byte[objCount * ENEMY_REC_LEN];
     setEnemiesToArray(objects, data, baseAddr, objCount);
-    Utils.saveDataToFile("settings_sega_zombies_ate_my_neighbors/enemies.bin", data);
+    Utils.saveDataToFile("enemies.bin", data);
     return true;
   }
   
@@ -303,7 +303,7 @@ public static class ZamnUtils
   public static List<ObjectList> getItemsFromFile(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
-    byte[] data = Utils.loadDataFromFile("settings_sega_zombies_ate_my_neighbors/items.bin");
+    byte[] data = Utils.loadDataFromFile("items.bin");
     return getItemsFromArray(data, 0, lr.objCount);
   }
   
@@ -323,7 +323,7 @@ public static class ZamnUtils
     int objCount = lr.objCount;
     byte[] data = new byte[objCount * ITEMS_REC_LEN];
     setItemsToArray(objects, data, baseAddr, objCount);
-    Utils.saveDataToFile("settings_sega_zombies_ate_my_neighbors/items.bin", data);
+    Utils.saveDataToFile("items.bin", data);
     return true;
   }
 }
