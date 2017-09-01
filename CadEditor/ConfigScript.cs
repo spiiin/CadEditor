@@ -480,7 +480,7 @@ namespace CadEditor
 
         public static string getObjTypesPicturesDir()
         {
-            return objTypesPicturesDir;
+            return ConfigScript.ConfigDirectory + objTypesPicturesDir;
         }
 
         public static string[] getBlockTypeNames()

@@ -686,14 +686,9 @@ namespace CadEditor
             for (int i = 0; i < OBJECTS_COUNT; i++)
             {
                 var fname = String.Format(templ, i);
-                //".." hack for WinXP compatibility
                 if (File.Exists(fname))
                 {
                     objectSprites.Images[i] = Image.FromFile(fname);
-                }
-                else if (File.Exists("../" + fname))
-                {
-                    objectSprites.Images[i] = Image.FromFile("../" + fname);
                 }
 
                 //
@@ -703,17 +698,9 @@ namespace CadEditor
                 {
                     objectSpritesBig[i] = Image.FromFile(fnameBig);
                 }
-                else if (File.Exists("../" + fnameBig))
-                {
-                    objectSpritesBig[i] = Image.FromFile("../" + fnameBig);
-                }
                 else if (File.Exists(fnameGenericBig))
                 {
                     objectSpritesBig[i] = Image.FromFile(fnameGenericBig);
-                }
-                else if (File.Exists("../" + fnameGenericBig))
-                {
-                    objectSpritesBig[i] = Image.FromFile("../" + fnameGenericBig);
                 }
                 else
                 {
