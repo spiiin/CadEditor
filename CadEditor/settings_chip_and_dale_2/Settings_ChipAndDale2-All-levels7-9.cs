@@ -31,7 +31,7 @@ public class Data : CapcomBase
   public SetObjectsFunc setObjectsFunc()   { return setObjectsCad2; }
   public override GetBlocksFunc        getBlocksFunc()        { return BlockUtils.getBlocksDt2;}
   public override SetBlocksFunc        setBlocksFunc()        { return BlockUtils.setBlocksDt2;}
-  public override GetVideoPageAddrFunc getVideoPageAddrFunc() { return getChrAddress; }
+  public override GetVideoPageAddrFunc getVideoPageAddrFunc() { return Utils.getChrAddress; }
   public bool isBuildScreenFromSmallBlocks() { return true; }
   public override GetLayoutFunc getLayoutFunc()       { return getLayout;   }
   
@@ -193,12 +193,5 @@ public class Data : CapcomBase
       Globals.romdata[addrBase + i * 3 + 1] = 0xFF;
     }
     return true;
-  }
-  
-  public static int getChrAddress(int id)
-  {
-      if (id >= 0x90)
-        return ConfigScript.videoOffset.beginAddr + ConfigScript.videoOffset.recSize * (id - 0x90);
-      return -1;
   }
 }

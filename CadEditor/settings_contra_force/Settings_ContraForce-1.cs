@@ -36,15 +36,15 @@ public class Data
   
   public byte[] getVideoChunk(int videoPageId)
   {
-     if (videoPageId == 0x90)
+     if (videoPageId == 0)
      {
         return Utils.readVideoBankFromFile("chr1.bin", 0);
      }
-     else if (videoPageId == 0x91)
+     else if (videoPageId == 0x1)
      {
         return Utils.readVideoBankFromFile("chr1-2.bin", 0);
      }
-     else if (videoPageId == 0x92)
+     else if (videoPageId == 0x2)
      {
          return Utils.readVideoBankFromFile("chr1-3.bin", 0);
      }

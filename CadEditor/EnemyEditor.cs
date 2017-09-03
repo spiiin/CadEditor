@@ -18,7 +18,7 @@ namespace CadEditor
         private int curActiveBlock = 0;
 
         private int curActiveLayout = 0;
-        private int curVideoNo = 0x90;
+        private int curVideoNo = 0;
         private int curBigBlockNo = 0;
         private int curBlockNo = 0;
         private int curPaletteNo = 0;
@@ -52,7 +52,7 @@ namespace CadEditor
             curWidth = ConfigScript.getLevelWidth(curActiveLayout);
             curHeight = ConfigScript.getLevelHeight(curActiveLayout);
             curActiveLayout = cbLayoutNo.SelectedIndex;
-            curVideoNo = cbVideoNo.SelectedIndex + 0x90;
+            curVideoNo = cbVideoNo.SelectedIndex;
             curBigBlockNo = cbBigBlockNo.SelectedIndex;
             curBlockNo = cbBlockNo.SelectedIndex;
             curPaletteNo = cbPaletteNo.SelectedIndex;
@@ -147,7 +147,7 @@ namespace CadEditor
             UtilsGui.setCbItemsCount(cbBlockNo, ConfigScript.blocksOffset.recCount);
             UtilsGui.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
             UtilsGui.setCbItemsCount(cbScale, 2, 1);
-            UtilsGui.setCbIndexWithoutUpdateLevel(cbVideoNo, cbLevel_SelectedIndexChanged, formMain.CurActiveVideoNo - 0x90);
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbVideoNo, cbLevel_SelectedIndexChanged, formMain.CurActiveVideoNo);
             UtilsGui.setCbIndexWithoutUpdateLevel(cbBlockNo, cbLevel_SelectedIndexChanged, formMain.CurActiveBlockNo);
             UtilsGui.setCbIndexWithoutUpdateLevel(cbBigBlockNo, cbLevel_SelectedIndexChanged, formMain.CurActiveBigBlockNo);
             UtilsGui.setCbIndexWithoutUpdateLevel(cbPaletteNo, cbLevel_SelectedIndexChanged, formMain.CurActivePalleteNo);

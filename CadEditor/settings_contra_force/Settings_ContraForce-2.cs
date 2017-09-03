@@ -52,23 +52,23 @@ public class Data
   
   public byte[] getVideoChunk(int videoPageId)
   {
-          if (videoPageId == 0x90)
+          if (videoPageId == 0)
      {
         return Utils.readVideoBankFromFile("chr2.bin", 0);
      }
-     else if (videoPageId == 0x91)
+     else if (videoPageId == 1)
      {
         return Utils.readVideoBankFromFile("chr2-2.bin", 0);
      }
-     else if (videoPageId == 0x92)
+     else if (videoPageId == 2)
      {
          return Utils.readVideoBankFromFile("chr2-3.bin", 0);
      }
-     else if (videoPageId == 0x93)
+     else if (videoPageId == 3)
      {
          return Utils.readVideoBankFromFile("chr2-4.bin", 0);
      }
-     else if (videoPageId == 0x94)
+     else if (videoPageId == 4)
      {
          return Utils.readVideoBankFromFile("chr2-5.bin", 0);
      }

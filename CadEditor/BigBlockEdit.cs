@@ -21,7 +21,7 @@ namespace CadEditor
         {
             curHierarchyLevel = 0;
             curTileset = 0;
-            curVideo = 0x90;
+            curVideo = 0;
             curPallete = 0;
             curPart = 0;
             dirty = false;
@@ -67,7 +67,7 @@ namespace CadEditor
             //generic version
             cbHierarchyLevel.SelectedIndex = 0;
             cbTileset.SelectedIndex = formMain.CurActiveBigBlockNo;
-            cbVideoNo.SelectedIndex = formMain.CurActiveVideoNo - 0x90;
+            cbVideoNo.SelectedIndex = formMain.CurActiveVideoNo;
             cbSmallBlock.SelectedIndex = formMain.CurActiveBlockNo;
             cbPaletteNo.SelectedIndex = formMain.CurActivePalleteNo;
             cbPart.SelectedIndex = 0;
@@ -330,7 +330,7 @@ namespace CadEditor
             curSmallBlockNo = cbSmallBlock.SelectedIndex;
             curViewType = (MapViewType)cbViewType.SelectedIndex;
 
-            curVideo = cbVideoNo.SelectedIndex + 0x90;
+            curVideo = cbVideoNo.SelectedIndex;
             curPallete = cbPaletteNo.SelectedIndex;
             curPart = cbPart.SelectedIndex;
             UtilsGui.setCbItemsCount(cbPart, Math.Max(ConfigScript.getBigBlocksCount(curHierarchyLevel) / 256, 1));

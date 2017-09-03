@@ -41,7 +41,7 @@ namespace CadEditor
             UtilsGui.setCbItemsCount(cbPalette, ConfigScript.palOffset.recCount);
 
             UtilsGui.setCbIndexWithoutUpdateLevel(cbTileset, cbLevelSelect_SelectedIndexChanged, formMain.CurActiveBigBlockNo);  //small blocks no?
-            UtilsGui.setCbIndexWithoutUpdateLevel(cbVideo, VisibleOnlyChange_SelectedIndexChanged, formMain.CurActiveVideoNo - 0x90);
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbVideo, VisibleOnlyChange_SelectedIndexChanged, formMain.CurActiveVideoNo);
             UtilsGui.setCbIndexWithoutUpdateLevel(cbPalette, VisibleOnlyChange_SelectedIndexChanged, formMain.CurActivePalleteNo);
             curActiveBigBlock = formMain.CurActiveBigBlockNo; //small blocks no?
             curActiveVideo = formMain.CurActiveVideoNo;
@@ -126,7 +126,7 @@ namespace CadEditor
         }
 
         //generic
-        private int curActiveVideo = 0x90;
+        private int curActiveVideo = 0;
         private int curActiveBigBlock = 0;
         private int curActivePal = 0;
         //editor
@@ -393,7 +393,7 @@ namespace CadEditor
         {
             if (cbVideo.SelectedIndex == -1 || cbPalette.SelectedIndex == -1)
                 return;
-            curActiveVideo = cbVideo.SelectedIndex + 0x90;
+            curActiveVideo = cbVideo.SelectedIndex;
             curActivePal = cbPalette.SelectedIndex;
             reloadLevel(false);
         }

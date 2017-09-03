@@ -36,7 +36,7 @@ public class Data:CapcomBase
     byte[] videoChunk = Utils.getVideoChunk(videoPageId);
     
     //if background bank, fill first quarter of videoChunk with constant to all video memory data
-    if (videoPageId>=0x90)
+    if (videoPageId>=0)
       for (int i = 0; i < 16 * 16 * 4; i++)
         videoChunk[i] = Globals.romdata[0xC010 + i];
     return videoChunk;

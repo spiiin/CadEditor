@@ -180,12 +180,6 @@ namespace CadEditor
                 return;
             }
 
-            //read blocks from file
-            int backId, blockId, palId;
-            backId = curActiveVideoNo; ;
-            blockId = curActiveBigBlockNo;
-            palId = curActivePalleteNo;
-
             MapViewType smallObjectsType =
                 curViewType == MapViewType.SmallObjNumbers ? MapViewType.ObjNumbers :
                   curViewType == MapViewType.ObjType ? MapViewType.ObjType : MapViewType.Tiles;
@@ -198,7 +192,7 @@ namespace CadEditor
             }
             else
             {
-                bigBlocks = ConfigScript.videoNes.makeBigBlocks(backId, blockId, bigTileIndex, palId, smallObjectsType, smallBlockScaleFactor, curButtonScale, curViewType, showAxis, ConfigScript.getbigBlocksHierarchyCount() - 1);
+                bigBlocks = ConfigScript.videoNes.makeBigBlocks(curActiveVideoNo, curActiveBigBlockNo, bigTileIndex, curActivePalleteNo, smallObjectsType, smallBlockScaleFactor, curButtonScale, curViewType, showAxis, ConfigScript.getbigBlocksHierarchyCount() - 1);
             }
 
             changeBlocksSize(bigBlocks);
@@ -580,7 +574,7 @@ namespace CadEditor
 
         private void changeLevelIndex(bool reloadObjectsPanel = false)
         {
-            curActiveVideoNo = cbVideoNo.SelectedIndex + 0x90;
+            curActiveVideoNo = cbVideoNo.SelectedIndex;
             curActiveBigBlockNo = cbBigBlockNo.SelectedIndex;
             curActiveBlockNo = cbBlockNo.SelectedIndex;
             curActivePalleteNo = cbPaletteNo.SelectedIndex;

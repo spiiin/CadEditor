@@ -84,13 +84,13 @@ public class Data:CapcomBase
   
   public byte[] getDuckTalesVideoChunk(int videoPageId)
   {
-    if (videoPageId < 0x96)
+    if (videoPageId < 0x6)
     {
         return Utils.readVideoBankFromFile("videoBack_DT2.bin", videoPageId);
     }
     else
     {
-        return Utils.readVideoBankFromFile("videoMap_DT2.bin", 0x90);
+        return Utils.readVideoBankFromFile("videoMap_DT2.bin", 0);
     }
   }
   

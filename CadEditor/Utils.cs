@@ -43,11 +43,12 @@ namespace CadEditor
 
         public static int getChrAddress(int id)
         {
-            if ((id & 0xF0) == 0x90)
-                return ConfigScript.videoOffset.beginAddr + ConfigScript.videoOffset.recSize * (id & 0x0F);
-            else if ((id & 0xF0) == 0x80)
-                return ConfigScript.videoObjOffset.beginAddr + ConfigScript.videoObjOffset.recSize * (id & 0x0F);
-            return -1;
+            return ConfigScript.videoOffset.beginAddr + ConfigScript.videoOffset.recSize * id;
+        }
+
+        public static int getChrObjAddress(int id)
+        {
+            return ConfigScript.videoObjOffset.beginAddr + ConfigScript.videoObjOffset.recSize * id;
         }
 
         public static byte[] getVideoChunk(int videoPageId)
@@ -627,8 +628,7 @@ namespace CadEditor
                     byte[] videodata = new byte[(int)f.Length];
                     f.Read(videodata, 0, (int)f.Length);
                     byte[] ans = new byte[0x1000];
-                    //read only first 16 banks
-                    int offset = (videoPageId & 0x0F) * 0x1000;
+                    int offset = videoPageId * 0x1000;
                     for (int i = 0; i < ans.Length; i++)
                         ans[i] = videodata[offset + i];
                     return ans;

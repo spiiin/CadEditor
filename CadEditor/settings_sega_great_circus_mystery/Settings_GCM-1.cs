@@ -29,7 +29,7 @@ public class Data
   
   public byte[] getVideoChuck(int videoPageId)
   {
-    return Utils.readBinFile(videoPageId == 0x90 ? "vram.bin":"vram2.bin");
+    return Utils.readBinFile(videoPageId == 0 ? "vram.bin":"vram2.bin");
   }
   
   public byte[] readPal(int palNo)

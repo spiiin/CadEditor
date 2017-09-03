@@ -293,8 +293,6 @@ namespace CadEditor
             plugins.Reverse();
         }
 
-        //0x90 - background memory
-        //0x91 - objects    memory
         public static int getVideoPageAddr(int id)
         {
             return getVideoPageAddrFunc(id);

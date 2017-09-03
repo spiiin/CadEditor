@@ -67,12 +67,12 @@ public class Data:CapcomBase
   
   public int getDuckTalesVideoAddress(int id)
   {
-    if (id == 0x90) return 0x4010;
-    if (id == 0x91) return 0x4D10;
-    if (id == 0x92) return 0x5A10;
-    if (id == 0x93) return 0x7D10;
-    if (id == 0x94) return 0x8A10;
-    if (id == 0x95) return 0x9710;
+    if (id == 0) return 0x4010;
+    if (id == 1) return 0x4D10;
+    if (id == 2) return 0x5A10;
+    if (id == 3) return 0x7D10;
+    if (id == 4) return 0x8A10;
+    if (id == 5) return 0x9710;
     return -1;
   }
   
