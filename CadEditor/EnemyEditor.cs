@@ -169,8 +169,8 @@ namespace CadEditor
 
         private void resizeMapScreen()
         {
-            int blockWidth = formMain.Layer1.blockWidth;
-            int blockHeight = formMain.Layer1.blockHeight;
+            int blockWidth = formMain.Layers[0].blockWidth;
+            int blockHeight = formMain.Layers[0].blockHeight;
             int scrLevelNo = getLevelRecForGameType().levelNo;
 
             int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
@@ -311,8 +311,8 @@ namespace CadEditor
 
         private Point mouseCoordToSxSyCoord(Point mouseCoord)
         {
-            int blockWidth = formMain.Layer1.blockWidth;
-            int blockHeight = formMain.Layer1.blockHeight;
+            int blockWidth = formMain.Layers[0].blockWidth;
+            int blockHeight = formMain.Layers[0].blockHeight;
             int scrLevelNo = getLevelRecForGameType().levelNo;
             int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
             int scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);
@@ -323,8 +323,8 @@ namespace CadEditor
 
         private Point mouseCoordToCoordInsideScreen(Point mouseCoord)
         {
-            int blockWidth = formMain.Layer1.blockWidth;
-            int blockHeight = formMain.Layer1.blockHeight;
+            int blockWidth = formMain.Layers[0].blockWidth;
+            int blockHeight = formMain.Layers[0].blockHeight;
             int scrLevelNo = getLevelRecForGameType().levelNo;
             int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
             int scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);
@@ -335,8 +335,8 @@ namespace CadEditor
 
         private void paintBack(Graphics g)
         {
-            int blockWidth = formMain.Layer1.blockWidth;
-            int blockHeight = formMain.Layer1.blockHeight;
+            int blockWidth = formMain.Layers[0].blockWidth;
+            int blockHeight = formMain.Layers[0].blockHeight;
             int scrLevelNo = getLevelRecForGameType().levelNo;
             int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
             int scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);
@@ -347,14 +347,14 @@ namespace CadEditor
                 {
                     int noInLayout = y * curLevelLayerData.width + x;
                     int scrNo = calcScrNo(noInLayout);
-                    if (scrNo < formMain.Layer1.screens.Length && scrNo >= 0)
+                    if (scrNo < formMain.Layers[0].screens.Length && scrNo >= 0)
                     {
                         int width = ConfigScript.getScreenWidth(scrLevelNo);
                         int height = ConfigScript.getScreenHeight(scrLevelNo);
                         var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
                         int leftMargin = scrWidth * x;
                         int topMargin = scrHeight * y;
-                        MapEditor.Render(g, bigBlocks, visibleRect, new BlockLayer[] { formMain.Layer1 }, scrNo, curScale, false, leftMargin, topMargin, width, height);
+                        MapEditor.Render(g, bigBlocks, visibleRect, formMain.Layers, scrNo, curScale, false, leftMargin, topMargin, width, height);
                         //ConfigScript.renderToMainScreen(g, (int)curScale);
                     }
                     else
@@ -370,8 +370,8 @@ namespace CadEditor
             var g = e.Graphics;
             paintBack(g);
 
-            int blockWidth = formMain.Layer1.blockWidth;
-            int blockHeight = formMain.Layer1.blockHeight;
+            int blockWidth = formMain.Layers[0].blockWidth;
+            int blockHeight = formMain.Layers[0].blockHeight;
             int scrLevelNo = getLevelRecForGameType().levelNo;
             int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
             int scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);

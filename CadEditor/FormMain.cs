@@ -753,14 +753,9 @@ namespace CadEditor
             get { return curScale; }
         }
 
-        public BlockLayer Layer1
+        public BlockLayer[] Layers
         {
-            get { return layers[0]; }
-        }
-
-        public BlockLayer Layer2
-        {
-            get { return layers[1]; }
+            get { return layers; }
         }
 
         public Image[] BigBlocks
