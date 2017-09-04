@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PluginExportScreens</RootNamespace>
     <AssemblyName>PluginExportScreens</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -31,6 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IronPython, Version=2.7.7.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CadEditor\IronPython.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Scripting, Version=1.1.2.22, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CadEditor\Microsoft.Scripting.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CadEditor\Newtonsoft.Json.dll</HintPath>
@@ -45,6 +54,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExportTMX.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExportTMX.Designer.cs">
+      <DependentUpon>ExportTMX.cs</DependentUpon>
+    </Compile>
     <Compile Include="Icon.Designer.cs">
       <DependentUpon>Icon.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -60,6 +75,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ExportTMX.resx">
+      <DependentUpon>ExportTMX.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Icon.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Icon.Designer.cs</LastGenOutput>

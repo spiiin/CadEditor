@@ -44,6 +44,11 @@ namespace PluginExportScreens
             item = new ToolStripButton("Export", iconExport, btExport_Click);
             item.DisplayStyle = ToolStripItemDisplayStyle.Image;
             formMain.addToolButton(item);
+
+            var iconExportTmx = (System.Drawing.Bitmap)rm.GetObject("icon_export");
+            item = new ToolStripButton("Export TMX", iconExportTmx, btExportTmx_Click);
+            item.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            formMain.addToolButton(item);
         }
 
         public void loadFromConfig(object asm, object data)
@@ -138,6 +143,13 @@ namespace PluginExportScreens
                     tw.WriteLine(JsonConvert.SerializeObject(screenParams));
                 }
             }
+        }
+
+        private void btExportTmx_Click(object sender, EventArgs e)
+        {
+            var f = new ExportTMX();
+            f.setFormMain(formMain);
+            formMain.subeditorOpen(f, (ToolStripButton)sender, true);
         }
 
         private void btImport_Click(object sender, EventArgs e)
