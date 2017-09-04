@@ -1,0 +1,3 @@
+[submodule "CadEditor/exportTmx/pytmxlib"]
+	path = CadEditor/exportTmx/pytmxlib
+	url = https://github.com/spiiin/pytmxlib.git
