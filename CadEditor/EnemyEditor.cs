@@ -22,8 +22,6 @@ namespace CadEditor
         private int curBigBlockNo = 0;
         private int curBlockNo = 0;
         private int curPaletteNo = 0;
-        private int curWidth = 1;
-        private int curHeight = 1;
         private float curScale = 1.0f;
 
         private int curActiveObjectListIndex = 0;
@@ -49,14 +47,12 @@ namespace CadEditor
 
         private void reloadLevelLayerData()
         {
-            curWidth = ConfigScript.getLevelWidth(curActiveLayout);
-            curHeight = ConfigScript.getLevelHeight(curActiveLayout);
             curActiveLayout = cbLayoutNo.SelectedIndex;
             curVideoNo = cbVideoNo.SelectedIndex;
             curBigBlockNo = cbBigBlockNo.SelectedIndex;
             curBlockNo = cbBlockNo.SelectedIndex;
             curPaletteNo = cbPaletteNo.SelectedIndex;
-            curLevelLayerData = (ConfigScript.getLayoutFunc != null) ? ConfigScript.getLayout(curActiveLayout) : Utils.getLayoutLinear(curActiveLayout);
+            curLevelLayerData = ConfigScript.getLayout(curActiveLayout);
         }
 
         private void setDirty()
@@ -240,12 +236,12 @@ namespace CadEditor
 
         private LevelRec getLevelRecForGameType()
         {
-            return ConfigScript.getLevelRec(getActiveLayoutNo());
+            return ConfigScript.getLevelRec(curActiveLayout);
         }
 
         private void setObjects()
         {
-            objectLists = ConfigScript.getObjects(getActiveLayoutNo());
+            objectLists = ConfigScript.getObjects(curActiveLayout);
             cbObjectList.Items.Clear();
             for (int i = 0; i < objectLists.Count; i++)
                 cbObjectList.Items.Add(objectLists[i].name);
@@ -338,8 +334,11 @@ namespace CadEditor
             int blockWidth = formMain.Layers[0].blockWidth;
             int blockHeight = formMain.Layers[0].blockHeight;
             int scrLevelNo = getLevelRecForGameType().levelNo;
-            int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
-            int scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);
+
+            int width = ConfigScript.getScreenWidth(scrLevelNo);
+            int height = ConfigScript.getScreenHeight(scrLevelNo);
+            int scrWidth = (int)(width * blockWidth * curScale);
+            int scrHeight = (int)(height * blockHeight * curScale);
 
             for (int x = 0; x < curLevelLayerData.width; x++)
             {
@@ -349,8 +348,7 @@ namespace CadEditor
                     int scrNo = calcScrNo(noInLayout);
                     if (scrNo < formMain.Layers[0].screens.Length && scrNo >= 0)
                     {
-                        int width = ConfigScript.getScreenWidth(scrLevelNo);
-                        int height = ConfigScript.getScreenHeight(scrLevelNo);
+
                         var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
                         int leftMargin = scrWidth * x;
                         int topMargin = scrHeight * y;
@@ -411,7 +409,7 @@ namespace CadEditor
             }*/
             try
             {
-                ConfigScript.setObjects(getActiveLayoutNo(), objectLists);
+                ConfigScript.setObjects(curActiveLayout, objectLists);
             }
             catch (IndexOutOfRangeException ex)
             {
@@ -588,13 +586,8 @@ namespace CadEditor
         private void btSort_Click(object sender, EventArgs e)
         {
             var activeObjectList = objectLists[curActiveObjectListIndex];
-            ConfigScript.sortObjects(getActiveLayoutNo(), curActiveObjectListIndex, activeObjectList.objects);
+            ConfigScript.sortObjects(curActiveLayout, curActiveObjectListIndex, activeObjectList.objects);
             fillObjectsDataGrid();
-        }
-
-        private int getActiveLayoutNo()
-        {
-            return curActiveLayout;
         }
 
         private void mapScreen_MouseDown(object sender, MouseEventArgs e)
