@@ -36,7 +36,7 @@ COPY_FOLDER_LIST = [
   "scroll_sprites/",
   "settings_*/",
   
-  "PythonLib",
+  "IronPythonLib",
   "exportTmx/pytmxlib/tmxlib/",
 ]
 

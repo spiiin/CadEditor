@@ -38,7 +38,7 @@ namespace PluginExportScreens
                 options["FullFrames"] = false;
 
                 var engine = Python.CreateEngine(options);
-                engine.SetSearchPaths(new[] { "PythonLib", "exportTmx", "exportTmx/pytmxlib" });
+                engine.SetSearchPaths(new[] { "IronPythonLib", "exportTmx", "exportTmx/pytmxlib" });
                 var scope = engine.ExecuteFile("exportTmx/exportTmx.py");
                 dynamic export = scope.GetVariable("export");
                 int layoutNo = cbLayout.SelectedIndex;
