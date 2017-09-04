@@ -79,7 +79,7 @@ public class Data:CapcomBase
   public byte[] getDuckTalesVideoChunk(int videoPageId)
   {
     //anim editor hack
-    if (videoPageId < 0x90)
+    if (videoPageId < 0x0)
     {
       var ptrs = new int[] { 
         0x10  , 0x110 , 0x210, 0x310, 0x410, 0x510, 0x610, 0x710,
