@@ -68,5 +68,17 @@ namespace PluginExportScreens
                 cbLayout.Items.Add(String.Format("Layout {0}:0x{1:X} ({2}x{3})", lr.name, lr.layoutAddr, lr.width, lr.height));
             cbLayout.SelectedIndex = 0;
         }
+
+        private void ExportTMX_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btExport_Click(btExport, new EventArgs());
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                Close();
+            }
+        }
     }
 }

@@ -33,9 +33,9 @@
             this.cbLayout = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.pnLevelParam = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
             this.btExport = new System.Windows.Forms.Button();
             this.sfSave = new System.Windows.Forms.SaveFileDialog();
-            this.label2 = new System.Windows.Forms.Label();
             this.pnLevelParam.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -88,6 +88,15 @@
             this.pnLevelParam.Size = new System.Drawing.Size(463, 104);
             this.pnLevelParam.TabIndex = 5;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(-2, 76);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(464, 17);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "*View parameters (Blocks, Scale, Borders) will be read from main window";
+            // 
             // btExport
             // 
             this.btExport.Location = new System.Drawing.Point(4, 122);
@@ -101,17 +110,8 @@
             // sfSave
             // 
             this.sfSave.FileName = "CadLevel.tmx";
-            this.sfSave.Filter = "*.tmx|TMX";
+            this.sfSave.Filter = "TMX|*.tmx";
             this.sfSave.InitialDirectory = "./exportTmx";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(-2, 76);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(464, 17);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "*View parameters (Blocks, Scale, Borders) will be read from main window";
             // 
             // ExportTMX
             // 
@@ -120,9 +120,11 @@
             this.ClientSize = new System.Drawing.Size(466, 152);
             this.Controls.Add(this.btExport);
             this.Controls.Add(this.pnLevelParam);
+            this.KeyPreview = true;
             this.Name = "ExportTMX";
             this.Text = "Export TMX";
             this.Load += new System.EventHandler(this.ExportTMX_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ExportTMX_KeyDown);
             this.pnLevelParam.ResumeLayout(false);
             this.pnLevelParam.PerformLayout();
             this.ResumeLayout(false);

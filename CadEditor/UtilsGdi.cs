@@ -70,13 +70,17 @@ namespace CadEditor
                     int currentMaxY = 0;
                     for (int x = 0; x < width; x++)
                     {
-                        var im = images[y * width + x];
-                        g.DrawImage(im, new Point(currentX, currentY));
-                        currentX += im.Width;
-                        currentMaxY = Math.Max(currentMaxY, im.Height);
-                        if (x == width-1)
+                        var imIndex = y * width + x;
+                        if (imIndex < images.Length)
                         {
-                            currentY += currentMaxY;
+                            var im = images[imIndex];
+                            g.DrawImage(im, new Point(currentX, currentY));
+                            currentX += im.Width;
+                            currentMaxY = Math.Max(currentMaxY, im.Height);
+                            if (x == width - 1)
+                            {
+                                currentY += currentMaxY;
+                            }
                         }
                     }
                 }

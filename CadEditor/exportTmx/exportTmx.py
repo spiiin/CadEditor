@@ -19,6 +19,10 @@ def export(formMain, curActiveLayout):
     
     width = ConfigScript.getScreenWidth(scrLevelNo);
     height = ConfigScript.getScreenHeight(scrLevelNo);
+    if ConfigScript.getScreenVertical():
+        mapSize = (layout.width * height, layout.height * width)
+    else:
+        mapSize = (layout.width * width, layout.height * height)
     
     tileSize = (blockWidth, blockHeight)
     
@@ -27,9 +31,10 @@ def export(formMain, curActiveLayout):
     ImWidthInBlocks = 16
     ImHeightInBlocks = int(ceil(len(bigBlocksImages)*1.0/ImWidthInBlocks))
     bigBlockImage = UtilsGDI.GlueImages(bigBlocksImages, ImWidthInBlocks, ImHeightInBlocks)
+    #bigBlockImage = UtilsGDI.GlueImages(bigBlocksImages, len(bigBlocksImages), 1)
     bigBlockImage.Save("exportTmx/tiles.png")
     
-    map = tmxlib.Map((layout.width * width, layout.height * height), tileSize , base_path=".")
+    map = tmxlib.Map(mapSize, tileSize , base_path=".")
     im = tmxlib.image.open("tiles.png", base_path="exportTmx")
     tileset = tmxlib.ImageTileset("Tiles", tileSize, im, base_path = ".")
     map.tilesets.append(tileset)
@@ -42,10 +47,14 @@ def export(formMain, curActiveLayout):
                 curScreen = formMain.Layers[0].screens[scrNo]
                 for y in xrange(height):
                     for x in xrange(width):
+                        if ConfigScript.getScreenVertical():
+                            cx, cy = y, x
+                        else:
+                            cx, cy = x, y
                         index = y * width + x
-                        tileNo = curScreen[index]
-                        lx = sx * width + x
-                        ly = sy * height + y
+                        tileNo =  ConfigScript.getBigTileNoFromScreen(curScreen, index)
+                        lx = sx * width + cx
+                        ly = sy * height + cy
                         layer[lx,ly] = map.tilesets["Tiles"][tileNo]
     map.save('exportTmx/export.tmx')
     return True

@@ -152,7 +152,7 @@ namespace CadEditor
             blockSize4x4 = callFromScript(asm, data, "*.isBlockSize4x4", false);
             buildScreenFromSmallBlocks = callFromScript(asm, data, "isBuildScreenFromSmallBlocks", false);
             layersCount = callFromScript(asm, data, "*.getLayersCount", 1);
-            levelRecs = callFromScript(asm, data,"*.getLevelRecs", new List<LevelRec>());
+            levelRecs = callFromScript(asm, data,"*.getLevelRecs", new List<LevelRec>() { new LevelRec(0, 0, 1, 1, 0) });
 
             //todo: remove or change to many lists interface
             minObjCoordX = callFromScript(asm, data, "*.getMinObjCoordX", 0);
