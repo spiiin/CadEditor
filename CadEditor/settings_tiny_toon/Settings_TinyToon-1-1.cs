@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class MetaData 
 {
-  public static string makeConfig() { return File.ReadAllText(Directory.GetCurrentDirectory() + "/Settings_TinyToonTemplate.cs"); }
+  public static string makeConfig() { return File.ReadAllText(ConfigScript.ConfigDirectory + "/Settings_TinyToonTemplate.cs"); }
   public static Dictionary<string, object> getPatchDictionary()
   {
     return new Dictionary<string, object>{
