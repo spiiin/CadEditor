@@ -7,7 +7,7 @@ ZIP_NAME       = "../Release/cad_editor_v%s.zip" % VERSION
 COPY_FILE_LIST = [
   "CadEditor.exe",
   "Be.Windows.Forms.HexBox.dll",
-  "CSScriptLibrary.v3.5.dll",
+  "CSScriptLibrary.dll",
   "Newtonsoft.Json.dll",
   
   "Config.cs",

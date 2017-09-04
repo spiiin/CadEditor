@@ -127,7 +127,7 @@ namespace CadEditor
 
         private void exportPictures(string filename)
         {
-            bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(curVideo, curTileset, bigBlockIndexes, curPallete, curViewType, 1, 2.0f, MapViewType.Tiles, false, curHierarchyLevel);
+            //bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(curVideo, curTileset, bigBlockIndexes, curPallete, curViewType, 1, 2.0f, MapViewType.Tiles, false, curHierarchyLevel);
             var result = UtilsGDI.GlueImages(bigBlocksImages,bigBlocksImages.Length, 1);
             result.Save(filename);
         }
