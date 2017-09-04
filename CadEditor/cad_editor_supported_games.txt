@@ -24,6 +24,7 @@
     Contra Force                                    (все уровни)
     Mickey Mouse 3 Yume Fuusen                      (все уровни)
     Moon Crystal                                    (все уровни)
+    Mighty Final Fight                              (все уровни)
     Felix the Cat                                   (все уровни, дампы+скрипт компрессии)
     Flintstones: The Surprise at Dinosaur Peak!     (1 уровень  + редактор объектов 1 уровня)
     New Ghostbusters 2                              (1 уровень  + редактор объектов 1 уровня)
@@ -62,7 +63,6 @@
   редактор экранов картинками:
     Little Nemo                                     (все уровни + редактор объектов всех уровней)
     Ninja Cat (Cattou Ninden Teyandee)              (все уровни + редактор объектов 4 уровней неполный)
-    Mighty Final Fight                              (все уровни)
     Banana Prince                                   (все уровни)
     SD Hero Soukessen - Taose! Aku no Gundan        (все уровни)
     Addams Family, The - Pugsley's Scavenger Hunt   (все уровни)
