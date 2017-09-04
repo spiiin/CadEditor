@@ -675,7 +675,7 @@ namespace CadEditor
             showBrush = bttShowBrush.Checked;
         }
 
-        private FormClosedEventHandler subeditorClosed(ToolStripButton enabledAfterCloseButton)
+        private FormClosedEventHandler subeditorClosed(ToolStripItem enabledAfterCloseButton)
         {
             return delegate(object sender, FormClosedEventArgs e) 
             { 
@@ -684,7 +684,7 @@ namespace CadEditor
             };
         }
 
-        public void subeditorOpen(Form f, ToolStripButton b, bool showDialog = false)
+        public void subeditorOpen(Form f, ToolStripItem b, bool showDialog = false)
         {
             if (UtilsGui.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
             {

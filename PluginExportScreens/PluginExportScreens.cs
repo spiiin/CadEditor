@@ -27,28 +27,31 @@ namespace PluginExportScreens
 
             var iconImport = (System.Drawing.Bitmap)rm.GetObject("icon_import");
             var item = new ToolStripButton("Import", iconImport, btImport_Click);
-            item.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            item.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             formMain.addToolButton(item);
 
             var iconExportPic = (System.Drawing.Bitmap)rm.GetObject("icon_export");
-            item = new ToolStripButton("Export pic", iconExportPic, bttExportPic_Click);
-            item.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            formMain.addToolButton(item);
+            var exportMenu = new ToolStripSplitButton("Export", iconExportPic);
+            formMain.addToolButton(exportMenu);
+
+            var itemMenu = new ToolStripMenuItem("Export screens as png", iconExportPic, bttExportPic_Click);
+            itemMenu.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+            exportMenu.DropDownItems.Add(itemMenu);
 
             var iconExportJson = (System.Drawing.Bitmap)rm.GetObject("icon_export");
-            item = new ToolStripButton("Export json", iconExportJson, bttExportJson_Click);
-            item.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            formMain.addToolButton(item);
+            itemMenu = new ToolStripMenuItem("Export json", iconExportJson, bttExportJson_Click);
+            itemMenu.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+            exportMenu.DropDownItems.Add(itemMenu);
 
             var iconExport = (System.Drawing.Bitmap)rm.GetObject("icon_export");
-            item = new ToolStripButton("Export", iconExport, btExport_Click);
-            item.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            formMain.addToolButton(item);
+            itemMenu = new ToolStripMenuItem("Export binary", iconExport, btExport_Click);
+            itemMenu.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+            exportMenu.DropDownItems.Add(itemMenu);
 
             var iconExportTmx = (System.Drawing.Bitmap)rm.GetObject("icon_export");
-            item = new ToolStripButton("Export TMX", iconExportTmx, btExportTmx_Click);
-            item.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            formMain.addToolButton(item);
+            itemMenu = new ToolStripMenuItem("Export TMX", iconExportTmx, btExportTmx_Click);
+            itemMenu.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+            exportMenu.DropDownItems.Add(itemMenu);
         }
 
         public void loadFromConfig(object asm, object data)
@@ -66,7 +69,7 @@ namespace PluginExportScreens
             var f = new SaveScreensCount();
             f.Text = "Export picture";
 
-            formMain.subeditorOpen(f, (ToolStripButton)sender, true);
+            formMain.subeditorOpen(f, (ToolStripItem)sender, true);
 
             if (SaveScreensCount.Result)
             {
@@ -113,7 +116,7 @@ namespace PluginExportScreens
             var f = new SaveScreensCount();
             f.Text = "Export json";
 
-            formMain.subeditorOpen(f, (ToolStripButton)sender, true);
+            formMain.subeditorOpen(f, (ToolStripItem)sender, true);
 
             if (SaveScreensCount.Result)
             {
@@ -149,7 +152,7 @@ namespace PluginExportScreens
         {
             var f = new ExportTMX();
             f.setFormMain(formMain);
-            formMain.subeditorOpen(f, (ToolStripButton)sender, true);
+            formMain.subeditorOpen(f, (ToolStripItem)sender, true);
         }
 
         private void btImport_Click(object sender, EventArgs e)
@@ -160,7 +163,7 @@ namespace PluginExportScreens
             SaveScreensCount.Filename = "exportedScreens.bin";
             var f = new SaveScreensCount();
             f.Text = "Import";
-            formMain.subeditorOpen(f, (ToolStripButton)sender, true);
+            formMain.subeditorOpen(f, (ToolStripItem)sender, true);
             if (SaveScreensCount.Result)
             {
                 int saveLastIndex = SaveScreensCount.First;
@@ -198,7 +201,7 @@ namespace PluginExportScreens
             SaveScreensCount.Filename = "exportedScreens.bin";
             var f = new SaveScreensCount();
             f.Text = "Export";
-            formMain.subeditorOpen(f, (ToolStripButton)sender, true);
+            formMain.subeditorOpen(f, (ToolStripItem)sender, true);
             if (SaveScreensCount.Result)
             {
                 if (SaveScreensCount.Count <= 0)
