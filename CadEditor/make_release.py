@@ -9,6 +9,7 @@ COPY_FILE_LIST = [
   "Be.Windows.Forms.HexBox.dll",
   "CSScriptLibrary.dll",
   "Newtonsoft.Json.dll",
+  "IronPython.dll",
   
   "Config.cs",
   "Settings_CapcomBase.cs",
@@ -26,12 +27,17 @@ COPY_FILE_LIST = [
   "cad_editor_structures.txt",
   
   "Plugin*.dll",
+  
+  "exportTmx/exportTmx.py",
 ]
 
 COPY_FOLDER_LIST = [
   "obj_sprites/",
   "scroll_sprites/",
   "settings_*/",
+  
+  "PythonLib",
+  "exportTmx/pytmxlib/tmxlib/",
 ]
 
 def removeAndCreate(path):
@@ -40,6 +46,7 @@ def removeAndCreate(path):
     shutil.rmtree(path)
   print "Create release folder..."
   os.makedirs(path)
+  os.makedirs(os.path.join(path, "exportTmx/"))
   
 def zipdir(path, zip):
   for root, dirs, files in os.walk(path):
@@ -53,11 +60,12 @@ def makeRelease():
   absRoot = os.path.abspath(RELEASE_FOLDER)
   print "Release folder: ", absRoot
   removeAndCreate(absRoot)
+  
   print "Copying files:"
   for fn in COPY_FILE_LIST:
     if fn.find("*")==-1:
       print "  copy ", fn
-      shutil.copy(fn, absRoot)
+      shutil.copy(fn, os.path.join(absRoot, fn))
     else:
       fileList2 = glob.glob(fn)
       for fn2 in fileList2:
