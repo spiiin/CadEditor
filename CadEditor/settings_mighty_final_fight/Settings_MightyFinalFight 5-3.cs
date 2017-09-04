@@ -1,15 +1,24 @@
 using CadEditor;
 using System;
-using System.Drawing;
+//css_include Settings_CapcomBase.cs;
 
-public class Data 
+public class Data : CapcomBase
 { 
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginChrView.dll",
+    };
+  }
   public OffsetRec getScreensOffset()  { return new OffsetRec(0x1B110, 3 , 8*8);   }
-  public int getScreenWidth()          { return 8; }
-  public int getScreenHeight()         { return 8; }
-  public string getBlocksFilename()    { return "mighty_final_fight_5a.png"; }
+  public OffsetRec getPalOffset()       { return new OffsetRec(0x1AE8C , 1  , 16);     }
+  public OffsetRec getVideoOffset()     { return new OffsetRec(0x3B010, 1  , 0x1000); }
+  public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x20010, 1  , 0x1000); }
+  public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x1B710 , 1  , 0x4000); }
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x1BB10, 1  , 0x4000); }
   
-  public bool isBigBlockEditorEnabled() { return false; }
-  public bool isBlockEditorEnabled()    { return false; }
+  public bool isBigBlockEditorEnabled() { return true; }
+  public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
 }
