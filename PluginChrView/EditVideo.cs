@@ -45,8 +45,7 @@ namespace CadEditor
         private void reloadVideo()
         {
             setPal();
-            int videoPageId = curActiveVideo + 0x90;
-            pbVideo.Image = ConfigScript.videoNes.makeImageRectangle(ConfigScript.getVideoChunk(videoPageId), curPal, curSubPal, 4);
+            pbVideo.Image = ConfigScript.videoNes.makeImageRectangle(ConfigScript.getVideoChunk(curActiveVideo), curPal, curSubPal, 4);
         }
 
         private int curActiveVideo = 0;
@@ -105,10 +104,8 @@ namespace CadEditor
             f.ShowDialog();
             if (!f.Result)
                 return;
-            var fn = f.Filename;
-            int videoPageId = curActiveVideo + 0x90;
-            var data = ConfigScript.getVideoChunk(videoPageId);
-            Utils.saveDataToFile(fn, data);
+            var data = ConfigScript.getVideoChunk(curActiveVideo);
+            Utils.saveDataToFile(f.Filename, data);
         }
 
         private void btImport_Click(object sender, EventArgs e)
@@ -122,8 +119,7 @@ namespace CadEditor
             var data = Utils.loadDataFromFile(fn);
             if (data == null)
                 return;
-            int videoPageId = curActiveVideo + 0x90;
-            ConfigScript.setVideoChunk(videoPageId, data);
+            ConfigScript.setVideoChunk(curActiveVideo, data);
 
             //dirty = true;
             reloadVideo();
