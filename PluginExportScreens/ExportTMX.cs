@@ -42,7 +42,7 @@ namespace PluginExportScreens
                 var scope = engine.ExecuteFile("exportTmx/exportTmx.py");
                 dynamic export = scope.GetVariable("export");
                 int layoutNo = cbLayout.SelectedIndex;
-                bool result = export(formMain, layoutNo);
+                bool result = export(tbFilename.Text, formMain, layoutNo);
                 if (result)
                 {
                     MessageBox.Show("Export done!");

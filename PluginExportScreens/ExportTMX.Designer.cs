@@ -54,7 +54,7 @@
             this.tbFilename.Name = "tbFilename";
             this.tbFilename.Size = new System.Drawing.Size(367, 22);
             this.tbFilename.TabIndex = 1;
-            this.tbFilename.Text = "CadLevel.tmx";
+            this.tbFilename.Text = "exportTmx/CadLevel.tmx";
             this.tbFilename.Click += new System.EventHandler(this.tbFilename_Click);
             // 
             // cbLayout
@@ -120,7 +120,9 @@
             this.ClientSize = new System.Drawing.Size(466, 152);
             this.Controls.Add(this.btExport);
             this.Controls.Add(this.pnLevelParam);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
+            this.MaximizeBox = false;
             this.Name = "ExportTMX";
             this.Text = "Export TMX";
             this.Load += new System.EventHandler(this.ExportTMX_Load);
