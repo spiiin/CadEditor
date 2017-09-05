@@ -634,6 +634,7 @@ namespace CadEditor
                 curScale = curButtonScale = ConfigScript.isBuildScreenFromSmallBlocks() ? 1 : 2;
                 fileLoaded = true;
                 resetControls();
+                setWindowText();
             }
             if (!fileLoaded)
                 return false;
@@ -648,9 +649,11 @@ namespace CadEditor
 
         private void btOpen_Click(object sender, EventArgs e)
         {
-            openFile();
-            reloadGameType();
-            changeLevelIndex(true);
+            if (openFile())
+            {
+                reloadGameType();
+                changeLevelIndex(true);
+            }
         }
 
         public void setDirty()
@@ -1034,6 +1037,11 @@ namespace CadEditor
         private void tbbShowInfo_Click(object sender, EventArgs e)
         {
             new About().ShowDialog();
+        }
+
+        private void setWindowText()
+        {
+            Text = String.Format("CAD Editor v4.3 - {0}", OpenFile.FileName);
         }
     }
 }
