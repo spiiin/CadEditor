@@ -32,6 +32,13 @@ namespace CadEditor
                 Globals.loadData(OpenFile.FileName, OpenFile.DumpName, OpenFile.ConfigName);
                 curScale = curButtonScale =  ConfigScript.isBuildScreenFromSmallBlocks() ? 1 : 2;
                 fileLoaded = true;
+
+                //Change size without event, it will call later
+                pnBlocks.SizeChanged -= pnBlocks_SizeChanged;
+                splitContainer1.Width = this.Width - 21;
+                splitContainer1.Height = this.Height - 81;
+                pnBlocks.SizeChanged += pnBlocks_SizeChanged;
+                //
                 resetControls();
             }
 
@@ -44,9 +51,6 @@ namespace CadEditor
 
             ConfigScript.plugins.ForEach((p) => p.addToolButton(this));
             ConfigScript.plugins.ForEach((p) => p.addSubeditorButton(this));
-
-            splitContainer1.Width = this.Width - 21;
-            splitContainer1.Height = this.Height - 81;
         }
 
         private Form makeBlocksEditor()
@@ -144,16 +148,10 @@ namespace CadEditor
 
         public void reloadLevel(bool reloadScreens = true, bool reloadBlockPanel = false)
         {
-            setBigBlocksIndexes();
             setBlocks(reloadBlockPanel);
             if (reloadScreens)
                 resetScreens();
             mapScreen.Invalidate();
-        }
-
-        private void setBigBlocksIndexes()
-        {
-          int bigTileIndex = curActiveBlockNo;
         }
 
         private Image[] makeSegaBigBlocks()
