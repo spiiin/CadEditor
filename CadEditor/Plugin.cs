@@ -71,8 +71,6 @@ namespace CadEditor
         //Bitmap GetTile(byte[] Tiles, ushort Word, Color[] Palette, byte PalIndex, bool HF, bool VF);
         Bitmap GetZoomTile(byte[] tiles, ushort Word, Color[] palette, byte palIndex, bool HF, bool VF, float zoom);
         // Bitmap GetBlock(ushort[] mapping, byte[] tiles, Color[] palette, byte Index);
-        Bitmap GetZoomBlock(ushort[] mapping, byte[] tiles, Color[] palette, int Index, float zoom);
-        Bitmap GetZoomBlock4x4(ushort[] mapping, byte[] tiles, Color[] palette, int Index, float zoom);
 
         string getName();
     }

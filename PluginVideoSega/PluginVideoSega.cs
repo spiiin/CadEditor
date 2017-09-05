@@ -22,9 +22,15 @@ namespace PluginVideoSega
             for (ushort i = 0; i < count; i++)
             {
                 if (!ConfigScript.isBlockSize4x4())
-                    result[i] = GetZoomBlock(m, tiles, cpal, i, zoom * 2.0f);
+                {
+                    var b = GetBlock(m, tiles, cpal, i);
+                    result[i] = UtilsGDI.ResizeBitmap(b, (int)(32 * zoom), (int)(32 * zoom));
+                }
                 else
-                    result[i] = GetZoomBlock4x4(m, tiles, cpal, i, zoom);
+                {
+                    var b = GetBlock4x4(m, tiles, cpal, i);
+                    result[i] = UtilsGDI.ResizeBitmap(b, (int)(32 * zoom), (int)(32 * zoom));
+                }
                 if (curViewType == MapViewType.ObjNumbers)
                     result[i] = VideoHelper.addObjNumber(result[i], i);
                 if (showAxis)
@@ -84,7 +90,7 @@ namespace PluginVideoSega
 
         public Bitmap GetTileFrom2ColorArray(byte[] Tiles, ref int Position)
         {
-            Bitmap retn = new Bitmap(8, 8, System.Drawing.Imaging.PixelFormat.Format16bppRgb555);
+            Bitmap retn = new Bitmap(8, 8, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
 
             for (int h = 0; h < 8; h++)
                 for (int w = 0; w < 4; w++)
@@ -117,7 +123,7 @@ namespace PluginVideoSega
             for (int y = 0, pos = 0; y < block.Height / 8; y++)
                 for (int x = 0; x < block.Width / 8; x++, pos += 0x20)
                 {
-                    Bitmap tile = new Bitmap(8, 8, System.Drawing.Imaging.PixelFormat.Format16bppRgb555);
+                    Bitmap tile = new Bitmap(8, 8, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
                     using (Graphics g = Graphics.FromImage(tile)) g.DrawImage(block, new Rectangle(0, 0, 8, 8), new Rectangle(x * 8, y * 8, 8, 8), GraphicsUnit.Pixel);
                     Array.Copy(GetArrayFrom2ColorTile(tile), 0, retn, pos, 0x20);
                 }
@@ -161,7 +167,7 @@ namespace PluginVideoSega
         public Bitmap GetZoomTile(byte[] tiles, ushort Word, Color[] palette, byte palIndex, bool HF, bool VF, float zoom)
         {
             Bitmap tile = GetTile(tiles, Word, palette, palIndex, HF, VF);
-            Bitmap retn = new Bitmap((int)(8 * zoom), (int)(8 * zoom), System.Drawing.Imaging.PixelFormat.Format16bppRgb555);
+            Bitmap retn = new Bitmap((int)(8 * zoom), (int)(8 * zoom), System.Drawing.Imaging.PixelFormat.Format24bppRgb);
 
             Graphics gr = Graphics.FromImage(retn);
             gr.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
@@ -174,9 +180,27 @@ namespace PluginVideoSega
             return retn;
         }
 
-        private Bitmap GetBlock(ushort[] mapping, byte[] tiles, Color[] palette, byte Index)
+        private Bitmap GetBlock(ushort[] mapping, byte[] tiles, Color[] palette, int Index)
         {
-            Bitmap block = new Bitmap(32, 32, System.Drawing.Imaging.PixelFormat.Format16bppRgb555);
+            Bitmap block = new Bitmap(16, 16, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            for (int y = 0; y < 2; y++)
+                for (int x = 0; x < 2; x++)
+                {
+                    ushort Word = mapping[Index * 4 + y * 2 + x];
+                    byte palIndex = Mapper.PalIdx(Word);
+                    bool HF = Mapper.HF(Word);
+                    bool VF = Mapper.VF(Word);
+
+                    Bitmap tile = GetTile(tiles, Word, palette, palIndex, HF, VF);
+
+                    using (Graphics g = Graphics.FromImage(block)) g.DrawImage(tile, new Rectangle(x * 8, y * 8, 8, 8));
+                }
+            return block;
+        }
+
+        private Bitmap GetBlock4x4(ushort[] mapping, byte[] tiles, Color[] palette, int Index)
+        {
+            Bitmap block = new Bitmap(32, 32, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
             for (int y = 0; y < 4; y++)
                 for (int x = 0; x < 4; x++)
                 {
@@ -190,63 +214,6 @@ namespace PluginVideoSega
                     using (Graphics g = Graphics.FromImage(block)) g.DrawImage(tile, new Rectangle(x * 8, y * 8, 8, 8));
                 }
             return block;
-        }
-
-        public Bitmap GetZoomBlock(ushort[] mapping, byte[] tiles, Color[] palette, int Index, float zoom)
-        {
-            Bitmap block = new Bitmap(16, 16, System.Drawing.Imaging.PixelFormat.Format16bppRgb555);
-            Bitmap retn = new Bitmap((int)(16 * zoom), (int)(16 * zoom), System.Drawing.Imaging.PixelFormat.Format16bppRgb555);
-
-            for (int y = 0; y < 2; y++)
-                for (int x = 0; x < 2; x++)
-                {
-                    ushort Word = mapping[Index * 4 + y * 2 + x];
-                    byte palIndex = Mapper.PalIdx(Word);
-                    bool HF = Mapper.HF(Word);
-                    bool VF = Mapper.VF(Word);
-
-                    Bitmap tile = GetZoomTile(tiles, Word, palette, palIndex, HF, VF, zoom);
-                    using (Graphics g = Graphics.FromImage(block)) g.DrawImage(tile, new Rectangle(x * 8, y * 8, 8, 8));
-                }
-
-            Graphics gr = Graphics.FromImage(retn);
-            gr.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-
-            if (zoom > 1.0f)
-                gr.DrawImage(block, new Rectangle(0, 0, retn.Width + 2, retn.Height + 2));
-            else
-                gr.DrawImage(block, new Rectangle(0, 0, retn.Width, retn.Height));
-            gr.Dispose();
-            return retn;
-        }
-
-        public Bitmap GetZoomBlock4x4(ushort[] mapping, byte[] tiles, Color[] palette, int Index, float zoom)
-        {
-            Bitmap block = new Bitmap(32, 32, System.Drawing.Imaging.PixelFormat.Format16bppRgb555);
-            Bitmap retn = new Bitmap((int)(32 * zoom), (int)(32 * zoom), System.Drawing.Imaging.PixelFormat.Format16bppRgb555);
-
-            for (int y = 0; y < 4; y++)
-                for (int x = 0; x < 4; x++)
-                {
-                    ushort Word = mapping[Index * 0x10 + y * 4 + x];
-                    byte palIndex = Mapper.PalIdx(Word);
-                    bool HF = Mapper.HF(Word);
-                    bool VF = Mapper.VF(Word);
-
-                    Bitmap tile = GetZoomTile(tiles, Word, palette, palIndex, HF, VF, zoom);
-
-                    using (Graphics g = Graphics.FromImage(block)) g.DrawImage(tile, new Rectangle(x * 8, y * 8, 8, 8));
-                }
-
-            Graphics gr = Graphics.FromImage(retn);
-            gr.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-
-            if (zoom > 1.0f)
-                gr.DrawImage(block, new Rectangle(0, 0, retn.Width + 2, retn.Height + 2));
-            else
-                gr.DrawImage(block, new Rectangle(0, 0, retn.Width, retn.Height));
-            gr.Dispose();
-            return retn;
         }
     }
     //---------------------------------------------------------------------------------------------
