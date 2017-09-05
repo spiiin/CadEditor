@@ -111,7 +111,7 @@
             // 
             this.sfSave.FileName = "CadLevel.tmx";
             this.sfSave.Filter = "TMX|*.tmx";
-            this.sfSave.InitialDirectory = "./exportTmx";
+            this.sfSave.InitialDirectory = "./exportTmx/";
             // 
             // ExportTMX
             // 
