@@ -1,5 +1,6 @@
 import tmxlib
 import clr
+import os
 from math import ceil
 
 clr.AddReference("CadEditor")
@@ -8,7 +9,10 @@ from CadEditor import ConfigScript, UtilsGDI
 def calcScrNo(layout, noInLayout):
     return layout.layer[noInLayout] - 1
 
-def export(formMain, curActiveLayout):  
+def export(filename, formMain, curActiveLayout):
+    path, fname = os.path.split(filename)
+    fnameWithoutExt, fnameExt = os.path.splitext(fname)
+    
     layout = ConfigScript.getLayout(curActiveLayout)
     levelRec = ConfigScript.getLevelRec(curActiveLayout)
     curScale = formMain.CurScale
@@ -32,10 +36,10 @@ def export(formMain, curActiveLayout):
     ImHeightInBlocks = int(ceil(len(bigBlocksImages)*1.0/ImWidthInBlocks))
     bigBlockImage = UtilsGDI.GlueImages(bigBlocksImages, ImWidthInBlocks, ImHeightInBlocks)
     #bigBlockImage = UtilsGDI.GlueImages(bigBlocksImages, len(bigBlocksImages), 1)
-    bigBlockImage.Save("exportTmx/tiles.png")
+    bigBlockImage.Save(os.path.join(path, fnameWithoutExt + ".png"))
     
     map = tmxlib.Map(mapSize, tileSize , base_path=".")
-    im = tmxlib.image.open("tiles.png", base_path="exportTmx")
+    im = tmxlib.image.open(fnameWithoutExt + ".png", base_path=path)
     tileset = tmxlib.ImageTileset("Tiles", tileSize, im, base_path = ".")
     map.tilesets.append(tileset)
     layer = map.add_layer("Layer1")
@@ -56,5 +60,5 @@ def export(formMain, curActiveLayout):
                         lx = sx * width + cx
                         ly = sy * height + cy
                         layer[lx,ly] = map.tilesets["Tiles"][tileNo]
-    map.save('exportTmx/export.tmx')
+    map.save(filename)
     return True
