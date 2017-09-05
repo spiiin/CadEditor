@@ -22,8 +22,12 @@ namespace CadEditor
             return bmp;
         }
 
-        public static Bitmap ResizeBitmap(Image image, int width, int height)
+        public static Image ResizeBitmap(Image image, int width, int height)
         {
+            if ((image.Width == width) && (image.Height == height))
+            {
+                return image;
+            }
             var destRect = new Rectangle(0, 0, width, height);
             var destImage = new Bitmap(width, height);
 
@@ -217,7 +221,7 @@ namespace CadEditor
             int imCountX = imSrc.Width / imBlockWidth;
             int imCountY = imSrc.Height / imBlockHeight;
 
-            var bigBlocks = new Bitmap[imCountX*imCountY];
+            var bigBlocks = new Image[imCountX*imCountY];
             for (int i = 0; i < bigBlocks.Length; i++)
             {
                 bigBlocks[i] = new Bitmap((int)(curButtonScale * blockWidth), (int)(curButtonScale * blockHeight));
