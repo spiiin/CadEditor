@@ -23,16 +23,17 @@ namespace PluginExportScreens
 
         private void tbFilename_Click(object sender, EventArgs e)
         {
-            if (sfSave.ShowDialog() == DialogResult.OK)
-            { 
-                tbFilename.Text = sfSave.FileName;
-            }
         }
 
         private void btExport_Click(object sender, EventArgs e)
         {
             try
             {
+                if (sfSave.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+
                 var options = new Dictionary<string, object>();
                 options["Frames"] = true;
                 options["FullFrames"] = false;
@@ -42,10 +43,11 @@ namespace PluginExportScreens
                 var scope = engine.ExecuteFile("exportTmx/exportTmx.py");
                 dynamic export = scope.GetVariable("export");
                 int layoutNo = cbLayout.SelectedIndex;
-                bool result = export(tbFilename.Text, formMain, layoutNo);
+                bool result = export(sfSave.FileName, formMain, layoutNo);
                 if (result)
                 {
                     MessageBox.Show("Export done!");
+                    Close();
                 }
             }
             catch (Exception ex)
