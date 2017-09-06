@@ -146,9 +146,9 @@ namespace CadEditor
                 mapScreen.Size = new Size((int)((ConfigScript.getScreenWidth(curActiveLevelForScreen) + 2) * layers[0].blockWidth * curScale), (int)(ConfigScript.getScreenHeight(curActiveLevelForScreen) * layers[0].blockHeight * curScale));
         }
 
-        public void reloadLevel(bool reloadScreens = true, bool reloadBlockPanel = false)
+        public void reloadLevel(bool reloadScreens = true, bool rebuildBlocks = false)
         {
-            setBlocks(reloadBlockPanel);
+            setBlocks(rebuildBlocks);
             if (reloadScreens)
                 resetScreens();
             mapScreen.Invalidate();
@@ -163,17 +163,20 @@ namespace CadEditor
             return ConfigScript.videoSega.makeBigBlocks(mapping, videoTiles, pal, count, curViewType, showAxis);
         }
 
-        private void setBlocks(bool needToRefillBlockPanel)
+        private void setBlocks(bool needRebuildBlocks)
         {
             //if using pictures
             if (ConfigScript.usePicturesInstedBlocks)
             {
-                //get block size from image
-                layers[0].blockWidth = ConfigScript.getBlocksPicturesWidth();
-                layers[0].blockHeight = 32;
-                layers[1].blockWidth = ConfigScript.getBlocksPicturesWidth();
-                layers[1].blockHeight = 32;
-                bigBlocks = UtilsGDI.setBlocksForPictures(curButtonScale, layers[0].blockWidth, layers[0].blockHeight, curViewType, showAxis);
+                if (needRebuildBlocks)
+                {
+                    //get block size from image
+                    layers[0].blockWidth = ConfigScript.getBlocksPicturesWidth();
+                    layers[0].blockHeight = 32;
+                    layers[1].blockWidth = ConfigScript.getBlocksPicturesWidth();
+                    layers[1].blockHeight = 32;
+                    bigBlocks = UtilsGDI.setBlocksForPictures(curButtonScale, layers[0].blockWidth, layers[0].blockHeight, curViewType, showAxis);
+                }
                 updateBlocksImages();
                 return;
             }
@@ -184,16 +187,18 @@ namespace CadEditor
 
             float smallBlockScaleFactor = curButtonScale;
             int bigTileIndex = curActiveBlockNo;
-            if (ConfigScript.isUseSegaGraphics())
+            if (needRebuildBlocks)
             {
-                bigBlocks = makeSegaBigBlocks();
+                if (ConfigScript.isUseSegaGraphics())
+                {
+                    bigBlocks = makeSegaBigBlocks();
+                }
+                else
+                {
+                    bigBlocks = ConfigScript.videoNes.makeBigBlocks(curActiveVideoNo, curActiveBigBlockNo, bigTileIndex, curActivePalleteNo, smallObjectsType, curViewType, showAxis, ConfigScript.getbigBlocksHierarchyCount() - 1);
+                }
+                changeBlocksSize(bigBlocks);
             }
-            else
-            {
-                bigBlocks = ConfigScript.videoNes.makeBigBlocks(curActiveVideoNo, curActiveBigBlockNo, bigTileIndex, curActivePalleteNo, smallObjectsType, curViewType, showAxis, ConfigScript.getbigBlocksHierarchyCount() - 1);
-            }
-
-            changeBlocksSize(bigBlocks);
             curActiveBlock = 0;
             updateBlocksImages();
         }
@@ -559,7 +564,7 @@ namespace CadEditor
             }
             updateSaveVisibility();
             bool senderIsScale = sender == bttScale;
-            changeLevelIndex(senderIsScale);
+            changeLevelIndex(!senderIsScale);
             if (senderIsScale)
             {
                 if (ConfigScript.getScreenVertical())
@@ -570,14 +575,14 @@ namespace CadEditor
             }
         }
 
-        private void changeLevelIndex(bool reloadObjectsPanel = false)
+        private void changeLevelIndex(bool reloadBlocks = false)
         {
             curActiveVideoNo = cbVideoNo.SelectedIndex;
             curActiveBigBlockNo = cbBigBlockNo.SelectedIndex;
             curActiveBlockNo = cbBlockNo.SelectedIndex;
             curActivePalleteNo = cbPaletteNo.SelectedIndex;
             curViewType = (MapViewType)cbViewType.SelectedIndex;
-            reloadLevel(true, reloadObjectsPanel);
+            reloadLevel(true, reloadBlocks);
         }
 
         private void returnCbLevelIndex()
@@ -650,7 +655,7 @@ namespace CadEditor
             if (openFile())
             {
                 reloadGameType();
-                changeLevelIndex(true);
+                changeLevelIndex();
             }
         }
 
@@ -668,7 +673,7 @@ namespace CadEditor
         private void cbShowAxis_CheckedChanged(object sender, EventArgs e)
         {
             showAxis = bttAxis.Checked;
-            reloadLevel(false);
+            reloadLevel(false, true);
         }
 
         private void bttShowBrush_CheckedChanged(object sender, EventArgs e)
@@ -681,7 +686,7 @@ namespace CadEditor
             return delegate(object sender, FormClosedEventArgs e) 
             { 
                 enabledAfterCloseButton.Enabled = true;
-                reloadLevel();
+                reloadLevel(true, true);
             };
         }
 
