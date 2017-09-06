@@ -386,6 +386,7 @@ namespace CadEditor
             }
             dirty = true;
             updateSaveVisibility();
+            bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(curVideo, curTileset, bigBlockIndexes, curPallete, curViewType, MapViewType.Tiles, false, curHierarchyLevel);
             mapScreen.Invalidate();
         }
 
