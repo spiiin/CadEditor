@@ -94,7 +94,7 @@ namespace CadEditor
             bigBlocks = new Image[SEGA_TILES_COUNT];
             for (ushort idx = 0; idx < SEGA_TILES_COUNT; idx++)
             {
-                bigBlocks[idx] = ConfigScript.videoSega.GetZoomTile(videoChunk, idx, cpal, (byte)curActivePalNo, false, false, curScale);
+                bigBlocks[idx] = ConfigScript.videoSega.GetTile(videoChunk, idx, cpal, (byte)curActivePalNo, false, false);
             }
         }
 
@@ -146,7 +146,7 @@ namespace CadEditor
                 byte pal = Mapper.PalIdx(word);
                 bool hf = Mapper.HF(word);
                 bool vf = Mapper.VF(word);
-                var b = ConfigScript.videoSega.GetZoomTile(videoChunk, tileIdx, cpal, pal, hf, vf, curScale);
+                var b = ConfigScript.videoSega.GetTile(videoChunk, tileIdx, cpal, pal, hf, vf);
                 g.DrawImage(b, tileRect);
                 if (i == curSelectedTilePart)
                     g.DrawRectangle(new Pen(Brushes.Red, 2.0f), tileRect);

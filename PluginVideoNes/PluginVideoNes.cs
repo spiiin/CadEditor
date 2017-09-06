@@ -109,13 +109,12 @@ namespace PluginVideoNes
                 nesColors = ConfigScript.nesColors;
         }
 
-        public Bitmap makeImage(int index, byte[] videoChunk, byte[] pallete, int subPalIndex, float scale, bool scaleAccurate = true, bool withAlpha = false)
+        public Bitmap makeImage(int index, byte[] videoChunk, byte[] pallete, int subPalIndex, bool withAlpha = false)
         {
-            Bitmap res = new Bitmap((int)(8 * scale), (int)(8 * scale));
+            Bitmap res = new Bitmap(8, 8);
             using (Graphics g = Graphics.FromImage(res))
             {
                 int i = index;
-                float bitmapScale = scaleAccurate ? scale : 1;
                 int beginIndex = 16 * i;
                 for (int line = 0; line < 8; line++)
                 {
@@ -127,61 +126,47 @@ namespace PluginVideoNes
                         int fullPalIndex = subPalIndex * 4 + palIndex;
                         int colorNo = pallete[fullPalIndex];
                         Color c = (withAlpha && (fullPalIndex % 4 == 0)) ? Color.FromArgb(0) : nesColors[colorNo];
-                        if (scaleAccurate && (scale > 1.0f))
-                        {
-                            int scaleInt = (int)scale;
-                            for (int scaleFillX = 0; scaleFillX < scaleInt; scaleFillX++)
-                                for (int scaleFillY = 0; scaleFillY < scaleInt; scaleFillY++)
-                                    res.SetPixel(pixel * scaleInt + scaleFillX, line * scaleInt + scaleFillY, c);
-                        }
-                        else
-                        {
-                            if (scale > 1.0f)
-                                res.SetPixel(pixel, line, c);
-                            else
-                                res.SetPixel((int)(pixel * scale), (int)(line * scale), c);
-                        }
+                        res.SetPixel(pixel, line, c);
                     }
                 }
             }
             return res;
         }
 
-        public Bitmap makeImageStrip(byte[] videoChunk, byte[] pallete, int subPalIndex, float scale, bool scaleAccurate = true, bool withAlpha = false)
+        public Bitmap makeImageStrip(byte[] videoChunk, byte[] pallete, int subPalIndex, bool withAlpha = false)
         {
-            Bitmap res = new Bitmap((int)(8 * CHUNK_COUNT * scale), (int)(8 * scale));
+            Bitmap res = new Bitmap(8 * CHUNK_COUNT, 8);
             using (Graphics g = Graphics.FromImage(res))
             {
                 for (int i = 0; i < CHUNK_COUNT; i++)
                 {
-                    float bitmapScale = scaleAccurate ? scale : 1;
-                    Bitmap onePic = makeImage(i, videoChunk, pallete, subPalIndex, scale, scaleAccurate, withAlpha);
-                    g.DrawImage(onePic, new Rectangle((int)(i * 8 * scale), 0, (int)(8 * scale), (int)(8 * scale)));
+                    Bitmap onePic = makeImage(i, videoChunk, pallete, subPalIndex, withAlpha);
+                    g.DrawImage(onePic, new Rectangle(i * 8, 0, 8, 8));
                 }
             }
             return res;
         }
 
-        public Bitmap makeImageRectangle(byte[] videoChunk, byte[] pallete, int subPalIndex, float scale, bool scaleAccurate = true, bool withAlpha = false)
+        public Bitmap makeImageRectangle(byte[] videoChunk, byte[] pallete, int subPalIndex, bool withAlpha = false)
         {
-            var images = Enumerable.Range(0, 256).Select(i => makeImage(i, videoChunk, pallete, subPalIndex, scale, scaleAccurate, withAlpha));
+            var images = Enumerable.Range(0, 256).Select(i => makeImage(i, videoChunk, pallete, subPalIndex, withAlpha));
             return UtilsGDI.GlueImages(images.ToArray(), 16, 16);
         }
 
-        public Bitmap[] makeObjects(ObjRec[] objects, Bitmap[][] objStrips, float scale, MapViewType drawType, int constantSubpal = -1)
+        public Bitmap[] makeObjects(ObjRec[] objects, Bitmap[][] objStrips, MapViewType drawType, int constantSubpal = -1)
         {
             var ans = new Bitmap[objects.Length];
             for (int index = 0; index < objects.Length; index++)
             {
-                ans[index] = makeObject(index, objects, objStrips, scale, drawType, constantSubpal);
+                ans[index] = makeObject(index, objects, objStrips, drawType, constantSubpal);
             }
             return ans;
         }
 
-        public Bitmap makeObject(int index, ObjRec[] objects, Bitmap[][] objStrips, float scale, MapViewType drawType, int constantSubpal = -1)
+        public Bitmap makeObject(int index, ObjRec[] objects, Bitmap[][] objStrips, MapViewType drawType, int constantSubpal = -1)
         {
             var obj = objects[index];
-            int scaleInt16 = (int)(scale * 16);
+            int scaleInt16 = 16;
             var images = new Image[obj.getSize()];
             for (int i = 0; i < obj.getSize(); i++)
             {
@@ -209,7 +194,7 @@ namespace PluginVideoNes
             return mblock;
         }
 
-        public Bitmap[] makeObjects(int videoPageId, int tilesId, int palId, float scale, MapViewType drawType, int constantSubpal = -1)
+        public Bitmap[] makeObjects(int videoPageId, int tilesId, int palId, MapViewType drawType, int constantSubpal = -1)
         {
             byte[] videoChunk = ConfigScript.getVideoChunk(videoPageId);
             int blocksCount = ConfigScript.getBlocksCount();
@@ -217,31 +202,31 @@ namespace PluginVideoNes
 
             byte[] palette = ConfigScript.getPal(palId);
             var range256 = Enumerable.Range(0, 256);
-            var objStrip1 = range256.Select(i => makeImage(i, videoChunk, palette, 0, scale)).ToArray();
-            var objStrip2 = range256.Select(i => makeImage(i, videoChunk, palette, 1, scale)).ToArray();
-            var objStrip3 = range256.Select(i => makeImage(i, videoChunk, palette, 2, scale)).ToArray();
-            var objStrip4 = range256.Select(i => makeImage(i, videoChunk, palette, 3, scale)).ToArray();
+            var objStrip1 = range256.Select(i => makeImage(i, videoChunk, palette, 0)).ToArray();
+            var objStrip2 = range256.Select(i => makeImage(i, videoChunk, palette, 1)).ToArray();
+            var objStrip3 = range256.Select(i => makeImage(i, videoChunk, palette, 2)).ToArray();
+            var objStrip4 = range256.Select(i => makeImage(i, videoChunk, palette, 3)).ToArray();
             var objStrips = new[] { objStrip1, objStrip2, objStrip3, objStrip4 };
 
-            var bitmaps = makeObjects(objects, objStrips, scale, drawType, constantSubpal);
+            var bitmaps = makeObjects(objects, objStrips, drawType, constantSubpal);
             return bitmaps;
         }
 
-        public Bitmap makeObjectsStrip(int videoPageId, int tilesId, int palId, float scale, MapViewType drawType, int constantSubpal = -1)
+        public Bitmap makeObjectsStrip(int videoPageId, int tilesId, int palId, MapViewType drawType, int constantSubpal = -1)
         {
-            var bitmaps = makeObjects(videoPageId, tilesId, palId, scale, drawType, constantSubpal);
+            var bitmaps = makeObjects(videoPageId, tilesId, palId, drawType, constantSubpal);
             return UtilsGDI.GlueImages(bitmaps, bitmaps.Length, 1);
         }
 
          public Image[] makeBigBlocks(int videoNo, int bigBlockNo, int blockNo, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
-            float smallBlockScaleFactor = 2.0f, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false, int hierarchyLevel = 0)
+           MapViewType curViewType = MapViewType.Tiles, bool showAxis = false, int hierarchyLevel = 0)
         {
             BigBlock[] bigBlockIndexes = ConfigScript.getBigBlocksRecursive(hierarchyLevel, blockNo);
-            return makeBigBlocks(videoNo, bigBlockNo, bigBlockIndexes, palleteNo, smallObjectsViewType, smallBlockScaleFactor, curButtonScale, curViewType, showAxis, hierarchyLevel);
+            return makeBigBlocks(videoNo, bigBlockNo, bigBlockIndexes, palleteNo, smallObjectsViewType, curViewType, showAxis, hierarchyLevel);
         }
 
         public Image[] makeBigBlocks(int videoNo, int bigBlockNo, BigBlock[] bigBlockIndexes, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
-            float smallBlockScaleFactor = 2.0f, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false, int hierarchyLevel = 0)
+            MapViewType curViewType = MapViewType.Tiles, bool showAxis = false, int hierarchyLevel = 0)
         {
             int blockCount = ConfigScript.getBigBlocksCount(hierarchyLevel);
             var bigBlocks = new Image[blockCount];
@@ -249,12 +234,12 @@ namespace PluginVideoNes
             Image[] smallBlocksPack;
             if (hierarchyLevel == 0)
             {
-                smallBlocksPack = makeObjects(videoNo, bigBlockNo, palleteNo, smallBlockScaleFactor, smallObjectsViewType);
+                smallBlocksPack = makeObjects(videoNo, bigBlockNo, palleteNo, smallObjectsViewType);
             }
             else
             {
                 var bigBlockIndexesPrev = ConfigScript.getBigBlocksRecursive(hierarchyLevel - 1, bigBlockNo);
-                smallBlocksPack = makeBigBlocks(videoNo, bigBlockNo, bigBlockIndexesPrev, palleteNo, smallObjectsViewType, smallBlockScaleFactor, curButtonScale, curViewType, false, hierarchyLevel - 1);
+                smallBlocksPack = makeBigBlocks(videoNo, bigBlockNo, bigBlockIndexesPrev, palleteNo, smallObjectsViewType, curViewType, false, hierarchyLevel - 1);
             }
 
             //tt version hardcode
@@ -266,7 +251,7 @@ namespace PluginVideoNes
                 smallBlocksAll = new Image[4][];
                 for (int i = 0; i < 4; i++)
                 {
-                    smallBlocksAll[i] = makeObjects(videoNo, bigBlockNo, palleteNo, smallBlockScaleFactor, smallObjectsViewType, i);
+                    smallBlocksAll[i] = makeObjects(videoNo, bigBlockNo, palleteNo, smallObjectsViewType, i);
                 }
             }
             else
@@ -280,7 +265,8 @@ namespace PluginVideoNes
                 if (ConfigScript.isBuildScreenFromSmallBlocks())
                 {
                     var sb = smallBlocksPack[btileId];
-                    b = UtilsGDI.ResizeBitmap(sb, (int)(sb.Width * curButtonScale * 2), (int)(sb.Height * curButtonScale * 2));
+                    //scale for small blocks
+                    b = UtilsGDI.ResizeBitmap(sb, (int)(sb.Width * 2), (int)(sb.Height * 2));
                 }
                 else
                 {
@@ -296,19 +282,19 @@ namespace PluginVideoNes
         }
 
         //make capcom screen image
-        public Bitmap makeScreen(int scrNo, int levelNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, float scale = 2.0f, bool withBorders = true)
+        public Bitmap makeScreen(int scrNo, int levelNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, bool withBorders = true)
         {
             if (scrNo < 0)
-                return VideoHelper.emptyScreen((int)(ConfigScript.getScreenWidth(levelNo) * 32 * scale), (int)(ConfigScript.getScreenHeight(levelNo) * 32 * scale));
-            var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, scale, scale, MapViewType.Tiles, withBorders);
-            //var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.ObjType, scale, scale,MapViewType.Tiles, withBorders);
+                return VideoHelper.emptyScreen((int)(ConfigScript.getScreenWidth(levelNo) * 32), (int)(ConfigScript.getScreenHeight(levelNo) * 32));
+            var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, MapViewType.Tiles, withBorders);
+            //var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.ObjType,MapViewType.Tiles, withBorders);
             int[] indexes = Globals.getScreen(ConfigScript.screensOffset[levelNo], scrNo);
             int scrW = ConfigScript.getScreenWidth(0); //zero as screenNoForLevel
             int scrH = ConfigScript.getScreenHeight(0);
             //capcom hardcode
 
             var blockLayer1 = new BlockLayer() { screens = new int[1][] { indexes }, showLayer = true, blockWidth = 32, blockHeight = 32 };
-            return new Bitmap(MapEditor.ScreenToImage(bigBlocks, new BlockLayer[] { blockLayer1 }, 0, scale, false, 0, 0, scrW, scrH));
+            return new Bitmap(MapEditor.ScreenToImage(bigBlocks, new BlockLayer[] { blockLayer1 }, 0, 2.0f, false, 0, 0, scrW, scrH));
         }
 
         public Color[] NesColors

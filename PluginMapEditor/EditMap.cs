@@ -22,14 +22,19 @@ namespace CadEditor
         {
             mapData = MapConfig.loadMap(curActiveMapNo);
             setPal();
-            int videoPageId = curActiveVideo + 0x90;
+            int videoPageId = curActiveVideo;
             videos = new ImageList[4];
+            var chunk = ConfigScript.getVideoChunk(videoPageId);
             for (int i = 0; i < 4; i++)
             {
-                Bitmap imageStrip = ConfigScript.videoNes.makeImageStrip(ConfigScript.getVideoChunk(videoPageId), curPal, i, 2);
                 videos[i] = new ImageList();
                 videos[i].ImageSize = new Size(16, 16);
-                videos[i].Images.AddStrip(imageStrip);
+                var images = new Image[256];
+                for (int t = 0; t < 256; t++)
+                {
+                    images[t] = UtilsGDI.ResizeBitmap(ConfigScript.videoNes.makeImage(t, chunk, curPal, i), 16, 16);
+                }
+                videos[i].Images.AddRange(images);
             }
 
             prepareBlocksPanel();
@@ -93,8 +98,8 @@ namespace CadEditor
             {
                 var but = new Button();
                 but.Size = new Size(16+5,16+5);
-                but.ImageList = videos[0];
-                but.ImageIndex = i;
+                but.Tag = i;
+                but.Image = videos[0].Images[i];
                 but.Click += new EventHandler(buttonBlockClick);
                 blocksPanel.Controls.Add(but);
             }
@@ -103,7 +108,7 @@ namespace CadEditor
 
         private void buttonBlockClick(Object button, EventArgs e)
         {
-            int index = ((Button)button).ImageIndex;
+            int index = (int)((Button)button).Tag;
             curActiveBlock = index;
         }
 

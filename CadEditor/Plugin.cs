@@ -39,20 +39,20 @@ namespace CadEditor
         void updateColorsFromConfig();
 
         Image[] makeBigBlocks(int videoNo, int bigBlockNo, int blockNo, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
-            float smallBlockScaleFactor = 2.0f, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false, int heirarchyLevel = 0);
+            MapViewType curViewType = MapViewType.Tiles, bool showAxis = false, int heirarchyLevel = 0);
         Image[] makeBigBlocks(int videoNo, int bigBlockNo, BigBlock[] bigBlockData, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
-            float smallBlockScaleFactor = 2.0f, float curButtonScale = 2, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false, int heirarchyLevel = 0);
+            MapViewType curViewType = MapViewType.Tiles, bool showAxis = false, int heirarchyLevel = 0);
 
-        Bitmap makeImage(int index, byte[] videoChunk, byte[] pallete, int subPalIndex, float scale, bool scaleAccurate = true, bool withAlpha = false);
-        Bitmap makeImageStrip(byte[] videoChunk, byte[] pallete, int subPalIndex, float scale, bool scaleAccurate = true, bool withAlpha = false);
-        Bitmap makeImageRectangle(byte[] videoChunk, byte[] pallete, int subPalIndex, float scale, bool scaleAccurate = true, bool withAlpha = false);
+        Bitmap makeImage(int index, byte[] videoChunk, byte[] pallete, int subPalIndex, bool withAlpha = false);
+        Bitmap makeImageStrip(byte[] videoChunk, byte[] pallete, int subPalIndex, bool withAlpha = false);
+        Bitmap makeImageRectangle(byte[] videoChunk, byte[] pallete, int subPalIndex, bool withAlpha = false);
 
-        Bitmap[] makeObjects(ObjRec[] objects, Bitmap[][] objStrips, float scale, MapViewType drawType, int constantSubpal = -1);
-        Bitmap[] makeObjects(int videoPageId, int tilesId, int palId, float scale, MapViewType drawType, int constantSubpal = -1);
-        Bitmap makeObject(int index, ObjRec[] objects, Bitmap[][] objStrips, float scale, MapViewType drawType, int constantSubpal = -1);
-        Bitmap makeObjectsStrip(int videoPageId, int tilesId, int palId, float scale, MapViewType drawType, int constantSubpal = -1);
+        Bitmap[] makeObjects(ObjRec[] objects, Bitmap[][] objStrips, MapViewType drawType, int constantSubpal = -1);
+        Bitmap[] makeObjects(int videoPageId, int tilesId, int palId, MapViewType drawType, int constantSubpal = -1);
+        Bitmap makeObject(int index, ObjRec[] objects, Bitmap[][] objStrips, MapViewType drawType, int constantSubpal = -1);
+        Bitmap makeObjectsStrip(int videoPageId, int tilesId, int palId, MapViewType drawType, int constantSubpal = -1);
 
-        Bitmap makeScreen(int scrNo, int levelNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, float scale = 2.0f, bool withBorders = true);
+        Bitmap makeScreen(int scrNo, int levelNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, bool withBorders = true);
 
         Color[] NesColors { get; set; }
 
@@ -61,15 +61,14 @@ namespace CadEditor
 
     public interface IVideoPluginSega
     {
-        Image[] makeBigBlocks(byte[] mapping, byte[] tiles, byte[] palette, int count, float zoom, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false);
+        Image[] makeBigBlocks(byte[] mapping, byte[] tiles, byte[] palette, int count, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false);
         Color[] GetPalette(byte[] pal);
         Bitmap GetTileFromArray(byte[] Tiles, ref int Position, Color[] Palette, byte PalIndex);
         Bitmap GetTileFrom2ColorArray(byte[] Tiles, ref int Position);
         byte[] GetArrayFrom2ColorTile(Bitmap tile);
         byte[] GetArrayFrom2ColorBlock(Bitmap block);
-        Bitmap GetZoomBlockFrom2ColorArray(byte[] Tiles, int Width, float Zoom);
-        //Bitmap GetTile(byte[] Tiles, ushort Word, Color[] Palette, byte PalIndex, bool HF, bool VF);
-        Bitmap GetZoomTile(byte[] tiles, ushort Word, Color[] palette, byte palIndex, bool HF, bool VF, float zoom);
+        //Bitmap GetBlockFrom2ColorArray(byte[] Tiles, int Width);
+        Bitmap GetTile(byte[] tiles, ushort Word, Color[] palette, byte palIndex, bool HF, bool VF);
         // Bitmap GetBlock(ushort[] mapping, byte[] tiles, Color[] palette, byte Index);
 
         string getName();

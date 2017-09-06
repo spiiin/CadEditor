@@ -287,7 +287,7 @@ namespace CadEditor
                     for (int h = 0; h < curHeight; h++)
                     {
                         int scrNo = curLevelLayerData.layer[h*curWidth + w] - 1;
-                        Bitmap scr = scrNo >= 0 ? ConfigScript.videoNes.makeScreen(scrNo, scrLevelNo, curVideoNo, curBigBlockNo, curBlockNo, curPalleteNo, 2.0f) : VideoHelper.emptyScreen(512,512,false);
+                        Bitmap scr = scrNo >= 0 ? ConfigScript.videoNes.makeScreen(scrNo, scrLevelNo, curVideoNo, curBigBlockNo, curBlockNo, curPalleteNo) : VideoHelper.emptyScreen(512,512,false);
                         g.DrawImage(scr, new Point(w*512,h*512));
                     }
                 }

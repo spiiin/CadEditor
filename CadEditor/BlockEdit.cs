@@ -106,20 +106,20 @@ namespace CadEditor
             var chunk = ConfigScript.getVideoChunk(curActiveVideo);
             for (int i = 0; i < 4; i++)
             {
-                videoSprites[i] = Enumerable.Range(0,256).Select(t => ConfigScript.videoNes.makeImage(t, chunk, palette, i, 2, true)).ToArray();
+                videoSprites[i] = Enumerable.Range(0,256).Select(t => ((Bitmap)UtilsGDI.ResizeBitmap(ConfigScript.videoNes.makeImage(t, chunk, palette, i), 16, 16))).ToArray();
             }
         }
 
         protected void setVideoImage()
         {
-            var b = new Bitmap(256, 256);
+            var b = new Bitmap(TILE_SIZE*16, TILE_SIZE*16);
             using (Graphics g = Graphics.FromImage(b))
             {
                 for (int i = 0; i < Globals.CHUNKS_COUNT; i++)
                 {
                     int x = i % 16;
                     int y = i / 16;
-                    g.DrawImage(videoSprites[curSubpalIndex][i], new Rectangle(x * 16, y * 16, 16, 16));
+                    g.DrawImage(videoSprites[curSubpalIndex][i], new Rectangle(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE));
                 }
             }
             mapScreen.Image = b;
@@ -177,8 +177,8 @@ namespace CadEditor
         protected void pb_MouseClick(object sender, MouseEventArgs e)
         {
             bool left = e.Button == MouseButtons.Left;
-            int x = e.X / 16;
-            int y = e.Y / 16;
+            int x = e.X / TILE_SIZE;
+            int y = e.Y / TILE_SIZE;
             PictureBox p = (PictureBox)sender;
             int objIndex = curPageIndex * BLOCKS_PER_PAGE + (int)p.Tag;
             var obj = objects[ objIndex];
@@ -225,14 +225,14 @@ namespace CadEditor
 
         public Image makeObjImage(int index)
         {
-            return ConfigScript.videoNes.makeObject(index, objects, videoSprites, 2.0f, MapViewType.Tiles);
+            return ConfigScript.videoNes.makeObject(index, objects, videoSprites, MapViewType.Tiles);
         }
 
         protected void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
-            int x = e.X / 16;
-            int y = e.Y / 16;
-            curActiveBlock = y * 16 + x;
+            int x = e.X / TILE_SIZE;
+            int y = e.Y / TILE_SIZE;
+            curActiveBlock = y * TILE_SIZE + x;
             pbActive.Image = videoSprites[curSubpalIndex][curActiveBlock];
             lbActive.Text = String.Format("({0:X})", curActiveBlock);
             dirty = true;

@@ -15,7 +15,7 @@ def export(filename, formMain, curActiveLayout):
     
     layout = ConfigScript.getLayout(curActiveLayout)
     levelRec = ConfigScript.getLevelRec(curActiveLayout)
-    curScale = formMain.CurScale
+    curScale = 1#formMain.CurScale
     
     blockWidth = int(formMain.Layers[0].blockWidth * curScale);
     blockHeight = int(formMain.Layers[0].blockHeight * curScale);
@@ -31,6 +31,7 @@ def export(filename, formMain, curActiveLayout):
     tileSize = (blockWidth, blockHeight)
     
     #generate tiles
+    #TODO: rescale it to curScale
     bigBlocksImages = formMain.BigBlocks
     ImWidthInBlocks = 16
     ImHeightInBlocks = int(ceil(len(bigBlocksImages)*1.0/ImWidthInBlocks))

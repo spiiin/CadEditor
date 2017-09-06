@@ -14,7 +14,7 @@ namespace PluginVideoSega
         {
             return "Sega Video Plugin";
         }
-        public Image[] makeBigBlocks(byte[] mapping, byte[] tiles, byte[] palette, int count, float zoom, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false)
+        public Image[] makeBigBlocks(byte[] mapping, byte[] tiles, byte[] palette, int count, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false)
         {
             var result = new Image[count];
             ushort[] m = Mapper.LoadMapping(mapping);
@@ -24,12 +24,12 @@ namespace PluginVideoSega
                 if (!ConfigScript.isBlockSize4x4())
                 {
                     var b = GetBlock(m, tiles, cpal, i);
-                    result[i] = UtilsGDI.ResizeBitmap(b, (int)(32 * zoom), (int)(32 * zoom));
+                    result[i] = UtilsGDI.ResizeBitmap(b, 32, 32);
                 }
                 else
                 {
                     var b = GetBlock4x4(m, tiles, cpal, i);
-                    result[i] = UtilsGDI.ResizeBitmap(b, (int)(32 * zoom), (int)(32 * zoom));
+                    result[i] = UtilsGDI.ResizeBitmap(b, 32, 32);
                 }
                 if (curViewType == MapViewType.ObjNumbers)
                     result[i] = VideoHelper.addObjNumber(result[i], i);
@@ -131,29 +131,7 @@ namespace PluginVideoSega
             return retn;
         }
 
-        public Bitmap GetZoomBlockFrom2ColorArray(byte[] Tiles, int Width, float Zoom)
-        {
-            int Height = Tiles.Length / (0x20 * Width);
-            Bitmap block = new Bitmap(Width * 8, Height * 8);
-            Bitmap retn = new Bitmap((int)(Width * Zoom * 8), (int)(Height * Zoom * 8));
-
-            for (int y = 0, pos = 0; y < Height; y++)
-                for (int x = 0; x < Width; x++)
-                {
-                    Bitmap tile = GetTileFrom2ColorArray(Tiles, ref pos);
-                    using (Graphics g = Graphics.FromImage(block)) g.DrawImage(tile, new Rectangle(x * 8, y * 8, 8, 8));
-                }
-
-            Graphics gr = Graphics.FromImage(retn);
-            gr.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-
-            gr.DrawImage(block, new Rectangle(0, 0, retn.Width, retn.Height));
-            gr.Dispose();
-
-            return retn;
-        }
-
-        private Bitmap GetTile(byte[] Tiles, ushort Word, Color[] Palette, byte PalIndex, bool HF, bool VF)
+        public Bitmap GetTile(byte[] Tiles, ushort Word, Color[] Palette, byte PalIndex, bool HF, bool VF)
         {
             int pos = Mapper.TilePos(Word);
             Bitmap retn = GetTileFromArray(Tiles, ref pos, Palette, PalIndex);
@@ -161,22 +139,6 @@ namespace PluginVideoSega
             if (HF) retn.RotateFlip(RotateFlipType.RotateNoneFlipX);
             if (VF) retn.RotateFlip(RotateFlipType.RotateNoneFlipY);
 
-            return retn;
-        }
-
-        public Bitmap GetZoomTile(byte[] tiles, ushort Word, Color[] palette, byte palIndex, bool HF, bool VF, float zoom)
-        {
-            Bitmap tile = GetTile(tiles, Word, palette, palIndex, HF, VF);
-            Bitmap retn = new Bitmap((int)(8 * zoom), (int)(8 * zoom), System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-
-            Graphics gr = Graphics.FromImage(retn);
-            gr.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-
-            if (zoom > 1.0f)
-                gr.DrawImage(tile, new Rectangle(0, 0, retn.Width + 2, retn.Height + 2));
-            else
-                gr.DrawImage(tile, new Rectangle(0, 0, retn.Width, retn.Height));
-            gr.Dispose();
             return retn;
         }
 

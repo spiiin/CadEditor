@@ -45,7 +45,7 @@ namespace CadEditor
         private void reloadVideo()
         {
             setPal();
-            pbVideo.Image = ConfigScript.videoNes.makeImageRectangle(ConfigScript.getVideoChunk(curActiveVideo), curPal, curSubPal, 4);
+            pbVideo.Image = ConfigScript.videoNes.makeImageRectangle(ConfigScript.getVideoChunk(curActiveVideo), curPal, curSubPal);
         }
 
         private int curActiveVideo = 0;

@@ -94,7 +94,7 @@ namespace CadEditor
             {
                 if (hasSmallBlocksPals())
                 {
-                    smallBlocksImages[0] = ConfigScript.videoNes.makeObjects(curVideo, curTileset, curPallete, 1, curViewType);
+                    smallBlocksImages[0] = ConfigScript.videoNes.makeObjects(curVideo, curTileset, curPallete, curViewType);
                 }
                 else
                 {
@@ -103,12 +103,12 @@ namespace CadEditor
             }
             else
             {
-                smallBlocksImages[0] = ConfigScript.videoNes.makeBigBlocks(curVideo, curTileset, ConfigScript.getBigBlocksRecursive(curHierarchyLevel-1, curSmallBlockNo), curPallete, curViewType, 1, 2.0f, MapViewType.Tiles, false, curHierarchyLevel-1);
+                smallBlocksImages[0] = ConfigScript.videoNes.makeBigBlocks(curVideo, curTileset, ConfigScript.getBigBlocksRecursive(curHierarchyLevel-1, curSmallBlockNo), curPallete, curViewType, MapViewType.Tiles, false, curHierarchyLevel-1);
             }
             reloadBlocksPanel();
 
             //prerender big blocks
-            bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(curVideo, curTileset, bigBlockIndexes, curPallete, curViewType, 1, 2.0f, MapViewType.Tiles, false, curHierarchyLevel);
+            bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(curVideo, curTileset, bigBlockIndexes, curPallete, curViewType, MapViewType.Tiles, false, curHierarchyLevel);
             //
             int btc = Math.Min(ConfigScript.getBigBlocksCount(curHierarchyLevel), 256);
             int bblocksInRow = 16;
@@ -121,7 +121,7 @@ namespace CadEditor
         {
             for (int i = 0; i < 4; i++)
             {
-                smallBlocksImages[i] = ConfigScript.videoNes.makeObjects(curVideo, curTileset, curPallete, 1, curViewType, i);
+                smallBlocksImages[i] = ConfigScript.videoNes.makeObjects(curVideo, curTileset, curPallete, curViewType, i);
             }
         }
 

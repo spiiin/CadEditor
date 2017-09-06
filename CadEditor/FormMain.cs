@@ -87,8 +87,8 @@ namespace CadEditor
 
         private void changeBlocksSize(Image[] bigImages)
         {
-            layers[0].blockWidth = (int)(bigImages[0].Width / curScale);
-            layers[0].blockHeight = (int)(bigImages[0].Height / curScale);
+            layers[0].blockWidth = bigImages[0].Width;
+            layers[0].blockHeight = bigImages[0].Height;
             layers[1].blockWidth = layers[0].blockWidth;
             layers[1].blockHeight = layers[0].blockHeight;
         }
@@ -160,7 +160,7 @@ namespace CadEditor
             byte[] videoTiles = ConfigScript.getVideoChunk(curActiveVideoNo);
             byte[] pal = ConfigScript.getPal(curActivePalleteNo);
             int count = ConfigScript.getBigBlocksCount(ConfigScript.getbigBlocksHierarchyCount()-1);
-            return ConfigScript.videoSega.makeBigBlocks(mapping, videoTiles, pal, count, curScale, curViewType, showAxis);
+            return ConfigScript.videoSega.makeBigBlocks(mapping, videoTiles, pal, count, curViewType, showAxis);
         }
 
         private void setBlocks(bool needToRefillBlockPanel)
@@ -190,7 +190,7 @@ namespace CadEditor
             }
             else
             {
-                bigBlocks = ConfigScript.videoNes.makeBigBlocks(curActiveVideoNo, curActiveBigBlockNo, bigTileIndex, curActivePalleteNo, smallObjectsType, smallBlockScaleFactor, curButtonScale, curViewType, showAxis, ConfigScript.getbigBlocksHierarchyCount() - 1);
+                bigBlocks = ConfigScript.videoNes.makeBigBlocks(curActiveVideoNo, curActiveBigBlockNo, bigTileIndex, curActivePalleteNo, smallObjectsType, curViewType, showAxis, ConfigScript.getbigBlocksHierarchyCount() - 1);
             }
 
             changeBlocksSize(bigBlocks);
@@ -977,7 +977,7 @@ namespace CadEditor
             int tx = x / TILE_SIZE_X, ty = y / TILE_SIZE_Y;
             int maxtX = blocksScreen.Width / TILE_SIZE_X;
             int index = ty * maxtX + tx;
-            if ((tx < 0) || (tx >= maxtX) || (index < 0) || (index > bigBlocks.Length))
+            if ((tx < 0) || (tx >= maxtX) || (index < 0) || (index >= bigBlocks.Length))
             {
                 return;
             }
