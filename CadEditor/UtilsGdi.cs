@@ -207,7 +207,7 @@ namespace CadEditor
             return bmp;
         }
 
-        public static Image[] setBlocksForPictures(float curButtonScale = 2, int blockWidth = 32, int blockHeight = 32, MapViewType curDrawType = MapViewType.Tiles, bool showAxis = true)
+        public static Image[] setBlocksForPictures(float curButtonScale = 2, int blockWidth = 32, int blockHeight = 32, MapViewType curDrawType = MapViewType.Tiles)
         {
             //only if using pictures
             if (!ConfigScript.usePicturesInstedBlocks || ConfigScript.getBlocksPicturesFilename() == "")
@@ -234,17 +234,6 @@ namespace CadEditor
                     var imBlock = CropImage(imSrc, new Rectangle(x * imBlockWidth, y * imBlockHeight, imBlockWidth, imBlockHeight));
                     var imResized = ResizeBitmap(imBlock, (int)(curButtonScale * blockWidth), (int)(curButtonScale * blockHeight));
                     bigBlocks[y*imCountX + x] = imResized;
-                }
-            }
-
-            if (showAxis)
-            {
-                for (int i = 0; i < bigBlocks.Length; i++)
-                {
-                    var im1 = bigBlocks[i];
-                    using (var g = Graphics.FromImage(im1))
-                        g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), new Rectangle(0, 0, (int)(blockWidth * curButtonScale), (int)(blockHeight * curButtonScale)));
-                    bigBlocks[i] = im1;
                 }
             }
 

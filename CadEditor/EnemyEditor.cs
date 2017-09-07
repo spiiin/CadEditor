@@ -75,7 +75,7 @@ namespace CadEditor
                 if (ConfigScript.isUseSegaGraphics())
                     bigBlocks = makeSegaBigBlocks();
                 else
-                    bigBlocks = ConfigScript.videoNes.makeBigBlocks(curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo, MapViewType.Tiles, MapViewType.Tiles, formMain.ShowAxis, ConfigScript.getbigBlocksHierarchyCount()-1);
+                    bigBlocks = ConfigScript.videoNes.makeBigBlocks(curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo, MapViewType.Tiles, MapViewType.Tiles, ConfigScript.getbigBlocksHierarchyCount()-1);
             }
         }
 
@@ -86,7 +86,7 @@ namespace CadEditor
             byte[] videoTiles = ConfigScript.getVideoChunk(curVideoNo);
             byte[] pal = ConfigScript.getPal(curPaletteNo);
             int count = ConfigScript.getBigBlocksCount(ConfigScript.getbigBlocksHierarchyCount()-1);
-            return ConfigScript.videoSega.makeBigBlocks(mapping, videoTiles, pal, count, MapViewType.Tiles, formMain.ShowAxis);
+            return ConfigScript.videoSega.makeBigBlocks(mapping, videoTiles, pal, count, MapViewType.Tiles);
         }
 
         private int calcScrNo(int noInLayout)
@@ -132,7 +132,7 @@ namespace CadEditor
         {
             if (ConfigScript.usePicturesInstedBlocks)
             {
-                bigBlocks = UtilsGDI.setBlocksForPictures(2, 32,32, MapViewType.Tiles, formMain.ShowAxis);
+                bigBlocks = UtilsGDI.setBlocksForPictures(2, 32,32, MapViewType.Tiles);
             }
 
             reloadPictures();
@@ -355,7 +355,7 @@ namespace CadEditor
                         var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
                         int leftMargin = scrWidth * x;
                         int topMargin = scrHeight * y;
-                        MapEditor.Render(g, bigBlocks, visibleRect, formMain.Layers, scrNo, curScale, false, leftMargin, topMargin, width, height);
+                        MapEditor.Render(g, bigBlocks, visibleRect, formMain.Layers, scrNo, curScale, false, formMain.ShowAxis, leftMargin, topMargin, width, height);
                         //ConfigScript.renderToMainScreen(g, (int)curScale);
                     }
                     else

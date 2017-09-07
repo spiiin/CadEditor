@@ -219,14 +219,14 @@ namespace PluginVideoNes
         }
 
          public Image[] makeBigBlocks(int videoNo, int bigBlockNo, int blockNo, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
-           MapViewType curViewType = MapViewType.Tiles, bool showAxis = false, int hierarchyLevel = 0)
+           MapViewType curViewType = MapViewType.Tiles, int hierarchyLevel = 0)
         {
             BigBlock[] bigBlockIndexes = ConfigScript.getBigBlocksRecursive(hierarchyLevel, blockNo);
-            return makeBigBlocks(videoNo, bigBlockNo, bigBlockIndexes, palleteNo, smallObjectsViewType, curViewType, showAxis, hierarchyLevel);
+            return makeBigBlocks(videoNo, bigBlockNo, bigBlockIndexes, palleteNo, smallObjectsViewType, curViewType, hierarchyLevel);
         }
 
         public Image[] makeBigBlocks(int videoNo, int bigBlockNo, BigBlock[] bigBlockIndexes, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
-            MapViewType curViewType = MapViewType.Tiles, bool showAxis = false, int hierarchyLevel = 0)
+            MapViewType curViewType = MapViewType.Tiles, int hierarchyLevel = 0)
         {
             int blockCount = ConfigScript.getBigBlocksCount(hierarchyLevel);
             var bigBlocks = new Image[blockCount];
@@ -239,7 +239,7 @@ namespace PluginVideoNes
             else
             {
                 var bigBlockIndexesPrev = ConfigScript.getBigBlocksRecursive(hierarchyLevel - 1, bigBlockNo);
-                smallBlocksPack = makeBigBlocks(videoNo, bigBlockNo, bigBlockIndexesPrev, palleteNo, smallObjectsViewType, curViewType, false, hierarchyLevel - 1);
+                smallBlocksPack = makeBigBlocks(videoNo, bigBlockNo, bigBlockIndexesPrev, palleteNo, smallObjectsViewType, curViewType, hierarchyLevel - 1);
             }
 
             //tt version hardcode
@@ -274,8 +274,6 @@ namespace PluginVideoNes
                 }
                 if (curViewType == MapViewType.ObjNumbers)
                     b = VideoHelper.addObjNumber(b, btileId);
-                if (showAxis)
-                    b = VideoHelper.addAxisRectangle(b);
                 bigBlocks[btileId] = b;
             }
             return bigBlocks;
@@ -286,7 +284,7 @@ namespace PluginVideoNes
         {
             if (scrNo < 0)
                 return VideoHelper.emptyScreen((int)(ConfigScript.getScreenWidth(levelNo) * 32), (int)(ConfigScript.getScreenHeight(levelNo) * 32));
-            var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, MapViewType.Tiles, withBorders);
+            var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, MapViewType.Tiles);
             //var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.ObjType,MapViewType.Tiles, withBorders);
             int[] indexes = Globals.getScreen(ConfigScript.screensOffset[levelNo], scrNo);
             int scrW = ConfigScript.getScreenWidth(0); //zero as screenNoForLevel

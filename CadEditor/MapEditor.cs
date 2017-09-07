@@ -6,7 +6,7 @@ namespace CadEditor
 {
     public class MapEditor
     {
-        public static void Render(Graphics g, Image[] bigBlocks, Rectangle? visibleRect, BlockLayer[] layers, int scrNo, float CurScale, bool ShowBorder, int LeftMargin, int TopMargin, int WIDTH, int HEIGHT)
+        public static void Render(Graphics g, Image[] bigBlocks, Rectangle? visibleRect, BlockLayer[] layers, int scrNo, float CurScale, bool ShowBorder, bool showBlocksAxis, int LeftMargin, int TopMargin, int WIDTH, int HEIGHT)
         {
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
@@ -38,7 +38,13 @@ namespace CadEditor
                     if (visibleRect == null || visibleRect.Value.Contains(tileRect) || visibleRect.Value.IntersectsWith(tileRect))
                     {
                         if (bigBlockNo > -1 && bigBlockNo < bigBlocks.Length)
+                        {
                             g.DrawImage(bigBlocks[bigBlockNo], tileRect);
+                            if (showBlocksAxis)
+                            {
+                                g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), tileRect);
+                            }
+                        }
                         //else
                         //    g.FillRectangle(Brushes.White, tileRect);
                     }
@@ -104,7 +110,7 @@ namespace CadEditor
 
             using (var g = Graphics.FromImage(result))
             {
-                Render(g, bigBlocks, null, layers, scrNo, CurScale, ShowBorder, LeftMargin, TopMargin, WIDTH, HEIGHT);
+                Render(g, bigBlocks, null, layers, scrNo, CurScale, ShowBorder, false, LeftMargin, TopMargin, WIDTH, HEIGHT);
             }
             return result;
         }

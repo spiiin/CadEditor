@@ -14,7 +14,7 @@ namespace PluginVideoSega
         {
             return "Sega Video Plugin";
         }
-        public Image[] makeBigBlocks(byte[] mapping, byte[] tiles, byte[] palette, int count, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false)
+        public Image[] makeBigBlocks(byte[] mapping, byte[] tiles, byte[] palette, int count, MapViewType curViewType = MapViewType.Tiles)
         {
             var result = new Image[count];
             ushort[] m = Mapper.LoadMapping(mapping);
@@ -33,8 +33,6 @@ namespace PluginVideoSega
                 }
                 if (curViewType == MapViewType.ObjNumbers)
                     result[i] = VideoHelper.addObjNumber(result[i], i);
-                if (showAxis)
-                    result[i] = VideoHelper.addAxisRectangle(result[i]);
             }
             return result;
         }

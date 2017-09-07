@@ -39,9 +39,9 @@ namespace CadEditor
         void updateColorsFromConfig();
 
         Image[] makeBigBlocks(int videoNo, int bigBlockNo, int blockNo, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
-            MapViewType curViewType = MapViewType.Tiles, bool showAxis = false, int heirarchyLevel = 0);
+            MapViewType curViewType = MapViewType.Tiles, int heirarchyLevel = 0);
         Image[] makeBigBlocks(int videoNo, int bigBlockNo, BigBlock[] bigBlockData, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
-            MapViewType curViewType = MapViewType.Tiles, bool showAxis = false, int heirarchyLevel = 0);
+            MapViewType curViewType = MapViewType.Tiles, int heirarchyLevel = 0);
 
         Bitmap makeImage(int index, byte[] videoChunk, byte[] pallete, int subPalIndex, bool withAlpha = false);
         Bitmap makeImageStrip(byte[] videoChunk, byte[] pallete, int subPalIndex, bool withAlpha = false);
@@ -61,7 +61,7 @@ namespace CadEditor
 
     public interface IVideoPluginSega
     {
-        Image[] makeBigBlocks(byte[] mapping, byte[] tiles, byte[] palette, int count, MapViewType curViewType = MapViewType.Tiles, bool showAxis = false);
+        Image[] makeBigBlocks(byte[] mapping, byte[] tiles, byte[] palette, int count, MapViewType curViewType = MapViewType.Tiles);
         Color[] GetPalette(byte[] pal);
         Bitmap GetTileFromArray(byte[] Tiles, ref int Position, Color[] Palette, byte PalIndex);
         Bitmap GetTileFrom2ColorArray(byte[] Tiles, ref int Position);

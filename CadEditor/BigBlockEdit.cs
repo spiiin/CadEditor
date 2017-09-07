@@ -103,12 +103,12 @@ namespace CadEditor
             }
             else
             {
-                smallBlocksImages[0] = ConfigScript.videoNes.makeBigBlocks(curVideo, curTileset, ConfigScript.getBigBlocksRecursive(curHierarchyLevel-1, curSmallBlockNo), curPallete, curViewType, MapViewType.Tiles, false, curHierarchyLevel-1);
+                smallBlocksImages[0] = ConfigScript.videoNes.makeBigBlocks(curVideo, curTileset, ConfigScript.getBigBlocksRecursive(curHierarchyLevel-1, curSmallBlockNo), curPallete, curViewType, MapViewType.Tiles, curHierarchyLevel-1);
             }
             reloadBlocksPanel();
 
             //prerender big blocks
-            bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(curVideo, curTileset, bigBlockIndexes, curPallete, curViewType, MapViewType.Tiles, false, curHierarchyLevel);
+            bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(curVideo, curTileset, bigBlockIndexes, curPallete, curViewType, MapViewType.Tiles, curHierarchyLevel);
             //
             int btc = Math.Min(ConfigScript.getBigBlocksCount(curHierarchyLevel), 256);
             int bblocksInRow = 16;
@@ -386,7 +386,7 @@ namespace CadEditor
             }
             dirty = true;
             updateSaveVisibility();
-            bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(curVideo, curTileset, bigBlockIndexes, curPallete, curViewType, MapViewType.Tiles, false, curHierarchyLevel);
+            bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(curVideo, curTileset, bigBlockIndexes, curPallete, curViewType, MapViewType.Tiles, curHierarchyLevel);
             mapScreen.Invalidate();
         }
 

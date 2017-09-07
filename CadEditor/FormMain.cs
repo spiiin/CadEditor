@@ -160,7 +160,7 @@ namespace CadEditor
             byte[] videoTiles = ConfigScript.getVideoChunk(curActiveVideoNo);
             byte[] pal = ConfigScript.getPal(curActivePalleteNo);
             int count = ConfigScript.getBigBlocksCount(ConfigScript.getbigBlocksHierarchyCount()-1);
-            return ConfigScript.videoSega.makeBigBlocks(mapping, videoTiles, pal, count, curViewType, showAxis);
+            return ConfigScript.videoSega.makeBigBlocks(mapping, videoTiles, pal, count, curViewType);
         }
 
         private void setBlocks(bool needRebuildBlocks)
@@ -175,7 +175,7 @@ namespace CadEditor
                     layers[0].blockHeight = 32;
                     layers[1].blockWidth = ConfigScript.getBlocksPicturesWidth();
                     layers[1].blockHeight = 32;
-                    bigBlocks = UtilsGDI.setBlocksForPictures(curButtonScale, layers[0].blockWidth, layers[0].blockHeight, curViewType, showAxis);
+                    bigBlocks = UtilsGDI.setBlocksForPictures(curButtonScale, layers[0].blockWidth, layers[0].blockHeight, curViewType);
                 }
                 updateBlocksImages();
                 return;
@@ -195,7 +195,7 @@ namespace CadEditor
                 }
                 else
                 {
-                    bigBlocks = ConfigScript.videoNes.makeBigBlocks(curActiveVideoNo, curActiveBigBlockNo, bigTileIndex, curActivePalleteNo, smallObjectsType, curViewType, showAxis, ConfigScript.getbigBlocksHierarchyCount() - 1);
+                    bigBlocks = ConfigScript.videoNes.makeBigBlocks(curActiveVideoNo, curActiveBigBlockNo, bigTileIndex, curActivePalleteNo, smallObjectsType, curViewType, ConfigScript.getbigBlocksHierarchyCount() - 1);
                 }
                 changeBlocksSize(bigBlocks);
             }
@@ -285,7 +285,7 @@ namespace CadEditor
             int TILE_SIZE_Y = (int)(layers[0].blockHeight * curScale);
             int SIZE = WIDTH * HEIGHT;
             var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
-            MapEditor.Render(e.Graphics, bigBlocks, visibleRect, layers, curActiveScreen, curScale, true, ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X, 0, WIDTH, HEIGHT);
+            MapEditor.Render(e.Graphics, bigBlocks, visibleRect, layers, curActiveScreen, curScale, true, showAxis, ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X, 0, WIDTH, HEIGHT);
 
             if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen > 0) && layers[0].showLayer)
             {
