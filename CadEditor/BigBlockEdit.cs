@@ -456,7 +456,7 @@ namespace CadEditor
             var sb0 = smallBlocksImages[0];
             int sbw = sb0[0].Width;
             int sbh = sb0[0].Height;
-            MapEditor.RenderAllBlocks(e.Graphics, blocksScreen, smallBlocksImages[0], sbw, sbh, visibleRect, 1.0f, curActiveBlock);
+            MapEditor.RenderAllBlocks(e.Graphics, blocksScreen, smallBlocksImages[0], sbw, sbh, visibleRect, 1.0f, curActiveBlock, false);
         }
 
         private void blocksScreen_MouseDown(object sender, MouseEventArgs e)

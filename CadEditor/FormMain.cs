@@ -676,7 +676,7 @@ namespace CadEditor
         private void cbShowAxis_CheckedChanged(object sender, EventArgs e)
         {
             showAxis = bttAxis.Checked;
-            reloadLevel(false, true);
+            reloadLevel(false, false);
         }
 
         private void bttShowBrush_CheckedChanged(object sender, EventArgs e)
@@ -976,7 +976,7 @@ namespace CadEditor
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
             var visibleRect = UtilsGui.getVisibleRectangle(pnBlocks, blocksScreen);
-            MapEditor.RenderAllBlocks(e.Graphics, blocksScreen, bigBlocks, layers[0].blockWidth, layers[0].blockHeight, visibleRect, curScale, curActiveBlock);
+            MapEditor.RenderAllBlocks(e.Graphics, blocksScreen, bigBlocks, layers[0].blockWidth, layers[0].blockHeight, visibleRect, curScale, curActiveBlock, showAxis);
         }
 
         private void blocksScreen_MouseDown(object sender, MouseEventArgs e)

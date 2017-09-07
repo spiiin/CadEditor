@@ -65,7 +65,7 @@ namespace CadEditor
             ConfigScript.renderToMainScreen(g, (int)CurScale);
         }
 
-        public static void RenderAllBlocks(Graphics g, PictureBox parentControl, Image[] bigBlocks, int blockWidth, int blockHeight, Rectangle? visibleRect, float CurScale, int activeBlock)
+        public static void RenderAllBlocks(Graphics g, PictureBox parentControl, Image[] bigBlocks, int blockWidth, int blockHeight, Rectangle? visibleRect, float CurScale, int activeBlock, bool showBlocksAxis)
         {
             int TILE_SIZE_X = (int)(blockWidth * CurScale);
             int TILE_SIZE_Y = (int)(blockHeight * CurScale);
@@ -87,9 +87,14 @@ namespace CadEditor
                     else
                         g.FillRectangle(Brushes.White, tileRect);
 
+                    if (showBlocksAxis)
+                    {
+                        g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), tileRect);
+                    }
+
                     if (i == activeBlock)
                     {
-                        g.DrawRectangle(new Pen(Brushes.Red, 2.0f), tileRect);
+                        g.DrawRectangle(new Pen(Brushes.Red, 3.0f), tileRect);
                     }
                 }
             }

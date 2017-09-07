@@ -620,7 +620,7 @@ namespace CadEditor
             {
                 return (T)script.InvokeInst(data, funcName, funcParams);
             }
-            catch (Exception e) //all exception catch...
+            catch (Exception) //all exception catch...
             {
                 return defaultValue;
             }

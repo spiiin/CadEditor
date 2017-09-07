@@ -289,7 +289,7 @@ namespace CadEditor
         private void blocksScreen_Paint(object sender, PaintEventArgs e)
         {
             var visibleRect = UtilsGui.getVisibleRectangle(pnBlocks, blocksScreen);
-            MapEditor.RenderAllBlocks(e.Graphics, blocksScreen, bigBlocks, blockWidth, blockHeight, visibleRect, 1.0f, curActiveTile);
+            MapEditor.RenderAllBlocks(e.Graphics, blocksScreen, bigBlocks, blockWidth, blockHeight, visibleRect, 1.0f, curActiveTile, false);
         }
 
         private void blocksScreen_MouseDown(object sender, MouseEventArgs e)
