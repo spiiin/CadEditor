@@ -331,6 +331,9 @@ namespace CadEditor
 
         private void paintBack(Graphics g)
         {
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+
             int blockWidth = formMain.Layers[0].blockWidth;
             int blockHeight = formMain.Layers[0].blockHeight;
             int scrLevelNo = getLevelRecForGameType().levelNo;

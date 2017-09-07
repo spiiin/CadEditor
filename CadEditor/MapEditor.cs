@@ -8,6 +8,9 @@ namespace CadEditor
     {
         public static void Render(Graphics g, Image[] bigBlocks, Rectangle? visibleRect, BlockLayer[] layers, int scrNo, float CurScale, bool ShowBorder, int LeftMargin, int TopMargin, int WIDTH, int HEIGHT)
         {
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+
             bool verticalScreen = ConfigScript.getScreenVertical();
             int SIZE = WIDTH * HEIGHT;
 

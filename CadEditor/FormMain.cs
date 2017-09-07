@@ -276,13 +276,16 @@ namespace CadEditor
             int[] indexes2 = (ConfigScript.getLayersCount() > 1) ? layers[1].screens[curActiveScreen] : null;
             var g = e.Graphics;
 
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+
             int WIDTH = ConfigScript.getScreenWidth(curActiveLevelForScreen);
             int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
             int TILE_SIZE_X = (int)(layers[0].blockWidth * curScale);
             int TILE_SIZE_Y = (int)(layers[0].blockHeight * curScale);
             int SIZE = WIDTH * HEIGHT;
             var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
-            MapEditor.Render(e.Graphics, bigBlocks, visibleRect, new BlockLayer[] { layers[0], layers[1] }, curActiveScreen, curScale, true, ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X, 0, WIDTH, HEIGHT);
+            MapEditor.Render(e.Graphics, bigBlocks, visibleRect, layers, curActiveScreen, curScale, true, ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X, 0, WIDTH, HEIGHT);
 
             if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen > 0) && layers[0].showLayer)
             {
@@ -969,6 +972,9 @@ namespace CadEditor
         {
             if (!fileLoaded)
                 return;
+            var g = e.Graphics;
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
             var visibleRect = UtilsGui.getVisibleRectangle(pnBlocks, blocksScreen);
             MapEditor.RenderAllBlocks(e.Graphics, blocksScreen, bigBlocks, layers[0].blockWidth, layers[0].blockHeight, visibleRect, curScale, curActiveBlock);
         }
