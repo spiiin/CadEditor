@@ -30,7 +30,7 @@ namespace CadEditor
             else
             {
                 Globals.loadData(OpenFile.FileName, OpenFile.DumpName, OpenFile.ConfigName);
-                curScale = curButtonScale =  ConfigScript.isBuildScreenFromSmallBlocks() ? 1 : 2;
+                curScale =  ConfigScript.isBuildScreenFromSmallBlocks() ? 1 : 2;
                 fileLoaded = true;
 
                 //Change size without event, it will call later
@@ -175,7 +175,7 @@ namespace CadEditor
                     layers[0].blockHeight = 32;
                     layers[1].blockWidth = ConfigScript.getBlocksPicturesWidth();
                     layers[1].blockHeight = 32;
-                    bigBlocks = UtilsGDI.setBlocksForPictures(curButtonScale, layers[0].blockWidth, layers[0].blockHeight, curViewType);
+                    bigBlocks = UtilsGDI.setBlocksForPictures(curScale, layers[0].blockWidth, layers[0].blockHeight, curViewType);
                 }
                 updateBlocksImages();
                 return;
@@ -185,8 +185,6 @@ namespace CadEditor
                 curViewType == MapViewType.SmallObjNumbers ? MapViewType.ObjNumbers :
                   curViewType == MapViewType.ObjType ? MapViewType.ObjType : MapViewType.Tiles;
 
-            float smallBlockScaleFactor = curButtonScale;
-            int bigTileIndex = curActiveBlockNo;
             if (needRebuildBlocks)
             {
                 if (ConfigScript.isUseSegaGraphics())
@@ -195,7 +193,7 @@ namespace CadEditor
                 }
                 else
                 {
-                    bigBlocks = ConfigScript.videoNes.makeBigBlocks(curActiveVideoNo, curActiveBigBlockNo, bigTileIndex, curActivePalleteNo, smallObjectsType, curViewType, ConfigScript.getbigBlocksHierarchyCount() - 1);
+                    bigBlocks = ConfigScript.videoNes.makeBigBlocks(curActiveVideoNo, curActiveBigBlockNo, curActiveBlockNo, curActivePalleteNo, smallObjectsType, curViewType, ConfigScript.getbigBlocksHierarchyCount() - 1);
                 }
                 changeBlocksSize(bigBlocks);
             }
@@ -334,9 +332,6 @@ namespace CadEditor
         private int curActivePalleteNo = 0;
 
         private float curScale = 2;
-        private float curButtonScale = 2;
-        //private int blockWidth = 32;
-        //private int blockHeight = 32;
 
         bool useStructs;
         TileStructure curTileStruct;
@@ -637,7 +632,7 @@ namespace CadEditor
             if (f.ShowDialog() == DialogResult.OK)
             {
                 Globals.loadData(OpenFile.FileName, OpenFile.DumpName, OpenFile.ConfigName);
-                curScale = curButtonScale = ConfigScript.isBuildScreenFromSmallBlocks() ? 1 : 2;
+                curScale = ConfigScript.isBuildScreenFromSmallBlocks() ? 1 : 2;
                 fileLoaded = true;
                 resetControls();
                 setWindowText();
@@ -780,7 +775,7 @@ namespace CadEditor
         private void bttScale_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             float[] scaleFactors = { 0.25f, 0.5f, 1.0f, 2.0f, 3.0f, 4.0f };
-            curScale = curButtonScale = scaleFactors [bttScale.DropDownItems.IndexOf(e.ClickedItem)];
+            curScale = scaleFactors [bttScale.DropDownItems.IndexOf(e.ClickedItem)];
             cbLevel_SelectedIndexChanged(bttScale, new EventArgs());
         }
 
