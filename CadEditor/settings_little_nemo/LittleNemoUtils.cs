@@ -2,10 +2,47 @@ using CadEditor;
 using System;
 using System.Collections.Generic;
 
-using System.Windows.Forms;
-
 public class LittleNemoUtils 
 { 
+  public static ObjRec[] getBlocks(int blockIndex)
+  {
+      int count = ConfigScript.getBlocksCount();
+      var bb = Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), count);
+      var palAddr = ConfigScript.getTilesAddr(blockIndex) + ConfigScript.getBlocksCount() * 4;
+      for (int i = 0; i < count; i++)
+      {
+          bb[i].palBytes[0] = Globals.romdata[palAddr + i] >> 6;  //physics also in lo bits
+      }
+      return bb;
+  }
+  
+  public static void setBlocks(int blockIndex, ObjRec[] blocksData)
+  {
+    int count = ConfigScript.getBlocksCount();
+    Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), count, false);
+    var palAddr = ConfigScript.getTilesAddr(blockIndex) + ConfigScript.getBlocksCount() * 4;
+    for (int i = 0; i < count; i++)
+    {
+        int t = Globals.romdata[palAddr + i];
+        t =  t &  0x3F | (blocksData[i].palBytes[0]<<6);
+        Globals.romdata[palAddr + i] = (byte)t; //save only pal bits, not physics
+    }
+  }
+  
+  public static BigBlock[] getBigBlocks(int bigTileIndex)
+  {
+    var bigBlocksAddr = ConfigScript.getBigTilesAddr(0, bigTileIndex);
+    var data = Utils.readDataFromAlignedArrays(Globals.romdata, bigBlocksAddr, ConfigScript.getBigBlocksCount(0));
+    return Utils.unlinearizeBigBlocks<BigBlock>(data, 2, 2);
+  }
+  
+  public static void setBigBlocks(int bigTileIndex, BigBlock[] bigBlockIndexes)
+  {
+    var bigBlocksAddr = ConfigScript.getBigTilesAddr(0, bigTileIndex);
+    var data = Utils.linearizeBigBlocks(bigBlockIndexes);
+    Utils.writeDataToAlignedArrays(data, Globals.romdata, bigBlocksAddr, ConfigScript.getBigBlocksCount(0));
+  }
+  
   public static List<ObjectList> getObjectsNemo(int levelNo)
   {
       LevelRec lr = ConfigScript.getLevelRec(levelNo);
