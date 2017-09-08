@@ -1,6 +1,5 @@
 Поддерживаемые игры:
   редактор экранов/макроблоков/блоков/списков врагов:
-    Chip&Dale                                       (все уровни)
     Darkwing Duck                                   (все уровни)
     Little Mermaid                                  (все уровни)
     Tale Spin                                       (все уровни)
@@ -8,6 +7,8 @@
     Flintstones: The Rescue of Dino & Hoppy         (все уровни)
     Jungle Book                                     (все уровни)
     Tom & Jerry                                     (все уровни)
+    Little Nemo                                     (все уровни)
+    Chip&Dale                                       (все уровни, редактор объектов неполный)
     Duck Tales                                      (все уровни, редактор объектов неполный)
     Duck Tales 2                                    (все уровни, редактор объектов неполный)
     Chip & Dale 2                                   (все уровни, редактор объектов неполный)
@@ -61,7 +62,6 @@
     Contra Spirits                                  (1 уровень, игра защищена от изменений)
     Mickey Mania 7                                  (1 уровень, игра защищена от изменений)
   редактор экранов картинками:
-    Little Nemo                                     (все уровни + редактор объектов всех уровней)
     Ninja Cat (Cattou Ninden Teyandee)              (все уровни + редактор объектов 4 уровней неполный)
     Banana Prince                                   (все уровни)
     SD Hero Soukessen - Taose! Aku no Gundan        (все уровни)
