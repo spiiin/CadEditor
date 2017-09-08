@@ -14,8 +14,10 @@ public class Data
     };
   }
   public OffsetRec getScreensOffset()  { return new OffsetRec(0x10910, 22 , 8*8);   }
-  public bool isBigBlockEditorEnabled() { return true; }
-  public bool isBlockEditorEnabled()    { return true; }
+  public string getBlocksFilename()    { return "little_nemo_8-2.png"; }
+  
+  public bool isBigBlockEditorEnabled() { return false; }
+  public bool isBlockEditorEnabled()    { return false; }
   public bool isEnemyEditorEnabled()    { return true; }
   
   public GetObjectsFunc getObjectsFunc()   { return LittleNemoUtils.getObjectsNemo; }
