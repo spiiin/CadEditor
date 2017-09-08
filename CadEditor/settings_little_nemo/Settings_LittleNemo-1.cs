@@ -15,8 +15,6 @@ public class Data
   }
   
   public OffsetRec getScreensOffset()  { return new OffsetRec(0x910, 33 , 8*8);   }
-  public int getScreenWidth()          { return 8; }
-  public int getScreenHeight()         { return 8; }
   
   public bool isBigBlockEditorEnabled() { return true; }
   public bool isBlockEditorEnabled()    { return true; }
@@ -28,7 +26,6 @@ public class Data
   
   public GetLayoutFunc getLayoutFunc() { return LittleNemoUtils.getLayoutLinearPlusOne; }
   public SetLayoutFunc setLayoutFunc() { return LittleNemoUtils.setLayoutLinearPlusOne; }
-  public int getPalBytesAddr()         { return 0x11E0; }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return Utils.getChrAddress; }
   public GetVideoChunkFunc    getVideoChunkFunc()    { return Utils.getVideoChunk; }
@@ -46,6 +43,7 @@ public class Data
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x510 , 1   , 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x10 , 1   , 0x4000); }
   
+  public int getPalBytesAddr()         { return 0x11E0; }
   public IList<LevelRec> getLevelRecs() { return levelRecs; }
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
