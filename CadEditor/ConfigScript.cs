@@ -89,7 +89,7 @@ namespace CadEditor
             programStartDirectory = AppDomain.CurrentDomain.BaseDirectory + "/";
             configDirectory = Path.GetDirectoryName(fileName) + "/";
 
-            var asm = new AsmHelper(CSScript.Load(fileName));
+            var asm = new AsmHelper(CSScript.LoadCode(File.ReadAllText(fileName)));
             object data = null;
             bool metaDataExists = true;
             try
