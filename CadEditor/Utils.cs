@@ -362,7 +362,7 @@ namespace CadEditor
             return objects;
         }
 
-        public static void writeBlocksToAlignedArrays(ObjRec[] objects, byte[] romdata, int addr, int count)
+        public static void writeBlocksToAlignedArrays(ObjRec[] objects, byte[] romdata, int addr, int count, bool withPal = true)
         {
             for (int i = 0; i < count; i++)
             {
@@ -371,7 +371,10 @@ namespace CadEditor
                 romdata[addr + count * 1 + i] = (byte)obj.indexes[1];
                 romdata[addr + count * 2 + i] = (byte)obj.indexes[2];
                 romdata[addr + count * 3 + i] = (byte)obj.indexes[3];
-                romdata[addr + count * 4 + i] = (byte)obj.palBytes[0];
+                if (withPal)
+                {
+                    romdata[addr + count * 4 + i] = (byte)obj.palBytes[0];
+                }
             }
         }
 

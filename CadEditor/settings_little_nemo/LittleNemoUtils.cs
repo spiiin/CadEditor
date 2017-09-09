@@ -11,7 +11,8 @@ public class LittleNemoUtils
       var palAddr = ConfigScript.getTilesAddr(blockIndex) + ConfigScript.getBlocksCount() * 4;
       for (int i = 0; i < count; i++)
       {
-          bb[i].palBytes[0] = Globals.romdata[palAddr + i] >> 6;  //physics also in lo bits
+          var objType = (Globals.romdata[palAddr + i] << 4)&0xF0;
+          bb[i].palBytes[0] = (Globals.romdata[palAddr + i] >> 6) | objType;  //physics also in lo bits
       }
       return bb;
   }
@@ -23,9 +24,8 @@ public class LittleNemoUtils
     var palAddr = ConfigScript.getTilesAddr(blockIndex) + ConfigScript.getBlocksCount() * 4;
     for (int i = 0; i < count; i++)
     {
-        int t = Globals.romdata[palAddr + i];
-        t =  t &  0x3F | (blocksData[i].palBytes[0]<<6);
-        Globals.romdata[palAddr + i] = (byte)t; //save only pal bits, not physics
+        int t =  blocksData[i].getType() | ((blocksData[i].palBytes[0]&0x3)<<6);
+        Globals.romdata[palAddr + i] = (byte)t;
     }
   }
   

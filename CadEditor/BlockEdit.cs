@@ -348,6 +348,7 @@ namespace CadEditor
                 cbType.Size = new Size(120, 21);
                 cbType.Tag = i;
                 cbType.DropDownStyle = ComboBoxStyle.DropDownList;
+                cbType.SelectedIndexChanged += cbType_SelectedIndexChanged;
                 fp.Controls.Add(cbType);
                 mapObjects.Controls.Add(fp);
             }
