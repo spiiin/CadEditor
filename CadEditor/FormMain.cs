@@ -920,6 +920,8 @@ namespace CadEditor
         {
             if (UtilsGui.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
             {
+                Globals.loadData(OpenFile.FileName, OpenFile.DumpName, OpenFile.ConfigName);
+                resetControls();
                 reloadLevel(true, true);
                 mapScreen.Invalidate();
             }
