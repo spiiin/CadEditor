@@ -1,6 +1,6 @@
 import os, glob, shutil, zipfile
 
-VERSION        = "43"
+VERSION        = "44"
 RELEASE_FOLDER = "../Release/cad_editor_v%s" % VERSION
 ZIP_NAME       = "../Release/cad_editor_v%s.zip" % VERSION
 
@@ -36,8 +36,8 @@ COPY_FOLDER_LIST = [
   "scroll_sprites/",
   "settings_*/",
   
-  "IronPythonLib",
-  "exportTmx/pytmxlib/tmxlib/",
+  "IronPythonLib/",
+  "exportTmx/pytmxlib/",
 ]
 
 def removeAndCreate(path):
