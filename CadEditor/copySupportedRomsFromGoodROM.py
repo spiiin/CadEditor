@@ -23,6 +23,7 @@ fnames = [
     "Contra Spirits (1995) (Unl).nes",
     "Darkman (U) [!].nes",
     "Darkwing Duck (U) [!].nes",
+    "Dragon Fighter (U) [!].nes",
     "Duck Tales (U) [!].nes",
     "Duck Tales 2 (U) [!].nes",
     "Felix the Cat (U) [!].nes",

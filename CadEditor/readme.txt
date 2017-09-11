@@ -473,7 +473,7 @@ v4.4
   DANGER X    - конфиги для игры Banana Prince, Mighty Final Fight, SD Hero Soukessen
   Ti_         - помощь с дизассеблированием, конфиги для игр Contra Force, Jungle Book, Little Nemo, Battletoads, Battletoads & Double Dragon, Shatterhand, Tom & Jerry, Ninja Cats.
   Alxr        - разбор формата уровней Rockin' Kats.
-  Proton      - финансовая поддержка, конфиги для Shatterhand
+  Proton      - финансовая поддержка, конфиги для игр Shatterhand, Dragon Fighter
   
 -------------------------------------------------------------------------------
 Обратная связь: 

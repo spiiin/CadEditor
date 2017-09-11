@@ -58,6 +58,7 @@
     Shadow of the Ninja                             (1 уровень)
     Little Samson                                   (1 уровень)
     Super Spy Hunter                                (1 уровень)
+    Dragon Fighter                                  (1 уровень)
     Jurassic Park                                   (1 уровень, редактор дампа)
     Contra Spirits                                  (1 уровень, игра защищена от изменений)
     Mickey Mania 7                                  (1 уровень, игра защищена от изменений)
