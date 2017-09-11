@@ -46,15 +46,7 @@ public class Data
   {
     int addr = ConfigScript.getTilesAddr(tileId);
     int count = ConfigScript.getBlocksCount();
-    //write only first 4 indexes, not change palBytes
-    for (int i = 0; i < count; i++)
-    {
-        Globals.romdata[addr + i * 5 + 0] = (byte)blocksData[i].indexes[0];
-        Globals.romdata[addr + i * 5 + 1] = (byte)blocksData[i].indexes[2];
-        Globals.romdata[addr + i * 5 + 2] = (byte)blocksData[i].indexes[1];
-        Globals.romdata[addr + i * 5 + 3] = (byte)blocksData[i].indexes[3];
-        //Globals.romdata[addr + i * 5 + 4] = (byte)blocksData[i].palBytes[0];
-    }
+    Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, true, true);
   }
   
   public BigBlock[] getBigBlocks(int bigTileIndex)
