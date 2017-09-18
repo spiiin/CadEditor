@@ -99,7 +99,7 @@ public static class ZamnUtils
     return enemyAddr;
   }
   
-  public static List<ObjectList> getVictimsFromArray(byte[] romdata, int baseAddr, int objCount)
+  public static ObjectList getVictimsFromArray(byte[] romdata, int baseAddr, int objCount)
   {
     var objects = new List<ObjectRec>();
     for (int i = 0; i < objCount; i++)
@@ -114,12 +114,12 @@ public static class ZamnUtils
         var obj = new ObjectRec(victimNo, 0, 0, x/2, y/2, dataDict);
         objects.Add(obj);
     }
-    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
+    return new ObjectList { objects = objects, name = "Victims" };
   }
 
   public static bool setVictimsToArray(List<ObjectList> objLists, byte[] romdata, int baseAddr, int objCount)
   {
-    var objects = objLists[0].objects;
+    var objects = objLists[1].objects;
     for (int i = 0; i < objects.Count; i++)
     {
         var obj = objects[i];
@@ -141,7 +141,7 @@ public static class ZamnUtils
     return true;
   }
   
-  public static List<ObjectList> getEnemiesFromArray(byte[] romdata, int baseAddr, int objCount)
+  public static ObjectList getEnemiesFromArray(byte[] romdata, int baseAddr, int objCount)
   {
     var objects = new List<ObjectRec>();
     const int ENEMY_REC_LEN = 12;
@@ -159,7 +159,7 @@ public static class ZamnUtils
         var obj = new ObjectRec(victimNo, 0, 0, x/2, y/2, dataDict);
         objects.Add(obj);
     }
-    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };;
+    return new ObjectList { objects = objects, name = "Enemies" };
   }
   
   public static bool setEnemiesToArray(List<ObjectList> objLists, byte[] romdata, int baseAddr, int objCount)
@@ -187,7 +187,7 @@ public static class ZamnUtils
     return true;
   }
   
-  public static List<ObjectList> getItemsFromArray(byte[] romdata, int baseAddr, int objCount)
+  public static ObjectList getItemsFromArray(byte[] romdata, int baseAddr, int objCount)
   {
     var objects = new List<ObjectRec>();
     const int ITEM_REC_LEN = 6;
@@ -199,12 +199,12 @@ public static class ZamnUtils
         var obj = new ObjectRec(t, 0, 0, x/2, y/2);
         objects.Add(obj);
     }
-    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
+    return new ObjectList { objects = objects, name = "Items" };
   }
   
   public static bool setItemsToArray(List<ObjectList> objLists, byte[] romdata, int baseAddr, int objCount)
   {
-    var objects = objLists[0].objects;
+    var objects = objLists[2].objects;
     const int ITEM_REC_LEN = 6;
     for (int i = 0; i < objects.Count; i++)
     {
@@ -223,24 +223,58 @@ public static class ZamnUtils
   }
   
   //-----------------------------------------------------------------------------------------------
-  public static List<ObjectList> getVictimsFromRom(int levelNo)
+  
+  //for current level
+  
+  public static LevelRec getEnemiesLayout()
   {
-    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+      return new LevelRec(0x2A972, 14, 1, 1, 0x0);
+  }
+  
+  public static LevelRec getVictimsLayout()
+  {
+      return new LevelRec(0x2AA1C, 10, 1, 1, 0x0);
+  }
+  
+  public static LevelRec getItemsLayout()
+  {
+      return new LevelRec(0x2AA96, 10, 1, 1, 0x0);
+  }
+  //-----------------------------------------------------------------------------------------------
+  
+  public static List<ObjectList> getObjects(int levelNo)
+  {
+      var enemies = getEnemiesFromRom(levelNo);
+      var victims = getVictimsFromRom(levelNo);
+      var items   = getItemsFromRom(levelNo);
+      return new List<ObjectList> { enemies, victims, items };
+  }
+  
+  public static bool setObjects(int levelNo, List<ObjectList> objLists)
+  {
+      bool enemiesSaved = setEnemiesToRom(levelNo, objLists);
+      bool victimsSaved  = setVictimsToRom (levelNo, objLists);
+      bool itemsSaves = setItemsToRom(levelNo, objLists);
+      return enemiesSaved && victimsSaved && itemsSaves;
+  }
+  public static ObjectList getVictimsFromRom(int levelNo)
+  {
+    LevelRec lr = getVictimsLayout();
     int baseAddr = lr.objectsBeginAddr;
     int objCount = lr.objCount;
     return getVictimsFromArray(Globals.romdata, baseAddr, objCount);
   }
   
-  public static List<ObjectList> getVictimsFromFile(int levelNo)
+  public static ObjectList getVictimsFromFile(int levelNo)
   {
-    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    LevelRec lr = getVictimsLayout();
     byte[] data = Utils.loadDataFromFile("victims.bin");
     return getVictimsFromArray(data, 0, lr.objCount);
   }
   
   public static bool setVictimsToRom(int levelNo, List<ObjectList> objects)
   {
-    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    LevelRec lr = getVictimsLayout();
     int baseAddr = lr.objectsBeginAddr;
     int objCount = lr.objCount;
     return setVictimsToArray(objects, Globals.romdata, baseAddr, objCount);
@@ -248,7 +282,7 @@ public static class ZamnUtils
   
   public static bool setVictimsToFile(int levelNo, List<ObjectList> objects)
   {
-    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    LevelRec lr = getVictimsLayout();
     int baseAddr = 0;
     int objCount = lr.objCount;
     byte[] data = new byte[objCount*12];
@@ -257,24 +291,24 @@ public static class ZamnUtils
     return true;
   }
   
-  public static List<ObjectList> getEnemiesFromRom(int levelNo)
+  public static ObjectList getEnemiesFromRom(int levelNo)
   {
-    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    LevelRec lr = getEnemiesLayout();
     int baseAddr = lr.objectsBeginAddr;
     int objCount = lr.objCount;
     return getEnemiesFromArray(Globals.romdata, baseAddr, objCount);
   }
   
-  public static List<ObjectList> getEnemiesFromFile(int levelNo)
+  public static ObjectList getEnemiesFromFile(int levelNo)
   {
-    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    LevelRec lr = getEnemiesLayout();
     byte[] data = Utils.loadDataFromFile("enemies.bin");
     return getEnemiesFromArray(data, 0, lr.objCount);
   }
   
   public static bool setEnemiesToRom(int levelNo, List<ObjectList> objects)
   {
-    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    LevelRec lr = getEnemiesLayout();
     int baseAddr = lr.objectsBeginAddr;
     int objCount = lr.objCount;
     return setEnemiesToArray(objects, Globals.romdata, baseAddr, objCount);
@@ -283,7 +317,7 @@ public static class ZamnUtils
   public static bool setEnemiesToFile(int levelNo, List<ObjectList> objects)
   {
     const int ENEMY_REC_LEN = 12;
-    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    LevelRec lr = getEnemiesLayout();
     int baseAddr = 0;
     int objCount = lr.objCount;
     byte[] data = new byte[objCount * ENEMY_REC_LEN];
@@ -292,24 +326,24 @@ public static class ZamnUtils
     return true;
   }
   
-  public static List<ObjectList> getItemsFromRom(int levelNo)
+  public static ObjectList getItemsFromRom(int levelNo)
   {
-    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    LevelRec lr = getItemsLayout();
     int baseAddr = lr.objectsBeginAddr;
     int objCount = lr.objCount;
     return getItemsFromArray(Globals.romdata, baseAddr, objCount);
   }
   
-  public static List<ObjectList> getItemsFromFile(int levelNo)
+  public static ObjectList getItemsFromFile(int levelNo)
   {
-    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    LevelRec lr = getItemsLayout();
     byte[] data = Utils.loadDataFromFile("items.bin");
     return getItemsFromArray(data, 0, lr.objCount);
   }
   
   public static bool setItemsToRom(int levelNo, List<ObjectList> objects)
   {
-    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    LevelRec lr = getItemsLayout();
     int baseAddr = lr.objectsBeginAddr;
     int objCount = lr.objCount;
     return setItemsToArray(objects, Globals.romdata, baseAddr, objCount);
@@ -318,7 +352,7 @@ public static class ZamnUtils
   public static bool setItemsToFile(int levelNo, List<ObjectList> objects)
   {
     const int ITEMS_REC_LEN = 6;
-    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    LevelRec lr = getItemsLayout();
     int baseAddr = 0;
     int objCount = lr.objCount;
     byte[] data = new byte[objCount * ITEMS_REC_LEN];
