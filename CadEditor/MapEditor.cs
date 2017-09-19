@@ -31,7 +31,7 @@ namespace CadEditor
                     int bigBlockNo = ConfigScript.getBigTileNoFromScreen(layer.screens[scrNo], i);
                     Rectangle tileRect;
                     if (verticalScreen)
-                        tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X + TopMargin, (i % WIDTH) * TILE_SIZE_Y + LeftMargin, TILE_SIZE_X, TILE_SIZE_Y);
+                        tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X + LeftMargin, (i % WIDTH) * TILE_SIZE_Y + TopMargin, TILE_SIZE_X, TILE_SIZE_Y);
                     else
                         tileRect = new Rectangle((i % WIDTH) * TILE_SIZE_X + LeftMargin, i / WIDTH * TILE_SIZE_Y + TopMargin, TILE_SIZE_X, TILE_SIZE_Y);
 

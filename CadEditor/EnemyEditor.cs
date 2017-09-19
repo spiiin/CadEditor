@@ -252,6 +252,7 @@ namespace CadEditor
         {
             dgvObjects.AutoGenerateColumns = true;
             var activeObjectList = objectLists[curActiveObjectListIndex];
+            dgvObjects.Columns.Clear();
             dgvObjects.DataSource = activeObjectList.objects;
 
             if (dgvObjects.Columns.Count < ObjectRec.FIELD_COUNT)
@@ -353,8 +354,9 @@ namespace CadEditor
                     {
 
                         var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
-                        int leftMargin = scrWidth * x;
-                        int topMargin = scrHeight * y;
+
+                        int leftMargin = (ConfigScript.getScreenVertical() ? scrHeight : scrWidth) * x;
+                        int topMargin = (ConfigScript.getScreenVertical() ? scrWidth : scrHeight) * y;
                         MapEditor.Render(g, bigBlocks, visibleRect, formMain.Layers, scrNo, curScale, false, formMain.ShowAxis, leftMargin, topMargin, width, height);
                         //ConfigScript.renderToMainScreen(g, (int)curScale);
                     }
@@ -385,8 +387,8 @@ namespace CadEditor
                 for (int i = 0; i < activeObjectList.objects.Count; i++)
                 {
                     var curObject = activeObjectList.objects[i];
-                    int leftMargin = scrWidth * curObject.sx;
-                    int topMargin = scrHeight * curObject.sy;
+                    int leftMargin = (ConfigScript.getScreenVertical() ? scrHeight : scrWidth) * curObject.sx;
+                    int topMargin = (ConfigScript.getScreenVertical() ? scrWidth : scrHeight) * curObject.sy;
 
                     bool inactive = objListIndex != curActiveObjectListIndex;
                     bool selected = !inactive && selectedRows.Cast<DataGridViewRow>().Any(r=>(r.Index == i));
@@ -806,8 +808,11 @@ namespace CadEditor
 
         private void cbObjectList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbObjectList.SelectedIndex == -1)
+            int selIndex = cbObjectList.SelectedIndex;
+            if ((selIndex == -1) || (selIndex == curActiveObjectListIndex))
+            {
                 return;
+            }
             curActiveObjectListIndex = cbObjectList.SelectedIndex;
             fillObjectsDataGrid();
             mapScreen.Invalidate();
