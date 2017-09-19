@@ -23,15 +23,15 @@ public class Data
   {
     var levelLayers = new int[][]
     {
-        new int[] { 0,1,2,3 },
-        new int[] { 4,5 },
-        new int[] { 6,7,8,9 },
-        new int[] { 0xD },
-        new int[] { 0x0E, 0x0F, 0x10, 0x11 },
-        new int[] { 0xA, 0xB, 0xC },
-        new int[] { 0x12, 0x13, 0x14, 0x15 },
+        new int[] { 1,2,3,4 },
+        new int[] { 5,6 },
+        new int[] { 7,8,9,0xA },
+        new int[] { 0xE },
+        new int[] { 0xF, 0x10, 0x11, 0x12 },
+        new int[] { 0xB, 0xC, 0xD },
+        new int[] { 0x13, 0x14, 0x15, 0x16 },
     };
-    return new LevelLayerData(levelLayers[levelNo].Length, 1, levelLayers[levelNo]);
+    return new LevelLayerData(levelLayers[levelNo].Length, 1, levelLayers[levelNo], null, null);
   }
   
   public IList<LevelRec> getLevelRecs() { return levelRecs; }

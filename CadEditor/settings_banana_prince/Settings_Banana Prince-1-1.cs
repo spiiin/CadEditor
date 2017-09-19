@@ -105,7 +105,7 @@ public class Data
       int height = ConfigScript.getLevelHeight(curActiveLayout);
       int[] layer = new int[width * height];
       for (int i = 0; i < width * height; i++)
-          layer[i] = i;
+          layer[i] = i+1;
       return new LevelLayerData(width, height, layer, null, null);
   }
   

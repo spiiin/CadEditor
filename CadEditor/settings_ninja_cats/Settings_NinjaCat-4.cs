@@ -23,14 +23,14 @@ public class Data
   {
     var levelLayers = new int[][]
     {
-        new int[] { 0,1,2,3 },
-        new int[] { 4,5,6 },
-        new int[] { 7, },
-        new int[] { 8,9,10,11 },
-        new int[] { 12,13},
-        new int[] { 14 },
-        new int[] { 15,16,17,18,19 },
-        new int[] { 19 },
+        new int[] { 1,2,3,4 },
+        new int[] { 5,6,7 },
+        new int[] { 8, },
+        new int[] { 9,10,11,12 },
+        new int[] { 13,14},
+        new int[] { 15 },
+        new int[] { 16,17,18,19,20 },
+        new int[] { 20 },
     };
     return new LevelLayerData(levelLayers[levelNo].Length, 1, levelLayers[levelNo]);
   }
