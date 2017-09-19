@@ -8,12 +8,29 @@ public class Data
   public OffsetRec getScreensOffset()  { return new OffsetRec(88, 22 , 8*5);   }
   public int getScreenWidth()          { return 5; }
   public int getScreenHeight()         { return 8; }
-  public string getBlocksFilename()    { return "ninja_cats_1.png"; }
+  //public string getBlocksFilename()    { return "ninja_cats_1.png"; }
   public bool getScreenVertical()      { return true; }
   
-  public bool isBigBlockEditorEnabled() { return false; }
-  public bool isBlockEditorEnabled()    { return false; }
+  public bool isBigBlockEditorEnabled() { return true; }
+  public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return true; }
+  
+  public OffsetRec getVideoOffset()   { return new OffsetRec(0x2D010, 1, 0x1000); }
+  //public OffsetRec getPalOffset()     { return new OffsetRec(0x2B10,  1, 16   ); }
+  public int getPalBytesAddr()          { return 0x4B2E; }
+  public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x4052 , 8   , 0x4000); }
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x5376  , 8   , 0x440); }
+  
+  public GetVideoPageAddrFunc getVideoPageAddrFunc()         { return Utils.getChrAddress; }
+  public GetVideoChunkFunc    getVideoChunkFunc()            { return Utils.getVideoChunk; }
+  public SetVideoChunkFunc    setVideoChunkFunc()            { return Utils.setVideoChunk; }
+  public GetBlocksFunc        getBlocksFunc() { return getBlocks;}
+  public SetBlocksFunc        setBlocksFunc() { return setBlocks;}
+  public GetBigBlocksFunc     getBigBlocksFunc()     { return getBigBlocks;}
+  public SetBigBlocksFunc     setBigBlocksFunc()     { return setBigBlocks;}
+  public GetPalFunc           getPalFunc()           { return getPallete;}
+  public SetPalFunc           setPalFunc()           { return null;}
+  
   
   public GetObjectsFunc getObjectsFunc()   { return getObjects;  }
   public SetObjectsFunc setObjectsFunc()   { return setObjects;  }
@@ -88,5 +105,57 @@ public class Data
         Globals.romdata[baseAddr + objCount*2 + i + 2] = 0xFF;
     }
     return true;
+  }
+  
+  public ObjRec[] getBlocks(int tileId)
+  {
+      int addr = ConfigScript.getTilesAddr(tileId);
+      int count = ConfigScript.getBlocksCount();
+      var blocks = Utils.readBlocksLinear(Globals.romdata, addr, 2, 2, count, false);
+      return blocks;
+  }
+  
+  public void setBlocks(int tileId, ObjRec[] blocksData)
+  {
+    int addr = ConfigScript.getTilesAddr(tileId);
+    int count = ConfigScript.getBlocksCount();
+    Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, false);
+  }
+  
+  public BigBlock[] getBigBlocks(int bigTileIndex)
+  {
+    var data = Utils.readLinearBigBlockData(0, bigTileIndex);
+    var bb = Utils.unlinearizeBigBlocks<BigBlockWithPal>(data, 2, 2);
+    for (int i = 0; i < bb.Length; i++)
+    {
+      int palByte = Globals.romdata[getPalBytesAddr() + i];
+      bb[i].palBytes[0] = palByte >> 0 & 0x3;
+      bb[i].palBytes[1] = palByte >> 2 & 0x3;
+      bb[i].palBytes[2] = palByte >> 4 & 0x3;
+      bb[i].palBytes[3] = palByte >> 6 & 0x3;
+    }
+    return bb;
+  }
+  
+  public void setBigBlocks(int bigTileIndex, BigBlock[] bigBlockIndexes)
+  {
+    var data = Utils.linearizeBigBlocks(bigBlockIndexes);
+    Utils.writeLinearBigBlockData(0, bigTileIndex, data);
+    //save pal bytes
+    for (int i = 0; i < bigBlockIndexes.Length; i++)
+    {
+      var bb = bigBlockIndexes[i] as BigBlockWithPal;
+      int palByte = bb.palBytes[0] | bb.palBytes[1] << 2 | bb.palBytes[2]<<4 | bb.palBytes[3]<< 6;
+      Globals.romdata[getPalBytesAddr() + i] = (byte)palByte;
+    }
+  }
+  
+  public byte[] getPallete(int palId)
+  {
+    var pallete = new byte[] { 
+      0x0f, 0x2a, 0x30, 0x25, 0x0f, 0x15, 0x10, 0x30,
+      0x0f, 0x21, 0x26, 0x30, 0x0f, 0x21, 0x1b, 0x3c
+    }; 
+    return pallete;
   }
 }
