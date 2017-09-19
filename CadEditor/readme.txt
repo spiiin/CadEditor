@@ -474,6 +474,7 @@ v4.4
   Ti_         - помощь с дизассеблированием, конфиги для игр Contra Force, Jungle Book, Little Nemo, Battletoads, Battletoads & Double Dragon, Shatterhand, Tom & Jerry, Ninja Cats.
   Alxr        - разбор формата уровней Rockin' Kats.
   Proton      - финансовая поддержка, конфиги для игр Shatterhand, Dragon Fighter
+  ExL         - спрайты для Little Nemo, саппорт
   
 -------------------------------------------------------------------------------
 Обратная связь: 

@@ -13,6 +13,8 @@ public class Data
       "PluginEditLayout.dll",
     };
   }
+  public string getObjTypesPicturesDir() { return "obj_sprites_nemo"; }
+  
   public OffsetRec getScreensOffset()  { return new OffsetRec(0x12910, 30 , 8*8);   }
   public string getBlocksFilename()    { return "little_nemo_8-3.png"; }
   
