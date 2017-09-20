@@ -169,15 +169,29 @@ namespace CadEditor
             int blockHeight = formMain.Layers[0].blockHeight;
             int scrLevelNo = getLevelRecForGameType().levelNo;
 
-            int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
-            int scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);
+            int scrWidth, scrHeight;
+            if (ConfigScript.getScreenVertical())
+            {
+                scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockHeight * curScale);
+                scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockWidth * curScale);
+            }
+            else
+            {
+                scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
+                scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);
+            }
 
             int screensInWidth = curLevelLayerData.width;
             int screensInHeight = curLevelLayerData.height;
-            if (!ConfigScript.getScreenVertical())
-                mapScreen.Size = new Size(scrWidth * screensInWidth, scrHeight * screensInHeight);
-            else
+            if (ConfigScript.getScreenVertical())
+            {
                 mapScreen.Size = new Size(scrHeight * screensInWidth, scrWidth * screensInHeight);
+            }
+            else
+            {
+                mapScreen.Size = new Size(scrWidth * screensInWidth, scrHeight * screensInHeight);
+            }
+                
         }
 
         private void fillObjPanel()
