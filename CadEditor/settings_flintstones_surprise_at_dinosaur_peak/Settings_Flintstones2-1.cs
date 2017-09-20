@@ -64,8 +64,8 @@ public class Data
     {
       byte x    = Globals.romdata[0x14D84 + i];
       byte y    = Globals.romdata[0x14D9C + i];
-      int realx = x * 8;
-      int realy = y * 8;
+      int realx = x * 16;
+      int realy = y * 16;
       byte v    = Globals.romdata[0x14DB4 + i];
       var obj = new ObjectRec(v, 0, 0, realx, realy);
       objects.Add(obj);
@@ -81,8 +81,8 @@ public class Data
     for (int i = 0; i < objects.Count; i++)
     {
         var obj = objects[i];
-        byte x = (byte)(obj.x /8);
-        byte y = (byte)(obj.y /8);
+        byte x = (byte)(obj.x /16);
+        byte y = (byte)(obj.y /16);
         Globals.romdata[0x14DB4 + i] = (byte)obj.type;
         Globals.romdata[0x14D84 + i] = x;
         Globals.romdata[0x14D9C + i] = y;
