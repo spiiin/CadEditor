@@ -1,22 +1,34 @@
 using CadEditor;
 using System;
-using System.Drawing;
 using System.Collections.Generic;
+//css_include settings_ninja_cats/NinjaCatUtils.cs;
 
 public class Data 
 { 
   public OffsetRec getScreensOffset()  { return new OffsetRec(2864, 20 , 8*5);   }
   public int getScreenWidth()          { return 5; }
   public int getScreenHeight()         { return 8; }
-  public string getBlocksFilename()    { return "ninja_cats_4.png"; }
   public bool getScreenVertical()      { return true; }
   
-  public bool isBigBlockEditorEnabled() { return false; }
-  public bool isBlockEditorEnabled()    { return false; }
+  public bool isBigBlockEditorEnabled() { return true; }
+  public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return true; }
   
-  public GetObjectsFunc getObjectsFunc()   { return getObjects;  }
-  public SetObjectsFunc setObjectsFunc()   { return setObjects;  }
+  public int getPalBytesAddr()          { return 0x4d15; }
+  public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x47ee , 8   , 0x4000); }
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x5F22  , 8   , 0x440); }
+  
+  public GetVideoPageAddrFunc getVideoPageAddrFunc()          { return NinjaCatUtils.fakeVideoAddr(); }
+  public GetVideoChunkFunc    getVideoChunkFunc()             { return NinjaCatUtils.getVideoChunk("chr3.bin");   }
+  public SetVideoChunkFunc    setVideoChunkFunc()             { return null; }
+  public GetBlocksFunc        getBlocksFunc()                 { return NinjaCatUtils.getBlocks;}
+  public SetBlocksFunc        setBlocksFunc()                 { return NinjaCatUtils.setBlocks;}
+  public GetBigBlocksFunc     getBigBlocksFunc()              { return NinjaCatUtils.getBigBlocks;}
+  public SetBigBlocksFunc     setBigBlocksFunc()              { return NinjaCatUtils.setBigBlocks;}
+  public GetPalFunc           getPalFunc()                    { return NinjaCatUtils.readPalFromBin("pal4.bin"); }
+  public SetPalFunc           setPalFunc()                    { return null;}
+  public GetObjectsFunc getObjectsFunc()                      { return NinjaCatUtils.getObjects;  }
+  public SetObjectsFunc setObjectsFunc()                      { return NinjaCatUtils.setObjects;  }
   
   public GetLayoutFunc getLayoutFunc()     { return getLayout;   }
   LevelLayerData getLayout(int levelNo)
@@ -47,48 +59,4 @@ public class Data
     new LevelRec(0xA7E4, 10,  5, 1, 0x0), //room 7
     new LevelRec(0xA804, 1 ,  1, 1, 0x0), //room 8
   };
-  
-  public List<ObjectList> getObjects(int levelNo)
-  {
-    LevelRec lr = ConfigScript.getLevelRec(levelNo);
-    int objCount = lr.objCount;
-    int baseAddr = lr.objectsBeginAddr;
-    var objects = new List<ObjectRec>();
-    for (int i = 0; i < objCount; i++)
-    {
-      byte x    = Globals.romdata[baseAddr + objCount*0 + i + 1];
-      byte y    = Globals.romdata[baseAddr + objCount*1 + i + 2];
-      byte v    = Globals.romdata[baseAddr + objCount*2 + i + 2];
-      int scrx  = x >> 4; scrx &= 0x7; //if bit 8 set, that something happen
-      int realx = (x &0x0F)*16;
-      int realy = y;
-      var obj = new ObjectRec(v, scrx, 0, realx, realy);
-      objects.Add(obj);
-    }
-    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };;
-  }
-
-  public bool setObjects(int levelNo, List<ObjectList> objLists)
-  {
-    LevelRec lr = ConfigScript.getLevelRec(levelNo);
-    int objCount = lr.objCount;
-    int baseAddr = lr.objectsBeginAddr;
-    var objects = objLists[0].objects;
-    for (int i = 0; i < objects.Count; i++)
-    {
-        var obj = objects[i];
-        byte x = (byte)((obj.x >> 4) | (obj.sx << 4));
-        byte y = (byte)(obj.y & 0xF0);  //first bits can demand enemy creation
-        Globals.romdata[baseAddr + objCount*0 + i + 1] = x;
-        Globals.romdata[baseAddr + objCount*1 + i + 2] = y;
-        Globals.romdata[baseAddr + objCount*2 + i + 2] = (byte)obj.type;
-    }
-    for (int i = objects.Count; i < objCount; i++)
-    {
-        Globals.romdata[baseAddr + objCount*0 + i + 1] = 0xFF;
-        Globals.romdata[baseAddr + objCount*1 + i + 2] = 0xFF;
-        Globals.romdata[baseAddr + objCount*2 + i + 2] = 0xFF;
-    }
-    return true;
-  }
 }
