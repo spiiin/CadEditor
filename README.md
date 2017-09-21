@@ -36,8 +36,8 @@ https://www.patreon.com/CadEditor<br>
 <img src="https://raw.githubusercontent.com/spiiin/CadEditor/master/docs/images/cad_editor_mac.png" />
 
 
-<b>Latest release</b>
+<b>Latest release</b><br>
 https://github.com/spiiin/CadEditor/releases
 
-<b>Project on itch.io</b>
+<b>Project on itch.io</b><br>
 https://spiiin.itch.io/cadeditor
