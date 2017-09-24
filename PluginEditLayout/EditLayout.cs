@@ -130,7 +130,7 @@ namespace CadEditor
                 for (int x = 0; x < w; x++)
                 {
                     int index = curLevelLayerData.layer[y * w + x];
-                    int scroll = curLevelLayerData.scroll[y * w + x];
+                    int scroll = curLevelLayerData.scroll != null ? curLevelLayerData.scroll[y * w + x] : 0;
                     int scrollIndex = scroll >> 5;
                     int doorIndex = scroll & 0x01F;
                     g.DrawImage(screenImages.Images[index % 256], new Rectangle(x*64, y*64, 64, 64));
@@ -142,8 +142,11 @@ namespace CadEditor
 
         private void changeScroll(int index)
         {
-            var scrollByteArray = new byte[]{ 0x42, 0x42, 0x43, 0x03, 0x00, 0xC0, 0xC0, 0x41 };
-            curLevelLayerData.scroll[index] = scrollByteArray[curActiveBlock];
+            if (curLevelLayerData.scroll != null)
+            {
+                var scrollByteArray = new byte[] { 0x42, 0x42, 0x43, 0x03, 0x00, 0xC0, 0xC0, 0x41 };
+                curLevelLayerData.scroll[index] = scrollByteArray[curActiveBlock];
+            }
         }
 
         private void pb_MouseUp(object sender, MouseEventArgs e)
@@ -160,7 +163,13 @@ namespace CadEditor
             else if (drawMode == MapDrawMode.Scrolls)
                 changeScroll(index);
             else if (drawMode == MapDrawMode.Doors)
-                curLevelLayerData.scroll[index] = (curActiveBlock & 0x1F) | (curLevelLayerData.scroll[index] & 0xE0);
+            {
+                if (curLevelLayerData.scroll != null)
+                {
+                    curLevelLayerData.scroll[index] = (curActiveBlock & 0x1F) | (curLevelLayerData.scroll[index] & 0xE0);
+                }
+               
+            }
             pbMap.Invalidate();
         }
 
