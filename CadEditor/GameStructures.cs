@@ -67,7 +67,7 @@ namespace CadEditor
             this.palBytes = palBytes;
         }
 
-        public ObjRec(byte c1, byte c2, byte c3, byte c4, byte typeColor)
+        public ObjRec(int c1, int c2, int c3, int c4, int typeColor)
         {
             this.indexes = new int[4];
             this.palBytes = new int[1];
