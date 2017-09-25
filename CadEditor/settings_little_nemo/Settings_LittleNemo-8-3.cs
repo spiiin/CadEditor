@@ -16,10 +16,9 @@ public class Data
   public string getObjTypesPicturesDir() { return "obj_sprites_nemo"; }
   
   public OffsetRec getScreensOffset()  { return new OffsetRec(0x12910, 30 , 8*8);   }
-  public string getBlocksFilename()    { return "little_nemo_8-3.png"; }
   
-  public bool isBigBlockEditorEnabled() { return false; }
-  public bool isBlockEditorEnabled()    { return false; }
+  public bool isBigBlockEditorEnabled() { return true; }
+  public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return true; }
   
   public GetObjectsFunc getObjectsFunc()   { return LittleNemoUtils.getObjectsNemo; }
@@ -29,9 +28,8 @@ public class Data
   public GetLayoutFunc getLayoutFunc() { return LittleNemoUtils.getLayoutLinearPlusOne; }
   public SetLayoutFunc setLayoutFunc() { return LittleNemoUtils.setLayoutLinearPlusOne; }
   
-  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return Utils.getChrAddress; }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return Utils.getVideoChunk; }
-  public SetVideoChunkFunc    setVideoChunkFunc()    { return Utils.setVideoChunk; }
+  public GetVideoPageAddrFunc getVideoPageAddrFunc()          { return LittleNemoUtils.fakeVideoAddr(); }
+  public GetVideoChunkFunc    getVideoChunkFunc()             { return LittleNemoUtils.getVideoChunk("chr8-3.bin");   }
   public GetBigBlocksFunc     getBigBlocksFunc()     { return LittleNemoUtils.getBigBlocks;}
   public SetBigBlocksFunc     setBigBlocksFunc()     { return LittleNemoUtils.setBigBlocks;}
   public GetBlocksFunc        getBlocksFunc()        { return LittleNemoUtils.getBlocks;}

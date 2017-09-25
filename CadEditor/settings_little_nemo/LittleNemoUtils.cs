@@ -145,4 +145,15 @@ public class LittleNemoUtils
                0;
     });
   }
+  
+  //for levels 8-2, 8-3, used dumps
+  public static GetVideoPageAddrFunc fakeVideoAddr()
+  {
+      return (int _)=> { return -1; };
+  }
+  
+  public static GetVideoChunkFunc getVideoChunk(string fname)
+  {
+     return (int _)=> { return Utils.readVideoBankFromFile(fname, 0); };
+  }
 }
