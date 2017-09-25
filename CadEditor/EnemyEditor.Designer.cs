@@ -530,7 +530,7 @@
             this.cbObjectList.Location = new System.Drawing.Point(127, 4);
             this.cbObjectList.Margin = new System.Windows.Forms.Padding(4);
             this.cbObjectList.Name = "cbObjectList";
-            this.cbObjectList.Size = new System.Drawing.Size(228, 24);
+            this.cbObjectList.Size = new System.Drawing.Size(213, 24);
             this.cbObjectList.TabIndex = 58;
             this.cbObjectList.SelectedIndexChanged += new System.EventHandler(this.cbObjectList_SelectedIndexChanged);
             // 
@@ -548,8 +548,7 @@
             // 
             // btSort
             // 
-            this.btSort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btSort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btSort.Location = new System.Drawing.Point(170, 540);
             this.btSort.Margin = new System.Windows.Forms.Padding(4);
             this.btSort.Name = "btSort";
