@@ -288,7 +288,7 @@ namespace CadEditor
             return data;
         }
 
-        public static ObjRec[] readBlocksLinear(byte[] romdata, int addr, int w, int h, int count, bool withAttribs, bool transposeIndexes = false)
+        public static ObjRec[] readBlocksLinear(byte[] romdata, int addr, int w, int h, int count, bool withAttribs, bool transposeIndexes = false, int stride = 0)
         {
             var objects = new ObjRec[count];
             int blockSize = w * h;
@@ -300,7 +300,7 @@ namespace CadEditor
             {
                 var indexes = new int[blockSize];
                 var palBytes = new int[palSize];
-                int baseAddr = addr + i * fullSize;
+                int baseAddr = addr + i * (fullSize + stride);
                 Array.Copy(romdata, baseAddr, indexes, 0, blockSize);
                 if (withAttribs)
                 {
@@ -315,7 +315,7 @@ namespace CadEditor
             return objects;
         }
 
-        public static void writeBlocksLinear(ObjRec[] objects, byte[] romdata, int addr, int count, bool withAttribs, bool transposeIndexes = false)
+        public static void writeBlocksLinear(ObjRec[] objects, byte[] romdata, int addr, int count, bool withAttribs, bool transposeIndexes = false, int stride = 0)
         {
             var block0 = objects[0];
             int bw = block0.w, bh = block0.h;
@@ -330,7 +330,7 @@ namespace CadEditor
                 {
                     indexes = Utils.transpose(indexes, bw, bh);
                 }
-                int baseAddr = addr + i * fullSize;
+                int baseAddr = addr + i * (fullSize + stride);
                 for (int bi = 0; bi < blockSize; bi++)
                 {
                     romdata[baseAddr + bi] = (byte)indexes[bi];
