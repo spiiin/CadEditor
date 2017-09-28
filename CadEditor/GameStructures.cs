@@ -333,7 +333,7 @@ namespace CadEditor
 
             //compare all values in dictionary
             bool addDataEq = additionalData.SequenceEqual(other.additionalData);
-            return true;
+            return addDataEq;
         }
     }
 
