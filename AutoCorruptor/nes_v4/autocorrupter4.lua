@@ -55,7 +55,7 @@ function start()
                 local ppuNametable = ppu.readbyterange(0x2000, 0x400)
                 local hash  = gethash(ppuNametable, string.len(ppuNametable));
                 if (not shas[hash]) then
-                  print("Found new screen at addr "..tostring(CUR_ADDR).." hash "..tostring(hash));
+                  print("Found new screen at addr "..string.format("%05X", CUR_ADDR).." hash "..tostring(hash));
                   local fname = string.format("snaps/%05X", CUR_ADDR)..".png";
                   gui.savescreenshotas(fname);
                   emu.frameadvance();
