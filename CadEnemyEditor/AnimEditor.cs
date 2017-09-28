@@ -134,12 +134,14 @@ namespace CadEnemyEditor
             int videoId = index;
             var videoChunk = ConfigScript.getVideoChunk(videoId);
             var videoStrip = ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 0, true);
-            Bitmap resultVideo = new Bitmap(128, 128);
+            Bitmap resultVideo = new Bitmap(256, 256);
             using (Graphics g = Graphics.FromImage(resultVideo))
             {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
                 for (int i = 0; i < 256; i++)
                 {
-                    g.DrawImage(videoStrip, new Rectangle(i % 16 * 8, (i / 16) * 8, 8 , 8), new Rectangle(i * 8, 0, 8, 8), GraphicsUnit.Pixel);
+                    g.DrawImage(videoStrip, new Rectangle(i % 16 * 16, (i / 16) * 16, 16, 16), new Rectangle(i * 8, 0, 8, 8), GraphicsUnit.Pixel);
                 }
             }
             pbVideo.Image = resultVideo;
@@ -181,6 +183,8 @@ namespace CadEnemyEditor
 
             using (Graphics g = Graphics.FromImage(frame))
             {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
                 g.FillRectangle(Brushes.Black, new Rectangle(0,0,128*scale, 128*scale));
                 for (int i = 0; i < count; i++)
                 {
@@ -254,8 +258,8 @@ namespace CadEnemyEditor
         {
             if (activeFrame == null)
                 return;
-            int xNo = e.X / 8;
-            int yNo = e.Y / 8;
+            int xNo = e.X / 16;
+            int yNo = e.Y / 16;
             int tileNo = yNo * 16 + xNo;
 
             var tileIndexes = lvTiles.SelectedIndices;
