@@ -131,17 +131,15 @@ namespace CadEnemyEditor
 
         private void reloadVideo(int index)
         {
-            int scale = 4;
             int videoId = index;
             var videoChunk = ConfigScript.getVideoChunk(videoId);
             var videoStrip = ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 0, true);
-            int scaleBitmap = 2;
-            Bitmap resultVideo = new Bitmap(128 * scaleBitmap, 128 * scaleBitmap);
+            Bitmap resultVideo = new Bitmap(128, 128);
             using (Graphics g = Graphics.FromImage(resultVideo))
             {
                 for (int i = 0; i < 256; i++)
                 {
-                    g.DrawImage(videoStrip, new Rectangle(i % 16 * 8 * scaleBitmap, (i / 16) * 8 * scaleBitmap, 8 * scaleBitmap, 8 * scaleBitmap), new Rectangle(i * 8 * scale, 0, 8 * scale, 8 * scale), GraphicsUnit.Pixel);
+                    g.DrawImage(videoStrip, new Rectangle(i % 16 * 8, (i / 16) * 8, 8 , 8), new Rectangle(i * 8, 0, 8, 8), GraphicsUnit.Pixel);
                 }
             }
             pbVideo.Image = resultVideo;
@@ -242,7 +240,7 @@ namespace CadEnemyEditor
 
         private void cbVideo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int index = cbVideo.SelectedIndex;
+            int index = cbVideo.SelectedIndex - 0x10;
             reloadVideo(index);
             drawFrame(activeFrame);
         }
@@ -256,9 +254,8 @@ namespace CadEnemyEditor
         {
             if (activeFrame == null)
                 return;
-            int scale = 2;
-            int xNo = e.X / (8*scale);
-            int yNo = e.Y / (8*scale);
+            int xNo = e.X / 8;
+            int yNo = e.Y / 8;
             int tileNo = yNo * 16 + xNo;
 
             var tileIndexes = lvTiles.SelectedIndices;
