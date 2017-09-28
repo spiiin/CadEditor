@@ -239,9 +239,7 @@ namespace CadEditor
 
             if (curViewType == MapViewType.ObjNumbers)
             {
-                int _bbRectPosX = (int)((blockWidth / 2) * curButtonScale);
                 int _bbRectSizeX = (int)((blockWidth / 2) * curButtonScale);
-                int _bbRectPosY = (int)((blockHeight / 2) * curButtonScale);
                 int _bbRectSizeY = (int)((blockHeight / 2) * curButtonScale);
                 for (int i = 0; i < 256; i++)
                 {

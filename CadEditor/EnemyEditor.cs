@@ -416,8 +416,6 @@ namespace CadEditor
 
         private bool saveToFile()
         {
-            var romFname = OpenFile.FileName;
-            LevelRec lr = getLevelRecForGameType();
             //TODO: return free space checking
             /*int addrBase = lr.objectsBeginAddr;
             int objCount = lr.objCount;
@@ -444,7 +442,6 @@ namespace CadEditor
 
         private bool saveToJsonFile(string fname)
         {
-            LevelRec lr = getLevelRecForGameType();
             try
             {
                 using (TextWriter f = new StreamWriter(fname))
@@ -614,7 +611,6 @@ namespace CadEditor
             var mouseCoord = new Point(e.X, e.Y);
             Point coord = mouseCoordToSxSyCoord(mouseCoord);
             Point ocoord = mouseCoordToCoordInsideScreen(mouseCoord);
-            int type = curActiveBlock;
             int sx = coord.X, sy = coord.Y;
             int x = (int)(ocoord.X / curScale);
             int y = (int)(ocoord.Y / curScale);

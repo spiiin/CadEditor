@@ -26,7 +26,6 @@ namespace CadEditor
         int curActiveBlock = 0;
         int curActiveTile = 0;
         int curActivePalNo = 0;
-        float curScale = 2.0f;
         int curSelectedTilePart = 0;
         private bool dirty;
 

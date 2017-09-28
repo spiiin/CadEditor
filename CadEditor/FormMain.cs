@@ -229,7 +229,6 @@ namespace CadEditor
             {
                 if (i % WIDTH == line)
                 {
-                    int index = indexesPrev[i];
                     int bigBlockNo = ConfigScript.getBigTileNoFromScreen(indexesPrev, i);
                     if (bigBlockNo < bigBlocks.Length)
                         g.DrawImage(bigBlocks[bigBlockNo], new Rectangle(X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y));
@@ -270,8 +269,6 @@ namespace CadEditor
         {
             if (!fileLoaded)
                 return;
-            int[] indexes = layers[0].screens[curActiveScreen];
-            int[] indexes2 = (ConfigScript.getLayersCount() > 1) ? layers[1].screens[curActiveScreen] : null;
             var g = e.Graphics;
 
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
@@ -281,7 +278,6 @@ namespace CadEditor
             int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
             int TILE_SIZE_X = (int)(layers[0].blockWidth * curScale);
             int TILE_SIZE_Y = (int)(layers[0].blockHeight * curScale);
-            int SIZE = WIDTH * HEIGHT;
             var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
             //ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X
             MapEditor.Render(e.Graphics, bigBlocks, visibleRect, layers, curActiveScreen, curScale, true, showAxis, ConfigScript.getScreenVertical() ? 0 : TILE_SIZE_X, ConfigScript.getScreenVertical() ? TILE_SIZE_X : 0, WIDTH, HEIGHT);
@@ -366,7 +362,7 @@ namespace CadEditor
             if (ee.X < 0) { ee.X += 32768 * 2; }
             if (ee.Y < 0) { ee.Y += 32768 * 2; }
             int WIDTH = ConfigScript.getScreenWidth(curActiveLevelForScreen);
-            int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
+            //int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
             int dx, dy;
             if (ConfigScript.getScreenVertical())
             {
@@ -409,7 +405,7 @@ namespace CadEditor
                 return;
             }
             int WIDTH = ConfigScript.getScreenWidth(curActiveLevelForScreen);
-            int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
+            //int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
             int dx, dy;
             if (ConfigScript.getScreenVertical())
             {
@@ -475,8 +471,6 @@ namespace CadEditor
         {
             int WIDTH = ConfigScript.getScreenWidth(curActiveLevelForScreen);
             int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
-            int TILE_SIZE_X = (int)(layers[0].blockWidth * curScale);
-            int TILE_SIZE_Y = (int)(layers[0].blockHeight * curScale);
             var activeScreens = layers[curActiveLayer].screens;
             if (curTileStruct!=null)
             {

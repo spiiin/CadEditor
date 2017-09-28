@@ -123,7 +123,7 @@ namespace CadEditor
             var arrayWithData = Globals.dumpdata != null ? Globals.dumpdata : Globals.romdata;
             int dataStride = ConfigScript.getScreenDataStride();
             int wordLen = ConfigScript.getWordLen();
-            bool littleEndian = ConfigScript.isLittleEndian();
+            //bool littleEndian = ConfigScript.isLittleEndian();
             int beginAddr = screenOffset.beginAddr + screenIndex * screenOffset.recSize * dataStride * wordLen;
             for (int i = 0; i < screenOffset.recSize; i++)
                 result[i] = readBlockIndexFromMap(arrayWithData, beginAddr, i);

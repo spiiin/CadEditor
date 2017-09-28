@@ -105,7 +105,6 @@ namespace CadEditor
             bool verticalScreen = ConfigScript.getScreenVertical();
             int TILE_SIZE_X = (int)(layers[0].blockWidth * CurScale);
             int TILE_SIZE_Y = (int)(layers[0].blockHeight * CurScale);
-            int SIZE = WIDTH * HEIGHT;
 
             Image result;
             if (verticalScreen)

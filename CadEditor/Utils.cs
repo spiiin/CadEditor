@@ -499,7 +499,6 @@ namespace CadEditor
         {
             int BLOCK_W = 4;
             int BLOCK_H = 4;
-            int BLOCK_S = BLOCK_H * BLOCK_H;
             var objects = readBlocksLinear(romdata, addr, BLOCK_W, BLOCK_H, count, false);
             for (int i = 0; i < count; i++)
             {
@@ -748,7 +747,6 @@ namespace CadEditor
         public static void defaultDrawObjectBig(Graphics g, ObjectRec curObject, int listNo, bool isSelected, float curScale, Image[] objectSpritesBig, bool inactive, int leftMargin, int topMargin)
         {
             int x = curObject.x, y = curObject.y;
-            var myFont = new Font(FontFamily.GenericSansSerif, 6.0f);
             int xsize = objectSpritesBig[curObject.type].Size.Width;
             int ysize = objectSpritesBig[curObject.type].Size.Height;
             var rect = new Rectangle((int)(x * curScale) - xsize / 2 + leftMargin, (int)(y * curScale) - ysize / 2 + topMargin, xsize, ysize);

@@ -162,7 +162,6 @@ namespace CadEditor
             Graphics g = e.Graphics;
             int btc = Math.Min(ConfigScript.getBigBlocksCount(curHierarchyLevel), 256);
             int bblocksInRow = 16;
-            int bblocksInCol = (btc / bblocksInRow) + 1;
 
             var testBBlock = bigBlockIndexes[0];
             int bWidth = getBlockWidth();
@@ -194,7 +193,6 @@ namespace CadEditor
 
             int btc = Math.Min(ConfigScript.getBigBlocksCount(curHierarchyLevel), 256);
             int bblocksInRow = 16;
-            int bblocksInCol = (btc / bblocksInRow) + 1;
 
             var testBBlock = bigBlockIndexes[0];
             int bWidth = getBlockWidth();
@@ -418,10 +416,7 @@ namespace CadEditor
         protected void mapScreen_MouseMove(object sender, MouseEventArgs e)
         {
             int addIndexesText = curPart * 256;
-
-            int btc = Math.Min(ConfigScript.getBigBlocksCount(curHierarchyLevel), 256);
             int bblocksInRow = 16;
-            int bblocksInCol = (btc / bblocksInRow) + 1;
 
             var testBBlock = bigBlockIndexes[0];
             int bWidth = getBlockWidth();

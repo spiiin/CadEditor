@@ -55,15 +55,15 @@ namespace CadEditor
 
         public static void LoadStringsFromFile(string fileName)
         {
-            try
+            /*try
             {
                 var asm = new AsmHelper(CSScript.Load(fileName));
                 object data = asm.CreateObject("Strings");
-                Strings.FormMainName = callFromScript(asm, data, "*.getNesColors", "");
+                Strings.FormMainName = callFromScript(asm, data, "*.getStrings", "");
             }
             catch (Exception)
             {
-            }
+            }*/
         }
 
         private static void addPlugin(string pluginName)

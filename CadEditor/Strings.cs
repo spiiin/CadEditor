@@ -8,7 +8,7 @@ namespace CadEditor
     static class Strings
     {
         //Main Editor
-        public static string FormMainName;
+        /*public static string FormMainName;
 
         public static string Open;
         public static string Save;
@@ -40,6 +40,6 @@ namespace CadEditor
         public static string OrGroup1;
         public static string OrGroup2;
         public static string UseStructs;
-        public static string Coords;
+        public static string Coords;*/
     }
 }
