@@ -132,14 +132,8 @@ namespace CadEnemyEditor
         private void reloadVideo(int index)
         {
             int scale = 4;
-            //int VideoSize = 4096;
-            //int beginAddr = ConfigScript.videoObjOffset.beginAddr + index * ConfigScript.videoObjOffset.recSize;
-            int videoId = index + 0x80;
-            var videoChunk = ConfigScript.getVideoChunk(videoId);//(ConfigScript.getVideoChunkFunc == null) ? ConfigScript.getVideoChunk(videoId): Utils.getVideoChunk(videoId);
-            /*for (int i = 0; i < VideoSize; i++)
-            {
-                videoChunk[i] = Globals.romdata[beginAddr + i];
-            }*/
+            int videoId = index;
+            var videoChunk = ConfigScript.getVideoChunk(videoId);
             var videoStrip = ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 0, true);
             int scaleBitmap = 2;
             Bitmap resultVideo = new Bitmap(128 * scaleBitmap, 128 * scaleBitmap);
