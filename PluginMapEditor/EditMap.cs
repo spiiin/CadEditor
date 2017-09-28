@@ -131,7 +131,7 @@ namespace CadEditor
                 int colorByte = mapData.attrData[x / 4 + mapData.width/4* (y / 4)];
                 int subPal = (colorByte >> (x%4/2*2 + y%4/2*4))& 0x03;
                 var tileRect = new Rectangle(new Point(x * 16, y * 16), new Size(16,16));
-                if (visibleRect == null || visibleRect.Contains(tileRect) || visibleRect.IntersectsWith(tileRect))
+                if (visibleRect.Contains(tileRect) || visibleRect.IntersectsWith(tileRect))
                 {
                     g.DrawImage(videos[subPal].Images[mapData.mapData[i]], tileRect);
                 }

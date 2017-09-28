@@ -217,7 +217,6 @@ namespace CadEditor
 
         bool saveToFile()
         {
-            var romFname = OpenFile.FileName;
             int no = cbLevel.SelectedIndex;
             if (no == -1)
                 return false;

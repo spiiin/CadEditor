@@ -197,7 +197,6 @@ namespace PluginVideoNes
         public Bitmap[] makeObjects(int videoPageId, int tilesId, int palId, MapViewType drawType, int constantSubpal = -1)
         {
             byte[] videoChunk = ConfigScript.getVideoChunk(videoPageId);
-            int blocksCount = ConfigScript.getBlocksCount();
             ObjRec[] objects = ConfigScript.getBlocks(tilesId);
 
             byte[] palette = ConfigScript.getPal(palId);

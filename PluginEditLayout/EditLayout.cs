@@ -131,8 +131,6 @@ namespace CadEditor
                 {
                     int index = curLevelLayerData.layer[y * w + x];
                     int scroll = curLevelLayerData.scroll != null ? curLevelLayerData.scroll[y * w + x] : 0;
-                    int scrollIndex = scroll >> 5;
-                    int doorIndex = scroll & 0x01F;
                     g.DrawImage(screenImages.Images[index % 256], new Rectangle(x*64, y*64, 64, 64));
                     if (showScrolls)
                       g.DrawString(String.Format("{0:X}", scroll), new Font("Arial", 8), new SolidBrush(Color.Red), new Rectangle(x * 64 + 24, y * 64 + 24, 32, 16));

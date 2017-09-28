@@ -89,8 +89,6 @@ namespace PluginExportScreens
                 int WIDTH = ConfigScript.getScreenWidth(formMain.LevelNoForScreens);
                 int HEIGHT = ConfigScript.getScreenHeight(formMain.LevelNoForScreens);
                 float curScale = formMain.CurScale;
-                int TILE_SIZE_X = (int)(formMain.Layers[0].blockWidth * curScale);
-                int TILE_SIZE_Y = (int)(formMain.Layers[0].blockHeight * curScale);
                 var probeIm = MapEditor.ScreenToImage(formMain.BigBlocks,formMain.Layers, formMain.ScreenNo, curScale, false, 0, 0, WIDTH, HEIGHT);
                 int screenCount = SaveScreensCount.Count;
                 var resultImage = new Bitmap(probeIm.Width * screenCount, probeIm.Height);
