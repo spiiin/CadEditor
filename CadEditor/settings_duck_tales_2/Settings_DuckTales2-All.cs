@@ -227,7 +227,9 @@ public class Data:CapcomBase
           objectsPtr += 3;
           objIndex++;
       }
-      //fill free space with 0xFF?
+      //write code of end objects
+      Globals.romdata[addr] = 0xFF;   
+      Globals.romdata[addr+1] = 0xFF;
       return true;
   }
 }
