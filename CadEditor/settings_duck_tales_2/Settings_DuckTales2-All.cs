@@ -167,9 +167,50 @@ public class Data:CapcomBase
     return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
   }
   
-  /*public bool setObjectsDt2(int levelNo, List<ObjectList> objects)
+  public bool setObjectsDt2(int levelNo, List<ObjectList> objLists)
   {
-    //todo : add save for duck tales 2
-    return true;
-  }*/
+      LevelRec lr = ConfigScript.getLevelRec(levelNo);
+      var objects = objLists[0].objects;
+      int objCount = lr.objCount, addr = lr.objectsBeginAddr;
+      var objsAtLine = new int[lr.height];
+
+      for (int i = 0; i < objects.Count; i++)
+      {
+          var obj = objects[i];
+          objsAtLine[obj.sy] += 1;
+      }
+
+      int curObjLine = 0;
+
+      //start line 0
+      Globals.romdata[addr] = (byte)0xFF;
+      Globals.romdata[addr + 1] = (byte)curObjLine;
+      addr += 2;
+
+      int objIndex = 0;
+      int totalCount = objsAtLine[curObjLine];
+      while (objIndex < objects.Count)
+      {
+          if (objIndex >= totalCount)
+          {
+              Globals.romdata[addr] = (byte)0xFF;
+              Globals.romdata[addr + 1] = (byte)(++curObjLine);
+              addr += 2;
+              totalCount += objsAtLine[curObjLine];
+              continue;
+          }
+
+          var obj = objects[objIndex];
+          int x = (obj.sx << 5) | (obj.x >> 3);
+          Globals.romdata[addr + 0] = (byte)x;
+          Globals.romdata[addr + 1] = (byte)obj.y;
+          Globals.romdata[addr + 2] = (byte)obj.type;
+          addr += 3;
+          objIndex++;
+      }
+      //fill free space with 0xFF
+      
+      //patch pointers to floors
+      return true;
+  }
 }
