@@ -129,11 +129,12 @@ public class Data:CapcomBase
 
   public bool setObjectsDt(int levelNo, List<ObjectList> objLists)
   {
-    //todo: add save sy coord to objLineOffsets array
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
     int addrBase = lr.objectsBeginAddr;
     int objCount = lr.objCount;
     var objects = objLists[0].objects;
+    
+    var objsAtLine = new int[lr.height];
     for (int i = 0; i < objects.Count; i++)
     {
         var obj = objects[i];
@@ -141,6 +142,8 @@ public class Data:CapcomBase
         Globals.romdata[addrBase - 3 * objCount + i - lr.height] = (byte)obj.sx;
         Globals.romdata[addrBase - 2 * objCount + i - lr.height] = (byte)obj.x;
         Globals.romdata[addrBase - 1 * objCount + i - lr.height] = (byte)obj.y;
+        //save count objects at line
+        objsAtLine[obj.sy] += 1;
     }
     for (int i = objects.Count; i < objCount; i++)
     {
@@ -148,6 +151,14 @@ public class Data:CapcomBase
         Globals.romdata[addrBase - 3 * objCount + i - lr.height] = 0xFF;
         Globals.romdata[addrBase - 2 * objCount + i - lr.height] = 0xFF;
         Globals.romdata[addrBase - 1 * objCount + i - lr.height] = 0xFF;
+    }
+    
+    //save calculated objects line indexes
+    int totalCount = 0;
+    for (int i = 1; i < lr.height; i++)
+    {
+        totalCount += objsAtLine[i-1];
+        Globals.romdata[addrBase + i - lr.height] = (byte)totalCount;
     }
     return true;
   }
