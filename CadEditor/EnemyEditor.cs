@@ -264,9 +264,10 @@ namespace CadEditor
 
         private void fillObjectsDataGrid()
         {
-            dgvObjects.AutoGenerateColumns = true;
             var activeObjectList = objectLists[curActiveObjectListIndex];
+            dgvObjects.DataSource = null;
             dgvObjects.Columns.Clear();
+            dgvObjects.AutoGenerateColumns = true;
             dgvObjects.DataSource = activeObjectList.objects;
 
             if (dgvObjects.Columns.Count < ObjectRec.FIELD_COUNT)
