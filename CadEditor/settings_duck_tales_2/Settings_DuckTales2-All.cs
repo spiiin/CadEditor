@@ -35,7 +35,7 @@ public class Data:CapcomBase
   public override GetBigBlocksFunc     getBigBlocksFunc()     { return getBigBlocksDt2;}
   public override SetBigBlocksFunc     setBigBlocksFunc()     { return setBigBlocksDt2;}
   public GetObjectsFunc getObjectsFunc() { return getObjectsDt2; }
-  public SetObjectsFunc setObjectsFunc() { return null; }
+  public SetObjectsFunc setObjectsFunc() { return setObjectsDt2; }
   
   public IList<LevelRec> levelRecsDt2 = new List<LevelRec>() 
   {
