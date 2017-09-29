@@ -131,6 +131,13 @@ public class Data:CapcomBase
     Utils.writeDataToUnalignedArrays(data, Globals.romdata, addrPointers[0], addrPointers[1], addrPointers[2], addrPointers[3], blocksCount); 
   }
   
+  public int getPtrToFloorsAddr(int levelNo)
+  {
+    int SIZE_OF_WORD = 2;
+    int FLOORS_COUNT = 6;
+    return 0x19434 + levelNo * FLOORS_COUNT * SIZE_OF_WORD;
+  }
+  
   public List<ObjectList> getObjectsDt2(int levelNo)
   {
     LevelRec lr = ConfigScript.getLevelRec(levelNo);
@@ -186,17 +193,28 @@ public class Data:CapcomBase
       Globals.romdata[addr] = (byte)0xFF;
       Globals.romdata[addr + 1] = (byte)curObjLine;
       addr += 2;
+      
+      //pointers to floors
+      int floorPtr = getPtrToFloorsAddr(levelNo);
+      int objectsPtr = Utils.readWordUnsignedLE(Globals.romdata, floorPtr);
 
       int objIndex = 0;
       int totalCount = objsAtLine[curObjLine];
       while (objIndex < objects.Count)
       {
           if (objIndex >= totalCount)
-          {
+          {   
+              //write code of begin ptr
               Globals.romdata[addr] = (byte)0xFF;
               Globals.romdata[addr + 1] = (byte)(++curObjLine);
               addr += 2;
+              objectsPtr += 2;
               totalCount += objsAtLine[curObjLine];
+              
+              //patch ptrs to floors
+              floorPtr += 2; //next floor
+              Globals.romdata[floorPtr+0] = (byte)(objectsPtr & 0xFF);
+              Globals.romdata[floorPtr+1] = (byte)(objectsPtr >> 8);
               continue;
           }
 
@@ -206,11 +224,10 @@ public class Data:CapcomBase
           Globals.romdata[addr + 1] = (byte)obj.y;
           Globals.romdata[addr + 2] = (byte)obj.type;
           addr += 3;
+          objectsPtr += 3;
           objIndex++;
       }
-      //fill free space with 0xFF
-      
-      //patch pointers to floors
+      //fill free space with 0xFF?
       return true;
   }
 }
