@@ -1,6 +1,6 @@
 import os, glob, shutil, zipfile
 
-VERSION        = "44"
+VERSION        = "45"
 RELEASE_FOLDER = "../Release/cad_editor_v%s" % VERSION
 ZIP_NAME       = "../Release/cad_editor_v%s.zip" % VERSION
 
@@ -48,12 +48,14 @@ def removeAndCreate(path):
   os.makedirs(path)
   os.makedirs(os.path.join(path, "exportTmx/"))
   
-def zipdir(path, zip):
-  for root, dirs, files in os.walk(path):
-    for file in files:
-      fp = os.path.join(root, file)
-      #fp = fp.remove(ROOT_SUBPATH)
-      zip.write(fp)
+def zipdir(path, ziph):
+    # ziph is zipfile handle
+    absPath = os.path.abspath(path)
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            fullPath = os.path.join(root, file)
+            shortPath = fullPath.replace(absPath, "")
+            ziph.write(fullPath, arcname =shortPath)
 
 def makeRelease():
   print "Make release CadEditor v" + VERSION
@@ -83,11 +85,13 @@ def makeRelease():
         shutil.copytree(dir2, os.path.join(absRoot, dir2))
   print ""
   
-  #print "Making release archive"
-  #zip = zipfile.ZipFile(ZIP_NAME, 'w')
-  #zipdir(absRoot, zip)
-  #zip.close()
+  print "Making release archive"
+  zipf = zipfile.ZipFile(ZIP_NAME, 'w', zipfile.ZIP_DEFLATED)
+  zipdir(absRoot, zipf)
+  zipf.close()
   print "DONE!"
+  print "Release folder: %s"% RELEASE_FOLDER
+  print "Release zip   : %s"% ZIP_NAME
     
 #-----------------------------------------------------------------------
 if __name__ == "__main__":
