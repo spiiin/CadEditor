@@ -101,7 +101,7 @@ namespace CadEditor
         {
             screenImages.Images.Clear();
             screenImages.Images.Add(makeBlackScreen(64,64,0));
-            for (int scrNo = 0; scrNo < ConfigScript.screensOffset[scrLevelNo].recCount; scrNo++)
+            for (int scrNo = 0; scrNo < 256/*ConfigScript.screensOffset[scrLevelNo].recCount*/; scrNo++)
                 screenImages.Images.Add(makeBlackScreen(64, 64, scrNo + 1));
         }
 
