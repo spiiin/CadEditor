@@ -1,4 +1,5 @@
 using CadEditor;
+using System;
 using System.Collections.Generic;
 
 public static class ShatterhandUtils 
@@ -64,5 +65,103 @@ public static class ShatterhandUtils
   public static GetVideoChunkFunc getVideoChunk(string fname)
   {
      return (int _)=> { return Utils.readVideoBankFromFile(fname, 0); };
+  }
+  
+  public static LevelLayerData getLayoutLinearSH(int curActiveLayout)
+  {
+      int layoutAddr = ConfigScript.getLayoutAddr(curActiveLayout);
+      int width =  ConfigScript.getLevelWidth(curActiveLayout);
+      int height = ConfigScript.getLevelHeight(curActiveLayout);
+      int[] layer = new int[width * height];
+      for (int i = 0; i < width * height; i++)
+          layer[i] = (Globals.romdata[layoutAddr + i] + 1)%256;
+      return new LevelLayerData(width, height, layer, null, null);
+  }
+  
+  public static bool setLayoutLinearSH(LevelLayerData layerData, int curActiveLayout)
+  {
+      int layoutAddr = ConfigScript.getLayoutAddr(curActiveLayout);
+      int width =  ConfigScript.getLevelWidth(curActiveLayout);
+      int height = ConfigScript.getLevelHeight(curActiveLayout);
+      for (int i = 0; i < width * height; i++)
+          Globals.romdata[layoutAddr + i] = (byte)(layerData.layer[i] - 1);
+      return true;
+  }
+  
+  public static List<ObjectList> getObjects(int levelNo)
+  {
+    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    int objCount = lr.objCount;
+    int baseAddr = lr.objectsBeginAddr;
+    var objects = new List<ObjectRec>();
+    int objSize = 6;
+    for (int i = 0; i < objCount; i++)
+    {
+      int dirIndex = Globals.romdata[baseAddr + objSize*i + 0];
+      int type = Globals.romdata[baseAddr + objSize*i + 1];
+      int flags1 = Globals.romdata[baseAddr + objSize*i + 2];
+      int x = Globals.romdata[baseAddr + objSize*i + 3];
+      int flags2 = Globals.romdata[baseAddr + objSize*i + 4];
+      int y = Globals.romdata[baseAddr + objSize*i + 5];
+      
+      int direction = dirIndex & 0x40;
+      int index = dirIndex & 0x3F;
+      var dataDict = new Dictionary<string,int>();
+      dataDict["direction"] = direction;
+      dataDict["index"] = index;
+      dataDict["flags1"] = flags1;
+      dataDict["flags2"] = flags2;
+      int scrX = (x >> 4) - 1;
+      int realX = (x & 0x0F) * 16;
+      int scrY = (y >> 4) - 1;
+      int realY = (y & 0x0F) * 16;
+      var obj = new ObjectRec(type, scrX, scrY, realX, realY, dataDict);
+      objects.Add(obj);
+    }
+    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
+  }
+
+  public static bool setObjects(int levelNo, List<ObjectList> objLists)
+  {
+    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    int objCount = lr.objCount;
+    int baseAddr = lr.objectsBeginAddr;
+    var objects = objLists[0].objects;
+    int objSize = 6;
+    for (int i = 0; i < objects.Count; i++)
+    {
+      var obj = objects[i];
+      var dict = obj.additionalData;
+      int dirIndex = dict["direction"] | dict["index"];
+      int x = ((obj.sx+1) << 4) | (obj.x/16);
+      int y = ((obj.sy+1) << 4) | (obj.y/16);
+      
+      Globals.romdata[baseAddr + objSize*i + 0] = (byte)dirIndex;
+      Globals.romdata[baseAddr + objSize*i + 1] = (byte)obj.type;
+      Globals.romdata[baseAddr + objSize*i + 2] = (byte)dict["flags1"];
+      Globals.romdata[baseAddr + objSize*i + 3] = (byte)x;
+      Globals.romdata[baseAddr + objSize*i + 4] = (byte)dict["flags2"];
+      Globals.romdata[baseAddr + objSize*i + 5] = (byte)y;
+    }
+    for (int i = objects.Count; i < objCount; i++)
+    {
+      Globals.romdata[baseAddr + objSize*i + 0] = (byte)0xFF;
+      Globals.romdata[baseAddr + objSize*i + 1] = (byte)0xFF;
+      Globals.romdata[baseAddr + objSize*i + 2] = (byte)0xFF;
+      Globals.romdata[baseAddr + objSize*i + 3] = (byte)0xFF;
+      Globals.romdata[baseAddr + objSize*i + 4] = (byte)0xFF;
+      Globals.romdata[baseAddr + objSize*i + 5] = (byte)0xFF;
+    }
+    return true;
+  }
+  
+  public static Dictionary<String,int> getObjectDictionary(int listNo, int type)
+  {
+    return new Dictionary<String, int> { 
+        {"direction", 0},
+        {"index", 0},
+        {"flags1", 0},
+        {"flags2", 0},
+    };
   }
 }
