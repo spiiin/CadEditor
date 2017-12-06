@@ -51,6 +51,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginSegaBackEditor", "..\
 		{BD2A990C-9D64-472D-9C78-1429C666604B} = {BD2A990C-9D64-472D-9C78-1429C666604B}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsViewer", "..\SettingsViewer\SettingsViewer.csproj", "{6D34882E-6A7D-4EA1-ADB2-07C0E21D521D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -190,6 +192,18 @@ Global
 		{1DFBB313-4FC3-432C-A2A5-27A5315CF772}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1DFBB313-4FC3-432C-A2A5-27A5315CF772}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1DFBB313-4FC3-432C-A2A5-27A5315CF772}.Release|x86.ActiveCfg = Release|Any CPU
+		{6D34882E-6A7D-4EA1-ADB2-07C0E21D521D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D34882E-6A7D-4EA1-ADB2-07C0E21D521D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D34882E-6A7D-4EA1-ADB2-07C0E21D521D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6D34882E-6A7D-4EA1-ADB2-07C0E21D521D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6D34882E-6A7D-4EA1-ADB2-07C0E21D521D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6D34882E-6A7D-4EA1-ADB2-07C0E21D521D}.Debug|x86.Build.0 = Debug|Any CPU
+		{6D34882E-6A7D-4EA1-ADB2-07C0E21D521D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D34882E-6A7D-4EA1-ADB2-07C0E21D521D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D34882E-6A7D-4EA1-ADB2-07C0E21D521D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6D34882E-6A7D-4EA1-ADB2-07C0E21D521D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6D34882E-6A7D-4EA1-ADB2-07C0E21D521D}.Release|x86.ActiveCfg = Release|Any CPU
+		{6D34882E-6A7D-4EA1-ADB2-07C0E21D521D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
