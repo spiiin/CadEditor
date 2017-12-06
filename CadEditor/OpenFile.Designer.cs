@@ -43,7 +43,7 @@
             // btOpen
             // 
             this.btOpen.Location = new System.Drawing.Point(16, 142);
-            this.btOpen.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btOpen.Margin = new System.Windows.Forms.Padding(4);
             this.btOpen.Name = "btOpen";
             this.btOpen.Size = new System.Drawing.Size(296, 28);
             this.btOpen.TabIndex = 0;
@@ -54,7 +54,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 31);
+            this.label1.Location = new System.Drawing.Point(13, 75);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(105, 17);
@@ -64,7 +64,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 106);
+            this.label2.Location = new System.Drawing.Point(13, 27);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(113, 17);
@@ -73,8 +73,8 @@
             // 
             // tbFileName
             // 
-            this.tbFileName.Location = new System.Drawing.Point(131, 27);
-            this.tbFileName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbFileName.Location = new System.Drawing.Point(126, 72);
+            this.tbFileName.Margin = new System.Windows.Forms.Padding(4);
             this.tbFileName.Name = "tbFileName";
             this.tbFileName.Size = new System.Drawing.Size(479, 22);
             this.tbFileName.TabIndex = 3;
@@ -82,8 +82,8 @@
             // 
             // tbConfigName
             // 
-            this.tbConfigName.Location = new System.Drawing.Point(131, 97);
-            this.tbConfigName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbConfigName.Location = new System.Drawing.Point(126, 24);
+            this.tbConfigName.Margin = new System.Windows.Forms.Padding(4);
             this.tbConfigName.Name = "tbConfigName";
             this.tbConfigName.Size = new System.Drawing.Size(479, 22);
             this.tbConfigName.TabIndex = 4;
@@ -96,7 +96,7 @@
             // btClose
             // 
             this.btClose.Location = new System.Drawing.Point(320, 142);
-            this.btClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btClose.Margin = new System.Windows.Forms.Padding(4);
             this.btClose.Name = "btClose";
             this.btClose.Size = new System.Drawing.Size(287, 28);
             this.btClose.TabIndex = 5;
@@ -106,8 +106,8 @@
             // 
             // tbDumpName
             // 
-            this.tbDumpName.Location = new System.Drawing.Point(131, 64);
-            this.tbDumpName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbDumpName.Location = new System.Drawing.Point(128, 112);
+            this.tbDumpName.Margin = new System.Windows.Forms.Padding(4);
             this.tbDumpName.Name = "tbDumpName";
             this.tbDumpName.Size = new System.Drawing.Size(479, 22);
             this.tbDumpName.TabIndex = 7;
@@ -116,7 +116,7 @@
             // lbDumpName
             // 
             this.lbDumpName.AutoSize = true;
-            this.lbDumpName.Location = new System.Drawing.Point(16, 68);
+            this.lbDumpName.Location = new System.Drawing.Point(13, 116);
             this.lbDumpName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbDumpName.Name = "lbDumpName";
             this.lbDumpName.Size = new System.Drawing.Size(110, 17);
@@ -138,7 +138,7 @@
             this.Controls.Add(this.btOpen);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "OpenFile";
             this.Text = "Open File";
