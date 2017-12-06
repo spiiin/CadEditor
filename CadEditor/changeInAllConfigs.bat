@@ -1,2 +1,0 @@
-changeInAllConfigs.py
-pause
