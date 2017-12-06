@@ -45,7 +45,6 @@ namespace CadEditor
                 romName = callFromScript(asm, data, "*.getFileName", "");
                 cfgName = callFromScript(asm, data, "*.getConfigName", "");
                 dumpName = callFromScript(asm, data, "*.getDumpName", "");
-                //showDumpFileField = callFromScript(asm, data, "*.showDumpFileField", false);
                 nesColors = callFromScript<Color[]>(asm, data, "*.getNesColors", null);
             }
             catch (Exception)
@@ -738,7 +737,6 @@ namespace CadEditor
         public static string dumpName;
         public static string  cfgName;
         public static Color[] nesColors;
-        //public static bool showDumpFileField;
 
         public static List<IPlugin> plugins = new List<IPlugin>();
         public static IVideoPluginNes videoNes;

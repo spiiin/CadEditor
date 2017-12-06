@@ -114,6 +114,8 @@ namespace SettingsViewer
 
         public MethodDelegate get() { return getMethod(GetCurrentMethodNameWithoutGetter(2));} //just shortcut
 
+        [Category("Show dump")]
+        public MethodDelegate showDumpFileField { get { return get(); } }
         [Category("Levels count")]
         public MethodDelegate getLevelsCount { get { return get(); } }
         [Category("Offsets")]
