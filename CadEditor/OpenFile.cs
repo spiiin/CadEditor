@@ -29,6 +29,9 @@ namespace CadEditor
             if (ofOpenDialog.ShowDialog() == DialogResult.OK)
             {
                 tbConfigName.Text = ofOpenDialog.FileName;
+                var showDumpField = ConfigScript.PreloadShowDumpField(tbConfigName.Text);
+                tbDumpName.Enabled = showDumpField;
+                lbDumpName.Enabled = showDumpField;
             }
         }
 
@@ -43,8 +46,8 @@ namespace CadEditor
         private void btOpen_Click(object sender, EventArgs e)
         {
             FileName = tbFileName.Text;
-            DumpName = ConfigScript.showDumpFileField ? tbDumpName.Text : "";
             ConfigName = tbConfigName.Text;
+            DumpName = ConfigScript.PreloadShowDumpField(ConfigName) ? tbDumpName.Text : "";
             DialogResult = DialogResult.OK;
             Close();
 
@@ -66,15 +69,16 @@ namespace CadEditor
 
         private void OpenFile_Load(object sender, EventArgs e)
         {
-            tbDumpName.Enabled = ConfigScript.showDumpFileField;
-            lbDumpName.Enabled = ConfigScript.showDumpFileField;
-
             if (Properties.Settings.Default["FileName"].ToString() != "")
                 tbFileName.Text = Properties.Settings.Default["FileName"].ToString();
             if (Properties.Settings.Default["DumpName"].ToString() != "")
                 tbDumpName.Text = Properties.Settings.Default["DumpName"].ToString();
             if (Properties.Settings.Default["ConfigName"].ToString() != "")
                 tbConfigName.Text = Properties.Settings.Default["ConfigName"].ToString();
+
+            var showDumpField = ConfigScript.PreloadShowDumpField(tbConfigName.Text);
+            tbDumpName.Enabled = showDumpField;
+            lbDumpName.Enabled = showDumpField;
 
             if (FileName == "" && ConfigScript.romName != "")
                 tbFileName.Text = ConfigScript.romName;

@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 public class Data
 {
+  public bool showDumpFileField()  { return true;  }
+  
   public bool isUseSegaGraphics()            { return true; }
   //public bool isBuildScreenFromSmallBlocks() { return true; }
   public bool getScreenVertical()         { return true; }

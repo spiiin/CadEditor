@@ -2,6 +2,8 @@ using CadEditor;
 using System.Collections.Generic;
 public class Data
 { 
+  public bool showDumpFileField()  { return true;  }
+  
   public OffsetRec getScreensOffset()     { return new OffsetRec(0x0   , 1 , 14*96);  } //0x38848
   public int getScreenWidth()    { return 14; }
   public int getScreenHeight()   { return 96; }

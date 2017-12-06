@@ -12,6 +12,9 @@ public class Data
       "PluginSegaBackEditor.dll",
     };
   }
+  
+  public bool showDumpFileField()  { return true;  }
+  
   public bool isUseSegaGraphics()      { return true; }
   public bool isBlockSize4x4()         { return true; }
   public OffsetRec getScreensOffset()  { return new OffsetRec(0x0, 1 , 512*8);   }

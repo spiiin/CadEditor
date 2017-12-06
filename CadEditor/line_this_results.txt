@@ -1,0 +1,69 @@
+--------------------------
+2016-12-10
+--------------------------
+2272 files
+Summary : 30533 lines
+Code    : 25735 lines
+Comments: 1743 lines
+Empty   : 3055 lines
+--------------------------
+2017-01-04
+--------------------------
+Summary : 31022 lines
+Code    : 26164 lines
+Comments: 1743 lines
+Empty   : 3115 lines
+------------------------
+2017-01-28
+------------------------
+Found   : 2342 files
+Summary : 32342 lines
+Code    : 27219 lines
+Comments: 1776 lines
+Empty   : 3347 lines
+------------------------
+2017-04-15
+------------------------
+Found   : 2431 files
+Summary : 34180 lines
+Code    : 28721 lines
+Comments: 1826 lines
+Empty   : 3633 lines
+------------------------
+2017-05-07
+------------------------
+Found   : 2512 files
+Summary : 34946 lines
+Code    : 29261 lines
+Comments: 1868 lines
+Empty   : 3817 lines
+------------------------
+
+
+Не считая код дизайнера форм:
+------------------------
+2017-08-25
+------------------------
+Found   : 2553 files
+Summary : 30447 lines
+Code    : 25836 lines
+Comments:  795 lines
+Empty   : 3816 lines
+
+------------------------
+2017-08-29
+------------------------
+Found   : 2558 files
+Summary : 30755 lines
+Code    : 26082 lines
+Comments:  808 lines
+Empty   : 3865 lines
+
+------------------------
+2017-09-10
+------------------------
+Found   : 3116 files
+Summary : 36725 lines
+Code    : 30684 lines
+Comments: 1008 lines
+Empty   : 5033 lines

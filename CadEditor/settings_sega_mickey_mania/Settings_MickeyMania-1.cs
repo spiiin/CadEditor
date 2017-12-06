@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public class Data
 {
+  public bool showDumpFileField()  { return true;  }
+  
   public bool isUseSegaGraphics()            { return true; }
   public bool isBlockSize4x4()               { return true; } //valid only for sega games
   //public bool isBuildScreenFromSmallBlocks() { return true; }
