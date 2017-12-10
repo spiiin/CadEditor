@@ -55,12 +55,16 @@ namespace PluginCompressLZKN
                 int compressedSize = LZKN1.compress(Globals.dumpdata, compressedBytes, Globals.dumpdata.Length);
                 tbLog.AppendText(String.Format("Compression complete. Compressed size: {0} bytes\n", compressedSize));
 
-                tbLog.AppendText(String.Format("Saving content to lzkn archive: {0}\n", compressedFileName));
-
                 byte[] realCompressedBytes = new byte[compressedSize];
                 Array.Copy(compressedBytes, realCompressedBytes, compressedSize);
-                File.WriteAllBytes(compressedFileName, realCompressedBytes);
-                tbLog.AppendText(String.Format("Saving content to lzkn archive complete\n"));
+
+                bool needCreateArchiveFile = cbArchiveFile.Checked;
+                if (needCreateArchiveFile)
+                {
+                    tbLog.AppendText(String.Format("Saving content to lzkn archive: {0}\n", compressedFileName));
+                    File.WriteAllBytes(compressedFileName, realCompressedBytes);
+                    tbLog.AppendText(String.Format("Saving content to lzkn archive complete\n"));
+                }
 
                 bool insert = cbInsert.Checked;
                 if (insert)
@@ -68,7 +72,7 @@ namespace PluginCompressLZKN
                     int selectedAddressIndex = cbAddress.SelectedIndex;
                     int insertingAddress = CompressConfig.compressParams[selectedAddressIndex].address;
                     tbLog.AppendText(String.Format("Inserting archive in ROM at address: {0}\n", insertingAddress.ToString("X")));
-                    Array.Copy(compressedBytes, 0, Globals.romdata, insertingAddress, compressedSize);
+                    Array.Copy(realCompressedBytes, 0, Globals.romdata, insertingAddress, compressedSize);
                     //todo: fill free space with 0xFF
                     Globals.flushToFile();
                     tbLog.AppendText("Inserting archive in ROM complete\n");
