@@ -30,12 +30,12 @@
         {
             this.btCompress = new System.Windows.Forms.Button();
             this.pnParams = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cbAddress = new System.Windows.Forms.ComboBox();
-            this.cbInsert = new System.Windows.Forms.CheckBox();
-            this.tbLog = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.lbMaxLength = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cbInsert = new System.Windows.Forms.CheckBox();
+            this.cbAddress = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tbLog = new System.Windows.Forms.TextBox();
             this.pnParams.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,24 +62,25 @@
             this.pnParams.Size = new System.Drawing.Size(458, 133);
             this.pnParams.TabIndex = 1;
             // 
-            // label1
+            // lbMaxLength
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(168, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(119, 17);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Address to insert:";
+            this.lbMaxLength.AutoSize = true;
+            this.lbMaxLength.Enabled = false;
+            this.lbMaxLength.Location = new System.Drawing.Point(335, 50);
+            this.lbMaxLength.Name = "lbMaxLength";
+            this.lbMaxLength.Size = new System.Drawing.Size(21, 17);
+            this.lbMaxLength.TabIndex = 6;
+            this.lbMaxLength.Text = "-1";
             // 
-            // cbAddress
+            // label2
             // 
-            this.cbAddress.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbAddress.FormattingEnabled = true;
-            this.cbAddress.Location = new System.Drawing.Point(338, 13);
-            this.cbAddress.Name = "cbAddress";
-            this.cbAddress.Size = new System.Drawing.Size(107, 24);
-            this.cbAddress.TabIndex = 3;
-            this.cbAddress.SelectedIndexChanged += new System.EventHandler(this.cbAddress_SelectedIndexChanged);
+            this.label2.AutoSize = true;
+            this.label2.Enabled = false;
+            this.label2.Location = new System.Drawing.Point(168, 50);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(161, 17);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Max compressed length:";
             // 
             // cbInsert
             // 
@@ -94,6 +95,25 @@
             this.cbInsert.UseVisualStyleBackColor = true;
             this.cbInsert.CheckedChanged += new System.EventHandler(this.cbInsert_CheckedChanged);
             // 
+            // cbAddress
+            // 
+            this.cbAddress.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbAddress.FormattingEnabled = true;
+            this.cbAddress.Location = new System.Drawing.Point(338, 13);
+            this.cbAddress.Name = "cbAddress";
+            this.cbAddress.Size = new System.Drawing.Size(107, 24);
+            this.cbAddress.TabIndex = 3;
+            this.cbAddress.SelectedIndexChanged += new System.EventHandler(this.cbAddress_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(168, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(119, 17);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Address to insert:";
+            // 
             // tbLog
             // 
             this.tbLog.Location = new System.Drawing.Point(12, 167);
@@ -104,24 +124,6 @@
             this.tbLog.TabIndex = 2;
             this.tbLog.Text = "Press compress to recompress dump file";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(168, 50);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(161, 17);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Max compressed length:";
-            // 
-            // lbMaxLength
-            // 
-            this.lbMaxLength.AutoSize = true;
-            this.lbMaxLength.Location = new System.Drawing.Point(335, 50);
-            this.lbMaxLength.Name = "lbMaxLength";
-            this.lbMaxLength.Size = new System.Drawing.Size(21, 17);
-            this.lbMaxLength.TabIndex = 6;
-            this.lbMaxLength.Text = "-1";
-            // 
             // CompressManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -129,6 +131,8 @@
             this.ClientSize = new System.Drawing.Size(482, 451);
             this.Controls.Add(this.tbLog);
             this.Controls.Add(this.pnParams);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "CompressManager";
             this.Text = "Compress manager";
             this.Load += new System.EventHandler(this.CompressManager_Load);

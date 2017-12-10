@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using CadEditor;
+using System.Runtime.InteropServices;
+using System.IO;
 
 namespace PluginCompressLZKN
 {
@@ -20,7 +22,7 @@ namespace PluginCompressLZKN
         private void CompressManager_Load(object sender, EventArgs e)
         {
             cbAddress.Items.Clear();
-            cbAddress.Items.AddRange(CompressConfig.compressParams.Select(x => x.address.ToString()).ToArray());
+            cbAddress.Items.AddRange(CompressConfig.compressParams.Select(x => x.address.ToString("X")).ToArray());
             UtilsGui.setCbIndexWithoutUpdateLevel(cbAddress, cbAddress_SelectedIndexChanged);
         }
 
@@ -38,15 +40,62 @@ namespace PluginCompressLZKN
 
         private void btCompress_Click(object sender, EventArgs e)
         {
-            tbLog.Text = "";
-            tbLog.AppendText("---------------------------------------------------------------\n");
-            tbLog.AppendText("Job start\n");
-            tbLog.AppendText(String.Format("Current file name: {0}\n", OpenFile.FileName));
-            tbLog.AppendText(String.Format("Current dump name: {0}\n", OpenFile.DumpName));
-            tbLog.AppendText("Error! Compressor not found\n");
-            tbLog.AppendText("Job end\n");
-            tbLog.AppendText("---------------------------------------------------------------\n");
-            bool needToInsert = cbInsert.Checked;
+            try
+            {
+                tbLog.Text = "";
+                tbLog.AppendText("--------------------------------------------------------------------------------------------------\n");
+                tbLog.AppendText("Job start\n");
+                tbLog.AppendText(String.Format("Current file name: {0}\n", OpenFile.FileName));
+                tbLog.AppendText(String.Format("Current dump name: {0}\n", OpenFile.DumpName));
+
+                var compressedFileName = OpenFile.DumpName + ".lzkn1";
+                tbLog.AppendText(String.Format("Try to compress current dumpdata with lzkn1 compressor\n"));
+
+                byte[] compressedBytes = new byte[Globals.dumpdata.Length];
+                int compressedSize = LZKN1.compress(Globals.dumpdata, compressedBytes, Globals.dumpdata.Length);
+                tbLog.AppendText(String.Format("Compression complete. Compressed size: {0} bytes\n", compressedSize));
+
+                tbLog.AppendText(String.Format("Saving content to lzkn archive: {0}\n", compressedFileName));
+
+                byte[] realCompressedBytes = new byte[compressedSize];
+                Array.Copy(compressedBytes, realCompressedBytes, compressedSize);
+                File.WriteAllBytes(compressedFileName, realCompressedBytes);
+                tbLog.AppendText(String.Format("Saving content to lzkn archive complete\n"));
+
+                bool insert = cbInsert.Checked;
+                if (insert)
+                {
+                    int selectedAddressIndex = cbAddress.SelectedIndex;
+                    int insertingAddress = CompressConfig.compressParams[selectedAddressIndex].address;
+                    tbLog.AppendText(String.Format("Inserting archive in ROM at address: {0}\n", insertingAddress.ToString("X")));
+                    Array.Copy(compressedBytes, 0, Globals.romdata, insertingAddress, compressedSize);
+                    //todo: fill free space with 0xFF
+                    Globals.flushToFile();
+                    tbLog.AppendText("Inserting archive in ROM complete\n");
+                }
+                else
+                {
+                    tbLog.AppendText("Inserting archive in ROM disabled\n");
+                }
+                tbLog.AppendText("Done!\n");
+                tbLog.AppendText("--------------------------------------------------------------------------------------------------\n");
+            }
+            catch(Exception ex)
+            {
+                tbLog.AppendText(String.Format("Error! Description: {0}", ex.Message));
+            }
         }
+    }
+
+    public static class LZKN1
+    {
+        [DllImport("lzkn1.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int compress([In] byte[] input, [Out] byte[] output, int size);
+
+        [DllImport("lzkn1.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int compressed_size([In] byte[] input);
+
+        //[DllImport("lzkn2.dll", CallingConvention = CallingConvention.Cdecl)]
+        //public static extern void ShowMe();
     }
 }
