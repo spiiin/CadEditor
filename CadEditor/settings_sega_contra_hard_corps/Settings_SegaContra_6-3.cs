@@ -1,6 +1,7 @@
 using CadEditor;
 using System;
 using System.Collections.Generic;
+using PluginCompressLZKN;
 //css_include Settings_CHC-Utils.cs;
 
 public class Data 
@@ -10,6 +11,7 @@ public class Data
     return new string[] 
     {
       "PluginSegaBackEditor.dll",
+      "PluginCompressLZKN.dll"
     };
   }
   
@@ -83,5 +85,13 @@ public class Data
   public void saveBack(byte[] data)
   {
     Utils.saveDataToFile(BACK_NAME, data);
+  }
+  
+  //-------------------------------------------
+  public CompressParams[] getCompressParams()
+  {
+      return new CompressParams[] {
+          new CompressParams {address = 0x1EBAA2, maxSize = 1},
+      };
   }
 }

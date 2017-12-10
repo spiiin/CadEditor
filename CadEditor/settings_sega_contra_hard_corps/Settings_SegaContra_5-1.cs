@@ -1,10 +1,18 @@
 using CadEditor;
 using System;
 using System.Collections.Generic;
+using PluginCompressLZKN;
 //css_include Settings_CHC-Utils.cs;
 
 public class Data 
 { 
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginCompressLZKN.dll"
+    };
+  }
   public bool showDumpFileField()  { return true;  }
 
   public bool isUseSegaGraphics()      { return true; }
@@ -61,5 +69,13 @@ public class Data
   public byte[] readPal(int palNo)
   {
     return Utils.readBinFile(PAL_NAME);
+  }
+  
+  //-------------------------------------------
+  public CompressParams[] getCompressParams()
+  {
+      return new CompressParams[] {
+          new CompressParams {address = 0x1F36D0, maxSize = 1},
+      };
   }
 }
