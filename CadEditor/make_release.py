@@ -10,6 +10,7 @@ COPY_FILE_LIST = [
   "CSScriptLibrary.dll",
   "Newtonsoft.Json.dll",
   "IronPython.dll",
+  "lzkn1.dll",
   
   "Config.cs",
   "Settings_CapcomBase.cs",
