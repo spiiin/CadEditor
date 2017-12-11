@@ -49,6 +49,7 @@ namespace PluginCompressLZKN
     {
         public int address;
         public int maxSize;
+        public string fname;
     }
 
     public static class CompressConfig

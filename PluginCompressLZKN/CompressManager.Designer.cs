@@ -30,25 +30,26 @@
         {
             this.btCompress = new System.Windows.Forms.Button();
             this.pnParams = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cbArchiveFile = new System.Windows.Forms.CheckBox();
             this.lbMaxLength = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.cbInsert = new System.Windows.Forms.CheckBox();
             this.cbAddress = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tbLog = new System.Windows.Forms.TextBox();
-            this.cbArchiveFile = new System.Windows.Forms.CheckBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.pnParams.SuspendLayout();
             this.SuspendLayout();
             // 
             // btCompress
             // 
-            this.btCompress.Location = new System.Drawing.Point(17, 117);
+            this.btCompress.Location = new System.Drawing.Point(17, 142);
             this.btCompress.Name = "btCompress";
-            this.btCompress.Size = new System.Drawing.Size(261, 23);
+            this.btCompress.Size = new System.Drawing.Size(468, 23);
             this.btCompress.TabIndex = 0;
             this.btCompress.Text = "Compress";
             this.btCompress.UseVisualStyleBackColor = true;
@@ -56,6 +57,7 @@
             // 
             // pnParams
             // 
+            this.pnParams.Controls.Add(this.label7);
             this.pnParams.Controls.Add(this.label6);
             this.pnParams.Controls.Add(this.label5);
             this.pnParams.Controls.Add(this.label4);
@@ -69,14 +71,73 @@
             this.pnParams.Controls.Add(this.btCompress);
             this.pnParams.Location = new System.Drawing.Point(12, 12);
             this.pnParams.Name = "pnParams";
-            this.pnParams.Size = new System.Drawing.Size(515, 153);
+            this.pnParams.Size = new System.Drawing.Size(515, 171);
             this.pnParams.TabIndex = 1;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(287, 13);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(123, 17);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "*what to compress";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Enabled = false;
+            this.label6.Location = new System.Drawing.Point(300, 54);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(185, 17);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "that can be inserted in ROM";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Enabled = false;
+            this.label5.Location = new System.Drawing.Point(286, 37);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(199, 17);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "*maximum size to new archive,";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(287, 73);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(171, 17);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "*insert archive in ROM file";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(286, 102);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(207, 17);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "*created *.lzkn1 file with archive";
+            // 
+            // cbArchiveFile
+            // 
+            this.cbArchiveFile.AutoSize = true;
+            this.cbArchiveFile.Checked = true;
+            this.cbArchiveFile.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbArchiveFile.Location = new System.Drawing.Point(16, 98);
+            this.cbArchiveFile.Name = "cbArchiveFile";
+            this.cbArchiveFile.Size = new System.Drawing.Size(144, 21);
+            this.cbArchiveFile.TabIndex = 7;
+            this.cbArchiveFile.Text = "Create archive file";
+            this.cbArchiveFile.UseVisualStyleBackColor = true;
             // 
             // lbMaxLength
             // 
             this.lbMaxLength.AutoSize = true;
             this.lbMaxLength.Enabled = false;
-            this.lbMaxLength.Location = new System.Drawing.Point(182, 78);
+            this.lbMaxLength.Location = new System.Drawing.Point(181, 37);
             this.lbMaxLength.Name = "lbMaxLength";
             this.lbMaxLength.Size = new System.Drawing.Size(21, 17);
             this.lbMaxLength.TabIndex = 6;
@@ -86,7 +147,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Enabled = false;
-            this.label2.Location = new System.Drawing.Point(15, 78);
+            this.label2.Location = new System.Drawing.Point(14, 37);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(161, 17);
             this.label2.TabIndex = 5;
@@ -97,7 +158,7 @@
             this.cbInsert.AutoSize = true;
             this.cbInsert.Checked = true;
             this.cbInsert.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbInsert.Location = new System.Drawing.Point(17, 30);
+            this.cbInsert.Location = new System.Drawing.Point(17, 73);
             this.cbInsert.Name = "cbInsert";
             this.cbInsert.Size = new System.Drawing.Size(117, 21);
             this.cbInsert.TabIndex = 4;
@@ -108,17 +169,18 @@
             // cbAddress
             // 
             this.cbAddress.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbAddress.DropDownWidth = 240;
             this.cbAddress.FormattingEnabled = true;
-            this.cbAddress.Location = new System.Drawing.Point(171, 51);
+            this.cbAddress.Location = new System.Drawing.Point(170, 10);
             this.cbAddress.Name = "cbAddress";
-            this.cbAddress.Size = new System.Drawing.Size(107, 24);
+            this.cbAddress.Size = new System.Drawing.Size(110, 24);
             this.cbAddress.TabIndex = 3;
             this.cbAddress.SelectedIndexChanged += new System.EventHandler(this.cbAddress_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 54);
+            this.label1.Location = new System.Drawing.Point(14, 13);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(119, 17);
             this.label1.TabIndex = 2;
@@ -126,63 +188,13 @@
             // 
             // tbLog
             // 
-            this.tbLog.Location = new System.Drawing.Point(12, 171);
+            this.tbLog.Location = new System.Drawing.Point(12, 189);
             this.tbLog.Multiline = true;
             this.tbLog.Name = "tbLog";
             this.tbLog.ReadOnly = true;
-            this.tbLog.Size = new System.Drawing.Size(515, 328);
+            this.tbLog.Size = new System.Drawing.Size(515, 310);
             this.tbLog.TabIndex = 2;
             this.tbLog.Text = "Press compress to recompress dump file";
-            // 
-            // cbArchiveFile
-            // 
-            this.cbArchiveFile.AutoSize = true;
-            this.cbArchiveFile.Checked = true;
-            this.cbArchiveFile.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbArchiveFile.Location = new System.Drawing.Point(17, 3);
-            this.cbArchiveFile.Name = "cbArchiveFile";
-            this.cbArchiveFile.Size = new System.Drawing.Size(144, 21);
-            this.cbArchiveFile.TabIndex = 7;
-            this.cbArchiveFile.Text = "Create archive file";
-            this.cbArchiveFile.UseVisualStyleBackColor = true;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(287, 7);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(207, 17);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "*created *.lzkn1 file with archive";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(287, 30);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(171, 17);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "*insert archive in ROM file";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Enabled = false;
-            this.label5.Location = new System.Drawing.Point(287, 78);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(199, 17);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "*maximum size to new archive,";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Enabled = false;
-            this.label6.Location = new System.Drawing.Point(301, 95);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(185, 17);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "that can be inserted in ROM";
             // 
             // CompressManager
             // 
@@ -218,5 +230,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox cbArchiveFile;
+        private System.Windows.Forms.Label label7;
     }
 }
