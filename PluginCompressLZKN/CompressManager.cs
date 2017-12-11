@@ -53,7 +53,7 @@ namespace PluginCompressLZKN
                 tbLog.AppendText(String.Format("Input file name: {0}\n", fullInputFilename));
 
                 var compressedFileName = fullInputFilename + ".lzkn1";
-                tbLog.AppendText(String.Format("Try to compress current dumpdata with lzkn1 compressor\n"));
+                tbLog.AppendText(String.Format("Try to compress input file with lzkn1 compressor\n"));
 
                 var inputData = File.ReadAllBytes(fullInputFilename);
                 byte[] compressedBytes = new byte[inputData.Length];
@@ -85,9 +85,16 @@ Try to make archive smaller or disable size checking in settings file", maxSize,
                     int insertingAddress = CompressConfig.compressParams[selectedAddressIndex].address;
                     tbLog.AppendText(String.Format("Inserting archive in ROM at address: {0}\n", insertingAddress.ToString("X")));
                     Array.Copy(realCompressedBytes, 0, Globals.romdata, insertingAddress, compressedSize);
-                    //todo: fill free space with 0xFF
-                    Globals.flushToFile();
                     tbLog.AppendText("Inserting archive in ROM complete\n");
+
+                    if (cbFillZero.Checked)
+                    {
+                        int zerosSize = maxSize - compressedSize;
+                        tbLog.AppendText(String.Format("Filling free space in ROM with zeros: {0} bytes\n", zerosSize));
+                        var fillArray = new byte[zerosSize];
+                        Array.Copy(fillArray, 0, Globals.romdata, insertingAddress + compressedSize, zerosSize);
+                    }
+                    Globals.flushToFile();
                 }
                 else
                 {

@@ -42,6 +42,7 @@
             this.cbAddress = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tbLog = new System.Windows.Forms.TextBox();
+            this.cbFillZero = new System.Windows.Forms.CheckBox();
             this.pnParams.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,6 +58,7 @@
             // 
             // pnParams
             // 
+            this.pnParams.Controls.Add(this.cbFillZero);
             this.pnParams.Controls.Add(this.label7);
             this.pnParams.Controls.Add(this.label6);
             this.pnParams.Controls.Add(this.label5);
@@ -113,7 +115,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(286, 102);
+            this.label3.Location = new System.Drawing.Point(286, 116);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(207, 17);
             this.label3.TabIndex = 8;
@@ -122,7 +124,7 @@
             // cbArchiveFile
             // 
             this.cbArchiveFile.AutoSize = true;
-            this.cbArchiveFile.Location = new System.Drawing.Point(16, 98);
+            this.cbArchiveFile.Location = new System.Drawing.Point(17, 115);
             this.cbArchiveFile.Name = "cbArchiveFile";
             this.cbArchiveFile.Size = new System.Drawing.Size(144, 21);
             this.cbArchiveFile.TabIndex = 7;
@@ -190,6 +192,18 @@
             this.tbLog.TabIndex = 2;
             this.tbLog.Text = "Press compress to recompress dump file";
             // 
+            // cbFillZero
+            // 
+            this.cbFillZero.AutoSize = true;
+            this.cbFillZero.Checked = true;
+            this.cbFillZero.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbFillZero.Location = new System.Drawing.Point(17, 95);
+            this.cbFillZero.Name = "cbFillZero";
+            this.cbFillZero.Size = new System.Drawing.Size(185, 21);
+            this.cbFillZero.TabIndex = 13;
+            this.cbFillZero.Text = "Fill free space with zeros";
+            this.cbFillZero.UseVisualStyleBackColor = true;
+            // 
             // CompressManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -225,5 +239,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox cbArchiveFile;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.CheckBox cbFillZero;
     }
 }
