@@ -31,12 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SegaBlockEdit));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pnBlocks = new System.Windows.Forms.Panel();
+            this.pnBlocksScroll = new System.Windows.Forms.Panel();
             this.blocksScreen = new System.Windows.Forms.PictureBox();
             this.pnLeftBottom = new System.Windows.Forms.Panel();
             this.cbPalSubpart = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.pbActive = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.pnView = new System.Windows.Forms.Panel();
             this.mapScreen = new System.Windows.Forms.PictureBox();
             this.pnRightBottom = new System.Windows.Forms.Panel();
@@ -53,18 +52,21 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tbbSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.pnViewScroll = new System.Windows.Forms.Panel();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.pnBlocks.SuspendLayout();
+            this.pnBlocksScroll.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.blocksScreen)).BeginInit();
             this.pnLeftBottom.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbActive)).BeginInit();
             this.pnView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             this.pnRightBottom.SuspendLayout();
             this.pnMapping.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.pnViewScroll.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -80,16 +82,16 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.pnBlocks);
             this.splitContainer1.Panel1.Controls.Add(this.pnLeftBottom);
+            this.splitContainer1.Panel1.Controls.Add(this.pnBlocks);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.pnView);
-            this.splitContainer1.Panel2.Controls.Add(this.pnRightBottom);
             this.splitContainer1.Panel2.Controls.Add(this.pnMapping);
-            this.splitContainer1.Size = new System.Drawing.Size(924, 613);
-            this.splitContainer1.SplitterDistance = 451;
+            this.splitContainer1.Panel2.Controls.Add(this.pnRightBottom);
+            this.splitContainer1.Panel2.Controls.Add(this.pnView);
+            this.splitContainer1.Size = new System.Drawing.Size(992, 529);
+            this.splitContainer1.SplitterDistance = 357;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -99,20 +101,32 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnBlocks.AutoScroll = true;
-            this.pnBlocks.Controls.Add(this.blocksScreen);
+            this.pnBlocks.Controls.Add(this.pnBlocksScroll);
             this.pnBlocks.Location = new System.Drawing.Point(4, 3);
             this.pnBlocks.Name = "pnBlocks";
-            this.pnBlocks.Size = new System.Drawing.Size(437, 551);
-            this.pnBlocks.TabIndex = 62;
+            this.pnBlocks.Size = new System.Drawing.Size(348, 468);
+            this.pnBlocks.TabIndex = 999;
             this.pnBlocks.SizeChanged += new System.EventHandler(this.pnBlocks_SizeChanged);
+            // 
+            // pnBlocksScroll
+            // 
+            this.pnBlocksScroll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnBlocksScroll.AutoScroll = true;
+            this.pnBlocksScroll.Controls.Add(this.blocksScreen);
+            this.pnBlocksScroll.Location = new System.Drawing.Point(0, 4);
+            this.pnBlocksScroll.Name = "pnBlocksScroll";
+            this.pnBlocksScroll.Size = new System.Drawing.Size(348, 461);
+            this.pnBlocksScroll.TabIndex = 63;
             // 
             // blocksScreen
             // 
             this.blocksScreen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.blocksScreen.Location = new System.Drawing.Point(3, 3);
+            this.blocksScreen.Location = new System.Drawing.Point(3, 9);
             this.blocksScreen.Name = "blocksScreen";
-            this.blocksScreen.Size = new System.Drawing.Size(431, 332);
+            this.blocksScreen.Size = new System.Drawing.Size(332, 449);
             this.blocksScreen.TabIndex = 5;
             this.blocksScreen.TabStop = false;
             this.blocksScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.blocksScreen_Paint);
@@ -120,16 +134,13 @@
             // 
             // pnLeftBottom
             // 
-            this.pnLeftBottom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnLeftBottom.Controls.Add(this.cbPalSubpart);
             this.pnLeftBottom.Controls.Add(this.label2);
-            this.pnLeftBottom.Controls.Add(this.pbActive);
-            this.pnLeftBottom.Controls.Add(this.label1);
-            this.pnLeftBottom.Location = new System.Drawing.Point(4, 561);
+            this.pnLeftBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnLeftBottom.Location = new System.Drawing.Point(0, 478);
             this.pnLeftBottom.Margin = new System.Windows.Forms.Padding(4);
             this.pnLeftBottom.Name = "pnLeftBottom";
-            this.pnLeftBottom.Size = new System.Drawing.Size(441, 47);
+            this.pnLeftBottom.Size = new System.Drawing.Size(355, 49);
             this.pnLeftBottom.TabIndex = 3;
             // 
             // cbPalSubpart
@@ -153,38 +164,17 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "View with pal:";
             // 
-            // pbActive
-            // 
-            this.pbActive.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.pbActive.Location = new System.Drawing.Point(394, 0);
-            this.pbActive.Margin = new System.Windows.Forms.Padding(4);
-            this.pbActive.Name = "pbActive";
-            this.pbActive.Size = new System.Drawing.Size(43, 39);
-            this.pbActive.TabIndex = 2;
-            this.pbActive.TabStop = false;
-            // 
-            // label1
-            // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(333, 12);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 17);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Active:";
-            // 
             // pnView
             // 
             this.pnView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnView.AutoScroll = true;
-            this.pnView.Controls.Add(this.mapScreen);
+            this.pnView.Controls.Add(this.pnViewScroll);
             this.pnView.Location = new System.Drawing.Point(4, 4);
             this.pnView.Margin = new System.Windows.Forms.Padding(4);
             this.pnView.Name = "pnView";
-            this.pnView.Size = new System.Drawing.Size(458, 439);
+            this.pnView.Size = new System.Drawing.Size(602, 311);
             this.pnView.TabIndex = 7;
             // 
             // mapScreen
@@ -200,15 +190,14 @@
             // 
             // pnRightBottom
             // 
-            this.pnRightBottom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnRightBottom.Controls.Add(this.cbBlockNo);
             this.pnRightBottom.Controls.Add(this.label5);
-            this.pnRightBottom.Location = new System.Drawing.Point(4, 561);
+            this.pnRightBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnRightBottom.Location = new System.Drawing.Point(0, 480);
             this.pnRightBottom.Margin = new System.Windows.Forms.Padding(4);
             this.pnRightBottom.Name = "pnRightBottom";
-            this.pnRightBottom.Size = new System.Drawing.Size(458, 47);
-            this.pnRightBottom.TabIndex = 5;
+            this.pnRightBottom.Size = new System.Drawing.Size(628, 47);
+            this.pnRightBottom.TabIndex = 7;
             // 
             // cbBlockNo
             // 
@@ -233,8 +222,6 @@
             // 
             // pnMapping
             // 
-            this.pnMapping.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnMapping.Controls.Add(this.cbPrior);
             this.pnMapping.Controls.Add(this.cbVFlip);
             this.pnMapping.Controls.Add(this.cbHFlip);
@@ -242,10 +229,11 @@
             this.pnMapping.Controls.Add(this.cbTile);
             this.pnMapping.Controls.Add(this.label4);
             this.pnMapping.Controls.Add(this.label3);
-            this.pnMapping.Location = new System.Drawing.Point(4, 443);
+            this.pnMapping.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnMapping.Location = new System.Drawing.Point(0, 369);
             this.pnMapping.Margin = new System.Windows.Forms.Padding(4);
             this.pnMapping.Name = "pnMapping";
-            this.pnMapping.Size = new System.Drawing.Size(458, 111);
+            this.pnMapping.Size = new System.Drawing.Size(628, 111);
             this.pnMapping.TabIndex = 6;
             // 
             // cbPrior
@@ -337,7 +325,7 @@
             this.toolStripSeparator2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(924, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(1005, 27);
             this.toolStrip1.TabIndex = 64;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -356,28 +344,41 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 27);
             // 
+            // pnViewScroll
+            // 
+            this.pnViewScroll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnViewScroll.AutoScroll = true;
+            this.pnViewScroll.Controls.Add(this.mapScreen);
+            this.pnViewScroll.Location = new System.Drawing.Point(8, 8);
+            this.pnViewScroll.Margin = new System.Windows.Forms.Padding(4);
+            this.pnViewScroll.Name = "pnViewScroll";
+            this.pnViewScroll.Size = new System.Drawing.Size(590, 299);
+            this.pnViewScroll.TabIndex = 8;
+            // 
             // SegaBlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(924, 646);
+            this.ClientSize = new System.Drawing.Size(1005, 576);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.MaximizeBox = false;
             this.Name = "SegaBlockEdit";
-            this.Text = "Block Editor";
+            this.Text = "Sega Block Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SegaBlockEdit_FormClosing);
             this.Load += new System.EventHandler(this.SegaBlockEdit_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.pnBlocks.ResumeLayout(false);
+            this.pnBlocksScroll.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.blocksScreen)).EndInit();
             this.pnLeftBottom.ResumeLayout(false);
             this.pnLeftBottom.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbActive)).EndInit();
             this.pnView.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
             this.pnRightBottom.ResumeLayout(false);
@@ -386,6 +387,7 @@
             this.pnMapping.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.pnViewScroll.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -398,8 +400,6 @@
         private System.Windows.Forms.ToolStripButton tbbSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.Panel pnLeftBottom;
-        private System.Windows.Forms.PictureBox pbActive;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbPalSubpart;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox mapScreen;
@@ -417,5 +417,7 @@
         private System.Windows.Forms.Panel pnView;
         private System.Windows.Forms.Panel pnBlocks;
         private System.Windows.Forms.PictureBox blocksScreen;
+        private System.Windows.Forms.Panel pnBlocksScroll;
+        private System.Windows.Forms.Panel pnViewScroll;
     }
 }

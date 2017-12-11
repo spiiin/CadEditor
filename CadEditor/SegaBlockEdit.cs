@@ -41,6 +41,14 @@ namespace CadEditor
 
         private void SegaBlockEdit_Load(object sender, EventArgs e)
         {
+            //Change size without event, it will call later
+            /*pnBlocks.SizeChanged -= pnBlocks_SizeChanged;
+            splitContainer1.Location = new Point(0, 35);
+            splitContainer1.Width = this.Width - 21;
+            splitContainer1.Height = this.Height - 81;
+            pnBlocks.SizeChanged += pnBlocks_SizeChanged;*/
+            
+
             dirty = false;
             reloadTiles();
             UtilsGui.setCbItemsCount(cbPalSubpart, 4);
@@ -136,7 +144,10 @@ namespace CadEditor
             int TILE_SIZE = TILE_WIDTH * TILE_HEIGHT;
             int index = curActiveBlock * TILE_SIZE;
             var g = e.Graphics;
-            
+
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+
             for (int i = 0; i < TILE_SIZE; i++)
             {
                 ushort word = tiles[index + i];
@@ -178,7 +189,6 @@ namespace CadEditor
             else
             {
                 curActiveTile = Mapper.TileIdx(tiles[changeIndex]);
-                pbActive.Image = bigBlocks[curActiveTile];
                 blocksScreen.Invalidate();
             }
             //
@@ -288,7 +298,12 @@ namespace CadEditor
         private void blocksScreen_Paint(object sender, PaintEventArgs e)
         {
             var visibleRect = UtilsGui.getVisibleRectangle(pnBlocks, blocksScreen);
-            MapEditor.RenderAllBlocks(e.Graphics, blocksScreen, bigBlocks, blockWidth, blockHeight, visibleRect, 1.0f, curActiveTile, false);
+            var g = e.Graphics;
+
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+
+            MapEditor.RenderAllBlocks(g, blocksScreen, bigBlocks, blockWidth, blockHeight, visibleRect, 1.0f, curActiveTile, false);
         }
 
         private void blocksScreen_MouseDown(object sender, MouseEventArgs e)
@@ -304,8 +319,6 @@ namespace CadEditor
             {
                 return;
             }
-
-            pbActive.Image = bigBlocks[index];
             //!
             curActiveTile = index;
             blocksScreen.Invalidate();
@@ -313,7 +326,7 @@ namespace CadEditor
 
         private void updateBlocksImages()
         {
-            UtilsGui.resizeBlocksScreen(bigBlocks, blocksScreen, 16, 16, 1.0f);
+            UtilsGui.resizeBlocksScreen(bigBlocks, blocksScreen, blockWidth, blockHeight, 1.0f);
             blocksScreen.Invalidate();
         }
 
