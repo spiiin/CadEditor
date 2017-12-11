@@ -86,7 +86,6 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Enabled = false;
             this.label6.Location = new System.Drawing.Point(300, 54);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(185, 17);
@@ -96,7 +95,6 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Enabled = false;
             this.label5.Location = new System.Drawing.Point(286, 37);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(199, 17);
@@ -134,7 +132,6 @@
             // lbMaxLength
             // 
             this.lbMaxLength.AutoSize = true;
-            this.lbMaxLength.Enabled = false;
             this.lbMaxLength.Location = new System.Drawing.Point(181, 37);
             this.lbMaxLength.Name = "lbMaxLength";
             this.lbMaxLength.Size = new System.Drawing.Size(21, 17);
@@ -144,12 +141,11 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Enabled = false;
             this.label2.Location = new System.Drawing.Point(14, 37);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(161, 17);
+            this.label2.Size = new System.Drawing.Size(164, 17);
             this.label2.TabIndex = 5;
-            this.label2.Text = "Max compressed length:";
+            this.label2.Text = "Max archive size (bytes):";
             // 
             // cbInsert
             // 

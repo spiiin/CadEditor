@@ -23,7 +23,7 @@ namespace PluginCompressLZKN
         {
             cbAddress.Items.Clear();
             cbAddress.Items.AddRange(CompressConfig.compressParams.Select(x => String.Format("{0} ({1})", x.address.ToString("X"), x.fname) ).ToArray());
-            UtilsGui.setCbIndexWithoutUpdateLevel(cbAddress, cbAddress_SelectedIndexChanged);
+            cbAddress.SelectedIndex = 0;
         }
 
         private void cbAddress_SelectedIndexChanged(object sender, EventArgs e)
@@ -62,6 +62,14 @@ namespace PluginCompressLZKN
 
                 byte[] realCompressedBytes = new byte[compressedSize];
                 Array.Copy(compressedBytes, realCompressedBytes, compressedSize);
+
+                int maxSize = CompressConfig.compressParams[selectedAddressIndex].maxSize;
+                if (compressedSize > maxSize)
+                {
+                    throw new Exception(String.Format(@"Maximum archive size allowed to inserting to ROM at this address is: {0} bytes.
+Final archive is to large: {1} bytes.
+Try to make archive smaller or disable size checking in settings file", maxSize, compressedSize));
+                }
 
                 bool needCreateArchiveFile = cbArchiveFile.Checked;
                 if (needCreateArchiveFile)
