@@ -199,11 +199,22 @@ namespace CadEditor
 
         private int getCurTileIdx()
         {
+            return curSelectedTilePart + curActiveBlock * getCurTileSize();
+        }
+
+        private int getCurTileBeginIdx()
+        {
+            return curActiveBlock * getCurTileSize();
+        }
+
+        private int getCurTileSize()
+        {
             int TILE_WIDTH = ConfigScript.isBlockSize4x4() ? 4 : 2;
             int TILE_HEIGHT = ConfigScript.isBlockSize4x4() ? 4 : 2;
             int TILE_SIZE = TILE_WIDTH * TILE_HEIGHT;
-            return curSelectedTilePart + curActiveBlock * TILE_SIZE;
+            return TILE_SIZE;
         }
+
 
         private void cbTile_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -212,6 +223,16 @@ namespace CadEditor
             int tileIdx = getCurTileIdx();
             ushort val = (ushort)cbTile.SelectedIndex;
             tiles[tileIdx] = Mapper.ApplyTileIdx(tiles[tileIdx], val);
+
+            bool altPressed = Control.ModifierKeys == Keys.Alt;
+            if (altPressed)
+            {
+                for (int i = getCurTileBeginIdx(); i < getCurTileBeginIdx()+ getCurTileSize(); i++)
+                {
+                    tiles[i] = Mapper.ApplyTileIdx(tiles[i], val);
+                }
+            }
+
             mapScreen.Invalidate();
             dirty = true;
         }
@@ -223,6 +244,16 @@ namespace CadEditor
             int tileIdx = getCurTileIdx();
             byte val = (byte)cbPal.SelectedIndex;
             tiles[tileIdx] = Mapper.ApplyPalIdx(tiles[tileIdx], val);
+
+            bool altPressed = Control.ModifierKeys == Keys.Alt;
+            if (altPressed)
+            {
+                for (int i = getCurTileBeginIdx(); i < getCurTileBeginIdx() + getCurTileSize(); i++)
+                {
+                    tiles[i] = Mapper.ApplyPalIdx(tiles[i], val);
+                }
+            }
+
             mapScreen.Invalidate();
             dirty = true;
         }
@@ -232,6 +263,16 @@ namespace CadEditor
             int tileIdx = getCurTileIdx();
             int val = cbHFlip.Checked ? 1 : 0;
             tiles[tileIdx] = Mapper.ApplyHF(tiles[tileIdx], val);
+ 
+            bool altPressed = Control.ModifierKeys == Keys.Alt;
+            if (altPressed)
+            {
+                for (int i = getCurTileBeginIdx(); i < getCurTileBeginIdx() + getCurTileSize(); i++)
+                {
+                    tiles[i] = Mapper.ApplyHF(tiles[i], val);
+                }
+            }
+
             mapScreen.Invalidate();
             dirty = true;
         }
@@ -241,6 +282,16 @@ namespace CadEditor
             int tileIdx = getCurTileIdx();
             int val = cbVFlip.Checked ? 1 : 0;
             tiles[tileIdx] = Mapper.ApplyVF(tiles[tileIdx], val);
+
+            bool altPressed = Control.ModifierKeys == Keys.Alt;
+            if (altPressed)
+            {
+                for (int i = getCurTileBeginIdx(); i < getCurTileBeginIdx() + getCurTileSize(); i++)
+                {
+                    tiles[i] = Mapper.ApplyVF(tiles[i], val);
+                }
+            }
+
             mapScreen.Invalidate();
             dirty = true;
         }
@@ -250,6 +301,16 @@ namespace CadEditor
             int tileIdx = getCurTileIdx();
             int val = cbVFlip.Checked ? 1 : 0;
             tiles[tileIdx] = Mapper.ApplyP(tiles[tileIdx], val);
+
+            bool altPressed = Control.ModifierKeys == Keys.Alt;
+            if (altPressed)
+            {
+                for (int i = getCurTileBeginIdx(); i < getCurTileBeginIdx() + getCurTileSize(); i++)
+                {
+                    tiles[i] = Mapper.ApplyP(tiles[i], val);
+                }
+            }
+
             mapScreen.Invalidate();
             dirty = true;
         }
@@ -333,6 +394,11 @@ namespace CadEditor
         private void pnBlocks_SizeChanged(object sender, EventArgs e)
         {
             updateBlocksImages();
+        }
+
+        private void pnView_SizeChanged(object sender, EventArgs e)
+        {
+            pnMapping.Location = new Point(pnViewScroll.Location.X, pnViewScroll.Location.Y + pnViewScroll.Height);
         }
     }
 }

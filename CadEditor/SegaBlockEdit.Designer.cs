@@ -30,17 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SegaBlockEdit));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.pnBlocks = new System.Windows.Forms.Panel();
-            this.pnBlocksScroll = new System.Windows.Forms.Panel();
-            this.blocksScreen = new System.Windows.Forms.PictureBox();
             this.pnLeftBottom = new System.Windows.Forms.Panel();
             this.cbPalSubpart = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.pnView = new System.Windows.Forms.Panel();
-            this.mapScreen = new System.Windows.Forms.PictureBox();
-            this.pnRightBottom = new System.Windows.Forms.Panel();
-            this.cbBlockNo = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.pnBlocks = new System.Windows.Forms.Panel();
+            this.pnBlocksScroll = new System.Windows.Forms.Panel();
+            this.blocksScreen = new System.Windows.Forms.PictureBox();
             this.pnMapping = new System.Windows.Forms.Panel();
             this.cbPrior = new System.Windows.Forms.CheckBox();
             this.cbVFlip = new System.Windows.Forms.CheckBox();
@@ -49,24 +44,30 @@
             this.cbTile = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.pnRightBottom = new System.Windows.Forms.Panel();
+            this.cbBlockNo = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.pnView = new System.Windows.Forms.Panel();
+            this.pnViewScroll = new System.Windows.Forms.Panel();
+            this.mapScreen = new System.Windows.Forms.PictureBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tbbSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.pnViewScroll = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.pnLeftBottom.SuspendLayout();
             this.pnBlocks.SuspendLayout();
             this.pnBlocksScroll.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.blocksScreen)).BeginInit();
-            this.pnLeftBottom.SuspendLayout();
-            this.pnView.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
-            this.pnRightBottom.SuspendLayout();
             this.pnMapping.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
+            this.pnRightBottom.SuspendLayout();
+            this.pnView.SuspendLayout();
             this.pnViewScroll.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -94,6 +95,38 @@
             this.splitContainer1.SplitterDistance = 357;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // pnLeftBottom
+            // 
+            this.pnLeftBottom.Controls.Add(this.cbPalSubpart);
+            this.pnLeftBottom.Controls.Add(this.label2);
+            this.pnLeftBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnLeftBottom.Location = new System.Drawing.Point(0, 478);
+            this.pnLeftBottom.Margin = new System.Windows.Forms.Padding(4);
+            this.pnLeftBottom.Name = "pnLeftBottom";
+            this.pnLeftBottom.Size = new System.Drawing.Size(355, 49);
+            this.pnLeftBottom.TabIndex = 3;
+            // 
+            // cbPalSubpart
+            // 
+            this.cbPalSubpart.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPalSubpart.FormattingEnabled = true;
+            this.cbPalSubpart.Location = new System.Drawing.Point(103, 9);
+            this.cbPalSubpart.Margin = new System.Windows.Forms.Padding(4);
+            this.cbPalSubpart.Name = "cbPalSubpart";
+            this.cbPalSubpart.Size = new System.Drawing.Size(61, 24);
+            this.cbPalSubpart.TabIndex = 4;
+            this.cbPalSubpart.SelectedIndexChanged += new System.EventHandler(this.cbPalNo_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(11, 12);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(92, 17);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "View with pal:";
             // 
             // pnBlocks
             // 
@@ -132,96 +165,9 @@
             this.blocksScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.blocksScreen_Paint);
             this.blocksScreen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.blocksScreen_MouseDown);
             // 
-            // pnLeftBottom
-            // 
-            this.pnLeftBottom.Controls.Add(this.cbPalSubpart);
-            this.pnLeftBottom.Controls.Add(this.label2);
-            this.pnLeftBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnLeftBottom.Location = new System.Drawing.Point(0, 478);
-            this.pnLeftBottom.Margin = new System.Windows.Forms.Padding(4);
-            this.pnLeftBottom.Name = "pnLeftBottom";
-            this.pnLeftBottom.Size = new System.Drawing.Size(355, 49);
-            this.pnLeftBottom.TabIndex = 3;
-            // 
-            // cbPalSubpart
-            // 
-            this.cbPalSubpart.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbPalSubpart.FormattingEnabled = true;
-            this.cbPalSubpart.Location = new System.Drawing.Point(103, 9);
-            this.cbPalSubpart.Margin = new System.Windows.Forms.Padding(4);
-            this.cbPalSubpart.Name = "cbPalSubpart";
-            this.cbPalSubpart.Size = new System.Drawing.Size(61, 24);
-            this.cbPalSubpart.TabIndex = 4;
-            this.cbPalSubpart.SelectedIndexChanged += new System.EventHandler(this.cbPalNo_SelectedIndexChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 12);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(92, 17);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "View with pal:";
-            // 
-            // pnView
-            // 
-            this.pnView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnView.AutoScroll = true;
-            this.pnView.Controls.Add(this.pnViewScroll);
-            this.pnView.Location = new System.Drawing.Point(4, 4);
-            this.pnView.Margin = new System.Windows.Forms.Padding(4);
-            this.pnView.Name = "pnView";
-            this.pnView.Size = new System.Drawing.Size(602, 311);
-            this.pnView.TabIndex = 7;
-            // 
-            // mapScreen
-            // 
-            this.mapScreen.Location = new System.Drawing.Point(0, 0);
-            this.mapScreen.Margin = new System.Windows.Forms.Padding(4);
-            this.mapScreen.Name = "mapScreen";
-            this.mapScreen.Size = new System.Drawing.Size(171, 158);
-            this.mapScreen.TabIndex = 5;
-            this.mapScreen.TabStop = false;
-            this.mapScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.mapScreen_Paint);
-            this.mapScreen.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseClick);
-            // 
-            // pnRightBottom
-            // 
-            this.pnRightBottom.Controls.Add(this.cbBlockNo);
-            this.pnRightBottom.Controls.Add(this.label5);
-            this.pnRightBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnRightBottom.Location = new System.Drawing.Point(0, 480);
-            this.pnRightBottom.Margin = new System.Windows.Forms.Padding(4);
-            this.pnRightBottom.Name = "pnRightBottom";
-            this.pnRightBottom.Size = new System.Drawing.Size(628, 47);
-            this.pnRightBottom.TabIndex = 7;
-            // 
-            // cbBlockNo
-            // 
-            this.cbBlockNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbBlockNo.FormattingEnabled = true;
-            this.cbBlockNo.Location = new System.Drawing.Point(83, 9);
-            this.cbBlockNo.Margin = new System.Windows.Forms.Padding(4);
-            this.cbBlockNo.Name = "cbBlockNo";
-            this.cbBlockNo.Size = new System.Drawing.Size(61, 24);
-            this.cbBlockNo.TabIndex = 4;
-            this.cbBlockNo.SelectedIndexChanged += new System.EventHandler(this.cbBlockNo_SelectedIndexChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 12);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(64, 17);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "BlockNo:";
-            // 
             // pnMapping
             // 
+            this.pnMapping.Controls.Add(this.label1);
             this.pnMapping.Controls.Add(this.cbPrior);
             this.pnMapping.Controls.Add(this.cbVFlip);
             this.pnMapping.Controls.Add(this.cbHFlip);
@@ -240,7 +186,7 @@
             // 
             this.cbPrior.AutoSize = true;
             this.cbPrior.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbPrior.Location = new System.Drawing.Point(76, 86);
+            this.cbPrior.Location = new System.Drawing.Point(74, 86);
             this.cbPrior.Margin = new System.Windows.Forms.Padding(4);
             this.cbPrior.Name = "cbPrior";
             this.cbPrior.Size = new System.Drawing.Size(74, 21);
@@ -317,6 +263,76 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "TileNo";
             // 
+            // pnRightBottom
+            // 
+            this.pnRightBottom.Controls.Add(this.cbBlockNo);
+            this.pnRightBottom.Controls.Add(this.label5);
+            this.pnRightBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnRightBottom.Location = new System.Drawing.Point(0, 480);
+            this.pnRightBottom.Margin = new System.Windows.Forms.Padding(4);
+            this.pnRightBottom.Name = "pnRightBottom";
+            this.pnRightBottom.Size = new System.Drawing.Size(628, 47);
+            this.pnRightBottom.TabIndex = 7;
+            // 
+            // cbBlockNo
+            // 
+            this.cbBlockNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBlockNo.FormattingEnabled = true;
+            this.cbBlockNo.Location = new System.Drawing.Point(83, 9);
+            this.cbBlockNo.Margin = new System.Windows.Forms.Padding(4);
+            this.cbBlockNo.Name = "cbBlockNo";
+            this.cbBlockNo.Size = new System.Drawing.Size(61, 24);
+            this.cbBlockNo.TabIndex = 4;
+            this.cbBlockNo.SelectedIndexChanged += new System.EventHandler(this.cbBlockNo_SelectedIndexChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(7, 12);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(64, 17);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "BlockNo:";
+            // 
+            // pnView
+            // 
+            this.pnView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnView.AutoScroll = true;
+            this.pnView.Controls.Add(this.pnViewScroll);
+            this.pnView.Location = new System.Drawing.Point(4, 4);
+            this.pnView.Margin = new System.Windows.Forms.Padding(4);
+            this.pnView.Name = "pnView";
+            this.pnView.Size = new System.Drawing.Size(601, 311);
+            this.pnView.TabIndex = 7;
+            this.pnView.SizeChanged += new System.EventHandler(this.pnView_SizeChanged);
+            // 
+            // pnViewScroll
+            // 
+            this.pnViewScroll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnViewScroll.AutoScroll = true;
+            this.pnViewScroll.Controls.Add(this.mapScreen);
+            this.pnViewScroll.Location = new System.Drawing.Point(8, 8);
+            this.pnViewScroll.Margin = new System.Windows.Forms.Padding(4);
+            this.pnViewScroll.Name = "pnViewScroll";
+            this.pnViewScroll.Size = new System.Drawing.Size(589, 299);
+            this.pnViewScroll.TabIndex = 8;
+            // 
+            // mapScreen
+            // 
+            this.mapScreen.Location = new System.Drawing.Point(0, 0);
+            this.mapScreen.Margin = new System.Windows.Forms.Padding(4);
+            this.mapScreen.Name = "mapScreen";
+            this.mapScreen.Size = new System.Drawing.Size(171, 158);
+            this.mapScreen.TabIndex = 5;
+            this.mapScreen.TabStop = false;
+            this.mapScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.mapScreen_Paint);
+            this.mapScreen.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseClick);
+            // 
             // toolStrip1
             // 
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -344,18 +360,14 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 27);
             // 
-            // pnViewScroll
+            // label1
             // 
-            this.pnViewScroll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnViewScroll.AutoScroll = true;
-            this.pnViewScroll.Controls.Add(this.mapScreen);
-            this.pnViewScroll.Location = new System.Drawing.Point(8, 8);
-            this.pnViewScroll.Margin = new System.Windows.Forms.Padding(4);
-            this.pnViewScroll.Name = "pnViewScroll";
-            this.pnViewScroll.Size = new System.Drawing.Size(590, 299);
-            this.pnViewScroll.TabIndex = 8;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(165, 65);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(298, 17);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "*Hold Alt key to set values to ALL tiles in block";
             // 
             // SegaBlockEdit
             // 
@@ -374,20 +386,20 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.pnLeftBottom.ResumeLayout(false);
+            this.pnLeftBottom.PerformLayout();
             this.pnBlocks.ResumeLayout(false);
             this.pnBlocksScroll.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.blocksScreen)).EndInit();
-            this.pnLeftBottom.ResumeLayout(false);
-            this.pnLeftBottom.PerformLayout();
-            this.pnView.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
-            this.pnRightBottom.ResumeLayout(false);
-            this.pnRightBottom.PerformLayout();
             this.pnMapping.ResumeLayout(false);
             this.pnMapping.PerformLayout();
+            this.pnRightBottom.ResumeLayout(false);
+            this.pnRightBottom.PerformLayout();
+            this.pnView.ResumeLayout(false);
+            this.pnViewScroll.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.pnViewScroll.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -419,5 +431,6 @@
         private System.Windows.Forms.PictureBox blocksScreen;
         private System.Windows.Forms.Panel pnBlocksScroll;
         private System.Windows.Forms.Panel pnViewScroll;
+        private System.Windows.Forms.Label label1;
     }
 }
