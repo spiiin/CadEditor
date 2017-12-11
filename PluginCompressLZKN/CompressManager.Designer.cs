@@ -124,8 +124,6 @@
             // cbArchiveFile
             // 
             this.cbArchiveFile.AutoSize = true;
-            this.cbArchiveFile.Checked = true;
-            this.cbArchiveFile.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbArchiveFile.Location = new System.Drawing.Point(16, 98);
             this.cbArchiveFile.Name = "cbArchiveFile";
             this.cbArchiveFile.Size = new System.Drawing.Size(144, 21);

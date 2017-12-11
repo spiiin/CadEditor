@@ -102,8 +102,5 @@ namespace PluginCompressLZKN
 
         [DllImport("lzkn1.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int compressed_size([In] byte[] input);
-
-        //[DllImport("lzkn2.dll", CallingConvention = CallingConvention.Cdecl)]
-        //public static extern void ShowMe();
     }
 }
