@@ -93,6 +93,7 @@ public class Data
       return new CompressParams[] {
           new CompressParams {address = 0x1EA6A6, maxSize = 1},
           new CompressParams {address = 0x1E8740, maxSize = -1, fname = BLOCKS_NAME},
+          new CompressParams {address = 0x1E9488, maxSize = -1, fname = BACK_NAME},
       };
   }
 }
