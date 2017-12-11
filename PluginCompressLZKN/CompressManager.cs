@@ -49,11 +49,7 @@ namespace PluginCompressLZKN
 
                 int selectedAddressIndex = cbAddress.SelectedIndex;
                 var inputFilename = CompressConfig.compressParams[selectedAddressIndex].fname;
-                if (inputFilename == "")
-                {
-                    inputFilename = OpenFile.DumpName;
-                }
-                var fullInputFilename = ConfigScript.ConfigDirectory + inputFilename;
+                var fullInputFilename = inputFilename == null ? OpenFile.DumpName : (ConfigScript.ConfigDirectory + inputFilename);
                 tbLog.AppendText(String.Format("Input file name: {0}\n", fullInputFilename));
 
                 var compressedFileName = fullInputFilename + ".lzkn1";
