@@ -91,9 +91,9 @@ public class Data
   public CompressParams[] getCompressParams()
   {
       return new CompressParams[] {
-          new CompressParams {address = 0x1EED5A, maxSize = 1},
-          new CompressParams {address = 0x1ED6B4, maxSize = -1, fname = BLOCKS_NAME},
-          new CompressParams {address = 0x1EE49E, maxSize = -1, fname = BACK_NAME},
+          new CompressParams {address = 0x1EED5A, maxSize = 459},
+          new CompressParams {address = 0x1ED6B4, maxSize = 3562, fname = BLOCKS_NAME},
+          new CompressParams {address = 0x1EE49E, maxSize = 584, fname = BACK_NAME},
       };
   }
 }
