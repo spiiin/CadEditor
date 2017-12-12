@@ -33,6 +33,8 @@ namespace CadEditor
         byte[] videoChunk;
         Color[] cpal;
 
+        bool showAxis = true;
+
         Image[] bigBlocks = new Image[0];
 
         const int SEGA_TILES_COUNT = 0x800;
@@ -121,10 +123,7 @@ namespace CadEditor
             curSelectedTilePart = 0;
             mapScreen.Invalidate();
 
-            int TILE_WIDTH = ConfigScript.isBlockSize4x4() ? 4 : 2;
-            int TILE_HEIGHT = ConfigScript.isBlockSize4x4() ? 4 : 2;
-            int TILE_SIZE = TILE_WIDTH * TILE_HEIGHT;
-            updateMappingControls(curActiveBlock * TILE_SIZE + curSelectedTilePart);
+            updateMappingControls(getCurTileBeginIdx());
         }
 
         private void updateMappingControls(int index)
@@ -158,8 +157,14 @@ namespace CadEditor
                 bool vf = Mapper.VF(word);
                 var b = ConfigScript.videoSega.GetTile(videoChunk, tileIdx, cpal, pal, hf, vf);
                 g.DrawImage(b, tileRect);
+                if (showAxis)
+                {
+                    g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), tileRect);
+                }
                 if (i == curSelectedTilePart)
-                    g.DrawRectangle(new Pen(Brushes.Red, 2.0f), tileRect);
+                {
+                    g.DrawRectangle(new Pen(Brushes.Red, 2.5f), tileRect);
+                }
             }
         }
 
@@ -209,8 +214,8 @@ namespace CadEditor
 
         private int getCurTileSize()
         {
-            int TILE_WIDTH = ConfigScript.isBlockSize4x4() ? 4 : 2;
-            int TILE_HEIGHT = ConfigScript.isBlockSize4x4() ? 4 : 2;
+            int TILE_WIDTH = getTileWidth();
+            int TILE_HEIGHT = getTileHeight();
             int TILE_SIZE = TILE_WIDTH * TILE_HEIGHT;
             return TILE_SIZE;
         }
@@ -364,7 +369,7 @@ namespace CadEditor
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
 
-            MapEditor.RenderAllBlocks(g, blocksScreen, bigBlocks, blockWidth, blockHeight, visibleRect, 1.0f, curActiveTile, false);
+            MapEditor.RenderAllBlocks(g, blocksScreen, bigBlocks, blockWidth, blockHeight, visibleRect, 1.0f, curActiveTile, showAxis);
         }
 
         private void blocksScreen_MouseDown(object sender, MouseEventArgs e)
@@ -399,6 +404,13 @@ namespace CadEditor
         private void pnView_SizeChanged(object sender, EventArgs e)
         {
             pnMapping.Location = new Point(pnViewScroll.Location.X, pnViewScroll.Location.Y + pnViewScroll.Height);
+        }
+
+        private void tbbShowAxis_CheckedChanged(object sender, EventArgs e)
+        {
+            showAxis = tbbShowAxis.Checked;
+            mapScreen.Invalidate();
+            blocksScreen.Invalidate();
         }
     }
 }

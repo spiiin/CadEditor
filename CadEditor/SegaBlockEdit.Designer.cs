@@ -37,6 +37,7 @@
             this.pnBlocksScroll = new System.Windows.Forms.Panel();
             this.blocksScreen = new System.Windows.Forms.PictureBox();
             this.pnMapping = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.cbPrior = new System.Windows.Forms.CheckBox();
             this.cbVFlip = new System.Windows.Forms.CheckBox();
             this.cbHFlip = new System.Windows.Forms.CheckBox();
@@ -53,7 +54,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tbbSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.label1 = new System.Windows.Forms.Label();
+            this.tbbShowAxis = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -182,6 +183,15 @@
             this.pnMapping.Size = new System.Drawing.Size(628, 111);
             this.pnMapping.TabIndex = 6;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(165, 65);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(298, 17);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "*Hold Alt key to set values to ALL tiles in block";
+            // 
             // cbPrior
             // 
             this.cbPrior.AutoSize = true;
@@ -305,7 +315,7 @@
             this.pnView.Location = new System.Drawing.Point(4, 4);
             this.pnView.Margin = new System.Windows.Forms.Padding(4);
             this.pnView.Name = "pnView";
-            this.pnView.Size = new System.Drawing.Size(601, 311);
+            this.pnView.Size = new System.Drawing.Size(599, 311);
             this.pnView.TabIndex = 7;
             this.pnView.SizeChanged += new System.EventHandler(this.pnView_SizeChanged);
             // 
@@ -319,7 +329,7 @@
             this.pnViewScroll.Location = new System.Drawing.Point(8, 8);
             this.pnViewScroll.Margin = new System.Windows.Forms.Padding(4);
             this.pnViewScroll.Name = "pnViewScroll";
-            this.pnViewScroll.Size = new System.Drawing.Size(589, 299);
+            this.pnViewScroll.Size = new System.Drawing.Size(587, 299);
             this.pnViewScroll.TabIndex = 8;
             // 
             // mapScreen
@@ -338,7 +348,8 @@
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tbbSave,
-            this.toolStripSeparator2});
+            this.toolStripSeparator2,
+            this.tbbShowAxis});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1005, 27);
@@ -360,14 +371,18 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 27);
             // 
-            // label1
+            // tbbShowAxis
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(165, 65);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(298, 17);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "*Hold Alt key to set values to ALL tiles in block";
+            this.tbbShowAxis.Checked = true;
+            this.tbbShowAxis.CheckOnClick = true;
+            this.tbbShowAxis.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tbbShowAxis.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbbShowAxis.Image = ((System.Drawing.Image)(resources.GetObject("tbbShowAxis.Image")));
+            this.tbbShowAxis.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbbShowAxis.Name = "tbbShowAxis";
+            this.tbbShowAxis.Size = new System.Drawing.Size(24, 24);
+            this.tbbShowAxis.Text = "Show axis";
+            this.tbbShowAxis.CheckedChanged += new System.EventHandler(this.tbbShowAxis_CheckedChanged);
             // 
             // SegaBlockEdit
             // 
@@ -432,5 +447,6 @@
         private System.Windows.Forms.Panel pnBlocksScroll;
         private System.Windows.Forms.Panel pnViewScroll;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripButton tbbShowAxis;
     }
 }

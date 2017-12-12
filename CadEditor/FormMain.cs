@@ -666,7 +666,8 @@ namespace CadEditor
         private void cbShowAxis_CheckedChanged(object sender, EventArgs e)
         {
             showAxis = bttAxis.Checked;
-            reloadLevel(false, false);
+            mapScreen.Invalidate();
+            blocksScreen.Invalidate();
         }
 
         private void bttShowBrush_CheckedChanged(object sender, EventArgs e)
@@ -1042,7 +1043,7 @@ namespace CadEditor
 
         private void setWindowText()
         {
-            Text = String.Format("CAD Editor v4.5 - {0}", OpenFile.FileName);
+            Text = String.Format("CAD Editor v4.6 - {0}", OpenFile.FileName);
         }
     }
 }
