@@ -1,6 +1,6 @@
 import os, glob, shutil, zipfile
 
-VERSION        = "45"
+VERSION        = "46"
 RELEASE_FOLDER = "../Release/cad_editor_v%s" % VERSION
 ZIP_NAME       = "../Release/cad_editor_v%s.zip" % VERSION
 

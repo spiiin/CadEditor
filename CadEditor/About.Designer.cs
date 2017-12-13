@@ -44,6 +44,8 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBox1
@@ -62,7 +64,7 @@
             // lbMail
             // 
             this.lbMail.AutoSize = true;
-            this.lbMail.Location = new System.Drawing.Point(92, 227);
+            this.lbMail.Location = new System.Drawing.Point(92, 280);
             this.lbMail.Name = "lbMail";
             this.lbMail.Size = new System.Drawing.Size(165, 17);
             this.lbMail.TabIndex = 1;
@@ -163,7 +165,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(14, 178);
+            this.label6.Location = new System.Drawing.Point(12, 178);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(79, 17);
             this.label6.TabIndex = 12;
@@ -190,17 +192,37 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(14, 227);
+            this.label9.Location = new System.Drawing.Point(14, 280);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(42, 17);
             this.label9.TabIndex = 16;
             this.label9.Text = "Email";
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(12, 219);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(50, 17);
+            this.label10.TabIndex = 17;
+            this.label10.Text = "Bitcoin";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(92, 219);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(290, 17);
+            this.label11.TabIndex = 18;
+            this.label11.Text = "12a26G6BxzYqx1D82ZNQvVJuzGSPETnd9r";
+            // 
             // About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(345, 253);
+            this.ClientSize = new System.Drawing.Size(385, 306);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -245,5 +267,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
     }
 }
