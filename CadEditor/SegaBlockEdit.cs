@@ -194,12 +194,18 @@ namespace CadEditor
             else
             {
                 curActiveTile = Mapper.TileIdx(tiles[changeIndex]);
+                updateActiveTileNo();
                 blocksScreen.Invalidate();
             }
             //
 
             updateMappingControls(index + tileIdx);
             mapScreen.Invalidate();
+        }
+
+        private void updateActiveTileNo()
+        {
+            lbActive.Text = String.Format("TileNo: ({0:X})", curActiveTile);
         }
 
         private int getCurTileIdx()
@@ -387,6 +393,7 @@ namespace CadEditor
             }
             //!
             curActiveTile = index;
+            updateActiveTileNo();
             blocksScreen.Invalidate();
         }
 

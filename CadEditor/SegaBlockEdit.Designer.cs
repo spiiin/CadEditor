@@ -55,6 +55,7 @@
             this.tbbSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tbbShowAxis = new System.Windows.Forms.ToolStripButton();
+            this.lbActive = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -99,6 +100,7 @@
             // 
             // pnLeftBottom
             // 
+            this.pnLeftBottom.Controls.Add(this.lbActive);
             this.pnLeftBottom.Controls.Add(this.cbPalSubpart);
             this.pnLeftBottom.Controls.Add(this.label2);
             this.pnLeftBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -315,7 +317,7 @@
             this.pnView.Location = new System.Drawing.Point(4, 4);
             this.pnView.Margin = new System.Windows.Forms.Padding(4);
             this.pnView.Name = "pnView";
-            this.pnView.Size = new System.Drawing.Size(599, 311);
+            this.pnView.Size = new System.Drawing.Size(598, 311);
             this.pnView.TabIndex = 7;
             this.pnView.SizeChanged += new System.EventHandler(this.pnView_SizeChanged);
             // 
@@ -329,7 +331,7 @@
             this.pnViewScroll.Location = new System.Drawing.Point(8, 8);
             this.pnViewScroll.Margin = new System.Windows.Forms.Padding(4);
             this.pnViewScroll.Name = "pnViewScroll";
-            this.pnViewScroll.Size = new System.Drawing.Size(587, 299);
+            this.pnViewScroll.Size = new System.Drawing.Size(586, 299);
             this.pnViewScroll.TabIndex = 8;
             // 
             // mapScreen
@@ -383,6 +385,16 @@
             this.tbbShowAxis.Size = new System.Drawing.Size(24, 24);
             this.tbbShowAxis.Text = "Show axis";
             this.tbbShowAxis.CheckedChanged += new System.EventHandler(this.tbbShowAxis_CheckedChanged);
+            // 
+            // lbActive
+            // 
+            this.lbActive.AutoSize = true;
+            this.lbActive.Location = new System.Drawing.Point(201, 12);
+            this.lbActive.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbActive.Name = "lbActive";
+            this.lbActive.Size = new System.Drawing.Size(67, 17);
+            this.lbActive.TabIndex = 5;
+            this.lbActive.Text = "TileNo: ()";
             // 
             // SegaBlockEdit
             // 
@@ -448,5 +460,6 @@
         private System.Windows.Forms.Panel pnViewScroll;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripButton tbbShowAxis;
+        private System.Windows.Forms.Label lbActive;
     }
 }
