@@ -33,12 +33,6 @@ namespace CadEditor
                 curScale =  ConfigScript.isBuildScreenFromSmallBlocks() ? 1 : 2;
                 fileLoaded = true;
 
-                //Change size without event, it will call later
-                pnBlocks.SizeChanged -= pnBlocks_SizeChanged;
-                splitContainer1.Width = this.Width - 21;
-                splitContainer1.Height = this.Height - 81;
-                pnBlocks.SizeChanged += pnBlocks_SizeChanged;
-                //
                 resetControls();
             }
 
@@ -995,6 +989,17 @@ namespace CadEditor
         private void pnBlocks_SizeChanged(object sender, EventArgs e)
         {
             updateBlocksImages();
+        }
+
+        private void FormMain_Resize(object sender, EventArgs e)
+        {
+            splitContainer1.Width = this.Width - 21;
+            splitContainer1.Height = this.Height - 81;
+        }
+
+        private void FormMain_LocationChanged(object sender, EventArgs e)
+        {
+            OnResize(e);
         }
 
         public void addSubeditorButton(ToolStripItem item)
