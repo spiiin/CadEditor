@@ -6,6 +6,7 @@ local save1Label, save2Label, save1Tb, save2Tb
 
 START_CORRUPTING = false
 STOP_CORRUPTING = false
+MAKE_SCREESHOTS = false
 
 START_ADDR = 0x10
 END_ADDR   = rom.readbyte(4) * 0x4000 + 0x10
@@ -59,8 +60,8 @@ function start()
     print("Start corrupter")
     CUR_ADDR = START_ADDR
     
-    savestate.load(savestate.create(3))
-    FRAME_FOR_SCREEN = emu.framecount()
+    FRAME_FOR_SCREEN = tonumber(save2Tb.value)
+    
     cdlFile = assert(io.open(CDL_FILE, "rb"))
     cdlData = cdlFile:read("*all")
     shas = {}
@@ -129,6 +130,16 @@ function start()
 end
 
 --------------------------------------------------------
+function makeScreenshotsEveryFrame()
+    endFrame = tonumber(save2Tb.value)
+    savestate.load(savestate.create(2))
+    while emu.framecount() <= endFrame do
+        print("Screenshot at frame:"..string.format("%05d", emu.framecount()));
+        local fname = string.format("snaps/frame_%05d", emu.framecount())..".png";
+        gui.savescreenshotas(fname);
+        emu.frameadvance();
+    end
+end
 
 function createWindow()
 	runButton = iup.button{title="Run(E)"};
@@ -140,6 +151,11 @@ function createWindow()
 	stopButton.action = function(self)
       stop()
 	end
+  
+  makeScreenBetween = iup.button { title = "Make screenshots at every frame"}
+  makeScreenBetween.action = function(self)
+      MAKE_SCREESHOTS = true
+  end
   
   nameTable0toolge = iup.toggle{title="Check nametable 0", VALUE="ON"}
   nameTable0toolge.action = function(self)
@@ -163,8 +179,8 @@ function createWindow()
   
   save1Label = iup.label{title="Save 1 frame(start):"}
   save2Label = iup.label{title="Save 2 frame(stop):"}
-  save1Tb    = iup.text{value="0", readonly="yes"}
-	save2Tb    = iup.text{value="0", readonly="yes"}
+  save1Tb    = iup.text{value="0", readonly="yes", active="no"}
+	save2Tb    = iup.text{value="0", readonly="no"}
 	dialogs = dialogs + 1;
 	handles[dialogs] = iup.dialog{
 			title="Autocorrupter v5",
@@ -177,7 +193,8 @@ function createWindow()
                 title = "Frames",
                 iup.vbox{
                   iup.hbox { save1Label, save1Tb },
-                  iup.hbox { save2Label, save2Tb }
+                  iup.hbox { save2Label, save2Tb },
+                  makeScreenBetween
                 }
               },
               iup.frame{
@@ -206,13 +223,6 @@ end
 createWindow() --create gui
 atSave(9) --for update frame values
 
-function exec_silent(command)
-    local p = assert(io.popen(command))
-    local result = p:read("*all")
-    p:close()
-    return result
-end
-
 while true do
     local t = input.get()
     if t["E"] then
@@ -222,6 +232,11 @@ while true do
     if START_CORRUPTING then
         START_CORRUPTING = false
         start()
+    end
+    
+    if MAKE_SCREESHOTS then
+        MAKE_SCREESHOTS = false
+        makeScreenshotsEveryFrame()
     end
     FCEU.frameadvance();
 end;
