@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 public class Data
 { 
-  public OffsetRec getVideoOffset()     { return new OffsetRec(0, 1  , 0x1000); }
-  public OffsetRec getVideoObjOffset()  { return new OffsetRec(0, 1  , 0x1000); }
+  public OffsetRec getVideoOffset()     { return new OffsetRec(0, 2  , 0x1000); }
+  public OffsetRec getPalOffset()       { return new OffsetRec(0, 2  , 16);     }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0, 1  , 0x4000); }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x77C1 - 16*15*8  , 13 , 16*15);   }
   public int getScreenWidth()    { return 16; }
@@ -125,10 +125,14 @@ public class Data
   
   public byte[] getPallete(int palId)
   {
-      return new byte[] {
-        0x0f, 0x30, 0x10, 0x00, 0x0f, 0x30, 0x1a, 0x17,
-        0x0f, 0x37, 0x27, 0x17, 0x0f, 0x30, 0x05, 0x17,
-    }; 
+     if (palId == 0)
+     {
+        return Utils.readBinFile("pal1.bin");
+     }
+     else
+     {
+       return Utils.readBinFile("pal1-2.bin");
+     }
   }
   
   public int getVideoAddress(int id)
@@ -138,7 +142,18 @@ public class Data
   
   public byte[] getVideoChunk(int videoPageId)
   {
-     return Utils.readVideoBankFromFile("chr1.bin", videoPageId);
+          if (videoPageId == 0)
+     {
+        return Utils.readVideoBankFromFile("chr1.bin", 0);
+     }
+     else if (videoPageId == 0x1)
+     {
+        return Utils.readVideoBankFromFile("chr1-2.bin", 0);
+     }
+     else
+     {
+       return null;
+     }
   }
  
 }
