@@ -10,7 +10,7 @@ public static class ShatterhandUtils
     int palAddr = ConfigScript.getPalBytesAddr();
     for (int i = 0; i < ConfigScript.getBlocksCount(); i++)
     {
-        objects[i].palBytes[0] =  Globals.romdata[palAddr + i];
+        objects[i].palBytes[0] =  Globals.romdata[palAddr + i] >> 6; //physics also in this blocks
     }
     return objects;
   }
@@ -23,7 +23,8 @@ public static class ShatterhandUtils
     Utils.writeBlocksLinear(blocks, Globals.romdata, addr, count, false, true);
     for (int i = 0; i < count; i++)
     {
-        Globals.romdata[palAddr + i] = (byte)blocks[i].palBytes[0];
+        int mask = Globals.romdata[palAddr + i] & 0x3F;
+        Globals.romdata[palAddr + i] = (byte)(mask | (blocks[i].palBytes[0] << 6));
     }
   }
   
