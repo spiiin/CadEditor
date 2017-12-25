@@ -42,7 +42,7 @@ public class Data
             indexes[1] = bi + 1;
             indexes[2] = bi + 16;
             indexes[3] = bi + 17;
-            objects[i] = new ObjRec(2, 2, indexes, palBytes);
+            objects[i] = new ObjRec(2, 2, 0, indexes, palBytes);
         }
         return objects;
   }

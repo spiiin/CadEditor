@@ -58,7 +58,7 @@ public class Data
               palBytes[j*4+3] = (palByte >> 6) & 3;
           }
           //
-          objects[i] = new ObjRec(w, h, indexes, palBytes);
+          objects[i] = new ObjRec(w, h, 0, indexes, palBytes);
       }
       return objects;
   }

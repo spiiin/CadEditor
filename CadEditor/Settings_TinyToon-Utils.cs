@@ -65,7 +65,7 @@ public static class TinyToonUtils
   
   static ObjRec[] readBlocksFromAlignedArraysTT(byte[] romdata, int addr, int count)
   {
-      var objects = Utils.readBlocksFromAlignedArrays(romdata, addr, count);
+      var objects = Utils.readBlocksFromAlignedArrays(romdata, addr, count, false);
       foreach (var o in objects)
       {
           o.indexes = Utils.transpose(o.indexes, 2, 2);

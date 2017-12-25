@@ -31,7 +31,7 @@ public class Data
   
   public ObjRec[] getBlocks(int blockIndex)
   {
-    var bb = Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount());
+    var bb = Utils.readBlocksFromAlignedArraysWithoutCropPal(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount());
     foreach (var b in bb)
     {
       b.palBytes[0] = b.palBytes[0] >> 4;

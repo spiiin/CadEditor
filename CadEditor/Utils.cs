@@ -310,7 +310,9 @@ namespace CadEditor
                 {
                     indexes = Utils.transpose(indexes, w, h);
                 }
-                objects[i] = new ObjRec(w, h, indexes, palBytes);
+
+                //todo: add flag to decode or not to decode type from palBytes
+                objects[i] = new ObjRec(w, h, 0, indexes, palBytes);
             }
             return objects;
         }
@@ -345,7 +347,25 @@ namespace CadEditor
             }
         }
 
-        public static ObjRec[] readBlocksFromAlignedArrays(byte[] romdata, int addr, int count)
+        public static ObjRec[] readBlocksFromAlignedArraysWithoutCropPal(byte[] romdata, int addr, int count)
+        {
+            //capcom version
+            var objects = new ObjRec[count];
+            for (int i = 0; i < count; i++)
+            {
+                byte c1, c2, c3, c4, typeColor;
+                c1 = romdata[addr + i];
+                c2 = romdata[addr + count * 1 + i];
+                c3 = romdata[addr + count * 2 + i];
+                c4 = romdata[addr + count * 3 + i];
+                typeColor = romdata[addr + count * 4 + i];
+                int pal = typeColor;
+                objects[i] = new ObjRec(c1, c2, c3, c4, 0, pal);
+            }
+            return objects;
+        }
+
+        public static ObjRec[] readBlocksFromAlignedArrays(byte[] romdata, int addr, int count, bool readType)
         {
             //capcom version
             var objects = new ObjRec[count];
@@ -357,12 +377,18 @@ namespace CadEditor
                 c3 = romdata[addr + count*2 + i];
                 c4 = romdata[addr + count*3 + i];
                 typeColor = romdata[addr + count * 4 + i];
-                objects[i] = new ObjRec(c1, c2, c3, c4, typeColor);
+                int pal = typeColor & 0x3;
+                int type = 0;
+                if (readType)
+                {
+                    type = (typeColor & 0xF0) >> 4;
+                }
+                objects[i] = new ObjRec(c1, c2, c3, c4, type, pal);
             }
             return objects;
         }
 
-        public static void writeBlocksToAlignedArrays(ObjRec[] objects, byte[] romdata, int addr, int count, bool withPal = true)
+        public static void writeBlocksToAlignedArrays(ObjRec[] objects, byte[] romdata, int addr, int count, bool withPal, bool writeType)
         {
             for (int i = 0; i < count; i++)
             {
@@ -373,7 +399,12 @@ namespace CadEditor
                 romdata[addr + count * 3 + i] = (byte)obj.indexes[3];
                 if (withPal)
                 {
-                    romdata[addr + count * 4 + i] = (byte)obj.palBytes[0];
+                    int typeColor = obj.palBytes[0];
+                    if (writeType)
+                    {
+                        typeColor |= ((obj.type & 0xF) << 4);
+                    }
+                    romdata[addr + count * 4 + i] = (byte)(typeColor);
                 }
             }
         }

@@ -27,12 +27,12 @@ public class TomAndJerryBase
   
   public ObjRec[] getBlocks(int blockIndex)
   {
-    return Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount());
+    return Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount(), false);
   }
   
   public void setBlocks(int blockIndex, ObjRec[] blocksData)
   {
-    Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount());
+    Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount(), true, false);
   }
   
   //-------------------------------------------------------------------------------

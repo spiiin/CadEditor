@@ -76,7 +76,7 @@ public class Data
      ind[14] = obj.indexes[2];
      ind[15] = obj.indexes[2];
      
-     return new ObjRec(4, 4, ind, obj.palBytes);
+     return new ObjRec(4, 4, obj.type, ind, obj.palBytes);
   }
   
   public ObjRec[] getBlocksFromTiles16Pal1(int blockIndex)

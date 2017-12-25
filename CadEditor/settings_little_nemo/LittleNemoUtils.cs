@@ -7,7 +7,7 @@ public class LittleNemoUtils
   public static ObjRec[] getBlocks(int blockIndex)
   {
       int count = ConfigScript.getBlocksCount();
-      var bb = Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), count);
+      var bb = Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), count, false);
       var palAddr = ConfigScript.getTilesAddr(blockIndex) + ConfigScript.getBlocksCount() * 4;
       for (int i = 0; i < count; i++)
       {
@@ -20,7 +20,7 @@ public class LittleNemoUtils
   public static void setBlocks(int blockIndex, ObjRec[] blocksData)
   {
     int count = ConfigScript.getBlocksCount();
-    Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), count, false);
+    Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), count, false, false);
     var palAddr = ConfigScript.getTilesAddr(blockIndex) + ConfigScript.getBlocksCount() * 4;
     for (int i = 0; i < count; i++)
     {

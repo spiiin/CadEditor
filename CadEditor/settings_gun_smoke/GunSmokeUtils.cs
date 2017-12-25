@@ -9,7 +9,7 @@ public static class GunSmokeUtils
       var blocks = new ObjRec[64];
       for (int i = 0; i < 64; i++)
       {
-          blocks[i] = new ObjRec(i*4, i*4+2, i*4+1, i*4+3, 0);
+          blocks[i] = new ObjRec(i*4, i*4+2, i*4+1, i*4+3, 0, 0);
       }
       return blocks;
   }

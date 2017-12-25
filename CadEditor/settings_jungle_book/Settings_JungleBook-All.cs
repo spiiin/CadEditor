@@ -177,8 +177,8 @@ public class Data
   //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   public static ObjRec[] getBlocksJB(int blockIndex)
   {
-    var part1 = Utils.readBlocksFromAlignedArrays(Globals.romdata, BlocksAddrs[blockIndex].hiAddr, BlocksAddrs[blockIndex].hiCount);
-    var part2 = Utils.readBlocksFromAlignedArrays(Globals.romdata, BlocksAddrs[blockIndex].loAddr, BlocksAddrs[blockIndex].loCount);
+    var part1 = Utils.readBlocksFromAlignedArrays(Globals.romdata, BlocksAddrs[blockIndex].hiAddr, BlocksAddrs[blockIndex].hiCount, false);
+    var part2 = Utils.readBlocksFromAlignedArrays(Globals.romdata, BlocksAddrs[blockIndex].loAddr, BlocksAddrs[blockIndex].loCount, false);
     var total = new ObjRec[256];
     Array.Copy(part1, total, part1.Length);
     Array.Copy(part2, 0, total, BlocksAddrs[blockIndex].loCount, part2.Length); //copy to index 110, no 128!!! bug of game developers?
@@ -205,8 +205,8 @@ public class Data
     int loCount = BlocksAddrs[blockIndex].loCount;
     var secondPart = new ObjRec[loCount];
     Array.Copy(objects, loCount, secondPart, 0, loCount);
-    Utils.writeBlocksToAlignedArrays(objects   , Globals.romdata, BlocksAddrs[blockIndex].hiAddr, BlocksAddrs[blockIndex].hiCount);
-    Utils.writeBlocksToAlignedArrays(secondPart, Globals.romdata, BlocksAddrs[blockIndex].loAddr, loCount);
+    Utils.writeBlocksToAlignedArrays(objects   , Globals.romdata, BlocksAddrs[blockIndex].hiAddr, BlocksAddrs[blockIndex].hiCount, true, false);
+    Utils.writeBlocksToAlignedArrays(secondPart, Globals.romdata, BlocksAddrs[blockIndex].loAddr, loCount, true, false);
   }
   
   public void setBigBlocksJB(int bigTileIndex, BigBlock[] bigBlockIndexes)

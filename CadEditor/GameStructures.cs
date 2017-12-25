@@ -58,16 +58,17 @@ namespace CadEditor
 
     public class ObjRec : IEquatable<ObjRec>
     {
-        public ObjRec(int w, int h, int[] indexes, int[] palBytes)
+        public ObjRec(int w, int h, int type, int[] indexes, int[] palBytes)
         {
             //getSize() == indexes.Length == (if square) palBytes.Lenghth/4
             this.w = w;
             this.h = h;
+            this.type = type;
             this.indexes = indexes;
             this.palBytes = palBytes;
         }
 
-        public ObjRec(int c1, int c2, int c3, int c4, int typeColor)
+        public ObjRec(int c1, int c2, int c3, int c4, int type, int pal)
         {
             this.indexes = new int[4];
             this.palBytes = new int[1];
@@ -76,13 +77,15 @@ namespace CadEditor
             this.indexes[1] = c2;
             this.indexes[2] = c3;
             this.indexes[3] = c4;
-            this.palBytes[0] = typeColor;
+            this.palBytes[0] = pal;
+            this.type = type;
         }
 
         public ObjRec(ObjRec other)
         {
             this.w = other.w;
             this.h = other.h;
+            this.type = other.type;
             this.indexes = new int[other.indexes.Length];
             this.palBytes = new int[other.palBytes.Length];
             Array.Copy(other.indexes, this.indexes, this.indexes.Length);
@@ -91,6 +94,7 @@ namespace CadEditor
 
         public int[] indexes;
         public int[] palBytes;
+        public int type;
         public int w = 2, h = 2;
 
         public int getSize()
@@ -111,7 +115,7 @@ namespace CadEditor
 
         public virtual int getType()
         {
-            return (palBytes[0] & 0xF0) >> 4;
+            return type;
         }
 
         bool IEquatable<ObjRec>.Equals(ObjRec other)
@@ -129,6 +133,10 @@ namespace CadEditor
             {
                 if (palBytes[p] != other.palBytes[p])
                     return false;
+            }
+            if (type != other.type)
+            {
+                return false;
             }
             return true;
         }
@@ -153,6 +161,7 @@ namespace CadEditor
             {
                 hash += p.GetHashCode();
             }
+            hash += type.GetHashCode();
             return hash;
         }
     }

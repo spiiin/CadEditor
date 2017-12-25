@@ -22,7 +22,7 @@ public static class BlockUtils
   
   public static ObjRec[] getBlocksDt2(int blockIndex)
   {
-    ObjRec[] blocks = Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount());
+    ObjRec[] blocks = Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(), true);
     //decode palByte
     int palInfoCount = ConfigScript.getBlocksCount()/4;
     var palInfo = new byte[palInfoCount];
