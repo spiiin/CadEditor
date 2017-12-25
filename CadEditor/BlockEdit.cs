@@ -26,6 +26,9 @@ namespace CadEditor
             preparePanel();
             resetControls();
 
+            //rebuild video
+            reloadLevel();
+
             readOnly = false; //must be read from config
             btSave.Enabled = !readOnly;
             lbReadOnly.Visible = readOnly;
