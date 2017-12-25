@@ -3,6 +3,7 @@
 require("auxlib");
 
 local save1Label, save2Label, save1Tb, save2Tb
+local addr1Label, addr2Label, stepLabel, addr1Tb, addr2Tb, stepTb
 
 START_CORRUPTING = false
 STOP_CORRUPTING = false
@@ -58,6 +59,9 @@ end
 
 function start()
     print("Start corrupter")
+    START_ADDR = tonumber(addr1Tb.value)
+    END_ADDR = tonumber(addr2Tb.value)
+    STEP = tonumber(stepTb.value)
     CUR_ADDR = START_ADDR
     
     FRAME_FOR_SCREEN = tonumber(save2Tb.value)
@@ -68,7 +72,7 @@ function start()
     CYCLES = 0
     emu.speedmode("maximum");
 
-    lastValue = rom.readbyte(START_ADDR)
+    lastValue = rom.readbyte(CUR_ADDR)
     savestate.load(savestate.create(2))
     needReturn = true
         
@@ -157,30 +161,27 @@ function createWindow()
       MAKE_SCREESHOTS = true
   end
   
-  nameTable0toolge = iup.toggle{title="Check nametable 0", VALUE="ON"}
-  nameTable0toolge.action = function(self)
-      CHECK_NAMETABLE[1] = self.value == "ON"
-  end
-  
-  nameTable1toolge = iup.toggle{title="Check nametable 1", VALUE="OFF"}
-  nameTable1toolge.action = function(self)
-      CHECK_NAMETABLE[2] = self.value == "ON"
-  end
-  
-  nameTable2toolge = iup.toggle{title="Check nametable 2", VALUE="OFF"}
-  nameTable2toolge.action = function(self)
-      CHECK_NAMETABLE[3] = self.value == "ON"
-  end
-  
-  nameTable3toolge = iup.toggle{title="Check nametable 3", VALUE="OFF"}
-  nameTable3toolge.action = function(self)
-      CHECK_NAMETABLE[4] = self.value == "ON"
-  end
+  nameTableToolge = {}
+  for i = 1,4 do
+    nameTableToolge[i] = iup.toggle{title="Check nametable "..tostring(i-1), VALUE="OFF"}
+    nameTableToolge[i].action = function(self)
+      CHECK_NAMETABLE[i] = self.value == "ON"
+    end
+  end 
+  nameTableToolge[1].value = "ON"
   
   save1Label = iup.label{title="Save 1 frame(start):"}
   save2Label = iup.label{title="Save 2 frame(stop):"}
   save1Tb    = iup.text{value="0", readonly="yes", active="no"}
 	save2Tb    = iup.text{value="0", readonly="no"}
+  
+  addr1Label = iup.label{title="From address:"}
+  addr2Label = iup.label{title="To address:     "}
+  stepLabel  = iup.label{title="Step:                "}
+  addr1Tb    = iup.text{value=tostring(START_ADDR), readonly="no"}
+	addr2Tb    = iup.text{value=tostring(END_ADDR), readonly="no"}
+  stepTb     = iup.text{value=tostring(STEP), readonly="no"}
+  
 	dialogs = dialogs + 1;
 	handles[dialogs] = iup.dialog{
 			title="Autocorrupter v5",
@@ -190,7 +191,7 @@ function createWindow()
             title="",
             iup.vbox{
               iup.frame{
-                title = "Frames",
+                title = "When to corrupt",
                 iup.vbox{
                   iup.hbox { save1Label, save1Tb },
                   iup.hbox { save2Label, save2Tb },
@@ -198,14 +199,23 @@ function createWindow()
                 }
               },
               iup.frame{
-                title = "Check conditions",
+                title = "What to corrupt",
                 iup.vbox{
-                  nameTable0toolge,
-                  nameTable1toolge,
-                  nameTable2toolge,
-                  nameTable3toolge
+                  iup.hbox { addr1Label, addr1Tb },
+                  iup.hbox { addr2Label, addr2Tb },
+                  iup.hbox { stepLabel, stepTb }
                 }
               },
+              iup.frame{
+                title = "What to check after corrupting",
+                iup.vbox{
+                  nameTableToolge[1],
+                  nameTableToolge[2],
+                  nameTableToolge[3],
+                  nameTableToolge[4]
+                }
+              },
+                
               iup.hbox { runButton, stopButton }
             }
           }
