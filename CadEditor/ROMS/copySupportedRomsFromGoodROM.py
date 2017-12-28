@@ -17,6 +17,7 @@ fnames = [
     "Bucky O'Hare (E).nes",
     "Captain America and The Avengers (U) [!].nes",
     "Castlevania (E).nes",
+    "Challenger (J).nes",
     "Chip 'n Dale Rescue Rangers (U) [!].nes",
     "Chip 'n Dale Rescue Rangers 2 (U) [!].nes",
     "Contra Force (U) [!].nes",
