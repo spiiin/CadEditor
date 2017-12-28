@@ -12,7 +12,8 @@ public class LittleNemoUtils
       for (int i = 0; i < count; i++)
       {
           var objType = (Globals.romdata[palAddr + i] << 4)&0xF0;
-          bb[i].palBytes[0] = (Globals.romdata[palAddr + i] >> 6) | objType;  //physics also in lo bits
+          bb[i].type = objType >> 4;
+          bb[i].palBytes[0] = (Globals.romdata[palAddr + i] >> 6);
       }
       return bb;
   }
