@@ -11,9 +11,9 @@ public class LittleNemoUtils
       var palAddr = ConfigScript.getTilesAddr(blockIndex) + ConfigScript.getBlocksCount() * 4;
       for (int i = 0; i < count; i++)
       {
-          var objType = (Globals.romdata[palAddr + i] << 4)&0xF0;
-          bb[i].type = objType >> 4;
-          bb[i].palBytes[0] = (Globals.romdata[palAddr + i] >> 6);
+          int palType = Globals.romdata[palAddr + i];
+          bb[i].type = palType & 0x0F;
+          bb[i].palBytes[0] = palType >> 6;
       }
       return bb;
   }
