@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+
+    <title>Формат хранения уровней в ROM-файлах</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Формат хранения уровней в ROM-файлах</h1>
+        <h2>Описание формата хранений данных об уровнях</h2>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+
+<p>
+<b>CadEditor</b> - редактор уровней для множества игр под разные платформы (NES, Sega Mega Drive, GBA).
+</p>
+<p>
+<h3>Список форматов данных уровней в играх, поддерживаемых редактором.</h3>
+</p>
+
+<table border=1>
+
+<tr>
+<th width=30%>Название игры</th>
+<th>Формат блоков</th>
+<th>Формат макроблоков</th>
+<th>Формат экранов</th>
+</tr>
+
+<tr>
+<td>
+
+<table>
+<tr><td>Darkwing Duck</td></tr>
+<tr><td>Little Mermaid</td></tr>
+<tr><td>Tale Spin</td></tr>
+<tr><td>Chip & Dale</td></tr>
+</table>
+
+</td>
+<td>SoA(2x2 + palByte1)</td>
+<td>AoS(2x2)</td>
+<td>(8x8)</td>
+<tr>
+
+<tr>
+<td>Duck Tales</td>
+<td>SoA(2x2 + palByte1)</td>
+<td>AoS(2x2)</td>
+<td>(8x8)<br>
+<i>прим.1</i>
+</td>
+<tr>
+
+<tr>
+<td>Duck Tales 2</td>
+<td>SoA(2x2 + palByte1p)</td>
+<td>SoA(2x2)</td>
+<td>(8x8)</td>
+<tr>
+
+<tr>
+<td>Chip & Dale 2</td>
+<td>SoA(2x2 + palByte1p)</td>
+<td>-</td>
+<td>(16x15)</td>
+<tr>
+
+<tr>
+<td>
+Tiny Toon Adventures
+</td>
+<td>SoA(2x2)T</td>
+<td>SoA(2x2 + palByte4)</td>
+<td>(8x6)</td>
+<tr>
+
+<tr>
+<td>
+Flintstones RoD&H
+</td>
+<td>AoS(2x2)T + palByte1</td>
+<td>AoS(4x4)T</td>
+<td>(-)T</td>
+<tr>
+
+<tr>
+<td>
+Jungle Book
+</td>
+<td>SoA(2x2+palByte1)x2</td>
+<td>AoS(2x2)x2</td>
+<td>-</td>
+<tr>
+
+<tr>
+<td>
+Tom & Jerry
+</td>
+<td>SoA(2x2+palByte1)</td>
+<td>-</td>
+<td>-</td>
+<tr>
+
+<tr>
+<td>
+Little Nemo
+</td>
+<td>SoA(2x2+palByte1)</td>
+<td>SoA(2x2)</td>
+<td>(8x8)</td>
+<tr>
+
+</table>
+
+<p>
+<h3>Обозначения</h3>
+<b>(NxM)</b> - структура из N единиц в ширину и M в ширину.<br>
+<b>()T</b> - структура хранится в транспонированном виде.<br>
+<b>()x2</b> - игра содержит по две копии наборов данных на уровень.<br>
+<b>AoS()</b> - структуры хранятся последовательно, одна за другой. <br>
+<b>SoA()</b> - структуры хранятся массивами из отдельных частей (отдельный массив из всех 1х элементов структуры, затем отдельный массив из всех 2х элементов структуры и т.д.).<br>
+<b>SoA(NxM + palByteX)</b> - массивы из отдельных частей структуры из NxM элементов, а затем массив из частей palBytesX, в котором элементы означают доп. данные для соотвествующих индексу структур.<br>
+<b>AoS(NxM)+ palByteX</b> - последовательное описание структур размером NxM, а затем описание массива из частей palBytesX, в котором элементы означают доп. данных для соотвествующих индексу структур<br>
+</p>
+
+<p>
+<h3>Способы хранения бит палитры</h3>
+<b>palByte1</b> - биты палитры хранятся по 2 бита в байте. Дополнительные 6 бит байта в зависимости от игры могут использоваться для хранения доп. информации (тип физики блока) или не использоваться никак.<br>
+<b>palByte1p</b> - биты палитры хранятся сжатыми по 4 штуки в одном байте для 4 отдельных блоков<br>
+<b>palByte4</b> - биты палитры хранятся в одном байте по 4 штуки для 4х блоков, связанных в один макроблок или для блока в 4x4 тайла.<br>
+</p>
+
+<p>
+<h3>Примечения</h3>
+<b><i>прим.1</i></b> Отдельно хранятся старшие биты номеров блоков (игра поддерживает до 512 блоков на уровень)<br>
+</p>
+
+  </section>
+  </div>
+  
+   <div class="dashed">
+   <div class="container" align="center">
+   <a href="index.html" align="right">Назад</a>
+   </div>
+   </div>
+  </body>
+</html>
