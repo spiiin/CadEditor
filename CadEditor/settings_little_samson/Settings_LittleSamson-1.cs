@@ -9,7 +9,7 @@ public class Data
   public int getScreenHeight()        { return 8; }
   
   public bool isBigBlockEditorEnabled() { return true; }
-  public bool isBlockEditorEnabled()    { return false; }
+  public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getVideoAddress; }
