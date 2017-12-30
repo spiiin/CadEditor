@@ -11,7 +11,6 @@ public class Data
   public int getScreenHeight()   { return 128; }
   public int getBigBlocksCount() { return 77; }
   public int getBlocksCount()    { return 64; }
-  //public string getBlocksFilename()       { return "gun_smoke_1.png"; }
   
   public GetBigTileNoFromScreenFunc getBigTileNoFromScreenFunc() { return getBigTileNoFromScreen; }
   public SetBigTileToScreenFunc     setBigTileToScreenFunc()     { return setBigTileToScreen; }
