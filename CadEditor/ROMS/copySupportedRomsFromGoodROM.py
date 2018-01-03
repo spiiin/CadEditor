@@ -74,6 +74,7 @@ fnames = [
     "Super Robin Hood [p1][!].nes",
     "Super Spy Hunter (U) [!].nes",
     "TaleSpin (E) [!].nes",
+    "Takeshi no Chousenjou (J).nes",
     "Teenage Mutant Ninja Turtles (U) [!].nes",
     "Teenage Mutant Ninja Turtles II - The Arcade Game (U) [!].nes",
     "Teenage Mutant Ninja Turtles III - The Manhattan Project (U) [!].nes",

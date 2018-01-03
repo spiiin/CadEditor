@@ -64,6 +64,7 @@
     Gun Smoke                                       (1 уровень)
     Castlevania                                     (1 уровень)
     Captain Planet                                  (1 уровень)
+    Takeshi Chousenjou                              (1 уровень)
     Jurassic Park                                   (1 уровень, редактор дампа)
     Contra Spirits                                  (1 уровень, игра защищена от изменений)
     Mickey Mania 7                                  (1 уровень, игра защищена от изменений)
