@@ -19,6 +19,7 @@ fnames = [
     "Captain Planet and The Planeteers (U) [!].nes",
     "Castlevania (E).nes",
     "Challenger (J).nes",
+    "Cheetah Men II (U) [!p].nes",
     "Chip 'n Dale Rescue Rangers (U) [!].nes",
     "Chip 'n Dale Rescue Rangers 2 (U) [!].nes",
     "Contra Force (U) [!].nes",
