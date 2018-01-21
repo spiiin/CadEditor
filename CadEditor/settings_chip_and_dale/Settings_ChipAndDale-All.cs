@@ -2,6 +2,7 @@ using CadEditor;
 using PluginMapEditor;
 using System.Collections.Generic;
 //css_include Settings_CapcomBase.cs;
+
 public class Data:CapcomBase
 {
   public string[] getPluginNames() 
@@ -21,7 +22,7 @@ public class Data:CapcomBase
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x36F0 , 8   , 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x3AF0 , 8   , 0x4000); }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x10   , 300 , 0x40);   }
-  public IList<LevelRec> getLevelRecs() { return levelRecsCad; }
+  public IList<LevelRec> getLevelRecs() { return levelRecsCad(); }
   public string[] getBlockTypeNames()   { return objTypesCad;  }
   
   public GetObjectsFunc getObjectsFunc() { return getObjectsCad; }
@@ -29,7 +30,7 @@ public class Data:CapcomBase
   
   public bool isBigBlockEditorEnabled() { return true; }
   public bool isBlockEditorEnabled()    { return true; }
-  public bool isEnemyEditorEnabled()    { return false; }
+  public bool isEnemyEditorEnabled()    { return true; }
   
   public string getObjTypesPicturesDir() { return "obj_sprites_cad"; }
   
@@ -51,20 +52,41 @@ public class Data:CapcomBase
       new MapInfo(){ dataAddr = 0x8237, palAddr = 0x8871, videoNo = 15 },
   };
   
-  public IList<LevelRec> levelRecsCad = new List<LevelRec>() 
+  public int getLayoutAddr(int no)
   {
-    new LevelRec(0x10388, 76),
-    new LevelRec(0x10456, 31),
-    new LevelRec(0x105A1, 73),
-    new LevelRec(0x106D1, 57),
-    new LevelRec(0x10890, 97),
-    new LevelRec(0x10A1D, 74),
-    new LevelRec(0x10B0E, 41),
-    new LevelRec(0x10C88, 83),
-    new LevelRec(0x10DB3, 53),
-    new LevelRec(0x10EA1, 45),
-    new LevelRec(0x10FED, 71),
-  };
+      int baseOffset = getLevelRecBaseOffset();
+      return (Globals.romdata[baseOffset + 165 + no] << 8) | Globals.romdata[baseOffset + 150 + no] + getLayoutPtrAdd();
+  }
+  
+  public int getLayoutWidth(int no)
+  {
+      int baseOffset = getLevelRecBaseOffset();
+      return Globals.romdata[baseOffset + 45 + no]+1;
+  }
+  
+  public int getLayoutHeight(int no)
+  {
+       int baseOffset = getLevelRecBaseOffset();
+       return Globals.romdata[baseOffset + 30 + no]+1;
+  }
+  
+  public IList<LevelRec> levelRecsCad()
+  {
+      return new List<LevelRec>() 
+      {
+          new LevelRec(0x10388, 76, getLayoutWidth(0), getLayoutHeight(0), getLayoutAddr(0)), //broke first boss after save?
+          new LevelRec(0x10456, 31, getLayoutWidth(1), getLayoutHeight(1), getLayoutAddr(1)),
+          new LevelRec(0x105A1, 73, getLayoutWidth(2), getLayoutHeight(2), getLayoutAddr(2)),
+          new LevelRec(0x106D1, 57, getLayoutWidth(3), getLayoutHeight(3), getLayoutAddr(3)),
+          new LevelRec(0x10890, 97, getLayoutWidth(4), getLayoutHeight(4), getLayoutAddr(4)),
+          new LevelRec(0x10A1D, 74, getLayoutWidth(5), getLayoutHeight(5), getLayoutAddr(5)),
+          new LevelRec(0x10B0E, 41, getLayoutWidth(6), getLayoutHeight(6), getLayoutAddr(6)),
+          new LevelRec(0x10C88, 83, getLayoutWidth(7), getLayoutHeight(7), getLayoutAddr(7)),
+          new LevelRec(0x10DB3, 53, getLayoutWidth(8), getLayoutHeight(8), getLayoutAddr(8)),
+          new LevelRec(0x10EA1, 45, getLayoutWidth(9), getLayoutHeight(9), getLayoutAddr(9)),
+          new LevelRec(0x10FED, 71, getLayoutWidth(10), getLayoutHeight(10), getLayoutAddr(10)),
+      };
+  }
   
   string[] objTypesCad =
     new[]  {
