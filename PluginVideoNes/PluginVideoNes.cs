@@ -124,8 +124,9 @@ namespace PluginVideoNes
                         bool bitHi = Utils.getBit(videoChunk[beginIndex + line + 8], 8 - pixel);
                         int palIndex = mixBits(bitHi, bitLo);
                         int fullPalIndex = subPalIndex * 4 + palIndex;
-                        int colorNo = pallete[fullPalIndex];
-                        Color c = (withAlpha && (fullPalIndex % 4 == 0)) ? Color.FromArgb(0) : nesColors[colorNo];
+                        bool isBackColor = fullPalIndex % 4 == 0;
+                        int colorNo = pallete[isBackColor ? 0 : fullPalIndex];
+                        Color c = (withAlpha && isBackColor) ? Color.FromArgb(0) : nesColors[colorNo];
                         res.SetPixel(pixel, line, c);
                     }
                 }
