@@ -1,54 +1,35 @@
 using CadEditor;
 using System.Collections.Generic;
+//css_include settings_adventure_in_the_magic_kingdoom/AitMKUtils.cs;
+
 public class Data
 { 
-  public OffsetRec getScreensOffset()     { return new OffsetRec(0xA890, 4 /*next - castle level too, with other graphics*/, 8*9);   }
+  public OffsetRec getScreensOffset()     { return new OffsetRec(0xA890, 24, 8*9);   }
   public int getScreenWidth()             { return 8; }
-  public int getScreenHeight()            { return 9; }
+  public int getScreenHeight()            { return 8; }
   
   public bool isBigBlockEditorEnabled() { return true; }
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
   
-  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getVideoAddress; }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChunk;   }
+  public OffsetRec getVideoOffset()     { return new OffsetRec(0x0 , 4   , 0x1000);  }
+  public OffsetRec getPalOffset  ()     { return new OffsetRec(0x0 , 5   , 16); }
+  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return AitMKUtils.fakeVideoAddr(); }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return AitMKUtils.getVideoChunk(new[] {"chr1.bin", "chr1-2.bin", "chr1-3.bin", "chr1-4.bin"}); }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x4010, 1  , 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x4810, 1  , 0x1000);  }
   public int getBlocksCount()           { return 256; }
-  public int getBigBlocksCount()        { return 256; }
+  public int getBigBlocksCount()        { return 512; }
   
-  public GetBlocksFunc        getBlocksFunc() { return getBlocks;}
-  public SetBlocksFunc        setBlocksFunc() { return setBlocks;}
+  public GetBigTileNoFromScreenFunc getBigTileNoFromScreenFunc() { return AitMKUtils.getBigTileNoFromScreen; }
+  public SetBigTileToScreenFunc     setBigTileToScreenFunc()     { return AitMKUtils.setBigTileToScreen; }
+  
+  public GetBlocksFunc        getBlocksFunc() { return AitMKUtils.getBlocks;}
+  public SetBlocksFunc        setBlocksFunc() { return AitMKUtils.setBlocks;}
   public GetBigBlocksFunc     getBigBlocksFunc()     { return Utils.getBigBlocksCapcomDefault;}
   public SetBigBlocksFunc     setBigBlocksFunc()     { return Utils.setBigBlocksCapcomDefault;}
-  public GetPalFunc           getPalFunc()           { return getPallete;}
+  public GetPalFunc           getPalFunc()           { return AitMKUtils.readPalFromBin(new[] {"pal1.bin", "pal1-2.bin", "pal1-3.bin", "pal1-4.bin", "pal1-5.bin"}); }
   public SetPalFunc           setPalFunc()           { return null;}
-  
-  //----------------------------------------------------------------------------
-  public ObjRec[] getBlocks(int tileId)
-  {
-    return Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), false);
-  }
-  
-  public void setBlocks(int tileId, ObjRec[] blocks)
-  {
-    Utils.writeBlocksToAlignedArrays(blocks, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), true, false);
-  }
-  
-  public byte[] getPallete(int palId)
-  {
-      return Utils.readBinFile("pal1.bin");
-  }
-  
-  public int getVideoAddress(int id)
-  {
-    return -1;
-  }
-  
-  public byte[] getVideoChunk(int videoPageId)
-  {
-     return Utils.readVideoBankFromFile("chr1.bin", videoPageId);
-  }
 }
