@@ -56,6 +56,7 @@ fnames = [
     "Mickey's Adventures in Numberland (U) [!p].nes",
     "Micro Machines (Unl) [!].nes",
     "Mighty Final Fight (U) [!p].nes",
+    "Mission - Impossible (U) [!].nes",
     "Mitsume ga Tooru (J).nes",
     "Monster In My Pocket (U) [!].nes",
     "Moon Crystal (J) [!].nes",
