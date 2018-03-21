@@ -372,7 +372,17 @@ namespace CadEditor
 
                         int leftMargin = (ConfigScript.getScreenVertical() ? scrHeight : scrWidth) * x;
                         int topMargin = (ConfigScript.getScreenVertical() ? scrWidth : scrHeight) * y;
+                        
                         MapEditor.Render(g, bigBlocks, visibleRect, formMain.Layers, scrNo, curScale, false, formMain.ShowAxis, leftMargin, topMargin, width, height);
+                        if (formMain.ShowAxis)
+                        {
+                            int TILE_SIZE_X = (int)(formMain.Layers[0].blockWidth * curScale);
+                            int TILE_SIZE_Y = (int)(formMain.Layers[0].blockHeight * curScale);
+                            if (ConfigScript.getScreenVertical())
+                                g.DrawRectangle(new Pen(Brushes.Black,2.0f), new Rectangle(leftMargin, topMargin, TILE_SIZE_X * height, TILE_SIZE_Y * width));
+                            else
+                                g.DrawRectangle(new Pen(Brushes.Black,2.0f), new Rectangle(leftMargin, topMargin, TILE_SIZE_X * width, TILE_SIZE_Y * height));
+                        }
                         //ConfigScript.renderToMainScreen(g, (int)curScale);
                     }
                     else
