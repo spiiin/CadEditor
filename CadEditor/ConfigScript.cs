@@ -20,6 +20,7 @@ namespace CadEditor
     public delegate byte[] GetPalFunc(int palId);
     public delegate void   SetPalFunc(int palId, byte[] pallete);
     public delegate GroupRec[] GetGroupsFunc();
+    public delegate IList<LevelRec> GetLevelRecsFunc();
     public delegate void   RenderToMainScreenFunc(Graphics g, int curScale);
     public delegate List<ObjectList> GetObjectsFunc(int levelNo);
     public delegate bool            SetObjectsFunc(int levelNo, List<ObjectList> objects); 
@@ -147,12 +148,12 @@ namespace CadEditor
             levelsCount = callFromScript(asm, data, "*.getLevelsCount", 1);
             screensOffset = new OffsetRec[levelsCount];
 
-            palOffset = callFromScript(asm, data,"*.getPalOffset", new OffsetRec(0,1,0));
+            palOffset = callFromScript(asm, data, "*.getPalOffset", new OffsetRec(0, 1, 0));
             videoOffset = callFromScript(asm, data, "*.getVideoOffset", new OffsetRec(0, 1, 0));
             videoObjOffset = callFromScript(asm, data, "*.getVideoObjOffset", new OffsetRec(0, 1, 0));
             blocksOffset = callFromScript(asm, data, "*.getBlocksOffset", new OffsetRec(0, 1, 0));
-            screensOffset[0]        = callFromScript(asm, data, "*.getScreensOffset", new OffsetRec(0, 1, 0));
-            screensOffset[0].width  = callFromScript(asm, data, "*.getScreenWidth", 8);
+            screensOffset[0] = callFromScript(asm, data, "*.getScreensOffset", new OffsetRec(0, 1, 0));
+            screensOffset[0].width = callFromScript(asm, data, "*.getScreenWidth", 8);
             screensOffset[0].height = callFromScript(asm, data, "*.getScreenHeight", 8);
             if ((screensOffset[0].beginAddr == 0) && (screensOffset[0].recSize == 0))
             {
@@ -167,7 +168,7 @@ namespace CadEditor
             blockSize4x4 = callFromScript(asm, data, "*.isBlockSize4x4", false);
             buildScreenFromSmallBlocks = callFromScript(asm, data, "isBuildScreenFromSmallBlocks", false);
             layersCount = callFromScript(asm, data, "*.getLayersCount", 1);
-            levelRecs = callFromScript(asm, data,"*.getLevelRecs", new List<LevelRec>() { new LevelRec(0, 0, 1, 1, 0) });
+            getLevelRecsFunc = callFromScript<GetLevelRecsFunc>(asm, data, "*.getLevelRecsFunc", ConfigScript.getLevelRecsFuncDefault());
 
             //todo: remove or change to many lists interface
             minObjCoordX = callFromScript(asm, data, "*.getMinObjCoordX", 0);
@@ -261,6 +262,11 @@ namespace CadEditor
             palBytesAddr = callFromScript(asm, data, "*.getPalBytesAddr", -1);
 
             loadAllPlugins(asm, data);
+        }
+
+        private static GetLevelRecsFunc getLevelRecsFuncDefault()
+        {
+            return () => { return new List<LevelRec>() { new LevelRec(0, 0, 1, 1, 0) }; };
         }
 
         private static void loadAllPlugins(AsmHelper asm, object data)
@@ -472,9 +478,14 @@ namespace CadEditor
             return blocksCount;
         }
 
+        public static IList<LevelRec> getLevelRecs()
+        {
+            return getLevelRecsFunc();
+        }
+
         public static LevelRec getLevelRec(int i)
         {
-            return levelRecs[i];
+            return getLevelRecsFunc()[i];
         }
 
         public static int getMaxObjType()
@@ -674,7 +685,8 @@ namespace CadEditor
         public static int segaBackWidth;
         public static int segaBackHeight;
 
-        public static IList<LevelRec> levelRecs;
+        //public static IList<LevelRec> levelRecs;
+        public static GetLevelRecsFunc getLevelRecsFunc;
 
         public static GetVideoPageAddrFunc getVideoPageAddrFunc;
         public static GetVideoChunkFunc getVideoChunkFunc;

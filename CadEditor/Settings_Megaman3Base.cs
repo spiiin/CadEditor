@@ -20,9 +20,9 @@ public class Megaman3Base:CapcomBase
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x1710 + LEVEL_OFFSET * LEVEL_NO()    , 1  , 0x2000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x1B10 + LEVEL_OFFSET * LEVEL_NO()    , 1  , 0x2000); }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x0F10 + LEVEL_OFFSET * LEVEL_NO()    , 256, 0x40);   }
-  public IList<LevelRec> getLevelRecs() { return levelRecsDwd; } //
+  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecs;}; }
   
-  public IList<LevelRec> levelRecsDwd = new List<LevelRec>() 
+  public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
     new LevelRec(0x10000, 1, 8, 4,  0x41510), 
   };

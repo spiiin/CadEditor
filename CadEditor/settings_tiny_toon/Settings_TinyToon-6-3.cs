@@ -13,7 +13,7 @@ public class Data
   public int getBigBlocksCount()        { return 20; }
   public int getScreenWidth()           { return 8; }
   public int getScreenHeight()          { return 30; }
-  public IList<LevelRec> getLevelRecs() { return levelRecsTT; }
+  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecsTT;}; }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getTinyToonVideoAddress; }
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getTinyToonVideoChunk;   }

@@ -25,7 +25,7 @@ public class Data : CapcomBase
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x210 + 32, 256 , 16*15);   }
   public override int getScreenWidth()     { return 16; }
   public override int getScreenHeight()    { return 15; }
-  public IList<LevelRec> getLevelRecs()    { return levelRecsCad2; }
+  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecsCad2;}; }
   public int getScrollsOffsetFromLayout()  { return 538; } //offset scrolls array from layout array
   public GetObjectsFunc getObjectsFunc()   { return getObjectsCad2; }
   public SetObjectsFunc setObjectsFunc()   { return setObjectsCad2; }

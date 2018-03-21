@@ -38,7 +38,7 @@ public class Data
   public GetObjectDictionaryFunc getObjectDictionaryFunc() { return ShatterhandUtils.getObjectDictionary; }
   public GetLayoutFunc        getLayoutFunc()        { return ShatterhandUtils.getLayoutLinearSH; }
   public SetLayoutFunc        setLayoutFunc()        { return ShatterhandUtils.setLayoutLinearSH; }
-  public IList<LevelRec> getLevelRecs()  { return levelRec; }
+  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecs;}; }
   
   public bool isBigBlockEditorEnabled() { return true; }
   public bool isBlockEditorEnabled()    { return true; }

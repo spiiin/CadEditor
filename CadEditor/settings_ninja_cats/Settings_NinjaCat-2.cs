@@ -49,7 +49,7 @@ public class Data
     return new LevelLayerData(levelLayers[levelNo].Length, 1, levelLayers[levelNo]);
   }
   
-  public IList<LevelRec> getLevelRecs() { return levelRecs; }
+  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecs;}; }
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
     new LevelRec(0xA605, 5 , 2, 1, 0x0), //room 1

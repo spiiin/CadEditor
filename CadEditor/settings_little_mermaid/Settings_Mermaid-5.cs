@@ -18,7 +18,7 @@ public class Data:CapcomBase
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x2910, 1 , 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x2410,  1 , 0x4000); }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x5250, 32 , 0x40);   }
-  public IList<LevelRec> getLevelRecs() { return levelRecs; }
+  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecs;}; }
   public GetObjectsFunc getObjectsFunc() { return MermaidUtils.getObjectsLM; }
   public SetObjectsFunc setObjectsFunc() { return MermaidUtils.setObjectsLM; }
   public override GetLayoutFunc  getLayoutFunc()  { return MermaidUtils.getLayoutLinearMermaid;   }

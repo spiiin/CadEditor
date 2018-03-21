@@ -19,7 +19,7 @@ public class Data:CapcomBase
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x510 , 1 , 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x10 ,  1 , 0x4000); }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x4010,64 , 0x40);   }
-  public IList<LevelRec> getLevelRecs() { return levelRecs; }
+  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecs;}; }
   public override GetVideoChunkFunc    getVideoChunkFunc()    { return getLMVideoChunk; }
   public GetObjectsFunc getObjectsFunc() { return MermaidUtils.getObjectsLM; }
   public SetObjectsFunc setObjectsFunc() { return MermaidUtils.setObjectsLM; }

@@ -12,7 +12,7 @@ public class Data
   public string getBlocksFilename()    { return "zamn_1.png"; }
   public int getWordLen()              { return 2;} 
   
-  public IList<LevelRec> getLevelRecs()    { return levelRecs; }
+  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecs;}; }
   public GetObjectsFunc getObjectsFunc()   { return ZamnUtils.getObjects;/*getEnemiesFromFile*/ }
   public SetObjectsFunc setObjectsFunc()   { return ZamnUtils.setObjects;/*setEnemiesToFile;*/ }
   

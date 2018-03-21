@@ -177,6 +177,7 @@ namespace CadEditor
             this.layoutAddr = 0;
             this.name = "";
             this.levelNo = 0;
+            this.group = null;
         }
 
         public LevelRec(int objectsBeginAddr, int objCount, int width = 0, int height = 0, int layoutAddr = 0)
@@ -188,6 +189,7 @@ namespace CadEditor
             this.layoutAddr = layoutAddr;
             this.name = "";
             this.levelNo = 0;
+            this.group = null;
         }
 
         public LevelRec(int objectsBeginAddr, int objCount, int width = 0, int height = 0, int layoutAddr = 0, string name = "")
@@ -199,17 +201,19 @@ namespace CadEditor
             this.layoutAddr = layoutAddr;
             this.name = name;
             this.levelNo = 0;
+            this.group = null;
         }
 
         public LevelRec(int objectsBeginAddr, int objCount, int width = 0, int height = 0, int layoutAddr = 0, string name = "", int levelNo = 0)
+            :this(objectsBeginAddr, objCount, width, height, layoutAddr, name)
         {
-            this.objCount = objCount;
-            this.objectsBeginAddr = objectsBeginAddr;
-            this.width = width;
-            this.height = height;
-            this.layoutAddr = layoutAddr;
-            this.name = name;
             this.levelNo = levelNo;
+        }
+
+        public LevelRec(int objectsBeginAddr, int objCount, int width = 0, int height = 0, int layoutAddr = 0, string name = "", int levelNo = 0, GroupRec group = null)
+            :this(objectsBeginAddr, objCount, width, height, layoutAddr, name, levelNo)
+        {
+            this.group = group;
         }
         public int objCount;
         public int objectsBeginAddr;
@@ -218,6 +222,7 @@ namespace CadEditor
         public int layoutAddr;
         public int levelNo;
         public string name;
+        public GroupRec group;
     }
 
     public struct ScreenRec
@@ -271,7 +276,7 @@ namespace CadEditor
         public int[] dirs;
     }
 
-    public struct GroupRec
+    public class GroupRec
     {
         public string name;
         public int videoNo;

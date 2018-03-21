@@ -42,7 +42,7 @@ public class Data
   public GetObjectsFunc getObjectsFunc() { return CHCUtils.getObjects; }
   public SetObjectsFunc setObjectsFunc() { return CHCUtils.setObjects; }
   public GetObjectDictionaryFunc getObjectDictionaryFunc() { return CHCUtils.getObjectDictionary; }
-  public IList<LevelRec> getLevelRecs()  { return levelRecs;  }
+  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecs;}; }
   public DrawObjectFunc getDrawObjectFunc() { return CHCUtils.drawObject; }
   
   public int getMaxObjType()             { return 0x500; }

@@ -44,7 +44,7 @@ public class Data
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0xC010 , 1   , 0x4000); }
   
   public int getPalBytesAddr()         { return 0xd120; }
-  public IList<LevelRec> getLevelRecs() { return levelRecs; }
+  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecs;}; }
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
     new LevelRec(0xd15e, 44, 16, 4, 0xD090), 

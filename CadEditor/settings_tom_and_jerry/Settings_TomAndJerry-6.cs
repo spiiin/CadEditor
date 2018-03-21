@@ -13,7 +13,7 @@ public class Data : TomAndJerryBase
   public override int getScreenWidth()     { return  40; }
   public override int getScreenHeight()    { return 112; }
   
-  public IList<LevelRec> getLevelRecs() { return levelRecs; }
+  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecs;}; }
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return true; }

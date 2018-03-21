@@ -13,7 +13,7 @@ public class Data
   public int getBigBlocksCount()        { return 62; }
   public int getScreenWidth()           { return 8; }
   public int getScreenHeight()          { return 6; }
-  public IList<LevelRec> getLevelRecs() { return levelRecsTT; }
+  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecsTT;}; }
   public GetObjectsFunc getObjectsFunc() { return TinyToonUtils.getObjectsTT; }
   public SetObjectsFunc setObjectsFunc() { return TinyToonUtils.setObjectsTT; }
   public string getObjTypesPicturesDir() { return "obj_sprites_TT"; }

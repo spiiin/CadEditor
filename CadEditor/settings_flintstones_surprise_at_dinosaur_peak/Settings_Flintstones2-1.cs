@@ -26,7 +26,7 @@ public class Data
   public bool isBigBlockEditorEnabled() { return true; }
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return true; }
-  public IList<LevelRec> getLevelRecs() { return levelRecs; }
+  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecs;}; }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return Utils.getChrAddress; }
   public GetVideoChunkFunc    getVideoChunkFunc()    { return Utils.getVideoChunk; }

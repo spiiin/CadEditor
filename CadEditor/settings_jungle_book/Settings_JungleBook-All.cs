@@ -39,7 +39,7 @@ public class Data
   public bool isBigBlockEditorEnabled() { return true; }
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return true; }
-  public IList<LevelRec> getLevelRecs() { return levelRecsJB; }
+  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecsJB;}; }
   
   public SetBlocksFunc setBlocksFunc()     { return setBlocksJB;}
   public GetBlocksFunc getBlocksFunc()     { return getBlocksJB;}

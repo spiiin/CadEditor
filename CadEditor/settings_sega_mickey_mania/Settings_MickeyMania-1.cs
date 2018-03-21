@@ -19,7 +19,6 @@ public class Data
   public int getBigBlocksCount()        { return 256; }
   public int getScreenWidth()           { return 128; }
   public int getScreenHeight()          { return 70; }
-  public IList<LevelRec> getLevelRecs() { return null; }
   
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChuck;   }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }

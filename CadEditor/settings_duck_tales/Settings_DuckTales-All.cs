@@ -25,7 +25,7 @@ public class Data:CapcomBase
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x7B10 , 3   , 0x4000); }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x10058, 300 , 0x48);   }
 
-  public IList<LevelRec> getLevelRecs()  { return levelRecsDt; }
+  public GetLevelRecsFunc getLevelRecsFunc()  { return ()=> {return levelRecsDt; }; }
   public string[] getBlockTypeNames()    { return objTypesDt;  }
   public GetObjectsFunc getObjectsFunc() { return getObjectsDt; }
   public SetObjectsFunc setObjectsFunc() { return setObjectsDt; }

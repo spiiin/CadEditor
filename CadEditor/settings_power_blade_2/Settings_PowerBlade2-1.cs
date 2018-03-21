@@ -15,7 +15,6 @@ public class Data
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x4E44 , 34 , 8*5);   }
   public int getScreenWidth()    { return 8; }
   public int getScreenHeight()   { return 5; }
-  public IList<LevelRec> getLevelRecs() { return null; }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
   

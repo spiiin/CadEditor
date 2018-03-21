@@ -19,7 +19,7 @@ public class Data
   public GetLayoutFunc getLayoutFunc()     { return getLayout;   } 
   public GetObjectDictionaryFunc getObjectDictionaryFunc() { return getObjectDictionary; }
   
-  public IList<LevelRec> getLevelRecs() { return levelRecs; }
+  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecs;}; }
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
     new LevelRec(0x18B71, 22, 7, 1, 0x0),

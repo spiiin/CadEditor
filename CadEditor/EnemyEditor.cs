@@ -119,10 +119,24 @@ namespace CadEditor
             curActiveLayout = cbLayoutNo.SelectedIndex;
             curScale = cbScale.SelectedIndex + 1; //TODO: normal scale factors;
             cbLayoutNo.Items.Clear();
-            foreach (var lr in ConfigScript.levelRecs)
-                cbLayoutNo.Items.Add(String.Format("{0}:0x{1:X} ({2}x{3})", lr.name, lr.layoutAddr, lr.width, lr.height));
+            foreach (var lr in ConfigScript.getLevelRecs())
+                cbLayoutNo.Items.Add(String.Format("{0} : 0x{1:X}  ({2}x{3})", lr.name, lr.layoutAddr, lr.width, lr.height));
             UtilsGui.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged, curActiveLayout);
 
+            if (sender == cbLayoutNo)
+            {
+                var g = getLevelRecForGameType().group;
+                if (g != null)
+                {
+                    UtilsGui.setCbIndexWithoutUpdateLevel(cbVideoNo, cbLevel_SelectedIndexChanged, g.videoNo);
+                    UtilsGui.setCbIndexWithoutUpdateLevel(cbBigBlockNo, cbLevel_SelectedIndexChanged, g.bigBlockNo);
+                    UtilsGui.setCbIndexWithoutUpdateLevel(cbBlockNo, cbLevel_SelectedIndexChanged, g.blockNo);
+                    UtilsGui.setCbIndexWithoutUpdateLevel(cbPaletteNo, cbLevel_SelectedIndexChanged, g.palNo);
+                    reloadLevelLayerData();
+
+                    cbGroup.Text = ""; //clear text of selected group
+                }
+            }
             reloadLevel(reloadObjects);
             resizeMapScreen();
             mapScreen.Invalidate();
@@ -152,8 +166,10 @@ namespace CadEditor
             UtilsGui.setCbIndexWithoutUpdateLevel(cbTool, cbTool_SelectedIndexChanged);
             UtilsGui.setCbIndexWithoutUpdateLevel(cbScale, cbLevel_SelectedIndexChanged, 1);
             cbLayoutNo.Items.Clear();
-            foreach (var lr in ConfigScript.levelRecs)
+            foreach (var lr in ConfigScript.getLevelRecs())
+            {
                 cbLayoutNo.Items.Add(String.Format("{0}:0x{1:X} ({2}x{3})", lr.name, lr.layoutAddr, lr.width, lr.height));
+            }
             UtilsGui.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged);
 
             bttSave.Enabled = ConfigScript.setObjectsFunc != null;

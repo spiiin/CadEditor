@@ -44,7 +44,7 @@ public class Data
     return new LevelLayerData(5, 4, layer);
   }
   
-  public IList<LevelRec> getLevelRecs() { return levelRecs; }
+  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecs;}; }
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
     new LevelRec(0x69D8, 4, 5, 4, 0x1),

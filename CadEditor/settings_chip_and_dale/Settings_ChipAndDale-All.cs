@@ -24,7 +24,7 @@ public class Data:CapcomBase
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x36F0 , 8   , 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x3AF0 , 8   , 0x4000); }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x10   , 300 , 0x40);   }
-  public IList<LevelRec> getLevelRecs() { return levelRecsCad(); }
+  public GetLevelRecsFunc getLevelRecsFunc() { return getLevelRecsCad; }
   public string[] getBlockTypeNames()   { return objTypesCad;  }
   
   public GetObjectsFunc getObjectsFunc() { return getObjectsCad; }
@@ -131,21 +131,22 @@ public class Data:CapcomBase
     return groups;
   }
   
-  public IList<LevelRec> levelRecsCad()
+  public IList<LevelRec> getLevelRecsCad()
   {
+      var groups = ConfigScript.getGroups();
       return new List<LevelRec>() 
       {
-          new LevelRec(0x10388, 76, getLayoutWidth(0), getLayoutHeight(0), getLayoutAddr(0)), //broke first boss after save?
-          new LevelRec(0x10456, 31, getLayoutWidth(1), getLayoutHeight(1), getLayoutAddr(1)),
-          new LevelRec(0x105A1, 73, getLayoutWidth(2), getLayoutHeight(2), getLayoutAddr(2)),
-          new LevelRec(0x106D1, 57, getLayoutWidth(3), getLayoutHeight(3), getLayoutAddr(3)),
-          new LevelRec(0x10890, 97, getLayoutWidth(4), getLayoutHeight(4), getLayoutAddr(4)),
-          new LevelRec(0x10A1D, 74, getLayoutWidth(5), getLayoutHeight(5), getLayoutAddr(5)),
-          new LevelRec(0x10B0E, 41, getLayoutWidth(6), getLayoutHeight(6), getLayoutAddr(6)),
-          new LevelRec(0x10C88, 83, getLayoutWidth(7), getLayoutHeight(7), getLayoutAddr(7)),
-          new LevelRec(0x10DB3, 53, getLayoutWidth(8), getLayoutHeight(8), getLayoutAddr(8)),
-          new LevelRec(0x10EA1, 45, getLayoutWidth(9), getLayoutHeight(9), getLayoutAddr(9)),
-          new LevelRec(0x10FED, 71, getLayoutWidth(10), getLayoutHeight(10), getLayoutAddr(10)),
+          new LevelRec(0x10388, 76, getLayoutWidth(0), getLayoutHeight(0), getLayoutAddr(0), groups[0].name, 0, groups[0]), //broke first boss after save?
+          new LevelRec(0x10456, 31, getLayoutWidth(1), getLayoutHeight(1), getLayoutAddr(1), groups[1].name, 0, groups[1]),
+          new LevelRec(0x105A1, 73, getLayoutWidth(2), getLayoutHeight(2), getLayoutAddr(2), groups[2].name, 0, groups[2]),
+          new LevelRec(0x106D1, 57, getLayoutWidth(3), getLayoutHeight(3), getLayoutAddr(3), groups[3].name, 0, groups[3]),
+          new LevelRec(0x10890, 97, getLayoutWidth(4), getLayoutHeight(4), getLayoutAddr(4), groups[4].name, 0, groups[4]),
+          new LevelRec(0x10A1D, 74, getLayoutWidth(5), getLayoutHeight(5), getLayoutAddr(5), groups[5].name, 0, groups[5]),
+          new LevelRec(0x10B0E, 41, getLayoutWidth(6), getLayoutHeight(6), getLayoutAddr(6), groups[6].name, 0, groups[6]),
+          new LevelRec(0x10C88, 83, getLayoutWidth(7), getLayoutHeight(7), getLayoutAddr(7), groups[7].name, 0, groups[7]),
+          new LevelRec(0x10DB3, 53, getLayoutWidth(8), getLayoutHeight(8), getLayoutAddr(8), groups[8].name, 0, groups[8]),
+          new LevelRec(0x10EA1, 45, getLayoutWidth(9), getLayoutHeight(9), getLayoutAddr(9), groups[9].name, 0, groups[9]),
+          new LevelRec(0x10FED, 71, getLayoutWidth(10), getLayoutHeight(10), getLayoutAddr(10), groups[10].name, 0, groups[10]),
       };
   }
   
