@@ -30,6 +30,9 @@ public class Data:CapcomBase
   public GetObjectsFunc getObjectsFunc() { return getObjectsCad; }
   public SetObjectsFunc setObjectsFunc() { return setObjectsCad; }
   
+  public override GetLayoutFunc  getLayoutFunc()  { return getLayoutCad;   }          
+  public override SetLayoutFunc  setLayoutFunc()  { return Utils.setLayoutLinear;   } //auto crop hi-part of numbers >256
+  
   public bool isBigBlockEditorEnabled() { return true; }
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return true; }
@@ -59,7 +62,7 @@ public class Data:CapcomBase
   public int getLayoutAddr(int no)
   {
       int baseOffset = getLevelRecBaseOffset();
-      return (Globals.romdata[baseOffset + 165 + no] << 8) | Globals.romdata[baseOffset + 150 + no] + getLayoutPtrAdd();
+      return (Globals.romdata[baseOffset + 165 + no] << 8) + Globals.romdata[baseOffset + 150 + no] + getLayoutPtrAdd();
   }
   
   public int getLayoutWidth(int no)
@@ -72,6 +75,24 @@ public class Data:CapcomBase
   {
        int baseOffset = getLevelRecBaseOffset();
        return Globals.romdata[baseOffset + 30 + no]+1;
+  }
+  
+  public static LevelLayerData getLayoutCad(int curActiveLayout)
+  {
+      var layout = Utils.getLayoutLinear(curActiveLayout);
+      
+      if ((curActiveLayout != 5) && (curActiveLayout != 8))
+      {
+        return layout;
+      }
+      
+      //additional +256 for levels E and H
+      var layer = layout.layer;
+      for (int i = 0; i < layer.Length; i++)
+      {
+        layer[i] += 0x100;
+      }
+      return layout;
   }
   
   public GroupRec[] getGroups()
