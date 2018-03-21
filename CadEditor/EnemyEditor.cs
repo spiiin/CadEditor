@@ -163,6 +163,12 @@ namespace CadEditor
 
             UtilsGui.setCbItemsCount(cbBigObjectNo, 256, 0, true);
             cbLevel_SelectedIndexChanged(cbLayoutNo, new EventArgs());
+
+            cbGroup.Items.Clear();
+            foreach (var g in ConfigScript.getGroups())
+            {
+                cbGroup.Items.Add(g.name);
+            }
         }
 
         private void resizeMapScreen()
@@ -994,6 +1000,18 @@ namespace CadEditor
             {
                 deleteSelected();
             }
+        }
+
+        private void cbGroup_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbGroup.SelectedIndex < 0)
+                return;
+            GroupRec g = ConfigScript.getGroup(cbGroup.SelectedIndex);
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbVideoNo, cbLevel_SelectedIndexChanged, g.videoNo);
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbBigBlockNo, cbLevel_SelectedIndexChanged, g.bigBlockNo);
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbBlockNo, cbLevel_SelectedIndexChanged, g.blockNo);
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbPaletteNo, cbLevel_SelectedIndexChanged, g.palNo);
+            cbLevel_SelectedIndexChanged(cbVideoNo, new EventArgs());
         }
     }
 }

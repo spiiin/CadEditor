@@ -80,6 +80,10 @@
             this.ofJson = new System.Windows.Forms.OpenFileDialog();
             this.sfJson = new System.Windows.Forms.SaveFileDialog();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.pnGroups = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cbGroup = new System.Windows.Forms.ComboBox();
+            this.pnAdvancedParams = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             this.pnGeneric.SuspendLayout();
             this.pnView.SuspendLayout();
@@ -93,6 +97,8 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.pnGroups.SuspendLayout();
+            this.pnAdvancedParams.SuspendLayout();
             this.SuspendLayout();
             // 
             // mapScreen
@@ -160,28 +166,22 @@
             // 
             this.pnGeneric.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnGeneric.Controls.Add(this.pnAdvancedParams);
+            this.pnGeneric.Controls.Add(this.pnGroups);
             this.pnGeneric.Controls.Add(this.label14);
             this.pnGeneric.Controls.Add(this.cbScale);
             this.pnGeneric.Controls.Add(this.label11);
             this.pnGeneric.Controls.Add(this.cbLayoutNo);
-            this.pnGeneric.Controls.Add(this.label9);
-            this.pnGeneric.Controls.Add(this.cbPaletteNo);
-            this.pnGeneric.Controls.Add(this.label8);
-            this.pnGeneric.Controls.Add(this.cbBlockNo);
-            this.pnGeneric.Controls.Add(this.label2);
-            this.pnGeneric.Controls.Add(this.cbBigBlockNo);
-            this.pnGeneric.Controls.Add(this.label4);
-            this.pnGeneric.Controls.Add(this.cbVideoNo);
             this.pnGeneric.Location = new System.Drawing.Point(5, 17);
             this.pnGeneric.Margin = new System.Windows.Forms.Padding(4);
             this.pnGeneric.Name = "pnGeneric";
-            this.pnGeneric.Size = new System.Drawing.Size(233, 164);
+            this.pnGeneric.Size = new System.Drawing.Size(233, 222);
             this.pnGeneric.TabIndex = 50;
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(155, 62);
+            this.label14.Location = new System.Drawing.Point(162, 59);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(47, 17);
@@ -195,7 +195,7 @@
             this.cbScale.Items.AddRange(new object[] {
             "1",
             "2"});
-            this.cbScale.Location = new System.Drawing.Point(157, 81);
+            this.cbScale.Location = new System.Drawing.Point(162, 80);
             this.cbScale.Margin = new System.Windows.Forms.Padding(4);
             this.cbScale.Name = "cbScale";
             this.cbScale.Size = new System.Drawing.Size(59, 24);
@@ -235,7 +235,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(5, 112);
+            this.label9.Location = new System.Drawing.Point(5, 60);
             this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(55, 17);
@@ -263,7 +263,7 @@
             "13",
             "14",
             "15"});
-            this.cbPaletteNo.Location = new System.Drawing.Point(11, 132);
+            this.cbPaletteNo.Location = new System.Drawing.Point(11, 80);
             this.cbPaletteNo.Margin = new System.Windows.Forms.Padding(4);
             this.cbPaletteNo.Name = "cbPaletteNo";
             this.cbPaletteNo.Size = new System.Drawing.Size(69, 24);
@@ -273,7 +273,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(83, 111);
+            this.label8.Location = new System.Drawing.Point(85, 60);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(46, 17);
@@ -293,7 +293,7 @@
             "6",
             "7",
             "8"});
-            this.cbBlockNo.Location = new System.Drawing.Point(88, 130);
+            this.cbBlockNo.Location = new System.Drawing.Point(88, 80);
             this.cbBlockNo.Margin = new System.Windows.Forms.Padding(4);
             this.cbBlockNo.Name = "cbBlockNo";
             this.cbBlockNo.Size = new System.Drawing.Size(59, 24);
@@ -303,7 +303,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(85, 62);
+            this.label2.Location = new System.Drawing.Point(85, 8);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(66, 17);
@@ -323,7 +323,7 @@
             "6",
             "7",
             "8"});
-            this.cbBigBlockNo.Location = new System.Drawing.Point(88, 81);
+            this.cbBigBlockNo.Location = new System.Drawing.Point(88, 28);
             this.cbBigBlockNo.Margin = new System.Windows.Forms.Padding(4);
             this.cbBigBlockNo.Name = "cbBigBlockNo";
             this.cbBigBlockNo.Size = new System.Drawing.Size(59, 24);
@@ -333,7 +333,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(4, 60);
+            this.label4.Location = new System.Drawing.Point(4, 8);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(82, 17);
@@ -353,7 +353,7 @@
             "6",
             "7",
             "8"});
-            this.cbVideoNo.Location = new System.Drawing.Point(8, 80);
+            this.cbVideoNo.Location = new System.Drawing.Point(8, 28);
             this.cbVideoNo.Margin = new System.Windows.Forms.Padding(4);
             this.cbVideoNo.Name = "cbVideoNo";
             this.cbVideoNo.Size = new System.Drawing.Size(72, 24);
@@ -577,10 +577,10 @@
             // 
             this.pnBigObjects.Controls.Add(this.pbBigObject);
             this.pnBigObjects.Controls.Add(this.cbBigObjectNo);
-            this.pnBigObjects.Location = new System.Drawing.Point(5, 263);
+            this.pnBigObjects.Location = new System.Drawing.Point(5, 264);
             this.pnBigObjects.Margin = new System.Windows.Forms.Padding(4);
             this.pnBigObjects.Name = "pnBigObjects";
-            this.pnBigObjects.Size = new System.Drawing.Size(228, 386);
+            this.pnBigObjects.Size = new System.Drawing.Size(228, 385);
             this.pnBigObjects.TabIndex = 31;
             this.pnBigObjects.Visible = false;
             // 
@@ -610,7 +610,7 @@
             this.cbUseBigPictures.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cbUseBigPictures.AutoSize = true;
-            this.cbUseBigPictures.Location = new System.Drawing.Point(5, 234);
+            this.cbUseBigPictures.Location = new System.Drawing.Point(9, 241);
             this.cbUseBigPictures.Margin = new System.Windows.Forms.Padding(4);
             this.cbUseBigPictures.Name = "cbUseBigPictures";
             this.cbUseBigPictures.Size = new System.Drawing.Size(128, 21);
@@ -728,6 +728,52 @@
             this.splitContainer1.SplitterDistance = 706;
             this.splitContainer1.TabIndex = 70;
             // 
+            // pnGroups
+            // 
+            this.pnGroups.Controls.Add(this.label1);
+            this.pnGroups.Controls.Add(this.cbGroup);
+            this.pnGroups.Location = new System.Drawing.Point(7, 51);
+            this.pnGroups.Name = "pnGroups";
+            this.pnGroups.Size = new System.Drawing.Size(148, 59);
+            this.pnGroups.TabIndex = 58;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(4, 8);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(63, 17);
+            this.label1.TabIndex = 50;
+            this.label1.Text = "GROUP:";
+            // 
+            // cbGroup
+            // 
+            this.cbGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbGroup.DropDownWidth = 200;
+            this.cbGroup.FormattingEnabled = true;
+            this.cbGroup.Location = new System.Drawing.Point(4, 29);
+            this.cbGroup.Margin = new System.Windows.Forms.Padding(4);
+            this.cbGroup.Name = "cbGroup";
+            this.cbGroup.Size = new System.Drawing.Size(77, 24);
+            this.cbGroup.TabIndex = 51;
+            this.cbGroup.SelectedIndexChanged += new System.EventHandler(this.cbGroup_SelectedIndexChanged);
+            // 
+            // pnAdvancedParams
+            // 
+            this.pnAdvancedParams.Controls.Add(this.label4);
+            this.pnAdvancedParams.Controls.Add(this.cbVideoNo);
+            this.pnAdvancedParams.Controls.Add(this.cbBigBlockNo);
+            this.pnAdvancedParams.Controls.Add(this.label2);
+            this.pnAdvancedParams.Controls.Add(this.cbBlockNo);
+            this.pnAdvancedParams.Controls.Add(this.label9);
+            this.pnAdvancedParams.Controls.Add(this.label8);
+            this.pnAdvancedParams.Controls.Add(this.cbPaletteNo);
+            this.pnAdvancedParams.Location = new System.Drawing.Point(8, 112);
+            this.pnAdvancedParams.Name = "pnAdvancedParams";
+            this.pnAdvancedParams.Size = new System.Drawing.Size(213, 110);
+            this.pnAdvancedParams.TabIndex = 31;
+            // 
             // EnemyEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -761,6 +807,10 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.pnGroups.ResumeLayout(false);
+            this.pnGroups.PerformLayout();
+            this.pnAdvancedParams.ResumeLayout(false);
+            this.pnAdvancedParams.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -818,5 +868,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripComboBox cbTool;
         private System.Windows.Forms.ToolStripButton bttAlign8;
+        private System.Windows.Forms.Panel pnGroups;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cbGroup;
+        private System.Windows.Forms.Panel pnAdvancedParams;
     }
 }
