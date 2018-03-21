@@ -130,6 +130,8 @@ namespace CadEditor
 
         private void EnemyEditor_Load(object sender, EventArgs e)
         {
+            this.KeyPreview = true;
+
             if (ConfigScript.usePicturesInstedBlocks)
             {
                 bigBlocks = UtilsGDI.setBlocksForPictures(2, 32,32, MapViewType.Tiles);
@@ -978,6 +980,14 @@ namespace CadEditor
         private void bttAlign8_Click(object sender, EventArgs e)
         {
             bindToAxis = bttAlign8.Checked;
+        }
+
+        private void EnemyEditor_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                deleteSelected();
+            }
         }
     }
 }

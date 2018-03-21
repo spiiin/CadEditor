@@ -743,6 +743,7 @@
             this.Text = "Enemy Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EnemyEditor_FormClosing);
             this.Load += new System.EventHandler(this.EnemyEditor_Load);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.EnemyEditor_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
             this.pnGeneric.ResumeLayout(false);
             this.pnGeneric.PerformLayout();
