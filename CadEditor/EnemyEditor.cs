@@ -627,6 +627,12 @@ namespace CadEditor
             int sx = coord.X, sy = coord.Y;
             int x = (int)(ocoord.X / curScale);
             int y = (int)(ocoord.Y / curScale);
+
+            if (e.Button == MouseButtons.Right)
+            {
+                cbTool.SelectedIndex = (int)(ToolType.Select);
+            }
+
             if (curTool == ToolType.Select)
             {
                 if (Control.ModifierKeys != Keys.Shift && Control.ModifierKeys != Keys.Control)
