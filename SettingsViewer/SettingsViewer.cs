@@ -153,7 +153,7 @@ namespace SettingsViewer
         [Category("Layers")]
         public MethodDelegate getLayersCount { get { return get(); } }
         [Category("Level recs")]
-        public MethodDelegate getLevelRecs { get { return get(); } }
+        public MethodDelegate getLevelRecsFunc { get { return get(); } }
         [Category("Min/max object params")]
         public MethodDelegate getMinObjCoordX { get { return get(); } }
         [Category("Min/max object params")]

@@ -80,7 +80,7 @@ namespace CadEditor
             cbPaletteNo.SelectedIndex = 0;
 
             cbLayoutNo.Items.Clear();
-            foreach (var lr in ConfigScript.levelRecs)
+            foreach (var lr in ConfigScript.getLevelRecs())
                 cbLayoutNo.Items.Add(String.Format("0x{0:X} ({1}x{2})", lr.layoutAddr, lr.width, lr.height));
 
             cbLayoutNo.SelectedIndex = 0;
@@ -209,7 +209,7 @@ namespace CadEditor
 
             updatePanelsVisibility();
             cbLayoutNo.Items.Clear();
-            foreach (var lr in ConfigScript.levelRecs)
+            foreach (var lr in ConfigScript.getLevelRecs())
                 cbLayoutNo.Items.Add(String.Format("0x{0:X} ({1}x{2})", lr.layoutAddr, lr.width, lr.height));
             UtilsGui.setCbIndexWithoutUpdateLevel(cbLayoutNo, cbLevel_SelectedIndexChanged, curActiveLayout);
             reloadLevelLayer();

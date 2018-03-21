@@ -66,7 +66,7 @@ namespace PluginExportScreens
         private void ExportTMX_Load(object sender, EventArgs e)
         {
             cbLayout.Items.Clear();
-            foreach (var lr in ConfigScript.levelRecs)
+            foreach (var lr in ConfigScript.getLevelRecs())
                 cbLayout.Items.Add(String.Format("Layout {0}:0x{1:X} ({2}x{3})", lr.name, lr.layoutAddr, lr.width, lr.height));
             cbLayout.SelectedIndex = 0;
         }
