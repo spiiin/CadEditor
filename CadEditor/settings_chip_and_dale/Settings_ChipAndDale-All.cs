@@ -14,7 +14,7 @@ public class Data:CapcomBase
       "PluginChrView.dll",
       "PluginLevelParamsCad.dll",
       "PluginAnimEditor.dll",
-      //"PluginEditLayout.dll",
+      "PluginEditLayout.dll",
     };
   }
    
