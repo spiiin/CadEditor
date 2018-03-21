@@ -44,7 +44,7 @@ public class Data
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return true; }
   
-  public IList<LevelRec> levelRec = new List<LevelRec>() 
+  public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
     new LevelRec(0x13001, 35, 16, 7, 0x81a3),
   };
