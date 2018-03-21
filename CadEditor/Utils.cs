@@ -610,8 +610,8 @@ namespace CadEditor
             data[addr + 3] = (byte)(word & 0xFF);
         }
 
-        //for capcom mmc3 mappers, only for certain banks
-        public static int getRomAddr(int bank, int addr)
+        //for capcom unrom mappers, only for certain banks
+        public static int getCapcomAnimAddr(int bank, int addr)
         {
             if (bank == 0x04)
                 return 0x8000 + addr + 0x10;

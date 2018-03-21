@@ -178,14 +178,14 @@ public class Data:CapcomBase
   //--------------------------------------------------------------------------------------------
   //Anim Editor
   public static int getAnimCount()   { return 168; }
-  public static int getAnimAddrHi()  { return Utils.getRomAddr(5, 0xB55F); }
-  public static int getAnimAddrLo()  { return Utils.getRomAddr(5, 0xB4B6); }
+  public static int getAnimAddrHi()  { return Utils.getCapcomAnimAddr(5, 0xB55F); }
+  public static int getAnimAddrLo()  { return Utils.getCapcomAnimAddr(5, 0xB4B6); }
   public static int getFrameCount()  { return 300; }
-  public static int getFrameAddrHi() { return Utils.getRomAddr(5, 0x9CAE); }
-  public static int getFrameAddrLo() { return Utils.getRomAddr(5, 0x9B82); }
+  public static int getFrameAddrHi() { return Utils.getCapcomAnimAddr(5, 0x9CAE); }
+  public static int getFrameAddrLo() { return Utils.getCapcomAnimAddr(5, 0x9B82); }
   public static int getCoordCount()  { return 183; }
-  public static int getCoordAddrHi() { return Utils.getRomAddr(5, 0xB145); }
-  public static int getCoordAddrLo() { return Utils.getRomAddr(5, 0xB08E); }
+  public static int getCoordAddrHi() { return Utils.getCapcomAnimAddr(5, 0xB145); }
+  public static int getCoordAddrLo() { return Utils.getCapcomAnimAddr(5, 0xB08E); }
   public static byte[] getAnimPal()  { return new byte[] { 0x00, 0x0F, 0x37, 0x16, 0x00, 0x0F, 0x30, 0x10, 0x00, 0x0f, 0x30, 0x29, 0x00, 0x0F, 0x37, 0x27 }; }
   public static int getAnimBankNo()  { return 5;}
 }

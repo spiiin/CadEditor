@@ -48,14 +48,14 @@ public class Data:CapcomBase
   
   //Anim Editor
   public static int getAnimCount()   { return 139; }
-  public static int getAnimAddrHi()  { return Utils.getRomAddr(4, 0xA7A7); }
-  public static int getAnimAddrLo()  { return Utils.getRomAddr(4, 0xA71C); }
+  public static int getAnimAddrHi()  { return Utils.getCapcomAnimAddr(4, 0xA7A7); }
+  public static int getAnimAddrLo()  { return Utils.getCapcomAnimAddr(4, 0xA71C); }
   public static int getFrameCount()  { return 251; }
-  public static int getFrameAddrHi() { return Utils.getRomAddr(4, 0x93B6); }
-  public static int getFrameAddrLo() { return Utils.getRomAddr(4, 0x92BB); }
+  public static int getFrameAddrHi() { return Utils.getCapcomAnimAddr(4, 0x93B6); }
+  public static int getFrameAddrLo() { return Utils.getCapcomAnimAddr(4, 0x92BB); }
   public static int getCoordCount()  { return 184; }
-  public static int getCoordAddrHi() { return Utils.getRomAddr(4, 0xA3D5); }
-  public static int getCoordAddrLo() { return Utils.getRomAddr(4, 0xA31D); }
+  public static int getCoordAddrHi() { return Utils.getCapcomAnimAddr(4, 0xA3D5); }
+  public static int getCoordAddrLo() { return Utils.getCapcomAnimAddr(4, 0xA31D); }
   public static byte[] getAnimPal()  { return new byte[] { 0xF, 0x5, 0x14, 0x36, 0xF, 0xB, 0x2B, 0x20, 0xF, 0x0, 0x10, 0x20, 0xF, 0x4, 0x26, 0x36  }; }
   public static int getAnimBankNo()  { return 4;}
 }
