@@ -62,7 +62,7 @@ namespace CadEnemyEditor
                 byte hiAddrByte = Globals.romdata[animAddrHi + i];
                 byte loAddrByte = Globals.romdata[animAddrLo + i];
                 int addr = Utils.makeAddrPtr(hiAddrByte, loAddrByte);
-                int addrRom = Utils.getRomAddr(AnimConfig.animBankNo, addr);
+                int addrRom = Utils.getCapcomAnimAddr(AnimConfig.animBankNo, addr);
                 int frameCountAndShift = Globals.romdata[addrRom] + 1;
                 int framesCount = frameCountAndShift % 128;
                 int frameShift = frameCountAndShift < 128 ? 0 : 256;
@@ -84,7 +84,7 @@ namespace CadEnemyEditor
                 byte frameAddrHi = Globals.romdata[frameAddr1Hi + frame];
                 byte frameAddrLo = Globals.romdata[frameAddr1Lo + frame];
                 int frameAddr = Utils.makeAddrPtr(frameAddrHi, frameAddrLo);
-                int frameAddrRom = Utils.getRomAddr(AnimConfig.animBankNo, frameAddr);
+                int frameAddrRom = Utils.getCapcomAnimAddr(AnimConfig.animBankNo, frameAddr);
                 int tileCount = Globals.romdata[frameAddrRom]+1;
                 int coordsIndex = Globals.romdata[frameAddrRom+1];
                 var tiles = new TileInfo[tileCount];
@@ -176,7 +176,7 @@ namespace CadEnemyEditor
             int count = f.tileCount;
             TileInfo[] tiles = f.tiles;
             int coordsAddr = coordList[f.coordsIndex].addr;
-            int coordsRomAddr = Utils.getRomAddr(AnimConfig.animBankNo, coordsAddr);
+            int coordsRomAddr = Utils.getCapcomAnimAddr(AnimConfig.animBankNo, coordsAddr);
             int addPart = (128 / 2 * scale);
 
             ImageList[] imageLists = { imageList1, imageList2, imageList3, imageList4 };
@@ -233,7 +233,7 @@ namespace CadEnemyEditor
             lvTiles.Items.Clear();
             TileInfo[] tiles = f.tiles;
             int coordsAddr = coordList[f.coordsIndex].addr;
-            int coordsRomAddr = Utils.getRomAddr(AnimConfig.animBankNo, coordsAddr);
+            int coordsRomAddr = Utils.getCapcomAnimAddr(AnimConfig.animBankNo, coordsAddr);
             for (int i = 0; i < tiles.Length; i++)
             {
                 byte xcByte = Globals.romdata[coordsRomAddr + i * 2 + 1];
@@ -312,7 +312,7 @@ namespace CadEnemyEditor
                 byte frameAddrHi = Globals.romdata[frameAddr1Hi + frame];
                 byte frameAddrLo = Globals.romdata[frameAddr1Lo + frame];
                 int frameAddr = Utils.makeAddrPtr(frameAddrHi, frameAddrLo);
-                int frameAddrRom = Utils.getRomAddr(AnimConfig.animBankNo, frameAddr);
+                int frameAddrRom = Utils.getCapcomAnimAddr(AnimConfig.animBankNo, frameAddr);
                 int tileCount = Globals.romdata[frameAddrRom] + 1;
                 int coordsIndex = Globals.romdata[frameAddrRom + 1];
                 var tiles = frameList[frame].tiles;
