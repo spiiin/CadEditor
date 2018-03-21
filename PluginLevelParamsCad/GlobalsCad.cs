@@ -13,6 +13,9 @@ namespace CadEditor
     {
         public static void reloadLevelParamsData()
         {
+            LevelData.LoadOffsetsFromConfig();
+            DoorData.LoadOffsetsFromConfig();
+
             levelData.Clear();
             doorsData.Clear();
             for (int i = 0; i < LEVELS_COUNT; i++)

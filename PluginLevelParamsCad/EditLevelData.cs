@@ -187,8 +187,6 @@ namespace CadEditor
 
         private void loadLevelData()
         {
-            LevelData.LoadOffsetsFromConfig();
-            DoorData.LoadOffsetsFromConfig();
             GlobalsCad.reloadLevelParamsData();
         }
 

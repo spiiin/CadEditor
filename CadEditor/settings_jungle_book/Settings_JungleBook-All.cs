@@ -55,6 +55,7 @@ public class Data
   public SetVideoChunkFunc    setVideoChunkFunc()            { return Utils.setVideoChunk; }
   public GetObjectDictionaryFunc getObjectDictionaryFunc()   { return getObjectDictionary; }
   
+  public GetGroupsFunc getGroupsFunc() { return getGroups; }
   public GroupRec[] getGroups()
   {
     return new GroupRec[] { 

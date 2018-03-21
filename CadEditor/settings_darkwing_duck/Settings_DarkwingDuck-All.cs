@@ -39,6 +39,7 @@ public class Data : CapcomBase
     new LevelRec(0x10A89, 58, 19, 3,  0x1E156),  
   };
   
+  public GetGroupsFunc getGroupsFunc() { return getGroups; }
   public GroupRec[] getGroups()
   {
     return new GroupRec[] { 

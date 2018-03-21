@@ -3,6 +3,8 @@ using PluginMapEditor;
 using System.Collections.Generic;
 //css_include Settings_CapcomBase.cs;
 
+//css_reference PluginLevelParamsCad.dll
+
 public class Data:CapcomBase
 {
   public string[] getPluginNames() 
@@ -46,6 +48,8 @@ public class Data:CapcomBase
   public MapInfo[] getMapsInfo() { return mapsCad; }
   public LoadMapFunc getLoadMapFunc() { return MapUtils.loadMapCad; }
   public SaveMapFunc getSaveMapFunc() { return MapUtils.saveMapCad; }
+  
+  public GetGroupsFunc getGroupsFunc() { return getGroups; }
 
   MapInfo[] mapsCad = new MapInfo[]
   { 
@@ -68,6 +72,63 @@ public class Data:CapcomBase
   {
        int baseOffset = getLevelRecBaseOffset();
        return Globals.romdata[baseOffset + 30 + no]+1;
+  }
+  
+  public GroupRec[] getGroups()
+  {
+    GlobalsCad.reloadLevelParamsData();
+    var levelsData = GlobalsCad.levelData;
+    //var doorsData = GlobalsCad.doorsData;
+    var levelNames = new[] {
+      new { name = "Level 0", screen = 0x01 },
+      new { name = "Level A", screen = 0x34 },
+      new { name = "Level B", screen = 0x1F },
+      new { name = "Level C", screen = 0x5A },
+      new { name = "Level D", screen = 0x3E },
+      new { name = "Level E", screen = 0x113 },
+      new { name = "Level F", screen = 0x84 },
+      new { name = "Level G", screen = 0x6B },
+      new { name = "Level H", screen = 0x101 },
+      new { name = "Level I", screen = 0x90 },
+      new { name = "Level J", screen = 0xA2 }
+    };
+    /*var doorNames = new string[] {
+      "Door 1",
+      "Door 2",
+      "Door 3",
+      "Door 4",
+      "Door 5",
+      "Door 6",
+      "Door 7",
+      "Door 8",
+      "Door 9",
+      "Door A",
+      "Door B",
+      "Door C",
+      "Door D",
+      "Door E",
+      "Door F",
+      "Door 10",
+      "Door 11",
+      "Door 12",
+      "Door 13",
+      "Door 14",
+      "Door 15",
+      "Door 16",
+      "Door 17",
+      "Door 18"      
+    };*/
+    
+    var groups = new GroupRec[GlobalsCad.LEVELS_COUNT];
+    
+    for (int i = 0; i < GlobalsCad.LEVELS_COUNT; i++)
+    {
+      var levelData = levelsData[i];
+      var levelName = levelNames[i];
+      groups[i] = new GroupRec(levelName.name, (levelData.backId) - 0x90, levelData.bigBlockId, levelData.bigBlockId, levelData.palId, levelName.screen);
+    }
+    
+    return groups;
   }
   
   public IList<LevelRec> levelRecsCad()

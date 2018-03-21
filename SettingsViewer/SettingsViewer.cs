@@ -257,7 +257,7 @@ namespace SettingsViewer
         [Category("Blocks params")]
         public MethodDelegate getBlockTypeNames { get { return get(); } }
         [Category("Groups params")]
-        public MethodDelegate getGroups { get { return get(); } }
+        public MethodDelegate getGroupsFunc { get { return get(); } }
         [Category("Blocks params")]
         public MethodDelegate getPalBytesAddr { get { return get(); } }
     }

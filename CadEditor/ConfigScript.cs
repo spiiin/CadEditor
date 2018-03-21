@@ -19,6 +19,7 @@ namespace CadEditor
     public delegate void   SetSegaMappingFunc(int bigTileIndex, byte[] bigBlocks);
     public delegate byte[] GetPalFunc(int palId);
     public delegate void   SetPalFunc(int palId, byte[] pallete);
+    public delegate GroupRec[] GetGroupsFunc();
     public delegate void   RenderToMainScreenFunc(Graphics g, int curScale);
     public delegate List<ObjectList> GetObjectsFunc(int levelNo);
     public delegate bool            SetObjectsFunc(int levelNo, List<ObjectList> objects); 
@@ -255,9 +256,9 @@ namespace CadEditor
 
             blockTypeNames = callFromScript(asm, data, "getBlockTypeNames", defaultBlockTypeNames);
 
-            groups = callFromScript(asm, data, "getGroups", new GroupRec[0]);
+            getGroupsFunc = callFromScript<GetGroupsFunc>(asm, data, "*.getGroupsFunc", () => { return new GroupRec[0]; });
 
-            palBytesAddr = callFromScript(asm, data, "getPalBytesAddr", -1);
+            palBytesAddr = callFromScript(asm, data, "*.getPalBytesAddr", -1);
 
             loadAllPlugins(asm, data);
         }
@@ -563,12 +564,12 @@ namespace CadEditor
 
         public static GroupRec[] getGroups()
         {
-            return groups;
+            return getGroupsFunc();
         }
 
         public static GroupRec getGroup(int i)
         {
-            return groups[i];
+            return getGroups()[i];
         }
 
         public static int getPalBytesAddr()
@@ -725,7 +726,7 @@ namespace CadEditor
         public static string objTypesPicturesDir;
         private static string blocksPicturesFilename;
 
-        public static GroupRec[] groups;
+        public static GetGroupsFunc getGroupsFunc;
 
         public static int palBytesAddr;
 
