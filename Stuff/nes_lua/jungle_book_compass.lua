@@ -1,6 +1,9 @@
 --Script for showing path to the nearest crystal
 --Rom: Jungle Book NES (All versions)
---Author: spiiin 
+--Author: spiiin
+
+local COMPASS_COUNT = 5
+
 local startCrystalActivityAddr = 0x6B4
 local levelObjAddrs = {
     0x167D5,
@@ -55,6 +58,17 @@ function getCrystals(addr, objectsCount)
     return crystals
 end
 
+function drawCompass(minDx, minDy)
+    local sx = memory.readbyte(mowgliAtScrAddrX) + 20
+    local sy = memory.readbyte(mowgliAtScrAddrY)
+    local scale = 4
+    local endx = sx - minDx*4
+    local endy = sy - minDy*4
+    gui.line(sx, sy, endx, endy, "#FFFFFF")
+    local ends = 2
+    gui.box(endx - ends, endy - ends, endx + ends, endy + ends, "#00FF00")
+end
+
 function updateCompass(crystals)
     if crystals == nil then
         return
@@ -65,9 +79,13 @@ function updateCompass(crystals)
     gui.text(1, 20, string.format("PosY:%2d",posY))
     
     --find min dist
-    local MAXVAL = 10e6
-    local minDist = 10e6
-    local minDx, minDy = MAXVAL, MAXVAL
+    
+    --local MAXVAL = 10e6
+    --local minDist = 10e6
+    --local minDx, minDy = MAXVAL, MAXVAL
+    
+    distTable = {}
+    
     for i,c in ipairs(crystals) do
         local x,y,i = c[1], c[2], c[3]
         --check activity
@@ -76,27 +94,22 @@ function updateCompass(crystals)
         if isActive then
             local dx, dy = posX-x, posY-y
             local distSq = dx*dx + dy*dy
-            if distSq < minDist then
-                minDist = distSq
-                minDx, minDy = dx, dy
-            end
+            table.insert(distTable, {distSq, dx, dy})
         end
     end
-    local dist = math.sqrt(minDist)
-    gui.text(1, 28, string.format("Min distantion:%d",dist))
     
-    if minDist == MAXVAL then
-        return
+    table.sort(distTable, function(lhs, rhs) return lhs[1] < rhs[1] end)
+    for currentCompass = 1, COMPASS_COUNT do
+        if #distTable < currentCompass then
+            return
+        end
+        local currentDistRec = distTable[currentCompass]
+        local minDist, minDx, minDy = currentDistRec[1], currentDistRec[2], currentDistRec[3]
+        --print(distTable[1], minDist, minDx, minDy)
+        local dist = math.sqrt(minDist)
+        gui.text(1, 28, string.format("Min distantion:%d",dist))
+        drawCompass(minDx, minDy)
     end
-    --draw line
-    local sx = memory.readbyte(mowgliAtScrAddrX) + 20
-    local sy = memory.readbyte(mowgliAtScrAddrY)
-    local scale = 4
-    local endx = sx - minDx*4
-    local endy = sy - minDy*4
-    gui.line(sx, sy, endx, endy, "#FFFFFF")
-    local ends = 2
-    gui.box(endx - ends, endy - ends, endx + ends, endy + ends, "#00FF00")
 end
 
 
