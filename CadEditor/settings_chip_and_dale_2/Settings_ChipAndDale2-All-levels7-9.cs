@@ -62,6 +62,33 @@ public class Data : CapcomBase
     return new LevelLayerData(levelLayers[levelNo].Length, 1, levelLayers[levelNo]);
   }
   
+  public GetGroupsFunc getGroupsFunc() { return getGroups; }
+  
+  public GroupRec[] getGroups()
+  {
+    return new GroupRec[] { 
+      //wrong pals
+      new GroupRec("1-1"             , 15,0,0,0, 0x05),
+      new GroupRec("1-2"             , 16,0,0,2, 0x01),
+      new GroupRec("1-boss"          , 15,0,0,3, 0x02),
+      new GroupRec("2-any"           , 17,1,1,4, 0x15),
+      new GroupRec("3-any"           , 18,2,2,5, 0x21),
+      new GroupRec("4-any"           , 21,2,2,5, 0x51),
+      new GroupRec("5-any"           , 19,4,4,7, 0x43),
+      new GroupRec("5-boss1"         , 19,6,6,7, 0x40),
+      new GroupRec("5-boss2"         , 27,6,6,7, 0x41), 
+      new GroupRec("6-any"           , 25,3,3,6, 0x2f),
+      new GroupRec("7-any"           , 20,3,3,6, 0x5f),
+      new GroupRec("8-any"           , 22,1,1,6, 0x6c),
+      new GroupRec("8-boss"          , 26,6,6,0, 0x03),
+      new GroupRec("9-any"           , 23,5,5,0, 0x84),
+      new GroupRec("monty bonus"     , 21,1,1,0, 0x08),
+      new GroupRec("mini-game"       , 29,6,6,2, 0x3F),
+      new GroupRec("mini-game-2"     , 29,4,4,2, 0x42),
+      
+    };
+  }
+  
   public IList<LevelRec> levelRecsCad2 = new List<LevelRec>() 
   {
     //level 7
