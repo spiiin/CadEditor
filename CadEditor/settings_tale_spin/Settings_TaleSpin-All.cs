@@ -18,22 +18,25 @@ public class Data:CapcomBase
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x36F0 , 8   , 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x3AF0 , 8   , 0x4000); }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x10   , 300 , 0x40);   }
-  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecsTS;}; }
+  public GetLevelRecsFunc getLevelRecsFunc() { return getLevelRecs; }
   public GetObjectsFunc getObjectsFunc() { return getObjectsDwd; }
   public SetObjectsFunc setObjectsFunc() { return setObjectsDwd; }
   
-  public IList<LevelRec> levelRecsTS = new List<LevelRec>() 
+  public IList<LevelRec> getLevelRecs()
   {
-    new LevelRec(0x1035F, 59,  8, 5,  0x1E10C), 
-    new LevelRec(0x104C2, 74, 10, 5,  0x1E13C),
-    new LevelRec(0x10600, 61, 17, 4,  0x1E16E),
-    new LevelRec(0x1078D, 84, 12, 7,  0x1E1A1),
-    new LevelRec(0x108DD, 63, 14, 6,  0x1E1F5),
-    new LevelRec(0x109FC, 56, 9 , 8,  0x1E249),
-    new LevelRec(0x10B00, 51, 12, 5,  0x1E292),
-    new LevelRec(0x10C07, 53, 8,  6,  0x1E2D9),
-  };
-  
+      var groups = ConfigScript.getGroups();
+      return new List<LevelRec>() 
+      {
+          new LevelRec(0x1035F, 59,  8, 5,  0x1E10C, groups[0].name, 0, groups[0]), 
+          new LevelRec(0x104C2, 74, 10, 5,  0x1E13C, groups[2].name, 0, groups[2]),
+          new LevelRec(0x10600, 61, 17, 4,  0x1E16E, groups[4].name, 0, groups[4]),
+          new LevelRec(0x1078D, 84, 12, 7,  0x1E1A1, groups[6].name, 0, groups[6]),
+          new LevelRec(0x108DD, 63, 14, 6,  0x1E1F5, groups[8].name, 0, groups[8]),
+          new LevelRec(0x109FC, 56, 9 , 8,  0x1E249, groups[3].name, 0, groups[3]),
+          new LevelRec(0x10B00, 51, 12, 5,  0x1E292, groups[7].name, 0, groups[7]),
+          new LevelRec(0x10C07, 53, 8,  6,  0x1E2D9, groups[9].name, 0, groups[9]),
+      };
+  }
   public GetGroupsFunc getGroupsFunc() { return getGroups; }
   public GroupRec[] getGroups()
   {

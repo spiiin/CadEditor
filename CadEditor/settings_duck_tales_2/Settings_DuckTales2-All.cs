@@ -24,7 +24,6 @@ public class Data:CapcomBase
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x7310 , 3   , 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x1008A , 5  , 0x440);  }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x11d5a, 300 , 0x40);   }
-  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecsDt2;}; }
   public string[] getBlockTypeNames()   { return objTypesDt2;  }
   
   public override GetVideoPageAddrFunc getVideoPageAddrFunc() { return getDuckTalesVideoAddress; }
@@ -37,16 +36,22 @@ public class Data:CapcomBase
   public GetObjectsFunc getObjectsFunc() { return getObjectsDt2; }
   public SetObjectsFunc setObjectsFunc() { return setObjectsDt2; }
   
-  public IList<LevelRec> levelRecsDt2 = new List<LevelRec>() 
+  public GetLevelRecsFunc getLevelRecsFunc() { return getLevelRecs; }
+  
+  public IList<LevelRec> getLevelRecs()
   {
-    new LevelRec(0x19488, 0xFF, 8, 6, 0x11C3A),
-    new LevelRec(0x195A7, 0xFF, 8, 6, 0x11C6A),
-    new LevelRec(0x196E7, 0xFF, 8, 6, 0x11C9A),
-    new LevelRec(0x19830, 0xFF, 8, 6, 0x11CCA),
-    new LevelRec(0x19970, 0xFF, 8, 6, 0x11CFA),
-    new LevelRec(0x19A87, 0xFF, 8, 6, 0x11D2A),
-    new LevelRec(0x19B9E, 0xFF, 8, 6, 0x11C6A),
-  };
+      var groups = ConfigScript.getGroups();
+      return new List<LevelRec>() 
+      {
+          new LevelRec(0x19488, 0xFF, 8, 6, 0x11C3A, groups[0].name, 0, groups[0]),
+          new LevelRec(0x195A7, 0xFF, 8, 6, 0x11C6A, groups[1].name, 0, groups[1]),
+          new LevelRec(0x196E7, 0xFF, 8, 6, 0x11C9A, groups[2].name, 0, groups[2]),
+          new LevelRec(0x19830, 0xFF, 8, 6, 0x11CCA, groups[3].name, 0, groups[3]),
+          new LevelRec(0x19970, 0xFF, 8, 6, 0x11CFA, groups[4].name, 0, groups[4]),
+          new LevelRec(0x19A87, 0xFF, 8, 6, 0x11D2A, groups[5].name, 0, groups[5]),
+          new LevelRec(0x19B9E, 0xFF, 8, 6, 0x11C6A, groups[1].name, 0, groups[1]),
+      };
+  }
   
   public GetGroupsFunc getGroupsFunc() { return getGroups; }
   public GroupRec[] getGroups()
