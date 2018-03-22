@@ -39,7 +39,6 @@ public class Data
   public bool isBigBlockEditorEnabled() { return true; }
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return true; }
-  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecsJB;}; }
   
   public SetBlocksFunc setBlocksFunc()     { return setBlocksJB;}
   public GetBlocksFunc getBlocksFunc()     { return getBlocksJB;}
@@ -65,25 +64,30 @@ public class Data
       new GroupRec("River"                 , 14,1,1,0, 0x01),
       new GroupRec("Baloo and River"       , 14,1,1,0, 0x01),
       new GroupRec("Tree Village"          , 11,2,2,0, 0x01),
-      new GroupRec("Ruins"                 , 2 ,3,3,9 ,0x01),
-      new GroupRec("Falling Ruins"         , 2 ,3,3,9 ,0x01),
+      new GroupRec("Ruins"                 , 2 ,3,3,12 ,0x01),
+      new GroupRec("Falling Ruins"         , 2 ,3,3,12 ,0x01),
       new GroupRec("Jungle by Night"       , 14,0,0,0, 0x01),
     };
   }
   
-  public IList<LevelRec> levelRecsJB = new List<LevelRec>() 
+  public GetLevelRecsFunc getLevelRecsFunc() { return getLevelRecs; }
+  public IList<LevelRec> getLevelRecs()
   {
-    new LevelRec(0x167D5, 48, 1, 1, 0x0, "Jungle By Day", 0),
-    new LevelRec(0x18815, 45, 1, 1, 0x0, "Great Tree", 1),
-    new LevelRec(0x173F6, 67, 1, 1, 0x0, "Dawn Patrol", 2),
-    new LevelRec(0x14B7A, 89, 1, 1, 0x0, "River", 3),
-    new LevelRec(0x1550E, 67, 1, 1, 0x0, "Baloo and River", 4),
-    new LevelRec(0x194D3, 51, 1, 1, 0x0, "Tree Village", 5),
-    new LevelRec(0x128D6, 60, 1, 1, 0x0, "Ruins", 6),
-    new LevelRec(0x13642, 111, 1, 1, 0x0, "Falling Ruins", 7),
-    new LevelRec(0x17E04, 65, 1, 1, 0x0, "Jungle By Night", 8),
-    //new LevelRec(0x10912, 74, 1, 1, 0x0, "Wastelands", 9),
-  };
+      var groups = ConfigScript.getGroups();
+      return new List<LevelRec>() 
+      {
+          new LevelRec(0x167D5, 48, 1, 1, 0x0, "Jungle By Day", 0, groups[0]),
+          new LevelRec(0x18815, 45, 1, 1, 0x0, "Great Tree", 1, groups[1]),
+          new LevelRec(0x173F6, 67, 1, 1, 0x0, "Dawn Patrol", 2, groups[2]),
+          new LevelRec(0x14B7A, 89, 1, 1, 0x0, "River", 3, groups[3]),
+          new LevelRec(0x1550E, 67, 1, 1, 0x0, "Baloo and River", 4, groups[4]),
+          new LevelRec(0x194D3, 51, 1, 1, 0x0, "Tree Village", 5, groups[5]),
+          new LevelRec(0x128D6, 60, 1, 1, 0x0, "Ruins", 6, groups[6]),
+          new LevelRec(0x13642, 111, 1, 1, 0x0, "Falling Ruins", 7, groups[7]),
+          new LevelRec(0x17E04, 65, 1, 1, 0x0, "Jungle By Night", 8, groups[8]),
+          //new LevelRec(0x10912, 74, 1, 1, 0x0, "Wastelands", 9, groups[9]),
+      };
+  }
   
   //addrs saved in ram at 77-79-7E-81
   public List<ObjectList> getObjectsJungleBook(int levelNo)
@@ -181,6 +185,11 @@ public class Data
     var part1 = Utils.readBlocksFromAlignedArrays(Globals.romdata, BlocksAddrs[blockIndex].hiAddr, BlocksAddrs[blockIndex].hiCount, false);
     var part2 = Utils.readBlocksFromAlignedArrays(Globals.romdata, BlocksAddrs[blockIndex].loAddr, BlocksAddrs[blockIndex].loCount, false);
     var total = new ObjRec[256];
+    //fill with zeros
+    for (int i = 0; i < 256; i++)
+    {
+        total[i] = new ObjRec(0,0,0,0,0,0);
+    }
     Array.Copy(part1, total, part1.Length);
     Array.Copy(part2, 0, total, BlocksAddrs[blockIndex].loCount, part2.Length); //copy to index 110, no 128!!! bug of game developers?
     return total;
