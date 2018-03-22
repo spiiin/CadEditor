@@ -15,8 +15,8 @@ public static class FliUtils
     {
       byte x    = Globals.romdata[baseAddr + objCount*0 + i];
       byte y    = Globals.romdata[baseAddr + objCount*2 + i];
-      int realx = x * 16;
-      int realy = y * 16;
+      int realx = x * 8;
+      int realy = y * 8;
       byte v    = Globals.romdata[baseAddr + objCount*3 + i];
       byte data = Globals.romdata[baseAddr + objCount*1 + i];
       var dataDict = new Dictionary<string,int>();
@@ -36,8 +36,8 @@ public static class FliUtils
     for (int i = 0; i < objects.Count; i++)
     {
         var obj = objects[i];
-        byte x = (byte)(obj.x /16);
-        byte y = (byte)(obj.y /16);
+        byte x = (byte)(obj.x /8);
+        byte y = (byte)(obj.y /8);
         Globals.romdata[baseAddr + objCount*3 + i] = (byte)obj.type;
         Globals.romdata[baseAddr + objCount*1 + i] = (byte)obj.additionalData["data"];
         Globals.romdata[baseAddr + objCount*0 + i] = x;
