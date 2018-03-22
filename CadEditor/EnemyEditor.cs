@@ -134,7 +134,7 @@ namespace CadEditor
                     UtilsGui.setCbIndexWithoutUpdateLevel(cbPaletteNo, cbLevel_SelectedIndexChanged, g.palNo);
                     reloadLevelLayerData();
 
-                    cbGroup.Text = ""; //clear text of selected group
+                    cbGroup.SelectedIndex = -1;
                 }
             }
             reloadLevel(reloadObjects);

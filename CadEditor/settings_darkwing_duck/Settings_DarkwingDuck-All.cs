@@ -21,23 +21,28 @@ public class Data : CapcomBase
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x36F0 , 8   , 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x3AF0 , 8   , 0x4000); }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x10   , 300 , 0x40);   }
-  public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecsDwd;}; }
+  public GetLevelRecsFunc getLevelRecsFunc() { return getLevelRecs; }
   public int getScrollsOffsetFromLayout() { return 508; } //offset scrolls array from layout array
   public string[] getBlockTypeNames()   { return objTypesDwd;  }
   public GetObjectsFunc getObjectsFunc() { return getObjectsDwd; }
   public SetObjectsFunc setObjectsFunc() { return setObjectsDwd; }
   public string getObjTypesPicturesDir() { return "obj_sprites_dwd"; }
   public override GetLayoutFunc getLayoutFunc() { return dwdGetLayout; }
-  public IList<LevelRec> levelRecsDwd = new List<LevelRec>() 
+  
+  public IList<LevelRec> getLevelRecs()
   {
-    new LevelRec(0x10315, 51, 17, 4,  0x1DFA0),
-    new LevelRec(0x10438, 60, 17, 4,  0x1DFE4), 
-    new LevelRec(0x10584, 68, 17, 4,  0x1E028),  
-    new LevelRec(0x106A0, 54, 10, 12, 0x1E06C), 
-    new LevelRec(0x10816, 80, 19, 3,  0x1E0E4),  
-    new LevelRec(0x10962, 63, 19, 3,  0x1E11D),  
-    new LevelRec(0x10A89, 58, 19, 3,  0x1E156),  
-  };
+      var groups = ConfigScript.getGroups();
+      return new List<LevelRec>() 
+      {
+          new LevelRec(0x10315, 51, 17, 4,  0x1DFA0, groups[0].name, 0, groups[0]),
+          new LevelRec(0x10438, 60, 17, 4,  0x1DFE4, groups[1].name, 0, groups[1]), 
+          new LevelRec(0x10584, 68, 17, 4,  0x1E028, groups[2].name, 0, groups[2]),  
+          new LevelRec(0x106A0, 54, 10, 12, 0x1E06C, groups[3].name, 0, groups[3]), 
+          new LevelRec(0x10816, 80, 19, 3,  0x1E0E4, groups[4].name, 0, groups[4]),  
+          new LevelRec(0x10962, 63, 19, 3,  0x1E11D, groups[5].name, 0, groups[5]),  
+          new LevelRec(0x10A89, 58, 19, 3,  0x1E156, groups[6].name, 0, groups[6]),
+      };
+  }
   
   public GetGroupsFunc getGroupsFunc() { return getGroups; }
   public GroupRec[] getGroups()
