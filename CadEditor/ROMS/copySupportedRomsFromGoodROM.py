@@ -30,7 +30,7 @@ fnames = [
     "Duck Tales (U) [!].nes",
     "Duck Tales 2 (U) [!].nes",
     "Felix the Cat (U) [!].nes",
-    "Flintstones, The - The Rescue of Dino & Hoppy (E) [!p].nes",
+    "Flintstones, The - The Rescue of Dino & Hoppy (U) [!].nes",
     "Flintstones, The - The Surprise at Dinosaur Peak! (U) [!p].nes",
     "Goonies II, The (U) [!].nes",
     "Gun.Smoke (U) [!].nes",
