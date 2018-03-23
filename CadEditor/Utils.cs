@@ -56,8 +56,7 @@ namespace CadEditor
             //local version for cad & dwd
             byte[] videoChunk = new byte[Globals.VIDEO_PAGE_SIZE];
             int videoAddr = ConfigScript.getVideoPageAddr(videoPageId);
-            for (int i = 0; i < Globals.VIDEO_PAGE_SIZE; i++)
-                videoChunk[i] = Globals.romdata[videoAddr + i];
+            Array.Copy(Globals.romdata, videoAddr, videoChunk, 0, Globals.VIDEO_PAGE_SIZE);
             return videoChunk;
         }
 
