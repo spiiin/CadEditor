@@ -409,8 +409,8 @@ namespace CadEditor
                         int leftMargin = (ConfigScript.getScreenVertical() ? scrHeight : scrWidth) * x;
                         int topMargin = (ConfigScript.getScreenVertical() ? scrWidth : scrHeight) * y;
                         
-                        MapEditor.Render(g, bigBlocks, visibleRect, layers, scrNo, curScale, false, formMain.ShowAxis, leftMargin, topMargin, width, height);
-                        if (formMain.ShowAxis)
+                        MapEditor.Render(g, bigBlocks, visibleRect, layers, scrNo, curScale, false, showAxis, leftMargin, topMargin, width, height);
+                        if (showScreenAxis)
                         {
                             int TILE_SIZE_X = (int)(layers[0].blockWidth * curScale);
                             int TILE_SIZE_Y = (int)(layers[0].blockHeight * curScale);
@@ -694,6 +694,8 @@ namespace CadEditor
 
         private int oldX;
         private int oldY;
+        private bool showAxis;
+        private bool showScreenAxis;
 
         private void mapScreen_MouseMove(object sender, MouseEventArgs e)
         {
@@ -1045,6 +1047,13 @@ namespace CadEditor
             UtilsGui.setCbIndexWithoutUpdateLevel(cbBlockNo, cbLevel_SelectedIndexChanged, g.blockNo);
             UtilsGui.setCbIndexWithoutUpdateLevel(cbPaletteNo, cbLevel_SelectedIndexChanged, g.palNo);
             cbLevel_SelectedIndexChanged(cbVideoNo, new EventArgs());
+        }
+
+        private void bttAxis_Click(object sender, EventArgs e)
+        {
+            showAxis = bttAxis.Checked;
+            showScreenAxis = bttAxisScreens.Checked;
+            mapScreen.Invalidate();
         }
     }
 }
