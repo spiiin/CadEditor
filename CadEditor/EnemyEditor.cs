@@ -725,6 +725,11 @@ namespace CadEditor
                     return;
             }
 
+            if ((sx >= ConfigScript.getLevelWidth(scrLevelNo)) || (sy >= ConfigScript.getLevelHeight(scrLevelNo)))
+            {
+                return;
+            }
+
             if (curTool == ToolType.Select)
             {
                 var activeObjectList = objectLists[curActiveObjectListIndex]; //TODO: all
