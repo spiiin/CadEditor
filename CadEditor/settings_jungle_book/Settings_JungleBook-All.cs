@@ -49,7 +49,7 @@ public class Data
   public SortObjectsFunc sortObjectsFunc() { return sortObjectsJungleBook; }
   public GetPalFunc           getPalFunc() { return Utils.getPalleteLinear;}
   public SetPalFunc           setPalFunc() { return Utils.setPalleteLinear;}
-  public GetVideoPageAddrFunc getVideoPageAddrFunc()         { return Utils.getChrAddress; }
+  public GetVideoPageAddrFunc getVideoPageAddrFunc()         { return getVideoAddress; }
   public GetVideoChunkFunc    getVideoChunkFunc()            { return Utils.getVideoChunk; }
   public SetVideoChunkFunc    setVideoChunkFunc()            { return Utils.setVideoChunk; }
   public GetObjectDictionaryFunc getObjectDictionaryFunc()   { return getObjectDictionary; }
@@ -227,5 +227,18 @@ public class Data
     Array.Copy(data, 128*4, secondPart, 0, bigBlockRec.loCount*4);
     Utils.writeDataToAlignedArrays(data      , Globals.romdata, bigBlockRec.hiAddr, bigBlockRec.hiCount);
     Utils.writeDataToAlignedArrays(secondPart, Globals.romdata, bigBlockRec.loAddr, bigBlockRec.loCount);
+  }
+  
+  public int getVideoAddress(int id)
+  {
+    //for correct view level 7-8 (with video no 2)
+    if (id == 2)
+    {
+      return ConfigScript.videoOffset.beginAddr + 0x800 + ConfigScript.videoOffset.recSize * id;
+    }
+    else
+    {
+      return Utils.getChrAddress(id);
+    }
   }
 }
