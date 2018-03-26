@@ -1,6 +1,6 @@
 using CadEditor;
 using System;
-using System.Drawing;
+//css_include settings_captain_america/CaptainAmericaUtils.cs;
 
 public class Data 
 { 
@@ -23,36 +23,11 @@ public class Data
   public int getBigBlocksCount()        { return 77; }
   public int getPalBytesAddr()          { return 0x5220; }
   
-  public GetBlocksFunc        getBlocksFunc() { return getBlocks;}
-  public SetBlocksFunc        setBlocksFunc() { return setBlocks;}
+  public GetBlocksFunc        getBlocksFunc() { return CAUtils.getBlocks;}
+  public SetBlocksFunc        setBlocksFunc() { return CAUtils.setBlocks;}
   public GetPalFunc           getPalFunc()           { return getPallete;}
   public SetPalFunc           setPalFunc()           { return null;}
   //----------------------------------------------------------------------------
-  public static ObjRec[] getBlocks(int tileId)
-  {
-      int count = ConfigScript.getBlocksCount();
-      var bb = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), 2, 2, count, false, false);
-      var palAddr = ConfigScript.getPalBytesAddr();
-      for (int i = 0; i < count; i++)
-      {
-          bb[i].palBytes[0] = Globals.romdata[palAddr + i] & 0x3; //get only pal, not physics
-      }
-      return bb;
-  }
-  
-  public static void setBlocks(int tileId, ObjRec[] blocksData)
-  {
-    int addr = ConfigScript.getTilesAddr(tileId);
-    int count = ConfigScript.getBlocksCount();
-    var palAddr = ConfigScript.getPalBytesAddr();
-    Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, false, false);
-    for (int i = 0; i < count; i++)
-    {
-        int t = Globals.romdata[palAddr + i];
-        t =  t &  0xFC | blocksData[i].palBytes[0];
-        Globals.romdata[palAddr + i] = (byte)t; //save only pal bits, not physics
-    }
-  }
   
   public byte[] getPallete(int palId)
   {

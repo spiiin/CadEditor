@@ -4,7 +4,7 @@ using System;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x2a60 - 16*15*4, 27 , 16*15);   }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x10, 10 , 16*15);   }
   public int getScreenWidth()          { return 16; }
   public int getScreenHeight()         { return 15; }
   
@@ -18,10 +18,10 @@ public class Data
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
   
-  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x6310, 1  , 0x1000);  }
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x6010, 1  , 0x1000);  }
   public int getBlocksCount()           { return 138; }
   public int getBigBlocksCount()        { return 138; }
-  public int getPalBytesAddr()          { return 0x50D0; }
+  public int getPalBytesAddr()          { return 0x5010; }
   
   public GetBlocksFunc        getBlocksFunc() { return CAUtils.getBlocks;}
   public SetBlocksFunc        setBlocksFunc() { return CAUtils.setBlocks;}
@@ -31,7 +31,7 @@ public class Data
   
   public byte[] getPallete(int palId)
   {
-      return Utils.readBinFile("pal2.bin");
+      return Utils.readBinFile("pal-final.bin");
   }
   
   public int getVideoAddress(int id)
@@ -41,6 +41,6 @@ public class Data
   
   public byte[] getVideoChunk(int videoPageId)
   {
-     return Utils.readVideoBankFromFile("chr2.bin", videoPageId);
+     return Utils.readVideoBankFromFile("chr-final.bin", videoPageId);
   }
 }
