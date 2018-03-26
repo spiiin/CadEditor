@@ -48,7 +48,7 @@ end
 savestate.registersave(atSave)
 --------------------------------------------------------
 function readCdlMask(CUR_ADDR)
-    return bit.band(string.byte(cdlData:sub(CUR_ADDR+0x10,CUR_ADDR+0x10)), 0x22)
+    return bit.band(string.byte(cdlData:sub(CUR_ADDR-0x10,CUR_ADDR-0x10)), 0x22)
 end
 
 function stop()
@@ -114,7 +114,7 @@ function start()
                 break
             end;
             
-            local cdlCharMask = readCdlMask(CUR_ADDR)
+            local cdlCharMask = readCdlMask(CUR_ADDR) --skip header
             
             if cdlCharMask ~= 0 then
                 lastValue = rom.readbyte(CUR_ADDR);
