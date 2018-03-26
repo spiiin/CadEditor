@@ -4,6 +4,16 @@ using System.Collections.Generic;
 
 public static class FliUtils
 {
+  public static void sortObjects(int levelNo, int listNo, List<ObjectRec> objects)
+  {
+    for (int i = 0; i < objects.Count; i++)
+    {
+      var o = objects[i];
+      o.additionalData["data"] = o.x / 8;
+    }
+    objects.Sort((o1, o2) => { return o1.x > o2.x ? 1 : o1.x < o2.x ? -1 : o1.y < o2.y ? -1 : o1.y > o2.y ? 1 : 0; });
+  }
+  
   //addrs saved in ram at D7-D9-DC-DC
   public static List<ObjectList> getObjects(int levelNo)
   {

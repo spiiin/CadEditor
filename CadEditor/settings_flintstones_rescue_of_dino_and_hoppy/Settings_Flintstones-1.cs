@@ -1,6 +1,7 @@
 using CadEditor;
 using System.Collections.Generic;
 //css_include Settings_Flintstones-Utils.cs;
+
 public class Data
 { 
   public string[] getPluginNames() 
@@ -36,6 +37,7 @@ public class Data
   public virtual SetBigBlocksFunc setBigBlocksFunc() { return FliUtils.setBigBlocks;}
   public GetObjectsFunc getObjectsFunc()   { return FliUtils.getObjects;  }
   public SetObjectsFunc setObjectsFunc()   { return FliUtils.setObjects;  }
+  public SortObjectsFunc sortObjectsFunc() { return FliUtils.sortObjects; }
   public GetObjectDictionaryFunc getObjectDictionaryFunc() { return FliUtils.getObjectDictionary; }
   public ConvertScreenTileFunc getConvertScreenTileFunc()     { return FliUtils.getConvertScreenTile; }
   public ConvertScreenTileFunc getBackConvertScreenTileFunc() { return FliUtils.getBackConvertScreenTile; }
