@@ -464,13 +464,17 @@ namespace CadEditor
         private bool saveToFile()
         {
             //TODO: return free space checking
-            /*int addrBase = lr.objectsBeginAddr;
-            int objCount = lr.objCount;
-            if (activeObjectList.objects.Count > objCount)
+            if (objectLists.Count == 1)
             {
-                MessageBox.Show(String.Format("Too many objects in level ({0}). Maximum: {1}", activeObjectList.objects.Count, lr.objCount));
-                return false;
-            }*/
+                var lr = getLevelRecForGameType();
+                int addrBase = lr.objectsBeginAddr;
+                int objCount = lr.objCount;
+                if (objectLists[0].objects.Count > objCount)
+                {
+                    MessageBox.Show(String.Format("Too many objects in level ({0}). Maximum: {1}", objectLists[0].objects.Count, lr.objCount));
+                    return false;
+                }
+            }
             try
             {
                 ConfigScript.setObjects(curActiveLayout, objectLists);
