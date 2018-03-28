@@ -1,0 +1,4 @@
+Ending screens
+First (ROM offset): 159ad-16174 (size: 7C8), palette: 16175-161b4 (size: 40)
+Second (ROM offset): 169b5-1697c (size: 7C8), palette: 1697d-169bc (size: 40)
+Third (ROM offset): 169bd-16d80 (size: 3c2), palette: 16d81-16dc0 (size: 40)
