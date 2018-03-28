@@ -53,6 +53,7 @@ fnames = [
     "Megaman V (E) [!].nes",
     "Mickey Mania 7 (Unl) [!].nes",
     "Mickey Mouse 3 - Yume Fuusen (J).nes",
+    "Mickey Mousecapade (U) [!].nes",
     "Mickey's Adventures in Numberland (U) [!p].nes",
     "Micro Machines (Unl) [!].nes",
     "Mighty Final Fight (U) [!p].nes",
