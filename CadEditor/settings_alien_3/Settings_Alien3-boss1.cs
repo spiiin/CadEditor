@@ -3,9 +3,9 @@ using System;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset() { return new OffsetRec(0x2010, 1, 64*64); }
+  public OffsetRec getScreensOffset() { return new OffsetRec(0x1564, 1, 64*16); }
   public int getScreenWidth()         { return 64; }
-  public int getScreenHeight()        { return 64; }
+  public int getScreenHeight()        { return 16; }
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }
@@ -28,5 +28,4 @@ public class Data
   public SetBlocksFunc        setBlocksFunc() { return Utils.setBlocksFromTiles16Pal1;}
   public GetPalFunc           getPalFunc() { return Utils.getPalleteLinear;}
   public SetPalFunc           setPalFunc() { return Utils.setPalleteLinear;}
-  //-------------------------------------------------------------------------------
 }
