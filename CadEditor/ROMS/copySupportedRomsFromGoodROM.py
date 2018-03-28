@@ -8,7 +8,7 @@ fnames = [
     "Addams Family, The (E) [!].nes",
     "Addams Family, The - Pugsley's Scavenger Hunt (U) [!p].nes",
     "Adventures in the Magic Kingdom (U) [!].nes",
-    "Alien 3 (E) [!].nes",
+    "Alien 3 (U) [!].nes",
     "Batman (U) [!].nes",
     "Batman III [p1].nes",
     "Battletoads & Double Dragon - The Ultimate Team (E) [!p].nes",

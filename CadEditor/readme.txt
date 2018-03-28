@@ -512,14 +512,15 @@ v4.8
 -------------------------------------------------------------------------------
   EmsiD       - рисование иконок, создание хаков Darkwing Duck.
   Mefisto     - идеи по развитию редактора, тестирование, написание компрессоров дл€ сеговских игр.
-  Lomax       - тестирование.
+  Lomax       - тестирование, создание хаков с помощью редактора
   Roket       - тестирование, рисование иконок, конфиги дл€ редактора анимаций Tale Spin, Little Mermaid, конфиги дл€ игр Goonies 2, Mickey Mouse 3, Mickey's Adventures in Numberland, Hook, Indiana Jones Jr, Super Robin Hood, формат объектов Tom & Jerry, Little Nemo
+  lancuster   - конфиги дл€ игр Dragon Fighter, Cheetahmen 2, Captain America, TMNT 1
   evgeny      - идеи по развитию редактора, тестирование.
   Matrixz     - документаци€ к megaman 4.
   Nemesis_c   - конфиги дл€ игры Zombies Ate My Neighbors.
   Darthatron  - документаци€ по Final Fantasy Tactics Advance, кодирование.
   cah4e3      - собрание огромной базы Unpublished cheats list дл€ NES, формат игры Contra Spirits/Mickey Mania.
-  Megaplex    - документаци€ по игре EarthWorm Jim 2.
+  Megaplex    - документаци€ по игре EarthWorm Jim 2 и использованию формата RNC
   DANGER X    - конфиги дл€ игры Banana Prince, Mighty Final Fight, SD Hero Soukessen
   Ti_         - помощь с дизассеблированием, конфиги дл€ игр Contra Force, Jungle Book, Little Nemo, Battletoads, Battletoads & Double Dragon, Shatterhand, Tom & Jerry, Ninja Cats.
   Alxr        - разбор формата уровней Rockin' Kats.
