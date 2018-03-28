@@ -24,7 +24,7 @@ public class Data
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0xe673 , 1  , 0x1000);  }
   public int getBlocksCount()           { return 256; }
   public int getBigBlocksCount()        { return 256; }
-  public int getPalBytesAddr()          { return 0xe92e; }
+  public int getPalBytesAddr()          { return 0xe903; }
   public GetBlocksFunc        getBlocksFunc() { return Utils.getBlocksFromTiles16Pal1;}
   public SetBlocksFunc        setBlocksFunc() { return Utils.setBlocksFromTiles16Pal1;}
   public GetPalFunc           getPalFunc()           { return getPallete;}
