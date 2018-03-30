@@ -4,7 +4,7 @@ using System;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x2BCF, 13 , 8*8);   }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x2BCF, 14 , 8*8);   }
   public int getScreenWidth()          { return 8; }
   public int getScreenHeight()         { return 8; }
   
@@ -21,8 +21,8 @@ public class Data
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x2F4F, 1  , 0x1000);  }
-  public int getBlocksCount()           { return 256; }
-  public int getBigBlocksCount()        { return 256; }
+  public int getBlocksCount()           { return 245; }
+  public int getBigBlocksCount()        { return 245; }
   public int getPalBytesAddr()          { return 0x3e9F; }
   public GetBlocksFunc        getBlocksFunc() { return Utils.getBlocksFromTiles16Pal1;}
   public SetBlocksFunc        setBlocksFunc() { return Utils.setBlocksFromTiles16Pal1;}
