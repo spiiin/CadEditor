@@ -1008,6 +1008,14 @@ namespace CadEditor
             f.Show();
         }
 
+        private void splitContainer1_Panel1_Resize(object sender, EventArgs e)
+        {
+            pnBlocks.Width = splitContainer1.Panel1.Width - pnElements.Width - 10;
+            pnBlocks.Height = splitContainer1.Panel1.Height - 10;
+            blocksScreen.Width = pnBlocks.Width;
+            updateBlocksImages();
+        }
+
         public void addSubeditorButton(ToolStripItem item)
         {
           toolStrip1.Items.Insert(toolStrip1.Items.IndexOf(bttEnemies)+1, item);

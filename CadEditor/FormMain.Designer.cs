@@ -86,12 +86,12 @@
             this.tbbShowPluginInfo = new System.Windows.Forms.ToolStripButton();
             this.tbbShowInfo = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.pnBlocks = new System.Windows.Forms.Panel();
+            this.blocksScreen = new System.Windows.Forms.PictureBox();
             this.pnElements = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.cbLevelNo = new System.Windows.Forms.ComboBox();
             this.cbUseStructs = new System.Windows.Forms.CheckBox();
-            this.pnBlocks = new System.Windows.Forms.Panel();
-            this.blocksScreen = new System.Windows.Forms.PictureBox();
             this.lbStructures = new System.Windows.Forms.ListBox();
             this.pnViewScroll = new System.Windows.Forms.Panel();
             this.lbPalBytesAddr = new System.Windows.Forms.Label();
@@ -106,9 +106,9 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.pnElements.SuspendLayout();
             this.pnBlocks.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.blocksScreen)).BeginInit();
+            this.pnElements.SuspendLayout();
             this.pnViewScroll.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -398,7 +398,7 @@
             this.pnView.Location = new System.Drawing.Point(4, 4);
             this.pnView.Margin = new System.Windows.Forms.Padding(4);
             this.pnView.Name = "pnView";
-            this.pnView.Size = new System.Drawing.Size(1027, 615);
+            this.pnView.Size = new System.Drawing.Size(1024, 615);
             this.pnView.TabIndex = 53;
             // 
             // lbCoords
@@ -406,7 +406,7 @@
             this.lbCoords.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbCoords.AutoSize = true;
-            this.lbCoords.Location = new System.Drawing.Point(7, 610);
+            this.lbCoords.Location = new System.Drawing.Point(7, 614);
             this.lbCoords.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbCoords.Name = "lbCoords";
             this.lbCoords.Size = new System.Drawing.Size(87, 17);
@@ -738,9 +738,10 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.pnElements);
             this.splitContainer1.Panel1.Controls.Add(this.pnBlocks);
+            this.splitContainer1.Panel1.Controls.Add(this.pnElements);
             this.splitContainer1.Panel1.Controls.Add(this.lbStructures);
+            this.splitContainer1.Panel1.Resize += new System.EventHandler(this.splitContainer1_Panel1_Resize);
             // 
             // splitContainer1.Panel2
             // 
@@ -750,10 +751,32 @@
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 5;
             // 
+            // pnBlocks
+            // 
+            this.pnBlocks.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.pnBlocks.AutoScroll = true;
+            this.pnBlocks.Controls.Add(this.blocksScreen);
+            this.pnBlocks.Location = new System.Drawing.Point(4, 5);
+            this.pnBlocks.Name = "pnBlocks";
+            this.pnBlocks.Size = new System.Drawing.Size(257, 626);
+            this.pnBlocks.TabIndex = 61;
+            this.pnBlocks.SizeChanged += new System.EventHandler(this.pnBlocks_SizeChanged);
+            // 
+            // blocksScreen
+            // 
+            this.blocksScreen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.blocksScreen.Location = new System.Drawing.Point(3, 3);
+            this.blocksScreen.Name = "blocksScreen";
+            this.blocksScreen.Size = new System.Drawing.Size(251, 332);
+            this.blocksScreen.TabIndex = 5;
+            this.blocksScreen.TabStop = false;
+            this.blocksScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.blocksScreen_Paint);
+            this.blocksScreen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.blocksScreen_MouseDown);
+            // 
             // pnElements
             // 
-            this.pnElements.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnElements.Controls.Add(this.label3);
             this.pnElements.Controls.Add(this.cbLevelNo);
             this.pnElements.Controls.Add(this.cbUseStructs);
@@ -765,10 +788,11 @@
             this.pnElements.Controls.Add(this.label6);
             this.pnElements.Controls.Add(this.cbScreenNo);
             this.pnElements.Controls.Add(this.pnGeneric);
-            this.pnElements.Location = new System.Drawing.Point(272, 4);
+            this.pnElements.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnElements.Location = new System.Drawing.Point(268, 0);
             this.pnElements.Margin = new System.Windows.Forms.Padding(4);
             this.pnElements.Name = "pnElements";
-            this.pnElements.Size = new System.Drawing.Size(103, 634);
+            this.pnElements.Size = new System.Drawing.Size(103, 638);
             this.pnElements.TabIndex = 5;
             // 
             // label3
@@ -804,31 +828,6 @@
             this.cbUseStructs.UseVisualStyleBackColor = true;
             this.cbUseStructs.CheckedChanged += new System.EventHandler(this.cbUseStructs_CheckedChanged);
             // 
-            // pnBlocks
-            // 
-            this.pnBlocks.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnBlocks.AutoScroll = true;
-            this.pnBlocks.Controls.Add(this.blocksScreen);
-            this.pnBlocks.Location = new System.Drawing.Point(4, 5);
-            this.pnBlocks.Name = "pnBlocks";
-            this.pnBlocks.Size = new System.Drawing.Size(252, 628);
-            this.pnBlocks.TabIndex = 61;
-            this.pnBlocks.SizeChanged += new System.EventHandler(this.pnBlocks_SizeChanged);
-            // 
-            // blocksScreen
-            // 
-            this.blocksScreen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.blocksScreen.Location = new System.Drawing.Point(3, 3);
-            this.blocksScreen.Name = "blocksScreen";
-            this.blocksScreen.Size = new System.Drawing.Size(229, 332);
-            this.blocksScreen.TabIndex = 5;
-            this.blocksScreen.TabStop = false;
-            this.blocksScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.blocksScreen_Paint);
-            this.blocksScreen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.blocksScreen_MouseDown);
-            // 
             // lbStructures
             // 
             this.lbStructures.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -853,7 +852,7 @@
             this.pnViewScroll.Controls.Add(this.pnView);
             this.pnViewScroll.Location = new System.Drawing.Point(4, 8);
             this.pnViewScroll.Name = "pnViewScroll";
-            this.pnViewScroll.Size = new System.Drawing.Size(1035, 623);
+            this.pnViewScroll.Size = new System.Drawing.Size(1032, 623);
             this.pnViewScroll.TabIndex = 5;
             // 
             // lbPalBytesAddr
@@ -900,10 +899,10 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.pnElements.ResumeLayout(false);
-            this.pnElements.PerformLayout();
             this.pnBlocks.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.blocksScreen)).EndInit();
+            this.pnElements.ResumeLayout(false);
+            this.pnElements.PerformLayout();
             this.pnViewScroll.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
