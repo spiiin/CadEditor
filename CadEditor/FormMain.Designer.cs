@@ -63,6 +63,7 @@
             this.bttEnemies = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.bttStructures = new System.Windows.Forms.ToolStripButton();
+            this.bttRunScript = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.bttShowNei = new System.Windows.Forms.ToolStripButton();
             this.bttAxis = new System.Windows.Forms.ToolStripButton();
@@ -94,7 +95,6 @@
             this.lbStructures = new System.Windows.Forms.ListBox();
             this.pnViewScroll = new System.Windows.Forms.Panel();
             this.lbPalBytesAddr = new System.Windows.Forms.Label();
-            this.bttRunScript = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -398,7 +398,7 @@
             this.pnView.Location = new System.Drawing.Point(4, 4);
             this.pnView.Margin = new System.Windows.Forms.Padding(4);
             this.pnView.Name = "pnView";
-            this.pnView.Size = new System.Drawing.Size(1028, 615);
+            this.pnView.Size = new System.Drawing.Size(1027, 615);
             this.pnView.TabIndex = 53;
             // 
             // lbCoords
@@ -531,6 +531,16 @@
             this.bttStructures.Size = new System.Drawing.Size(24, 24);
             this.bttStructures.Text = "Make structures";
             this.bttStructures.Click += new System.EventHandler(this.bttStructures_Click);
+            // 
+            // bttRunScript
+            // 
+            this.bttRunScript.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttRunScript.Image = ((System.Drawing.Image)(resources.GetObject("bttRunScript.Image")));
+            this.bttRunScript.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttRunScript.Name = "bttRunScript";
+            this.bttRunScript.Size = new System.Drawing.Size(24, 24);
+            this.bttRunScript.Text = "Run script";
+            this.bttRunScript.Click += new System.EventHandler(this.bttRunScript_Click);
             // 
             // toolStripSeparator6
             // 
@@ -803,7 +813,7 @@
             this.pnBlocks.Controls.Add(this.blocksScreen);
             this.pnBlocks.Location = new System.Drawing.Point(4, 5);
             this.pnBlocks.Name = "pnBlocks";
-            this.pnBlocks.Size = new System.Drawing.Size(261, 628);
+            this.pnBlocks.Size = new System.Drawing.Size(252, 628);
             this.pnBlocks.TabIndex = 61;
             this.pnBlocks.SizeChanged += new System.EventHandler(this.pnBlocks_SizeChanged);
             // 
@@ -813,7 +823,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.blocksScreen.Location = new System.Drawing.Point(3, 3);
             this.blocksScreen.Name = "blocksScreen";
-            this.blocksScreen.Size = new System.Drawing.Size(238, 332);
+            this.blocksScreen.Size = new System.Drawing.Size(229, 332);
             this.blocksScreen.TabIndex = 5;
             this.blocksScreen.TabStop = false;
             this.blocksScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.blocksScreen_Paint);
@@ -843,7 +853,7 @@
             this.pnViewScroll.Controls.Add(this.pnView);
             this.pnViewScroll.Location = new System.Drawing.Point(4, 8);
             this.pnViewScroll.Name = "pnViewScroll";
-            this.pnViewScroll.Size = new System.Drawing.Size(1036, 623);
+            this.pnViewScroll.Size = new System.Drawing.Size(1035, 623);
             this.pnViewScroll.TabIndex = 5;
             // 
             // lbPalBytesAddr
@@ -856,16 +866,6 @@
             this.lbPalBytesAddr.TabIndex = 60;
             this.lbPalBytesAddr.Text = "Pal byte addr:";
             this.lbPalBytesAddr.Visible = false;
-            // 
-            // bttRunScript
-            // 
-            this.bttRunScript.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttRunScript.Image = ((System.Drawing.Image)(resources.GetObject("bttRunScript.Image")));
-            this.bttRunScript.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttRunScript.Name = "bttRunScript";
-            this.bttRunScript.Size = new System.Drawing.Size(24, 24);
-            this.bttRunScript.Text = "Run script";
-            this.bttRunScript.Click += new System.EventHandler(this.bttRunScript_Click);
             // 
             // FormMain
             // 

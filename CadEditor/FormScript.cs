@@ -25,9 +25,9 @@ namespace CadEditor
             formMain = f;
         }
 
-        public TextBox getLog()
+        public void writeLog(string str = "", bool newLine = true)
         {
-            return tbLog;
+            tbLog.AppendText(str + (newLine ? Environment.NewLine : ""));
         }
 
         private void tbScriptFile_Click(object sender, EventArgs e)

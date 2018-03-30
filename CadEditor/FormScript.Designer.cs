@@ -66,12 +66,15 @@
             // 
             // tbLog
             // 
+            this.tbLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbLog.Location = new System.Drawing.Point(7, 106);
             this.tbLog.Multiline = true;
             this.tbLog.Name = "tbLog";
             this.tbLog.ReadOnly = true;
             this.tbLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbLog.Size = new System.Drawing.Size(545, 200);
+            this.tbLog.Size = new System.Drawing.Size(545, 295);
             this.tbLog.TabIndex = 3;
             // 
             // label2
@@ -93,7 +96,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(564, 318);
+            this.ClientSize = new System.Drawing.Size(564, 413);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tbLog);
             this.Controls.Add(this.label1);
