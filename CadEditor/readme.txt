@@ -514,7 +514,7 @@ v4.8
   Mefisto     - идеи по развитию редактора, тестирование, написание компрессоров для сеговских игр.
   Lomax       - тестирование, создание хаков с помощью редактора
   Roket       - тестирование, рисование иконок, конфиги для редактора анимаций Tale Spin, Little Mermaid, конфиги для игр Goonies 2, Mickey Mouse 3, Mickey's Adventures in Numberland, Hook, Indiana Jones Jr, Super Robin Hood, формат объектов Tom & Jerry, Little Nemo
-  lancuster   - конфиги для игр Dragon Fighter, Cheetahmen 2, Captain America, TMNT 1
+  lancuster   - конфиги для игр Dragon Fighter, Cheetahmen 2, Captain America, TMNT 1, Jackie Chan, Gun Smoke, Batman, Monster in my Pocket
   evgeny      - идеи по развитию редактора, тестирование.
   Matrixz     - документация к megaman 4.
   Nemesis_c   - конфиги для игры Zombies Ate My Neighbors.
