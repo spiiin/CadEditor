@@ -40,7 +40,6 @@ namespace CadEditor
                  { bttBigBlocks,    ()=>{ var f = new BigBlockEdit();  f.setFormMain(this); return f;} },
                  { bttBlocks,       makeBlocksEditor },
                  { bttEnemies,      ()=>{ var f = new EnemyEditor();  f.setFormMain(this); return f;}  },
-                 { bttConfig,       ()=>{ var f = new FormConfig();  f.setFormMain(this); f.onApply += reloadCallback; return f;}    },
             };
 
             ConfigScript.plugins.ForEach((p) => p.addToolButton(this));

@@ -63,7 +63,6 @@
             this.bttEnemies = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.bttStructures = new System.Windows.Forms.ToolStripButton();
-            this.bttConfig = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.bttShowNei = new System.Windows.Forms.ToolStripButton();
             this.bttAxis = new System.Windows.Forms.ToolStripButton();
@@ -93,8 +92,8 @@
             this.pnBlocks = new System.Windows.Forms.Panel();
             this.blocksScreen = new System.Windows.Forms.PictureBox();
             this.lbStructures = new System.Windows.Forms.ListBox();
-            this.lbPalBytesAddr = new System.Windows.Forms.Label();
             this.pnViewScroll = new System.Windows.Forms.Panel();
+            this.lbPalBytesAddr = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -102,7 +101,7 @@
             this.pnAdvancedParams.SuspendLayout();
             this.pnView.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            //((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -427,7 +426,6 @@
             this.bttEnemies,
             this.toolStripSeparator3,
             this.bttStructures,
-            this.bttConfig,
             this.toolStripSeparator6,
             this.bttShowNei,
             this.bttAxis,
@@ -531,16 +529,6 @@
             this.bttStructures.Size = new System.Drawing.Size(24, 24);
             this.bttStructures.Text = "Make structures";
             this.bttStructures.Click += new System.EventHandler(this.bttStructures_Click);
-            // 
-            // bttConfig
-            // 
-            this.bttConfig.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttConfig.Image = ((System.Drawing.Image)(resources.GetObject("bttConfig.Image")));
-            this.bttConfig.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttConfig.Name = "bttConfig";
-            this.bttConfig.Size = new System.Drawing.Size(24, 24);
-            this.bttConfig.Text = "Edit Config";
-            this.bttConfig.Click += new System.EventHandler(this.btSubeditor_Click);
             // 
             // toolStripSeparator6
             // 
@@ -844,17 +832,6 @@
             this.lbStructures.Visible = false;
             this.lbStructures.SelectedIndexChanged += new System.EventHandler(this.lbStructures_SelectedIndexChanged);
             // 
-            // lbPalBytesAddr
-            // 
-            this.lbPalBytesAddr.AutoSize = true;
-            this.lbPalBytesAddr.Location = new System.Drawing.Point(688, 9);
-            this.lbPalBytesAddr.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbPalBytesAddr.Name = "lbPalBytesAddr";
-            this.lbPalBytesAddr.Size = new System.Drawing.Size(96, 17);
-            this.lbPalBytesAddr.TabIndex = 60;
-            this.lbPalBytesAddr.Text = "Pal byte addr:";
-            this.lbPalBytesAddr.Visible = false;
-            // 
             // pnViewScroll
             // 
             this.pnViewScroll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -866,6 +843,17 @@
             this.pnViewScroll.Name = "pnViewScroll";
             this.pnViewScroll.Size = new System.Drawing.Size(1036, 623);
             this.pnViewScroll.TabIndex = 5;
+            // 
+            // lbPalBytesAddr
+            // 
+            this.lbPalBytesAddr.AutoSize = true;
+            this.lbPalBytesAddr.Location = new System.Drawing.Point(688, 9);
+            this.lbPalBytesAddr.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbPalBytesAddr.Name = "lbPalBytesAddr";
+            this.lbPalBytesAddr.Size = new System.Drawing.Size(96, 17);
+            this.lbPalBytesAddr.TabIndex = 60;
+            this.lbPalBytesAddr.Text = "Pal byte addr:";
+            this.lbPalBytesAddr.Visible = false;
             // 
             // FormMain
             // 
@@ -964,7 +952,6 @@
         private System.Windows.Forms.ToolStripButton bttReload;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbLevelNo;
-        private System.Windows.Forms.ToolStripButton bttConfig;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripButton tbbShowPluginInfo;
         private System.Windows.Forms.ComboBox cbGroup;
