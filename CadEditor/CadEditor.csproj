@@ -99,6 +99,12 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormScript.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormScript.Designer.cs">
+      <DependentUpon>FormScript.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormStructures.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +160,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormScript.resx">
+      <DependentUpon>FormScript.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormStructures.resx">
       <DependentUpon>FormStructures.cs</DependentUpon>

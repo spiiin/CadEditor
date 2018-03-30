@@ -1001,6 +1001,13 @@ namespace CadEditor
             OnResize(e);
         }
 
+        private void bttRunScript_Click(object sender, EventArgs e)
+        {
+            var f = new FormScript();
+            f.setFormMain(this);
+            f.Show();
+        }
+
         public void addSubeditorButton(ToolStripItem item)
         {
           toolStrip1.Items.Insert(toolStrip1.Items.IndexOf(bttEnemies)+1, item);

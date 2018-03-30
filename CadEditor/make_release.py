@@ -32,6 +32,7 @@ COPY_FILE_LIST = [
 ]
 
 COPY_FOLDER_LIST = [
+  "Scripts/",
   "obj_sprites/",
   "scroll_sprites/",
   "settings_*/",

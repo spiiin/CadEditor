@@ -94,6 +94,7 @@
             this.lbStructures = new System.Windows.Forms.ListBox();
             this.pnViewScroll = new System.Windows.Forms.Panel();
             this.lbPalBytesAddr = new System.Windows.Forms.Label();
+            this.bttRunScript = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -426,6 +427,7 @@
             this.bttEnemies,
             this.toolStripSeparator3,
             this.bttStructures,
+            this.bttRunScript,
             this.toolStripSeparator6,
             this.bttShowNei,
             this.bttAxis,
@@ -855,6 +857,16 @@
             this.lbPalBytesAddr.Text = "Pal byte addr:";
             this.lbPalBytesAddr.Visible = false;
             // 
+            // bttRunScript
+            // 
+            this.bttRunScript.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttRunScript.Image = ((System.Drawing.Image)(resources.GetObject("bttRunScript.Image")));
+            this.bttRunScript.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttRunScript.Name = "bttRunScript";
+            this.bttRunScript.Size = new System.Drawing.Size(24, 24);
+            this.bttRunScript.Text = "Run script";
+            this.bttRunScript.Click += new System.EventHandler(this.bttRunScript_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -964,6 +976,7 @@
         private System.Windows.Forms.Panel pnBlocks;
         private System.Windows.Forms.PictureBox blocksScreen;
         private System.Windows.Forms.Panel pnViewScroll;
+        private System.Windows.Forms.ToolStripButton bttRunScript;
     }
 }
 
