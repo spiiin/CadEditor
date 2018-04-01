@@ -25,6 +25,11 @@ namespace CadEditor
             formMain = f;
         }
 
+        public FormMain getFormMain()
+        {
+            return formMain;
+        }
+
         public void writeLog(string str = "", bool newLine = true)
         {
             tbLog.AppendText(str + (newLine ? Environment.NewLine : ""));
