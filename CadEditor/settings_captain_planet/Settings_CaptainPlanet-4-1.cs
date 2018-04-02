@@ -13,7 +13,7 @@ public class Data
     };
   }
   
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0xC0, 1, 255*4); }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x2ee0, 1, 255*4); }
   public int getScreenWidth()          { return 255; }
   public int getScreenHeight()         { return 4; }
 
@@ -28,7 +28,7 @@ public class Data
   public GetPalFunc           getPalFunc()           { return getPallete;}
   public SetPalFunc           setPalFunc()           { return null;}
 
-  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x4bc, 1, 0x1000); }
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x32dc, 1, 0x1000); }
   public int getBlocksCount()           { return 256; }
 
   public GetBlocksFunc        getBlocksFunc() { return getBlocks4x8;}
@@ -43,12 +43,12 @@ public class Data
   
   public byte[] getVideoChunk(int videoPageId)
   {
-      return Utils.readVideoBankFromFile("chr1.bin", 0);
+      return Utils.readVideoBankFromFile("chr4-1.bin", 0);
   }
   
   public byte[] getPallete(int palId)
   {
-      return Utils.readBinFile("pal1.bin");
+      return Utils.readBinFile("pal4-1.bin");
   }
   
     //-------------------------------------------------------------------------------------------------------------------
