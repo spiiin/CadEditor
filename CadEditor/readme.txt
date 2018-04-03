@@ -517,7 +517,6 @@ v4.9
   Cheetahmen 2
   Captain America
   Mickey Mousecapade
-  Alien 3
   Jackie Chan Action Kung Fu
   Gun Smoke
   Batman
@@ -525,7 +524,8 @@ v4.9
   Super C / Super Contra
   Captain Planet
   Mitsume ga Tooru
-
+  Alien 3
+  Terminator 2
 
 -------------------------------------------------------------------------------
 Благодарности: 
