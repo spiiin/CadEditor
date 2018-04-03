@@ -12,7 +12,7 @@ public class Data
   }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x52A9 , 1 , 8*48);   }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x0    , 1 , 16);     }
-  public OffsetRec getVideoOffset()     { return new OffsetRec(0x42010, 1 , 0x1000); }
+  public OffsetRec getVideoOffset()     { return new OffsetRec(0x41010, 1 , 0x1000); }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x20010, 1 , 0x1000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x5CA9, 1  , 0x4000); }
   public int getPhysicsBytesAddr()      { return 0x1C639; }
