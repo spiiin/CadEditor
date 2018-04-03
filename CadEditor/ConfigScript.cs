@@ -260,6 +260,7 @@ namespace CadEditor
             getGroupsFunc = callFromScript<GetGroupsFunc>(asm, data, "*.getGroupsFunc", () => { return new GroupRec[0]; });
 
             palBytesAddr = callFromScript(asm, data, "*.getPalBytesAddr", -1);
+            physicsBytesAddr = callFromScript(asm, data, "*.getPhysicsBytesAddr", -1);
 
             loadAllPlugins(asm, data);
         }
@@ -588,6 +589,11 @@ namespace CadEditor
             return palBytesAddr;
         }
 
+        public static int getPhysicsBytesAddr()
+        {
+            return physicsBytesAddr;
+        }
+
         //------------------------------------------------------------
         //helpers
         public static int getScreenWidth(int levelNo)
@@ -741,6 +747,7 @@ namespace CadEditor
         public static GetGroupsFunc getGroupsFunc;
 
         public static int palBytesAddr;
+        public static int physicsBytesAddr;
 
         public static string[] blockTypeNames;
         public static string[] defaultBlockTypeNames = new[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F" };

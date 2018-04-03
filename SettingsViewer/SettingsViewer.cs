@@ -260,5 +260,7 @@ namespace SettingsViewer
         public MethodDelegate getGroupsFunc { get { return get(); } }
         [Category("Blocks params")]
         public MethodDelegate getPalBytesAddr { get { return get(); } }
+        [Category("Blocks params")]
+        public MethodDelegate getPhysicsBytesAddr { get { return get(); } }
     }
 }
