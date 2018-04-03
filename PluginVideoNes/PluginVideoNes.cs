@@ -183,7 +183,9 @@ namespace PluginVideoNes
             {
                 if (drawType == MapViewType.ObjType)
                 {
-                    g2.FillRectangle(new SolidBrush(CadObjectTypeColors[obj.getType()]), new Rectangle(0, 0, scaleInt16, scaleInt16));
+                    int objType = obj.getType();
+                    var col = (objType < CadObjectTypeColors.Length) ? CadObjectTypeColors[objType] : CadObjectTypeColors[0];
+                    g2.FillRectangle(new SolidBrush(col), new Rectangle(0, 0, scaleInt16, scaleInt16));
                     g2.DrawString(String.Format("{0:X}", obj.getType()), new Font("Arial", 6), Brushes.White, new Point(0, 0));
                 }
                 else if (drawType == MapViewType.ObjNumbers)
