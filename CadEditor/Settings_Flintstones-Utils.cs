@@ -80,9 +80,11 @@ public static class FliUtils
     int count = ConfigScript.getBlocksCount();
     int addr  = ConfigScript.getTilesAddr(blockIndex);
     var objects = Utils.readBlocksLinear(Globals.romdata, addr, 2, 2, count, false, true);
+    int physicsAddr = ConfigScript.getPhysicsBytesAddr();
     for(int i = 0; i < objects.Length; i++)
     {
         objects[i].palBytes[0] = Globals.romdata[addr + count * 4 + i];
+        objects[i].type = Globals.romdata[physicsAddr + i];
     }
     return objects;
   }
@@ -91,10 +93,12 @@ public static class FliUtils
   {
     int count = ConfigScript.getBlocksCount();
     int addr  = ConfigScript.getTilesAddr(blockIndex);
+    int physicsAddr = ConfigScript.getPhysicsBytesAddr();
     Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, false, true);
     for (int i = 0; i < count; i++)
     {
         Globals.romdata[addr + count * 4 + i] = (byte)blocksData[i].palBytes[0];
+        Globals.romdata[physicsAddr + i] = (byte)blocksData[i].type;
     }
   }
   
@@ -120,6 +124,16 @@ public static class FliUtils
     transposeBigBlocks(bigBlockIndexes);
     var data = Utils.linearizeBigBlocks(bigBlockIndexes);
     Utils.writeLinearBigBlockData(0, bigTileIndex, data);
+  }
+  
+  public static string[] getBlockTypeNames()
+  { 
+    var blockTypeNames = new string[256];
+    for (int i=0; i < blockTypeNames.Length; i++)
+    {
+      blockTypeNames[i] = String.Format("{0:X}", i);
+    }
+    return blockTypeNames;
   }
   
   public static int getConvertScreenTile(int v)         { return (v >> 4) | (v & 0x0F) << 4;}
