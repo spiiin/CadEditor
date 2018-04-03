@@ -15,10 +15,13 @@ public class Data
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x40010, 1 , 0x1000); }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x20010, 1 , 0x1000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x3634, 1  , 0x4000); }
+  public int getPhysicsBytesAddr()      { return 0x1C4E8; }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x31F4, 1  , 0x4000); }
   public int getScreenWidth()             { return 8; }
   public int getScreenHeight()            { return 64; }
   public bool getScreenVertical()         { return true; }
+  
+  public string[] getBlockTypeNames()   { return FliUtils.getBlockTypeNames();  }
   
   public int getBlocksCount()    { return 144; }
   public int getBigBlocksCount() { return 68; }

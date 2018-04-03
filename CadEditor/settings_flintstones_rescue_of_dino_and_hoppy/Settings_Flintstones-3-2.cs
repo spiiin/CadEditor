@@ -17,10 +17,13 @@ public class Data
   //public OffsetRec getBlocksOffset()    { return new OffsetRec(0x12AC7, 1  , 0x4000); } //for european version of ROM
   //public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x125C7, 1  , 0x4000); } //for european version of ROM
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x12ABF, 1  , 0x4000); }
+  public int getPhysicsBytesAddr()      { return 0x1C3A3; }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x125BF, 1  , 0x4000); }
   public int getScreenWidth()             { return 8; }
   public int getScreenHeight()            { return 32; }
   public bool getScreenVertical()         { return true; }
+  
+  public string[] getBlockTypeNames()   { return FliUtils.getBlockTypeNames();  }
   
   public int getBlocksCount()    { return 246; }
   public int getBigBlocksCount() { return 80; }
