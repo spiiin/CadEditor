@@ -80,7 +80,7 @@ public static class FliUtils
     int count = ConfigScript.getBlocksCount();
     int addr  = ConfigScript.getTilesAddr(blockIndex);
     var objects = Utils.readBlocksLinear(Globals.romdata, addr, 2, 2, count, false, true);
-    int physicsAddr = ConfigScript.getPhysicsBytesAddr();
+    int physicsAddr = ConfigScript.getPhysicsBytesAddr(); //can be read from A7-A8 RAM
     for(int i = 0; i < objects.Length; i++)
     {
         objects[i].palBytes[0] = Globals.romdata[addr + count * 4 + i];
