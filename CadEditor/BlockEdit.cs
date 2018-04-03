@@ -218,11 +218,11 @@ namespace CadEditor
             dirty = true;
         }
 
-        protected void cbType_SelectedIndexChanged(object sender, EventArgs e)
+        protected void nudType_ValueChanged(object sender, EventArgs e)
         {
-            ComboBox cb = (ComboBox)sender;
-            int index = curPageIndex * BLOCKS_PER_PAGE + (int)cb.Tag;
-            objects[index].type = cb.SelectedIndex;
+            NumericUpDown nudType = (NumericUpDown)sender;
+            int index = curPageIndex * BLOCKS_PER_PAGE + (int)nudType.Tag;
+            objects[index].type = (int)nudType.Value;
             dirty = true;
         }
 
@@ -308,6 +308,7 @@ namespace CadEditor
             mapObjects.Controls.Clear();
             mapObjects.SuspendLayout();
             int endIndex = Math.Min(BLOCKS_PER_PAGE, ConfigScript.getBlocksCount());
+            var objectTypes = ConfigScript.getBlockTypeNames();
             for (int i = 0; i < endIndex; i++)
             {
                 var obj = objects[i];
@@ -344,15 +345,16 @@ namespace CadEditor
                 fp.Controls.Add(cbColor);
                 curPanelX += cbColor.Size.Width;
                 //
-                ComboBox cbType = new ComboBox();
-                var objectTypes = ConfigScript.getBlockTypeNames();
-                cbType.Items.AddRange(objectTypes);
-                cbType.Location = new Point(curPanelX, 0);
-                cbType.Size = new Size(120, 21);
-                cbType.Tag = i;
-                cbType.DropDownStyle = ComboBoxStyle.DropDownList;
-                cbType.SelectedIndexChanged += cbType_SelectedIndexChanged;
-                fp.Controls.Add(cbType);
+                NumericUpDown nudType = new NumericUpDown();
+                nudType.Size = cbSubpalette.Size;
+                nudType.Location = new Point(curPanelX, 0);
+                nudType.Tag = i;
+                nudType.Minimum = 0;
+                nudType.Maximum = objectTypes.Length-1;
+                nudType.Hexadecimal = true;
+                nudType.ValueChanged += nudType_ValueChanged;
+                fp.Controls.Add(nudType);
+
                 mapObjects.Controls.Add(fp);
             }
             mapObjects.ResumeLayout();
@@ -382,8 +384,8 @@ namespace CadEditor
                 pb.Image = makeObjImage(i);
                 ComboBox cbColor = (ComboBox)p.Controls[2];
                 cbColor.SelectedIndex = objects[i].getSubpallete();
-                ComboBox cbType = (ComboBox)p.Controls[3];
-                cbType.SelectedIndex = objects[i].getType();
+                NumericUpDown nudType = (NumericUpDown)p.Controls[3];
+                nudType.Value = objects[i].getType();
             }
             for (; pi < mapObjects.Controls.Count; pi++)
             {
