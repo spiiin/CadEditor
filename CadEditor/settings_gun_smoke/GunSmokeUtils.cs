@@ -58,9 +58,9 @@ public static class GunSmokeUtils
       }
   }
   
-  public static GetPalFunc readPalFromBin(string fname)
+  public static GetPalFunc readPalFromBin(string[] fname)
   {
-      return (int _)=> { return Utils.readBinFile(fname); };
+      return (int x)=> { return Utils.readBinFile(fname[x]); };
   }
   
   public static GetVideoPageAddrFunc fakeVideoAddr()
@@ -68,8 +68,28 @@ public static class GunSmokeUtils
       return (int _)=> { return -1; };
   }
   
-  public static GetVideoChunkFunc getVideoChunk(string fname)
+  public static GetVideoChunkFunc getVideoChunk(string[] fname)
   {
-     return (int _)=> { return Utils.readVideoBankFromFile(fname, 0); };
+     return (int x)=> { return Utils.readVideoBankFromFile(fname[x], 0); };
+  }
+  
+  public static int getBigTileNoFromScreen(int[] screenData, int index)
+  {
+    int w = ConfigScript.getScreenWidth(0);
+    int h = ConfigScript.getScreenHeight(0);
+    int noY = index / w;
+    noY = h - noY - 1;
+    int noX = index % w;
+    return screenData[noY*w + noX];
+  }
+
+  public static void setBigTileToScreen(int[] screenData, int index, int value)
+  {
+    int w = ConfigScript.getScreenWidth(0);
+    int h = ConfigScript.getScreenHeight(0);
+    int noY = index / w;
+    noY = h - noY - 1;
+    int noX = index % w;
+    screenData[noY*w + noX] = value;
   }
 }

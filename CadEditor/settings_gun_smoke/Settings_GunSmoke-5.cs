@@ -7,45 +7,27 @@ public class Data
 { 
   public OffsetRec getScreensOffset()     { return new OffsetRec(0x10410, 1, 8*96);  }
   public OffsetRec getBigBlocksOffset()   { return new OffsetRec(0x10010 , 1, 0x4000); }
+  public OffsetRec getVideoOffset()       { return new OffsetRec(0x0 , 2   , 0x1000);  }
+  public OffsetRec getPalOffset  ()       { return new OffsetRec(0x0 , 1   , 16); }
   public int getScreenWidth()    { return 8; }
   public int getScreenHeight()   { return 96; }
   public int getBigBlocksCount() { return 256; }
-  public int getBlocksCount()    { return 256; }
+  public int getBlocksCount()    { return 64; }
   
-  public GetBigTileNoFromScreenFunc getBigTileNoFromScreenFunc() { return getBigTileNoFromScreen; }
-  public SetBigTileToScreenFunc     setBigTileToScreenFunc()     { return setBigTileToScreen; }
+  public GetBigTileNoFromScreenFunc getBigTileNoFromScreenFunc() { return GunSmokeUtils.getBigTileNoFromScreen; }
+  public SetBigTileToScreenFunc     setBigTileToScreenFunc()     { return GunSmokeUtils.setBigTileToScreen; }
   
   public bool isBigBlockEditorEnabled() { return true; }
-  public bool isBlockEditorEnabled()    { return false; }
+  public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc()          { return GunSmokeUtils.fakeVideoAddr(); }
-  public GetVideoChunkFunc    getVideoChunkFunc()             { return GunSmokeUtils.getVideoChunk("chr5.bin");   }
+  public GetVideoChunkFunc    getVideoChunkFunc()             { return GunSmokeUtils.getVideoChunk(new[] {"chr5.bin", "chr5-2.bin"}); }
   public SetVideoChunkFunc    setVideoChunkFunc()             { return null; }
   public GetBlocksFunc        getBlocksFunc()                 { return GunSmokeUtils.getBlocks;}
   public SetBlocksFunc        setBlocksFunc()                 { return null; }
   public GetBigBlocksFunc     getBigBlocksFunc()              { return GunSmokeUtils.getBigBlocks;}
   public SetBigBlocksFunc     setBigBlocksFunc()              { return GunSmokeUtils.setBigBlocks;}
-  public GetPalFunc           getPalFunc()                    { return GunSmokeUtils.readPalFromBin("pal5.bin"); }
+  public GetPalFunc           getPalFunc()                    { return GunSmokeUtils.readPalFromBin(new[] {"pal5.bin"}); }
   public SetPalFunc           setPalFunc()                    { return null;}
-  
-  public int getBigTileNoFromScreen(int[] screenData, int index)
-  {
-    int w = getScreenWidth();
-    int h = getScreenHeight();
-    int noY = index / w;
-    noY = h - noY - 1;
-    int noX = index % w;
-    return screenData[noY*w + noX];
-  }
-
-  public void setBigTileToScreen(int[] screenData, int index, int value)
-  {
-    int w = getScreenWidth();
-    int h = getScreenHeight();
-    int noY = index / w;
-    noY = h - noY - 1;
-    int noX = index % w;
-    screenData[noY*w + noX] = value;
-  }
 }
