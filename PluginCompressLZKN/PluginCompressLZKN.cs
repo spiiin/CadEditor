@@ -21,7 +21,7 @@ namespace PluginCompressLZKN
             this.formMain = formMain;
             var rm = new ResourceManager("PluginCompressLZKN.Icon", this.GetType().Assembly);
             var iconAnim = (System.Drawing.Bitmap)rm.GetObject("icon_compress");
-            var item = new ToolStripButton("Anim Editor", iconAnim, btAnim_Click);
+            var item = new ToolStripButton("LZKN compress manager", iconAnim, btRun_Click);
             item.DisplayStyle = ToolStripItemDisplayStyle.Image;
             formMain.addSubeditorButton(item);
         }
@@ -36,7 +36,7 @@ namespace PluginCompressLZKN
             CompressConfig.compressParams = (CompressParams[]) asm.InvokeInst(data, "*.getCompressParams");
         }
 
-        private void btAnim_Click(object sender, EventArgs e)
+        private void btRun_Click(object sender, EventArgs e)
         {
             var f = new CompressManager();
             formMain.subeditorOpen(f, (ToolStripButton)sender, true);
