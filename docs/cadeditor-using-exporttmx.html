@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+
+    <title>Экспорт карт в формат TMX</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Экспорт карт в формат TMX</h1>
+        <h2>Видеопример экпорта карт игры Duck Tales 2 в формат TMX</h2>
+      </div>
+    </header>
+
+<div class="container">
+  <section id="main_content">
+
+<p>
+<b>CadEditor</b> включает в себя плагин для экспорта карт в формат TMX, используемых в редакторе Tiled.
+</p>
+<p>
+Плагин использует модуль IronPython для загрузки и выполнения кода на языка Python и библиотеку pytmxlib для генерации tmx-файла. Плагин использует параметры отображения блоков при экспорте (отображение сетки на блоках, масштаб картинок, используемые банк видеопамяти) из главного окна редактора - в нём можно настроить вид генерируемой карты.
+</p>
+
+<p>
+Плагин использует описание раскладок уровней (<b>Layout</b> - форма уровня, составленная из разных экранов), описанные в конфиге игры. Если в конфиге игре не указана раскладка, испольуется раскладка по умолчанию, содержащая один первый игровой экран).
+</p>
+
+<p>
+Обратный импорт карты из Tiled в редактор CadEditor невозможен, так как Tiled не поддерживает описание задание каких-либо огранений карты, необходимых для сохранения карт в ROM-файлы.
+</p>
+
+<p>
+Пример экспорта всех карт из игры Duck Tales 2 и последующего окрытия их в редакторе Tiled показан на видео. 
+</p>
+
+<p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/swrp6dp1Qgo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</p>
+
+  </section>
+  </div>
+  
+   <div class="dashed">
+   <div class="container" align="center">
+   <a href="index.html" align="right">Назад</a>
+   </div>
+   </div>
+  </body>
+</html>
