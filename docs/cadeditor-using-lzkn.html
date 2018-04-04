@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+
+    <title>Редактирование игры Contra Hard Corps</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Редактирование игры Contra Hard Corps</h1>
+        <h2>Видеопример редактирование блоков, экранов и списка врагов для игры Contra Hard Corps [SMD], а также использование плагина для сжатия карты и вставки её в ROM-файл</h2>
+      </div>
+    </header>
+
+<div class="container">
+  <section id="main_content">
+
+<p>
+<b>CadEditor</b> включает в себя конфиги для редактирования уровней игры <b>Contra Hard Corps</b> для платформы <b>Sega Mega Drive 2</b>, а также плагин <b>PluginCompressLZKN</b>, который содержит компрессор уровней, разработанный ромхакером RShell57, и утилиту для вставки сжатых уровней в ROM-файл.
+</p>
+<p>
+Конфиги уровней для Contra Hard Corps позволяют изменять набор блоков, используемых на уровнях, редактировать карту уровней - слой A (состоящий из блоков) и слой B (фон, состоящий из тайлов видеопамяти), а также список объектов и их параметров на уровнях (с ограничениями - недоступно редактирование параметров объектов-событий).
+</p>
+
+<p>
+Редактирование обоих слоёв карты и списка блоков происходит на разархивированных дампах игры, идущих в комплекте с редактором (можно также получить их, если достать игровые архивы из ROM-файла и разархивировать их вручную утилитой <a href="https://github.com/lab313ru/lzkn">LZ Konami Compression Tools</a>). После этого необходимо вставить отредактированные дампы в ROM-файл. Для этого можно также воспользоваться утилитой LZ Konami Compressor Tools и вставить в ROM полученные архивы по нужному смещению.
+</p>
+
+<p>
+Но намного удобнее использовать плагин PluginCompressorLZKN, который позволяет проводить операцию сжатия и вставки архива в ROM прямо из редактора CadEditor.
+Интерфейс плагина показан на скриншоте:
+<img src="images/tut1_cad_editor_lzkn.png" alt="редактор архивов lzkn">
+</p>
+
+<p>
+Плагин использует компрессор, превышающий по качеству сжатия оригинальный компрессор, используемый Konami. Он позволяет экспортировать сжатые архивы в отдельные файлы или сразу вставлять их в ROM по нужному смещению, при этом следит за тем, чтобы не допустить вставки в ROM архива, который больше допустимого по размеру (чтобы не затереть другие данные в ROM-файле).
+</p>
+
+<p>
+Процесс редактирования всех элементов (обоих слоёв карты, блоков, списка объектов),вставки архивов в ROM-файл и теста получившегося файла показан в видео:
+</p>
+
+<p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/NfIWeDwu68w" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</p>
+
+  </section>
+  </div>
+  
+   <div class="dashed">
+   <div class="container" align="center">
+   <a href="index.html" align="right">Назад</a>
+   </div>
+   </div>
+  </body>
+</html>
