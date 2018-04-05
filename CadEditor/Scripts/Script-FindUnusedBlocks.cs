@@ -42,16 +42,13 @@ public class Script
         }
         
         //print info about unused blocks
+        var unusedBlocks = usedBlocks.Select((c,index)=> new {Count=c, Index=index}).Where(c=>c.Count==0).Select(c=>c.Index).ToArray();
         formScript.writeLog("Unused blocks:", newLine:false);
-        int unusedBlocksCount = 0;
-        for (int i = 0; i < usedBlocks.Length; i++)
+        for (int i = 0; i < unusedBlocks.Length; i++)
         {
-            if (usedBlocks[i] == 0)
-            {
-                formScript.writeLog(String.Format(" 0x{0:X}", i), newLine:false);
-                unusedBlocksCount++;
-            }
+            formScript.writeLog(String.Format(" 0x{0:X}", unusedBlocks[i]), newLine:false);
         }
+        int unusedBlocksCount = unusedBlocks.Length;
         if (unusedBlocksCount == 0)
         {
             formScript.writeLog(" not found", newLine:false);
@@ -59,5 +56,14 @@ public class Script
         formScript.writeLog();
         
         formScript.writeLog(String.Format("Total unused blocks: {0}", unusedBlocksCount));
+        
+        if (unusedBlocksCount > 0)
+        {
+            var unusedPictures = formMain.BigBlocks.Where((im, index)=> unusedBlocks.Contains(index)).ToArray();
+            var glueImage = UtilsGDI.GlueImages(unusedPictures, unusedPictures.Length, 1);
+            var fname = ConfigScript.ConfigDirectory + String.Format("unusedBlocks.png");
+            glueImage.Save(fname);
+            formScript.writeLog(String.Format("Unused blocks image saved to file: {0}", fname));
+        }
     }
 }
