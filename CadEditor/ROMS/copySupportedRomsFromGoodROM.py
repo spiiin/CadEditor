@@ -69,6 +69,7 @@ fnames = [
     "Power Blade 2 (U) [!].nes",
     "Predator (U) [!].nes",
     "Raf World (J).nes",
+    "RoboCop 2 (U) (PRG1) [!].nes",
     "Rockin' Kats (U) [!].nes",
     "SD Hero Soukessen - Taose! Aku no Gundan (J) [!].nes",
     "Shadow of the Ninja (U) [!].nes",
