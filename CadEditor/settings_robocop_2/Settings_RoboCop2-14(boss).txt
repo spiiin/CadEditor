@@ -1,0 +1,4 @@
+Final boss (RoboCop 2)
+Tilemap (whole screen): 14854-14c3b
+Palette bits: 14c3c-15053
+Palette: 15054-15073

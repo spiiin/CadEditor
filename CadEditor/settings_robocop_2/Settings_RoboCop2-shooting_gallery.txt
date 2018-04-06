@@ -1,0 +1,4 @@
+Shooting gallery
+Tilemap (whole screen): 14034-143f3
+Palette bits: 143f4-14833
+Palette: 14834-14853
