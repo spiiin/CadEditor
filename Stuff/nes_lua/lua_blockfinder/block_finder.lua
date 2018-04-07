@@ -177,7 +177,7 @@ function convertBlockLinear()
     end
 end
 
-function findBlocksInRom(rom, blocks, convertBlockFunc)
+function findBlocksInRom(rom, blocks, convertBlockFunc, blockStride)
     local foundTable = {}
     for i=1, #rom do
         foundTable[i]=-1
@@ -200,7 +200,7 @@ function findBlocksInRom(rom, blocks, convertBlockFunc)
             end
         end
     end
-    return calcLongestStrip(foundTable, 4)
+    return calcLongestStrip(foundTable, blockStride)
 end
 
 function totalLen(curIndexes)
@@ -284,7 +284,7 @@ function runStride(rom, ppu, minStride, maxStride)
     local blocks = mapToPpu(getAllIndexes({0,1,32,33}, getNextItem2x2), ppu)
     for stride = minStride, maxStride do
         print("Stride: ", stride)
-        local foundTable = findBlocksInRom(rom, blocks, convertBlockStride(stride))
+        local foundTable = findBlocksInRom(rom, blocks, convertBlockStride(stride), 4)
         printResults(foundTable)
         FCEU.frameadvance() --for not freeze emulator window
     end
@@ -292,13 +292,17 @@ end
 
 function runLinear(rom, ppu)
     print("Search linear 2x2 horizontal blocks")
-    printResults(findBlocksInRom(rom, mapToPpu(getAllIndexes({0,1,32,33}, getNextItem2x2), ppu), convertBlockLinear()))
+    printResults(findBlocksInRom(rom, mapToPpu(getAllIndexes({0,1,32,33}, getNextItem2x2), ppu), convertBlockLinear(), 4))
+    print("Search linear 2x2 horizontal blocks, with attrib bytes")
+    printResults(findBlocksInRom(rom, mapToPpu(getAllIndexes({0,1,32,33}, getNextItem2x2), ppu), convertBlockLinear(), 5))
     print("Search linear 2x2 vertical blocks")
-    printResults(findBlocksInRom(rom, mapToPpu(getAllIndexes({0,32,1,33}, getNextItem2x2), ppu), convertBlockLinear()))
+    printResults(findBlocksInRom(rom, mapToPpu(getAllIndexes({0,32,1,33}, getNextItem2x2), ppu), convertBlockLinear(), 4))
+    print("Search linear 2x2 vertical blocks, with attrib bytes")
+    printResults(findBlocksInRom(rom, mapToPpu(getAllIndexes({0,32,1,33}, getNextItem2x2), ppu), convertBlockLinear(), 5))
     print("Search linear 4x4 horizontal blocks")
-    printResults(findBlocksInRom(rom, mapToPpu(getAllIndexes({0,1,2,3, 32,33,34,35, 64,65,66,67, 96,97,98,99}, getNextItem4x4), ppu), convertBlockLinear()))
+    printResults(findBlocksInRom(rom, mapToPpu(getAllIndexes({0,1,2,3, 32,33,34,35, 64,65,66,67, 96,97,98,99}, getNextItem4x4), ppu), convertBlockLinear(), 16))
     print("Search linear 4x4 vertical blocks")
-    printResults(findBlocksInRom(rom, mapToPpu(getAllIndexes({0,32,64,96, 1,33,65,97, 2,34,66,98, 3,35,67,99}, getNextItem4x4), ppu), convertBlockLinear()))
+    printResults(findBlocksInRom(rom, mapToPpu(getAllIndexes({0,32,64,96, 1,33,65,97, 2,34,66,98, 3,35,67,99}, getNextItem4x4), ppu), convertBlockLinear(), 16))
     --print("Search linear 4x4 mirrored Y blocks")
     --printResults(findBlocksInRom(rom, mapToPpu(getAllIndexes({96,97,98,99, 64,65,66,67, 32,33,34,35, 0,1,2,3}, getNextItem4x4), ppu), convertBlockLinear()))
 end
