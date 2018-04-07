@@ -7,6 +7,10 @@ NAME_TABLE_ROW = 32
 ATTR_TABLE_ADDR = 0x23C0
 ATTR_TABLE_SIZE   = 64
 
+function selectNamepageForSearch(no)
+    NAME_TABLE_PAGE = no
+end
+
 function hex(arg)
   return string.format("%02x", arg)
 end
@@ -268,7 +272,7 @@ function printResults(foundTable)
     for i = 1,5 do
         local el = foundTable[i]
         if el ~= nil then
-        print("  Address: ", hex(el[1]), " Count: ", el[2])
+        print("    Address: ", hex(el[1]), " Count: ", el[2])
         end
     end
 end
@@ -282,6 +286,7 @@ function runStride(rom, ppu, minStride, maxStride)
         print("Stride: ", stride)
         local foundTable = findBlocksInRom(rom, blocks, convertBlockStride(stride))
         printResults(foundTable)
+        FCEU.frameadvance() --for not freeze emulator window
     end
 end
 
@@ -303,3 +308,33 @@ local ppu = ppu.readbyterange(0x0, 0x4000)
 runLinear(rom, ppu)
 runStride(rom, ppu, 255, 255)
 print("Complete!")
+print("Press 1 to restart search in ppu name table 0")
+print("Press 2 to start search in ppu name table 1")
+print("Press 3 to run stride search (take 1-2 minutes)")
+
+while true do
+    local t = input.get()
+    if t["1"] then
+        print("-----------------------------")
+        print("Linear search in name table 0")
+        selectNamepageForSearch(0)
+        runLinear(rom, ppu)
+        runStride(rom, ppu, 255, 255)
+    end
+    
+    if t["2"] then
+        print("-----------------------------")
+        print("Linear search in name table 1")
+        selectNamepageForSearch(1)
+        runLinear(rom, ppu)
+        runStride(rom, ppu, 255, 255)
+    end
+    
+    if t["3"] then
+        print("-----------------------------")
+        print("Stride search")
+        runStride(rom, ppu, 64, 255)
+    end
+    
+    FCEU.frameadvance();
+end;
