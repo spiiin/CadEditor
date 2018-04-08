@@ -1,0 +1,5 @@
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0xddbc);   }
+  public OffsetRec getVideoOffset()   { return new OffsetRec(0x30010, 1, 0x1000); }
+  public OffsetRec getPalOffset()     { return new OffsetRec(0xdd9c, 16, 16   ); }
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0xcf4c , 1  , 0x1000);  }
+  public int getPalBytesAddr()          { return 0xce4c; }

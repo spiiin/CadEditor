@@ -4,9 +4,9 @@ using System.Drawing;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x146f0, 1 , 7*40);   }
-  public int getScreenWidth()          { return 40; }
-  public int getScreenHeight()         { return 7; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x17ae3, 1 , 8*48);   }
+  public int getScreenWidth()          { return 48; }
+  public int getScreenHeight()         { return 8; }
   
   public bool getScreenVertical()      { return true; }
   
@@ -16,17 +16,17 @@ public class Data
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
   
-  public OffsetRec getVideoOffset()   { return new OffsetRec(0x2c010, 1, 0x1000); }
-  public OffsetRec getPalOffset()     { return new OffsetRec(0x70a9, 16, 16   ); }
+  public OffsetRec getVideoOffset()   { return new OffsetRec(0x33010, 1, 0x1000); }
+  public OffsetRec getPalOffset()     { return new OffsetRec(0x7029, 16, 16   ); }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc()         { return Utils.getChrAddress; }
   public GetVideoChunkFunc    getVideoChunkFunc()            { return Utils.getVideoChunk; }
   public SetVideoChunkFunc    setVideoChunkFunc()            { return Utils.setVideoChunk; }
   
-  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x14110 , 1  , 0x1000);  }
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x171b3 , 1  , 0x1000);  }
   public int getBlocksCount()           { return 256; }
   public int getBigBlocksCount()        { return 256; }
-  public int getPalBytesAddr()          { return 0x14010; }
+  public int getPalBytesAddr()          { return 0x170b3; }
   public GetBlocksFunc        getBlocksFunc() { return Utils.getBlocksFromTiles16Pal1;}
   public SetBlocksFunc        setBlocksFunc() { return Utils.setBlocksFromTiles16Pal1;}
   public GetPalFunc           getPalFunc() { return Utils.getPalleteLinear;}

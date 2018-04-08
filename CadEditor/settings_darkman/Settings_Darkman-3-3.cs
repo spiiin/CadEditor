@@ -4,9 +4,9 @@ using System.Drawing;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x146f0, 1 , 7*40);   }
-  public int getScreenWidth()          { return 40; }
-  public int getScreenHeight()         { return 7; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x14530, 1 , 56*8);   }
+  public int getScreenWidth()          { return 56; }
+  public int getScreenHeight()         { return 8; }
   
   public bool getScreenVertical()      { return true; }
   
@@ -17,7 +17,7 @@ public class Data
   public bool isEnemyEditorEnabled()    { return false; }
   
   public OffsetRec getVideoOffset()   { return new OffsetRec(0x2c010, 1, 0x1000); }
-  public OffsetRec getPalOffset()     { return new OffsetRec(0x70a9, 16, 16   ); }
+  public OffsetRec getPalOffset()     { return new OffsetRec(0x70c9, 16, 16   ); }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc()         { return Utils.getChrAddress; }
   public GetVideoChunkFunc    getVideoChunkFunc()            { return Utils.getVideoChunk; }
