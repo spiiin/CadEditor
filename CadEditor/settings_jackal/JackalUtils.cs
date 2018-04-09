@@ -50,6 +50,27 @@ public static class JackalUtils
     Utils.writeBlocksLinearTiles16Pal1(blocksData, Globals.romdata,tileAddr, ConfigScript.getPalBytesAddr(), ConfigScript.getBlocksCount());
   }
   
+  public static ObjRec[] getBlocksFromTiles16Pal1Shifted(int blockIndex)
+  {
+      int tileAddr = (blockIndex == 0) ? ConfigScript.getTilesAddr(0) : 0x10625; //two different block sets
+      var bb = Utils.readBlocksLinearTiles16Pal1(Globals.romdata, tileAddr, ConfigScript.getPalBytesAddr(), ConfigScript.getBlocksCount());
+      for (int i = 0; i < bb.Length; i++)
+      {
+        bb[i] = JackalUtils.vertMirror(bb[i]);
+      }
+      return bb;
+  }
+
+  public static void setBlocksFromTiles16Pal1Shifted(int blockIndex, ObjRec[] blocksData)
+  {
+    int tileAddr = (blockIndex == 0) ? ConfigScript.getTilesAddr(0) : 0x10625; //two different block sets
+    for (int i = 0; i < blocksData.Length; i++)
+    {
+      blocksData[i] = JackalUtils.vertMirror(blocksData[i]); //TODO: remove inplace changes
+    }
+    Utils.writeBlocksLinearTiles16Pal1(blocksData, Globals.romdata,tileAddr, ConfigScript.getPalBytesAddr(), ConfigScript.getBlocksCount());
+  }
+  
   public static int getBigTileNoFromScreen(int[] screenData, int index)
   {
     int w = ConfigScript.getScreenWidth(0);

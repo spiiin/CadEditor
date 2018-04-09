@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class Data
 { 
-  public OffsetRec getScreensOffset()     { return new OffsetRec(0x10cf8, 1, 16*96);  }
+  public OffsetRec getScreensOffset()     { return new OffsetRec(0x11a0f, 1, 16*96);  }
   public int getScreenWidth()    { return 16; }
   public int getScreenHeight()   { return 96; }
   
@@ -22,11 +22,11 @@ public class Data
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChunk;   }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
-  public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x111e8  , 2  , 0x1000);  }
-  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x111e8  , 2  , 0x1000);  }
-  public int getBlocksCount()           { return 128; }
-  public int getBigBlocksCount()        { return 128; }
-  public int getPalBytesAddr()          { return 0x11988; }
+  public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x11eff  , 2  , 0x1000);  }
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x11eff  , 2  , 0x1000);  }
+  public int getBlocksCount()           { return 116; }
+  public int getBigBlocksCount()        { return 116; }
+  public int getPalBytesAddr()          { return 0x11eff + 16*116; }
   public GetBlocksFunc        getBlocksFunc() { return JackalUtils.getBlocksFromTiles16Pal1Shifted;}
   public SetBlocksFunc        setBlocksFunc() { return JackalUtils.setBlocksFromTiles16Pal1Shifted;}
   
@@ -41,11 +41,11 @@ public class Data
   
   public byte[] getVideoChunk(int videoPageId)
   {
-     return Utils.readVideoBankFromFile("chr2.bin", videoPageId);
+     return Utils.readVideoBankFromFile("chr4.bin", videoPageId);
   }
   
   public byte[] getPallete(int palId)
   {
-    return Utils.readBinFile("pal2.bin");
+    return Utils.readBinFile("pal4.bin");
   }
 }
