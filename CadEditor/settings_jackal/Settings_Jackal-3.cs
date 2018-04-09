@@ -5,7 +5,7 @@ using System.Drawing;
 
 public class Data
 { 
-  public OffsetRec getScreensOffset()     { return new OffsetRec(0x10cf8 /*- 16 * 96*/, 1, 16*96);  }
+  public OffsetRec getScreensOffset()     { return new OffsetRec(0x14025, 1, 16*96);  }
   public int getScreenWidth()    { return 16; }
   public int getScreenHeight()   { return 96; }
   
@@ -22,11 +22,11 @@ public class Data
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChunk;   }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
-  public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x111e8  , 2  , 0x1000);  }
-  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x111e8  , 2  , 0x1000);  }
-  public int getBlocksCount()           { return 128; }
-  public int getBigBlocksCount()        { return 128; }
-  public int getPalBytesAddr()          { return 0x11988; }
+  public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x14625  , 1  , 0x1000);  }
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x14625  , 1  , 0x1000);  }
+  public int getBlocksCount()           { return 125; }
+  public int getBigBlocksCount()        { return 125; }
+  public int getPalBytesAddr()          { return 0x14625 + 16*125; }
   public GetBlocksFunc        getBlocksFunc() { return getBlocksFromTiles16Pal1;}
   public SetBlocksFunc        setBlocksFunc() { return setBlocksFromTiles16Pal1;}
   
@@ -41,12 +41,12 @@ public class Data
   
   public byte[] getVideoChunk(int videoPageId)
   {
-     return Utils.readVideoBankFromFile("chr2.bin", videoPageId);
+     return Utils.readVideoBankFromFile("chr3.bin", videoPageId);
   }
   
   public byte[] getPallete(int palId)
   {
-    return Utils.readBinFile("pal2.bin");
+    return Utils.readBinFile("pal3.bin");
   }
   
   public ObjRec vertMirror(ObjRec obj)
@@ -78,7 +78,7 @@ public class Data
   
   public ObjRec[] getBlocksFromTiles16Pal1(int blockIndex)
   {
-      int tileAddr = (blockIndex == 0) ? ConfigScript.getTilesAddr(0) : 0x10625; //two different block sets
+      int tileAddr = ConfigScript.getTilesAddr(blockIndex);
       var bb = Utils.readBlocksLinearTiles16Pal1(Globals.romdata, tileAddr, ConfigScript.getPalBytesAddr(), ConfigScript.getBlocksCount());
       for (int i = 0; i < bb.Length; i++)
       {
@@ -89,7 +89,7 @@ public class Data
 
   public void setBlocksFromTiles16Pal1(int blockIndex, ObjRec[] blocksData)
   {
-    int tileAddr = (blockIndex == 0) ? 0x111e8 : 0x10625; //two different block sets
+    int tileAddr = ConfigScript.getTilesAddr(blockIndex);
     for (int i = 0; i < blocksData.Length; i++)
     {
       blocksData[i] = vertMirror(blocksData[i]); //TODO: remove inplace changes

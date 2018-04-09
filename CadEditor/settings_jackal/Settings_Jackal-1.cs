@@ -45,11 +45,7 @@ public class Data
   
   public byte[] getPallete(int palId)
   {
-    var pallete = new byte[] { 
-      0x0f, 0x01, 0x11, 0x20, 0x0f, 0x27, 0x08, 0x17,
-      0x0f, 0x27, 0x00, 0x10, 0x0f, 0x27, 0x0a, 0x1b
-    }; 
-    return pallete;
+    return Utils.readBinFile("pal1.bin");
   }
   
   public ObjRec vertMirror(ObjRec obj)
