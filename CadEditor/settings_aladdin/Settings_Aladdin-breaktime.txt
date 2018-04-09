@@ -1,0 +1,2 @@
+Screen: 0x357f1 (using RLE)
+Palette bits: 0x35c50 + 256*4
