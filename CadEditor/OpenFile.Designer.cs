@@ -33,11 +33,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tbFileName = new System.Windows.Forms.TextBox();
-            this.tbConfigName = new System.Windows.Forms.TextBox();
             this.ofOpenDialog = new System.Windows.Forms.OpenFileDialog();
             this.btClose = new System.Windows.Forms.Button();
             this.tbDumpName = new System.Windows.Forms.TextBox();
             this.lbDumpName = new System.Windows.Forms.Label();
+            this.btConfigSelect = new System.Windows.Forms.Button();
+            this.cbConfigName = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // btOpen
@@ -45,7 +46,7 @@
             this.btOpen.Location = new System.Drawing.Point(16, 142);
             this.btOpen.Margin = new System.Windows.Forms.Padding(4);
             this.btOpen.Name = "btOpen";
-            this.btOpen.Size = new System.Drawing.Size(296, 28);
+            this.btOpen.Size = new System.Drawing.Size(275, 28);
             this.btOpen.TabIndex = 0;
             this.btOpen.Text = "Open";
             this.btOpen.UseVisualStyleBackColor = true;
@@ -76,18 +77,9 @@
             this.tbFileName.Location = new System.Drawing.Point(126, 72);
             this.tbFileName.Margin = new System.Windows.Forms.Padding(4);
             this.tbFileName.Name = "tbFileName";
-            this.tbFileName.Size = new System.Drawing.Size(479, 22);
+            this.tbFileName.Size = new System.Drawing.Size(430, 22);
             this.tbFileName.TabIndex = 3;
             this.tbFileName.Click += new System.EventHandler(this.tbFileName_Click);
-            // 
-            // tbConfigName
-            // 
-            this.tbConfigName.Location = new System.Drawing.Point(126, 24);
-            this.tbConfigName.Margin = new System.Windows.Forms.Padding(4);
-            this.tbConfigName.Name = "tbConfigName";
-            this.tbConfigName.Size = new System.Drawing.Size(479, 22);
-            this.tbConfigName.TabIndex = 4;
-            this.tbConfigName.Click += new System.EventHandler(this.tbConfigName_Click);
             // 
             // ofOpenDialog
             // 
@@ -95,10 +87,10 @@
             // 
             // btClose
             // 
-            this.btClose.Location = new System.Drawing.Point(320, 142);
+            this.btClose.Location = new System.Drawing.Point(299, 142);
             this.btClose.Margin = new System.Windows.Forms.Padding(4);
             this.btClose.Name = "btClose";
-            this.btClose.Size = new System.Drawing.Size(287, 28);
+            this.btClose.Size = new System.Drawing.Size(257, 28);
             this.btClose.TabIndex = 5;
             this.btClose.Text = "Cancel";
             this.btClose.UseVisualStyleBackColor = true;
@@ -106,10 +98,10 @@
             // 
             // tbDumpName
             // 
-            this.tbDumpName.Location = new System.Drawing.Point(128, 112);
+            this.tbDumpName.Location = new System.Drawing.Point(126, 112);
             this.tbDumpName.Margin = new System.Windows.Forms.Padding(4);
             this.tbDumpName.Name = "tbDumpName";
-            this.tbDumpName.Size = new System.Drawing.Size(479, 22);
+            this.tbDumpName.Size = new System.Drawing.Size(430, 22);
             this.tbDumpName.TabIndex = 7;
             this.tbDumpName.Click += new System.EventHandler(this.tbDumpName_Click);
             // 
@@ -123,15 +115,36 @@
             this.lbDumpName.TabIndex = 6;
             this.lbDumpName.Text = "Dump file name:";
             // 
+            // btConfigSelect
+            // 
+            this.btConfigSelect.Location = new System.Drawing.Point(564, 21);
+            this.btConfigSelect.Margin = new System.Windows.Forms.Padding(4);
+            this.btConfigSelect.Name = "btConfigSelect";
+            this.btConfigSelect.Size = new System.Drawing.Size(43, 28);
+            this.btConfigSelect.TabIndex = 8;
+            this.btConfigSelect.Text = "...";
+            this.btConfigSelect.UseVisualStyleBackColor = true;
+            this.btConfigSelect.Click += new System.EventHandler(this.tbConfigName_Click);
+            // 
+            // cbConfigName
+            // 
+            this.cbConfigName.FormattingEnabled = true;
+            this.cbConfigName.Location = new System.Drawing.Point(126, 25);
+            this.cbConfigName.MaxDropDownItems = 32;
+            this.cbConfigName.Name = "cbConfigName";
+            this.cbConfigName.Size = new System.Drawing.Size(430, 24);
+            this.cbConfigName.TabIndex = 9;
+            // 
             // OpenFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 185);
+            this.Controls.Add(this.cbConfigName);
+            this.Controls.Add(this.btConfigSelect);
             this.Controls.Add(this.tbDumpName);
             this.Controls.Add(this.lbDumpName);
             this.Controls.Add(this.btClose);
-            this.Controls.Add(this.tbConfigName);
             this.Controls.Add(this.tbFileName);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -154,10 +167,11 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbFileName;
-        private System.Windows.Forms.TextBox tbConfigName;
         private System.Windows.Forms.OpenFileDialog ofOpenDialog;
         private System.Windows.Forms.Button btClose;
         private System.Windows.Forms.TextBox tbDumpName;
         private System.Windows.Forms.Label lbDumpName;
+        private System.Windows.Forms.Button btConfigSelect;
+        private System.Windows.Forms.ComboBox cbConfigName;
     }
 }
