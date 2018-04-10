@@ -21,6 +21,7 @@ public class Data:CapcomBase
   public GetLevelRecsFunc getLevelRecsFunc() { return getLevelRecs; }
   public GetObjectsFunc getObjectsFunc() { return getObjectsDwd; }
   public SetObjectsFunc setObjectsFunc() { return setObjectsDwd; }
+  public byte[] getScrollByteArray() { return new byte[] { 0x42, 0x42, 0x43, 0x03, 0x00, 0xC0, 0xC0, 0x41 }; }
   
   public IList<LevelRec> getLevelRecs()
   {

@@ -142,8 +142,11 @@ namespace CadEditor
         {
             if (curLevelLayerData.scroll != null)
             {
-                var scrollByteArray = new byte[] { 0x42, 0x42, 0x43, 0x03, 0x00, 0xC0, 0xC0, 0x41 };
-                curLevelLayerData.scroll[index] = scrollByteArray[curActiveBlock];
+                var scrollByteArray = ConfigScript.getScrollByteArray();
+                if (curActiveBlock < scrollByteArray.Length)
+                {
+                    curLevelLayerData.scroll[index] = scrollByteArray[curActiveBlock];
+                }
             }
         }
 

@@ -241,6 +241,7 @@ namespace CadEditor
 
             showScrollsInLayout = callFromScript(asm, data, "*.isShowScrollsInLayout", true);
             scrollsOffsetFromLayout = callFromScript(asm, data, "*.getScrollsOffsetFromLayout", 0);
+            scrollByteArray = callFromScript(asm, data, "*.getScrollByteArray", new byte[0]);
 
             blocksCount    = callFromScript(asm, data, "*.getBlocksCount"   , 256);
 
@@ -640,6 +641,11 @@ namespace CadEditor
         {
             return bigBlocksHierarchyCount;
         }
+
+        public static byte[] getScrollByteArray()
+        {
+            return scrollByteArray;
+        }
         //------------------------------------------------------------
 
         public static T callFromScript<T>(AsmHelper script, object data, string funcName, T defaultValue = default(T), params object[] funcParams)
@@ -738,6 +744,7 @@ namespace CadEditor
 
         public static bool showScrollsInLayout;
         public static int scrollsOffsetFromLayout;
+        public static byte[] scrollByteArray;
 
         public static bool usePicturesInstedBlocks;
         public static int blocksPicturesWidth;

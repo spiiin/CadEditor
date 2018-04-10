@@ -29,6 +29,8 @@ public class Data : CapcomBase
   public string getObjTypesPicturesDir() { return "obj_sprites_dwd"; }
   public override GetLayoutFunc getLayoutFunc() { return dwdGetLayout; }
   
+  public byte[] getScrollByteArray() { return new byte[] { 0x42, 0x42, 0x43, 0x03, 0x00, 0xC0, 0xC0, 0x41 }; }
+  
   public IList<LevelRec> getLevelRecs()
   {
       var groups = ConfigScript.getGroups();
