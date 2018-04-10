@@ -1,12 +1,14 @@
 using CadEditor;
+using PluginMapEditor;
 using System.Collections.Generic;
 //css_include Settings_CapcomBase.cs;
 public class Data:CapcomBase
 {
   public string[] getPluginNames() 
   {
-    return new string[] 
-    {
+    return new string[]  
+    { 
+      "PluginMapEditor.dll",
       "PluginChrView.dll",
       "PluginEditLayout.dll",
       "PluginAnimEditor.dll",
@@ -22,6 +24,15 @@ public class Data:CapcomBase
   public GetObjectsFunc getObjectsFunc() { return getObjectsDwd; }
   public SetObjectsFunc setObjectsFunc() { return setObjectsDwd; }
   public byte[] getScrollByteArray() { return new byte[] { 0x42, 0x42, 0x43, 0x03, 0x00, 0xC0, 0xC0, 0x41 }; }
+  
+  public MapInfo[] getMapsInfo() { return mapsDwd; }
+  public LoadMapFunc getLoadMapFunc() { return MapUtils.loadMapDwd; }
+  public SaveMapFunc getSaveMapFunc() { return MapUtils.saveMapDwd; }
+
+  MapInfo[] mapsDwd = new MapInfo[]
+  { 
+      new MapInfo(){ dataAddr = 0x8067, palAddr = 0x8D62, videoNo = 9 },
+  };
   
   public IList<LevelRec> getLevelRecs()
   {
