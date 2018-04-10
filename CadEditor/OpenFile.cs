@@ -34,8 +34,18 @@ namespace CadEditor
                 cbConfigName.Text = ofOpenDialog.FileName;
                 updateCbConfigInDirectory(cbConfigName.Text);
                 var showDumpField = ConfigScript.PreloadShowDumpField(cbConfigName.Text);
-                tbDumpName.Enabled = showDumpField;
-                lbDumpName.Enabled = showDumpField;
+                updateDumpFieldVisible(showDumpField);
+            }
+        }
+
+        private void updateDumpFieldVisible(bool showDumpField)
+        {
+            tbDumpName.Enabled = showDumpField;
+            lbDumpName.Enabled = showDumpField;
+            btDumpSelect.Enabled = showDumpField;
+            if (!showDumpField)
+            {
+                tbDumpName.Text = "";
             }
         }
 
@@ -99,8 +109,7 @@ namespace CadEditor
             }
 
             var showDumpField = ConfigScript.PreloadShowDumpField(cbConfigName.Text);
-            tbDumpName.Enabled = showDumpField;
-            lbDumpName.Enabled = showDumpField;
+            updateDumpFieldVisible(showDumpField);
 
             if (FileName == "" && ConfigScript.romName != "")
                 tbFileName.Text = ConfigScript.romName;

@@ -39,6 +39,8 @@
             this.lbDumpName = new System.Windows.Forms.Label();
             this.btConfigSelect = new System.Windows.Forms.Button();
             this.cbConfigName = new System.Windows.Forms.ComboBox();
+            this.btRomSelect = new System.Windows.Forms.Button();
+            this.btDumpSelect = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btOpen
@@ -79,7 +81,6 @@
             this.tbFileName.Name = "tbFileName";
             this.tbFileName.Size = new System.Drawing.Size(430, 22);
             this.tbFileName.TabIndex = 3;
-            this.tbFileName.Click += new System.EventHandler(this.tbFileName_Click);
             // 
             // ofOpenDialog
             // 
@@ -103,7 +104,6 @@
             this.tbDumpName.Name = "tbDumpName";
             this.tbDumpName.Size = new System.Drawing.Size(430, 22);
             this.tbDumpName.TabIndex = 7;
-            this.tbDumpName.Click += new System.EventHandler(this.tbDumpName_Click);
             // 
             // lbDumpName
             // 
@@ -117,10 +117,10 @@
             // 
             // btConfigSelect
             // 
-            this.btConfigSelect.Location = new System.Drawing.Point(564, 21);
+            this.btConfigSelect.Location = new System.Drawing.Point(563, 25);
             this.btConfigSelect.Margin = new System.Windows.Forms.Padding(4);
             this.btConfigSelect.Name = "btConfigSelect";
-            this.btConfigSelect.Size = new System.Drawing.Size(43, 28);
+            this.btConfigSelect.Size = new System.Drawing.Size(43, 24);
             this.btConfigSelect.TabIndex = 8;
             this.btConfigSelect.Text = "...";
             this.btConfigSelect.UseVisualStyleBackColor = true;
@@ -135,11 +135,35 @@
             this.cbConfigName.Size = new System.Drawing.Size(430, 24);
             this.cbConfigName.TabIndex = 9;
             // 
+            // btRomSelect
+            // 
+            this.btRomSelect.Location = new System.Drawing.Point(563, 72);
+            this.btRomSelect.Margin = new System.Windows.Forms.Padding(4);
+            this.btRomSelect.Name = "btRomSelect";
+            this.btRomSelect.Size = new System.Drawing.Size(43, 24);
+            this.btRomSelect.TabIndex = 10;
+            this.btRomSelect.Text = "...";
+            this.btRomSelect.UseVisualStyleBackColor = true;
+            this.btRomSelect.Click += new System.EventHandler(this.tbFileName_Click);
+            // 
+            // btDumpSelect
+            // 
+            this.btDumpSelect.Location = new System.Drawing.Point(564, 111);
+            this.btDumpSelect.Margin = new System.Windows.Forms.Padding(4);
+            this.btDumpSelect.Name = "btDumpSelect";
+            this.btDumpSelect.Size = new System.Drawing.Size(43, 24);
+            this.btDumpSelect.TabIndex = 11;
+            this.btDumpSelect.Text = "...";
+            this.btDumpSelect.UseVisualStyleBackColor = true;
+            this.btDumpSelect.Click += new System.EventHandler(this.tbDumpName_Click);
+            // 
             // OpenFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 185);
+            this.Controls.Add(this.btDumpSelect);
+            this.Controls.Add(this.btRomSelect);
             this.Controls.Add(this.cbConfigName);
             this.Controls.Add(this.btConfigSelect);
             this.Controls.Add(this.tbDumpName);
@@ -173,5 +197,7 @@
         private System.Windows.Forms.Label lbDumpName;
         private System.Windows.Forms.Button btConfigSelect;
         private System.Windows.Forms.ComboBox cbConfigName;
+        private System.Windows.Forms.Button btRomSelect;
+        private System.Windows.Forms.Button btDumpSelect;
     }
 }
