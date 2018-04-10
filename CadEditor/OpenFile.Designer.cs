@@ -80,7 +80,7 @@
             this.tbFileName.Margin = new System.Windows.Forms.Padding(4);
             this.tbFileName.Name = "tbFileName";
             this.tbFileName.Size = new System.Drawing.Size(430, 22);
-            this.tbFileName.TabIndex = 3;
+            this.tbFileName.TabIndex = 6;
             // 
             // ofOpenDialog
             // 
@@ -121,7 +121,7 @@
             this.btConfigSelect.Margin = new System.Windows.Forms.Padding(4);
             this.btConfigSelect.Name = "btConfigSelect";
             this.btConfigSelect.Size = new System.Drawing.Size(43, 24);
-            this.btConfigSelect.TabIndex = 8;
+            this.btConfigSelect.TabIndex = 2;
             this.btConfigSelect.Text = "...";
             this.btConfigSelect.UseVisualStyleBackColor = true;
             this.btConfigSelect.Click += new System.EventHandler(this.tbConfigName_Click);
@@ -133,7 +133,7 @@
             this.cbConfigName.MaxDropDownItems = 32;
             this.cbConfigName.Name = "cbConfigName";
             this.cbConfigName.Size = new System.Drawing.Size(430, 24);
-            this.cbConfigName.TabIndex = 9;
+            this.cbConfigName.TabIndex = 1;
             // 
             // btRomSelect
             // 
@@ -141,7 +141,7 @@
             this.btRomSelect.Margin = new System.Windows.Forms.Padding(4);
             this.btRomSelect.Name = "btRomSelect";
             this.btRomSelect.Size = new System.Drawing.Size(43, 24);
-            this.btRomSelect.TabIndex = 10;
+            this.btRomSelect.TabIndex = 3;
             this.btRomSelect.Text = "...";
             this.btRomSelect.UseVisualStyleBackColor = true;
             this.btRomSelect.Click += new System.EventHandler(this.tbFileName_Click);
@@ -152,7 +152,7 @@
             this.btDumpSelect.Margin = new System.Windows.Forms.Padding(4);
             this.btDumpSelect.Name = "btDumpSelect";
             this.btDumpSelect.Size = new System.Drawing.Size(43, 24);
-            this.btDumpSelect.TabIndex = 11;
+            this.btDumpSelect.TabIndex = 4;
             this.btDumpSelect.Text = "...";
             this.btDumpSelect.UseVisualStyleBackColor = true;
             this.btDumpSelect.Click += new System.EventHandler(this.tbDumpName_Click);
