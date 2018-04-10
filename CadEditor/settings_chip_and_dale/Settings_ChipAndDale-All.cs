@@ -31,7 +31,7 @@ public class Data:CapcomBase
   public SetObjectsFunc setObjectsFunc() { return setObjectsCad; }
   
   public override GetLayoutFunc  getLayoutFunc()  { return getLayoutCad;   }          
-  public override SetLayoutFunc  setLayoutFunc()  { return Utils.setLayoutLinear;   } //auto crop hi-part of numbers >256
+  public override SetLayoutFunc  setLayoutFunc()  { return setLayoutCad;   } //auto crop hi-part of numbers >256
   
   public bool isBigBlockEditorEnabled() { return true; }
   public bool isBlockEditorEnabled()    { return true; }
@@ -65,6 +65,12 @@ public class Data:CapcomBase
       return (Globals.romdata[baseOffset + 165 + no] << 8) + Globals.romdata[baseOffset + 150 + no] + getLayoutPtrAdd();
   }
   
+  public int getScrollAddr(int no)
+  {
+      int baseOffset = getLevelRecBaseOffset();
+      return (Globals.romdata[baseOffset + 195 + no] << 8) + Globals.romdata[baseOffset + 180 + no] + getScrollPtrAdd();
+  }
+  
   public int getLayoutWidth(int no)
   {
       int baseOffset = getLevelRecBaseOffset();
@@ -77,22 +83,49 @@ public class Data:CapcomBase
        return Globals.romdata[baseOffset + 30 + no]+1;
   }
   
-  public static LevelLayerData getLayoutCad(int curActiveLayout)
+  public LevelLayerData getLayoutCad(int curActiveLayout)
   {
       var layout = Utils.getLayoutLinear(curActiveLayout);
       
-      if ((curActiveLayout != 5) && (curActiveLayout != 8))
+      if ((curActiveLayout == 5) || (curActiveLayout == 8))
       {
-        return layout;
+          //additional +256 for levels E and H
+          var layer = layout.layer;
+          for (int i = 0; i < layer.Length; i++)
+          {
+            layer[i] += 0x100;
+          }
       }
       
-      //additional +256 for levels E and H
-      var layer = layout.layer;
-      for (int i = 0; i < layer.Length; i++)
+      var scrolls = new int[layout.layer.Length];
+      int scrollAddr = getScrollAddr(curActiveLayout);
+      for (int i = 0; i < scrolls.Length; i++)
       {
-        layer[i] += 0x100;
+        scrolls[i] = Globals.romdata[scrollAddr + i];
       }
+      layout.scroll = scrolls;
       return layout;
+  }
+  
+  public bool setLayoutCad(LevelLayerData curActiveLayerData, int curActiveLayout)
+  {
+      int layerAddr, scrollAddr, width, height;
+      layerAddr = getLayoutAddr(curActiveLayout);
+      scrollAddr = getScrollAddr(curActiveLayout);
+      width = curActiveLayerData.width;
+      height = curActiveLayerData.height;
+      for (int i = 0; i < width * height; i++)
+      {
+          Globals.romdata[layerAddr + i] = (byte)curActiveLayerData.layer[i];
+      }
+      if (curActiveLayerData.scroll != null)
+      {
+          for (int i = 0; i < width * height; i++)
+          {
+              Globals.romdata[scrollAddr + i] = (byte)curActiveLayerData.scroll[i];
+          }
+      }
+      return true;
   }
   
   public GroupRec[] getGroups()

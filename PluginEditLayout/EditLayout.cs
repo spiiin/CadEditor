@@ -92,7 +92,7 @@ namespace CadEditor
 
         private void reloadLevelLayer()
         {
-            curLevelLayerData = ConfigScript.getLayoutFunc(curActiveLayout);
+            curLevelLayerData = ConfigScript.getLayout(curActiveLayout);
             curActiveBlock = 0;
             pbMap.Invalidate();
         }
