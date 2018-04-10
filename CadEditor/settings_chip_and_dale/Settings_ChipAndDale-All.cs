@@ -48,7 +48,7 @@ public class Data:CapcomBase
   public int getDirPtrAdd()          { return 0x8010;  }
   public int getDoorRecBaseOffset()  { return 0x1E673; }
   
-  public byte[] getScrollByteArray() { return new byte[] { 0x40, 0x40, 0x80, 0x03, 0x00, 0xC0, 0xA0, 0xE0 }; }
+  public byte[] getScrollByteArray() { return new byte[] { 0x40, 0x40, 0x80, 0x03, 0x00, 0xA0, 0xC0, 0xE0 }; }
   
   public MapInfo[] getMapsInfo() { return mapsCad; }
   public LoadMapFunc getLoadMapFunc() { return MapUtils.loadMapCad; }
