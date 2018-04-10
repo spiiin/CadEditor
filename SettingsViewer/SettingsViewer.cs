@@ -248,6 +248,8 @@ namespace SettingsViewer
         public MethodDelegate isShowScrollsInLayout { get { return get(); } }
         [Category("Scrolls params")]
         public MethodDelegate getScrollsOffsetFromLayout { get { return get(); } }
+        [Category("Scrolls params")]
+        public MethodDelegate getScrollByteArray { get { return get(); } }
         [Category("Blocks params")]
         public MethodDelegate getBlocksCount { get { return get(); } }
         [Category("Blocks pictures params")]
