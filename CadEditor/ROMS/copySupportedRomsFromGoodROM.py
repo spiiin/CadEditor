@@ -86,6 +86,7 @@ fnames = [
     "Teenage Mutant Ninja Turtles III - The Manhattan Project (U) [!].nes",
     "Terminator 2 - Judgment Day (E) [!].nes",
     "Tiny Toon Adventures (U) [!].nes",
+    "Tiny Toon Adventures 2 - Trouble in Wackyland (U) [!].nes",
     "Tom & Jerry (and Tuffy) (J).nes",
     "Toxic Crusaders (U) [!].nes",
     "Young Indiana Jones Chronicles, The (U) [!].nes",
