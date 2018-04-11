@@ -144,6 +144,7 @@
             this.mapScreen2.TabIndex = 6;
             this.mapScreen2.TabStop = false;
             this.mapScreen2.Paint += new System.Windows.Forms.PaintEventHandler(this.mapScreen2_Paint);
+            this.mapScreen2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mapScreen2_MouseClick);
             // 
             // blocksScreen
             // 

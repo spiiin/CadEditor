@@ -182,11 +182,11 @@ namespace CadEditor
             }
         }
 
-        private void mapScreen_MouseClick(object sender, MouseEventArgs e)
+        private void clickOnMapScreen(MouseEventArgs e, MapData mapData)
         {
             int x = e.X / 16;
             int y = e.Y / 16;
-            if ((x < 0) || (x >= mapDatas[0].width) || (y < 0) || (y >= mapDatas[0].height))
+            if ((x < 0) || (x >= mapData.width) || (y < 0) || (y >= mapData.height))
             {
                 return;
             }
@@ -195,22 +195,37 @@ namespace CadEditor
             {
                 if (!MapConfig.readOnly)
                 {
-                    mapDatas[0].mapData[y * mapDatas[0].width + x] = curActiveBlock;
+                    mapData.mapData[y * mapData.width + x] = curActiveBlock;
                 }
             }
             else
             {
                 //bit magic!!!
-                int attrIndex = x / 4 + mapDatas[0].width/4 * (y / 4);
-                int colorByte = mapDatas[0].attrData[attrIndex];
+                int attrIndex = x / 4 + mapData.width / 4 * (y / 4);
+                int colorByte = mapData.attrData[attrIndex];
                 int startBitIndex = x % 4 / 2 * 2 + y % 4 / 2 * 4;  //get start bit index
                 int subPal = (colorByte >> startBitIndex) & 0x03;   //get 2 bits for subpal
                 subPal = (subPal + 1) & 0x3;                        //round increment it
                 colorByte &= ~(3 << startBitIndex);                 //clear 2 bits in color byte
                 colorByte |= (subPal << startBitIndex);             //set 2 bits according subpal
-                mapDatas[0].attrData[attrIndex] = colorByte;
+                mapData.attrData[attrIndex] = colorByte;
             }
+            
+        }
+
+        private void mapScreen_MouseClick(object sender, MouseEventArgs e)
+        {
+            clickOnMapScreen(e, mapDatas[0]);
             mapScreen.Invalidate();
+        }
+
+        private void mapScreen2_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (mapDatas.Length > 1)
+            {
+                clickOnMapScreen(e, mapDatas[1]);
+                mapScreen2.Invalidate();
+            }
         }
 
         private void btSave_Click(object sender, EventArgs e)
@@ -222,6 +237,7 @@ namespace CadEditor
         {
             showAxis = cbShowAxis.Checked;
             mapScreen.Invalidate();
+            mapScreen2.Invalidate();
             blocksScreen.Invalidate();
         }
 

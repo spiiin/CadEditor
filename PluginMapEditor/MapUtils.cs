@@ -16,6 +16,8 @@ namespace PluginMapEditor
             int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
             int[] mapData = new int[960];
             int[] attrData = new int[64];
+            int[] mapData2 = new int[960];
+            int[] attrData2 = new int[64];
             while (Globals.romdata[romAddr] != 0xFF)
             {
                 int videoAddr = Utils.readWord(Globals.romdata, romAddr) - 0x2000;
@@ -25,15 +27,27 @@ namespace PluginMapEditor
                 {
                     if (videoAddr < mapData.Length)
                     {
+                        //write in name table 1, data
                         mapData[videoAddr++] = Globals.romdata[romAddr++];
+                    }
+                    else if (videoAddr < (mapData.Length + attrData.Length))
+                    {
+                        //write in name table 1, attributes
+                        attrData[-960 + videoAddr++] = Globals.romdata[romAddr++];
+                    }
+                    else if (videoAddr < mapData.Length * 2 + attrData.Length)
+                    {
+                        //write in name table 2, data
+                        mapData2[-960 - 64 + videoAddr++] = Globals.romdata[romAddr++];
                     }
                     else
                     {
-                        attrData[-960 + videoAddr++] = Globals.romdata[romAddr++];
+                        //write in name table 2, attributes
+                        attrData2[-960 * 2 - 64 + videoAddr++] = Globals.romdata[romAddr++];
                     }
                 }
             }
-            return new MapData[] { new MapData(mapData, attrData, 32) };
+            return new MapData[] { new MapData(mapData, attrData, 32) , new MapData(mapData2, attrData2, 32) };
         }
 
         public static MapData[] loadMapCad(int mapNo)
@@ -129,9 +143,16 @@ namespace PluginMapEditor
 
         public static int saveMapDwd(int mapNo, MapData[] mapData, out byte[] packedData)
         {
-            packedData = new byte[(256 + 3) * 4]; //max size, for one name table
+            packedData = new byte[(256 + 3) * 4 * 2]; //max size, for two name tables
             var s = new MemoryStream(packedData);
-            var full = mapData[0].getFullArray();
+            var full1 = mapData[0].getFullArray();
+            var full2 = mapData[1].getFullArray();
+
+            //copy both arrays data into one array
+            var full = new int[full1.Length + full2.Length];
+            Array.Copy(full1, full, full1.Length);
+            Array.Copy(full2, 0, full, full1.Length, full2.Length);
+
             recursiveS(full, 0, full.Length, s, 0);
             s.WriteByte(0xFF); //write stop byte
             long nn = s.Position;
