@@ -31,7 +31,17 @@ public class Data:CapcomBase
 
   MapInfo[] mapsDwd = new MapInfo[]
   { 
+      new MapInfo(){ dataAddr = 0x8BA7, palAddr = 0x8DA5, videoNo = 9 },
       new MapInfo(){ dataAddr = 0x8067, palAddr = 0x8D62, videoNo = 9 },
+      new MapInfo(){ dataAddr = 0x831A, palAddr = 0x8F56, videoNo = 12 },
+      new MapInfo(){ dataAddr = 0x83B3, palAddr = 0x8F66, videoNo = 13 },
+      //new MapInfo(){ dataAddr = 0x8AC8, palAddr = 0x1C524, videoNo = 14 },
+      new MapInfo(){ dataAddr = 0x8AC8, palAddr = 0x1C534, videoNo = 14 },
+      new MapInfo(){ dataAddr = 0x8415, palAddr = 0x8F76, videoNo = 14 },
+      new MapInfo(){ dataAddr = 0x868C, palAddr = 0x1C544, videoNo = 15 },
+      new MapInfo(){ dataAddr = 0x87D2, palAddr = 0x1C544, videoNo = 15 },
+      new MapInfo(){ dataAddr = 0x8535, palAddr = 0x8F86, videoNo = 12 },
+      new MapInfo(){ dataAddr = 0x85D1, palAddr = 0x8F96, videoNo = 13 },
   };
   
   public IList<LevelRec> getLevelRecs()
