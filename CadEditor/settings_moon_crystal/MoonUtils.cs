@@ -24,7 +24,7 @@ public class MoonUtils
     return ConfigScript.screensOffset[0];
   }
   
-  public static MapData loadMapMoonCrystal(int mapNo)
+  public static MapData[] loadMapMoonCrystal(int mapNo)
   {
       return MapUtils.loadMapFromBlocks(mapNo, 960, 64, 32, false, MapUtils.fillAttribs);
   }

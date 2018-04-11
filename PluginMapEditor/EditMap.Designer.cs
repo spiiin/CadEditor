@@ -36,20 +36,23 @@
             this.cbScreenNo = new System.Windows.Forms.ComboBox();
             this.sfSaveDialog = new System.Windows.Forms.SaveFileDialog();
             this.mapPanel = new System.Windows.Forms.Panel();
+            this.mapScreen2 = new System.Windows.Forms.PictureBox();
             this.blocksScreen = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbSubpalette = new System.Windows.Forms.ComboBox();
             this.subpalSprites = new System.Windows.Forms.ImageList(this.components);
             this.lbActiveBlock = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.cbShowSecondNametable = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             this.mapPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mapScreen2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.blocksScreen)).BeginInit();
             this.SuspendLayout();
             // 
             // mapScreen
             // 
-            this.mapScreen.Location = new System.Drawing.Point(4, 30);
+            this.mapScreen.Location = new System.Drawing.Point(4, 4);
             this.mapScreen.Margin = new System.Windows.Forms.Padding(4);
             this.mapScreen.Name = "mapScreen";
             this.mapScreen.Size = new System.Drawing.Size(639, 536);
@@ -126,10 +129,21 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mapPanel.AutoScroll = true;
             this.mapPanel.Controls.Add(this.mapScreen);
+            this.mapPanel.Controls.Add(this.mapScreen2);
             this.mapPanel.Location = new System.Drawing.Point(383, 18);
             this.mapPanel.Name = "mapPanel";
             this.mapPanel.Size = new System.Drawing.Size(826, 691);
             this.mapPanel.TabIndex = 45;
+            // 
+            // mapScreen2
+            // 
+            this.mapScreen2.Location = new System.Drawing.Point(183, 4);
+            this.mapScreen2.Margin = new System.Windows.Forms.Padding(4);
+            this.mapScreen2.Name = "mapScreen2";
+            this.mapScreen2.Size = new System.Drawing.Size(639, 536);
+            this.mapScreen2.TabIndex = 6;
+            this.mapScreen2.TabStop = false;
+            this.mapScreen2.Paint += new System.Windows.Forms.PaintEventHandler(this.mapScreen2_Paint);
             // 
             // blocksScreen
             // 
@@ -191,11 +205,23 @@
             this.label2.TabIndex = 51;
             this.label2.Text = "ActiveBlock:";
             // 
+            // cbShowSecondNametable
+            // 
+            this.cbShowSecondNametable.AutoSize = true;
+            this.cbShowSecondNametable.Location = new System.Drawing.Point(16, 440);
+            this.cbShowSecondNametable.Name = "cbShowSecondNametable";
+            this.cbShowSecondNametable.Size = new System.Drawing.Size(188, 21);
+            this.cbShowSecondNametable.TabIndex = 52;
+            this.cbShowSecondNametable.Text = "Show second name table";
+            this.cbShowSecondNametable.UseVisualStyleBackColor = true;
+            this.cbShowSecondNametable.CheckedChanged += new System.EventHandler(this.cbShowSecondNametable_CheckedChanged);
+            // 
             // EditMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1221, 716);
+            this.Controls.Add(this.cbShowSecondNametable);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lbActiveBlock);
             this.Controls.Add(this.cbSubpalette);
@@ -212,6 +238,7 @@
             this.Load += new System.EventHandler(this.EditMap_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
             this.mapPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.mapScreen2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.blocksScreen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -233,5 +260,7 @@
         private System.Windows.Forms.ImageList subpalSprites;
         private System.Windows.Forms.Label lbActiveBlock;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.PictureBox mapScreen2;
+        private System.Windows.Forms.CheckBox cbShowSecondNametable;
     }
 }

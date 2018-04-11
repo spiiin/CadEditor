@@ -19,10 +19,11 @@ namespace CadEditor
         }
 
         int TILE_SIZE = 16;
+        bool showSecondNametable = false;
 
         private void reloadAllData()
         {
-            mapData = MapConfig.loadMap(curActiveMapNo);
+            mapDatas = MapConfig.loadMap(curActiveMapNo);
             setPal();
             int videoPageId = curActiveVideo;
             videos = new Image[4][];
@@ -39,8 +40,13 @@ namespace CadEditor
 
             blocksScreen.Invalidate();
 
-            mapScreen.Size = new Size(mapData.width * 16, mapData.height * 16);
+            mapScreen.Size = new Size(mapDatas[0].width * 16, mapDatas[0].height * 16);
             mapScreen.Invalidate();
+
+            mapScreen2.Visible = showSecondNametable;
+            mapScreen2.Size = mapScreen.Size;
+            mapScreen2.Location = new Point(mapScreen.Location.X + mapScreen.Width, mapScreen2.Location.Y);
+            mapScreen2.Invalidate();
         }
 
         private void EditMap_Load(object sender, EventArgs e)
@@ -48,6 +54,9 @@ namespace CadEditor
             UtilsGui.setCbItemsCount(cbScreenNo, MapConfig.mapsInfo.Length);
             cbScreenNo.SelectedIndex = 0;
             //reloadAllData();
+
+            cbShowSecondNametable.Checked =  mapDatas.Length > 1;
+            cbShowSecondNametable.Visible = mapDatas.Length > 1;
 
             cbSubpalette.DrawItem += new DrawItemEventHandler(cbSubpalette_DrawItemEvent);
         }
@@ -103,7 +112,7 @@ namespace CadEditor
         private void saveMap()
         {
             byte[] x;
-            int nn = MapConfig.saveMap(curActiveMapNo, mapData, out x);
+            int nn = MapConfig.saveMap(curActiveMapNo, mapDatas, out x);
 
             if (MapConfig.readOnly)
             {
@@ -130,21 +139,20 @@ namespace CadEditor
         int curActiveVideo = 10;
         int curActiveBlock = 0;
         Image[][] videos;
-        MapData mapData;
+        MapData[] mapDatas;
         bool showAxis = true;
         private int curActiveSubpal = 0;
 
-        private void mapScreen_Paint(object sender, PaintEventArgs e)
+        private void renderMapScreen(Graphics g, MapData mapData)
         {
-            var g = e.Graphics;
             var visibleRect = UtilsGui.getVisibleRectangle(mapPanel, mapScreen);
             for (int i = 0; i < mapData.width * mapData.height; i++)
             {
                 int x = i % mapData.width;
                 int y = i / mapData.width;
-                int colorByte = mapData.attrData[x / 4 + mapData.width/4* (y / 4)];
-                int subPal = (colorByte >> (x%4/2*2 + y%4/2*4))& 0x03;
-                var tileRect = new Rectangle(new Point(x * 16, y * 16), new Size(16,16));
+                int colorByte = mapData.attrData[x / 4 + mapData.width / 4 * (y / 4)];
+                int subPal = (colorByte >> (x % 4 / 2 * 2 + y % 4 / 2 * 4)) & 0x03;
+                var tileRect = new Rectangle(new Point(x * 16, y * 16), new Size(16, 16));
                 if (visibleRect.Contains(tileRect) || visibleRect.IntersectsWith(tileRect))
                 {
                     g.DrawImage(videos[subPal][mapData.mapData[i]], tileRect);
@@ -161,11 +169,24 @@ namespace CadEditor
             }
         }
 
+        private void mapScreen_Paint(object sender, PaintEventArgs e)
+        {
+            renderMapScreen(e.Graphics, mapDatas[0]);
+        }
+
+        private void mapScreen2_Paint(object sender, PaintEventArgs e)
+        {
+            if (mapDatas.Length > 1)
+            {
+                renderMapScreen(e.Graphics, mapDatas[1]);
+            }
+        }
+
         private void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
             int x = e.X / 16;
             int y = e.Y / 16;
-            if ((x < 0) || (x >= mapData.width) || (y < 0) || (y >= mapData.height))
+            if ((x < 0) || (x >= mapDatas[0].width) || (y < 0) || (y >= mapDatas[0].height))
             {
                 return;
             }
@@ -174,20 +195,20 @@ namespace CadEditor
             {
                 if (!MapConfig.readOnly)
                 {
-                    mapData.mapData[y * mapData.width + x] = curActiveBlock;
+                    mapDatas[0].mapData[y * mapDatas[0].width + x] = curActiveBlock;
                 }
             }
             else
             {
                 //bit magic!!!
-                int attrIndex = x / 4 + mapData.width/4 * (y / 4);
-                int colorByte = mapData.attrData[attrIndex];
+                int attrIndex = x / 4 + mapDatas[0].width/4 * (y / 4);
+                int colorByte = mapDatas[0].attrData[attrIndex];
                 int startBitIndex = x % 4 / 2 * 2 + y % 4 / 2 * 4;  //get start bit index
                 int subPal = (colorByte >> startBitIndex) & 0x03;   //get 2 bits for subpal
                 subPal = (subPal + 1) & 0x3;                        //round increment it
                 colorByte &= ~(3 << startBitIndex);                 //clear 2 bits in color byte
                 colorByte |= (subPal << startBitIndex);             //set 2 bits according subpal
-                mapData.attrData[attrIndex] = colorByte;
+                mapDatas[0].attrData[attrIndex] = colorByte;
             }
             mapScreen.Invalidate();
         }
@@ -248,6 +269,12 @@ namespace CadEditor
                 curActiveSubpal = cbSubpalette.SelectedIndex;
                 blocksScreen.Invalidate();
             }
+        }
+
+        private void cbShowSecondNametable_CheckedChanged(object sender, EventArgs e)
+        {
+            showSecondNametable = cbShowSecondNametable.Checked;
+            mapScreen2.Visible = showSecondNametable;
         }
     }
 

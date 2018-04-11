@@ -24,7 +24,7 @@ public class ToxicUtils
     return ConfigScript.screensOffset[0];
   }
   
-  public static MapData loadMapToxic(int mapNo)
+  public static MapData[] loadMapToxic(int mapNo)
   {
       return MapUtils.loadMapFromBlocks(mapNo, 480, 32, 32, false, fillAttribsToxic);
   }
@@ -56,7 +56,7 @@ public class ToxicUtils
       }
   }
 
-  public static int saveAttribsToxic(int mapNo, MapData mapData, out byte[] packedData)
+  public static int saveAttribsToxic(int mapNo, MapData[] mapData, out byte[] packedData)
   {
       packedData = new byte[0];
       int attribAddr = MapConfig.mapsInfo[mapNo].attribsAddr;
@@ -68,7 +68,7 @@ public class ToxicUtils
           int x = i % HEIGHT;
           int y = i / HEIGHT;
           int ind = y * HEIGHT + x;
-          Globals.romdata[attribAddr + ind] = (byte)mapData.attrData[ind];
+          Globals.romdata[attribAddr + ind] = (byte)mapData[0].attrData[ind];
       }
       Globals.flushToFile();
       return 0;

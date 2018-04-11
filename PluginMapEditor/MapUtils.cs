@@ -11,7 +11,7 @@ namespace PluginMapEditor
     {
         public delegate void FillAttribDelegate(int[] attrData, byte[] romdata, int attribAddr);
 
-        public static MapData loadMapDwd(int mapNo)
+        public static MapData[] loadMapDwd(int mapNo)
         {
             int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
             int[] mapData = new int[960];
@@ -33,36 +33,50 @@ namespace PluginMapEditor
                     }
                 }
             }
-            return new MapData(mapData, attrData, 32);
+            return new MapData[] { new MapData(mapData, attrData, 32) };
         }
 
-        public static MapData loadMapCad(int mapNo)
+        public static MapData[] loadMapCad(int mapNo)
         {
             int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
             int[] mapData = new int[960];
             int[] attrData = new int[64];
-            while (Globals.romdata[romAddr] != 0xFF)
+            int[] mapData2 = new int[960];
+            int[] attrData2 = new int[64];
+            while (Globals.romdata[romAddr] != 0x00)
             {
                 uint videoAddr = (uint)Utils.readWord(Globals.romdata, romAddr) - 0x2000;
-                if (videoAddr > mapData.Length + attrData.Length)
+                /*if (videoAddr > (mapData.Length + attrData.Length)*2) //support writing into two pages
                 {
                     break;
-                }
+                }*/
                 romAddr += 2;
                 int count = Globals.romdata[romAddr++] + 1;
                 for (int i = 0; i < count; i++)
                 {
                     if (videoAddr < mapData.Length)
                     {
+                        //write in name table 1, data
                         mapData[videoAddr++] = Globals.romdata[romAddr++];
+                    }
+                    else if (videoAddr < (mapData.Length + attrData.Length))
+                    {
+                        //write in name table 1, attributes
+                        attrData[-960 + videoAddr++] = Globals.romdata[romAddr++];
+                    }
+                    else if (videoAddr < mapData.Length*2+attrData.Length)
+                    {
+                        //write in name table 2, data
+                        mapData2[-960 - 64 + videoAddr++] = Globals.romdata[romAddr++];
                     }
                     else
                     {
-                        attrData[-960 + videoAddr++] = Globals.romdata[romAddr++];
+                        //write in name table 2, attributes
+                        attrData2[-960*2 - 64 + videoAddr++] = Globals.romdata[romAddr++];
                     }
                 }
             }
-            return new MapData(mapData, attrData, 32);
+            return new MapData[] { new MapData(mapData, attrData, 32), new MapData(mapData2, attrData2, 32) };
         }
 
         static void foundLongestZeros(int[] data, int startIndex, int endIndex, out int firstZeroIndex, out int lastZeroIndex)
@@ -113,30 +127,37 @@ namespace PluginMapEditor
             }
         }
 
-        public static int saveMapDwd(int mapNo, MapData mapData, out byte[] packedData)
+        public static int saveMapDwd(int mapNo, MapData[] mapData, out byte[] packedData)
         {
-            packedData = new byte[(256 + 3) * 4];
+            packedData = new byte[(256 + 3) * 4]; //max size, for one name table
             var s = new MemoryStream(packedData);
-            var full = mapData.getFullArray();
+            var full = mapData[0].getFullArray();
             recursiveS(full, 0, full.Length, s, 0);
             s.WriteByte(0xFF); //write stop byte
             long nn = s.Position;
             return (int)nn;
         }
 
-        public static int saveMapCad(int mapNo, MapData mapData, out byte[] packedData)
+        public static int saveMapCad(int mapNo, MapData[] mapData, out byte[] packedData)
         {
-            packedData = new byte[(256 + 3) * 4];
+            packedData = new byte[(256 + 3) * 4 * 2 ]; //max size, for two name tables
             var s = new MemoryStream(packedData);
-            var full = mapData.getFullArray();
-            recursiveS(full, 0, full.Length, s, 1);
-            s.WriteByte(0xFF); //write stop byte
+            var full1 = mapData[0].getFullArray();
+            var full2 = mapData[1].getFullArray();
+
+            //copy both arrays data into one array
+            var full = new int[full1.Length + full2.Length];
+            Array.Copy(full1, full, full1.Length);
+            Array.Copy(full2, 0, full, full1.Length, full2.Length);
+
+            recursiveS(full, 0, full.Length, s, -1);
+            s.WriteByte(0x00); //write stop byte
             long nn = s.Position;
             return (int)nn;
         }
         //--------------------------------------------
 
-        public static MapData loadMapDt2(int mapNo)
+        public static MapData[] loadMapDt2(int mapNo)
         {
             int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
             int[] mapData = new int[960];
@@ -175,17 +196,17 @@ namespace PluginMapEditor
                 }
 
             }
-            return new MapData(mapData, attrData, 32);
+            return new MapData[] { new MapData(mapData, attrData, 32) };
         }
 
-        public static int saveMapDt2(int mapNo, MapData mapData, out byte[] packedData)
+        public static int saveMapDt2(int mapNo, MapData[] mapData, out byte[] packedData)
         {
             packedData = new byte[1024];
             var s = new MemoryStream(packedData);
             byte repeatCode = 0xDC;
             s.WriteByte(repeatCode);
             int repeatCounter = 1;
-            var full = mapData.getFullArray();
+            var full = mapData[0].getFullArray();
             for (int i = 0; i < full.Length - 1; i++)
             {
                 byte sym = (byte)full[i];
@@ -262,7 +283,7 @@ namespace PluginMapEditor
             }
         }
 
-        public static int saveAttribsNinjaCrusaders(int mapNo, MapData mapData, out byte[] packedData)
+        public static int saveAttribsNinjaCrusaders(int mapNo, MapData[] mapData, out byte[] packedData)
         {
             packedData = new byte[0];
             int attribAddr = MapConfig.mapsInfo[mapNo].attribsAddr;
@@ -275,13 +296,13 @@ namespace PluginMapEditor
                 int y = i % HEIGHT;
                 int ind = x * HEIGHT + y;
                 int tind = y * WIDTH + x;
-                Globals.romdata[attribAddr + ind] = (byte)mapData.attrData[tind];
+                Globals.romdata[attribAddr + ind] = (byte)mapData[0].attrData[tind];
             }
             Globals.flushToFile();
             return 0;
         }
 
-        public static MapData loadMapFromBlocks(int mapNo, int mapSizeInBytes, int attrSizeInBytes, int mapWidth, bool vertical, FillAttribDelegate fillAttribDelegate)
+        public static MapData[] loadMapFromBlocks(int mapNo, int mapSizeInBytes, int attrSizeInBytes, int mapWidth, bool vertical, FillAttribDelegate fillAttribDelegate)
         {
             int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
             int attribAddr = MapConfig.mapsInfo[mapNo].attribsAddr;
@@ -305,41 +326,41 @@ namespace PluginMapEditor
             }
 
             fillAttribDelegate(attrData, Globals.romdata, attribAddr);
-            return new MapData(mapData, attrData, mapWidth);
+            return new MapData[] { new MapData(mapData, attrData, mapWidth) };
         }
 
-        public static MapData loadMapContraSpirits(int mapNo)
+        public static MapData[] loadMapContraSpirits(int mapNo)
         {
             return loadMapFromBlocks(mapNo, 960, 64, 32, false, fillAttribs);
         }
 
-        public static MapData loadMapBatman(int mapNo)
+        public static MapData[] loadMapBatman(int mapNo)
         {
             return loadMapFromBlocks(mapNo, 960, 64, 32, false, fillAttribs);
         }
 
-        public static MapData loadMapNinjaCrusaders(int mapNo)
+        public static MapData[] loadMapNinjaCrusaders(int mapNo)
         {
             return loadMapFromBlocks(mapNo, 960, 64, 32, true, fillAttribsNinjaCrusaders);
         }
 
-        public static MapData loadMapAddamsFamily(int mapNo)
+        public static MapData[] loadMapAddamsFamily(int mapNo)
         {
             return loadMapFromBlocks(mapNo, 256 * 20, 64 * 5, 256, false, fillAttribs);
         }
 
-        public static MapData loadMapAddamsFamilyFloor(int mapNo)
+        public static MapData[] loadMapAddamsFamilyFloor(int mapNo)
         {
             return loadMapFromBlocks(mapNo, 256 * 6, 64 * 3, 256, false, fillAttribs);
         }
 
-        public static int saveAttribs(int mapNo, MapData mapData, out byte[] packedData)
+        public static int saveAttribs(int mapNo, MapData[] mapData, out byte[] packedData)
         {
             packedData = new byte[0];
             int attribAddr = MapConfig.mapsInfo[mapNo].attribsAddr;
-            for (int i = 0; i < mapData.attrData.Length; i++)
+            for (int i = 0; i < mapData[0].attrData.Length; i++)
             {
-                 Globals.romdata[attribAddr + i] = (byte)mapData.attrData[i];
+                 Globals.romdata[attribAddr + i] = (byte)mapData[0].attrData[i];
             }
             Globals.flushToFile();
             return 0;

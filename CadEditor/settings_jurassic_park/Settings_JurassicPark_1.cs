@@ -79,7 +79,7 @@ public class Data
   public bool isMapReadOnly()         { return true; }
   public bool mapEditorSharePallete() { return true; }
   
-  public MapData loadMap(int mapNo)
+  public MapData[] loadMap(int mapNo)
   {
       return MapUtils.loadMapFromBlocks(mapNo, 48*47*4, 576, 48*2, false, MapUtils.fillAttribs);
   }

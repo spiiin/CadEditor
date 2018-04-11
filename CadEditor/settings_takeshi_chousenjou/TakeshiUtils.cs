@@ -34,7 +34,7 @@ public class TakeshiUtils
     return ConfigScript.screensOffset[0];
   }
   
-  public static MapData loadMapMoonCrystal(int mapNo)
+  public static MapData[] loadMapMoonCrystal(int mapNo)
   {
       return MapUtils.loadMapFromBlocks(mapNo, 120, 30, 4, true, MapUtils.fillAttribs);
   }

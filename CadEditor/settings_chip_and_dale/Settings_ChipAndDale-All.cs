@@ -63,8 +63,8 @@ public class Data:CapcomBase
       new MapInfo(){ dataAddr = 0x8496, palAddr = 0x924F, videoNo = -3 },
       new MapInfo(){ dataAddr = 0x863E, palAddr = 0x926F, videoNo = -2 },
       new MapInfo(){ dataAddr = 0x856A, palAddr = 0x925F, videoNo = -2 },
-      //new MapInfo(){ dataAddr = 0x8061, palAddr = 0x1C494, videoNo = 12 },
-      //new MapInfo(){ dataAddr = 0x8152, palAddr = 0x1C4A4, videoNo = 13 },
+      new MapInfo(){ dataAddr = 0x8061, palAddr = 0x1C494, videoNo = 12 },
+      new MapInfo(){ dataAddr = 0x8152, palAddr = 0x1C4A4, videoNo = 13 },
   };
   
   public int getLayoutAddr(int no)
