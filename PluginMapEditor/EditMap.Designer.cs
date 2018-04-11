@@ -28,16 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.mapScreen = new System.Windows.Forms.PictureBox();
-            this.blocksPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.btSave = new System.Windows.Forms.Button();
             this.cbShowAxis = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cbScreenNo = new System.Windows.Forms.ComboBox();
             this.sfSaveDialog = new System.Windows.Forms.SaveFileDialog();
             this.mapPanel = new System.Windows.Forms.Panel();
+            this.blocksScreen = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cbSubpalette = new System.Windows.Forms.ComboBox();
+            this.subpalSprites = new System.Windows.Forms.ImageList(this.components);
+            this.lbActiveBlock = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             this.mapPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.blocksScreen)).BeginInit();
             this.SuspendLayout();
             // 
             // mapScreen
@@ -50,17 +57,6 @@
             this.mapScreen.TabStop = false;
             this.mapScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.mapScreen_Paint);
             this.mapScreen.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mapScreen_MouseClick);
-            // 
-            // blocksPanel
-            // 
-            this.blocksPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.blocksPanel.AutoScroll = true;
-            this.blocksPanel.Location = new System.Drawing.Point(16, 15);
-            this.blocksPanel.Margin = new System.Windows.Forms.Padding(4);
-            this.blocksPanel.Name = "blocksPanel";
-            this.blocksPanel.Size = new System.Drawing.Size(323, 661);
-            this.blocksPanel.TabIndex = 6;
             // 
             // btSave
             // 
@@ -93,7 +89,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(341, 15);
+            this.label7.Location = new System.Drawing.Point(13, 412);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(77, 17);
@@ -113,10 +109,10 @@
             "6",
             "7",
             "8"});
-            this.cbScreenNo.Location = new System.Drawing.Point(345, 34);
+            this.cbScreenNo.Location = new System.Drawing.Point(131, 409);
             this.cbScreenNo.Margin = new System.Windows.Forms.Padding(4);
             this.cbScreenNo.Name = "cbScreenNo";
-            this.cbScreenNo.Size = new System.Drawing.Size(68, 24);
+            this.cbScreenNo.Size = new System.Drawing.Size(119, 24);
             this.cbScreenNo.TabIndex = 43;
             this.cbScreenNo.SelectedIndexChanged += new System.EventHandler(this.cbVideoNo_SelectedIndexChanged);
             // 
@@ -130,28 +126,93 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mapPanel.AutoScroll = true;
             this.mapPanel.Controls.Add(this.mapScreen);
-            this.mapPanel.Location = new System.Drawing.Point(430, 18);
+            this.mapPanel.Location = new System.Drawing.Point(383, 18);
             this.mapPanel.Name = "mapPanel";
-            this.mapPanel.Size = new System.Drawing.Size(850, 691);
+            this.mapPanel.Size = new System.Drawing.Size(826, 691);
             this.mapPanel.TabIndex = 45;
+            // 
+            // blocksScreen
+            // 
+            this.blocksScreen.Location = new System.Drawing.Point(12, 18);
+            this.blocksScreen.Name = "blocksScreen";
+            this.blocksScreen.Size = new System.Drawing.Size(360, 322);
+            this.blocksScreen.TabIndex = 46;
+            this.blocksScreen.TabStop = false;
+            this.blocksScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.blocksScreen_Paint);
+            this.blocksScreen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.blocksScreen_MouseDown);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 381);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(115, 17);
+            this.label1.TabIndex = 48;
+            this.label1.Text = "View with subpal:";
+            // 
+            // cbSubpalette
+            // 
+            this.cbSubpalette.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.cbSubpalette.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSubpalette.FormattingEnabled = true;
+            this.cbSubpalette.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4"});
+            this.cbSubpalette.Location = new System.Drawing.Point(131, 378);
+            this.cbSubpalette.Margin = new System.Windows.Forms.Padding(4);
+            this.cbSubpalette.Name = "cbSubpalette";
+            this.cbSubpalette.Size = new System.Drawing.Size(119, 23);
+            this.cbSubpalette.TabIndex = 49;
+            this.cbSubpalette.SelectedIndexChanged += new System.EventHandler(this.cbSubpalette_SelectedIndexChanged);
+            // 
+            // subpalSprites
+            // 
+            this.subpalSprites.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.subpalSprites.ImageSize = new System.Drawing.Size(64, 16);
+            this.subpalSprites.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // lbActiveBlock
+            // 
+            this.lbActiveBlock.AutoSize = true;
+            this.lbActiveBlock.Location = new System.Drawing.Point(132, 346);
+            this.lbActiveBlock.Name = "lbActiveBlock";
+            this.lbActiveBlock.Size = new System.Drawing.Size(26, 17);
+            this.lbActiveBlock.TabIndex = 50;
+            this.lbActiveBlock.Text = "(0)";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(13, 346);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(84, 17);
+            this.label2.TabIndex = 51;
+            this.label2.Text = "ActiveBlock:";
             // 
             // EditMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1292, 716);
+            this.ClientSize = new System.Drawing.Size(1221, 716);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lbActiveBlock);
+            this.Controls.Add(this.cbSubpalette);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.blocksScreen);
             this.Controls.Add(this.mapPanel);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cbScreenNo);
             this.Controls.Add(this.cbShowAxis);
             this.Controls.Add(this.btSave);
-            this.Controls.Add(this.blocksPanel);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "EditMap";
             this.Text = "Map Editor";
             this.Load += new System.EventHandler(this.EditMap_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
             this.mapPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.blocksScreen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -160,12 +221,17 @@
         #endregion
 
         private System.Windows.Forms.PictureBox mapScreen;
-        private System.Windows.Forms.FlowLayoutPanel blocksPanel;
         private System.Windows.Forms.Button btSave;
         private System.Windows.Forms.CheckBox cbShowAxis;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cbScreenNo;
         private System.Windows.Forms.SaveFileDialog sfSaveDialog;
         private System.Windows.Forms.Panel mapPanel;
+        private System.Windows.Forms.PictureBox blocksScreen;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cbSubpalette;
+        private System.Windows.Forms.ImageList subpalSprites;
+        private System.Windows.Forms.Label lbActiveBlock;
+        private System.Windows.Forms.Label label2;
     }
 }

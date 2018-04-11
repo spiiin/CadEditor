@@ -18,26 +18,27 @@ namespace CadEditor
             InitializeComponent();
         }
 
+        int TILE_SIZE = 16;
+
         private void reloadAllData()
         {
             mapData = MapConfig.loadMap(curActiveMapNo);
             setPal();
             int videoPageId = curActiveVideo;
-            videos = new ImageList[4];
+            videos = new Image[4][];
             var chunk = ConfigScript.getVideoChunk(videoPageId);
             for (int i = 0; i < 4; i++)
             {
-                videos[i] = new ImageList();
-                videos[i].ImageSize = new Size(16, 16);
                 var images = new Image[256];
                 for (int t = 0; t < 256; t++)
                 {
                     images[t] = UtilsGDI.ResizeBitmap(ConfigScript.videoNes.makeImage(t, chunk, curPal, i), 16, 16);
                 }
-                videos[i].Images.AddRange(images);
+                videos[i] = images;
             }
 
-            prepareBlocksPanel();
+            blocksScreen.Invalidate();
+
             mapScreen.Size = new Size(mapData.width * 16, mapData.height * 16);
             mapScreen.Invalidate();
         }
@@ -47,6 +48,25 @@ namespace CadEditor
             UtilsGui.setCbItemsCount(cbScreenNo, MapConfig.mapsInfo.Length);
             cbScreenNo.SelectedIndex = 0;
             //reloadAllData();
+
+            cbSubpalette.DrawItem += new DrawItemEventHandler(cbSubpalette_DrawItemEvent);
+        }
+
+        protected void cbSubpalette_DrawItemEvent(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index == -1)
+            {
+                e.DrawBackground();
+                e.DrawFocusRectangle();
+                return;
+            }
+            e.DrawBackground();
+            e.Graphics.DrawImage(subpalSprites.Images[e.Index], e.Bounds.Width - 63, e.Bounds.Y, 64, 16);
+            string text = cbSubpalette.Items[e.Index].ToString();
+            e.Graphics.DrawString(text, cbSubpalette.Font,
+                System.Drawing.Brushes.Black,
+                new RectangleF(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height));
+            e.DrawFocusRectangle();
         }
 
         private void setPal()
@@ -62,6 +82,21 @@ namespace CadEditor
                 for (int i = 0; i < 16; i++)
                     curPal[i] = Globals.romdata[palAddr + i];
                 curPal[0] = curPal[4] = curPal[8] = curPal[12] = 0x0F;
+            }
+
+            //set images for subpalletes
+            subpalSprites.Images.Clear();
+            for (int i = 0; i < 4; i++)
+            {
+                var sb = new Bitmap(16 * 4, 16);
+                using (Graphics g = Graphics.FromImage(sb))
+                {
+                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.NesColors[curPal[i * 4]]), 0, 0, 16, 16);
+                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.NesColors[curPal[i * 4 + 1]]), 16, 0, 16, 16);
+                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.NesColors[curPal[i * 4 + 2]]), 32, 0, 16, 16);
+                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.NesColors[curPal[i * 4 + 3]]), 48, 0, 16, 16);
+                }
+                subpalSprites.Images.Add(sb);
             }
         }
 
@@ -90,35 +125,14 @@ namespace CadEditor
             }
         }
 
-        private void prepareBlocksPanel()
-        {
-            blocksPanel.Controls.Clear();
-            blocksPanel.SuspendLayout();
-            for (int i = 0; i < 256; i++)
-            {
-                var but = new Button();
-                but.Size = new Size(16+5,16+5);
-                but.Tag = i;
-                but.Image = videos[0].Images[i];
-                but.Click += new EventHandler(buttonBlockClick);
-                blocksPanel.Controls.Add(but);
-            }
-            blocksPanel.ResumeLayout();
-        }
-
-        private void buttonBlockClick(Object button, EventArgs e)
-        {
-            int index = (int)((Button)button).Tag;
-            curActiveBlock = index;
-        }
-
         byte[] curPal;
         int curActiveMapNo = 0;
         int curActiveVideo = 10;
         int curActiveBlock = 0;
-        ImageList[] videos;
+        Image[][] videos;
         MapData mapData;
         bool showAxis = true;
+        private int curActiveSubpal = 0;
 
         private void mapScreen_Paint(object sender, PaintEventArgs e)
         {
@@ -133,7 +147,7 @@ namespace CadEditor
                 var tileRect = new Rectangle(new Point(x * 16, y * 16), new Size(16,16));
                 if (visibleRect.Contains(tileRect) || visibleRect.IntersectsWith(tileRect))
                 {
-                    g.DrawImage(videos[subPal].Images[mapData.mapData[i]], tileRect);
+                    g.DrawImage(videos[subPal][mapData.mapData[i]], tileRect);
                 }
             }
 
@@ -187,6 +201,7 @@ namespace CadEditor
         {
             showAxis = cbShowAxis.Checked;
             mapScreen.Invalidate();
+            blocksScreen.Invalidate();
         }
 
         private void cbVideoNo_SelectedIndexChanged(object sender, EventArgs e)
@@ -195,6 +210,44 @@ namespace CadEditor
             curActiveMapNo = cbScreenNo.SelectedIndex;
             curActiveVideo = si.videoNo;
             reloadAllData();
+        }
+
+        private void blocksScreen_MouseDown(object sender, MouseEventArgs e)
+        {
+            int tilesCount = videos[0].Length;
+            var p = blocksScreen.PointToClient(Cursor.Position);
+            int x = p.X, y = p.Y;
+            int TILE_SIZE_X = TILE_SIZE;
+            int TILE_SIZE_Y = TILE_SIZE;
+            int tx = x / TILE_SIZE_X, ty = y / TILE_SIZE_Y;
+            int maxtX = blocksScreen.Width / TILE_SIZE_X;
+            int index = ty * maxtX + tx;
+            if ((tx < 0) || (tx >= maxtX) || (index < 0) || (index >= tilesCount))
+            {
+                return;
+            }
+
+            curActiveBlock = index;
+            lbActiveBlock.Text = String.Format("({0:X})", curActiveBlock);
+            blocksScreen.Invalidate();
+        }
+
+        private void blocksScreen_Paint(object sender, PaintEventArgs e)
+        {
+            var g = e.Graphics;
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+            var visibleRect = UtilsGui.getVisibleRectangle(this, blocksScreen);
+            MapEditor.RenderAllBlocks(e.Graphics, blocksScreen, videos[curActiveSubpal], TILE_SIZE, TILE_SIZE, visibleRect, 1.0f, curActiveBlock, showAxis);
+        }
+
+        private void cbSubpalette_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbSubpalette.SelectedIndex != -1)
+            {
+                curActiveSubpal = cbSubpalette.SelectedIndex;
+                blocksScreen.Invalidate();
+            }
         }
     }
 
