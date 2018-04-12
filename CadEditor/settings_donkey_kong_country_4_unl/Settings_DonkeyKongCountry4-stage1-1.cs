@@ -20,7 +20,6 @@ public class Data
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x1a10, 1  , 0x1000);  }
   public int getBlocksCount()           { return 256; }
   public int getBigBlocksCount()        { return 256; }
-  public int getPalBytesAddr()          { return 0x1dff + 256*4; }
   
   public GetBlocksFunc        getBlocksFunc() { return getBlocks;}
   public SetBlocksFunc        setBlocksFunc() { return setBlocks;}
@@ -30,7 +29,7 @@ public class Data
   //----------------------------------------------------------------------------
   public ObjRec[] getBlocks(int tileId)
   {
-    return Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), false);
+    return  (Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), false);
   }
   
   public void setBlocks(int tileId, ObjRec[] blocks)

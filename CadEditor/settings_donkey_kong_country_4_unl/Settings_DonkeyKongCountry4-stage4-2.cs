@@ -20,7 +20,6 @@ public class Data
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x13a10, 1  , 0x1000);  }
   public int getBlocksCount()           { return 256; }
   public int getBigBlocksCount()        { return 256; }
-  public int getPalBytesAddr()          { return 0x13dff + 256*4; }
   
   public GetBlocksFunc        getBlocksFunc() { return getBlocks;}
   public SetBlocksFunc        setBlocksFunc() { return setBlocks;}
