@@ -20,6 +20,7 @@ public class Data
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0xda10, 1  , 0x1000);  }
   public int getBlocksCount()           { return 256; }
   public int getBigBlocksCount()        { return 256; }
+  //0xdf10 - physics
   
   public GetBlocksFunc        getBlocksFunc() { return getBlocks;}
   public SetBlocksFunc        setBlocksFunc() { return setBlocks;}

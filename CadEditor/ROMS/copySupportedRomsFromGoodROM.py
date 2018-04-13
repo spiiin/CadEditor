@@ -23,6 +23,7 @@ fnames = [
     "Cheetah Men II (U) [!p].nes",
     "Chip 'n Dale Rescue Rangers (U) [!].nes",
     "Chip 'n Dale Rescue Rangers 2 (U) [!].nes",
+    "Circus Caper (U) [!].nes",
     "Contra Force (U) [!].nes",
     "Contra Spirits (1995) (Unl).nes",
     "Crystal Mines (Unl) [!p].nes",
