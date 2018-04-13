@@ -17,14 +17,15 @@ fnames = [
     "Banana Prince (G) [!].nes",
     "Bucky O'Hare (E).nes",
     "Captain America and The Avengers (U) [!].nes",
-    #"Captain Planet and The Planeteers (U) [!].nes",
+    "Captain Planet and The Planeteers (U) [!].nes",
     "Castlevania (E).nes",
-    #"Challenger (J).nes",
-    #"Cheetah Men II (U) [!p].nes",
+    "Challenger (J).nes",
+    "Cheetah Men II (U) [!p].nes",
     "Chip 'n Dale Rescue Rangers (U) [!].nes",
     "Chip 'n Dale Rescue Rangers 2 (U) [!].nes",
     "Contra Force (U) [!].nes",
     "Contra Spirits (1995) (Unl).nes",
+    "Crystal Mines (Unl) [!p].nes",
     "Darkman (U) [!].nes",
     "Darkwing Duck (U) [!].nes",
     "Donkey Kong Country 4 (Unl) [!].nes",
@@ -98,7 +99,8 @@ fnames = [
     "Tom & Jerry (and Tuffy) (J).nes",
     "Toxic Crusaders (U) [!].nes",
     "Young Indiana Jones Chronicles, The (U) [!].nes",
-    "Yo! Noid (U) [!].nes"
+    "Yo! Noid (U) [!].nes",
+    "Zen Intergalactic Ninja (U) [!].nes"
 ]
 
 for fname in fnames:
