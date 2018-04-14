@@ -24,5 +24,5 @@ function dumpData()
 end
 
 
---memory.registerexecute(irqAddr, dumpData)
-dumpData()
+memory.registerexecute(irqAddr, dumpData)
+--dumpData()
