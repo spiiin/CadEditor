@@ -264,7 +264,7 @@ namespace PluginMapEditor
 
         //------------------------------------------------------------------------------------------------
 
-        private static void applyBlockToMap(int[] mapData, ObjRec block, int x, int y, int mapWidth)
+        private static void applyBlockToMap(int[] mapData, ObjRec block, int x, int y, int mapWidth, int yShiftInTiles)
         {
             int width = block.w;
             int height = block.h;
@@ -272,7 +272,7 @@ namespace PluginMapEditor
             {
                 for (int h = 0; h < height; h++)
                 {
-                    int mdIndex = (y * height + h) * mapWidth + x * width + w;
+                    int mdIndex = (y * height + h + yShiftInTiles) * mapWidth + x * width + w;
                     int bIndex = width * h + w;
                     if ((mdIndex >= 0) && (mdIndex < mapData.Length))
                     {
@@ -323,7 +323,7 @@ namespace PluginMapEditor
             return 0;
         }
 
-        public static MapData[] loadMapFromBlocks(int mapNo, int mapSizeInBytes, int attrSizeInBytes, int mapWidth, bool vertical, FillAttribDelegate fillAttribDelegate)
+        public static MapData[] loadMapFromBlocks(int mapNo, int mapSizeInBytes, int attrSizeInBytes, int mapWidth, bool vertical, FillAttribDelegate fillAttribDelegate, int yShiftInTiles = 0)
         {
             int romAddr = MapConfig.mapsInfo[mapNo].dataAddr;
             int attribAddr = MapConfig.mapsInfo[mapNo].attribsAddr;
@@ -343,7 +343,7 @@ namespace PluginMapEditor
                 {
                     Utils.Swap(ref bx, ref by);
                 }
-                applyBlockToMap(mapData, blocks[blockIndex], bx, by, mapWidth);
+                applyBlockToMap(mapData, blocks[blockIndex], bx, by, mapWidth, yShiftInTiles);
             }
 
             fillAttribDelegate(attrData, Globals.romdata, attribAddr);
