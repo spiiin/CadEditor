@@ -54,56 +54,56 @@
 </table>
 
 </td>
-<td>SoA(2x2 + palByte1)</td>
-<td>AoS(2x2)</td>
-<td>AoS(8x8)</td>
+<td>Aligned(2x2 + palByte1)</td>
+<td>Linear(2x2)</td>
+<td>Linear(8x8)</td>
 </tr>
 
 <tr>
 <td>Duck Tales</td>
-<td>SoA(2x2 + palByte1)</td>
-<td>AoS(2x2)</td>
-<td>AoS(8x8)<br>
+<td>Aligned(2x2 + palByte1)</td>
+<td>Linear(2x2)</td>
+<td>Linear(8x8)<br>
 <i>прим.1</i>
 </td>
 </tr>
 
 <tr>
 <td>Duck Tales 2</td>
-<td>SoA(2x2 + palByte1p)</td>
-<td>SoA(2x2)</td>
-<td>AoS(8x8)</td>
+<td>Aligned(2x2 + palByte1p)</td>
+<td>Aligned(2x2)</td>
+<td>Linear(8x8)</td>
 </tr>
 
 <tr>
 <td>Chip & Dale 2</td>
-<td>SoA(2x2 + palByte1p)</td>
+<td>Aligned(2x2 + palByte1p)</td>
 <td>-</td>
-<td>AoS(16x15)</td>
+<td>Linear(16x15)</td>
 </tr>
 
 <tr>
 <td>
 Tiny Toon Adventures
 </td>
-<td>SoA(2x2)</td>
-<td>SoA(2x2 + palByte4)</td>
-<td>AoS(8x6)</td>
+<td>Aligned(2x2)</td>
+<td>Aligned(2x2 + palByte4)</td>
+<td>Linear(8x6)</td>
 </tr>
 
 <tr>
 <td>Tiny Toon Adventures 2</td>
-<td>AoS(2x2) + palByte1p</td>
+<td>Linear(2x2) + palByte1p</td>
 <td>-</td>
-<td>AoS(16x15); AoS(16x12)</td>
+<td>Linear(16x15); Linear(16x12)</td>
 </tr>
 
 <tr>
 <td>
 Flintstones RoD&H
 </td>
-<td>AoS(2x2)T + palByte1</td>
-<td>AoS(4x4)T</td>
+<td>Linear(2x2)T + palByte1</td>
+<td>Linear(4x4)T</td>
 <td>(-)T</td>
 </tr>
 
@@ -111,8 +111,8 @@ Flintstones RoD&H
 <td>
 Flintstones SaDP
 </td>
-<td>AoS(2x2)T + palByte1</td>
-<td>AoS(2x4)T</td>
+<td>Linear(2x2)T + palByte1</td>
+<td>Linear(2x4)T</td>
 <td>(-)T</td>
 </tr>
 
@@ -120,8 +120,8 @@ Flintstones SaDP
 <td>
 Jungle Book
 </td>
-<td>SoA(2x2 + palByte1)x2</td>
-<td>AoS(2x2)x2</td>
+<td>Aligned(2x2 + palByte1)x2</td>
+<td>Linear(2x2)x2</td>
 <td>-</td>
 </tr>
 
@@ -132,7 +132,7 @@ Jungle Book
 <tr><td>Terminator 2</td></tr>
 </table>
 </td>
-<td>SoA(2x2 + palByte1)</td>
+<td>Aligned(2x2 + palByte1)</td>
 <td>-</td>
 <td>-</td>
 </tr>
@@ -141,7 +141,7 @@ Jungle Book
 <td>
 Crystal Mines
 </td>
-<td>SoAu(2x2 + palByte1)</td>
+<td>Unaligned(2x2 + palByte1)</td>
 <td>-</td>
 <td>-</td>
 </tr>
@@ -159,9 +159,9 @@ Crystal Mines
 <tr><td>Sonic the Hedgehog</td></tr>
 </table>
 </td>
-<td>SoA(2x2 + palByte1)</td>
+<td>Aligned(2x2 + palByte1)</td>
 <td>-</td>
-<td>AoS(16x16)</td>
+<td>Linear(16x16)</td>
 </tr>
 
 <tr>
@@ -171,29 +171,29 @@ Crystal Mines
 <tr><td>Super Spy Hunter</td></tr>
 </table>
 </td>
-<td>SoA(2x2 + palByte1)</td>
-<td>SoA(2x2)</td>
-<td>AoS(8x8)</td>
+<td>Aligned(2x2 + palByte1)</td>
+<td>Aligned(2x2)</td>
+<td>Linear(8x8)</td>
 </tr>
 
 <tr>
 <td>
 Rockin' Kats
 </td>
-<td>AoS(2x2 + palByte1)</td>
-<td>AoS(1x4)-><br>
-AoS(4x1)-><br>
-AoS(2x1)</td>
-<td>AoS(3x2)</td>
+<td>Linear(2x2 + palByte1)</td>
+<td>Linear(1x4)-><br>
+Linear(4x1)-><br>
+Linear(2x1)</td>
+<td>Linear(3x2)</td>
 </tr>
 
 <tr>
 <td>
 Final Mission
 </td>
-<td>AoS(2x2 + palByte1)</td>
+<td>Linear(2x2 + palByte1)</td>
 <td>-</td>
-<td>AoS(16x15)</td>
+<td>Linear(16x15)</td>
 </tr>
 
 <tr>
@@ -207,7 +207,7 @@ Final Mission
 <tr><td>Robocop 2</td></tr>
 </table>
 </td>
-<td>AoS(4x4) + palByte4</td>
+<td>Linear(4x4) + palByte4</td>
 <td>-</td>
 <td>-</td>
 </tr>
@@ -223,9 +223,9 @@ Final Mission
 <tr><td>Zen Intergalactic Ninja</td></tr>
 </table>
 </td>
-<td>AoS(4x4) + palByte4</td>
+<td>Linear(4x4) + palByte4</td>
 <td>-</td>
-<td>AoS(8x8)</td>
+<td>Linear(8x8)</td>
 </tr>
 
 <tr>
@@ -235,35 +235,35 @@ Final Mission
 <tr><td>Mickey Mouse 3</td></tr>
 </table>
 </td>
-<td>AoS(2x2) + palByte1</td>
-<td>AoS(2x2)</td>
-<td>AoS(8x6)</td>
+<td>Linear(2x2) + palByte1</td>
+<td>Linear(2x2)</td>
+<td>Linear(8x6)</td>
 </tr>
 
 <tr>
 <td>
 Moon Crystal
 </td>
-<td>AoS(2x2)</td>
+<td>Linear(2x2)</td>
 <td>-</td>
-<td>AoS(16x15), palByteX</td>
+<td>Linear(16x15), palByteX</td>
 </tr>
 
 <tr>
 <td>
 Toxic Crusaders
 </td>
-<td>AoS(2x2)</td>
+<td>Linear(2x2)</td>
 <td>-</td>
-<td>AoS(16x13), palByteX</td>
+<td>Linear(16x13), palByteX</td>
 </tr>
 
 <tr>
 <td>
 Challenger
 </td>
-<td>AoS(4x4) + palByte4</td>
-<td>AoS(2x2)</td>
+<td>Linear(4x4) + palByte4</td>
+<td>Linear(2x2)</td>
 <td>-</td>
 </tr>
 
@@ -271,7 +271,7 @@ Challenger
 <td>
 Felix the Cat
 </td>
-<td>SoA(2x2 + palByte1)</td>
+<td>Aligned(2x2 + palByte1)</td>
 <td>-</td>
 <td>Comp(-)</td>
 </tr>
@@ -280,7 +280,7 @@ Felix the Cat
 <td>
 Jurassic Park
 </td>
-<td>AoS(2x2)</td>
+<td>Linear(2x2)</td>
 <td>-</td>
 <td>Comp(-), palByteX</td>
 </tr>
@@ -289,18 +289,18 @@ Jurassic Park
 <td>
 Ninja Cat
 </td>
-<td>AoS(2x2)</td>
-<td>AoS(2x2) + palByte4</td>
-<td>AoS(8x5)T</td>
+<td>Linear(2x2)</td>
+<td>Linear(2x2) + palByte4</td>
+<td>Linear(8x5)T</td>
 </tr>
 
 <tr>
 <td>
 Shadow of the Ninja
 </td>
-<td>AoS(2x2)T</td>
-<td>AoS(mix(2x2, palByte4))T</td>
-<td>AoS(8x8)</td>
+<td>Linear(2x2)T</td>
+<td>Linear(mix(2x2, palByte4))T</td>
+<td>Linear(8x8)</td>
 </tr>
 
 <tr>
@@ -308,8 +308,8 @@ Shadow of the Ninja
 Little Samson
 </td>
 <td>const(2x2)</td>
-<td>AoS(mix(2x2, palByte4))</td>
-<td>AoS(8x8)</td>
+<td>Linear(mix(2x2, palByte4))</td>
+<td>Linear(8x8)</td>
 </tr>
 
 <tr>
@@ -317,7 +317,7 @@ Little Samson
 Gun Smoke
 </td>
 <td>const(2x2)</td>
-<td>AoS(2x2 + palByte4)</td>
+<td>Linear(2x2 + palByte4)</td>
 <td>(-)Iy</td>
 </tr>
 
@@ -325,9 +325,9 @@ Gun Smoke
 <td>
 New Ghostbusters 2
 </td>
-<td>SoA(2x2 + palByte1)</td>
+<td>Aligned(2x2 + palByte1)</td>
 <td>-</td>
-<td>AoS(16x15)</td>
+<td>Linear(16x15)</td>
 </tr>
 
 <tr>
@@ -337,62 +337,62 @@ New Ghostbusters 2
 <tr><td>Ghosts'n Goblins</td></tr>
 </table>
 </td>
-<td>AoS(2x2) + palByte1</td>
+<td>Linear(2x2) + palByte1</td>
 <td>-</td>
-<td>AoS(16x15)</td>
+<td>Linear(16x15)</td>
 </tr>
 
 <tr>
 <td>
 Cheetahmen 2
 </td>
-<td>AoS(2x2) + palByte1</td>
+<td>Linear(2x2) + palByte1</td>
 <td>-</td>
-<td>AoS(16x16)</td>
+<td>Linear(16x16)</td>
 </tr>
 
 <tr>
 <td>
 Low G Man
 </td>
-<td>AoS(2x2) + palByte1</td>
+<td>Linear(2x2) + palByte1</td>
 <td>-</td>
-<td>AoS(16x12)</td>
+<td>Linear(16x12)</td>
 </tr>
 
 <tr>
 <td>
 Shatterhand
 </td>
-<td>AoS(2x2)T + palByte1</td>
-<td>AoS(2x2)T</td>
-<td>AoS(8x8)</td>
+<td>Linear(2x2)T + palByte1</td>
+<td>Linear(2x2)T</td>
+<td>Linear(8x8)</td>
 </tr>
 
 <tr>
 <td>
 Three Eyes Story
 </td>
-<td>AoS(2x2) + palByte1</td>
-<td>AoS(2x2)T</td>
-<td>AoS(8x8)</td>
+<td>Linear(2x2) + palByte1</td>
+<td>Linear(2x2)T</td>
+<td>Linear(8x8)</td>
 </tr>
 
 <tr>
 <td>
 Raf World
 </td>
-<td>AoS(2x2) + palByte1</td>
-<td>AoS(2x2)</td>
-<td>AoS(8x8)</td>
+<td>Linear(2x2) + palByte1</td>
+<td>Linear(2x2)</td>
+<td>Linear(8x8)</td>
 </tr>
 
 <tr>
 <td>
 Ninja Gaiden
 </td>
-<td>AoS(2x2)T</td>
-<td>AoS(2x2)T + palByte4</td>
+<td>Linear(2x2)T</td>
+<td>Linear(2x2)T + palByte4</td>
 <td>(-)T</td>
 </tr>
 
@@ -400,8 +400,8 @@ Ninja Gaiden
 <td>
 Ninja Gaiden 2
 </td>
-<td>AoS(2x2)T</td>
-<td>AoS(2x2) + palByte4</td>
+<td>Linear(2x2)T</td>
+<td>Linear(2x2) + palByte4</td>
 <td>(-)T</td>
 </tr>
 
@@ -409,8 +409,8 @@ Ninja Gaiden 2
 <td>
 Ninja Gaiden 3
 </td>
-<td>AoS(2x2)</td>
-<td>AoS(2x2) + palByte4</td>
+<td>Linear(2x2)</td>
+<td>Linear(2x2) + palByte4</td>
 <td>(-)T</td>
 </tr>
 
@@ -421,7 +421,7 @@ Ninja Gaiden 3
 <tr><td>Jackie Chan Action Kung Fu</td></tr>
 </table>
 </td>
-<td>AoS(4x4) + palByte4</td>
+<td>Linear(4x4) + palByte4</td>
 <td>-</td>
 <td>(-)T</td>
 </tr>
@@ -430,7 +430,7 @@ Ninja Gaiden 3
 <td>
 Jackal
 </td>
-<td>AoS(4x4)Iy + palByte4</td>
+<td>Linear(4x4)Iy + palByte4</td>
 <td>-</td>
 <td>(-)Iy</td>
 </tr>
@@ -446,44 +446,44 @@ Jackal
 <tr><td>Bucky O'Hare</td></tr>
 </table>
 </td>
-<td>AoS(4x4) + palByte4</td>
+<td>Linear(4x4) + palByte4</td>
 <td>-</td>
-<td>AoS(8x6)</td>
+<td>Linear(8x6)</td>
 </tr>
 
 <tr>
 <td>
 Monster in my pocket
 </td>
-<td>AoS(4x4) + palByte4</td>
+<td>Linear(4x4) + palByte4</td>
 <td>-</td>
-<td>AoS(8x6); AoS(8x8)</td>
+<td>Linear(8x6); Linear(8x8)</td>
 </tr>
 
 <tr>
 <td>
 Batman
 </td>
-<td>AoS(4x2)</td>
+<td>Linear(4x2)</td>
 <td>-</td>
-<td>AoS(8x15), palByteX</td>
+<td>Linear(8x15), palByteX</td>
 </tr>
 
 <tr>
 <td>
 Ninja Crusaders
 </td>
-<td>AoS(4x1)</td>
+<td>Linear(4x1)</td>
 <td>-</td>
-<td>AoS(8x24), palByteX</td>
+<td>Linear(8x24), palByteX</td>
 </tr>
 
 <tr>
 <td>
 Dragon Fighter
 </td>
-<td>AoS(2x2 + palByte1)T</td>
-<td>AoS(2x2 + palByte1)T</td>
+<td>Linear(2x2 + palByte1)T</td>
+<td>Linear(2x2 + palByte1)T</td>
 <td>(-)T</td>
 </tr>
 
@@ -491,7 +491,7 @@ Dragon Fighter
 <td>
 Castlevania
 </td>
-<td>AoS(4x4 + palByte4)</td>
+<td>Linear(4x4 + palByte4)</td>
 <td>-</td>
 <td>(8x6)T</td>
 </tr>
@@ -500,27 +500,27 @@ Castlevania
 <td>
 Addams Family
 </td>
-<td>AoS(1x20); AoS(1x6)</td>
+<td>Linear(1x20); Linear(1x6)</td>
 <td>-</td>
-<td>AoS(-), palByteX</td>
+<td>Linear(-), palByteX</td>
 </tr>
 
 <tr>
 <td>
 Abadox
 </td>
-<td>AoS(4x30 + palByte30)</td>
+<td>Linear(4x30 + palByte30)</td>
 <td>-</td>
-<td>AoS(-)</td>
+<td>Linear(-)</td>
 </tr>
 
 <tr>
 <td>
 Captain Planet
 </td>
-<td>AoS(4x8 + palByte8)</td>
+<td>Linear(4x8 + palByte8)</td>
 <td>-</td>
-<td>AoS(-)</td>
+<td>Linear(-)</td>
 </tr>
 
 <tr>
@@ -530,25 +530,25 @@ Captain Planet
 <tr><td>Mickey Mania</td></tr>
 </table>
 </td>
-<td>AoS(2x2)W2</td>
+<td>Linear(2x2)W2</td>
 <td>-</td>
-<td>AoS(16x15), palByteX</td>
+<td>Linear(16x15), palByteX</td>
 </tr>
 
 <tr>
 <td>
 Takeshi no Chousenjou
 </td>
-<td>AoS(2x2)T</td>
+<td>Linear(2x2)T</td>
 <td>-</td>
-<td>AoS(15x2)T, palByteX</td>
+<td>Linear(15x2)T, palByteX</td>
 </tr>
 
 <tr>
 <td>
 Circus Caper
 </td>
-<td>AoS(2x2)T</td>
+<td>Linear(2x2)T</td>
 <td>-</td>
 <td>(-)T, palByteX</td>
 </tr>
@@ -563,16 +563,16 @@ Circus Caper
 <b>()Iy</b> - структура хранится в инвертированном по оси Y виде.<br>
 <b>()x2</b> - игра содержит по две копии наборов данных на уровень.<br>
 <b>()W2</b> - индексы элементов кодируются с помощью слова длиной в 2 байта<br>
-<b>AoS()</b> - структуры хранятся последовательно, одна за другой. <br>
-<b>SoA()</b> - структуры хранятся массивами из отдельных частей (отдельный массив из всех 1х элементов структуры, затем отдельный массив из всех 2х элементов структуры и т.д.).<br>
-<b>SoAu()</b> - то же, что и SoA(), но массивы хранятся в памяти не друг за другом, а раздельно (между ними может находиться переменное число других данных, не связанных с описанием блоков)<br>
+<b>Linear()</b> - структуры хранятся последовательно, одна за другой. <br>
+<b>Aligned()</b> - структуры хранятся массивами из отдельных частей (отдельный массив из всех 1х элементов структуры, затем отдельный массив из всех 2х элементов структуры и т.д.).<br>
+<b>Unaligned()</b> - то же, что и Aligned(), но массивы хранятся в памяти не друг за другом, а раздельно (между ними может находиться переменное число других данных, не связанных с описанием блоков)<br>
 <b>Const()</b> - индексы элементов структуры не хранятся, а вычисляются из индексов самой структуры.<br>
-<b>SoA(NxM + palByteX)</b> - массивы из отдельных частей структуры из NxM элементов, а затем массив из частей palByteX, в котором элементы означают доп. данные для соотвествующих индексу структур.<br>
-<b>AoS(NxM)+ palByteX</b> - последовательное описание структур размером NxM, а затем описание массива из частей palByteX, в котором элементы означают доп. данных для соотвествующих индексу структур<br>
+<b>Aligned(NxM + palByteX)</b> - массивы из отдельных частей структуры из NxM элементов, а затем массив из частей palByteX, в котором элементы означают доп. данные для соотвествующих индексу структур.<br>
+<b>Linear(NxM)+ palByteX</b> - последовательное описание структур размером NxM, а затем описание массива из частей palByteX, в котором элементы означают доп. данных для соотвествующих индексу структур<br>
 <b>(NxM)->(PxQ)</b> - структура PxQ, образованная из P элементов в ширину и Q элементов в высоту, где элементы структуры сами являются структурами из NxM элементов.<br>
-<b>AoS(NxM),palByteX</b> - описание бит палитры отдельным слоем от структур.<br>
+<b>Linear(NxM),palByteX</b> - описание бит палитры отдельным слоем от структур.<br>
 <b>Comp()</b> - данные в ROM сжаты каким-либо образом.<br>
-<b>AoS(NxM); AoS(PxQ)</b> - в игре используются и структуры размером NxM, и структуры размером PxQ элементов в разных местах.<br>
+<b>Linear(NxM); Linear(PxQ)</b> - в игре используются и структуры размером NxM, и структуры размером PxQ элементов в разных местах.<br>
 <b>mix(NxM, palByteX)</b> - биты палитры хранятся в тех же байтах, что и индексы элементов структуры.<br>
 </p>
 
@@ -600,8 +600,8 @@ Circus Caper
   </div>
   
    <div class="dashed">
-   <div class="container" align="center">
-   <a href="index.html" align="right">Назад</a>
+   <div class="container" Aligned="center">
+   <a href="index.html" Aligned="right">Назад</a>
    </div>
    </div>
   </body>
