@@ -1,13 +1,14 @@
 -------------------------------------------------------------------------------
 [RUS]
 Редактор уровней для игр [NES/SEGA/SNES/GBA].
-Версия 4.9
+Версия 5.0
 -------------------------------------------------------------------------------
 
 Полный список поддерживаемых игр в файле cad_editor_supported_games.txt
 ------------------------------------------------------------------------------- 
 !!! Рекомендуется копировать файл с промежуточным результатом в отдельную папку
     и проверять на работоспособность почаще!
+!!! Do not forget to do backups of result ROM file as much as possible
 -------------------------------------------------------------------------------
 
 История версий
@@ -528,6 +529,54 @@ v4.9
   Terminator 2
 - Редактор типов физики блоков для Flintstones Rescue Dino & Hoppy
 
+v5.0
+- Улучшено окно открытия конфигах
+- В редакторе раскладки вынесена часть параметров в конфиги
+- Плагин редактора карт
+  Поддержка карт шириной в две экранных страницы
+  Фиксы отрисовки блоков
+- Скрипты:
+  Сохранение скриншота экрана в файл.
+  Экспорт блоков 2x2 в формате выровненных массивов в файл
+  Экспорт текущего экрана в бинарный файл
+  Сохранение неиспользуемых на карте блоков в виде картинок для изучения
+  Скрипт экспорта всех CHR-банков конфига в виде картинок
+- Фиксы конфигов.
+  Gun smoke (добавлены дампы отражённой памяти)
+  Chip & Dale, Tale Spin, Darkwing Duck (редакторы раскладок, новые карты и кат-сцены в редакторе карт)
+- Конфиги всех уровней (блоки/экраны):
+  Shadow of the Ninja
+  Ninja Crusaders
+  Yo-Noid
+  Robocop 2
+  Jackal
+  Low G Man
+  Darkman
+  Ghosts and Goblins
+  Crystal Mines
+  Zen Intergalactic Ninja
+  Circus Caper
+  Ninja Gaiden
+  Ninja Gaiden 2
+  Ninja Gaiden 3
+  Final Mission
+unlicened games by Hammerteam:
+  Aladdin
+  Donkey Kong 4
+  Earth Worm Jim 3
+  Super Mario World
+  Titenic
+  Harry's Legend
+  Final Fight 3
+  Sonic the Hedgehog
+  Tiny Toon 6
+- Конфиги блоков/экранов (по 1 уровню):
+  Tiny Toon 2 (раздельные конфиги для верхней и нижней части уровня)
+  Toxic Crusaders  (ограниченный редактор палитр)
+  Mission Complete (много отдельных комнат)
+  
+  
+
 -------------------------------------------------------------------------------
 Благодарности: 
 -------------------------------------------------------------------------------
@@ -535,7 +584,7 @@ v4.9
   Mefisto     - идеи по развитию редактора, тестирование, написание компрессоров для сеговских игр.
   Lomax       - тестирование, создание хаков с помощью редактора
   Roket       - тестирование, рисование иконок, конфиги для редактора анимаций Tale Spin, Little Mermaid, конфиги для игр Goonies 2, Mickey Mouse 3, Mickey's Adventures in Numberland, Hook, Indiana Jones Jr, Super Robin Hood, формат объектов Tom & Jerry, Little Nemo
-  lancuster   - конфиги для игр Dragon Fighter, Cheetahmen 2, Captain America, TMNT 1, Jackie Chan, Gun Smoke, Batman, Monster in my Pocket, Super C, Captain Planet, Mitsume ga Tooru
+  lancuster   - конфиги для игр Dragon Fighter, Cheetahmen 2, Captain America, TMNT 1, Jackie Chan, Gun Smoke, Batman, Monster in my Pocket, Super C, Captain Planet, Mitsume ga Tooru и других (около 40 игр)
   evgeny      - идеи по развитию редактора, тестирование.
   Matrixz     - документация к Megaman 4.
   Nemesis_c   - конфиги для игры Zombies Ate My Neighbors.

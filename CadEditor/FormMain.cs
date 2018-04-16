@@ -1062,7 +1062,7 @@ namespace CadEditor
 
         private void setWindowText()
         {
-            Text = String.Format("CAD Editor v4.9 - {0}", OpenFile.FileName);
+            Text = String.Format("CAD Editor v5.0 - {0}", OpenFile.FileName);
         }
     }
 }
