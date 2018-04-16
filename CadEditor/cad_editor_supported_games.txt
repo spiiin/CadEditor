@@ -65,6 +65,7 @@ Supported games:
     Harry's Legend (unlicenced)                     (all levels)
     Final Fight 3 (unlicenced)                      (all levels)
     Sonic the Hedgehog (unlicenced)                 (all levels)
+    Tiny Toon 6 (unlicenced)                        (all levels)
     Felix the Cat                                   (all levels, dumps+compression scripts)
     Ninja Cat (Cattou Ninden Teyandee)              (all levels + object editor for 4 levels)
     New Ghostbusters 2                              (all levels + object editor for 1 level)
