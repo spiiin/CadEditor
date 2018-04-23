@@ -22,7 +22,7 @@ public class Data
   public bool isEnemyEditorEnabled()    { return false; }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return ToxicUtils.fakeVideoAddr(); }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return ToxicUtils.getVideoChunk("chr1.bin");   }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return ToxicUtils.getVideoChunk("chr1-1.bin");   }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
@@ -33,7 +33,7 @@ public class Data
   
   public GetBlocksFunc        getBlocksFunc() { return Utils.getBlocksLinear2x2withoutAttrib;}
   public SetBlocksFunc        setBlocksFunc() { return Utils.setBlocksLinearWithoutAttrib;}
-  public GetPalFunc           getPalFunc()           { return ToxicUtils.readPalFromBin("pal1.bin"); }
+  public GetPalFunc           getPalFunc()           { return ToxicUtils.readPalFromBin("pal1-1.bin"); }
   public SetPalFunc           setPalFunc()           { return null;}
   
   //----------------------------------------------------------------------------
