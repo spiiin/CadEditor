@@ -53,9 +53,9 @@ public static class ShatterhandUtils
       Utils.setBigBlocksCapcomDefault(bigTileIndex, bigBlockIndexes);
   }
   
-  public static GetPalFunc readPalFromBin(string fname)
+  public static GetPalFunc readPalFromBin(string[] fname)
   {
-      return (int _)=> { return Utils.readBinFile(fname); };
+      return (int x)=> { return Utils.readBinFile(fname[x]); };
   }
   
   public static GetVideoPageAddrFunc fakeVideoAddr()
@@ -63,9 +63,9 @@ public static class ShatterhandUtils
       return (int _)=> { return -1; };
   }
   
-  public static GetVideoChunkFunc getVideoChunk(string fname)
+  public static GetVideoChunkFunc getVideoChunk(string[] fname)
   {
-     return (int _)=> { return Utils.readVideoBankFromFile(fname, 0); };
+     return (int x)=> { return Utils.readVideoBankFromFile(fname[x], 0); };
   }
   
   public static LevelLayerData getLayoutLinearSH(int curActiveLayout)

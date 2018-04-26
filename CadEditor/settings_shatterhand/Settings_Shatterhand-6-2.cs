@@ -23,15 +23,18 @@ public class Data
 
   public int getBigBlocksCount()        { return 128; }
   public int getBlocksCount()           { return 128; }
+  
+  public OffsetRec getVideoOffset()     { return new OffsetRec(0x0 , 1   , 0x1000);  }
+  public OffsetRec getPalOffset  ()     { return new OffsetRec(0x0 , 1   , 16); }
 
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return ShatterhandUtils.fakeVideoAddr(); }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return ShatterhandUtils.getVideoChunk("chr6.bin");   }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return ShatterhandUtils.getVideoChunk(new[]{"chr6.bin"});   }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   public GetBigBlocksFunc     getBigBlocksFunc()     { return ShatterhandUtils.getBigBlocks; }
   public SetBigBlocksFunc     setBigBlocksFunc()     { return ShatterhandUtils.setBigBlocks;}
   public GetBlocksFunc        getBlocksFunc()        { return ShatterhandUtils.getBlocks;}
   public SetBlocksFunc        setBlocksFunc()        { return ShatterhandUtils.setBlocks;}
-  public GetPalFunc           getPalFunc()           { return ShatterhandUtils.readPalFromBin("pal6-2.bin"); }
+  public GetPalFunc           getPalFunc()           { return ShatterhandUtils.readPalFromBin(new[]{"pal6-2.bin"}); }
   public SetPalFunc           setPalFunc()           { return null;}
   //public GetObjectsFunc       getObjectsFunc()       { return ShatterhandUtils.getObjects; }
   //public SetObjectsFunc       setObjectsFunc()       { return ShatterhandUtils.setObjects; }
