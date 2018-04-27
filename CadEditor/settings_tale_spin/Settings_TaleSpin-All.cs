@@ -55,8 +55,8 @@ public class Data:CapcomBase
           new LevelRec(0x1078D, 84, 12, 7,  0x1E1A1, groups[6].name, 0, groups[6]),
           new LevelRec(0x108DD, 63, 14, 6,  0x1E1F5, groups[8].name, 0, groups[8]),
           new LevelRec(0x109FC, 56, 9 , 8,  0x1E249, groups[3].name, 0, groups[3]),
-          new LevelRec(0x10B00, 51, 12, 5,  0x1E292, groups[7].name, 0, groups[7]),
-          new LevelRec(0x10C07, 53, 8,  6,  0x1E2D9, groups[9].name, 0, groups[9]),
+          new LevelRec(0x10B00, 51, 12, 5,  0x1E291, groups[7].name, 0, groups[7]),
+          new LevelRec(0x10C07, 53, 8,  6,  0x1E2D1, groups[9].name, 0, groups[9]),
       };
   }
   public GetGroupsFunc getGroupsFunc() { return getGroups; }
