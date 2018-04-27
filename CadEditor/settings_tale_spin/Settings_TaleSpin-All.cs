@@ -63,16 +63,16 @@ public class Data:CapcomBase
   public GroupRec[] getGroups()
   {
     return new GroupRec[] { 
-      new GroupRec("Level 1"         , 0 ,0,0,0, 0x01),
-      new GroupRec("Level 2"         , 10,0,0,1, 0x17),
-      new GroupRec("Level 3"         , 1 ,1,1,2, 0x21),
-      new GroupRec("Level 4"         , 5 ,1,1,1, 0x34),
-      new GroupRec("Level 5"         , 2 ,2,2,3, 0x51),
-      new GroupRec("Level 5-2"       , 2 ,2,2,3, 0x86),
-      new GroupRec("Level 6"         , 3 ,2,2,5, 0x62),
-      new GroupRec("Level 7"         , 6 ,3,3,10, 0x91),
-      new GroupRec("Level 8"         , 4 ,4,4,6, 0xB1),
-      new GroupRec("Level 9"         , 7 ,4,4,7, 0xC5),
+      new GroupRec("Over The Sea"        , 0 ,0,0,0, 0x01),
+      new GroupRec("Bonus"               , 10,0,0,1, 0x17),
+      new GroupRec("The Baseball Stadium", 1 ,1,1,2, 0x21),
+      new GroupRec("The Mining Tunnels"  , 5 ,1,1,1, 0x34),
+      new GroupRec("In The Stormy Sky"   , 2 ,2,2,3, 0x51),
+      new GroupRec("In The Stormy Sky-2" , 2 ,2,2,3, 0x86),
+      new GroupRec("The Haunted House"   , 3 ,2,2,5, 0x62),
+      new GroupRec("Jungle Junket"       , 6 ,3,3,10, 0x91),
+      new GroupRec("High Above The City" , 4 ,4,4,6, 0xB1),
+      new GroupRec("The Snowy Alps"      , 7 ,4,4,7, 0xC5),
     };
   }
   
