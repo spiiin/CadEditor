@@ -35,15 +35,11 @@ public class Data
   
   public byte[] getVideoChunk(int videoPageId)
   {
-     return Utils.readVideoBankFromFile("ppu_dump1.bin", videoPageId);
+     return Utils.readVideoBankFromFile("chr1-1.bin", videoPageId);
   }
   
   public byte[] getPallete(int palId)
   {
-    var pallete = new byte[] { 
-      0x0f, 0x20, 0x2a, 0x01, 0x0f, 0x10, 0x1c, 0x0b,
-      0x0f, 0x10, 0x00, 0x0b, 0x0f, 0x27, 0x17, 0x06
-    }; 
-    return pallete;
+      return Utils.readBinFile("pal1-1.bin");
   }
 }

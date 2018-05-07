@@ -1,0 +1,13 @@
+Boss Arenas (using RLE)
+
+Stage 1-2
+19c50
+Stage 2-3
+19f06
+Stage 3-1(inside building arena)
+1a12e
+Stage 5-2
+19AC2
+Stage 6-3
+1ba7c
+
