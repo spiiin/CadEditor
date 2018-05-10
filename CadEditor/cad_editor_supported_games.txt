@@ -68,6 +68,7 @@ Supported games:
     Little Red Hood                                 (all levels)
     Rollergames                                     (all levels)
     Insector X                                      (all levels)
+    Utsurun Desu                                    (all levels)
     Aladdin (unlicenced)                            (all levels)
     Donkey Kong 4 (unlicenced)                      (all levels)
     EarthWorm Jim 3 (unlicenced)                    (all levels)

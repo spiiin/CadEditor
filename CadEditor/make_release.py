@@ -35,6 +35,7 @@ COPY_FOLDER_LIST = [
   "Scripts/",
   "obj_sprites/",
   "scroll_sprites/",
+  "shared_settings/",
   "settings_*/",
   
   "IronPythonLib/",

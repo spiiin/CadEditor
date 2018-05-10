@@ -113,6 +113,7 @@ fnames = [
     "Tom & Jerry (and Tuffy) (J).nes",
     "Toxic Crusaders (U) [!].nes",
     "Young Indiana Jones Chronicles, The (U) [!].nes",
+    "Utsurun Desu (J).nes",
     "Yo! Noid (U) [!].nes",
     "Zen Intergalactic Ninja (U) [!].nes"
 ]
