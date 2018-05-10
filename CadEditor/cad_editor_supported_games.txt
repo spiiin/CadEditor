@@ -69,6 +69,7 @@ Supported games:
     Rollergames                                     (all levels)
     Insector X                                      (all levels)
     Utsurun Desu                                    (all levels)
+    Karnov                                          (all levels)
     Aladdin (unlicenced)                            (all levels)
     Donkey Kong 4 (unlicenced)                      (all levels)
     EarthWorm Jim 3 (unlicenced)                    (all levels)
