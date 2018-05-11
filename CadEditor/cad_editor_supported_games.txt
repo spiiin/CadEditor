@@ -70,6 +70,7 @@ Supported games:
     Insector X                                      (all levels)
     Utsurun Desu                                    (all levels)
     Karnov                                          (all levels)
+    Captain Silver                                  (all levels)
     Aladdin (unlicenced)                            (all levels)
     Donkey Kong 4 (unlicenced)                      (all levels)
     EarthWorm Jim 3 (unlicenced)                    (all levels)

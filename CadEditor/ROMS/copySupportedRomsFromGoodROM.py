@@ -20,6 +20,7 @@ fnames = [
     "Bucky O'Hare (E).nes",
     "Captain America and The Avengers (U) [!].nes",
     "Captain Planet and The Planeteers (U) [!].nes",
+    "Captain Silver (J) [!].nes",
     "Castlevania (E).nes",
     "Castle of Dragon (U) [!].nes",
     "Challenger (J).nes",
