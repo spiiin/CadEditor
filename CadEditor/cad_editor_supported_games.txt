@@ -71,6 +71,7 @@ Supported games:
     Utsurun Desu                                    (all levels)
     Karnov                                          (all levels)
     Captain Silver                                  (all levels)
+    Buggs Bunny Crazy Castle                        (all levels)
     Aladdin (unlicenced)                            (all levels)
     Donkey Kong 4 (unlicenced)                      (all levels)
     EarthWorm Jim 3 (unlicenced)                    (all levels)
