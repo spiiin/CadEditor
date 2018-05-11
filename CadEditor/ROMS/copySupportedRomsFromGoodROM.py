@@ -100,6 +100,7 @@ fnames = [
     "Shatterhand (U) [!].nes",
     "Sonic The Hedgehog (Unl) [!].nes",
     "Super C (U) [!].nes",
+    "Super Contra 7 (Unl) [t1].nes",
     "Super Mario World (Unl).nes",
     "Super Robin Hood [p1][!].nes",
     "Super Spy Hunter (U) [!].nes",
