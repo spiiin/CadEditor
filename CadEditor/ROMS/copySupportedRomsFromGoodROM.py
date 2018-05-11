@@ -50,6 +50,7 @@ fnames = [
     "Flintstones, The - The Surprise at Dinosaur Peak! (U) [!p].nes",
     "Ghosts 'N Goblins (U) [!].nes",
     "Goonies II, The (U) [!].nes",
+    "Gruniozerca 2 (NesDevComp).nes",
     "Gun.Smoke (U) [!].nes",
     "Harry's Legend (English) (Unl).nes",
     "Heavy Barrel (U) [!].nes",

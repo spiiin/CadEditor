@@ -85,6 +85,7 @@ Supported games:
     Sonic the Hedgehog (unlicenced)                 (all levels)
     Tiny Toon 6 (unlicenced)                        (all levels)
     Super Contra 7 (unlicenced)                     (all levels)
+    Gruniozerca 2 (PD)                              (all levels)
     Dragon (unlicenced)                             (all levels, no pal layer)
     Toxic Crusaders                                 (all levels, no pal layer)
     Felix the Cat                                   (all levels, dumps+compression scripts)
