@@ -73,6 +73,7 @@ Supported games:
     Captain Silver                                  (all levels)
     Bugs Bunny Crazy Castle                         (all levels)
     Don Doko Don                                    (all levels)
+    Donald Land                                     (all levels)
     Aladdin (unlicenced)                            (all levels)
     Donkey Kong 4 (unlicenced)                      (all levels)
     EarthWorm Jim 3 (unlicenced)                    (all levels)

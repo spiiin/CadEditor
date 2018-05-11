@@ -36,6 +36,7 @@ fnames = [
     "Darkman (U) [!].nes",
     "Darkwing Duck (U) [!].nes",
     "Don Doko Don (J).nes",
+    "Donald Land (J).nes",
     "Donkey Kong Country 4 (Unl) [!].nes",
     "Dragon Fighter (U) [!].nes",
     "Dragon, The (Unl).nes",
