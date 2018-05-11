@@ -57,6 +57,7 @@ fnames = [
     "Hudson's Adventure Island II (U) [!].nes",
     "Hudson's Adventure Island III (U) [!].nes",
     "Insector X (J) [!].nes",
+    "Isolated Warrior (U) [!].nes",
     "Jackal (U) [!].nes",
     "Jackie Chan's Action Kung Fu (U) [!p].nes",
     "Jungle Book, The (U) [!].nes",
