@@ -1,0 +1,2 @@
+Palette: 135c6-135e5
+Screens: 135e6-136dd (tilemap)
