@@ -17,6 +17,7 @@ fnames = [
     "Battletoads & Double Dragon - The Ultimate Team (E) [!p].nes",
     "Battletoads (U) [!].nes",
     "Banana Prince (G) [!].nes",
+    "BreakThru (U) [!].nes",
     "Bucky O'Hare (E).nes",
     "Bugs Bunny Crazy Castle, The (U) [!].nes",
     "Captain America and The Avengers (U) [!].nes",

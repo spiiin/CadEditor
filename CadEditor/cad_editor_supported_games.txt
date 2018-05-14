@@ -75,6 +75,7 @@ Supported games:
     Don Doko Don                                    (all levels)
     Donald Land                                     (all levels)
     Isolated Warrior                                (all levels)
+    BreakThru                                       (all levels)
     Aladdin (unlicenced)                            (all levels)
     Donkey Kong 4 (unlicenced)                      (all levels)
     EarthWorm Jim 3 (unlicenced)                    (all levels)
