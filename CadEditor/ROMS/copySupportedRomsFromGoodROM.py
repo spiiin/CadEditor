@@ -55,6 +55,7 @@ fnames = [
     "Goonies II, The (U) [!].nes",
     "Gruniozerca 2 (NesDevComp).nes",
     "Gun.Smoke (U) [!].nes",
+    "Happily Ever After (Unreleased).nes",
     "Harry's Legend (English) (Unl).nes",
     "Heavy Barrel (U) [!].nes",
     "Hook (U) [!].nes",
