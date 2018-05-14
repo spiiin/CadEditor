@@ -1,0 +1,2 @@
+Offset: 189b2-18d71 (tilemap)
+Palette bits: 18d72-18db1
