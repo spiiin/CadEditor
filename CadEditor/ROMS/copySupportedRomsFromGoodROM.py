@@ -110,6 +110,7 @@ fnames = [
     "Super Robin Hood [p1][!].nes",
     "Super Spy Hunter (U) [!].nes",
     "TaleSpin (E) [!].nes",
+    "Takahashi Meijin no Bugutte Honey (J).nes",
     "Takeshi no Chousenjou (J).nes",
     "Teenage Mutant Ninja Turtles (U) [!].nes",
     "Teenage Mutant Ninja Turtles II - The Arcade Game (U) [!].nes",
