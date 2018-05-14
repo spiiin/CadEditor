@@ -104,6 +104,7 @@ fnames = [
     "Predator (U) [!].nes",
     "Quest of Ki, The (J).nes",
     "Raf World (J).nes",
+    "Robo Warrior (U) [!].nes",
     "RoboCop 2 (U) (PRG1) [!].nes",
     "Rockin' Kats (U) [!].nes",
     "Rollergames (U) [!].nes",
