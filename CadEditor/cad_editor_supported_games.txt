@@ -114,6 +114,7 @@ Supported games:
     Castlevania                                     (1 level)
     Takeshi Chousenjou                              (1 level)
     Mission Impossible                              (1 level)
+    Legendary Wings                                 (1 level)
     Jurassic Park                                   (1 level, dump editor)
     Contra Spirits                                  (1 level, game protected for changes)
     Mickey Mania 7                                  (1 level, game protected for changes)

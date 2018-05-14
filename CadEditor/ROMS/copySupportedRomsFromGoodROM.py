@@ -71,6 +71,7 @@ fnames = [
     "Kaiketsu Yanchamaru 3 - Taiketsu! Zouringen (J) [T+Eng1.00_Suicidal].nes",
     "Karnov (U) [!].nes",
     "Kyatto Ninja Teyandee (J).nes",
+    "Legendary Wings (U) [!].nes",
     "Little Mermaid, The (U) [!].nes",
     "Little Nemo - The Dream Master (U) [!].nes",
     "Little Red Hood (Sachen-HES) [!].nes",
