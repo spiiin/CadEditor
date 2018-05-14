@@ -55,6 +55,7 @@ fnames = [
     "Ghosts 'N Goblins (U) [!].nes",
     "Goonies II, The (U) [!].nes",
     "Gruniozerca 2 (NesDevComp).nes",
+    "Guerrilla War (U) [!].nes",
     "Gun.Smoke (U) [!].nes",
     "Happily Ever After (Unreleased).nes",
     "Harry's Legend (English) (Unl).nes",
