@@ -115,6 +115,7 @@ fnames = [
     "Teenage Mutant Ninja Turtles II - The Arcade Game (U) [!].nes",
     "Teenage Mutant Ninja Turtles III - The Manhattan Project (U) [!].nes",
     "Terminator 2 - Judgment Day (E) [!].nes",
+    "Time Diver Eon Man (U) (Prototype).nes",
     "Tiny Toon Adventures (U) [!].nes",
     "Tiny Toon Adventures 2 - Trouble in Wackyland (U) [!].nes",
     "Tiny Toon Adventures 6 (Unl) [!].nes",
