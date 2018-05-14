@@ -1,0 +1,6 @@
+BreakThru titlescreen
+Offset: 0x10 (tilemap)
+Palette: 0x3d0
+In-Game Map
+Offset: 0x410
+Palette: 0x7d0
