@@ -101,6 +101,7 @@ fnames = [
     "Power Blade (E) [!].nes",
     "Power Blade 2 (U) [!].nes",
     "Predator (U) [!].nes",
+    "Quest of Ki, The (J).nes",
     "Raf World (J).nes",
     "RoboCop 2 (U) (PRG1) [!].nes",
     "Rockin' Kats (U) [!].nes",
