@@ -109,6 +109,7 @@ fnames = [
     "Super Mario World (Unl).nes",
     "Super Robin Hood [p1][!].nes",
     "Super Spy Hunter (U) [!].nes",
+    "Taan Hak Fung Wan King Tank (Ch) [T+Eng Cool-Spot (01.01.2010)].nes",
     "TaleSpin (E) [!].nes",
     "Takahashi Meijin no Bugutte Honey (J).nes",
     "Takeshi no Chousenjou (J).nes",
