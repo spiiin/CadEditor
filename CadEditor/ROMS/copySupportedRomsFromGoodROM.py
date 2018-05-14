@@ -40,6 +40,7 @@ fnames = [
     "Don Doko Don (J).nes",
     "Donald Land (J).nes",
     "Donkey Kong Country 4 (Unl) [!].nes",
+    "Dooly_Bravo_Land.nes",
     "Dragon Fighter (U) [!].nes",
     "Dragon, The (Unl).nes",
     "Duck Tales (U) [!].nes",

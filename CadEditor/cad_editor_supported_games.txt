@@ -79,6 +79,7 @@ Supported games:
     Athena                                          (all levels)
     Time Diver Eon Man (prototype)                  (all levels)
     Takahashi Meijin no Bugutte Honey               (all levels)
+    Dooly Bravo Land                                (all levels)
     Aladdin (unlicenced)                            (all levels)
     Donkey Kong 4 (unlicenced)                      (all levels)
     EarthWorm Jim 3 (unlicenced)                    (all levels)
