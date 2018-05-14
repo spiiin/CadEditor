@@ -76,6 +76,7 @@ Supported games:
     Donald Land                                     (all levels)
     Isolated Warrior                                (all levels)
     BreakThru                                       (all levels)
+    Athena                                          (all levels)
     Time Diver Eon Man (prototype)                  (all levels)
     Takahashi Meijin no Bugutte Honey               (all levels)
     Aladdin (unlicenced)                            (all levels)

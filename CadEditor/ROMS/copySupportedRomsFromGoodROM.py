@@ -11,6 +11,7 @@ fnames = [
     "Adventures of Bayou Billy, The (U) [!].nes",
     "Aladdin 4 (1996) (Unl) [!].nes",
     "Alien 3 (U) [!].nes",
+    "Athena (J).nes",
     "Bad Dudes (U) [!].nes",
     "Batman (U) [!].nes",
     "Batman III [p1].nes",
