@@ -132,6 +132,7 @@ fnames = [
     "Toxic Crusaders (U) [!].nes",
     "Young Indiana Jones Chronicles, The (U) [!].nes",
     "Utsurun Desu (J).nes",
+    "Vice - Project Doom (U) [!].nes",
     "Yo! Noid (U) [!].nes",
     "Zen Intergalactic Ninja (U) [!].nes"
 ]
