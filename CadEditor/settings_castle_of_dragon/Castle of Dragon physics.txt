@@ -1,0 +1,47 @@
+Level 1
+100D0 - map
+10e50 - palette
+11081 - blocks tiles
+140d0 - solid blocks
+
+Level 2
+10210 - map
+10e50 - palette
+11081 - blocks tiles
+14210 - solid blocks
+
+Level 3
+102d0 - map
+10e50 - palette
+11081 - blocks tiles
+142d0 - solid blocks
+
+Level 4
+10490 - map
+10f2c - palette
+11e41 - blocks tiles
+14490 - solid blocks
+
+Level 5
+10690 - map
+10fab - palette
+12631 - blocks tiles
+14690 - solid blocks
+
+Level 6
+10890 - map
+10fab - palette
+12631 - blocks tiles
+14890 - solid blocks
+
+Level 7
+10a90 - map
+10fab - palette
+12631 - blocks tiles
+14a90 - solid blocks
+
+Level 8
+10c90 - map
+11027 - palette
+12df1 - blocks tiles
+14c90 - solid blocks
