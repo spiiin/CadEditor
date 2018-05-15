@@ -4,6 +4,18 @@ using System;
 public static class BlockUtils
 { 
   //-----------------------------------------------------------------------------------------------------------------
+  public static ObjRec[] getBlocksFromAlignedArrays(int tileId)
+  {
+      var bb = Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), false);
+      return bb;
+  }
+  
+  public static void setBlocksToAlignedArrays(int tileId, ObjRec[] blocksData)
+  {
+    Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), true, false);
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
   public static ObjRec[] getBlocksLinear2x2Masked(int tileId)
   {
       int count = ConfigScript.getBlocksCount();
