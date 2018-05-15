@@ -1,0 +1,2 @@
+Offset: 8c10-8fcf (tilemap)
+Palette: 8fd0-900f
