@@ -116,6 +116,7 @@ fnames = [
     "Super C (U) [!].nes",
     "Super Contra 7 (Unl) [t1].nes",
     "Super Mario World (Unl).nes",
+    "SuperPainter_v1.0.nes",
     "Super Robin Hood [p1][!].nes",
     "Super Spy Hunter (U) [!].nes",
     "Taan Hak Fung Wan King Tank (Ch) [T+Eng Cool-Spot (01.01.2010)].nes",
@@ -137,7 +138,8 @@ fnames = [
     "Utsurun Desu (J).nes",
     "Vice - Project Doom (U) [!].nes",
     "Yo! Noid (U) [!].nes",
-    "Zen Intergalactic Ninja (U) [!].nes"
+    "Zen Intergalactic Ninja (U) [!].nes",
+    "Zombie Nation (U) [!].nes",
 ]
 
 for fname in fnames:
