@@ -140,6 +140,7 @@ fnames = [
     "Utsurun Desu (J).nes",
     "Vice - Project Doom (U) [!].nes",
     "Yo! Noid (U) [!].nes",
+    "Whomp'Em (U) [!].nes",
     "Zen Intergalactic Ninja (U) [!].nes",
     "Zombie Nation (U) [!].nes",
 ]
