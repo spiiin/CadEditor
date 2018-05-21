@@ -20,6 +20,7 @@ fnames = [
     "Banana Prince (G) [!].nes",
     "BreakThru (U) [!].nes",
     "Bucky O'Hare (E).nes",
+    "Bugs Bunny Birthday Blowout, The (U) [!].nes",
     "Bugs Bunny Crazy Castle, The (U) [!].nes",
     "Burai Fighter (U) [!].nes",
     "Captain America and The Avengers (U) [!].nes",
