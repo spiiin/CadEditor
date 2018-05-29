@@ -74,6 +74,7 @@ fnames = [
     "Jurassic Park (U) [!].nes",
     "Kaiketsu Yanchamaru 3 - Taiketsu! Zouringen (J) [T+Eng1.00_Suicidal].nes",
     "Karnov (U) [!].nes",
+    "Kick Master (U) [!].nes",
     "Kyatto Ninja Teyandee (J).nes",
     "Legendary Wings (U) [!].nes",
     "Little Mermaid, The (U) [!].nes",

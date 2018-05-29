@@ -87,6 +87,7 @@ Supported games:
     Burai Fighter                                   (all levels)
     Zombie Nations                                  (all levels)
     Whomp Em                                        (all levels)
+    Kick Master                                     (all levels)
     Aladdin (unlicenced)                            (all levels)
     Donkey Kong 4 (unlicenced)                      (all levels)
     EarthWorm Jim 3 (unlicenced)                    (all levels)
