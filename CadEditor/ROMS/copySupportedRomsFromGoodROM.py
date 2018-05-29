@@ -103,6 +103,7 @@ fnames = [
     "Ninja Gaiden (U) [!].nes",
     "Ninja Gaiden II - The Dark Sword of Chaos (U) [!].nes",
     "Ninja Gaiden III - The Ancient Ship of Doom (U) [!].nes",
+    "Ninja Jajamaru - Ginga Daisakusen (J).nes",
     "Power Blade (E) [!].nes",
     "Power Blade 2 (U) [!].nes",
     "Predator (U) [!].nes",
