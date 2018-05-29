@@ -14,6 +14,32 @@ public static class BlockUtils
   {
     Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), true, false);
   }
+  
+  //-----------------------------------------------------------------------------------------------------------------
+  public static ObjRec[] getBlocksLinear2x2(int tileId)
+  {
+      int count = ConfigScript.getBlocksCount();
+      var bb = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), 2, 2, count, false, false);
+      var palAddr = ConfigScript.getPalBytesAddr();
+      for (int i = 0; i < count; i++)
+      {
+          bb[i].palBytes[0] = Globals.romdata[palAddr + i];
+      }
+      return bb;
+  }
+  
+  public static void setBlocksLinear2x2(int tileId, ObjRec[] blocksData)
+  {
+    int addr = ConfigScript.getTilesAddr(tileId);
+    int count = ConfigScript.getBlocksCount();
+    var palAddr = ConfigScript.getPalBytesAddr();
+    Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, false, false);
+    for (int i = 0; i < count; i++)
+    {
+        int t = blocksData[i].palBytes[0];
+        Globals.romdata[palAddr + i] = (byte)t;
+    }
+  }
 
   //-----------------------------------------------------------------------------------------------------------------
   public static ObjRec[] getBlocksLinear2x2Masked(int tileId)
