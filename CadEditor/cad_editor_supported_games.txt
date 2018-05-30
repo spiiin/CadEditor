@@ -109,6 +109,7 @@ Supported games:
     Gruniozerca 2 (PD)                              (all levels)
     Super Painter (PD)                              (all levels)
     Cowlitz Gamers (PD)                             (all levels)
+    Driar (PD)                                      (all levels)
     Dragon (unlicensed)                             (all levels, no pal layer)
     Toxic Crusaders                                 (all levels, no pal layer)
     Felix the Cat                                   (all levels, dumps+compression scripts)

@@ -49,6 +49,7 @@ fnames = [
     "Doraemon (J) (PRG0) [!].nes",
     "Dragon Fighter (U) [!].nes",
     "Dragon, The (Unl).nes",
+    "Driar.nes",
     "Duck Tales (U) [!].nes",
     "Duck Tales 2 (U) [!].nes",
     "EarthWorm Jim 3 (Unl) [!].nes",
