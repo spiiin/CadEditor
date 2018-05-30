@@ -12,6 +12,7 @@ fnames = [
     "Akumajou Special - Boku Dracula-kun (J) [T+EngR1_Kalas].nes",
     "Aladdin 4 (1996) (Unl) [!].nes",
     "Alien 3 (U) [!].nes",
+    "Amagon (U) [!].nes",
     "Athena (J).nes",
     "Bad Dudes (U) [!].nes",
     "Batman (U) [!].nes",

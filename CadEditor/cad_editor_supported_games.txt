@@ -92,6 +92,7 @@ Supported games:
     Yume Penguin Monogatari                         (all levels)
     Ghoul School                                    (all levels)
     Akumajou Special - Boku Dracula-kun             (all levels)
+    Amagon                                          (all levels)
     Aladdin (unlicensed)                            (all levels)
     Donkey Kong 4 (unlicensed)                      (all levels)
     EarthWorm Jim 3 (unlicensed)                    (all levels)
