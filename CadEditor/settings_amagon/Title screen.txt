@@ -1,0 +1,2 @@
+Offset: 1747d-176eb (using RLE)
+Palette: 176ec-1772b (00-FF)
