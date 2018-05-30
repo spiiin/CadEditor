@@ -1,0 +1,2 @@
+Offset: 194f9-198b8
+Palette: 198b9-198f8

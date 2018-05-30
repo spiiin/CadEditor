@@ -1,0 +1,6 @@
+Screen 1
+Offset: 1a949-1ad08
+Palette: 1ad09-1ad48
+Screen 2
+Offset: 1ad59-1b118
+Palette: 1b119-1b158
