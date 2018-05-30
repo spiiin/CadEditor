@@ -9,6 +9,7 @@ fnames = [
     "Addams Family, The - Pugsley's Scavenger Hunt (U) [!p].nes",
     "Adventures in the Magic Kingdom (U) [!].nes",
     "Adventures of Bayou Billy, The (U) [!].nes",
+    "Akumajou Special - Boku Dracula-kun (J) [T+EngR1_Kalas].nes",
     "Aladdin 4 (1996) (Unl) [!].nes",
     "Alien 3 (U) [!].nes",
     "Athena (J).nes",
