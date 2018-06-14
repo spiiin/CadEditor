@@ -1,0 +1,5 @@
+Titlescreen
+Offset: 10015-10301 (RLE)
+
+Map
+Offset: 103a9-1077f (RLE)
