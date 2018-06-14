@@ -1,0 +1,6 @@
+Bosses 1,2,5,6: 1034d-104d0 (RLE)
+Boss3: 104d1-107b5 (RLE)
+Boss4: 107b6-10989 (RLE)
+Center Gate: 10cbd-10e31 (RLE)
+Boss7: 1098a-10cbc (RLE)
+Ending: 1141d-1158c

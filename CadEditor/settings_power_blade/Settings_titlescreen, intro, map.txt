@@ -1,0 +1,5 @@
+Offset: 10e32-11042 (RLE)
+
+Intro: 11825-118d9 (RLE)
+
+Map: 10010-1034c (RLE)

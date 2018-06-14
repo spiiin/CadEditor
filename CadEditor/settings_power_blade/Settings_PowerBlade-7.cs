@@ -3,7 +3,7 @@ using System;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset() { return new OffsetRec(0x4E99 - 48*10, 33, 8*6); }
+  public OffsetRec getScreensOffset() { return new OffsetRec(0xe6c3, 28, 8*6); }
   public int getScreenWidth()         { return 8; }
   public int getScreenHeight()        { return 6; }
   
@@ -17,10 +17,10 @@ public class Data
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChunk;   }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
-  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x40e7 , 1  , 0x1000);  }
-  public int getBlocksCount()           { return 185; }
-  public int getBigBlocksCount()        { return 185; }
-  public int getPalBytesAddr()          { return 0x402e; }
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0xdecb , 1  , 0x1000);  }
+  public int getBlocksCount()           { return 124; }
+  public int getBigBlocksCount()        { return 124; }
+  public int getPalBytesAddr()          { return 0xde4f; }
   public GetBlocksFunc        getBlocksFunc() { return Utils.getBlocksFromTiles16Pal1;}
   public SetBlocksFunc        setBlocksFunc() { return Utils.setBlocksFromTiles16Pal1;}
   
@@ -35,11 +35,11 @@ public class Data
   
   public byte[] getVideoChunk(int videoPageId)
   {
-     return Utils.readVideoBankFromFile("chr1.bin", videoPageId);
+     return Utils.readVideoBankFromFile("chr7.bin", videoPageId);
   }
   
   public byte[] getPallete(int palId)
   {
-      return Utils.readBinFile("pal1.bin");
+      return Utils.readBinFile("pal7.bin");
   }
 }
