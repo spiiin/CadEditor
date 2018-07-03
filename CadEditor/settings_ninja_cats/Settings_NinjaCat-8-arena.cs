@@ -14,6 +14,8 @@ public class Data
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
   
+  public string getObjTypesPicturesDir() { return "obj_sprites_ninjacats"; }
+  
   public int getPalBytesAddr()          { return 0x4C1d; }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x440e , 8   , 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x5B2a  , 8   , 0x440); }
