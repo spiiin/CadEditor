@@ -172,11 +172,11 @@ namespace SettingsViewer
         public MethodDelegate getBigBlocksCountHierarchy { get { return get(); } }
         [Category("Blocks params")]
         public MethodDelegate getBigBlocksCount { get { return get(); } }
-        [Category("Offsets")]
-        public MethodDelegate getBigBlocksOffsetHierarchy { get { return get(); } }
         [Category("Blocks params")]
+        public MethodDelegate getBigBlocksOffsetHierarchy { get { return get(); } }
+        [Category("Offsets")]
         public MethodDelegate getBigBlocksOffset { get { return get(); } }
-        [Category("NES CHR params")]
+        [Category("NES CHR funcs")]
         public MethodDelegate getVideoPageAddrFunc { get { return get(); } }
         [Category("NES CHR funcs")]
         public MethodDelegate getVideoChunkFunc { get { return get(); } }
