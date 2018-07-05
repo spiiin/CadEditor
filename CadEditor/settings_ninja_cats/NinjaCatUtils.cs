@@ -1,6 +1,7 @@
 using CadEditor;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 public static class NinjaCatUtils 
 {
@@ -104,5 +105,23 @@ public static class NinjaCatUtils
   public static GetVideoChunkFunc getVideoChunk(string fname)
   {
      return (int _)=> { return Utils.readVideoBankFromFile(fname, 0); };
+  }
+  
+  public static void drawObjectBig(Graphics g, ObjectRec curObject, int listNo, bool isSelected, float curScale, Image[] objectSpritesBig, bool inactive, int leftMargin, int topMargin)
+  {
+      int x = curObject.x, y = curObject.y;
+      int xsize = objectSpritesBig[curObject.type].Size.Width;
+      int ysize = objectSpritesBig[curObject.type].Size.Height;
+      var rect = new Rectangle((int)((x - xsize) * curScale)  + leftMargin, (int)((y - ysize) * curScale) + topMargin, (int)(xsize*curScale), (int)(ysize*curScale));
+      if (curObject.type < objectSpritesBig.Length)
+          g.DrawImage(objectSpritesBig[curObject.type], rect);
+      if (isSelected)
+          g.DrawRectangle(new Pen(Brushes.Red, 2.0f), rect);
+
+      if (inactive)
+      {
+          g.FillRectangle(new SolidBrush(Color.FromArgb(128, 255, 255, 255)), rect);
+          g.DrawRectangle(new Pen(Brushes.Black, 1.0f), rect);
+      }
   }
 }

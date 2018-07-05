@@ -15,6 +15,7 @@ public class Data
   public bool isEnemyEditorEnabled()    { return true; }
   
   public string getObjTypesPicturesDir() { return "obj_sprites_ninjacats"; }
+  public DrawObjectBigFunc getDrawObjectBigFunc() { return NinjaCatUtils.drawObjectBig; }
   
   //public OffsetRec getVideoOffset()   { return new OffsetRec(0x2D010, 1, 0x1000); }
   //public OffsetRec getPalOffset()     { return new OffsetRec(0x2B10,  1, 16   ); }
