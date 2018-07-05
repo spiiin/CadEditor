@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 [RUS]
 Редактор уровней для игр [NES/SEGA/SNES/GBA].
-Версия 5.0
+Версия 5.0+
 -------------------------------------------------------------------------------
 
 Полный список поддерживаемых игр в файле cad_editor_supported_games.txt
@@ -575,7 +575,59 @@ unlicened games by Hammerteam:
   Toxic Crusaders  (ограниченный редактор палитр)
   Mission Complete (много отдельных комнат)
   
-  
+v5.0+ (набор конфигов)
+- Конфиги для игр (экраны, блоки. Все уровни):
+  Robocop
+  Bad Dudes
+  Tiny Toon 2
+  Bucky O'Hare
+  Cheetahmen, The (Action 52 Rip) (unl)
+  Castle of Dragon
+  Adventures of Bayou Billy
+  Heavy Barrel
+  Kaiketsu Yanchamaru 3
+  Little Red Hood
+  Rollergames
+  Insector X
+  Utsurun Desu
+  Karnov
+  Captain Silver
+  Bugs Bunny Crazy Castle
+  Don Doko Don
+  Donald Land
+  Isolated Warrior
+  BreakThru
+  Athena
+  Quest for Qi
+  Time Diver Eon Man (prototype)
+  Takahashi Meijin no Bugutte Honey
+  Dooly Bravo Land
+  Doraemon
+  Robo Warrior
+  Burai Fighter
+  Zombie Nations
+  Whomp Em
+  Kick Master
+  Ninja Jajamaru Jinga Daisakusen
+  Yume Penguin Monogatari
+  Ghoul School
+  Akumajou Special - Boku Dracula-kun
+  Amagon
+  Toxic Crusaders
+  Super Contra 7 (unl)
+  Super City Tank (unl)
+  Happily Ever After (unl)
+  Universal Soldiers (unl)
+  Dragon (unl)
+  Gruniozerca 2 (PD)
+  Super Painter (PD)
+  Cowlitz Gamers (PD)
+  Driar (PD)
+(по одному уровню)
+  Legendary Wings
+  Vice: Project Doom
+  Guerilla War
+  Bugs Bunny Birthday Blowout
 
 -------------------------------------------------------------------------------
 Благодарности: 
