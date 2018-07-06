@@ -225,25 +225,6 @@ namespace CadEditor
         public GroupRec group;
     }
 
-    public struct ScreenRec
-    {
-        public ScreenRec(int no, byte sx, byte sy, int door, bool backSort = false, bool upSort = false)
-        {
-            this.no = no;
-            this.sx = sx;
-            this.sy = sy;
-            this.backSort = backSort;
-            this.upsort = upSort;
-            this.door = door;
-        }
-        public int no;
-        public byte sx;
-        public byte sy;
-        public bool backSort;
-        public bool upsort;
-        public int door;
-    }
-
     public struct LevelLayerData
     {
         public LevelLayerData(int width, int height, int[] layer, int[] scroll, int[] dirs)
