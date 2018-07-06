@@ -61,9 +61,6 @@ namespace PluginExportScreens
 
         private void bttExportPic_Click(object sender, EventArgs e)
         {
-            int[][] screens, screens2;
-            loadScreens(out screens, out screens2);
-
             SaveScreensCount.ExportMode = true;
             SaveScreensCount.Filename = "exportedScreens.png";
             var f = new SaveScreensCount();
@@ -79,9 +76,10 @@ namespace PluginExportScreens
                     return;
                 }
                 int saveLastIndex = SaveScreensCount.First + SaveScreensCount.Count;
-                if (saveLastIndex > screens.Length)
+                int screensCount = ConfigScript.screensOffset[0].recCount;
+                if (saveLastIndex > screensCount)
                 {
-                    MessageBox.Show(string.Format("First screen + Screens Count value ({0}) must be less than Total Screen Count in the game ({1}", saveLastIndex, screens.Length), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(string.Format("First screen + Screens Count value ({0}) must be less than Total Screen Count in the game ({1}", saveLastIndex, screensCount), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -106,7 +104,7 @@ namespace PluginExportScreens
 
         private void bttExportJson_Click(object sender, EventArgs e)
         {
-            int[][] screens, screens2;
+            CadEditor.Screen[] screens, screens2;
             loadScreens(out screens, out screens2);
 
             SaveScreensCount.ExportMode = true;
@@ -124,9 +122,10 @@ namespace PluginExportScreens
                     return;
                 }
                 int saveLastIndex = SaveScreensCount.First + SaveScreensCount.Count;
-                if (saveLastIndex > screens.Length)
+                int screensCount = ConfigScript.screensOffset[0].recCount;
+                if (saveLastIndex > screensCount)
                 {
-                    MessageBox.Show(string.Format("First screen + Screens Count value ({0}) must be less than Total Screen Count in the game ({1}", saveLastIndex, screens.Length), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(string.Format("First screen + Screens Count value ({0}) must be less than Total Screen Count in the game ({1}", saveLastIndex, screensCount), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -134,7 +133,7 @@ namespace PluginExportScreens
                 int WIDTH = ConfigScript.getScreenWidth(formMain.LevelNoForScreens);
                 int HEIGHT = ConfigScript.getScreenHeight(formMain.LevelNoForScreens);
                 int screenCount = SaveScreensCount.Count;
-                var screenParams = new { Width = WIDTH, Height = HEIGHT, Screens = new int[screenCount][] };
+                var screenParams = new { Width = WIDTH, Height = HEIGHT, Screens = new CadEditor.Screen[screenCount] };
                 using (TextWriter tw = new StreamWriter(SaveScreensCount.Filename))
                 {
                     for (int i = 0; i < screenCount; i++)
@@ -155,7 +154,7 @@ namespace PluginExportScreens
 
         private void btImport_Click(object sender, EventArgs e)
         {
-            int[][] screens, screens2;
+            CadEditor.Screen[] screens, screens2;
             loadScreens(out screens, out screens2);
             SaveScreensCount.ExportMode = false;
             SaveScreensCount.Filename = "exportedScreens.bin";
@@ -183,7 +182,7 @@ namespace PluginExportScreens
                 int screenCount = data.Length / screenSize;
                 for (int i = 0; i < screenCount; i++)
                 {
-                    Array.Copy(data, i * screenSize, screens[first + i], 0, screenSize);
+                    Array.Copy(data, i * screenSize, screens[first + i].data, 0, screenSize);
                 }
             }
             formMain.SetScreens(screens);
@@ -193,7 +192,7 @@ namespace PluginExportScreens
 
         private void btExport_Click(object sender, EventArgs e)
         {
-            int[][] screens, screens2;
+            CadEditor.Screen[] screens, screens2;
             loadScreens(out screens, out screens2);
             SaveScreensCount.ExportMode = true;
             SaveScreensCount.Filename = "exportedScreens.bin";
@@ -221,16 +220,16 @@ namespace PluginExportScreens
 
                 for (int i = 0; i < screenCount; i++)
                 {
-                    byte[] byteScreen = new byte[screens[i + first].Length];
+                    byte[] byteScreen = new byte[screens[i + first].data.Length];
                     //all ints will be truncated to byte. it's ok for NES games, but may not for other platforms
-                    byteScreen = Array.ConvertAll(screens[i + first], (int x)=>(byte)x);
+                    byteScreen = Array.ConvertAll(screens[i + first].data, (int x)=>(byte)x);
                     Array.Copy(byteScreen, 0, data, screenSize * i, screenSize);
                 }
                 Utils.saveDataToFile(SaveScreensCount.Filename, data);
             }
         }
 
-        private void loadScreens(out int[][] screens, out int[][] screens2)
+        private void loadScreens(out CadEditor.Screen[] screens, out CadEditor.Screen[] screens2)
         {
             screens = Utils.setScreens(formMain.LevelNoForScreens);
             screens2 = null;

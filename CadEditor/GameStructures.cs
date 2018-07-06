@@ -479,7 +479,7 @@ namespace CadEditor
 
     public class BlockLayer
     {
-        public int[][] screens;
+        public Screen[] screens;
         public bool showLayer;
         public int blockWidth;
         public int blockHeight;
@@ -491,5 +491,14 @@ namespace CadEditor
             blockWidth = 32;
             blockHeight = 32;
         }
+    }
+
+    public class Screen
+    {
+        public Screen(int[] data)
+        {
+            this.data = data;
+        }
+        public int[] data;
     }
 }

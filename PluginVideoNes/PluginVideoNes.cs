@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
-using System.Windows.Forms;
+//using System.Windows.Forms;
 
 using CadEditor;
 
@@ -288,12 +288,12 @@ namespace PluginVideoNes
                 return VideoHelper.emptyScreen((int)(ConfigScript.getScreenWidth(levelNo) * 32), (int)(ConfigScript.getScreenHeight(levelNo) * 32));
             var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, MapViewType.Tiles);
             //var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.ObjType,MapViewType.Tiles, withBorders);
-            int[] indexes = Globals.getScreen(ConfigScript.screensOffset[levelNo], scrNo);
+            Screen screen = Globals.getScreen(ConfigScript.screensOffset[levelNo], scrNo);
             int scrW = ConfigScript.getScreenWidth(0); //zero as screenNoForLevel
             int scrH = ConfigScript.getScreenHeight(0);
             //capcom hardcode
 
-            var blockLayer1 = new BlockLayer() { screens = new int[1][] { indexes }, showLayer = true, blockWidth = 32, blockHeight = 32 };
+            var blockLayer1 = new BlockLayer() { screens = new Screen[] { screen }, showLayer = true, blockWidth = 32, blockHeight = 32 };
             return new Bitmap(MapEditor.ScreenToImage(bigBlocks, new BlockLayer[] { blockLayer1 }, 0, 2.0f, false, 0, 0, scrW, scrH));
         }
 

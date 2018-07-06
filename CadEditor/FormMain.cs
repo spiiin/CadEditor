@@ -217,7 +217,7 @@ namespace CadEditor
             int TILE_SIZE_X = (int)(layers[0].blockWidth * curScale);
             int TILE_SIZE_Y = (int)(layers[0].blockHeight * curScale);
             int SIZE = WIDTH * HEIGHT;
-            int[] indexesPrev = layers[0].screens[screenNo];
+            int[] indexesPrev = layers[0].screens[screenNo].data;
             for (int i = 0; i < SIZE; i++)
             {
                 if (i % WIDTH == line)
@@ -373,7 +373,7 @@ namespace CadEditor
                 if (dx == WIDTH || dx == -1)
                     return;
                 int index = dy * WIDTH + dx;
-                curActiveBlock = ConfigScript.getBigTileNoFromScreen(layers[0].screens[curActiveScreen], index);
+                curActiveBlock = ConfigScript.getBigTileNoFromScreen(layers[0].screens[curActiveScreen].data, index);
                 if (curActiveBlock != -1)
                 {
                     activeBlock.Image = bigBlocks[curActiveBlock];
@@ -426,7 +426,7 @@ namespace CadEditor
                     if (curActiveScreen < ConfigScript.screensOffset[curActiveLevelForScreen].recCount - 1)
                     {
                         int index = dy * WIDTH;
-                        ConfigScript.setBigTileToScreen(activeScreens[curActiveScreen + 1], index, curActiveBlock);
+                        ConfigScript.setBigTileToScreen(activeScreens[curActiveScreen + 1].data, index, curActiveBlock);
                         dirty = true; updateSaveVisibility();
                     }
                 }
@@ -435,7 +435,7 @@ namespace CadEditor
                     if (curActiveScreen > 0)
                     {
                         int index = dy * WIDTH + (WIDTH - 1);
-                        ConfigScript.setBigTileToScreen(activeScreens[curActiveScreen - 1], index, curActiveBlock);
+                        ConfigScript.setBigTileToScreen(activeScreens[curActiveScreen - 1].data, index, curActiveBlock);
                         dirty = true; updateSaveVisibility();
                     }
                 }
@@ -444,9 +444,9 @@ namespace CadEditor
                     if (!useStructs)
                     {
                         int index = dy * WIDTH + dx;
-                        if (index < activeScreens[curActiveScreen].Length)
+                        if (index < activeScreens[curActiveScreen].data.Length)
                         {
-                            ConfigScript.setBigTileToScreen(activeScreens[curActiveScreen], index, curActiveBlock);
+                            ConfigScript.setBigTileToScreen(activeScreens[curActiveScreen].data, index, curActiveBlock);
                         }
                         dirty = true; updateSaveVisibility();
                     }
@@ -479,7 +479,7 @@ namespace CadEditor
                         int no = curTileStruct[x, y];
                         if (no == -1)
                             continue;
-                        ConfigScript.setBigTileToScreen(activeScreens[curActiveScreen], index, no);
+                        ConfigScript.setBigTileToScreen(activeScreens[curActiveScreen].data, index, no);
                     }
                 }
             }
@@ -499,7 +499,7 @@ namespace CadEditor
             saveToFile();
         }
 
-        private void saveScreens(OffsetRec screensRec, int[][] screensData)
+        private void saveScreens(OffsetRec screensRec, Screen[] screensData)
         {
             var arrayToSave = Globals.dumpdata != null ? Globals.dumpdata : Globals.romdata;
             int wordLen = ConfigScript.getWordLen();
@@ -512,19 +512,19 @@ namespace CadEditor
                 if (wordLen == 1)
                 {
                     for (int x = 0; x < screensRec.recSize; x++)
-                        arrayToSave[addr + x * dataStride] = (byte)ConfigScript.backConvertScreenTile(screensData[i][x]);
+                        arrayToSave[addr + x * dataStride] = (byte)ConfigScript.backConvertScreenTile(screensData[i].data[x]);
                 }
                 else if (wordLen == 2)
                 {
                     if (littleEndian)
                     {
                         for (int x = 0; x < screensRec.recSize; x++)
-                            Utils.writeWordLE(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(screensData[i][x]));
+                            Utils.writeWordLE(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(screensData[i].data[x]));
                     }
                     else
                     {
                         for (int x = 0; x < screensRec.recSize; x++)
-                            Utils.writeWord(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(screensData[i][x]));
+                            Utils.writeWord(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(screensData[i].data[x]));
                     }
                 }
             }
@@ -755,8 +755,8 @@ namespace CadEditor
             return bigBlocks;
         }
 
-        //warnging! danger direct function. do not use it
-        public void SetScreens(int[][] screens)
+        //warning! danger direct function. do not use it
+        public void SetScreens(Screen[] screens)
         {
             this.layers[0].screens = screens;
         }
@@ -821,7 +821,7 @@ namespace CadEditor
                     for (int j = 0; j < deltaY; j++)
                     {
                         int index = (selectionBeginY + j)*ConfigScript.getScreenWidth(curActiveLevelForScreen) + (selectionBeginX + i);
-                        tiles[j][i] = curScreen[index];
+                        tiles[j][i] = curScreen.data[index];
                     }
                 }
                 FormStructures.addTileStruct(tiles);
