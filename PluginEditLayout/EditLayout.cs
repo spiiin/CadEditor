@@ -111,9 +111,9 @@ namespace CadEditor
             using (var g = Graphics.FromImage(b))
             {
                 g.FillRectangle(Brushes.Black, new Rectangle(0, 0, w, h));
-                g.DrawRectangle(new Pen(Color.Green, w/32), new Rectangle(0, 0, w, h));
+                g.DrawRectangle(new Pen(Color.Green, w/32.0f), new Rectangle(0, 0, w, h));
                 if (no % 256 != 0)
-                  g.DrawString(String.Format("{0:X}", no), new Font("Arial", w/8), Brushes.White, new Point(0, 0));
+                  g.DrawString(String.Format("{0:X}", no), new Font("Arial", w/8.0f), Brushes.White, new Point(0, 0));
             }
             return b;
         }

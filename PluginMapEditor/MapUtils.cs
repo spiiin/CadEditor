@@ -223,43 +223,46 @@ namespace PluginMapEditor
         public static int saveMapDt2(int mapNo, MapData[] mapData, out byte[] packedData)
         {
             packedData = new byte[1024];
-            var s = new MemoryStream(packedData);
-            byte repeatCode = 0xDC;
-            s.WriteByte(repeatCode);
-            int repeatCounter = 1;
-            var full = mapData[0].getFullArray();
-            for (int i = 0; i < full.Length - 1; i++)
+            int returnPosition = 0;
+            using (var s = new MemoryStream(packedData))
             {
-                byte sym = (byte)full[i];
-                if ((sym == full[i + 1]) && (i < full.Length - 2))
+                byte repeatCode = 0xDC;
+                s.WriteByte(repeatCode);
+                int repeatCounter = 1;
+                var full = mapData[0].getFullArray();
+                for (int i = 0; i < full.Length - 1; i++)
                 {
-                    repeatCounter++; //need check if repeatCounter < repeatCode
-                }
-                else
-                {
-                    if (repeatCounter < 3)
+                    byte sym = (byte)full[i];
+                    if ((sym == full[i + 1]) && (i < full.Length - 2))
                     {
-                        for (int r = 0; r < repeatCounter; r++)
-                        {
-                            s.WriteByte(sym);
-                        }
+                        repeatCounter++; //need check if repeatCounter < repeatCode
                     }
                     else
                     {
-                        s.WriteByte(repeatCode);
-                        s.WriteByte((byte)repeatCounter);
-                        s.WriteByte(sym);
+                        if (repeatCounter < 3)
+                        {
+                            for (int r = 0; r < repeatCounter; r++)
+                            {
+                                s.WriteByte(sym);
+                            }
+                        }
+                        else
+                        {
+                            s.WriteByte(repeatCode);
+                            s.WriteByte((byte)repeatCounter);
+                            s.WriteByte(sym);
+                        }
+                        repeatCounter = 1;
                     }
-                    repeatCounter = 1;
                 }
+                //write last byte
+                s.WriteByte((byte)full[full.Length - 1]);
+                //write archive end code
+                s.WriteByte(repeatCode);
+                s.WriteByte(0);
+                returnPosition = (int)s.Position;
             }
-            //write last byte
-            s.WriteByte((byte)full[full.Length - 1]);
-            //write archive end code
-            s.WriteByte(repeatCode);
-            s.WriteByte(0);
-
-            return (int)s.Position;
+            return returnPosition;
         }
 
         //------------------------------------------------------------------------------------------------

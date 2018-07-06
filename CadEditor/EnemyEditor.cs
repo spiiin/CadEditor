@@ -60,7 +60,7 @@ namespace CadEditor
         private void setDirty()
         {
             dirty = true;
-            bttSave.Enabled = bttSave.Enabled = ConfigScript.setObjectsFunc != null;
+            bttSave.Enabled = ConfigScript.setObjectsFunc != null;
         }
 
         private int findStartPosition()

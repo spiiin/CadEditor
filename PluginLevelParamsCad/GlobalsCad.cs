@@ -23,13 +23,12 @@ namespace CadEditor
             for (int i = 0; i < DOORS_COUNT; i++)
                 doorsData.Add(DoorData.readFromFile(Globals.romdata, i));
         }
-
-        public static IList<LevelData> levelData = new List<LevelData>(LEVELS_COUNT);
-        public static IList<DoorData> doorsData = new List<DoorData>(DOORS_COUNT);
-
         //cad specific
         public static int LEVELS_COUNT = 11;
         public static int DOORS_COUNT = 25;
+
+        public static IList<LevelData> levelData = new List<LevelData>(LEVELS_COUNT);
+        public static IList<DoorData> doorsData = new List<DoorData>(DOORS_COUNT);
 
         public static OffsetRec boxesBackOffset;
         public static int LevelRecBaseOffset;
