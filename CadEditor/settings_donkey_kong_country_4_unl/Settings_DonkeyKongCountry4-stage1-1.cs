@@ -29,7 +29,7 @@ public class Data
   //----------------------------------------------------------------------------
   public ObjRec[] getBlocks(int tileId)
   {
-    return  (Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), false);
+    return  Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), false);
   }
   
   public void setBlocks(int tileId, ObjRec[] blocks)
