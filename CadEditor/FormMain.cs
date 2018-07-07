@@ -381,7 +381,7 @@ namespace CadEditor
                 if (dx == WIDTH || dx == -1)
                     return;
                 int index = dy * WIDTH + dx;
-                curActiveBlock = ConfigScript.getBigTileNoFromScreen(screens[curActiveScreen].layers[0].data, index);
+                curActiveBlock = ConfigScript.getBigTileNoFromScreen(screens[curActiveScreen].layers[curActiveLayer].data, index);
                 if (curActiveBlock != -1)
                 {
                     activeBlock.Image = bigBlocks[curActiveBlock];
@@ -443,7 +443,7 @@ namespace CadEditor
                     if (curActiveScreen > 0)
                     {
                         int index = dy * WIDTH + (WIDTH - 1);
-                        ConfigScript.setBigTileToScreen(activeScreens[curActiveScreen - 1].layers[0].data, index, curActiveBlock);
+                        ConfigScript.setBigTileToScreen(activeScreens[curActiveScreen - 1].layers[curActiveLayer].data, index, curActiveBlock);
                         dirty = true; updateSaveVisibility();
                     }
                 }
@@ -452,9 +452,9 @@ namespace CadEditor
                     if (!useStructs)
                     {
                         int index = dy * WIDTH + dx;
-                        if (index < activeScreens[curActiveScreen].layers[0].data.Length)
+                        if (index < activeScreens[curActiveScreen].layers[curActiveLayer].data.Length)
                         {
-                            ConfigScript.setBigTileToScreen(activeScreens[curActiveScreen].layers[0].data, index, curActiveBlock);
+                            ConfigScript.setBigTileToScreen(activeScreens[curActiveScreen].layers[curActiveLayer].data, index, curActiveBlock);
                         }
                         dirty = true; updateSaveVisibility();
                     }
@@ -487,7 +487,7 @@ namespace CadEditor
                         int no = curTileStruct[x, y];
                         if (no == -1)
                             continue;
-                        ConfigScript.setBigTileToScreen(screen.layers[0].data, index, no);
+                        ConfigScript.setBigTileToScreen(screen.layers[curActiveLayer].data, index, no);
                     }
                 }
             }

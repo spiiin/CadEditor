@@ -20,7 +20,7 @@ public class Data
   public bool isEnemyEditorEnabled()    { return false; }
   
   public LoadScreensFunc loadScreensFunc() { return loadScreens; }
-  public SaveScreensFunc saveScreeenFunc() { return saveScreens; }
+  public SaveScreensFunc saveScreensFunc() { return saveScreens; }
   
   public Screen[] loadScreens()
   {
