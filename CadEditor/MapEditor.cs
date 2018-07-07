@@ -119,14 +119,6 @@ namespace CadEditor
             return result;
         }
 
-        /*void resetMapScreenSize(PictureBox mapScreen, int CurActiveLevelForScreen, float CurScale)
-        {
-            if (ConfigScript.getScreenVertical())
-                mapScreen.Size = new Size((int)(ConfigScript.getScreenHeight(CurActiveLevelForScreen) * blockWidth * CurScale), (int)((ConfigScript.getScreenWidth(CurActiveLevelForScreen) + 2) * blockHeight * CurScale));
-            else
-                mapScreen.Size = new Size((int)((ConfigScript.getScreenWidth(CurActiveLevelForScreen) + 2) * blockWidth * CurScale), (int)(ConfigScript.getScreenHeight(CurActiveLevelForScreen) * blockHeight * CurScale));
-        }*/
-
         /*private static PictureBox mapScreen;
         private static PictureBox activeBlock;
         private static Panel pnView;

@@ -91,7 +91,6 @@ namespace CadEditor
 
         private void resetControls()
         {
-            curActiveLevelForScreen = 0;
             resetScreens();
 
             UtilsGui.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
@@ -284,7 +283,7 @@ namespace CadEditor
             {
                 renderNeighbornLine(g, curActiveScreen - 1, (WIDTH - 1), 0);
             }
-            if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen < ConfigScript.screensOffset[curActiveLevelForScreen].recCount - 1) && layers[0].showLayer)
+            if (!ConfigScript.getScreenVertical() && showNeiScreens && (curActiveScreen < ConfigScript.screensOffset[0].recCount - 1) && layers[0].showLayer)
             {
                 renderNeighbornLine(g, curActiveScreen + 1, 0 , (WIDTH + 1) * TILE_SIZE_X);
             }
@@ -318,7 +317,6 @@ namespace CadEditor
         //editor globals
         private int curActiveBlock = 0;
         private int curActiveScreen = 0;
-        private int curActiveLevelForScreen = 0;
 
         //generic
         private int curActiveVideoNo = 0;
@@ -430,7 +428,7 @@ namespace CadEditor
                 var activeScreens = layers[curActiveLayer].screens;
                 if (dx == WIDTH)
                 {
-                    if (curActiveScreen < ConfigScript.screensOffset[curActiveLevelForScreen].recCount - 1)
+                    if (curActiveScreen < ConfigScript.screensOffset[0].recCount - 1)
                     {
                         int index = dy * WIDTH;
                         ConfigScript.setBigTileToScreen(activeScreens[curActiveScreen + 1].data, index, curActiveBlock);
@@ -506,16 +504,17 @@ namespace CadEditor
             saveToFile();
         }
 
-        private void saveScreens(OffsetRec screensRec, Screen[] screensData)
+        private void saveScreens(Screen[] screensData)
         {
             ConfigScript.saveScreens(screensData);
         }
 
         private bool saveToFile()
         {
-            saveScreens(ConfigScript.screensOffset[curActiveLevelForScreen], layers[0].screens);
-            if (ConfigScript.getLayersCount() > 1)
-                saveScreens(ConfigScript.screensOffset2, layers[1].screens);
+            saveScreens(layers[0].screens);
+            //Todo: return save screens for layer 2
+            /*if (ConfigScript.getLayersCount() > 1)
+                saveScreens(ConfigScript.screensOffset2, layers[1].screens);*/
             dirty = !Globals.flushToFile(); updateSaveVisibility();
             return !dirty;
         }
@@ -703,11 +702,6 @@ namespace CadEditor
         public bool ShowAxis
         {
             get { return showAxis; }
-        }
-
-        public int LevelNoForScreens
-        {
-            get { return curActiveLevelForScreen; }
         }
 
         public int ScreenNo

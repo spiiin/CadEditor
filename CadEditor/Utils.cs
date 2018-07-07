@@ -696,6 +696,9 @@ namespace CadEditor
                 saveScreensToOffset(screensData, currentScreenIndex, currentOffsetIndex);
                 currentScreenIndex += ConfigScript.screensOffset[currentScreenIndex].recCount;
             }
+
+            /*if (ConfigScript.getLayersCount() > 1)
+                saveScreens(ConfigScript.screensOffset2, layers[1].screens);*/
         }
 
         public static Screen[] setScreens2()
