@@ -655,7 +655,7 @@ namespace CadEditor
         }
 
         //save screensData from firstScreenIndex to ConfigScript.screensOffset[currentOffset]
-        private static void saveScreensToOffset(OffsetRec screensRec, Screen[] screensData, int firstScreenIndex, int currentOffsetIndex)
+        public static void saveScreensToOffset(OffsetRec screensRec, Screen[] screensData, int firstScreenIndex, int currentOffsetIndex, int layerNo)
         {
             var arrayToSave = Globals.dumpdata != null ? Globals.dumpdata : Globals.romdata;
             int wordLen = ConfigScript.getWordLen();
@@ -668,19 +668,19 @@ namespace CadEditor
                 if (wordLen == 1)
                 {
                     for (int x = 0; x < screensRec.recSize; x++)
-                        arrayToSave[addr + x * dataStride] = (byte)ConfigScript.backConvertScreenTile(screensData[firstScreenIndex+i].layers[0].data[x]);
+                        arrayToSave[addr + x * dataStride] = (byte)ConfigScript.backConvertScreenTile(screensData[firstScreenIndex+i].layers[layerNo].data[x]);
                 }
                 else if (wordLen == 2)
                 {
                     if (littleEndian)
                     {
                         for (int x = 0; x < screensRec.recSize; x++)
-                            Utils.writeWordLE(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(screensData[firstScreenIndex+i].layers[0].data[x]));
+                            Utils.writeWordLE(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(screensData[firstScreenIndex+i].layers[layerNo].data[x]));
                     }
                     else
                     {
                         for (int x = 0; x < screensRec.recSize; x++)
-                            Utils.writeWord(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(screensData[firstScreenIndex+i].layers[0].data[x]));
+                            Utils.writeWord(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(screensData[firstScreenIndex+i].layers[layerNo].data[x]));
                     }
                 }
             }
@@ -692,10 +692,10 @@ namespace CadEditor
             int currentScreenIndex = 0;
             for (int currentOffsetIndex = 0; currentOffsetIndex < offsetsCount; currentOffsetIndex++)
             {
-                saveScreensToOffset(ConfigScript.screensOffset[currentOffsetIndex], screensData, currentScreenIndex, currentOffsetIndex);
+                saveScreensToOffset(ConfigScript.screensOffset[currentOffsetIndex], screensData, currentScreenIndex, currentOffsetIndex, 0);
                 currentScreenIndex += ConfigScript.screensOffset[currentOffsetIndex].recCount;
             }
-            //todo save all layers
+            //todo: save all layers
         }
 
         public static Screen[] setScreens2()
