@@ -482,29 +482,26 @@ namespace CadEditor
 
     public class BlockLayer
     {
-        public Screen[] screens;
+        public int[] data;
         public bool showLayer;
-        public int blockWidth;
-        public int blockHeight;
 
-        public BlockLayer()
+        public BlockLayer(int[] data)
         {
-            screens = null;
+            this.data = data;
             showLayer = true;
-            blockWidth = 32;
-            blockHeight = 32;
         }
     }
 
     public class Screen
     {
-        public Screen(int[] data, int width, int height)
+        public Screen(BlockLayer layer, int width, int height)
         {
-            this.data = data;
+            this.layers = new BlockLayer[1];
+            this.layers[0] = layer;
             this.width = width;
             this.height = height;
         }
-        public int[] data;
+        public BlockLayer[] layers;
 
         public int width;
         public int height;

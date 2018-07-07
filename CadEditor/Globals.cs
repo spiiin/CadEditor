@@ -127,7 +127,9 @@ namespace CadEditor
             int beginAddr = screenOffset.beginAddr + screenIndex * screenOffset.recSize * dataStride * wordLen;
             for (int i = 0; i < screenOffset.recSize; i++)
                 result[i] = readBlockIndexFromMap(arrayWithData, beginAddr, i);
-            return new Screen(result, screenOffset.width, screenOffset.height);
+            //TODO: read layer2
+
+            return new Screen(new BlockLayer(result), screenOffset.width, screenOffset.height);
         }
 
         public static byte[] romdata;

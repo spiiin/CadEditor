@@ -89,7 +89,7 @@ namespace PluginExportScreens
                 int firstH = screens[0].height;
                 float curScale = formMain.CurScale;
                 //only for screens with same sizes
-                var probeIm = MapEditor.ScreenToImage(formMain.BigBlocks,formMain.Layers, formMain.ScreenNo, curScale, false, 0, 0, firstW, firstH);
+                var probeIm = MapEditor.ScreenToImage(formMain.BigBlocks,formMain.Screens, formMain.ScreenNo, curScale, false, 0, 0, firstW, firstH);
                 int screenCount = SaveScreensCount.Count;
                 var resultImage = new Bitmap(probeIm.Width * screenCount, probeIm.Height);
                 using (var g = Graphics.FromImage(resultImage))
@@ -98,7 +98,7 @@ namespace PluginExportScreens
                     {
                         int WIDTH = screens[i].width;
                         int HEIGHT = screens[i].height;
-                        var im = MapEditor.ScreenToImage(formMain.BigBlocks, formMain.Layers, first + i, curScale, false, 0, 0, WIDTH, HEIGHT);
+                        var im = MapEditor.ScreenToImage(formMain.BigBlocks, formMain.Screens, first + i, curScale, false, 0, 0, WIDTH, HEIGHT);
                         g.DrawImage(im, new Point(i * im.Width, 0));
                     }
                 }
@@ -184,7 +184,7 @@ namespace PluginExportScreens
                 int screenCount = data.Length / screenSize;
                 for (int i = 0; i < screenCount; i++)
                 {
-                    Array.Copy(data, i * screenSize, screens[first + i].data, 0, screenSize);
+                    Array.Copy(data, i * screenSize, screens[first + i].layers[0].data, 0, screenSize);
                 }
             }
             formMain.SetScreens(screens);
@@ -222,9 +222,9 @@ namespace PluginExportScreens
 
                 for (int i = 0; i < screenCount; i++)
                 {
-                    byte[] byteScreen = new byte[screens[i + first].data.Length];
+                    byte[] byteScreen = new byte[screens[i + first].layers[0].data.Length];
                     //all ints will be truncated to byte. it's ok for NES games, but may not for other platforms
-                    byteScreen = Array.ConvertAll(screens[i + first].data, (int x)=>(byte)x);
+                    byteScreen = Array.ConvertAll(screens[i + first].layers[0].data, (int x)=>(byte)x);
                     Array.Copy(byteScreen, 0, data, screenSize * i, screenSize);
                 }
                 Utils.saveDataToFile(SaveScreensCount.Filename, data);

@@ -6,7 +6,7 @@ namespace CadEditor
 {
     public class MapEditor
     {
-        public static void Render(Graphics g, Image[] bigBlocks, Rectangle? visibleRect, BlockLayer[] layers, int scrNo, float CurScale, bool ShowBorder, bool showBlocksAxis, int LeftMargin, int TopMargin, int WIDTH, int HEIGHT)
+        public static void Render(Graphics g, Image[] bigBlocks, Rectangle? visibleRect,Screen[] screens, int scrNo, float CurScale, bool ShowBorder, bool showBlocksAxis, int LeftMargin, int TopMargin, int WIDTH, int HEIGHT)
         {
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
@@ -14,21 +14,21 @@ namespace CadEditor
             bool verticalScreen = ConfigScript.getScreenVertical();
             int SIZE = WIDTH * HEIGHT;
 
-            for (int layerIndex = 0; layerIndex < layers.Length; layerIndex++)
+            for (int layerIndex = 0; layerIndex < screens[scrNo].layers.Length; layerIndex++)
             {
-                var layer = layers[layerIndex];
-                bool needRenderLayer = layer != null && layer.screens != null && layer.screens[scrNo] != null && layer.showLayer;
+                var layer = screens[scrNo].layers[layerIndex];
+                bool needRenderLayer = layer != null && layer.showLayer;
                 if (!needRenderLayer)
                 {
                     continue;
                 }
 
-                int TILE_SIZE_X = (int)(layer.blockWidth * CurScale);
-                int TILE_SIZE_Y = (int)(layer.blockHeight * CurScale);
+                int TILE_SIZE_X = (int)(bigBlocks[0].Width* CurScale);
+                int TILE_SIZE_Y = (int)(bigBlocks[0].Height* CurScale);
 
                 for (int i = 0; i < SIZE; i++)
                 {
-                    int bigBlockNo = ConfigScript.getBigTileNoFromScreen(layer.screens[scrNo].data, i);
+                    int bigBlockNo = ConfigScript.getBigTileNoFromScreen(layer.data, i);
                     Rectangle tileRect;
                     if (verticalScreen)
                         tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X + LeftMargin, (i % WIDTH) * TILE_SIZE_Y + TopMargin, TILE_SIZE_X, TILE_SIZE_Y);
@@ -53,8 +53,8 @@ namespace CadEditor
 
             if (ShowBorder)
             {
-                int TILE_SIZE_X = (int)(layers[0].blockWidth * CurScale);
-                int TILE_SIZE_Y = (int)(layers[0].blockHeight * CurScale);
+                int TILE_SIZE_X = (int)(bigBlocks[0].Width * CurScale);
+                int TILE_SIZE_Y = (int)(bigBlocks[0].Height * CurScale);
                 if (verticalScreen)
                     g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(0, TILE_SIZE_Y, TILE_SIZE_X * HEIGHT, TILE_SIZE_Y * WIDTH));
                 else
@@ -100,11 +100,11 @@ namespace CadEditor
             }
         }
 
-        public static Image ScreenToImage(Image[] bigBlocks, BlockLayer[] layers, int scrNo, float CurScale, bool ShowBorder, int LeftMargin, int TopMargin, int WIDTH, int HEIGHT)
+        public static Image ScreenToImage(Image[] bigBlocks, Screen[] screens, int scrNo, float CurScale, bool ShowBorder, int LeftMargin, int TopMargin, int WIDTH, int HEIGHT)
         {
             bool verticalScreen = ConfigScript.getScreenVertical();
-            int TILE_SIZE_X = (int)(layers[0].blockWidth * CurScale);
-            int TILE_SIZE_Y = (int)(layers[0].blockHeight * CurScale);
+            int TILE_SIZE_X = (int)(bigBlocks[0].Width * CurScale);
+            int TILE_SIZE_Y = (int)(bigBlocks[0].Height * CurScale);
 
             Image result;
             if (verticalScreen)
@@ -114,7 +114,7 @@ namespace CadEditor
 
             using (var g = Graphics.FromImage(result))
             {
-                Render(g, bigBlocks, null, layers, scrNo, CurScale, ShowBorder, false, LeftMargin, TopMargin, WIDTH, HEIGHT);
+                Render(g, bigBlocks, null, screens, scrNo, CurScale, ShowBorder, false, LeftMargin, TopMargin, WIDTH, HEIGHT);
             }
             return result;
         }
