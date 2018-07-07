@@ -512,9 +512,6 @@ namespace CadEditor
         private bool saveToFile()
         {
             saveScreens(layers[0].screens);
-            //Todo: return save screens for layer 2
-            /*if (ConfigScript.getLayersCount() > 1)
-                saveScreens(ConfigScript.screensOffset2, layers[1].screens);*/
             dirty = !Globals.flushToFile(); updateSaveVisibility();
             return !dirty;
         }

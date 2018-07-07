@@ -18,6 +18,7 @@ namespace CadEditor
             this.recSize = recSize;
             this.width = 0;
             this.height = 0;
+            //this.pointers = new int[0];
         }
 
         public OffsetRec(int beginAddr, int recCount, int recSize, int width = 0, int height = 0)
@@ -27,6 +28,17 @@ namespace CadEditor
             this.recSize = recSize;
             this.width = width;
             this.height = height;
+            //this.pointers = new int[0];
+        }
+
+        public OffsetRec(int beginAddr, int recCount, int recSize, int width = 0, int height = 0, int[] pointers = null)
+        {
+            this.beginAddr = beginAddr;
+            this.recCount = recCount;
+            this.recSize = recSize;
+            this.width = width;
+            this.height = height;
+            //this.pointers = pointers ?? new int[0] ;
         }
 
         public override string ToString()
@@ -39,6 +51,7 @@ namespace CadEditor
         public int recSize;
         public int width;
         public int height;
+        //public int[] pointers;
     }
 
     public struct LevelObjRec
@@ -492,6 +505,7 @@ namespace CadEditor
             this.height = height;
         }
         public int[] data;
+
         public int width;
         public int height;
     }

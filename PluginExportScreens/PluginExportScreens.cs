@@ -76,7 +76,8 @@ namespace PluginExportScreens
                     return;
                 }
                 int saveLastIndex = SaveScreensCount.First + SaveScreensCount.Count;
-                int screensCount = ConfigScript.screensOffset[0].recCount;
+                var screens = ConfigScript.loadScreens();
+                int screensCount = screens.Length;
                 if (saveLastIndex > screensCount)
                 {
                     MessageBox.Show(string.Format("First screen + Screens Count value ({0}) must be less than Total Screen Count in the game ({1}", saveLastIndex, screensCount), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -84,7 +85,6 @@ namespace PluginExportScreens
                 }
 
                 int first = SaveScreensCount.First;
-                var screens = ConfigScript.loadScreens();
                 int firstW = screens[0].width;
                 int firstH = screens[0].height;
                 float curScale = formMain.CurScale;
@@ -126,7 +126,7 @@ namespace PluginExportScreens
                     return;
                 }
                 int saveLastIndex = SaveScreensCount.First + SaveScreensCount.Count;
-                int screensCount = ConfigScript.screensOffset[0].recCount;
+                int screensCount = screens.Length;
                 if (saveLastIndex > screensCount)
                 {
                     MessageBox.Show(string.Format("First screen + Screens Count value ({0}) must be less than Total Screen Count in the game ({1}", saveLastIndex, screensCount), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -178,7 +178,7 @@ namespace PluginExportScreens
                     return;
                 }
 
-                int screenSize = ConfigScript.screensOffset[formMain.LevelNoForScreens].recSize;
+                int screenSize = ConfigScript.screensOffset[0].recSize; //TODO: only for games with only one screensOffset
                 int first = SaveScreensCount.First;
                 var data = Utils.loadDataFromFile(SaveScreensCount.Filename);
                 int screenCount = data.Length / screenSize;
@@ -215,7 +215,7 @@ namespace PluginExportScreens
                     return;
                 }
 
-                int screenSize = ConfigScript.screensOffset[formMain.LevelNoForScreens].recSize;
+                int screenSize = ConfigScript.screensOffset[0].recSize; //TODO: only for games with only one screensOffset
                 int screenCount = SaveScreensCount.Count;
                 int first = SaveScreensCount.First;
                 var data = new byte[screenSize * screenCount];

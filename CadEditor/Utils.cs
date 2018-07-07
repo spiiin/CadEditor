@@ -655,9 +655,8 @@ namespace CadEditor
         }
 
         //save screensData from firstScreenIndex to ConfigScript.screensOffset[currentOffset]
-        private static void saveScreensToOffset(Screen[] screensData, int firstScreenIndex, int currentOffsetIndex)
+        private static void saveScreensToOffset(OffsetRec screensRec, Screen[] screensData, int firstScreenIndex, int currentOffsetIndex)
         {
-            var screensRec = ConfigScript.screensOffset[currentOffsetIndex];
             var arrayToSave = Globals.dumpdata != null ? Globals.dumpdata : Globals.romdata;
             int wordLen = ConfigScript.getWordLen();
             bool littleEndian = ConfigScript.isLittleEndian();
@@ -693,12 +692,10 @@ namespace CadEditor
             int currentScreenIndex = 0;
             for (int currentOffsetIndex = 0; currentOffsetIndex < offsetsCount; currentOffsetIndex++)
             {
-                saveScreensToOffset(screensData, currentScreenIndex, currentOffsetIndex);
-                currentScreenIndex += ConfigScript.screensOffset[currentScreenIndex].recCount;
+                saveScreensToOffset(ConfigScript.screensOffset[currentOffsetIndex], screensData, currentScreenIndex, currentOffsetIndex);
+                currentScreenIndex += ConfigScript.screensOffset[currentOffsetIndex].recCount;
             }
-
-            /*if (ConfigScript.getLayersCount() > 1)
-                saveScreens(ConfigScript.screensOffset2, layers[1].screens);*/
+            //todo save all layers
         }
 
         public static Screen[] setScreens2()
