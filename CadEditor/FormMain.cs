@@ -510,7 +510,7 @@ namespace CadEditor
 
         private void saveScreens(OffsetRec screensRec, Screen[] screensData)
         {
-            Utils.defaultSaveScreens(0, screensData); //todo: change to ConfigScript.saveScreens()
+            ConfigScript.saveScreens(screensData);
         }
 
         private bool saveToFile()

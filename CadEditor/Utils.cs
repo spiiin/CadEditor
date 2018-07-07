@@ -632,28 +632,32 @@ namespace CadEditor
                 return -256 + b;
         }
 
-        public static Screen[] loadScreens(OffsetRec offset)
-        {
-            int count = offset.recCount;
-            var screens = new Screen[count];
-            for (int i = 0; i < count; i++)
-                screens[i] = Globals.getScreen(offset, i);
-            return screens;
-        }
-
         public static Screen[] loadScreensDiffSize()
         {
             var offsets = ConfigScript.screensOffset;
+            int totalCount = 0;
             int count = offsets.Length;
-            var screens = new Screen[count];
             for (int i = 0; i < count; i++)
-                screens[i] = Globals.getScreen(offsets[i], 0);
+            {
+                totalCount = offsets[i].recCount;
+            }
+            var screens = new Screen[totalCount];
+
+            int  currentScreen = 0;
+            for (int i = 0; i < count; i++)
+            {
+                for (int scrI = 0; scrI < offsets[i].recCount; scrI++)
+                {
+                    screens[currentScreen++] = Globals.getScreen(offsets[i], scrI);
+                }
+            }
             return screens;
         }
 
-        public static void defaultSaveScreens(int curActiveLevelForScreen, Screen[] screensData)
+        //save screensData from firstScreenIndex to ConfigScript.screensOffset[currentOffset]
+        private static void saveScreensToOffset(Screen[] screensData, int firstScreenIndex, int currentOffsetIndex)
         {
-            var screensRec = ConfigScript.screensOffset[curActiveLevelForScreen];
+            var screensRec = ConfigScript.screensOffset[currentOffsetIndex];
             var arrayToSave = Globals.dumpdata != null ? Globals.dumpdata : Globals.romdata;
             int wordLen = ConfigScript.getWordLen();
             bool littleEndian = ConfigScript.isLittleEndian();
@@ -665,21 +669,32 @@ namespace CadEditor
                 if (wordLen == 1)
                 {
                     for (int x = 0; x < screensRec.recSize; x++)
-                        arrayToSave[addr + x * dataStride] = (byte)ConfigScript.backConvertScreenTile(screensData[i].data[x]);
+                        arrayToSave[addr + x * dataStride] = (byte)ConfigScript.backConvertScreenTile(screensData[firstScreenIndex+i].data[x]);
                 }
                 else if (wordLen == 2)
                 {
                     if (littleEndian)
                     {
                         for (int x = 0; x < screensRec.recSize; x++)
-                            Utils.writeWordLE(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(screensData[i].data[x]));
+                            Utils.writeWordLE(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(screensData[firstScreenIndex+i].data[x]));
                     }
                     else
                     {
                         for (int x = 0; x < screensRec.recSize; x++)
-                            Utils.writeWord(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(screensData[i].data[x]));
+                            Utils.writeWord(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(screensData[firstScreenIndex+i].data[x]));
                     }
                 }
+            }
+        }
+
+        public static void saveScreensDiffSize(Screen[] screensData)
+        {
+            int offsetsCount = ConfigScript.screensOffset.Length;
+            int currentScreenIndex = 0;
+            for (int currentOffsetIndex = 0; currentOffsetIndex < offsetsCount; currentOffsetIndex++)
+            {
+                saveScreensToOffset(screensData, currentScreenIndex, currentOffsetIndex);
+                currentScreenIndex += ConfigScript.screensOffset[currentScreenIndex].recCount;
             }
         }
 

@@ -148,8 +148,7 @@ namespace CadEditor
                 }
             }
 
-            levelsCount = callFromScript(asm, data, "*.getLevelsCount", 1);
-            screensOffset = new OffsetRec[levelsCount];
+            screensOffset = new OffsetRec[1];
 
             palOffset = callFromScript(asm, data, "*.getPalOffset", new OffsetRec(0, 1, 0));
             videoOffset = callFromScript(asm, data, "*.getVideoOffset", new OffsetRec(0, 1, 0));
@@ -462,7 +461,7 @@ namespace CadEditor
             }
             else
             {
-                return Utils.loadScreens(ConfigScript.screensOffset[0]);
+                return Utils.loadScreensDiffSize();
             }
         }
 
@@ -474,7 +473,7 @@ namespace CadEditor
             }
             else
             {
-                Utils.defaultSaveScreens(0, screens);
+                Utils.saveScreensDiffSize(screens);
             }
         }
 
@@ -587,11 +586,6 @@ namespace CadEditor
         public static int getScrollsOffsetFromLayout()
         {
             return scrollsOffsetFromLayout;
-        }
-
-        public static int getLevelsCount()
-        {
-            return levelsCount;
         }
 
         public static bool isUseSegaGraphics()
