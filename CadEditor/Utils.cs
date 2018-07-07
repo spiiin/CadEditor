@@ -639,7 +639,7 @@ namespace CadEditor
             int count = offsets.Length;
             for (int i = 0; i < count; i++)
             {
-                totalCount = offsets[i].recCount;
+                totalCount += offsets[i].recCount;
             }
             var screens = new Screen[totalCount];
 

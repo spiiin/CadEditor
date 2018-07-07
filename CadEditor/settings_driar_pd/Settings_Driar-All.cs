@@ -28,9 +28,6 @@ public class Data
   public GetPalFunc           getPalFunc()           { return getPallete;}
   public SetPalFunc           setPalFunc()           { return null;}
 
-  public int getLevelsCount()           { return 38; }
-  public LoadScreensFunc loadScreensFunc()                  { return Utils.loadScreensDiffSize; }
-
   public OffsetRec[] getScreensOffsetsForLevels() {
     var ans = new OffsetRec[] {
       new OffsetRec(0x722a  , 1  , 16*14, 16, 14),

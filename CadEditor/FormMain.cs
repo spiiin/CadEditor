@@ -363,7 +363,6 @@ namespace CadEditor
             var screen = getActiveScreen();
 
             int WIDTH = screen.width;
-            //int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
             int dx, dy;
             if (ConfigScript.getScreenVertical())
             {
@@ -407,7 +406,6 @@ namespace CadEditor
             }
             var screen = getActiveScreen();
             int WIDTH = screen.width;
-            //int HEIGHT = ConfigScript.getScreenHeight(curActiveLevelForScreen);
             int dx, dy;
             if (ConfigScript.getScreenVertical())
             {
