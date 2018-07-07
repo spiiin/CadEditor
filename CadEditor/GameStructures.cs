@@ -176,7 +176,6 @@ namespace CadEditor
             this.height = 0;
             this.layoutAddr = 0;
             this.name = "";
-            this.levelNo = 0;
             this.group = null;
         }
 
@@ -188,7 +187,6 @@ namespace CadEditor
             this.height = height;
             this.layoutAddr = layoutAddr;
             this.name = "";
-            this.levelNo = 0;
             this.group = null;
         }
 
@@ -200,18 +198,11 @@ namespace CadEditor
             this.height = height;
             this.layoutAddr = layoutAddr;
             this.name = name;
-            this.levelNo = 0;
             this.group = null;
         }
 
-        public LevelRec(int objectsBeginAddr, int objCount, int width = 0, int height = 0, int layoutAddr = 0, string name = "", int levelNo = 0)
+        public LevelRec(int objectsBeginAddr, int objCount, int width = 0, int height = 0, int layoutAddr = 0, string name = "", GroupRec group = null)
             :this(objectsBeginAddr, objCount, width, height, layoutAddr, name)
-        {
-            this.levelNo = levelNo;
-        }
-
-        public LevelRec(int objectsBeginAddr, int objCount, int width = 0, int height = 0, int layoutAddr = 0, string name = "", int levelNo = 0, GroupRec group = null)
-            :this(objectsBeginAddr, objCount, width, height, layoutAddr, name, levelNo)
         {
             this.group = group;
         }
@@ -220,7 +211,6 @@ namespace CadEditor
         public int width;
         public int height;
         public int layoutAddr;
-        public int levelNo;
         public string name;
         public GroupRec group;
     }
@@ -495,10 +485,14 @@ namespace CadEditor
 
     public class Screen
     {
-        public Screen(int[] data)
+        public Screen(int[] data, int width, int height)
         {
             this.data = data;
+            this.width = width;
+            this.height = height;
         }
         public int[] data;
+        public int width;
+        public int height;
     }
 }

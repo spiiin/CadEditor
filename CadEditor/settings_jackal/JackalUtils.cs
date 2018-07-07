@@ -73,7 +73,8 @@ public static class JackalUtils
   
   public static int getBigTileNoFromScreen(int[] screenData, int index)
   {
-    int w = ConfigScript.getScreenWidth(0);
+    var screen = ConfigScript.loadScreens()[0];
+    int w = screen.width;
     int noY = index / w;
     noY = (noY/8)*8 + 7 - (noY%8);
     int noX = index % w;
@@ -82,7 +83,8 @@ public static class JackalUtils
 
   public static void setBigTileToScreen(int[] screenData, int index, int value)
   {
-    int w = ConfigScript.getScreenWidth(0);
+    var screen = ConfigScript.loadScreens()[0];
+    int w = screen.width;
     int noY = index / w;
     noY = (noY/8)*8 + 7 - (noY%8);
     int noX = index % w;

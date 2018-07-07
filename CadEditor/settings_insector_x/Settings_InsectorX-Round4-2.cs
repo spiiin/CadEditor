@@ -45,7 +45,7 @@ public class Data
   public MapInfo[] makeMapsInfo()
   {
      var mapsInfo = new MapInfo[getScreensOffset().recCount];
-     int actualScreenSize = ConfigScript.getScreenWidth(0) * ConfigScript.getScreenHeight(0) * ConfigScript.getWordLen();
+     int actualScreenSize = getScreensOffset().width * getScreensOffset().height * ConfigScript.getWordLen();
      int scrSize = getScreensOffset().recSize;
      for (int i = 0; i < mapsInfo.Length; i++)
      {

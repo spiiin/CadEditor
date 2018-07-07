@@ -333,10 +333,13 @@ namespace PluginMapEditor
             int[] mapData = new int[mapSizeInBytes];
             int[] attrData = new int[attrSizeInBytes];
             var blocks = ConfigScript.getBlocks(0);
-            int scrSize = ConfigScript.getScreenWidth(0) * ConfigScript.getScreenHeight(0);
+
+            var screens = ConfigScript.loadScreens();
+            var screen = screens[mapNo];
+            int scrSize = screen.width * screen.height;
 
             //fill tiles region
-            int SCREEN_WIDTH = ConfigScript.getScreenWidth(0);
+            int SCREEN_WIDTH = screen.width;
             for (int i = 0; i < scrSize; i++)
             {
                 int blockIndex = Globals.readBlockIndexFromMap(Globals.romdata, romAddr, i);

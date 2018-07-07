@@ -89,8 +89,6 @@
             this.pnBlocks = new System.Windows.Forms.Panel();
             this.blocksScreen = new System.Windows.Forms.PictureBox();
             this.pnElements = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cbLevelNo = new System.Windows.Forms.ComboBox();
             this.cbUseStructs = new System.Windows.Forms.CheckBox();
             this.lbStructures = new System.Windows.Forms.ListBox();
             this.pnViewScroll = new System.Windows.Forms.Panel();
@@ -398,7 +396,7 @@
             this.pnView.Location = new System.Drawing.Point(4, 4);
             this.pnView.Margin = new System.Windows.Forms.Padding(4);
             this.pnView.Name = "pnView";
-            this.pnView.Size = new System.Drawing.Size(1024, 615);
+            this.pnView.Size = new System.Drawing.Size(1023, 615);
             this.pnView.TabIndex = 53;
             // 
             // lbCoords
@@ -777,8 +775,6 @@
             // 
             // pnElements
             // 
-            this.pnElements.Controls.Add(this.label3);
-            this.pnElements.Controls.Add(this.cbLevelNo);
             this.pnElements.Controls.Add(this.cbUseStructs);
             this.pnElements.Controls.Add(this.lbCoords);
             this.pnElements.Controls.Add(this.lbActiveBlock);
@@ -794,27 +790,6 @@
             this.pnElements.Name = "pnElements";
             this.pnElements.Size = new System.Drawing.Size(103, 638);
             this.pnElements.TabIndex = 5;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 151);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(68, 17);
-            this.label3.TabIndex = 58;
-            this.label3.Text = "Level No:";
-            // 
-            // cbLevelNo
-            // 
-            this.cbLevelNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbLevelNo.FormattingEnabled = true;
-            this.cbLevelNo.Location = new System.Drawing.Point(7, 171);
-            this.cbLevelNo.Margin = new System.Windows.Forms.Padding(4);
-            this.cbLevelNo.Name = "cbLevelNo";
-            this.cbLevelNo.Size = new System.Drawing.Size(84, 24);
-            this.cbLevelNo.TabIndex = 59;
-            this.cbLevelNo.SelectedIndexChanged += new System.EventHandler(this.cbLevelNo_SelectedIndexChanged);
             // 
             // cbUseStructs
             // 
@@ -852,7 +827,7 @@
             this.pnViewScroll.Controls.Add(this.pnView);
             this.pnViewScroll.Location = new System.Drawing.Point(4, 8);
             this.pnViewScroll.Name = "pnViewScroll";
-            this.pnViewScroll.Size = new System.Drawing.Size(1032, 623);
+            this.pnViewScroll.Size = new System.Drawing.Size(1031, 623);
             this.pnViewScroll.TabIndex = 5;
             // 
             // lbPalBytesAddr
@@ -961,8 +936,6 @@
         private System.Windows.Forms.CheckBox cbUseStructs;
         private System.Windows.Forms.ListBox lbStructures;
         private System.Windows.Forms.ToolStripButton bttReload;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox cbLevelNo;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripButton tbbShowPluginInfo;
         private System.Windows.Forms.ComboBox cbGroup;

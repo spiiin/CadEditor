@@ -75,8 +75,9 @@ public static class GunSmokeUtils
   
   public static int getBigTileNoFromScreen(int[] screenData, int index)
   {
-    int w = ConfigScript.getScreenWidth(0);
-    int h = ConfigScript.getScreenHeight(0);
+    var screen = ConfigScript.loadScreens()[0];
+    int w = screen.width;
+    int h = screen.height;
     int noY = index / w;
     noY = h - noY - 1;
     int noX = index % w;
@@ -85,8 +86,9 @@ public static class GunSmokeUtils
 
   public static void setBigTileToScreen(int[] screenData, int index, int value)
   {
-    int w = ConfigScript.getScreenWidth(0);
-    int h = ConfigScript.getScreenHeight(0);
+    var screen = ConfigScript.loadScreens()[0];
+    int w = screen.width;
+    int h = screen.height;
     int noY = index / w;
     noY = h - noY - 1;
     int noX = index % w;

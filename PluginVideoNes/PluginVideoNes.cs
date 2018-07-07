@@ -285,12 +285,16 @@ namespace PluginVideoNes
         public Bitmap makeScreen(int scrNo, int levelNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, bool withBorders = true)
         {
             if (scrNo < 0)
-                return VideoHelper.emptyScreen((int)(ConfigScript.getScreenWidth(levelNo) * 32), (int)(ConfigScript.getScreenHeight(levelNo) * 32));
+            {
+                return VideoHelper.emptyScreen(256, 256);
+                //return VideoHelper.emptyScreen((int)(ConfigScript.getScreenWidthDefault(levelNo) * 32), (int)(ConfigScript.getScreenWidthDefault(levelNo) * 32));
+            }
             var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.Tiles, MapViewType.Tiles);
             //var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.ObjType,MapViewType.Tiles, withBorders);
-            Screen screen = Globals.getScreen(ConfigScript.screensOffset[levelNo], scrNo);
-            int scrW = ConfigScript.getScreenWidth(0); //zero as screenNoForLevel
-            int scrH = ConfigScript.getScreenHeight(0);
+            var screens = ConfigScript.loadScreens(); //Need to send it to function parameters to avoid reloads for every screen
+            Screen screen = screens[scrNo];
+            int scrW = screen.width;
+            int scrH = screen.height;
             //capcom hardcode
 
             var blockLayer1 = new BlockLayer() { screens = new Screen[] { screen }, showLayer = true, blockWidth = 32, blockHeight = 32 };

@@ -26,6 +26,7 @@ public class Data
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x432, 1  , 0x1000);  }
   
   public int getLevelsCount()           { return 50; }
+  public LoadScreensFunc loadScreensFunc()                  { return Utils.loadScreensDiffSize; }
   
   public OffsetRec[] getScreensOffsetsForLevels() {
     var ans = new OffsetRec[] {

@@ -632,12 +632,55 @@ namespace CadEditor
                 return -256 + b;
         }
 
-        public static Screen[] setScreens(int levelNo)
+        public static Screen[] loadScreens(OffsetRec offset)
         {
-            var screens = new Screen[ConfigScript.screensOffset[levelNo].recCount];
-            for (int i = 0; i < ConfigScript.screensOffset[levelNo].recCount; i++)
-                screens[i] = Globals.getScreen(ConfigScript.screensOffset[levelNo], i);
+            int count = offset.recCount;
+            var screens = new Screen[count];
+            for (int i = 0; i < count; i++)
+                screens[i] = Globals.getScreen(offset, i);
             return screens;
+        }
+
+        public static Screen[] loadScreensDiffSize()
+        {
+            var offsets = ConfigScript.screensOffset;
+            int count = offsets.Length;
+            var screens = new Screen[count];
+            for (int i = 0; i < count; i++)
+                screens[i] = Globals.getScreen(offsets[i], 0);
+            return screens;
+        }
+
+        public static void defaultSaveScreens(int curActiveLevelForScreen, Screen[] screensData)
+        {
+            var screensRec = ConfigScript.screensOffset[curActiveLevelForScreen];
+            var arrayToSave = Globals.dumpdata != null ? Globals.dumpdata : Globals.romdata;
+            int wordLen = ConfigScript.getWordLen();
+            bool littleEndian = ConfigScript.isLittleEndian();
+            //write back tiles
+            int dataStride = ConfigScript.getScreenDataStride();
+            for (int i = 0; i < screensRec.recCount; i++)
+            {
+                int addr = screensRec.beginAddr + i * screensRec.recSize * (dataStride * wordLen);
+                if (wordLen == 1)
+                {
+                    for (int x = 0; x < screensRec.recSize; x++)
+                        arrayToSave[addr + x * dataStride] = (byte)ConfigScript.backConvertScreenTile(screensData[i].data[x]);
+                }
+                else if (wordLen == 2)
+                {
+                    if (littleEndian)
+                    {
+                        for (int x = 0; x < screensRec.recSize; x++)
+                            Utils.writeWordLE(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(screensData[i].data[x]));
+                    }
+                    else
+                    {
+                        for (int x = 0; x < screensRec.recSize; x++)
+                            Utils.writeWord(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(screensData[i].data[x]));
+                    }
+                }
+            }
         }
 
         public static Screen[] setScreens2()

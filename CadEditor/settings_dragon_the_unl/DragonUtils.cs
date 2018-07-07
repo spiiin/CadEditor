@@ -26,16 +26,16 @@ public class DragonUtils
   
   public static MapData[] loadMap(int mapNo)
   {
-      int w = (ConfigScript.getScreenWidth(0)+4)*2;
-      int h = ConfigScript.getScreenHeight(0)*2;
+      int w = (getScreensOffset().width+4)*2;
+      int h = getScreensOffset().height*2;
       var mapData = MapUtils.loadMapFromBlocks(mapNo, w*h, w*h/4, h, true, fillAttribsT, 2);
       return mapData;
   }
   
   public static void fillAttribsT(int[] attrData, byte[] romdata, int attribAddr)
   {
-      int WIDTH = ConfigScript.getScreenWidth(0)/2+2;
-      int HEIGHT = ConfigScript.getScreenHeight(0)/2;
+      int WIDTH = getScreensOffset().width/2+2;
+      int HEIGHT = getScreensOffset().height/2;
       for (int i = 0; i < HEIGHT*WIDTH; i++)
       {
           int x = i % WIDTH;
@@ -51,8 +51,8 @@ public class DragonUtils
       packedData = new byte[0];
       int attribAddr = MapConfig.mapsInfo[mapNo].attribsAddr;
 
-      int WIDTH = ConfigScript.getScreenWidth(0)/2+2;
-      int HEIGHT = ConfigScript.getScreenHeight(0)/2;
+      int WIDTH = getScreensOffset().width/2+2;
+      int HEIGHT = getScreensOffset().height/2;
       for (int i = 0; i < HEIGHT * WIDTH; i++)
       {
           int x = i % WIDTH;
@@ -68,7 +68,7 @@ public class DragonUtils
   public static MapInfo[] makeMapsInfo()
   {
      var mapsInfo = new MapInfo[getScreensOffset().recCount];
-     int scrSize = ConfigScript.getScreenWidth(0) * ConfigScript.getScreenHeight(0) * ConfigScript.getWordLen();
+     int scrSize = getScreensOffset().width * getScreensOffset().height * ConfigScript.getWordLen();
      for (int i = 0; i < mapsInfo.Length; i++)
      {
          int da = getScreensOffset().beginAddr + scrSize  * i;

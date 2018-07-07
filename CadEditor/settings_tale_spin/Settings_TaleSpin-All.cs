@@ -49,14 +49,14 @@ public class Data:CapcomBase
       var groups = ConfigScript.getGroups();
       return new List<LevelRec>() 
       {
-          new LevelRec(0x1035F, 59,  8, 5,  0x1E10C, groups[0].name, 0, groups[0]), 
-          new LevelRec(0x104C2, 74, 10, 5,  0x1E13C, groups[2].name, 0, groups[2]),
-          new LevelRec(0x10600, 61, 17, 4,  0x1E16E, groups[4].name, 0, groups[4]),
-          new LevelRec(0x1078D, 84, 12, 7,  0x1E1A1, groups[6].name, 0, groups[6]),
-          new LevelRec(0x108DD, 63, 14, 6,  0x1E1F5, groups[8].name, 0, groups[8]),
-          new LevelRec(0x109FC, 56, 9 , 8,  0x1E249, groups[3].name, 0, groups[3]),
-          new LevelRec(0x10B00, 51, 12, 5,  0x1E291, groups[7].name, 0, groups[7]),
-          new LevelRec(0x10C07, 53, 8,  6,  0x1E2D1, groups[9].name, 0, groups[9]),
+          new LevelRec(0x1035F, 59,  8, 5,  0x1E10C, groups[0].name, groups[0]), 
+          new LevelRec(0x104C2, 74, 10, 5,  0x1E13C, groups[2].name, groups[2]),
+          new LevelRec(0x10600, 61, 17, 4,  0x1E16E, groups[4].name, groups[4]),
+          new LevelRec(0x1078D, 84, 12, 7,  0x1E1A1, groups[6].name, groups[6]),
+          new LevelRec(0x108DD, 63, 14, 6,  0x1E1F5, groups[8].name, groups[8]),
+          new LevelRec(0x109FC, 56, 9 , 8,  0x1E249, groups[3].name, groups[3]),
+          new LevelRec(0x10B00, 51, 12, 5,  0x1E291, groups[7].name, groups[7]),
+          new LevelRec(0x10C07, 53, 8,  6,  0x1E2D1, groups[9].name, groups[9]),
       };
   }
   public GetGroupsFunc getGroupsFunc() { return getGroups; }

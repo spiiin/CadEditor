@@ -19,6 +19,7 @@ public class Data
   public OffsetRec getBigBlocksOffset()                     { return new OffsetRec(0 , 4   , 1); }
   public OffsetRec getBlocksOffset()                        { return new OffsetRec(0 , 4   , 1); }
   
+  public LoadScreensFunc loadScreensFunc()                  { return Utils.loadScreensDiffSize; }
   public int getLevelsCount()                               { return 9; }
   
   public OffsetRec[] getScreensOffsetsForLevels() {
@@ -54,19 +55,22 @@ public class Data
   public SetVideoChunkFunc    setVideoChunkFunc()            { return Utils.setVideoChunk; }
   public GetObjectDictionaryFunc getObjectDictionaryFunc()   { return getObjectDictionary; }
   
+  public GetLayoutFunc  getLayoutFunc()  { return getLayout;  }
+  public SetLayoutFunc  setLayoutFunc()  { return null;       }
+  
   public GetGroupsFunc getGroupsFunc() { return getGroups; }
   public GroupRec[] getGroups()
   {
     return new GroupRec[] { 
       new GroupRec("Jungle by Day"         , 14,0,0,0, 0x01),
-      new GroupRec("Great Tree"            , 11,2,2,0, 0x01),
-      new GroupRec("Dawn Patrol"           , 14,0,0,0, 0x01),
-      new GroupRec("River"                 , 14,1,1,0, 0x01),
-      new GroupRec("Baloo and River"       , 14,1,1,0, 0x01),
-      new GroupRec("Tree Village"          , 11,2,2,0, 0x01),
-      new GroupRec("Ruins"                 , 2 ,3,3,12 ,0x01),
-      new GroupRec("Falling Ruins"         , 2 ,3,3,12 ,0x01),
-      new GroupRec("Jungle by Night"       , 14,0,0,0, 0x01),
+      new GroupRec("Great Tree"            , 11,2,2,0, 0x02),
+      new GroupRec("Dawn Patrol"           , 14,0,0,0, 0x03),
+      new GroupRec("River"                 , 14,1,1,0, 0x04),
+      new GroupRec("Baloo and River"       , 14,1,1,0, 0x05),
+      new GroupRec("Tree Village"          , 11,2,2,0, 0x06),
+      new GroupRec("Ruins"                 , 2 ,3,3,12 ,0x07),
+      new GroupRec("Falling Ruins"         , 2 ,3,3,12 ,0x08),
+      new GroupRec("Jungle by Night"       , 14,0,0,0, 0x09),
     };
   }
   
@@ -76,16 +80,16 @@ public class Data
       var groups = ConfigScript.getGroups();
       return new List<LevelRec>() 
       {
-          new LevelRec(0x167D5, 48, 1, 1, 0x0, "Jungle By Day", 0, groups[0]),
-          new LevelRec(0x18815, 45, 1, 1, 0x0, "Great Tree", 1, groups[1]),
-          new LevelRec(0x173F6, 67, 1, 1, 0x0, "Dawn Patrol", 2, groups[2]),
-          new LevelRec(0x14B7A, 89, 1, 1, 0x0, "River", 3, groups[3]),
-          new LevelRec(0x1550E, 67, 1, 1, 0x0, "Baloo and River", 4, groups[4]),
-          new LevelRec(0x194D3, 51, 1, 1, 0x0, "Tree Village", 5, groups[5]),
-          new LevelRec(0x128D6, 60, 1, 1, 0x0, "Ruins", 6, groups[6]),
-          new LevelRec(0x13642, 111, 1, 1, 0x0, "Falling Ruins", 7, groups[7]),
-          new LevelRec(0x17E04, 65, 1, 1, 0x0, "Jungle By Night", 8, groups[8]),
-          //new LevelRec(0x10912, 74, 1, 1, 0x0, "Wastelands", 9, groups[9]),
+          new LevelRec(0x167D5, 48, 1, 1, 0x0, "Jungle By Day", groups[0]),
+          new LevelRec(0x18815, 45, 1, 1, 0x0, "Great Tree", groups[1]),
+          new LevelRec(0x173F6, 67, 1, 1, 0x0, "Dawn Patrol", groups[2]),
+          new LevelRec(0x14B7A, 89, 1, 1, 0x0, "River", groups[3]),
+          new LevelRec(0x1550E, 67, 1, 1, 0x0, "Baloo and River", groups[4]),
+          new LevelRec(0x194D3, 51, 1, 1, 0x0, "Tree Village", groups[5]),
+          new LevelRec(0x128D6, 60, 1, 1, 0x0, "Ruins", groups[6]),
+          new LevelRec(0x13642, 111, 1, 1, 0x0, "Falling Ruins", groups[7]),
+          new LevelRec(0x17E04, 65, 1, 1, 0x0, "Jungle By Night", groups[8]),
+          //new LevelRec(0x10912, 74, 1, 1, 0x0, "Wastelands", groups[9]),
       };
   }
   
@@ -240,5 +244,12 @@ public class Data
     {
       return Utils.getChrAddress(id);
     }
+  }
+  
+  public static LevelLayerData getLayout(int curActiveLayout)
+  {
+      int[] layer = new int[1];
+      layer[0] = curActiveLayout+1;
+      return new LevelLayerData(1, 1, layer, null, null);
   }
 }

@@ -12,7 +12,7 @@ public class DonDokoDonUtils
   public static MapInfo[] makeMapsInfo()
   {
      var mapsInfo = new MapInfo[getScreensOffset().recCount];
-     int scrSize = ConfigScript.getScreenWidth(0) * ConfigScript.getScreenHeight(0) * ConfigScript.getWordLen();
+     int scrSize = getScreensOffset().width * getScreensOffset().height * ConfigScript.getWordLen();
      int actualScrSize = getScreensOffset().recSize;
      int attrSize = 64;
      for (int i = 0; i < mapsInfo.Length; i++)

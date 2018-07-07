@@ -108,8 +108,7 @@ namespace CadEditor
 
         private void reloadLayers()
         {
-            int scrLevelNo = getLevelRecForGameType().levelNo;
-            layers[0].screens = Utils.setScreens(scrLevelNo);
+            layers[0].screens = ConfigScript.loadScreens();
             if (ConfigScript.getLayersCount() > 1)
                 layers[1].screens = Utils.setScreens2();
         }
@@ -187,10 +186,11 @@ namespace CadEditor
             bttSave.Enabled = ConfigScript.setObjectsFunc != null;
 
             btSort.Visible = ConfigScript.sortObjectsFunc != null;
-            resizeMapScreen();
 
             UtilsGui.setCbItemsCount(cbBigObjectNo, 256, 0, true);
             cbLevel_SelectedIndexChanged(cbLayoutNo, new EventArgs());
+
+            resizeMapScreen();
 
             cbGroup.Items.Clear();
             foreach (var g in ConfigScript.getGroups())
@@ -199,22 +199,36 @@ namespace CadEditor
             }
         }
 
+        private Screen getActiveScreen()
+        {
+            for (int i = 0; i < curLevelLayerData.layer.Length; i++)
+            {
+                int scrNo = curLevelLayerData.layer[i] - 1; //Calculate size of all layout for first non zero screen in it
+                if ((scrNo >= 0) && (scrNo < layers[0].screens.Length))
+                {
+                    return layers[0].screens[scrNo];
+                }
+            }
+            return null;
+        }
+
         private void resizeMapScreen()
         {
+            reloadLayers();
             int blockWidth = layers[0].blockWidth;
             int blockHeight = layers[0].blockHeight;
-            int scrLevelNo = getLevelRecForGameType().levelNo;
+            var screen = getActiveScreen();
 
             int scrWidth, scrHeight;
             if (ConfigScript.getScreenVertical())
             {
-                scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockHeight * curScale);
-                scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockWidth * curScale);
+                scrWidth = (int)(screen.width * blockHeight * curScale);
+                scrHeight = (int)(screen.height * blockWidth * curScale);
             }
             else
             {
-                scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
-                scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);
+                scrWidth = (int)(screen.width * blockWidth * curScale);
+                scrHeight = (int)(screen.height * blockHeight * curScale);
             }
 
             int screensInWidth = curLevelLayerData.width;
@@ -361,9 +375,9 @@ namespace CadEditor
         {
             int blockWidth = layers[0].blockWidth;
             int blockHeight = layers[0].blockHeight;
-            int scrLevelNo = getLevelRecForGameType().levelNo;
-            int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
-            int scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);
+            var screen = getActiveScreen();
+            int scrWidth = (int)(screen.width * blockWidth * curScale);
+            int scrHeight = (int)(screen.height * blockHeight * curScale);
             int scrX = mouseCoord.X / (ConfigScript.screenVertical ? scrHeight : scrWidth);
             int scrY = mouseCoord.Y / (ConfigScript.screenVertical ? scrWidth : scrHeight);
             return new Point(scrX, scrY);
@@ -373,9 +387,9 @@ namespace CadEditor
         {
             int blockWidth = layers[0].blockWidth;
             int blockHeight = layers[0].blockHeight;
-            int scrLevelNo = getLevelRecForGameType().levelNo;
-            int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
-            int scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);
+            var screen = getActiveScreen();
+            int scrWidth = (int)(screen.width * blockWidth * curScale);
+            int scrHeight = (int)(screen.height * blockHeight * curScale);
             int oX = mouseCoord.X % (ConfigScript.screenVertical ? scrHeight : scrWidth);
             int oY = mouseCoord.Y % (ConfigScript.screenVertical ? scrWidth : scrHeight);
             return new Point(oX, oY);
@@ -388,10 +402,10 @@ namespace CadEditor
 
             int blockWidth = layers[0].blockWidth;
             int blockHeight = layers[0].blockHeight;
-            int scrLevelNo = getLevelRecForGameType().levelNo;
 
-            int width = ConfigScript.getScreenWidth(scrLevelNo);
-            int height = ConfigScript.getScreenHeight(scrLevelNo);
+            var screen = getActiveScreen();
+            int width = screen.width;
+            int height = screen.height;
             int scrWidth = (int)(width * blockWidth * curScale);
             int scrHeight = (int)(height * blockHeight * curScale);
 
@@ -436,9 +450,9 @@ namespace CadEditor
 
             int blockWidth = layers[0].blockWidth;
             int blockHeight = layers[0].blockHeight;
-            int scrLevelNo = getLevelRecForGameType().levelNo;
-            int scrWidth = (int)(ConfigScript.getScreenWidth(scrLevelNo) * blockWidth * curScale);
-            int scrHeight = (int)(ConfigScript.getScreenHeight(scrLevelNo) * blockHeight * curScale);
+            var screen = getActiveScreen();
+            int scrWidth = (int)(screen.width * blockWidth * curScale);
+            int scrHeight = (int)(screen.height * blockHeight * curScale);
 
             for (int objListIndex = 0; objListIndex < objectLists.Count; objListIndex++)
             {
@@ -715,9 +729,9 @@ namespace CadEditor
             int dx = x - oldX;
             int dy = y - oldY;
 
-            int scrLevelNo = getLevelRecForGameType().levelNo;
-            int coordXCount = ConfigScript.getScreenWidth(scrLevelNo) * 32;
-            int coordYCount = ConfigScript.getScreenHeight(scrLevelNo) * 32;
+            var screen = getActiveScreen();
+            int coordXCount = screen.width * 32;
+            int coordYCount = screen.height * 32;
             int minCoordX = 0;
             int minCoordY = 0;
             if (!ConfigScript.getScreenVertical())
@@ -731,7 +745,7 @@ namespace CadEditor
                     return;
             }
 
-            if ((sx >= ConfigScript.getLevelWidth(scrLevelNo)) || (sy >= ConfigScript.getLevelHeight(scrLevelNo)))
+            if ((sx >= screen.width || (sy >= screen.height)))
             {
                 return;
             }
@@ -798,9 +812,9 @@ namespace CadEditor
 
             if (curTool == ToolType.Create)
             {
-                int scrLevelNo = getLevelRecForGameType().levelNo;
-                int coordXCount = ConfigScript.getScreenWidth(scrLevelNo) * 32;
-                int coordYCount = ConfigScript.getScreenHeight(scrLevelNo) * 32;
+                var screen = getActiveScreen();
+                int coordXCount = screen.width * 32;
+                int coordYCount = screen.height * 32;
                 int minCoordX = 0;
                 int minCoordY = 0;
 

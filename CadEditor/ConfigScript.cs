@@ -36,6 +36,9 @@ namespace CadEditor
     public delegate void DrawObjectFunc(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, ImageList objectSprites, bool inactive, int leftMargin, int topMargin);
     public delegate void DrawObjectBigFunc(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, Image[] objectSprites, bool inactive, int leftMargin, int topMargin);
 
+    public delegate Screen[] LoadScreensFunc();
+    public delegate void SaveScreensFunc(Screen[] screens);
+
     public class ConfigScript
     {
         public static void LoadGlobalsFromFile(string fileName)
@@ -246,6 +249,9 @@ namespace CadEditor
             blocksCount    = callFromScript(asm, data, "*.getBlocksCount"   , 256);
 
             blocksPicturesFilename  = callFromScript(asm, data, "getBlocksFilename", "");
+
+            loadScreensFunc = callFromScript<LoadScreensFunc>(asm, data, "*.loadScreensFunc");
+            saveScreensFunc = callFromScript<SaveScreensFunc>(asm, data, "*.saveScreensFunc");
             if (blocksPicturesFilename != "")
             {
                 if (!File.Exists(ConfigScript.getBlocksPicturesFilename()))
@@ -445,9 +451,32 @@ namespace CadEditor
              if (drawObjectBigFunc != null)
                  drawObjectBigFunc(g, curObject, listNo, selected, curScale, objectSprites, inactive, leftMargin, topMargin);
              else
-                 Utils.defaultDrawObjectBig(g, curObject, listNo, selected, curScale, objectSprites, inactive, leftMargin, topMargin);
-             
+                 Utils.defaultDrawObjectBig(g, curObject, listNo, selected, curScale, objectSprites, inactive, leftMargin, topMargin);   
          }
+
+        public static Screen[] loadScreens()
+        {
+            if (loadScreensFunc != null)
+            {
+                return loadScreensFunc();
+            }
+            else
+            {
+                return Utils.loadScreens(ConfigScript.screensOffset[0]);
+            }
+        }
+
+        public static void saveScreens(Screen[] screens)
+        {
+            if (saveScreensFunc != null)
+            {
+                saveScreensFunc(screens);
+            }
+            else
+            {
+                Utils.defaultSaveScreens(0, screens);
+            }
+        }
 
         public static LevelLayerData getLayout(int levelNo)
         {
@@ -597,7 +626,7 @@ namespace CadEditor
 
         //------------------------------------------------------------
         //helpers
-        public static int getScreenWidth(int levelNo)
+        /*public static int getScreenWidth(int levelNo)
         {
             return screensOffset[levelNo].width;
         }
@@ -605,7 +634,7 @@ namespace CadEditor
         public static int getScreenHeight(int levelNo)
         {
             return screensOffset[levelNo].height;
-        }
+        }*/
 
         public static int getLayoutAddr(int index)
         {
@@ -737,6 +766,9 @@ namespace CadEditor
 
         public static DrawObjectFunc drawObjectFunc;
         public static DrawObjectBigFunc drawObjectBigFunc;
+
+        public static LoadScreensFunc loadScreensFunc;
+        public static SaveScreensFunc saveScreensFunc;
 
         public static bool isBigBlockEditorEnabled;
         public static bool isBlockEditorEnabled;

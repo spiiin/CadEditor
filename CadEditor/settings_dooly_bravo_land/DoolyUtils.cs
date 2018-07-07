@@ -27,8 +27,8 @@ public class DoolyUtils
   public static MapInfo[] makeMapsInfo()
   {
      var mapsInfo = new MapInfo[getScreensOffset().recCount];
-     int scrSize = ConfigScript.getScreenWidth(0) * ConfigScript.getScreenHeight(0) * ConfigScript.getWordLen();
-     int attrSize = ConfigScript.getScreenWidth(0)/2 * ConfigScript.getScreenHeight(0)/2;
+     int scrSize = getScreensOffset().width * getScreensOffset().height * ConfigScript.getWordLen();
+     int attrSize = getScreensOffset().width/2 * getScreensOffset().height/2;
      for (int i = 0; i < mapsInfo.Length; i++)
      {
          int da = getScreensOffset().beginAddr + scrSize * i;

@@ -46,7 +46,7 @@ public class TakeshiUtils
      for (int i = 0; i < mapsInfo.Length; i++)
      {
          int da = getScreensOffset().beginAddr + scrSize  * i;
-         int aa = da + ConfigScript.getScreenWidth(0) * ConfigScript.getScreenHeight(0);
+         int aa = da + getScreensOffset().width * getScreensOffset().height;
          mapsInfo[i] = new MapInfo(){ dataAddr = da, palAddr = ConfigScript.palOffset.beginAddr, videoNo = 0, attribsAddr = aa};
      }
      return mapsInfo;

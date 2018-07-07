@@ -84,16 +84,20 @@ namespace PluginExportScreens
                 }
 
                 int first = SaveScreensCount.First;
-                int WIDTH = ConfigScript.getScreenWidth(formMain.LevelNoForScreens);
-                int HEIGHT = ConfigScript.getScreenHeight(formMain.LevelNoForScreens);
+                var screens = ConfigScript.loadScreens();
+                int firstW = screens[0].width;
+                int firstH = screens[0].height;
                 float curScale = formMain.CurScale;
-                var probeIm = MapEditor.ScreenToImage(formMain.BigBlocks,formMain.Layers, formMain.ScreenNo, curScale, false, 0, 0, WIDTH, HEIGHT);
+                //only for screens with same sizes
+                var probeIm = MapEditor.ScreenToImage(formMain.BigBlocks,formMain.Layers, formMain.ScreenNo, curScale, false, 0, 0, firstW, firstH);
                 int screenCount = SaveScreensCount.Count;
                 var resultImage = new Bitmap(probeIm.Width * screenCount, probeIm.Height);
                 using (var g = Graphics.FromImage(resultImage))
                 {
                     for (int i = 0; i < screenCount; i++)
                     {
+                        int WIDTH = screens[i].width;
+                        int HEIGHT = screens[i].height;
                         var im = MapEditor.ScreenToImage(formMain.BigBlocks, formMain.Layers, first + i, curScale, false, 0, 0, WIDTH, HEIGHT);
                         g.DrawImage(im, new Point(i * im.Width, 0));
                     }
@@ -130,10 +134,8 @@ namespace PluginExportScreens
                 }
 
                 int first = SaveScreensCount.First;
-                int WIDTH = ConfigScript.getScreenWidth(formMain.LevelNoForScreens);
-                int HEIGHT = ConfigScript.getScreenHeight(formMain.LevelNoForScreens);
                 int screenCount = SaveScreensCount.Count;
-                var screenParams = new { Width = WIDTH, Height = HEIGHT, Screens = new CadEditor.Screen[screenCount] };
+                var screenParams = new { Screens = new CadEditor.Screen[screenCount] };
                 using (TextWriter tw = new StreamWriter(SaveScreensCount.Filename))
                 {
                     for (int i = 0; i < screenCount; i++)
@@ -231,7 +233,7 @@ namespace PluginExportScreens
 
         private void loadScreens(out CadEditor.Screen[] screens, out CadEditor.Screen[] screens2)
         {
-            screens = Utils.setScreens(formMain.LevelNoForScreens);
+            screens = ConfigScript.loadScreens();
             screens2 = null;
             if (ConfigScript.getLayersCount() > 1)
                 screens2 = Utils.setScreens2();

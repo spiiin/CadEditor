@@ -42,11 +42,11 @@ public class Data:CapcomBase
       var groups = ConfigScript.getGroups();
       return new List<LevelRec>() 
       {
-          new LevelRec(0x1B43B, 181, 8, 7, 0x1CE7B, groups[0].name, 0, groups[0]),
-          new LevelRec(0x1B6CC, 156, 8, 8, 0x1CEB3, groups[1].name, 0, groups[1]),
-          new LevelRec(0x1B8E8, 126, 8, 6, 0x1CEF3, groups[2].name, 0, groups[2]),
-          new LevelRec(0x1BAD1, 119, 8, 6, 0x1CF23, groups[3].name, 0, groups[3]),
-          new LevelRec(0x1BD70, 182, 8, 6, 0x1CF53, groups[4].name, 0, groups[4]),
+          new LevelRec(0x1B43B, 181, 8, 7, 0x1CE7B, groups[0].name, groups[0]),
+          new LevelRec(0x1B6CC, 156, 8, 8, 0x1CEB3, groups[1].name, groups[1]),
+          new LevelRec(0x1B8E8, 126, 8, 6, 0x1CEF3, groups[2].name, groups[2]),
+          new LevelRec(0x1BAD1, 119, 8, 6, 0x1CF23, groups[3].name, groups[3]),
+          new LevelRec(0x1BD70, 182, 8, 6, 0x1CF53, groups[4].name, groups[4]),
       };
   }
   
