@@ -168,7 +168,6 @@ namespace CadEditor
             useSegaGraphics = callFromScript(asm, data, "*.isUseSegaGraphics", false);
             blockSize4x4 = callFromScript(asm, data, "*.isBlockSize4x4", false);
             buildScreenFromSmallBlocks = callFromScript(asm, data, "isBuildScreenFromSmallBlocks", false);
-            layersCount = callFromScript(asm, data, "*.getLayersCount", 1);
             getLevelRecsFunc = callFromScript<GetLevelRecsFunc>(asm, data, "*.getLevelRecsFunc", ConfigScript.getLevelRecsFuncDefault());
 
             //todo: remove or change to many lists interface
@@ -572,11 +571,6 @@ namespace CadEditor
             return configDirectory + blocksPicturesFilename;
         }
 
-        public static int getLayersCount()
-        {
-            return layersCount;
-        }
-
         public static bool isShowScrollsInLayout()
         {
             return showScrollsInLayout;
@@ -700,7 +694,6 @@ namespace CadEditor
         public static int blocksCount;
         public static bool screenVertical;
         public static int screenDataStride;
-        public static int layersCount;
         public static int wordLen;
         public static bool littleEndian;
         public static bool buildScreenFromSmallBlocks;

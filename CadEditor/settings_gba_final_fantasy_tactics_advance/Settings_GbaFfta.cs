@@ -9,7 +9,6 @@ public class Data
   public int getScreenWidth()          { return 0x20; }
   public int getScreenHeight()         { return 0x40; }
   public int getWordLen()              { return 2;}
-  public int getLayersCount()          { return 2;}
   public bool isLittleEndian()         { return true; }
   public int    getPictureBlocksWidth(){ return 64; }
   public int getBigBlocksCount()       { return 542; }
