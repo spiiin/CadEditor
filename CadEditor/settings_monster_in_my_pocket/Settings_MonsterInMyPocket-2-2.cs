@@ -2,9 +2,15 @@ using CadEditor;
 using System.Collections.Generic;
 public class Data
 { 
-  public OffsetRec getScreensOffset()     { return new OffsetRec(0x209e, 4, 48);   }
-  public int getScreenWidth()             { return 8; }
-  public int getScreenHeight()            { return 6; }
+  public OffsetRec[] getScreensOffsetsForLevels() {
+    var ans = new OffsetRec[] {
+      new OffsetRec(0x209e, 4, 48, 8, 6),
+      new OffsetRec(0x215e, 4, 64, 8, 8),
+      new OffsetRec(0x225e, 5, 48, 8, 6),
+      new OffsetRec(0x234e, 1, 64, 8, 8),
+    };
+    return ans;  
+  }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
   
