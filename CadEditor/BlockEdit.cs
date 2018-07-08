@@ -43,12 +43,12 @@ namespace CadEditor
             UtilsGui.setCbItemsCount(cbTileset, ConfigScript.blocksOffset.recCount);
             UtilsGui.setCbItemsCount(cbPalette, ConfigScript.palOffset.recCount);
 
-            UtilsGui.setCbIndexWithoutUpdateLevel(cbTileset, cbLevelSelect_SelectedIndexChanged, formMain.CurActiveBigBlockNo);  //small blocks no?
-            UtilsGui.setCbIndexWithoutUpdateLevel(cbVideo, VisibleOnlyChange_SelectedIndexChanged, formMain.CurActiveVideoNo);
-            UtilsGui.setCbIndexWithoutUpdateLevel(cbPalette, VisibleOnlyChange_SelectedIndexChanged, formMain.CurActivePalleteNo);
-            curActiveBigBlock = formMain.CurActiveBigBlockNo; //small blocks no?
-            curActiveVideo = formMain.CurActiveVideoNo;
-            curActivePal = formMain.CurActivePalleteNo;
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbTileset, cbLevelSelect_SelectedIndexChanged, formMain.curActiveBigBlockNo);  //small blocks no?
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbVideo, VisibleOnlyChange_SelectedIndexChanged, formMain.curActiveVideoNo);
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbPalette, VisibleOnlyChange_SelectedIndexChanged, formMain.curActivePalleteNo);
+            curActiveBigBlock = formMain.curActiveBigBlockNo; //small blocks no?
+            curActiveVideo = formMain.curActiveVideoNo;
+            curActivePal = formMain.curActivePalleteNo;
             UtilsGui.setCbIndexWithoutUpdateLevel(cbSubpalette, cbSubpalette_SelectedIndexChanged);
 
             UtilsGui.setCbItemsCount(cbPanelNo, (ConfigScript.getBlocksCount() + BLOCKS_PER_PAGE  - 1)/ BLOCKS_PER_PAGE);

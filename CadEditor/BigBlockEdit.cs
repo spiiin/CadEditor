@@ -66,12 +66,12 @@ namespace CadEditor
 
             //generic version
             cbHierarchyLevel.SelectedIndex = 0;
-            cbTileset.SelectedIndex = formMain.CurActiveBigBlockNo;
-            cbVideoNo.SelectedIndex = formMain.CurActiveVideoNo;
-            cbSmallBlock.SelectedIndex = formMain.CurActiveBlockNo;
-            cbPaletteNo.SelectedIndex = formMain.CurActivePalleteNo;
+            cbTileset.SelectedIndex = formMain.curActiveBigBlockNo;
+            cbVideoNo.SelectedIndex = formMain.curActiveVideoNo;
+            cbSmallBlock.SelectedIndex = formMain.curActiveBlockNo;
+            cbPaletteNo.SelectedIndex = formMain.curActivePalleteNo;
             cbPart.SelectedIndex = 0;
-            cbViewType.SelectedIndex = Math.Min((int)formMain.CurActiveViewType, cbViewType.Items.Count - 1);
+            cbViewType.SelectedIndex = Math.Min((int)formMain.curActiveViewType, cbViewType.Items.Count - 1);
         }
 
         protected void reloadLevel(bool reloadBigBlocks = true)
