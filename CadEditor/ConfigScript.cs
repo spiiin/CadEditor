@@ -266,6 +266,8 @@ namespace CadEditor
             palBytesAddr = callFromScript(asm, data, "*.getPalBytesAddr", -1);
             physicsBytesAddr = callFromScript(asm, data, "*.getPhysicsBytesAddr", -1);
 
+            defaultScale = callFromScript(asm, data, "*.getDefaultScale", -1.0f);
+
             loadAllPlugins(asm, data);
         }
 
@@ -611,6 +613,11 @@ namespace CadEditor
             return physicsBytesAddr;
         }
 
+        public static float getDefaultScale()
+        {
+            return defaultScale;
+        }
+
         //------------------------------------------------------------
         //helpers
         /*public static int getScreenWidth(int levelNo)
@@ -754,6 +761,8 @@ namespace CadEditor
 
         public static LoadScreensFunc loadScreensFunc;
         public static SaveScreensFunc saveScreensFunc;
+
+        public static float defaultScale;
 
         public static bool isBigBlockEditorEnabled;
         public static bool isBlockEditorEnabled;

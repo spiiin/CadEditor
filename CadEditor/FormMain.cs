@@ -16,6 +16,15 @@ namespace CadEditor
             InitializeComponent();
         }
 
+        private void setDefaultScale()
+        {
+            curScale = ConfigScript.isBuildScreenFromSmallBlocks() ? 1 : 2;
+            if (ConfigScript.getDefaultScale() > 0)
+            {
+                curScale = ConfigScript.getDefaultScale();
+            }
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             this.KeyPreview = true;
@@ -30,7 +39,7 @@ namespace CadEditor
             else
             {
                 Globals.loadData(OpenFile.FileName, OpenFile.DumpName, OpenFile.ConfigName);
-                curScale =  ConfigScript.isBuildScreenFromSmallBlocks() ? 1 : 2;
+                setDefaultScale();
                 fileLoaded = true;
 
                 resetControls();
@@ -326,7 +335,7 @@ namespace CadEditor
         private int curActiveBlockNo = 0;
         private int curActivePalleteNo = 0;
 
-        private float curScale = 2;
+        private float curScale = 2.0f;
 
         bool useStructs;
         TileStructure curTileStruct;
@@ -598,7 +607,7 @@ namespace CadEditor
             if (f.ShowDialog() == DialogResult.OK)
             {
                 Globals.loadData(OpenFile.FileName, OpenFile.DumpName, OpenFile.ConfigName);
-                curScale = ConfigScript.isBuildScreenFromSmallBlocks() ? 1 : 2;
+                setDefaultScale();
                 fileLoaded = true;
                 resetControls();
                 setWindowText();

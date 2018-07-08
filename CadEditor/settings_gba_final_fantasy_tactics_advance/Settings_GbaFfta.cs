@@ -19,6 +19,8 @@ public class Data
   public LoadScreensFunc loadScreensFunc() { return loadScreens; }
   public SaveScreensFunc saveScreensFunc() { return saveScreens; }
   
+  public float getDefaultScale() { return 0.5f; }
+  
   public Screen[] loadScreens()
   {
       var screen1 = Globals.getScreen(getScreensOffset(), 0);
