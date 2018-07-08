@@ -258,8 +258,10 @@ namespace SettingsViewer
         public MethodDelegate getPictureBlocksWidth { get { return get(); } }
         [Category("Blocks params")]
         public MethodDelegate getBlockTypeNames { get { return get(); } }
-        [Category("Groups params")]
+        [Category("View params")]
         public MethodDelegate getGroupsFunc { get { return get(); } }
+        [Category("View params")]
+        public MethodDelegate getDefaultScale { get { return get(); } }
         [Category("Blocks params")]
         public MethodDelegate getPalBytesAddr { get { return get(); } }
         [Category("Blocks params")]
