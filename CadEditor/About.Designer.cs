@@ -41,11 +41,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.linkLabel4 = new System.Windows.Forms.LinkLabel();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // textBox1
@@ -165,29 +165,11 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 178);
+            this.label6.Location = new System.Drawing.Point(12, 180);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(79, 17);
             this.label6.TabIndex = 12;
             this.label6.Text = "Webmoney";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(92, 178);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(114, 17);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "R122299008919";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(92, 195);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(113, 17);
-            this.label8.TabIndex = 15;
-            this.label8.Text = "Z252798778065";
             // 
             // label9
             // 
@@ -201,31 +183,49 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(12, 219);
+            this.label10.Location = new System.Drawing.Point(12, 229);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(50, 17);
             this.label10.TabIndex = 17;
             this.label10.Text = "Bitcoin";
             // 
-            // label11
+            // textBox3
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(92, 219);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(290, 17);
-            this.label11.TabIndex = 18;
-            this.label11.Text = "12a26G6BxzYqx1D82ZNQvVJuzGSPETnd9r";
+            this.textBox3.Location = new System.Drawing.Point(97, 226);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
+            this.textBox3.Size = new System.Drawing.Size(309, 22);
+            this.textBox3.TabIndex = 19;
+            this.textBox3.Text = "12a26G6BxzYqx1D82ZNQvVJuzGSPETnd9r";
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(97, 177);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
+            this.textBox4.Size = new System.Drawing.Size(309, 22);
+            this.textBox4.TabIndex = 20;
+            this.textBox4.Text = "R122299008919";
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(97, 200);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.ReadOnly = true;
+            this.textBox5.Size = new System.Drawing.Size(309, 22);
+            this.textBox5.TabIndex = 21;
+            this.textBox5.Text = "Z252798778065";
             // 
             // About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(385, 306);
-            this.Controls.Add(this.label11);
+            this.ClientSize = new System.Drawing.Size(418, 306);
+            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.textBox3);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.linkLabel4);
             this.Controls.Add(this.label5);
@@ -264,10 +264,10 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.LinkLabel linkLabel4;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBox5;
     }
 }
