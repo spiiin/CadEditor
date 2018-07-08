@@ -75,20 +75,14 @@ namespace CadEditor
             if (!ConfigScript.usePicturesInstedBlocks)
             {
                 if (ConfigScript.isUseSegaGraphics())
-                    bigBlocks = makeSegaBigBlocks();
+                {
+                    Globals.makeSegaBigBlocks(curVideoNo, curBigBlockNo, curPaletteNo, MapViewType.Tiles);
+                }
                 else
-                    bigBlocks = ConfigScript.videoNes.makeBigBlocks(curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo, MapViewType.Tiles, MapViewType.Tiles, ConfigScript.getbigBlocksHierarchyCount()-1);
+                {
+                    bigBlocks = ConfigScript.videoNes.makeBigBlocks(curVideoNo, curBigBlockNo, curBlockNo, curPaletteNo, MapViewType.Tiles, MapViewType.Tiles, ConfigScript.getbigBlocksHierarchyCount() - 1);
+                }
             }
-        }
-
-        //copy-paste
-        private Image[] makeSegaBigBlocks()
-        {
-            byte[] mapping = ConfigScript.getSegaMapping(curBigBlockNo);
-            byte[] videoTiles = ConfigScript.getVideoChunk(curVideoNo);
-            byte[] pal = ConfigScript.getPal(curPaletteNo);
-            int count = ConfigScript.getBigBlocksCount(ConfigScript.getbigBlocksHierarchyCount()-1);
-            return ConfigScript.videoSega.makeBigBlocks(mapping, videoTiles, pal, count, MapViewType.Tiles);
         }
 
         private int calcScrNo(int noInLayout)
@@ -106,7 +100,7 @@ namespace CadEditor
             btDelete.Enabled = false;
         }
 
-        private void reloadLayers()
+        private void reloadScreens()
         {
             screens = ConfigScript.loadScreens();
         }
@@ -144,7 +138,7 @@ namespace CadEditor
                     cbGroup.SelectedIndex = -1;
                 }
 
-                reloadLayers();
+                reloadScreens();
             }
             reloadLevel(reloadObjects);
             resizeMapScreen();
@@ -157,6 +151,7 @@ namespace CadEditor
 
             if (ConfigScript.usePicturesInstedBlocks)
             {
+                //TODO: set big blocks sizes from picture
                 bigBlocks = UtilsGDI.setBlocksForPictures(2, 32,32, MapViewType.Tiles);
             }
 
@@ -212,7 +207,7 @@ namespace CadEditor
 
         private void resizeMapScreen()
         {
-            reloadLayers();
+            reloadScreens();
             var screen = getActiveScreen();
             int blockWidth = bigBlocks[0].Width;
             int blockHeight = bigBlocks[0].Height;

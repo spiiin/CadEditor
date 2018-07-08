@@ -86,10 +86,6 @@ namespace CadEditor
                 cbScreenNo.SelectedIndex = oldScreenNo;
         }
 
-        private void changeBlocksSize(Image[] bigImages)
-        {
-        }
-
         private void resetControls()
         {
             resetScreens();
@@ -156,18 +152,10 @@ namespace CadEditor
             mapScreen.Invalidate();
         }
 
-        private Image[] makeSegaBigBlocks()
-        {
-            byte[] mapping = ConfigScript.getSegaMapping(curActiveBigBlockNo);
-            byte[] videoTiles = ConfigScript.getVideoChunk(curActiveVideoNo);
-            byte[] pal = ConfigScript.getPal(curActivePalleteNo);
-            int count = ConfigScript.getBigBlocksCount(ConfigScript.getbigBlocksHierarchyCount()-1);
-            return ConfigScript.videoSega.makeBigBlocks(mapping, videoTiles, pal, count, curViewType);
-        }
-
         private void setBlocks(bool needRebuildBlocks)
         {
             var screen = getActiveScreen();
+
             //if using pictures
             if (ConfigScript.usePicturesInstedBlocks)
             {
@@ -178,26 +166,26 @@ namespace CadEditor
                     int h = 32;
                     bigBlocks = UtilsGDI.setBlocksForPictures(curScale, w, h, curViewType);
                 }
-                updateBlocksImages();
-                return;
             }
-
-            MapViewType smallObjectsType =
-                curViewType == MapViewType.SmallObjNumbers ? MapViewType.ObjNumbers :
-                  curViewType == MapViewType.ObjType ? MapViewType.ObjType : MapViewType.Tiles;
-
-            if (needRebuildBlocks)
+            else
             {
-                if (ConfigScript.isUseSegaGraphics())
+                MapViewType smallObjectsType =
+                    curViewType == MapViewType.SmallObjNumbers ? MapViewType.ObjNumbers :
+                      curViewType == MapViewType.ObjType ? MapViewType.ObjType : MapViewType.Tiles;
+
+                if (needRebuildBlocks)
                 {
-                    bigBlocks = makeSegaBigBlocks();
-                }
-                else
-                {
-                    bigBlocks = ConfigScript.videoNes.makeBigBlocks(curActiveVideoNo, curActiveBigBlockNo, curActiveBlockNo, curActivePalleteNo, smallObjectsType, curViewType, ConfigScript.getbigBlocksHierarchyCount() - 1);
+                    if (ConfigScript.isUseSegaGraphics())
+                    {
+                        bigBlocks = Globals.makeSegaBigBlocks(curActiveVideoNo, curActiveBigBlockNo, curActivePalleteNo, curViewType);
+                    }
+                    else
+                    {
+                        bigBlocks = ConfigScript.videoNes.makeBigBlocks(curActiveVideoNo, curActiveBigBlockNo, curActiveBlockNo, curActivePalleteNo, smallObjectsType, curViewType, ConfigScript.getbigBlocksHierarchyCount() - 1);
+                    }
                 }
             }
-            changeBlocksSize(bigBlocks);
+
             curActiveBlock = 0;
             updateBlocksImages();
         }
@@ -753,8 +741,11 @@ namespace CadEditor
         private void mapScreen_MouseDown(object sender, MouseEventArgs ea)
         {
             var ee = ea.Location;
+
+            //hack to WinAPI very big coordinates - convert signed to unsigned
             if (ee.X < 0) { ee.X += 32768 * 2; }
             if (ee.Y < 0) { ee.Y += 32768 * 2; }
+
             if (ea.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 if (Control.ModifierKeys == Keys.Alt)
@@ -775,8 +766,11 @@ namespace CadEditor
         private void mapScreen_MouseUp(object sender, MouseEventArgs ea)
         {
             var ee = ea.Location;
+
+            //hack to WinAPI very big coordinates - convert signed to unsigned
             if (ee.X < 0) { ee.X += 32768 * 2; }
             if (ee.Y < 0) { ee.Y += 32768 * 2; }
+
             if (selectionRect)
             {
                 convertMouseToDxDy(ee, out selectionEndX, out selectionEndY);
