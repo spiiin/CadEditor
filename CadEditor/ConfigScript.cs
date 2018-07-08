@@ -161,7 +161,6 @@ namespace CadEditor
             {
                 screensOffset = callFromScript(asm, data, "*.getScreensOffsetsForLevels", new OffsetRec[1]);
             }
-            screensOffset2 = callFromScript(asm, data, "*.getScreensOffset2", new OffsetRec(0, 1, 0));
             screenVertical = callFromScript(asm, data, "*.getScreenVertical", false);
             screenDataStride = callFromScript(asm, data, "*.getScreenDataStride", 1);
             wordLen = callFromScript(asm, data, "*.getWordLen", 1);
@@ -695,7 +694,6 @@ namespace CadEditor
         public static OffsetRec[] bigBlocksOffsets;
         public static OffsetRec blocksOffset;
         public static OffsetRec[] screensOffset;
-        public static OffsetRec screensOffset2;
         //public static OffsetRec boxesBackOffset;
         public static int levelsCount;
         public static int[] bigBlocksCounts;

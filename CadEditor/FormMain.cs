@@ -75,11 +75,6 @@ namespace CadEditor
                 cbScreenNo.SelectedIndex = 0;
             else if (oldScreenNo < cbScreenNo.Items.Count)
                 cbScreenNo.SelectedIndex = oldScreenNo;
-
-
-            //todo: layer 2
-            /*if (ConfigScript.getLayersCount() > 1)
-                screens = Utils.setScreens2();*/
         }
 
         private void changeBlocksSize(Image[] bigImages)

@@ -698,14 +698,6 @@ namespace CadEditor
             //todo: save all layers
         }
 
-        public static Screen[] setScreens2()
-        {
-            var screens = new Screen[ConfigScript.screensOffset2.recCount];
-            for (int i = 0; i < ConfigScript.screensOffset2.recCount; i++)
-                screens[i] = Globals.getScreen(ConfigScript.screensOffset2, i);
-            return screens;
-        }
-
         public static byte[] readVideoBankFromFile(string filename, int videoPageId)
         {
             try
