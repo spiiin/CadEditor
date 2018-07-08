@@ -15,25 +15,25 @@ namespace CadEditor
             InitializeComponent();
         }
 
-        private int curActiveBlock = 0;
+        private int curActiveBlock;
 
-        private int curActiveLayout = 0;
-        private int curVideoNo = 0;
-        private int curBigBlockNo = 0;
-        private int curBlockNo = 0;
-        private int curPaletteNo = 0;
+        private int curActiveLayout;
+        private int curVideoNo;
+        private int curBigBlockNo;
+        private int curBlockNo;
+        private int curPaletteNo;
         private float curScale = 1.0f;
 
-        private int curActiveObjectListIndex = 0;
+        private int curActiveObjectListIndex;
 
-        private bool bindToAxis = false;
-        private bool useBigPictures = false;
+        private bool bindToAxis;
+        private bool useBigPictures;
 
         private ToolType curTool = ToolType.Create;
 
-        private LevelLayerData curLevelLayerData = new LevelLayerData();
+        private LevelLayerData curLevelLayerData;
         private List<ObjectList> objectLists = new List<ObjectList>();
-        private bool dirty = false;
+        private bool dirty;
         private bool readOnly = false;
 
         private FormMain formMain;
@@ -42,10 +42,8 @@ namespace CadEditor
 
         private Image[] objectSpritesBig;
         private Image[] bigBlocks;
-            
-        const int MAX_SIZE = 64;
 
-        bool objectDragged = false;
+        bool objectDragged;
 
         private void reloadLevelLayerData()
         {
@@ -61,13 +59,6 @@ namespace CadEditor
         {
             dirty = true;
             bttSave.Enabled = ConfigScript.setObjectsFunc != null;
-        }
-
-        private int findStartPosition()
-        {
-            int w = curLevelLayerData.width;
-            int h = curLevelLayerData.height;
-            return w * (h - 1);
         }
 
         private void reloadBigBlocks()
@@ -147,12 +138,12 @@ namespace CadEditor
 
         private void EnemyEditor_Load(object sender, EventArgs e)
         {
-            this.KeyPreview = true;
+            KeyPreview = true;
 
             if (ConfigScript.usePicturesInstedBlocks)
             {
                 //TODO: set big blocks sizes from picture
-                bigBlocks = UtilsGDI.setBlocksForPictures(2, 32,32, MapViewType.Tiles);
+                bigBlocks = UtilsGDI.setBlocksForPictures();
             }
 
             reloadPictures();
@@ -247,7 +238,7 @@ namespace CadEditor
                 but.Size = new Size(32, 32);
                 but.ImageList = objectSprites;
                 but.ImageIndex = i;
-                but.Click += new EventHandler(buttonObjClick);
+                but.Click += buttonObjClick;
                 objPanel.Controls.Add(but);
             }
         }
@@ -257,15 +248,6 @@ namespace CadEditor
             int index = ((Button)button).ImageIndex;
             lbActive.Text = String.Format("({0:X2})", index);
             curActiveBlock = index;
-        }
-
-        private bool isUndefindedObj(ObjectRec obj)
-        {
-            int scrNo = coordToScreenNo(obj);
-            if (scrNo == -1)
-                return false;
-           
-           return (obj.type != 0xFF) && (curLevelLayerData.layer[scrNo] == 0);
         }
 
         private void deleteSelected()
@@ -348,22 +330,6 @@ namespace CadEditor
             lbObjectsCount.Text = String.Format("objects count: {0}/{1}", dgvObjects.RowCount, getLevelRecForGameType().objCount);
         }
 
-    
-        private int coordToScreenNo(ObjectRec obj)
-        {
-            int index = obj.sy * curLevelLayerData.width + obj.sx;
-            if (index < 0 || index >= curLevelLayerData.width * curLevelLayerData.height)
-                return -1;
-            return index;
-        }
-
-        private String makeStringForObject(ObjectRec obj)
-        {
-            int screenNo = coordToScreenNo(obj);
-            String ans = String.Format("{0} <{1:X}>", obj.ToString(), screenNo);
-            return ans;
-        }
-
         private Point mouseCoordToSxSyCoord(Point mouseCoord)
         {
             var screen = getActiveScreen();
@@ -402,8 +368,8 @@ namespace CadEditor
             int scrWidth = (int)(width * blockWidth * curScale);
             int scrHeight = (int)(height * blockHeight * curScale);
 
-            int TILE_SIZE_X = (int)(bigBlocks[0].Width * curScale);
-            int TILE_SIZE_Y = (int)(bigBlocks[0].Height * curScale);
+            int tileSizeX = (int)(bigBlocks[0].Width * curScale);
+            int tileSizeY = (int)(bigBlocks[0].Height * curScale);
 
             for (int x = 0; x < curLevelLayerData.width; x++)
             {
@@ -423,9 +389,9 @@ namespace CadEditor
                         if (showScreenAxis)
                         {
                             if (ConfigScript.getScreenVertical())
-                                g.DrawRectangle(new Pen(Brushes.Black,2.0f), new Rectangle(leftMargin, topMargin, TILE_SIZE_X * height, TILE_SIZE_Y * width));
+                                g.DrawRectangle(new Pen(Brushes.Black,2.0f), new Rectangle(leftMargin, topMargin, tileSizeX * height, tileSizeY * width));
                             else
-                                g.DrawRectangle(new Pen(Brushes.Black,2.0f), new Rectangle(leftMargin, topMargin, TILE_SIZE_X * width, TILE_SIZE_Y * height));
+                                g.DrawRectangle(new Pen(Brushes.Black,2.0f), new Rectangle(leftMargin, topMargin, tileSizeX * width, tileSizeY * height));
                         }
                         //ConfigScript.renderToMainScreen(g, (int)curScale);
                     }
@@ -475,7 +441,6 @@ namespace CadEditor
             if (objectLists.Count == 1)
             {
                 var lr = getLevelRecForGameType();
-                int addrBase = lr.objectsBeginAddr;
                 int objCount = lr.objCount;
                 if (objectLists[0].objects.Count > objCount)
                 {
@@ -505,9 +470,8 @@ namespace CadEditor
             {
                 using (TextWriter f = new StreamWriter(fname))
                 {
-                    for (int i = 0; i < objectLists.Count; i++)
+                    foreach (var obj in objectLists)
                     {
-                        var obj = objectLists[i];
                         string json = JsonConvert.SerializeObject(obj);
                         f.WriteLine(json);
                     }
@@ -567,7 +531,7 @@ namespace CadEditor
         private void btSortUp_Click(object sender, EventArgs e)
         {
             bool canMoveUp = true;
-            int repeatCount = (Control.ModifierKeys == Keys.Shift) ? 10 : 1;
+            int repeatCount = ModifierKeys == Keys.Shift ? 10 : 1;
             var activeObjectList = objectLists[curActiveObjectListIndex];
             for (int count = 0; count < repeatCount && canMoveUp; count++)
             {
@@ -606,7 +570,7 @@ namespace CadEditor
         private void btSortDown_Click(object sender, EventArgs e)
         {
             bool canMoveDown = true;
-            int repeatCount = (Control.ModifierKeys == Keys.Shift) ? 10 : 1;
+            int repeatCount = ModifierKeys == Keys.Shift ? 10 : 1;
             var activeObjectList = objectLists[curActiveObjectListIndex];
             for (int count = 0; count < repeatCount && canMoveDown; count++)
             {
@@ -681,7 +645,7 @@ namespace CadEditor
 
             if (curTool == ToolType.Select)
             {
-                if (Control.ModifierKeys != Keys.Shift && Control.ModifierKeys != Keys.Control)
+                if (ModifierKeys != Keys.Shift && ModifierKeys != Keys.Control)
                 {
                     for (int i = 0; i < dgvObjects.SelectedRows.Count; i++)
                     {
@@ -937,7 +901,7 @@ namespace CadEditor
 
             if (e.Value != null)
             {
-                long value = 0;
+                long value;
                 if (long.TryParse(e.Value.ToString(), out value))
                 {
                     e.Value = "0x" + value.ToString("X");
@@ -955,7 +919,7 @@ namespace CadEditor
                 {
                     try
                     {
-                        int hex = (int)Convert.ToInt32(s.ToString(), 16);
+                        int hex = Convert.ToInt32(s, 16);
                         e.Value = hex;
                         e.ParsingApplied = true;
                     }
@@ -979,7 +943,7 @@ namespace CadEditor
                         {
                             var v = e.Value.ToString();
                             bool isHex = (v.StartsWith("0x") || v.StartsWith("0X"));
-                            int intValue = isHex ? (int)Convert.ToInt32(v.ToString(), 16) : (int)Convert.ToInt32(v.ToString(), 10);
+                            int intValue = isHex ? Convert.ToInt32(v, 16) : Convert.ToInt32(v, 10);
                             dict[dgvObjects.Columns[e.ColumnIndex].Name] = intValue;
                         }
                     }
@@ -1000,7 +964,7 @@ namespace CadEditor
 
             if (!selectedZero)
             {
-                btSortDown.Enabled = dgvObjects.SelectedRows.Cast<DataGridViewRow>().All(r => r.Index < dgvObjects.RowCount - 1); ;
+                btSortDown.Enabled = dgvObjects.SelectedRows.Cast<DataGridViewRow>().All(r => r.Index < dgvObjects.RowCount - 1);
                 btSortUp.Enabled = dgvObjects.SelectedRows.Cast<DataGridViewRow>().All(r => r.Index > 0);
             }
 
