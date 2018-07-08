@@ -12,7 +12,7 @@ namespace CadEditor
     {
         public static int parseInt(string value, int defaultVal = 0)
         {
-            int ans = defaultVal;
+            int ans;
             //try hex parsing
             if ((value.Length > 2) && (value[0] == '0') && ((value[1] == 'x') || (value[1] == 'X')))
             {
@@ -70,18 +70,18 @@ namespace CadEditor
 
         public static byte[] getPalleteLinear(int palIndex)
         {
-            int pal_size = ConfigScript.isUseSegaGraphics() ? Globals.SEGA_PAL_LEN : Globals.PAL_LEN;
-            var palette = new byte[pal_size];
+            int palSize = ConfigScript.isUseSegaGraphics() ? Globals.SEGA_PAL_LEN : Globals.PAL_LEN;
+            var palette = new byte[palSize];
             int addr = ConfigScript.palOffset.beginAddr + palIndex * ConfigScript.palOffset.recSize;
             if (!ConfigScript.isUseSegaGraphics())
             {
-                for (int i = 0; i < pal_size; i++)
+                for (int i = 0; i < palSize; i++)
                     palette[i] = (byte)(Globals.romdata[addr + i] & 0x3F);
             }
             else
             {
-                for (int i = 0; i < pal_size; i++)
-                    palette[i] = (byte)(Globals.romdata[addr + i]);
+                for (int i = 0; i < palSize; i++)
+                    palette[i] = Globals.romdata[addr + i];
             }
             return palette;
         }
@@ -237,12 +237,12 @@ namespace CadEditor
             0x1f, 0x9f, 0x5f, 0xdf, 0x3f, 0xbf, 0x7f, 0xff
         };
 
-        public static byte ReverseBits(byte toReverse)
+        public static byte reverseBits(byte toReverse)
         {
             return BitReverseTable[toReverse];
         }
 
-        public static void Swap<T>(ref T a, ref T b)
+        public static void swap<T>(ref T a, ref T b)
         {
             T temp = a;
             a = b;
@@ -307,7 +307,7 @@ namespace CadEditor
                 }
                 if (transposeIndexes)
                 {
-                    indexes = Utils.transpose(indexes, w, h);
+                    indexes = transpose(indexes, w, h);
                 }
 
                 //todo: add flag to decode or not to decode type from palBytes
@@ -329,7 +329,7 @@ namespace CadEditor
                 var indexes = obj.indexes;
                 if (transposeIndexes)
                 {
-                    indexes = Utils.transpose(indexes, bw, bh);
+                    indexes = transpose(indexes, bw, bh);
                 }
                 int baseAddr = addr + i * (fullSize + stride);
                 for (int bi = 0; bi < blockSize; bi++)
@@ -435,7 +435,7 @@ namespace CadEditor
         public static BigBlock[] getBigBlocksCapcomDefault(int bigTileIndex)
         {
             var data = readLinearBigBlockData(0, bigTileIndex);
-            return Utils.unlinearizeBigBlocks<BigBlock>(data, 2, 2);
+            return unlinearizeBigBlocks<BigBlock>(data, 2, 2);
         }
 
         public static void writeLinearBigBlockData(int hierLevel, int bigTileIndex, byte[] bigBlockIndexes)
@@ -448,7 +448,7 @@ namespace CadEditor
 
         public static void setBigBlocksCapcomDefault(int bigTileIndex, BigBlock[] bigBlockIndexes)
         {
-            var data = Utils.linearizeBigBlocks(bigBlockIndexes);
+            var data = linearizeBigBlocks(bigBlockIndexes);
             writeLinearBigBlockData(0, bigTileIndex, data);
         }
 
@@ -533,7 +533,7 @@ namespace CadEditor
             for (int i = 0; i < count; i++)
             {
                 int palByte = romdata[palBytesAddr + i];
-                var palBytes = new int[] { (palByte >> 0) & 3, (palByte >> 2) & 3, (palByte >> 4) & 3, (palByte >> 6) & 3 };
+                var palBytes = new[] { (palByte >> 0) & 3, (palByte >> 2) & 3, (palByte >> 4) & 3, (palByte >> 6) & 3 };
                 objects[i].palBytes = palBytes;
             }
             return objects;
@@ -754,9 +754,9 @@ namespace CadEditor
             return videoChunk;
         }
 
-        public static void loadEnemyPictures(ref ImageList objectSprites, ref Image[] objectSpritesBig)
+        public static void loadEnemyPictures(ref ImageList objectSprites, out Image[] objectSpritesBig)
         {
-            const int OBJECTS_COUNT = 256; //limit for now
+            const int objectsCount = 256; //limit for now
             var objSpritesDir = ConfigScript.getObjTypesPicturesDir();
             var objSpritesDirGeneric = "obj_sprites";
             var templ = objSpritesDir + "/object{0}.png";
@@ -765,7 +765,7 @@ namespace CadEditor
             objectSprites.Images.Clear();
             objectSprites.Images.AddStrip(Image.FromFile(objSpritesDirGeneric + "/objSprites.png"));
             objectSpritesBig = new Image[256];
-            for (int i = 0; i < OBJECTS_COUNT; i++)
+            for (int i = 0; i < objectsCount; i++)
             {
                 var fname = String.Format(templ, i);
                 if (File.Exists(fname))

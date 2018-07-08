@@ -614,7 +614,7 @@ namespace CadEditor
 
         private void reloadPictures()
         {
-            Utils.loadEnemyPictures(ref objectSprites, ref objectSpritesBig);
+            Utils.loadEnemyPictures(ref objectSprites, out objectSpritesBig);
         }
 
         private void cbTool_SelectedIndexChanged(object sender, EventArgs e)

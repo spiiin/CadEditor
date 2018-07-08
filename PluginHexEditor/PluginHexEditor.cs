@@ -37,7 +37,7 @@ namespace PluginHexEditor
       {
           var f = new EditHexEditor();
           var so = ConfigScript.screensOffset[0];
-          f.setHighlightZone(so.beginAddr + so.recSize * formMain.ScreenNo, so.recSize);
+          f.setHighlightZone(so.beginAddr + so.recSize * formMain.screenNo, so.recSize);
           formMain.subeditorOpen(f, (ToolStripButton)sender, true);
       }
 

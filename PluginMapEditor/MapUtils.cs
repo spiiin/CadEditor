@@ -347,7 +347,7 @@ namespace PluginMapEditor
                 int by = i / SCREEN_WIDTH;
                 if (vertical)
                 {
-                    Utils.Swap(ref bx, ref by);
+                    Utils.swap(ref bx, ref by);
                 }
                 applyBlockToMap(mapData, blocks[blockIndex], bx, by, mapWidth, yShiftInTiles);
             }

@@ -87,9 +87,9 @@ namespace PluginExportScreens
                 int first = SaveScreensCount.First;
                 int firstW = screens[0].width;
                 int firstH = screens[0].height;
-                float curScale = formMain.CurScale;
+                float curScale = formMain.curScale;
                 //only for screens with same sizes
-                var probeIm = MapEditor.ScreenToImage(formMain.BigBlocks,formMain.Screens, formMain.ScreenNo, curScale, false, 0, 0, firstW, firstH);
+                var probeIm = MapEditor.ScreenToImage(formMain.bigBlocks,formMain.screens, formMain.screenNo, curScale, false, 0, 0, firstW, firstH);
                 int screenCount = SaveScreensCount.Count;
                 var resultImage = new Bitmap(probeIm.Width * screenCount, probeIm.Height);
                 using (var g = Graphics.FromImage(resultImage))
@@ -98,7 +98,7 @@ namespace PluginExportScreens
                     {
                         int WIDTH = screens[i].width;
                         int HEIGHT = screens[i].height;
-                        var im = MapEditor.ScreenToImage(formMain.BigBlocks, formMain.Screens, first + i, curScale, false, 0, 0, WIDTH, HEIGHT);
+                        var im = MapEditor.ScreenToImage(formMain.bigBlocks, formMain.screens, first + i, curScale, false, 0, 0, WIDTH, HEIGHT);
                         g.DrawImage(im, new Point(i * im.Width, 0));
                     }
                 }
@@ -185,7 +185,7 @@ namespace PluginExportScreens
                     Array.Copy(data, i * screenSize, screens[first + i].layers[0].data, 0, screenSize);
                 }
             }
-            formMain.SetScreens(screens);
+            formMain.setScreens(screens);
             formMain.setDirty();
             formMain.reloadLevel(false);
         }
