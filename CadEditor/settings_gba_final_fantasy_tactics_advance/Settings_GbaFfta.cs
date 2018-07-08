@@ -6,8 +6,6 @@ public class Data
 { 
   public OffsetRec getScreensOffset()  { return new OffsetRec(4096, 1 , 0x20*0x40, 0x20, 0x40);  }
   public OffsetRec getScreensOffset2() { return new OffsetRec(0   , 1 , 0x20*0x40, 0x20, 0x40);  }
-  public int getScreenWidth()          { return 0x20; }
-  public int getScreenHeight()         { return 0x40; }
   public int getWordLen()              { return 2;}
   public bool isLittleEndian()         { return true; }
   public int    getPictureBlocksWidth(){ return 64; }

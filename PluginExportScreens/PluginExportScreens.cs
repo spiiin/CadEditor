@@ -108,8 +108,7 @@ namespace PluginExportScreens
 
         private void bttExportJson_Click(object sender, EventArgs e)
         {
-            CadEditor.Screen[] screens, screens2;
-            loadScreens(out screens, out screens2);
+            var screens = ConfigScript.loadScreens();
 
             SaveScreensCount.ExportMode = true;
             SaveScreensCount.Filename = "exportedScreens.json";
@@ -156,8 +155,7 @@ namespace PluginExportScreens
 
         private void btImport_Click(object sender, EventArgs e)
         {
-            CadEditor.Screen[] screens, screens2;
-            loadScreens(out screens, out screens2);
+            var screens = ConfigScript.loadScreens();
             SaveScreensCount.ExportMode = false;
             SaveScreensCount.Filename = "exportedScreens.bin";
             var f = new SaveScreensCount();
@@ -194,8 +192,7 @@ namespace PluginExportScreens
 
         private void btExport_Click(object sender, EventArgs e)
         {
-            CadEditor.Screen[] screens, screens2;
-            loadScreens(out screens, out screens2);
+            CadEditor.Screen[] screens = ConfigScript.loadScreens();
             SaveScreensCount.ExportMode = true;
             SaveScreensCount.Filename = "exportedScreens.bin";
             var f = new SaveScreensCount();
@@ -229,14 +226,6 @@ namespace PluginExportScreens
                 }
                 Utils.saveDataToFile(SaveScreensCount.Filename, data);
             }
-        }
-
-        private void loadScreens(out CadEditor.Screen[] screens, out CadEditor.Screen[] screens2)
-        {
-            screens = ConfigScript.loadScreens();
-            screens2 = null;
-            if (ConfigScript.getLayersCount() > 1)
-                screens2 = Utils.setScreens2();
         }
 
         FormMain formMain;
