@@ -92,6 +92,12 @@
 
 <h2>Категория Screen Params</h2>
 
+<h3>public LoadScreensFunc loadScreensFunc</h3>
+<h3>public LoadScreensFunc saveScreensFunc</h3>
+<p>
+Функции позволяют переопределить способ, которым будут загружены экраны, и как они будут сохранены редактором. Стандартный способ включает загрузку и сохранение всех экранов, которые указаны с помощью смещений в функциях <b>getScreensOffset</b> и <b>getScrensOffsetForLevels.</b>
+</p>
+
 <h3>public int getScreenWidth()</h3>
 <h3>public int getScreenHeight()</h3>
 <p>
@@ -101,11 +107,6 @@
 <h3>public OffsetRec[] getScreensOffsetsForLevels()</h3>
 <p>
 Функция описывает массив структур OffsetRec, в которых указываются размеры экрана и последовательный массив экранов для каждого уровня.
-</p>
-
-<h3>public OffsetRec getScreensOffset2()</h3>
-<p>
-Если определена данная функция, то она описывает второй слой блоков для каждого экрана. В настоящий момент второй слой должен быть составлен из тех же блоков, что и первый и иметь такой же размер экрана, как и первый.
 </p>
 
 <h3>public bool getScreenVertical()</h3>
@@ -143,13 +144,6 @@
 <h3>public bool isBlockSize4x4()</h3>
 <p>
 Использовать ли блоки размером 2x2 или размером 4x4 (2 доступных варианта для графики Sega Mega Drive 2).
-</p>
-     
-<h2>Категория Layers</h2>
-
-<h3>public int getLayersCount()</h3>
-<p>
-Количество слоёв блоков на экране (доступные значения 1 или 2).
 </p>
         
 <h2>Категория Level recs</h2>

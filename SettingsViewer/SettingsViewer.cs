@@ -129,13 +129,15 @@ namespace SettingsViewer
         [Category("Offsets")]
         public MethodDelegate getScreensOffset { get { return get(); } }
         [Category("Screen params")]
+        public MethodDelegate loadScreensFunc { get { return get(); } }
+        [Category("Screen params")]
+        public MethodDelegate saveScreensFunc { get { return get(); } }
+        [Category("Screen params")]
         public MethodDelegate getScreenWidth { get { return get(); } }
         [Category("Screen params")]
         public MethodDelegate getScreenHeight { get { return get(); } }
         [Category("Screen params")]
         public MethodDelegate getScreensOffsetsForLevels { get { return get(); } }
-        [Category("Screen params")]
-        public MethodDelegate getScreensOffset2 { get { return get(); } }
         [Category("Screen params")]
         public MethodDelegate getScreenVertical { get { return get(); } }
         [Category("Screen params")]
@@ -150,8 +152,6 @@ namespace SettingsViewer
         public MethodDelegate isBlockSize4x4 { get { return get(); } }
         [Category("Screen params")]
         public MethodDelegate isBuildScreenFromSmallBlocks { get { return get(); } }
-        [Category("Layers")]
-        public MethodDelegate getLayersCount { get { return get(); } }
         [Category("Level recs")]
         public MethodDelegate getLevelRecsFunc { get { return get(); } }
         [Category("Min/max object params")]
