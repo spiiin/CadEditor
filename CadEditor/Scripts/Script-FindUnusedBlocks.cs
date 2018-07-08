@@ -15,27 +15,23 @@ public class Script
         //int scrNo = formMain.ScreenNo;
         //formScript.writeLog(String.Format("Current active screen: 0x{0:X}", scrNo));
         
-        int totalBlocksCount = formMain.BigBlocks.Length;
+        int totalBlocksCount = formMain.bigBlocks.Length;
         
         formScript.writeLog(String.Format("Total big blocks count: {0}", totalBlocksCount));
         int[] usedBlocks = new int[totalBlocksCount];
         
-        var layers = formMain.Layers;
+        var screens = formMain.screens;
+        
         //count all used blocks
-        for (int layerNo = 0; layerNo < layers.Length; layerNo++)
+        for (int scrNo = 0; scrNo < screens.Length; scrNo++)
         {
-            var layer = layers[layerNo];
-            var screens = layer.screens;
-            if (screens == null)
+            var activeScreen = screens[scrNo];
+            for (int layerNo = 0; layerNo < activeScreen.layers.Length; layerNo++)
             {
-                continue;
-            }
-            for (int scrNo = 0; scrNo < screens.Length; scrNo++)
-            {
-                var activeScreen = screens[scrNo];
-                for (int i = 0; i < activeScreen.Length; i++)
+                var data = activeScreen.layers[layerNo].data;
+                for (int i = 0; i < data.Length; i++)
                 {
-                    int blockNo = activeScreen[i];
+                    int blockNo = data[i];
                     usedBlocks[blockNo]++;
                 }
             }
@@ -59,7 +55,7 @@ public class Script
         
         if (unusedBlocksCount > 0)
         {
-            var unusedPictures = formMain.BigBlocks.Where((im, index)=> unusedBlocks.Contains(index)).ToArray();
+            var unusedPictures = formMain.bigBlocks.Where((im, index)=> unusedBlocks.Contains(index)).ToArray();
             var glueImage = UtilsGDI.GlueImages(unusedPictures, unusedPictures.Length, 1);
             var fname = ConfigScript.ConfigDirectory + String.Format("unusedBlocks.png");
             glueImage.Save(fname);

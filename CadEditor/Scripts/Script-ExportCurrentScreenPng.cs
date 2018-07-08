@@ -15,13 +15,13 @@ public class Script
         var formMain = formScript.getFormMain();
         formScript.writeLog();
         
-        int currentScreenNo = formMain.ScreenNo;
+        int currentScreenNo = formMain.screenNo;
         formScript.writeLog(String.Format("Current active screen: {0}", currentScreenNo));
         
-        var activeScreen = formMain.Layers[0].screens[currentScreenNo];
-        int w = ConfigScript.getScreenWidth(formMain.LevelNoForScreens);
-        int h = ConfigScript.getScreenHeight(formMain.LevelNoForScreens);
-        var im = MapEditor.ScreenToImage(formMain.BigBlocks, formMain.Layers, currentScreenNo, formMain.CurScale, false, 0, 0, w, h);
+        var activeScreen = formMain.screens[currentScreenNo];
+        int w = activeScreen.width;
+        int h = activeScreen.height;
+        var im = MapEditor.ScreenToImage(formMain.bigBlocks, formMain.screens, currentScreenNo, formMain.curScale, false, 0, 0, w, h);
         var fname = ConfigScript.ConfigDirectory + String.Format("screen{0}.png", currentScreenNo);
         im.Save(fname);
         formScript.writeLog(String.Format("Screen exported to file: {0}", fname));

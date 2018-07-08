@@ -15,9 +15,9 @@ public class Script
         var formMain = formScript.getFormMain();
         formScript.writeLog();
         
-        int currentScreenNo = formMain.ScreenNo;
+        int currentScreenNo = formMain.screenNo;
         formScript.writeLog(String.Format("Current active screen: {0}", currentScreenNo));
-        var activeScreen = formMain.Layers[0].screens[currentScreenNo];
+        var activeScreen = formMain.screens[currentScreenNo].layers[0].data;
         var data = activeScreen.Select(x=>(byte)x).ToArray();
         var fname = ConfigScript.ConfigDirectory + String.Format("screen{0}.bin", currentScreenNo);
         using (FileStream f = File.OpenWrite(fname))

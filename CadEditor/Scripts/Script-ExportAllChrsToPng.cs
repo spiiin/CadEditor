@@ -19,7 +19,7 @@ public class Script
         formScript.writeLog("--------------------------------------------------------------------");
         
         var formMain = formScript.getFormMain();
-        int palNo = formMain.CurActivePalleteNo;
+        int palNo = formMain.curActivePalleteNo;
         
         var pal = ConfigScript.getPal(palNo);
         for (int i = 0; i < chrDumpsCount; i++)

@@ -15,7 +15,7 @@ public class Script
         var formMain = formScript.getFormMain();
         formScript.writeLog();
         
-        int curActiveBlockset = formMain.CurActiveBigBlockNo;
+        int curActiveBlockset = formMain.curActiveBigBlockNo;
         var blocks = ConfigScript.getBlocks(curActiveBlockset);
         int blocksCount = blocks.Length;
         formScript.writeLog(String.Format("Current selected block set: {0}. Blocks count: {1}", curActiveBlockset, blocksCount));
