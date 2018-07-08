@@ -16,7 +16,7 @@ namespace CadEditor
         {
         }
 
-        public static void loadData(string Filename, string Dumpfile, string ConfigFilename)
+        public static bool loadData(string Filename, string Dumpfile, string ConfigFilename)
         {
             try
             {
@@ -29,7 +29,8 @@ namespace CadEditor
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Load rom error");
+                return false;
             }
 
             try
@@ -46,7 +47,8 @@ namespace CadEditor
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Load dump error");
+                return false;
             }
             
             try
@@ -55,8 +57,11 @@ namespace CadEditor
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Load config error");
+                return false;
             }
+
+            return true;
         }
 
         public static bool flushToFile()

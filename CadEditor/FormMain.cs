@@ -38,7 +38,11 @@ namespace CadEditor
             }
             else
             {
-                Globals.loadData(OpenFile.FileName, OpenFile.DumpName, OpenFile.ConfigName);
+                if (!Globals.loadData(OpenFile.FileName, OpenFile.DumpName, OpenFile.ConfigName))
+                {
+                    Close();
+                    return;
+                }
                 setDefaultScale();
                 fileLoaded = true;
 
@@ -569,14 +573,22 @@ namespace CadEditor
             var f = new OpenFile();
             if (f.ShowDialog() == DialogResult.OK)
             {
-                Globals.loadData(OpenFile.FileName, OpenFile.DumpName, OpenFile.ConfigName);
+                if (!Globals.loadData(OpenFile.FileName, OpenFile.DumpName, OpenFile.ConfigName))
+                {
+                    Close();
+                    return false;
+                }
                 setDefaultScale();
                 fileLoaded = true;
                 resetControls();
                 setWindowText();
             }
+
             if (!fileLoaded)
+            {
                 return false;
+            }
+
             return true;
             
         }
@@ -827,7 +839,10 @@ namespace CadEditor
         {
             if (UtilsGui.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
             {
-                Globals.loadData(OpenFile.FileName, OpenFile.DumpName, OpenFile.ConfigName);
+                if (!Globals.loadData(OpenFile.FileName, OpenFile.DumpName, OpenFile.ConfigName))
+                {
+                    return;
+                }
                 resetControls();
                 reloadLevel(true, true);
                 mapScreen.Invalidate();
