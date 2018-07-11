@@ -1,0 +1,11 @@
+Asmik Logo
+Offset: a012-a3d1 (tilemap)
+Palette: a3d2-a411
+
+Sega Copyright Text
+Offset: a412-a7d1 (tilemap)
+Palette: a7d2-a811
+
+Title screen
+Offset: a812-abd1 (tilemap)
+Palette: abd2-ac11
