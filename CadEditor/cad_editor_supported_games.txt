@@ -112,6 +112,7 @@ Supported games:
     Driar (PD)                                      (all levels)
     Power Blade                                     (all levels)
     Power Blade 2                                   (all levels)
+    Metal Storm                                     (all levels)
     Dragon (unlicensed)                             (all levels, no pal layer)
     Toxic Crusaders                                 (all levels, no pal layer)
     Felix the Cat                                   (all levels, dumps+compression scripts)

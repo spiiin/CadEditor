@@ -92,6 +92,7 @@ fnames = [
     "Megaman III (U) [!].nes",
     "Megaman IV (U) (PRG0) [!].nes",
     "Megaman V (E) [!].nes",
+    "Metal Storm (U) [!].nes",
     "Mickey Mania 7 (Unl) [!].nes",
     "Mickey Mouse 3 - Yume Fuusen (J).nes",
     "Mickey Mousecapade (U) [!].nes",
