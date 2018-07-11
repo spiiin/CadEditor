@@ -23,6 +23,7 @@ Supported games:
     Teenage Mutant Ninja Turtles 2                  (all levels)
     Teenage Mutant Ninja Turtles 3                  (all levels)
     Mickey's Adventures in Numberland               (all levels)
+    Mickey's Safari in Letterland                   (all levels)
     Contra Force                                    (all levels)
     Mickey Mouse                                    (all levels)
     Mickey Mouse 3 Yume Fuusen                      (all levels)

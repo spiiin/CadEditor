@@ -98,6 +98,7 @@ fnames = [
     "Mickey Mouse 3 - Yume Fuusen (J).nes",
     "Mickey Mousecapade (U) [!].nes",
     "Mickey's Adventures in Numberland (U) [!p].nes",
+    "Mickey's Safari in Letterland (U) [!p].nes",
     "Micro Machines (Unl) [!].nes",
     "Mighty Final Fight (U) [!p].nes",
     "Mission - Impossible (U) [!].nes",
