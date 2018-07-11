@@ -76,6 +76,7 @@ fnames = [
     "Jackie Chan's Action Kung Fu (U) [!p].nes",
     "Jungle Book, The (U) [!].nes",
     "Jurassic Park (U) [!].nes",
+    "Juuouki (J) [!].nes",
     "Kaiketsu Yanchamaru 3 - Taiketsu! Zouringen (J) [T+Eng1.00_Suicidal].nes",
     "Karnov (U) [!].nes",
     "Kick Master (U) [!].nes",
