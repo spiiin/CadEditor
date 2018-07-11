@@ -125,6 +125,7 @@ fnames = [
     "Shadow of the Ninja (U) [!].nes",
     "Shatterhand (U) [!].nes",
     "Sonic The Hedgehog (Unl) [!].nes",
+    "Splatter House - Wanpaku Graffiti (J) [T+Eng2.0_Spinner8].nes",
     "Super C (U) [!].nes",
     "Super Contra 7 (Unl) [t1].nes",
     "Super Mario World (Unl).nes",
