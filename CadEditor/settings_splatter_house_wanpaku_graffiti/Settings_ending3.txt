@@ -1,0 +1,2 @@
+Offset: d0ce-d14d (using RLE)
+Palette: d14e-d18d

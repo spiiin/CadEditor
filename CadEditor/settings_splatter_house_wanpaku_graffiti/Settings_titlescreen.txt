@@ -1,0 +1,2 @@
+Offset: 1a058-1a397 (0x340)
+Palette: 1a398-1a3d7
