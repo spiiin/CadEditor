@@ -111,6 +111,7 @@ Supported games:
     Super Painter (PD)                              (all levels)
     Cowlitz Gamers (PD)                             (all levels)
     Driar (PD)                                      (all levels)
+    Indivisible (PD)                                (all levels)
     Power Blade                                     (all levels)
     Power Blade 2                                   (all levels)
     Metal Storm                                     (all levels)
