@@ -1,0 +1,8 @@
+Title screen
+Offset: 1f110-1f26b (RLE)
+
+World Map
+Offset: 1c639-1caf9 (RLE)
+
+Ending screen (Princess)
+Offset: 1f26c-1f31b (RLE)
