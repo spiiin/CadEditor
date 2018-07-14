@@ -1,0 +1,2 @@
+Offset: 1b50 (tilemap)
+Palette: 1ed0
