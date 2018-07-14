@@ -95,6 +95,7 @@ Supported games:
     Akumajou Special - Boku Dracula-kun             (all levels)
     Amagon                                          (all levels)
     Wai Wai World 2                                 (all levels)
+    Garfield - A Week of Garfield                   (all levels)
     Aladdin (unlicensed)                            (all levels)
     Donkey Kong 4 (unlicensed)                      (all levels)
     EarthWorm Jim 3 (unlicensed)                    (all levels)

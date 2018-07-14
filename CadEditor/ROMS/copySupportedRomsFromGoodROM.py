@@ -58,6 +58,7 @@ fnames = [
     "Final Mission (J) [!].nes",
     "Flintstones, The - The Rescue of Dino & Hoppy (U) [!].nes",
     "Flintstones, The - The Surprise at Dinosaur Peak! (U) [!p].nes",
+    "Garfield - A Week of Garfield (J).nes",
     "Ghosts 'N Goblins (U) [!].nes",
     "Ghoul School (U) [!].nes",
     "Goonies II, The (U) [!].nes",
