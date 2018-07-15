@@ -1,0 +1,53 @@
+Objects type and coordinates
+
+1 (forest): a201 (begin)
+Types:
+01, 02, 03 - boar
+04 - deer
+05 - 3 flies
+06 - snake
+07 - snake
+08 - 3 flies
+09 - snake
+0a - apple (bonus)
+0b - apple (bonus)
+0c - 2 bees
+0d - apple (bonus)
+0e - 2 bees
+0f - apple (bonus)
+
+2 (underground): dd33 (begin)
+Types: 
+01 - pouch (bonus)
+02 - snake
+03 - scorpion
+04 - pouch (bonus)
+05 - zombie
+06 - fire
+07 - fire
+08 - volcano
+09 - zombie
+0a - bat
+0b - worm
+0c - box
+0d - bat
+0e - zombie 
+0f - volcano
+
+3 (underground2): e73b (begin)
+Types:
+01 - zombie
+02 - bat
+03 - worm
+04 - worm
+05 - fire
+06 - fire
+07 - zombie
+08 - key (item)
+09 - ghost
+0a - bat
+0b - zombie
+0c - ghost
+0d - fire
+0e - ghost
+0f - fire
