@@ -76,6 +76,7 @@ fnames = [
     "Isolated Warrior (U) [!].nes",
     "Jackal (U) [!].nes",
     "Jackie Chan's Action Kung Fu (U) [!p].nes",
+    "Ji Qi Mao Xiao Ding Dang (Doraemon) (Ch).nes",
     "Jungle Book, The (U) [!].nes",
     "Jurassic Park (U) [!].nes",
     "Juuouki (J) [!].nes",
