@@ -1,0 +1,14 @@
+Waixing Logo Screen
+
+Offset: 3c10-3fcf (tilemap)
+Palette: 3fd0-400f
+
+Title Screen
+
+Offset: 2b610-2b9cf (tilemap)
+Palette: 2b9d0-2ba0f
+
+Ending
+
+Offset: 2ba10-2bdcf (tilemap)
+Palette: 2bdd0-2be0f
