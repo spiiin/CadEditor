@@ -154,12 +154,14 @@ namespace CadEditor
             videoOffset = callFromScript(asm, data, "*.getVideoOffset", new OffsetRec(0, 1, 0));
             videoObjOffset = callFromScript(asm, data, "*.getVideoObjOffset", new OffsetRec(0, 1, 0));
             blocksOffset = callFromScript(asm, data, "*.getBlocksOffset", new OffsetRec(0, 1, 0));
-            screensOffset[0] = callFromScript(asm, data, "*.getScreensOffset", new OffsetRec(0, 1, 0, 8, 8));
-            screensOffset[0].width = callFromScript(asm, data, "*.getScreenWidth", screensOffset[0].width);
-            screensOffset[0].height = callFromScript(asm, data, "*.getScreenHeight", screensOffset[0].height);
+            screensOffset[0] = callFromScript(asm, data, "*.getScreensOffset", new OffsetRec(0, 1, 0, -1, -1));
             if ((screensOffset[0].beginAddr == 0) && (screensOffset[0].recSize == 0))
             {
                 screensOffset = callFromScript(asm, data, "*.getScreensOffsetsForLevels", new OffsetRec[1]);
+            }
+            if ((screensOffset[0].width <= 0) || (screensOffset[0].height <= 0))
+            {
+                throw new Exception("Screen width and height must be defined and be positive numbers");
             }
             screenVertical = callFromScript(asm, data, "*.getScreenVertical", false);
             screenDataStride = callFromScript(asm, data, "*.getScreenDataStride", 1);
@@ -174,8 +176,8 @@ namespace CadEditor
             minObjCoordX = callFromScript(asm, data, "*.getMinObjCoordX", 0);
             minObjCoordY = callFromScript(asm, data, "*.getMinObjCoordY", 0);
             minObjType   = callFromScript(asm, data, "*.getMinObjType"  , 0);
-            maxObjCoordX = callFromScript(asm, data, "*.getMaxObjCoordX", -1); //ConfigScript.getScreenWidth() * 32
-            maxObjCoordY = callFromScript(asm, data, "*.getMaxObjCoordY", -1); //ConfigScript.getScreenHeight() * 32;
+            maxObjCoordX = callFromScript(asm, data, "*.getMaxObjCoordX", -1);
+            maxObjCoordY = callFromScript(asm, data, "*.getMaxObjCoordY", -1);
             maxObjType   = callFromScript(asm, data, "*.getMaxObjType"  , -1); //256
 
             bigBlocksHierarchyCount = callFromScript<int>(asm, data, "*.getBigBlocksHierarchyCount", 1);
@@ -619,16 +621,6 @@ namespace CadEditor
         }
 
         //------------------------------------------------------------
-        //helpers
-        /*public static int getScreenWidth(int levelNo)
-        {
-            return screensOffset[levelNo].width;
-        }
-
-        public static int getScreenHeight(int levelNo)
-        {
-            return screensOffset[levelNo].height;
-        }*/
 
         public static int getLayoutAddr(int index)
         {
