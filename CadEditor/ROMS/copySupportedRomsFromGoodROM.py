@@ -124,6 +124,7 @@ fnames = [
     "RoboCop (U) [!].nes",
     "RoboCop 2 (U) (PRG1) [!].nes",
     "Rockin' Kats (U) [!].nes",
+    "Rocman X (Sachen) (Eng) [!].nes",
     "Rollergames (U) [!].nes",
     "SD Hero Soukessen - Taose! Aku no Gundan (J) [!].nes",
     "Shadow of the Ninja (U) [!].nes",

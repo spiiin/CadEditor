@@ -113,6 +113,7 @@ Supported games:
     Universal Soldiers (unlicensed)                 (all levels)
     Wizard of The Oz (unlicensed)                   (all levels)
     Ji Qi Mao Xiao Ding Dang (unlicensed)           (all levels)
+    Rocman X (unlicensed)                           (all levels)
     Gruniozerca 2 (PD)                              (all levels)
     Super Painter (PD)                              (all levels)
     Cowlitz Gamers (PD)                             (all levels)
