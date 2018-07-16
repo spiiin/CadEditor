@@ -5,7 +5,7 @@ using System.Drawing;
 
 public class Data : RockinCatsBase
 {
-  public override OffsetRec getScreensOffset()  { return new OffsetRec(0x16cd9, 11 , 3*2);    }
+  public override OffsetRec getScreensOffset()  { return new OffsetRec(0x16cd9, 11 , 3*2, 3, 2);    }
   public override int getVideoIndex1()          { return 0x30; }
   public override int getVideoIndex2()          { return 0x36; }
   public override OffsetRec getBlocksOffset()   { return new OffsetRec(0x16a0f ,1  , 0x4000); }
