@@ -1,0 +1,17 @@
+Title screen
+Offset: 4a87-4c1c (RLE)
+
+Mode Select
+Offset: 4c1d-4d82 (RLE)
+
+Level select
+Offset: 4d83-4eb0 (RLE)
+
+Game Over
+Offset: 4eb1-50f4 (RLE)
+
+Victory
+Offset: 50f5-52a2 (RLE)
+
+Credits (Chinese)
+Offset: 52a3-5570 (RLE)
