@@ -115,6 +115,7 @@ fnames = [
     "Ninja Gaiden II - The Dark Sword of Chaos (U) [!].nes",
     "Ninja Gaiden III - The Ancient Ship of Doom (U) [!].nes",
     "Ninja Jajamaru - Ginga Daisakusen (J).nes",
+    "Panda Prince, The (Shin-Shin) (Unl) [!].nes",
     "Power Blade (E) [!].nes",
     "Power Blade 2 (U) [!].nes",
     "Predator (U) [!].nes",
