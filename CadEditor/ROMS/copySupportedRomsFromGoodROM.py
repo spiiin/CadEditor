@@ -137,6 +137,7 @@ fnames = [
     "Super Contra 7 (Unl) [t1].nes",
     "Super Mario World (Unl).nes",
     "SuperPainter_v1.0.nes",
+    "Super Pitfall (U) [!].nes",
     "Super Robin Hood [p1][!].nes",
     "Super Spy Hunter (U) [!].nes",
     "Taan Hak Fung Wan King Tank (Ch) [T+Eng Cool-Spot (01.01.2010)].nes",
