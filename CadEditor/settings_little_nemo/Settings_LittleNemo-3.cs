@@ -15,7 +15,7 @@ public class Data
   }
   public string getObjTypesPicturesDir() { return "obj_sprites_nemo"; }
   
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x4910, 53 , 8*8);   }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x4910, 53 , 8*8, 8, 8);   }
   public bool isBigBlockEditorEnabled() { return true; }
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return true; }

@@ -10,7 +10,7 @@ public class MetaData
     return new Dictionary<string, object>{
         { "/*OFFSET_REC_BIG_BLOCKS*/", "OffsetRec(0x491F , 1   , 0x4000)" },
         { "/*OFFSET_REC_BLOCKS*/", "OffsetRec(0x1F1CB , 1  , 0x440)" },
-        { "/*OFFSET_REC_SCREEN*/", "OffsetRec(0x470F, 11 ,   48)"},
+        { "/*OFFSET_REC_SCREEN*/", "OffsetRec(0x470F, 11 ,   48, 8, 6)"},
         { "/*BIG_BLOCKS_COUNT*/", 0x40},
         { "/*LEVEL_REC*/", "LevelRec(0x14333, 15, 11, 1, 0x0)" },
         { "/*VIDEO_NAME*/", "videoBack_TT_11.bin" },
