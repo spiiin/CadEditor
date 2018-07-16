@@ -4,9 +4,7 @@ using System.Drawing;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x1fe20, 1 , 16*15);   }
-  public int getScreenWidth()          { return 16; }
-  public int getScreenHeight()         { return 15; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x1fe20, 1 , 16*15, 16, 15);   }
   public string getBlocksFilename()    { return "moon_crystal_6_2.png"; }
   
   public bool isBigBlockEditorEnabled() { return false; }

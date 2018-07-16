@@ -4,9 +4,7 @@ using System.Drawing;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset() { return new OffsetRec(0x8191, 1, 6*56); }
-  public int getScreenWidth()         { return 6; }
-  public int getScreenHeight()        { return 56; }
+  public OffsetRec getScreensOffset() { return new OffsetRec(0x8191, 1, 6*56, 6, 56); }
   public bool getScreenVertical()      { return true; }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }

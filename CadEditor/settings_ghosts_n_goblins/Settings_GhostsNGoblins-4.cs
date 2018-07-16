@@ -3,9 +3,7 @@ using System;
 //css_include settings_ghosts_n_goblins/GnGUtils.cs;
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0xaef7, 8 , 16*15);   }
-  public int getScreenWidth()          { return 16; }
-  public int getScreenHeight()         { return 15; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0xaef7, 8 , 16*15, 16, 15);   }
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }

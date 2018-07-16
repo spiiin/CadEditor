@@ -13,9 +13,7 @@ public class Data
     };
   }
   
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x2ee0, 1, 255*4); }
-  public int getScreenWidth()          { return 255; }
-  public int getScreenHeight()         { return 4; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x2ee0, 1, 255*4, 255, 4); }
 
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }

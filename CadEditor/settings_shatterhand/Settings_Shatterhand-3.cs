@@ -13,9 +13,7 @@ public class Data
     };
   }*/
   
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0xF474, 9, 8*8);   }
-  public int getScreenWidth()          { return 8; }
-  public int getScreenHeight()         { return 8; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0xF474, 9, 8*8, 8, 8);   }
 
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0xF8F2, 1, 0x400); }
   public int getPalBytesAddr()          { return 0xFE7a; }

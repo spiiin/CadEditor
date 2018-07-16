@@ -4,9 +4,7 @@ using System.Collections.Generic;
 
 public class Data
 { 
-    public OffsetRec getScreensOffset()   { return new OffsetRec(0x12acc , 9  , 64);      }
-    public int getScreenWidth()           { return 8; }
-    public int getScreenHeight()          { return 8; }
+    public OffsetRec getScreensOffset()   { return new OffsetRec(0x12acc , 9  , 64, 8, 8);      }
     
     public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x12998,  1  , 0x4000);  }
     public int getBigBlocksCount()        { return 256; }

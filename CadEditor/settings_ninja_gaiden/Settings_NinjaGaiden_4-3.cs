@@ -3,9 +3,7 @@ using System;
 //css_include settings_ninja_gaiden/NinjaGaidenUtils.cs;
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x1150, 1 , 6*104);   }
-  public int getScreenWidth()          { return 6; }
-  public int getScreenHeight()         { return 104; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x1150, 1 , 6*104, 6, 104);   }
   
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x4c10 , 1  , 0x1000);  }
   public int getBlocksCount()           { return 256; }

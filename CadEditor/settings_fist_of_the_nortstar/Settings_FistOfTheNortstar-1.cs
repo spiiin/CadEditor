@@ -4,9 +4,7 @@ using System.Drawing;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x01D4B7, 1 , 256); }
-  public int getScreenWidth()          { return 32; }
-  public int getScreenHeight()         { return 1; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x01D4B7, 1 , 256, 32, 1); }
   public string getBlocksFilename()    { return "fist_of_the_nortstar_1.png"; }
   public int    getPictureBlocksWidth()   { return 16; }
 

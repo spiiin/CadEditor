@@ -19,9 +19,7 @@ public class Data
   
   public bool isUseSegaGraphics()      { return true; }
   public bool isBlockSize4x4()         { return true; }
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x0, 1 , 32*128);   }
-  public int getScreenWidth()          { return 32; }
-  public int getScreenHeight()         { return 128;  }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x0, 1 , 32*128, 32, 128);   }
   
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChuck;}
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }

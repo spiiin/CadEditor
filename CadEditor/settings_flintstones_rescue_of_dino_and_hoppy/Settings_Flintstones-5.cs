@@ -10,15 +10,13 @@ public class Data
       "PluginChrView.dll",
     };
   }
-  public OffsetRec getScreensOffset()   { return new OffsetRec(0x2FF4 , 1 , 8*64);   }
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0x2FF4 , 1 , 8*64, 8, 64);   }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x0    , 1 , 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x40010, 1 , 0x1000); }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x20010, 1 , 0x1000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x3634, 1  , 0x4000); }
   public int getPhysicsBytesAddr()      { return 0x1C4E8; }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x31F4, 1  , 0x4000); }
-  public int getScreenWidth()             { return 8; }
-  public int getScreenHeight()            { return 64; }
   public bool getScreenVertical()         { return true; }
   
   public string[] getBlockTypeNames()   { return FliUtils.getBlockTypeNames();  }

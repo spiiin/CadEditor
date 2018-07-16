@@ -22,10 +22,8 @@ public class Data
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0, 1, 0     );   }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x1642f0, 1, 0x8000);  }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0, 1, 0     );   }
-  public OffsetRec getScreensOffset()   { return new OffsetRec(0, 1, 139*85);   }
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0, 1, 139*85, 139, 85);   }
   public int getBigBlocksCount()        { return 0x1000; }
-  public int getScreenWidth()           { return 139; }
-  public int getScreenHeight()          { return 85; }
   
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChuck;   }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }

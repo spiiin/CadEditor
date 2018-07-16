@@ -4,9 +4,7 @@ using System.Drawing;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset() { return new OffsetRec(0x163ed, 1, 12*256); }
-  public int getScreenWidth()         { return 12; }
-  public int getScreenHeight()        { return 256; }
+  public OffsetRec getScreensOffset() { return new OffsetRec(0x163ed, 1, 12*256, 12, 256); }
   public bool getScreenVertical()      { return true; }
 
   public bool isBigBlockEditorEnabled() { return false; }

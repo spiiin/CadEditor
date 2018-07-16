@@ -11,9 +11,7 @@ public class Data
       "PluginMapEditor.dll",
     };
   }
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0xcb06, 1 , 256);   }
-  public int getScreenWidth()          { return 256; }
-  public int getScreenHeight()         { return 1; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0xcb06, 1 , 256, 256, 1);   }
   public bool isBuildScreenFromSmallBlocks() { return true; }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return Utils.getChrAddress; }

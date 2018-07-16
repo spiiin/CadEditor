@@ -3,9 +3,7 @@ using System;
 //css_include shared_settings/BlockUtils.cs;
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x1f00, 1 , 16*45);   }
-  public int getScreenWidth()          { return 16; }
-  public int getScreenHeight()         { return 45; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x1f00, 1 , 16*45, 16, 45);   }
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }

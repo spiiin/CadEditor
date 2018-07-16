@@ -6,9 +6,7 @@ using System;
 public class Data 
 { 
   public bool showDumpFileField()  { return true;  }
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x0, 1 , 24*(256*4));   }
-  public int getScreenWidth()          { return 24; }
-  public int getScreenHeight()         { return 256*4; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x0, 1 , 24*(256*4), 24, 2564);   }
   public bool getScreenVertical()      { return true;   }
   
   public bool isBigBlockEditorEnabled() { return false; }

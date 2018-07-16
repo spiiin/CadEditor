@@ -5,9 +5,7 @@ using System.Drawing;
 
 public class Data
 { 
-  public OffsetRec getScreensOffset()     { return new OffsetRec(0x2802B, 1 , 48*7);  }
-  public int getScreenWidth()    { return 48; }
-  public int getScreenHeight()   { return 7; }
+  public OffsetRec getScreensOffset()     { return new OffsetRec(0x2802B, 1 , 48*7, 48, 7);  }
   public int getBigBlocksCount() { return 32; }
   public int getBlocksCount()    { return 32; }
   

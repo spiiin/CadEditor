@@ -12,9 +12,7 @@ public class Data
   }
   public OffsetRec getPalOffset()       { return new OffsetRec(0, 1  , 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0, 2  , 0x1000); }
-  public OffsetRec getScreensOffset()   { return new OffsetRec(0x4E44 , 34 , 8*5);   }
-  public int getScreenWidth()    { return 8; }
-  public int getScreenHeight()   { return 5; }
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0x4E44 , 34 , 8*5, 8, 5);   }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
   

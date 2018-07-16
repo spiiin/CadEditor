@@ -9,9 +9,7 @@ public class Data : TomAndJerryBase
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0      , 16 , 0x1000);   }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0      , 8  , 0x4000);   }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x19CFA, 1  , 182*4);    }
-  public OffsetRec getScreensOffset()   { return new OffsetRec(0x18530, 1  , 105*58);   }
-  public override int getScreenWidth()     { return  105; }
-  public override int getScreenHeight()    { return  58; }
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0x18530, 1  , 105*58, 105, 58);   }
   
   public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecs;}; }
   public bool isBigBlockEditorEnabled() { return false; }

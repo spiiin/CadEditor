@@ -9,10 +9,8 @@ public class Data
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x4D10 , 1   , 0xD00  ) ;}
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x75C8 , 1   , 0x4000 ) ;}
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x1F1CB, 1   , 0x440  ) ;}
-  public OffsetRec getScreensOffset()   { return new OffsetRec(0x7408 , 4   , 112 ) ;}
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0x7408 , 4   , 112 , 8, 14) ;}
   public int getBigBlocksCount()        { return 53; }
-  public int getScreenWidth()           { return 8; }
-  public int getScreenHeight()          { return 14; }
   public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecsTT;}; }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getTinyToonVideoAddress; }

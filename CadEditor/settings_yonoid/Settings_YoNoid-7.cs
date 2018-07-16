@@ -12,15 +12,13 @@ public class Data
     };
   }
   public OffsetRec getVideoOffset()   { return new OffsetRec(0x20010, 1, 0x1000); }
-  public OffsetRec getScreensOffset() { return new OffsetRec(0x123c5 , 1, 7*136 ); }
+  public OffsetRec getScreensOffset() { return new OffsetRec(0x123c5 , 1, 7*136 , 7, 136); }
   public OffsetRec getPalOffset()     { return new OffsetRec(0x1abb4, 16, 16   ); }
   
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x127bf , 1  , 0x1000);  }
   public int getBlocksCount()           { return 256; }
   public int getPalBytesAddr()          { return 0x1277d; }
   
-  public int getScreenWidth()         { return 7; }
-  public int getScreenHeight()        { return 136; }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
   

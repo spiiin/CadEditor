@@ -13,9 +13,7 @@ public class Data
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x9010, 1, 0x1000); }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x5842, 1, 16);    }
   
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x5bfc - 40, 1, 40*40); }
-  public int getScreenWidth()          { return 40; }
-  public int getScreenHeight()         { return 40; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x5bfc - 40, 1, 40*40, 40, 40); }
 
   public bool isBigBlockEditorEnabled() { return true; }
   public bool isBlockEditorEnabled()    { return true; }

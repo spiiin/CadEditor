@@ -12,9 +12,7 @@ public class Data
       "PluginMapEditor.dll",
     };
   }
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x8376, 24 , 16*15); }
-  public int getScreenWidth()          { return 16; }
-  public int getScreenHeight()         { return 15; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x8376, 24 , 16*15, 16, 15); }
   
   public int getWordLen()              { return 2;}
   public bool isLittleEndian()          { return true;}

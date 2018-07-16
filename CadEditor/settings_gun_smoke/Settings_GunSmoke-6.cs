@@ -5,12 +5,10 @@ using System.Collections.Generic;
 
 public class Data
 { 
-  public OffsetRec getScreensOffset()     { return new OffsetRec(0x14410, 1, 8*160);  }
+  public OffsetRec getScreensOffset()     { return new OffsetRec(0x14410, 1, 8*160, 8, 160);  }
   public OffsetRec getBigBlocksOffset()   { return new OffsetRec(0x14010 , 1, 0x4000); }
   public OffsetRec getVideoOffset()       { return new OffsetRec(0x0 , 2   , 0x1000);  }
   public OffsetRec getPalOffset  ()       { return new OffsetRec(0x0 , 1   , 16); }
-  public int getScreenWidth()    { return 8; }
-  public int getScreenHeight()   { return 160; }
   public int getBigBlocksCount() { return 256; }
   public int getBlocksCount()    { return 64; }
   

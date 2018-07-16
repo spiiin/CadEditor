@@ -4,9 +4,7 @@ using System.Drawing;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec( 0x03c1e, 1 , 14*72);   }
-  public int getScreenWidth()          { return 14; }
-  public int getScreenHeight()         { return 72; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec( 0x03c1e, 1 , 14*72, 14, 72);   }
   public bool getScreenVertical()      { return true; }
   public string getBlocksFilename()    { return "super_robin_hood_1.png"; }
   

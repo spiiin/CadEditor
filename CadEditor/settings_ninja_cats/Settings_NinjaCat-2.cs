@@ -5,9 +5,7 @@ using System.Collections.Generic;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec(1052, 21 , 8*5);   }
-  public int getScreenWidth()          { return 5; }
-  public int getScreenHeight()         { return 8; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(1052, 21 , 8*5, 5, 8);   }
   public bool getScreenVertical()      { return true; }
   
   public bool isBigBlockEditorEnabled() { return true; }

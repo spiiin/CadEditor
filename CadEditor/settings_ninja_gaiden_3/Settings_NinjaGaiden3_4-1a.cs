@@ -4,9 +4,7 @@ using System;
 
 public class Data 
 {
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0xc46, 1 , 6*88);   }
-  public int getScreenWidth()          { return 6; }
-  public int getScreenHeight()         { return 88; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0xc46, 1 , 6*88, 6, 88);   }
   
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x4410 , 1  , 0x1000);  }
   public int getBlocksCount()           { return 256; }

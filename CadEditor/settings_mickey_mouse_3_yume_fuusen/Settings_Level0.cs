@@ -3,9 +3,7 @@ using System;
 //css_include settings_mickey_mouse_3_yume_fuusen/MickeyUtils.cs;
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec( 0x000de, 10 , 8*6);   }
-  public int getScreenWidth()          { return 8; }
-  public int getScreenHeight()         { return 6; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec( 0x000de, 10 , 8*6, 8, 6);   }
   
   public bool isBigBlockEditorEnabled() { return true; }
   public bool isBlockEditorEnabled()    { return true; }

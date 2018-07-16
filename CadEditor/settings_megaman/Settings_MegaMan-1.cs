@@ -4,9 +4,7 @@ using System.Drawing;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset() { return new OffsetRec(0x43D0, 17, 64); }
-  public int getScreenWidth()         { return 8; }
-  public int getScreenHeight()        { return 8; }
+  public OffsetRec getScreensOffset() { return new OffsetRec(0x43D0, 17, 64, 8, 8); }
   public string getBlocksFilename()   { return "megaman_1.png"; }
   public bool getScreenVertical()     { return true; }
   

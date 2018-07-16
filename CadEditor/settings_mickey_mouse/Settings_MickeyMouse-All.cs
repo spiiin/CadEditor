@@ -3,9 +3,7 @@ using System;
 //css_include settings_mickey_mouse/MickeyMouseUtils.cs;
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0xa010, 1, 64*64);   }
-  public int getScreenWidth()          { return 64; }
-  public int getScreenHeight()         { return 64; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0xa010, 1, 64*64, 64, 64);   }
   
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x0 , 4   , 0x1000);  }
   public OffsetRec getPalOffset  ()     { return new OffsetRec(0x0 , 6   , 16); }

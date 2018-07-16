@@ -9,14 +9,12 @@ public class Data
       "PluginChrView.dll",
     };
   }
-  public OffsetRec getScreensOffset()   { return new OffsetRec(0xD833  , 1  , 8*96);   }
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0xD833  , 1  , 8*96, 8, 96);   }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x0     , 1  , 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x38010 , 1  , 0x1000); }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x20010 , 1  , 0x1000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0xDE7B  , 1  , 0x4000); }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0xDB33  , 1  , 0x4000); }
-  public int getScreenWidth()             { return 8; }
-  public int getScreenHeight()            { return 96; }
   public bool getScreenVertical()         { return true; }
   public int    getPictureBlocksWidth()   { return 16; }
   

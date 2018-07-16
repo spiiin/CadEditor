@@ -6,10 +6,8 @@ using System.Collections.Generic;
 
 public class Data
 { 
-  public OffsetRec getScreensOffset()     { return new OffsetRec(0x1024d, 1, 8*144);  }
+  public OffsetRec getScreensOffset()     { return new OffsetRec(0x1024d, 1, 8*144, 8, 144);  }
   public OffsetRec getBigBlocksOffset()   { return new OffsetRec(0x127bd ,1, 0x4000); }
-  public int getScreenWidth()    { return 8; }
-  public int getScreenHeight()   { return 144; }
   public int getBigBlocksCount() { return 256; }
   public int getBlocksCount()    { return 256; }
   
@@ -35,8 +33,8 @@ public class Data
   
   public int getBigTileNoFromScreen(int[] screenData, int index)
   {
-    int w = getScreenWidth();
-    int h = getScreenHeight();
+    int w = getScreensOffset().width;
+    int h = getScreensOffset().height;
     int noY = index / w;
     noY = h - noY - 1;
     int noX = index % w;
@@ -45,8 +43,8 @@ public class Data
 
   public void setBigTileToScreen(int[] screenData, int index, int value)
   {
-    int w = getScreenWidth();
-    int h = getScreenHeight();
+    int w = getScreensOffset().width;
+    int h = getScreensOffset().height;
     int noY = index / w;
     noY = h - noY - 1;
     int noX = index % w;

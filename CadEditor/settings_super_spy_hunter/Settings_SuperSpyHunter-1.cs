@@ -4,13 +4,11 @@ using System.Drawing;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset() { return new OffsetRec(0xB10, 20, 8*8); }
+  public OffsetRec getScreensOffset() { return new OffsetRec(0xB10, 20, 8*8, 8, 8); }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x510   , 1, 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x10    , 1, 0x400);  }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x90a9 , 1, 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x20010 , 1, 0x1000);  }
-  public int getScreenWidth()         { return 8; }
-  public int getScreenHeight()        { return 8; }
   
   public int getBigBlocksCount() { return 256; }
   public int getBlocksCount()    { return 256; }

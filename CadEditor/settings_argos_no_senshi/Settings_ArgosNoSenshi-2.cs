@@ -4,9 +4,7 @@ using System.Drawing;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x010098, 1 , 13); }
-  public int getScreenWidth()          { return 13; }
-  public int getScreenHeight()         { return 1; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x010098, 1 , 13, 13, 1); }
   public string getBlocksFilename()    { return "argos_no_senshi_2.png"; }
   public int    getPictureBlocksWidth()   { return 32; }
 

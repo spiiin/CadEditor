@@ -4,9 +4,7 @@ public class Data
 { 
   public bool showDumpFileField()  { return true;  }
   
-  public OffsetRec getScreensOffset()     { return new OffsetRec(0x0   , 1 , 14*96);  } //0x38848
-  public int getScreenWidth()    { return 14; }
-  public int getScreenHeight()   { return 96; }
+  public OffsetRec getScreensOffset()     { return new OffsetRec(0x0   , 1 , 14*96, 14, 96);  } //0x38848
   public int getBigBlocksCount() { return 46; }
   public int getBlocksCount()    { return 46; }
   

@@ -5,9 +5,7 @@ using PluginMapEditor;
 
 public class Data 
 {  
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x2010, 1 , 16*30);   }
-  public int getScreenWidth()          { return 16; }
-  public int getScreenHeight()         { return 30; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x2010, 1 , 16*30, 16, 30);   }
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }

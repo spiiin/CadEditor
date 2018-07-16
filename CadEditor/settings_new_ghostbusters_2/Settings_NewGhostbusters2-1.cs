@@ -6,9 +6,7 @@ public class Data
   public OffsetRec getVideoOffset()     { return new OffsetRec(0, 2  , 0x1000); }
   public OffsetRec getPalOffset()       { return new OffsetRec(0, 2  , 16);     }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0, 1  , 0x4000); }
-  public OffsetRec getScreensOffset()   { return new OffsetRec(0x77C1 - 16*15*8  , 13 , 16*15);   }
-  public int getScreenWidth()    { return 16; }
-  public int getScreenHeight()   { return 15; }
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0x77C1 - 16*15*8  , 13 , 16*15, 16, 15);   }
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }

@@ -3,9 +3,7 @@ using System;
 //css_include settings_doraemon/DoraemonUtils.cs;
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x32ff, 1 , 64*64);   }
-  public int getScreenWidth()          { return 64; }
-  public int getScreenHeight()         { return 64; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x32ff, 1 , 64*64, 64, 64);   }
   
   public bool isBigBlockEditorEnabled() { return true; }
   public bool isBlockEditorEnabled()    { return true; }

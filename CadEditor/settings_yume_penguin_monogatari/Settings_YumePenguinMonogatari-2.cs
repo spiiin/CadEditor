@@ -4,9 +4,7 @@ using System;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0xd385, 1 , 8*80);   }
-  public int getScreenWidth()          { return 8; }
-  public int getScreenHeight()         { return 80; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0xd385, 1 , 8*80, 8, 80);   }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
   

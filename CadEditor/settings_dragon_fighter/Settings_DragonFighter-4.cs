@@ -6,9 +6,7 @@ public class Data
 
   public OffsetRec getVideoOffset()    { return new OffsetRec(0x34010, 1, 0x1000); }
   
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0xa610, 1, 184*8); }
-  public int getScreenWidth()          { return 8; }
-  public int getScreenHeight()         { return 184; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0xa610, 1, 184*8, 8, 184); }
   public bool getScreenVertical()      { return true; }
 
   public bool isBigBlockEditorEnabled() { return true; }

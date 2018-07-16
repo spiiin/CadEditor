@@ -5,9 +5,7 @@ using System.Collections.Generic;
 
 public class Data
 { 
-  public OffsetRec getScreensOffset()     { return new OffsetRec(0x14025, 1, 16*96);  }
-  public int getScreenWidth()    { return 16; }
-  public int getScreenHeight()   { return 96; }
+  public OffsetRec getScreensOffset()     { return new OffsetRec(0x14025, 1, 16*96, 16, 96);  }
   
   public GetBigTileNoFromScreenFunc getBigTileNoFromScreenFunc() { return JackalUtils.getBigTileNoFromScreen; }
   public SetBigTileToScreenFunc     setBigTileToScreenFunc()     { return JackalUtils.setBigTileToScreen; }

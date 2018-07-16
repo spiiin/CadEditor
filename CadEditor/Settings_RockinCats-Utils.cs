@@ -4,7 +4,7 @@ using System.Drawing;
 
 public class RockinCatsBase 
 {
-  public virtual OffsetRec getScreensOffset()  { return new OffsetRec(0, 0 , 3*2);   }
+  public virtual OffsetRec getScreensOffset()  { return new OffsetRec(0, 0 , 3*2, 2, 3);   }
   public virtual OffsetRec getVideoOffset()    { return new OffsetRec(0, 1 , 0x1000);   }
   public virtual int getBlocksCount()          { return 256; }
   public virtual int getVideoIndex1()          { return -1; }
@@ -36,8 +36,6 @@ public class RockinCatsBase
     return pallete;
   }
   //
-  public int getScreenWidth()          { return 2; }
-  public int getScreenHeight()         { return 3; }
   
   public bool isBigBlockEditorEnabled() { return true; }
   public bool isBlockEditorEnabled()    { return true; }
