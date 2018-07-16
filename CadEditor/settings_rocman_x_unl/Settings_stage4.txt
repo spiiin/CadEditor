@@ -1,0 +1,4 @@
+Screen 1:
+Offset: 2ad9c-2b1af (using RLE)
+Screen 2:
+Offset: 2b1b0-2b6c4 (using RLE)

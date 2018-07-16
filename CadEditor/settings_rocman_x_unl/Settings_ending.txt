@@ -1,0 +1,14 @@
+Screen 1:
+Offset: 169ec-16b2f (using RLE)
+Screen 2:
+Offset: 16b30-16b86 (using RLE)
+Screen 3:
+Offset: 16b87-16dda (using RLE)
+Screen 4:
+Offset: 16ddb-17021 (using RLE)
+Screen 5:
+Offset: 17022-1721c (using RLE)
+Screen 6:
+Offset: 1721d-17449 (using RLE)
+Screen 7:
+Offset: 1744a-17475 (using RLE)

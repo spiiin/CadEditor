@@ -1,0 +1,26 @@
+Screen 1:
+Offset: 1ee61-1efd5 (using RLE)
+Screen 2:
+Offset: 1efd6-1f11d (using RLE)
+Screen 3:
+Offset: 1f11e-1f2d4 (using RLE)
+Screen 4:
+Offset: 1f2d5-1f419 (using RLE)
+Screen 5:
+Offset: 1f41a-1f5d2 (using RLE)
+Screen 6:
+Offset: 1f5d3-1f764 (using RLE)
+Screen 7:
+Offset: 1f765-1f8b8 (using RLE)
+Screen 8:
+Offset: 1f8b9-1fa10 (using RLE)
+Screen 9:
+Offset: 1fa11-1fb4a (using RLE)
+Screen 10:
+Offset: 1fb4b-1fcab (using RLE)
+Screen 11:
+Offset: 1fcac-1fde6 (using RLE)
+Screen 12:
+Offset: 128f5-12a40 (using RLE)
+Screen 13:
+Offset: 12a41-12d48 (using RLE)
