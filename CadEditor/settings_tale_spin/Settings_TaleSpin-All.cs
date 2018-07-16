@@ -19,7 +19,7 @@ public class Data:CapcomBase
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x20010, 16  , 0x1000); }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x36F0 , 8   , 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x3AF0 , 8   , 0x4000); }
-  public OffsetRec getScreensOffset()   { return new OffsetRec(0x10   , 300 , 0x40);   }
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0x10   , 300 , 0x40, 8, 8);   }
   public GetLevelRecsFunc getLevelRecsFunc() { return getLevelRecs; }
   public GetObjectsFunc getObjectsFunc() { return getObjectsDwd; }
   public SetObjectsFunc setObjectsFunc() { return setObjectsDwd; }

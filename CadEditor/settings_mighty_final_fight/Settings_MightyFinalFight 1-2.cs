@@ -11,7 +11,7 @@ public class Data : CapcomBase
       "PluginChrView.dll",
     };
   }
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x3010  , 4  , 8*8);   }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x3010  , 4  , 8*8, 8, 8);   }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x2E8C , 1  , 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x31010, 1  , 0x1000); }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x20010, 1  , 0x1000); }

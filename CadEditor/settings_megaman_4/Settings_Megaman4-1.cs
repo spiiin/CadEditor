@@ -18,7 +18,7 @@ public class Data:CapcomBase
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x20010 + CHR_OFFSET* LEVEL_NO, 1   , 0x1000); } //
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x40510 + LEVEL_OFFSET* LEVEL_NO , 1  , 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x40010 + LEVEL_OFFSET* LEVEL_NO , 1  , 0x4000); }
-  public OffsetRec getScreensOffset()   { return new OffsetRec(0x40910 + LEVEL_OFFSET* LEVEL_NO, 32 , 0x40);   }
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0x40910 + LEVEL_OFFSET* LEVEL_NO, 32 , 0x40, 8, 8);   }
   public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecs;}; }
   
   public IList<LevelRec> levelRecs = new List<LevelRec>() 

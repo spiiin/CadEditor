@@ -19,7 +19,7 @@ public class Data:CapcomBase
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x60010+ CHR_OFFSET  * LEVEL_NO, 16 , 0x1000); } //
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x1210 + LEVEL_OFFSET * LEVEL_NO, 1 , 0x2000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x0D10 + LEVEL_OFFSET * LEVEL_NO, 1 , 0x2000); }
-  public OffsetRec getScreensOffset()   { return new OffsetRec(0x1610 + LEVEL_OFFSET * LEVEL_NO, 256 , 0x40); }
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0x1610 + LEVEL_OFFSET * LEVEL_NO, 256 , 0x40, 8, 8); }
   
   public bool isBigBlockEditorEnabled() { return true;  }
   public bool isBlockEditorEnabled()    { return true;  }

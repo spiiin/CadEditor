@@ -23,7 +23,7 @@ public class Data:CapcomBase
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x4D10 , 7   , 0xD00);  }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x7310 , 3   , 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x1008A , 5  , 0x440);  }
-  public OffsetRec getScreensOffset()   { return new OffsetRec(0x11d5a, 300 , 0x40);   }
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0x11d5a, 300 , 0x40, 8, 8);   }
   public string[] getBlockTypeNames()   { return objTypesDt2;  }
   
   public override GetVideoPageAddrFunc getVideoPageAddrFunc() { return getDuckTalesVideoAddress; }

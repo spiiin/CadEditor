@@ -154,9 +154,9 @@ namespace CadEditor
             videoOffset = callFromScript(asm, data, "*.getVideoOffset", new OffsetRec(0, 1, 0));
             videoObjOffset = callFromScript(asm, data, "*.getVideoObjOffset", new OffsetRec(0, 1, 0));
             blocksOffset = callFromScript(asm, data, "*.getBlocksOffset", new OffsetRec(0, 1, 0));
-            screensOffset[0] = callFromScript(asm, data, "*.getScreensOffset", new OffsetRec(0, 1, 0));
-            screensOffset[0].width = callFromScript(asm, data, "*.getScreenWidth", 8);
-            screensOffset[0].height = callFromScript(asm, data, "*.getScreenHeight", 8);
+            screensOffset[0] = callFromScript(asm, data, "*.getScreensOffset", new OffsetRec(0, 1, 0, 8, 8));
+            screensOffset[0].width = callFromScript(asm, data, "*.getScreenWidth", screensOffset[0].width);
+            screensOffset[0].height = callFromScript(asm, data, "*.getScreenHeight", screensOffset[0].height);
             if ((screensOffset[0].beginAddr == 0) && (screensOffset[0].recSize == 0))
             {
                 screensOffset = callFromScript(asm, data, "*.getScreensOffsetsForLevels", new OffsetRec[1]);

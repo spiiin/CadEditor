@@ -18,9 +18,7 @@ public class Data : CapcomBase
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0, 16   , 0x1000); }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0 , 8   , 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0xC010  , 8   , 0x440); }
-  public OffsetRec getScreensOffset()   { return new OffsetRec(0x210   , 256 , 16*15);   }
-  public override int getScreenWidth()    { return 16; }
-  public override int getScreenHeight()   { return 15; }
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0x210   , 256 , 16*15, 16, 15);   }
   public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecsCad2;}; }
   public int getScrollsOffsetFromLayout() { return 538; } //offset scrolls array from layout array
   public GetObjectsFunc getObjectsFunc()   { return getObjectsCad2; }
