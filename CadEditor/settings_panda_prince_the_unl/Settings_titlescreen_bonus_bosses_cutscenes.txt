@@ -1,0 +1,36 @@
+Shin-Shin Logo
+Offset: 84d-8ed (RLE)
+
+Title Screen
+Offset: 8ee-a54 (RLE)
+
+Start | Password
+Offset: 65f-7a3 (RLE)
+
+Password Screen
+Offset: 2d8c6-2daad (RLE) 2d6e0-2d8c5 (RLE) another version (maybe used in "Super Lion King 2")
+
+1 Play | 2 Play
+Offset: a55-bef (RLE)
+
+Bonus Room
+Offset: ea8-1143 (RLE)
+
+Boss
+Offset: 1144-1413 (RLE)
+
+Cutscene1
+Offset: 1414-15de (RLE)
+
+Cutscene2
+Offset: 17aa-19a6 (RLE)
+
+Cutscene3
+Offset: 19a7-1b7d (RLE)
+
+Cutscene4
+Offset: 1b7e-1d54 (RLE)
+
+Cutscene5
+Offset: 15df-17a9 (RLE)
+
