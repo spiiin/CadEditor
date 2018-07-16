@@ -133,10 +133,6 @@ namespace SettingsViewer
         [Category("Screen params")]
         public MethodDelegate saveScreensFunc { get { return get(); } }
         [Category("Screen params")]
-        public MethodDelegate getScreenWidth { get { return get(); } }
-        [Category("Screen params")]
-        public MethodDelegate getScreenHeight { get { return get(); } }
-        [Category("Screen params")]
         public MethodDelegate getScreensOffsetsForLevels { get { return get(); } }
         [Category("Screen params")]
         public MethodDelegate getScreenVertical { get { return get(); } }
