@@ -2,10 +2,8 @@ using CadEditor;
 using System.Collections.Generic;
 public class Data
 { 
-  public OffsetRec getScreensOffset()     { return new OffsetRec(0xFA8, 27, 64);   }
-  public int getScreenWidth()             { return 8; }
-  public int getScreenHeight()            { return 8; }
-  
+  public OffsetRec getScreensOffset()     { return new OffsetRec(0xFA8, 27, 64, 8, 8);   }
+
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }

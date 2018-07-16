@@ -5,9 +5,7 @@ using System.Collections.Generic;
 
 public class Data
 {
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x8020, 1 , 256);   }
-  public int getScreenWidth()          { return 132; }
-  public int getScreenHeight()         { return 1; }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x8020, 1 , 256, 132, 1);   }
   public bool isBuildScreenFromSmallBlocks() { return true; }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return Utils.getChrAddress; }

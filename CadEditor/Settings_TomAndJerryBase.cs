@@ -6,8 +6,6 @@ public class TomAndJerryBase
 {
   public virtual int getBigBlocksCount() { return 256; }
   public virtual int getBlocksCount()    { return 256; }
-  public virtual int getScreenWidth()    { return 8; }
-  public virtual int getScreenHeight()   { return 8; }
   
   public virtual GetVideoPageAddrFunc getVideoPageAddrFunc() { return Utils.getChrAddress; }
   public virtual GetVideoChunkFunc    getVideoChunkFunc()    { return Utils.getVideoChunk; }
