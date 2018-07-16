@@ -72,6 +72,7 @@ fnames = [
     "Hook (U) [!].nes",
     "Hudson's Adventure Island II (U) [!].nes",
     "Hudson's Adventure Island III (U) [!].nes",
+    "Ikari Warriors (U) (PRG1) [!].nes",
     "Indivisible (Demo) (PD).nes",
     "Insector X (J) [!].nes",
     "Isolated Warrior (U) [!].nes",

@@ -150,6 +150,7 @@ Supported games:
     Guerilla War                                    (1 level)
     Bugs Bunny Birthday Blowout                     (1 level)
     Parasol Henbee                                  (1 level)
+    Ikari Warriors                                  (1 level)
     Jurassic Park                                   (1 level, dump editor)
     Contra Spirits                                  (1 level, game protected for changes)
     Mickey Mania 7                                  (1 level, game protected for changes)
