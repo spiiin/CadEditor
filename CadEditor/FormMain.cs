@@ -215,7 +215,7 @@ namespace CadEditor
                 if (i % width == line)
                 {
                     int bigBlockNo = ConfigScript.getBigTileNoFromScreen(indexesPrev, i);
-                    if (bigBlockNo < bigBlocks.Length)
+                    if ((bigBlockNo > 0) && (bigBlockNo < bigBlocks.Length))
                         g.DrawImage(bigBlocks[bigBlockNo], new Rectangle(x, i / width * tileSizeY, tileSizeX, tileSizeY));
                 }
             }

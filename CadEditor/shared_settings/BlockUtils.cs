@@ -69,6 +69,33 @@ public static class BlockUtils
   }
   
   //-----------------------------------------------------------------------------------------------------------------
+  public static ObjRec[] getBlocksLinear2x2MaskedTransposed(int tileId)
+  {
+      int count = ConfigScript.getBlocksCount();
+      var bb = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), 2, 2, count, false, true);
+      var palAddr = ConfigScript.getPalBytesAddr();
+      for (int i = 0; i < count; i++)
+      {
+          bb[i].palBytes[0] = Globals.romdata[palAddr + i] & 0x3; //get only pal, not physics
+      }
+      return bb;
+  }
+  
+  public static void setBlocksLinear2x2MaskedTransposed(int tileId, ObjRec[] blocksData)
+  {
+    int addr = ConfigScript.getTilesAddr(tileId);
+    int count = ConfigScript.getBlocksCount();
+    var palAddr = ConfigScript.getPalBytesAddr();
+    Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, false, true);
+    for (int i = 0; i < count; i++)
+    {
+        int t = Globals.romdata[palAddr + i];
+        t =  t &  0xFC | blocksData[i].palBytes[0];
+        Globals.romdata[palAddr + i] = (byte)t; //save only pal bits, not physics
+    }
+  }
+  
+  //-----------------------------------------------------------------------------------------------------------------
   public static ObjRec[] getBlocksLinear2x2MaskedWithAttribs(int tileId)
   {
       int count = ConfigScript.getBlocksCount();
