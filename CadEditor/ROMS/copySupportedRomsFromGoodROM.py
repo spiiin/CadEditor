@@ -135,6 +135,7 @@ fnames = [
     "SD Hero Soukessen - Taose! Aku no Gundan (J) [!].nes",
     "Shadow of the Ninja (U) [!].nes",
     "Shatterhand (U) [!].nes",
+    "Silent Assault (Color Dreams) [!].nes",
     "Sonic The Hedgehog (Unl) [!].nes",
     "Spelunker 2 - Yuusha heno Chousen (J) [b1][T+Eng0.9_Sarysa].nes",
     "Splatter House - Wanpaku Graffiti (J) [T+Eng2.0_Spinner8].nes",
