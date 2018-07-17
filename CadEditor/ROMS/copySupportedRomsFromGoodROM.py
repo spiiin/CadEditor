@@ -14,6 +14,7 @@ fnames = [
     "Alien 3 (U) [!].nes",
     "Aliens (J) (Prototype).fds",
     "Amagon (U) [!].nes",
+    "Asterix (E) [!].nes",
     "Athena (J).nes",
     "Bad Dudes (U) [!].nes",
     "Batman (U) [!].nes",

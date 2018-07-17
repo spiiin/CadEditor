@@ -107,6 +107,7 @@ Supported games:
     Juuouki                                         (all levels)
     Splatter House                                  (all levels)
     Doki! Doki! Yuuenchi (Trolls in Crazyland)      (all levels)
+    Asterix                                         (all levels)
     Aladdin (unlicensed)                            (all levels)
     Donkey Kong 4 (unlicensed)                      (all levels)
     EarthWorm Jim 3 (unlicensed)                    (all levels)
