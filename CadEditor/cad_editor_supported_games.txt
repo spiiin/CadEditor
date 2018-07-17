@@ -155,6 +155,7 @@ Supported games:
     Bugs Bunny Birthday Blowout                     (1 level)
     Parasol Henbee                                  (1 level)
     Ikari Warriors                                  (1 level)
+    Hudson Hawk                                     (1 level)
     Gaiapolis (unlicensed)                          (1 level)
     Jurassic Park                                   (1 level, dump editor)
     Contra Spirits                                  (1 level, game protected for changes)

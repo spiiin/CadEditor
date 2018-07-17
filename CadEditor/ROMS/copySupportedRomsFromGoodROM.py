@@ -73,6 +73,7 @@ fnames = [
     "Harry's Legend (English) (Unl).nes",
     "Heavy Barrel (U) [!].nes",
     "Hook (U) [!].nes",
+    "Hudson Hawk (U) [!].nes",
     "Hudson's Adventure Island II (U) [!].nes",
     "Hudson's Adventure Island III (U) [!].nes",
     "Ikari Warriors (U) (PRG1) [!].nes",
