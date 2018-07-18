@@ -1,6 +1,6 @@
 import os, glob, shutil, zipfile
 
-VERSION        = "50"
+VERSION        = "51"
 RELEASE_FOLDER = "../Release/cad_editor_v%s" % VERSION
 ZIP_NAME       = "../Release/cad_editor_v%s.zip" % VERSION
 
@@ -27,8 +27,9 @@ COPY_FOLDER_LIST = [
   "obj_sprites/",
   "scroll_sprites/",
   "shared_settings/",
-  "settings_*/",
-  
+  "settings_nes/settings_*/",
+  "settings_smd/settings_*/",
+  "settings_gba/settings_*/",
   "IronPythonLib/",
   "exportTmx/pytmxlib/",
 ]
