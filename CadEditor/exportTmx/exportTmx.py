@@ -17,12 +17,12 @@ def export(filename, formMain, curActiveLayout):
     levelRec = ConfigScript.getLevelRec(curActiveLayout)
     curScale = 1#formMain.CurScale
     
-    blockWidth = int(formMain.Layers[0].blockWidth * curScale);
-    blockHeight = int(formMain.Layers[0].blockHeight * curScale);
-    scrLevelNo = levelRec.levelNo;
+    blockWidth = int(formMain.bigBlocks[0].Width * curScale);
+    blockHeight = int(formMain.bigBlocks[0].Height * curScale);
     
-    width = ConfigScript.getScreenWidth(scrLevelNo);
-    height = ConfigScript.getScreenHeight(scrLevelNo);
+    scrNo = calcScrNo(layout, 0)
+    width = formMain.screens[scrNo].width;
+    height = formMain.screens[scrNo].height;
     if ConfigScript.getScreenVertical():
         mapSize = (layout.width * height, layout.height * width)
     else:
@@ -32,7 +32,7 @@ def export(filename, formMain, curActiveLayout):
     
     #generate tiles
     #TODO: rescale it to curScale
-    bigBlocksImages = formMain.BigBlocks
+    bigBlocksImages = formMain.bigBlocks
     ImWidthInBlocks = 16
     ImHeightInBlocks = int(ceil(len(bigBlocksImages)*1.0/ImWidthInBlocks))
     bigBlockImage = UtilsGDI.GlueImages(bigBlocksImages, ImWidthInBlocks, ImHeightInBlocks)
@@ -48,8 +48,8 @@ def export(filename, formMain, curActiveLayout):
         for sx in xrange(layout.width):
             scrIndex = sy * layout.width + sx
             scrNo = calcScrNo(layout, scrIndex)
-            if scrNo >= 0 and scrNo < len(formMain.Layers[0].screens):
-                curScreen = formMain.Layers[0].screens[scrNo]
+            if scrNo >= 0 and scrNo < len(formMain.screens):
+                curScreen = formMain.screens[scrNo].layers[0].data
                 for y in xrange(height):
                     for x in xrange(width):
                         if ConfigScript.getScreenVertical():
