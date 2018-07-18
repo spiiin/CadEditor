@@ -3,7 +3,31 @@ using System;
 
 public class Data 
 {
-  public OffsetRec getScreensOffset() { return new OffsetRec(0xd1b7 - 3*56, 1, 8*12, 8, 12); }
+  public OffsetRec[] getScreensOffsetsForLevels() {
+      var ans = new OffsetRec[] {
+          new OffsetRec(0xcec7 - 3*56, 1, 8*13, 8, 13),
+          new OffsetRec(0xcf2f - 3*56, 2, 8*12, 8, 12),
+          new OffsetRec(0xcfef - 3*56, 1, 8*13, 8, 13),
+          new OffsetRec(0xd057 - 3*56, 1, 8*12, 8, 12),
+          new OffsetRec(0xd0b7 - 3*56, 1, 8*12, 8, 12),
+          new OffsetRec(0xd11f - 3*56, 1, 8*6, 8, 6),
+          new OffsetRec(0xd14f - 3*56, 1, 8*8, 8, 8),
+          new OffsetRec(0xd18f - 3*56, 1, 8*5, 8, 5),
+          new OffsetRec(0xd1b7 - 3*56, 1, 8*12, 8, 12),
+          new OffsetRec(0xd217 - 3*56, 1, 8*13, 8, 13),
+          new OffsetRec(0xd27f - 3*56, 17, 8*6, 8, 6),
+          new OffsetRec(0xd5af - 3*56, 2, 8*7, 8, 7),
+          new OffsetRec(0xd61f - 3*56, 2, 8*6, 8, 6),
+          new OffsetRec(0xd67f - 3*56, 1, 8*13, 8, 13),
+          new OffsetRec(0xd6e7 - 3*56, 3, 8*6, 8, 6),
+          new OffsetRec(0xd777 - 3*56, 1, 8*8, 8, 8),
+          new OffsetRec(0xd7b7 - 3*56, 1, 8*12, 8, 12),
+          new OffsetRec(0xd817 - 3*56, 1, 8*6, 8, 6),
+          new OffsetRec(0xd847 - 3*56, 1, 8*24, 8, 24),
+          new OffsetRec(0xd907 - 3*56, 4, 8*6, 8, 6),
+      };
+      return ans;  
+  }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
   
