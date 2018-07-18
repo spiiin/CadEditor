@@ -37,6 +37,9 @@ namespace CadEditor
 
         private void tbScriptFile_Click(object sender, EventArgs e)
         {
+            ofScript.RestoreDirectory = true;
+            //InitialDirectory property is accepting only \\ slashes without repeats.
+            ofScript.InitialDirectory = ConfigScript.ProgramDirectory.Replace("/", "\\").Replace("\\\\", "\\") + "Scripts";
             if (ofScript.ShowDialog() == DialogResult.OK)
             {
                 tbScriptFile.Text = ofScript.FileName;

@@ -90,7 +90,6 @@
             // 
             this.ofScript.FileName = "Script.cs";
             this.ofScript.Filter = "Scripts | *.cs";
-            this.ofScript.InitialDirectory = "./Scripts/";
             // 
             // FormScript
             // 
