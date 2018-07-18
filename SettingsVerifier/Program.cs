@@ -16,14 +16,18 @@ namespace SettingsEditor
             var counter = 0;
             Console.WriteLine("Checking settings files...");
             string rootDirName = System.IO.Path.GetFullPath(".");
-            var dirNames = System.IO.Directory.GetDirectories(rootDirName, "settings_*", SearchOption.AllDirectories);
+            var dirNames = new List<string>();
+            dirNames.AddRange(System.IO.Directory.GetDirectories(rootDirName + "\\settings_nes", "*", SearchOption.AllDirectories));
+            dirNames.AddRange(System.IO.Directory.GetDirectories(rootDirName + "\\settings_smd", "*", SearchOption.AllDirectories));
+            dirNames.AddRange(System.IO.Directory.GetDirectories(rootDirName + "\\settings_gba", "*", SearchOption.AllDirectories));
+
             foreach (var dirName in dirNames)
             {
                 string[] fileNames = System.IO.Directory.GetFiles(dirName, "Settings_*.cs");
                 foreach (var f in fileNames)
                 {
                     counter++;
-                    if (counter > 0) //change to verify only some part of configs
+                    if (counter > 900) //change to verify only some part of configs
                     {
                         checkAndPrint(f);
                     }
