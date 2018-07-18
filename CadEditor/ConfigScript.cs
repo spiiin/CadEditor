@@ -41,6 +41,14 @@ namespace CadEditor
 
     public class ConfigScript
     {
+        static ConfigScript()
+        {
+            //add pathes for including scripts
+            var globalSettings = CSScript.GlobalSettings;
+            globalSettings.AddSearchDir("./settings_nes");
+            globalSettings.AddSearchDir("./settings_smd");
+            globalSettings.AddSearchDir("./settings_gba");
+        }
         public static void LoadGlobalsFromFile(string fileName)
         {
             try

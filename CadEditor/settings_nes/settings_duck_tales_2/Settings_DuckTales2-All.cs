@@ -1,0 +1,241 @@
+using CadEditor;
+using PluginMapEditor;
+using System.Collections.Generic;
+using System;
+//css_include shared_settings/CapcomBase.cs;
+//css_include shared_settings/Dt2Cad2.cs;
+
+public class Data:CapcomBase
+{
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginMapEditor.dll",
+      "PluginChrView.dll",
+      "PluginEditLayout.dll",
+    };
+  }
+  public bool isShowScrollsInLayout() { return false; }
+  
+  public OffsetRec getPalOffset()       { return new OffsetRec(0x3E2F, 12   , 16);     }
+  public OffsetRec getVideoOffset()     { return new OffsetRec(0x4D10 , 7   , 0xD00);  }
+  public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x4D10 , 7   , 0xD00);  }
+  public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x7310 , 3   , 0x4000); }
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x1008A , 5  , 0x440);  }
+  public OffsetRec getScreensOffset()   { return new OffsetRec(0x11d5a, 300 , 0x40, 8, 8);   }
+  public string[] getBlockTypeNames()   { return objTypesDt2;  }
+  
+  public override GetVideoPageAddrFunc getVideoPageAddrFunc() { return getDuckTalesVideoAddress; }
+  public override GetVideoChunkFunc    getVideoChunkFunc()    { return getDuckTalesVideoChunk;   }
+  public override SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
+  public override GetBlocksFunc        getBlocksFunc()        { return BlockUtils.getBlocksDt2;}
+  public override SetBlocksFunc        setBlocksFunc()        { return BlockUtils.setBlocksDt2;}
+  public override GetBigBlocksFunc     getBigBlocksFunc()     { return getBigBlocksDt2;}
+  public override SetBigBlocksFunc     setBigBlocksFunc()     { return setBigBlocksDt2;}
+  public GetObjectsFunc getObjectsFunc() { return getObjectsDt2; }
+  public SetObjectsFunc setObjectsFunc() { return setObjectsDt2; }
+  
+  public GetLevelRecsFunc getLevelRecsFunc() { return getLevelRecs; }
+  
+  public IList<LevelRec> getLevelRecs()
+  {
+      var groups = ConfigScript.getGroups();
+      return new List<LevelRec>() 
+      {
+          new LevelRec(0x19488, 0xFF, 8, 6, 0x11C3A, groups[0].name, groups[0]),
+          new LevelRec(0x195A7, 0xFF, 8, 6, 0x11C6A, groups[1].name, groups[1]),
+          new LevelRec(0x196E7, 0xFF, 8, 6, 0x11C9A, groups[2].name, groups[2]),
+          new LevelRec(0x19830, 0xFF, 8, 6, 0x11CCA, groups[3].name, groups[3]),
+          new LevelRec(0x19970, 0xFF, 8, 6, 0x11CFA, groups[4].name, groups[4]),
+          new LevelRec(0x19A87, 0xFF, 8, 6, 0x11D2A, groups[5].name, groups[5]),
+          new LevelRec(0x19B9E, 0xFF, 8, 6, 0x11C6A, groups[1].name, groups[1]),
+      };
+  }
+  
+  public GetGroupsFunc getGroupsFunc() { return getGroups; }
+  public GroupRec[] getGroups()
+  {
+    return new GroupRec[] { 
+      new GroupRec("Niagara"         , 0,0,0,0, 0x01),
+      new GroupRec("Bermuda"         , 1,0,1,2, 0x20),
+      new GroupRec("Egypt"           , 2,1,2,4, 0x41),
+      new GroupRec("Mu"              , 3,1,3,6, 0x5F),
+      new GroupRec("Scotland"        , 4,2,4,8, 0x81),
+      new GroupRec("Scotland 2"      , 4,2,4,8, 0x9E),
+    };
+  }
+  
+  string[] objTypesDt2 = new[] {
+    "no","no","no","no","no","no","no","no",
+    "no","no","no","no","no","no","no","no"
+  };
+  
+  public MapInfo[] getMapsInfo() { return mapsDt2; }
+  public LoadMapFunc getLoadMapFunc() { return MapUtils.loadMapDt2; }
+  public SaveMapFunc getSaveMapFunc() { return MapUtils.saveMapDt2; }
+
+  MapInfo[] mapsDt2 = new MapInfo[]
+  { 
+      new MapInfo(){   dataAddr = 0xF200, palAddr = 0x3DCF, videoNo = 6 }
+  };
+
+  
+  //--------------------------------------------------------------------------------------------
+  //duck tales specific
+  public int getDuckTalesVideoAddress(int id)
+  {
+    return -1;
+  }
+  
+  public byte[] getDuckTalesVideoChunk(int videoPageId)
+  {
+    if (videoPageId < 0x6)
+    {
+        return Utils.readVideoBankFromFile("videoBack_DT2.bin", videoPageId);
+    }
+    else
+    {
+        return Utils.readVideoBankFromFile("videoMap_DT2.bin", 0);
+    }
+  }
+  
+  public int getBigBlocksCountForLevel(int levelNo)
+  {
+    int[] bigBlocksCount = {207,195,169,176,209,209};
+    return bigBlocksCount[levelNo];
+  }
+  
+  public int[] getBigBlocksPtrsForLevel(int levelNo)
+  {
+    int[][] levelPointers = { 
+     new int[]{0x10D4A, 0x10E19, 0x10EE8, 0x10FB7},  //ptrs for level 1
+     new int[]{0x11086, 0x11149, 0x1120C, 0x112CF},  //ptrs for level 2
+     new int[]{0x11392, 0x1143B, 0x114E4, 0x1158D},  //ptrs for level 3
+     new int[]{0x11636, 0x116E6, 0x11796, 0x11846},  //ptrs for level 4
+     new int[]{0x118F6, 0x119C7, 0x11A98, 0x11B69},  //ptrs for level 5
+     new int[]{0x118F6, 0x119C7, 0x11A98, 0x11B69}   //ptrs for level 6 (same as 5)
+    };
+    return levelPointers[levelNo];
+  }
+  
+  public BigBlock[] getBigBlocksDt2(int bigTileIndex)
+  {
+    int[] addrPointers = getBigBlocksPtrsForLevel(bigTileIndex);
+    int blocksCount = getBigBlocksCountForLevel(bigTileIndex);
+    byte[] bigBlockIndexes = new byte[getBigBlocksCount()*4];
+    byte[] tempIndexes = Utils.readDataFromUnalignedArrays(Globals.romdata, addrPointers[0], addrPointers[1], addrPointers[2], addrPointers[3], blocksCount);
+    Array.Copy(tempIndexes, bigBlockIndexes, blocksCount*4); 
+    return Utils.unlinearizeBigBlocks<BigBlock>(bigBlockIndexes, 2, 2);
+  }
+  
+  public void setBigBlocksDt2(int bigTileIndex, BigBlock[] bigBlocks)
+  {
+    int[] addrPointers = getBigBlocksPtrsForLevel(bigTileIndex);
+    int blocksCount = getBigBlocksCountForLevel(bigTileIndex);
+    var data = Utils.linearizeBigBlocks(bigBlocks);
+    Utils.writeDataToUnalignedArrays(data, Globals.romdata, addrPointers[0], addrPointers[1], addrPointers[2], addrPointers[3], blocksCount); 
+  }
+  
+  public int getPtrToFloorsAddr(int levelNo)
+  {
+    int SIZE_OF_WORD = 2;
+    int FLOORS_COUNT = 6;
+    return 0x19434 + levelNo * FLOORS_COUNT * SIZE_OF_WORD;
+  }
+  
+  public List<ObjectList> getObjectsDt2(int levelNo)
+  {
+    LevelRec lr = ConfigScript.getLevelRec(levelNo);
+    int objCount = lr.objCount, addr = lr.objectsBeginAddr;
+    var objects = new List<ObjectRec>();
+
+    int objectsReaded = 0;
+    int currentHeight = 0;
+    while (objectsReaded < objCount)
+    {
+        byte command = Globals.romdata[addr];
+        if (command == 0xFF)
+        {
+            currentHeight = Globals.romdata[addr + 1];
+            if (currentHeight == 0xFF)
+                break;
+            addr += 2;
+        }
+        else
+        {
+            byte v = Globals.romdata[addr + 2];
+            byte xbyte = Globals.romdata[addr + 0];
+            byte ybyte = Globals.romdata[addr + 1];
+            byte sx = (byte)(xbyte >> 5);
+            byte x = (byte)((xbyte & 0x1F) << 3);
+            byte sy = (byte)currentHeight;
+            byte y = ybyte;
+            var obj = new ObjectRec(v, sx, sy, x, y);
+            objects.Add(obj);
+            objectsReaded++;
+            addr += 3;
+        }
+    }
+    return new List<ObjectList> { new ObjectList { objects = objects, name = "Objects" } };
+  }
+  
+  public bool setObjectsDt2(int levelNo, List<ObjectList> objLists)
+  {
+      LevelRec lr = ConfigScript.getLevelRec(levelNo);
+      var objects = objLists[0].objects;
+      int objCount = lr.objCount, addr = lr.objectsBeginAddr;
+      var objsAtLine = new int[lr.height];
+
+      for (int i = 0; i < objects.Count; i++)
+      {
+          var obj = objects[i];
+          objsAtLine[obj.sy] += 1;
+      }
+
+      int curObjLine = 0;
+
+      //start line 0
+      Globals.romdata[addr] = (byte)0xFF;
+      Globals.romdata[addr + 1] = (byte)curObjLine;
+      addr += 2;
+      
+      //pointers to floors
+      int floorPtr = getPtrToFloorsAddr(levelNo);
+      int objectsPtr = Utils.readWordUnsignedLE(Globals.romdata, floorPtr);
+
+      int objIndex = 0;
+      int totalCount = objsAtLine[curObjLine];
+      while (objIndex < objects.Count)
+      {
+          if (objIndex >= totalCount)
+          {   
+              //write code of begin ptr
+              Globals.romdata[addr] = (byte)0xFF;
+              Globals.romdata[addr + 1] = (byte)(++curObjLine);
+              addr += 2;
+              objectsPtr += 2;
+              totalCount += objsAtLine[curObjLine];
+              
+              //patch ptrs to floors
+              floorPtr += 2; //next floor
+              Globals.romdata[floorPtr+0] = (byte)(objectsPtr & 0xFF);
+              Globals.romdata[floorPtr+1] = (byte)(objectsPtr >> 8);
+              continue;
+          }
+
+          var obj = objects[objIndex];
+          int x = (obj.sx << 5) | (obj.x >> 3);
+          Globals.romdata[addr + 0] = (byte)x;
+          Globals.romdata[addr + 1] = (byte)obj.y;
+          Globals.romdata[addr + 2] = (byte)obj.type;
+          addr += 3;
+          objectsPtr += 3;
+          objIndex++;
+      }
+      //write code of end objects
+      Globals.romdata[addr] = 0xFF;   
+      Globals.romdata[addr+1] = 0xFF;
+      return true;
+  }
+}
