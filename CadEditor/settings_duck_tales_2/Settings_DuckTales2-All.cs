@@ -2,8 +2,8 @@ using CadEditor;
 using PluginMapEditor;
 using System.Collections.Generic;
 using System;
-//css_include Settings_CapcomBase.cs;
-//css_include Settings_Dt2Cad2.cs;
+//css_include shared_settings/CapcomBase.cs;
+//css_include shared_settings/Dt2Cad2.cs;
 
 public class Data:CapcomBase
 {

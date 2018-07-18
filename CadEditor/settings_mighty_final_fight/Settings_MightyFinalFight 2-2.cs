@@ -1,6 +1,6 @@
 using CadEditor;
 using System;
-//css_include Settings_CapcomBase.cs;
+//css_include shared_settings/CapcomBase.cs;
 
 public class Data : CapcomBase
 { 

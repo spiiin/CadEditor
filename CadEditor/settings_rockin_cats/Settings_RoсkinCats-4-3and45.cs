@@ -1,7 +1,7 @@
 using CadEditor;
 using System;
 using System.Drawing;
-//css_include Settings_RockinCats-Utils;
+//css_include settings_rockin_cats/RockinCats-Utils.cs;
 
 public class Data : RockinCatsBase
 {

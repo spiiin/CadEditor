@@ -1,7 +1,7 @@
 using CadEditor;
 using System.Collections.Generic;
-//css_include Settings_CapcomBase.cs;
-//css_include Settings_Mermaid-Utils.cs;
+//css_include shared_settings/CapcomBase.cs;
+//css_include settings_little_mermaid/Mermaid-Utils.cs;
 public class Data:CapcomBase
 {
   public string[] getPluginNames() 

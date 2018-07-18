@@ -1,6 +1,6 @@
 using CadEditor;
 using System.Collections.Generic;
-//css_include Settings_Flintstones-Utils.cs;
+//css_include settings_flintstones_rescue_of_dino_and_hoppy/Flintstones-Utils.cs;
 public class Data
 { 
   public string[] getPluginNames() 

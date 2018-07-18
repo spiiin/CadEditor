@@ -1,7 +1,7 @@
 using CadEditor;
 using System.Collections.Generic;
-//css_include Settings_CapcomBase.cs;
-//css_include Settings_Megaman3Base.cs
+//css_include shared_settings/CapcomBase.cs;
+//css_include settings_megaman3/Megaman3Base.cs;
 public class Data:Megaman3Base
 {
   protected override int LEVEL_NO() { return 3; }

@@ -1,6 +1,6 @@
 using CadEditor;
 using System.Collections.Generic;
-//css_include Settings_TomAndJerryBase.cs;
+//css_include settings_tom_and_jerry/TomAndJerryBase.cs;
 
 public class Data : TomAndJerryBase
 { 
