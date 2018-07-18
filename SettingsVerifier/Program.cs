@@ -16,7 +16,7 @@ namespace SettingsEditor
             var counter = 0;
             Console.WriteLine("Checking settings files...");
             string rootDirName = System.IO.Path.GetFullPath(".");
-            string[] dirNames = System.IO.Directory.GetDirectories(rootDirName, "settings_*");
+            var dirNames = System.IO.Directory.GetDirectories(rootDirName, "settings_*", SearchOption.AllDirectories);
             foreach (var dirName in dirNames)
             {
                 string[] fileNames = System.IO.Directory.GetFiles(dirName, "Settings_*.cs");
