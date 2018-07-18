@@ -1,7 +1,7 @@
 using CadEditor;
 using System;
 using System.Collections.Generic;
-//css_include settings_sega_zombies_ate_my_neighbors/Settings_ZAMN-Utils.cs;
+//css_include zombies_ate_my_neighbors/ZAMN-Utils.cs;
 
 public class Data 
 { 

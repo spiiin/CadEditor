@@ -2,7 +2,7 @@ using CadEditor;
 using System;
 using System.Collections.Generic;
 using PluginCompressLZKN;
-//css_include settings_sega_contra_hard_corps/CHC-Utils.cs;
+//css_include contra_hard_corps/CHC-Utils.cs;
 
 public class Data 
 { 
@@ -19,13 +19,13 @@ public class Data
   
   public bool isUseSegaGraphics()      { return true; }
   public bool isBlockSize4x4()         { return true; }
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x0, 1 , 128*32, 128, 32);   }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x0, 1 , 256*16, 256, 16);   }
   
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChuck;}
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
-  public GetSegaMappingFunc     getSegaMappingFunc()     { return getBigBlocks; }
-  public SetSegaMappingFunc     setSegaMappingFunc()     { return setBigBlocks; }
+  public GetSegaMappingFunc    getSegaMappingFunc()     { return getBigBlocks; }
+  public SetSegaMappingFunc    setSegaMappingFunc()     { return setBigBlocks; }
   
   public GetPalFunc           getPalFunc()           { return readPal;}
   public SetPalFunc           setPalFunc()           { return null;}
@@ -38,8 +38,8 @@ public class Data
   public bool isEnemyEditorEnabled()    { return true; }
   
   public GetObjectsFunc getObjectsFunc() { return CHCUtils.getObjects; }
+  public SetObjectsFunc setObjectsFunc() { return CHCUtils.setObjects; }
   public GetObjectDictionaryFunc getObjectDictionaryFunc() { return CHCUtils.getObjectDictionary; }
-  public SetObjectsFunc setObjectsFunc() { return null; }
   public GetLevelRecsFunc getLevelRecsFunc() { return ()=> {return levelRecs;}; }
   public DrawObjectFunc getDrawObjectFunc() { return CHCUtils.drawObject; }
   
@@ -47,13 +47,16 @@ public class Data
   
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
-    new LevelRec(0x7E88E, /*26*/ 93, 1, 1, 0), 
+    //33 - game objects
+    //67 - events
+    //17 - hack for not change last boss, because my save method brake game with change it
+    new LevelRec(0x7E1E8, 33 + 67 - 17, 1, 1, 0), 
   };
   
-  private string VIDEO_NAME  = "vram_22.bin";
-  private string BLOCKS_NAME = "blocks_22.bin"; //1E8740//1EA6A6
-  private string PAL_NAME    = "pal_22.bin";
-  private string BACK_NAME    = "back_22.bin";
+  private string VIDEO_NAME  = "vram_11.bin";
+  private string BLOCKS_NAME = "blocks_11.bin"; //1E391A//1E597C
+  private string PAL_NAME    = "pal_11.bin";
+  private string BACK_NAME   = "back_11.bin";
   
   public byte[] getVideoChuck(int videoPageId)
   {
@@ -89,9 +92,9 @@ public class Data
   public CompressParams[] getCompressParams()
   {
       return new CompressParams[] {
-          new CompressParams {address = 0x1EA6A6, maxSize = 681},
-          new CompressParams {address = 0x1E8740, maxSize = 3399, fname = BLOCKS_NAME},
-          new CompressParams {address = 0x1E9488, maxSize = 810, fname = BACK_NAME},
+          new CompressParams {address = 0x1E597C, maxSize = 1107 },
+          new CompressParams {address = 0x1E391A, maxSize = 3570, fname = BLOCKS_NAME},
+          new CompressParams {address = 0x1E470C, maxSize = 484, fname = BACK_NAME},
       };
   }
 }

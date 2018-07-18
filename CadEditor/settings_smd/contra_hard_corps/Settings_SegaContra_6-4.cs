@@ -2,7 +2,7 @@ using CadEditor;
 using System;
 using System.Collections.Generic;
 using PluginCompressLZKN;
-//css_include settings_sega_contra_hard_corps/CHC-Utils.cs;
+//css_include contra_hard_corps/CHC-Utils.cs;
 
 public class Data 
 { 
@@ -19,7 +19,7 @@ public class Data
   
   public bool isUseSegaGraphics()      { return true; }
   public bool isBlockSize4x4()         { return true; }
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x0, 1 , 128*32, 128, 32);   }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x0, 1 ,128*32, 128, 32);   }
   
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChuck;}
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
@@ -47,13 +47,13 @@ public class Data
   
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
-    new LevelRec(0x7D7EA, /*45*/112, 1, 1, 0), 
+    new LevelRec(0x7FCB4, /*24*/ 84, 1, 1, 0), 
   };
   
-  private string VIDEO_NAME  = "vram_3.bin";  
-  private string BLOCKS_NAME = "blocks_3.bin";//1DECF0//1E072A
-  private string PAL_NAME    = "pal_3.bin";
-  private string BACK_NAME    = "back_3.bin"; //1DF7A0
+  private string VIDEO_NAME  = "vram_64.bin";
+  private string BLOCKS_NAME = "blocks_64.bin"; //1F6E08//1F7D88
+  private string PAL_NAME    = "pal_64.bin";
+  private string BACK_NAME    = "back_64.bin";  //1F7B54
   
   public byte[] getVideoChuck(int videoPageId)
   {
@@ -89,9 +89,9 @@ public class Data
   public CompressParams[] getCompressParams()
   {
       return new CompressParams[] {
-          new CompressParams {address = 0x1E072A, maxSize = 578},
-          new CompressParams {address = 0x1E8740, maxSize = 3399, fname = BLOCKS_NAME},
-          new CompressParams {address = 0x1DF7A0, maxSize = 899, fname = BACK_NAME},           
+          new CompressParams {address = 0x1F7D88, maxSize = 668},
+          new CompressParams {address = 0x1F6E08, maxSize = 3403, fname = BLOCKS_NAME},
+          new CompressParams {address = 0x1F7B54, maxSize = 	563, fname = BACK_NAME},
       };
   }
 }

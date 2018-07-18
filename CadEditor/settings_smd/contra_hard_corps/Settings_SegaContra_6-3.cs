@@ -2,7 +2,7 @@ using CadEditor;
 using System;
 using System.Collections.Generic;
 using PluginCompressLZKN;
-//css_include settings_sega_contra_hard_corps/CHC-Utils.cs;
+//css_include contra_hard_corps/CHC-Utils.cs;
 
 public class Data 
 { 

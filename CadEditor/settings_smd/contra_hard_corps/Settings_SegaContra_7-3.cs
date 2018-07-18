@@ -2,7 +2,7 @@ using CadEditor;
 using System;
 using System.Collections.Generic;
 using PluginCompressLZKN;
-//css_include settings_sega_contra_hard_corps/CHC-Utils.cs;
+//css_include contra_hard_corps/CHC-Utils.cs;
 
 public class Data 
 { 
@@ -19,7 +19,7 @@ public class Data
   
   public bool isUseSegaGraphics()      { return true; }
   public bool isBlockSize4x4()         { return true; }
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x0, 1 , 512*8, 512, 8);   }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x0, 1 , 32*128, 32, 128);   }
   
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChuck;}
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
@@ -47,13 +47,13 @@ public class Data
   
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
-    new LevelRec(0x7E6DE, 33, 1, 1, 0), 
+    new LevelRec(0x7F172, /*12*/ 61, 1, 1, 0), 
   };
   
-  private string VIDEO_NAME  = "vram_21.bin";
-  private string BLOCKS_NAME = "blocks_21.bin"; //1E5DD0//1E7B7A
-  private string PAL_NAME    = "pal_21.bin";
-  private string BACK_NAME    = "back_21.bin"; //1E63DC
+  private string VIDEO_NAME  = "vram_73.bin";
+  private string BLOCKS_NAME = "blocks_73.bin"; //1ED6B4//1EED5A
+  private string PAL_NAME    = "pal_73.bin";
+  private string BACK_NAME    = "back_73.bin"; //1EE49E
   
   public byte[] getVideoChuck(int videoPageId)
   {
@@ -89,9 +89,9 @@ public class Data
   public CompressParams[] getCompressParams()
   {
       return new CompressParams[] {
-          new CompressParams {address = 0x1E7B7A, maxSize = 379},
-          new CompressParams {address = 0x1E5DD0, maxSize = 1547, fname = BLOCKS_NAME},
-          new CompressParams {address = 0x1E63DC, maxSize = 883, fname = BACK_NAME},
+          new CompressParams {address = 0x1EED5A, maxSize = 459},
+          new CompressParams {address = 0x1ED6B4, maxSize = 3562, fname = BLOCKS_NAME},
+          new CompressParams {address = 0x1EE49E, maxSize = 584, fname = BACK_NAME},
       };
   }
 }

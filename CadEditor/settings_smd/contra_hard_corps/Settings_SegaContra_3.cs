@@ -2,7 +2,7 @@ using CadEditor;
 using System;
 using System.Collections.Generic;
 using PluginCompressLZKN;
-//css_include settings_sega_contra_hard_corps/CHC-Utils.cs;
+//css_include contra_hard_corps/CHC-Utils.cs;
 
 public class Data 
 { 
@@ -10,11 +10,13 @@ public class Data
   {
     return new string[] 
     {
+      "PluginSegaBackEditor.dll",
       "PluginCompressLZKN.dll"
     };
   }
+  
   public bool showDumpFileField()  { return true;  }
-
+  
   public bool isUseSegaGraphics()      { return true; }
   public bool isBlockSize4x4()         { return true; }
   public OffsetRec getScreensOffset()  { return new OffsetRec(0x0, 1 , 128*32, 128, 32);   }
@@ -27,6 +29,9 @@ public class Data
   
   public GetPalFunc           getPalFunc()           { return readPal;}
   public SetPalFunc           setPalFunc()           { return null;}
+  
+  public LoadSegaBackFunc     loadSegaBackFunc()     { return loadBack;}
+  public SaveSegaBackFunc     saveSegaBackFunc()     { return saveBack;}
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }
@@ -42,12 +47,13 @@ public class Data
   
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
-    new LevelRec(0x7F324, /*30*/92, 1, 1, 0), 
+    new LevelRec(0x7D7EA, /*45*/112, 1, 1, 0), 
   };
   
-  private string VIDEO_NAME  = "vram_51.bin";
-  private string BLOCKS_NAME = "blocks_51.bin";  //1F0B28//1F36D0
-  private string PAL_NAME    = "pal_51.bin";
+  private string VIDEO_NAME  = "vram_3.bin";  
+  private string BLOCKS_NAME = "blocks_3.bin";//1DECF0//1E072A
+  private string PAL_NAME    = "pal_3.bin";
+  private string BACK_NAME    = "back_3.bin"; //1DF7A0
   
   public byte[] getVideoChuck(int videoPageId)
   {
@@ -69,12 +75,23 @@ public class Data
     return Utils.readBinFile(PAL_NAME);
   }
   
+  public byte[] loadBack()
+  {
+    return Utils.loadDataFromFile(BACK_NAME);
+  }
+  
+  public void saveBack(byte[] data)
+  {
+    Utils.saveDataToFile(BACK_NAME, data);
+  }
+  
   //-------------------------------------------
   public CompressParams[] getCompressParams()
   {
       return new CompressParams[] {
-          new CompressParams {address = 0x1F36D0, maxSize = 869},
-          new CompressParams {address = 0x1F0B28, maxSize = 5156, fname = BLOCKS_NAME},
+          new CompressParams {address = 0x1E072A, maxSize = 578},
+          new CompressParams {address = 0x1E8740, maxSize = 3399, fname = BLOCKS_NAME},
+          new CompressParams {address = 0x1DF7A0, maxSize = 899, fname = BACK_NAME},           
       };
   }
 }

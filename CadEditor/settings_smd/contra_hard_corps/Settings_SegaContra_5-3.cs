@@ -2,7 +2,7 @@ using CadEditor;
 using System;
 using System.Collections.Generic;
 using PluginCompressLZKN;
-//css_include settings_sega_contra_hard_corps/CHC-Utils.cs;
+//css_include contra_hard_corps/CHC-Utils.cs;
 
 public class Data 
 { 
@@ -47,13 +47,13 @@ public class Data
   
   public IList<LevelRec> levelRecs = new List<LevelRec>() 
   {
-    new LevelRec(0x7EC84, /*15*/ 62, 1, 1, 0), 
+    new LevelRec(0x7EF20, /*5*/ 22, 1, 1, 0), 
   };
   
-  private string VIDEO_NAME  = "vram_54.bin";
-  private string BLOCKS_NAME = "blocks_54.bin"; //1EA950//1EBAA2
-  private string PAL_NAME    = "pal_54.bin";
-  private string BACK_NAME    = "back_54.bin"; //1EB4F8
+  private string VIDEO_NAME  = "vram_53.bin";
+  private string BLOCKS_NAME = "blocks_53.bin"; //1EBCAC//1EC4E2
+  private string PAL_NAME    = "pal_53.bin";
+  private string BACK_NAME    = "back_53.bin"; //1EC15E
   
   public byte[] getVideoChuck(int videoPageId)
   {
@@ -89,9 +89,9 @@ public class Data
   public CompressParams[] getCompressParams()
   {
       return new CompressParams[] {
-          new CompressParams {address = 0x1EBAA2, maxSize = 522},
-          new CompressParams {address = 0x1EA950, maxSize = 2983, fname = BLOCKS_NAME},
-          new CompressParams {address = 0x1EB4F8, maxSize = 705, fname = BACK_NAME},
+          new CompressParams {address = 0x1EC4E2, maxSize = 333},
+          new CompressParams {address = 0x1EBCAC, maxSize = 1201, fname = BLOCKS_NAME},
+          new CompressParams {address = 0x1EC15E, maxSize = 473, fname = BACK_NAME},
       };
   }
 }
