@@ -1,3 +1,4 @@
+#from __future__ import print_function
 import os, glob, shutil, zipfile
 
 VERSION        = "51"
@@ -27,9 +28,9 @@ COPY_FOLDER_LIST = [
   "obj_sprites/",
   "scroll_sprites/",
   "shared_settings/",
-  "settings_nes/settings_*/",
-  "settings_smd/settings_*/",
-  "settings_gba/settings_*/",
+  "settings_nes/",  #NEED TO REMOVE SUBFOLDERS WITH "_" prefix - unfinished configs
+  "settings_smd/",
+  "settings_gba/",
   "IronPythonLib/",
   "exportTmx/pytmxlib/",
 ]
