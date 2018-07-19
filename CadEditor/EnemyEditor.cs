@@ -656,16 +656,36 @@ namespace CadEditor
                 var activeObjectList = objectLists[curActiveObjectListIndex]; //TODO: all
                 for (int i = 0; i < activeObjectList.objects.Count; i++)
                 {
-                    var obj = activeObjectList.objects[i];
-                    if ((obj.sx == sx) && (obj.sy == sy) && (Math.Abs(obj.x - x) < 8) && (Math.Abs(obj.y - y) < 8))
+                    if (!useBigPictures)
                     {
-                        dgvObjects.Rows[i].Selected = !dgvObjects.Rows[i].Selected;
+                        var obj = activeObjectList.objects[i];
+                        if ((obj.sx == sx) && (obj.sy == sy) && (Math.Abs(obj.x - x) < 8) && (Math.Abs(obj.y - y) < 8))
+                        {
+                            dgvObjects.Rows[i].Selected = !dgvObjects.Rows[i].Selected;
+                        }
+                    }
+                    else
+                    {
+                        var obj = activeObjectList.objects[i];
+                        if ((obj.sx == sx) && (obj.sy == sy))
+                        {
+                            if (isMouseInside(obj, x, y, objectSpritesBig))
+                            {
+                                dgvObjects.Rows[i].Selected = !dgvObjects.Rows[i].Selected;
+                            }
+                        }
                     }
                 }
             }
             objectDragged = true;
             oldX = x;
             oldY = y;
+        }
+
+        private bool isMouseInside(ObjectRec obj, int x, int y, Image[] sprites)
+        {
+            var bigObject = sprites[obj.type];
+            return (x > (obj.x - bigObject.Width)) && (x < obj.x) && (y > (obj.y - bigObject.Height)) && (y < obj.y);
         }
 
         private int oldX;
