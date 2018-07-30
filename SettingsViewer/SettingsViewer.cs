@@ -142,6 +142,8 @@ namespace SettingsViewer
         public MethodDelegate getWordLen => get();
         [Category("Screen params")]
         public MethodDelegate isLittleEndian => get();
+        [Category("GameBoy graphics")]
+        public MethodDelegate isUsGbGraphics => get();
         [Category("Sega graphics")]
         public MethodDelegate isUseSegaGraphics => get();
         [Category("Sega graphics")]
