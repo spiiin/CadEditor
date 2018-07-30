@@ -40,6 +40,21 @@ public static class BlockUtils
         Globals.romdata[palAddr + i] = (byte)t;
     }
   }
+  
+  //-----------------------------------------------------------------------------------------------------------------
+  public static ObjRec[] getBlocksLinear2x2WithoutAttribs(int tileId)
+  {
+      int count = ConfigScript.getBlocksCount();
+      var bb = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), 2, 2, count, false, false);
+      return bb;
+  }
+  
+  public static void setBlocksLinear2x2WithoutAttribs(int tileId, ObjRec[] blocksData)
+  {
+    int addr = ConfigScript.getTilesAddr(tileId);
+    int count = ConfigScript.getBlocksCount();
+    Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, false, false);
+  }
 
   //-----------------------------------------------------------------------------------------------------------------
   public static ObjRec[] getBlocksLinear2x2Masked(int tileId)

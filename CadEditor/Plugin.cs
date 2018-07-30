@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.IO;
 using System.Drawing;
+using System.Drawing.Imaging;
 using CSScriptLibrary;
 
 namespace CadEditor
@@ -56,6 +57,15 @@ namespace CadEditor
 
         Color[] NesColors { get; set; }
 
+        string getName();
+    }
+
+    public interface IVideoPluginGb
+    {
+        Image[] makeBigBlocks(byte[] ppuData, byte[] tiles, byte[] pallette, int count, MapViewType curViewType = MapViewType.Tiles);
+        Color[] getPalette(byte[] pal);
+        Bitmap getTile(byte[] ppuData, Color[] palette, int no);
+        Bitmap getTilesRectangle(byte[] ppuData, Color[] palette);
         string getName();
     }
 

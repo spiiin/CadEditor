@@ -61,7 +61,7 @@ namespace CadEditor
 
         private Form makeBlocksEditor()
         {
-            if (!ConfigScript.isUseSegaGraphics())
+            if (!ConfigScript.isUseSegaGraphics()) //isUseGbGraphics
             {
                 var f = new BlockEdit();
                 f.setFormMain(this);
@@ -180,6 +180,10 @@ namespace CadEditor
                     if (ConfigScript.isUseSegaGraphics())
                     {
                         bigBlocks = Globals.makeSegaBigBlocks(curActiveVideoNo, curActiveBigBlockNo, curActivePalleteNo, curActiveViewType);
+                    }
+                    else if (ConfigScript.isUseGbGraphics())
+                    {
+                        bigBlocks = Globals.makeGbBigBlocks(curActiveVideoNo, curActiveBigBlockNo, curActivePalleteNo, curActiveViewType);
                     }
                     else
                     {
@@ -958,6 +962,8 @@ namespace CadEditor
                 sb.Append(ConfigScript.videoNes.getName() + "\n");
             if (ConfigScript.videoSega != null)
                 sb.Append(ConfigScript.videoSega.getName() + "\n");
+            if (ConfigScript.videoGb != null)
+                sb.Append(ConfigScript.videoGb.getName() + "\n");
             MessageBox.Show(sb.ToString());
         }
 
@@ -982,7 +988,7 @@ namespace CadEditor
 
         private void setWindowText()
         {
-            Text = String.Format("CAD Editor v5.0 - {0}", OpenFile.FileName);
+            Text = String.Format("CAD Editor v5.1 - {0}", OpenFile.FileName);
         }
 
         private Screen getActiveScreen()

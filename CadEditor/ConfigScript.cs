@@ -176,6 +176,7 @@ namespace CadEditor
             wordLen = callFromScript(asm, data, "*.getWordLen", 1);
             littleEndian = callFromScript(asm, data, "*.isLittleEndian", false);
             useSegaGraphics = callFromScript(asm, data, "*.isUseSegaGraphics", false);
+            useGbGraphics = callFromScript(asm, data, "*.isUseGbGraphics", false);
             blockSize4x4 = callFromScript(asm, data, "*.isBlockSize4x4", false);
             buildScreenFromSmallBlocks = callFromScript(asm, data, "isBuildScreenFromSmallBlocks", false);
             getLevelRecsFunc = callFromScript<GetLevelRecsFunc>(asm, data, "*.getLevelRecsFunc", ConfigScript.getLevelRecsFuncDefault());
@@ -298,6 +299,7 @@ namespace CadEditor
             plugins.Clear();
             videoNes = null;
             videoSega = null;
+            videoGb = null;
         }
 
         private static void loadGlobalPlugins()
@@ -310,6 +312,7 @@ namespace CadEditor
 
             loadPluginWithSilentCatch(() => videoNes = PluginLoader.loadPlugin<IVideoPluginNes>("PluginVideoNes.dll"));
             loadPluginWithSilentCatch(() => videoSega = PluginLoader.loadPlugin<IVideoPluginSega>("PluginVideoSega.dll"));
+            loadPluginWithSilentCatch(() => videoGb = PluginLoader.loadPlugin<IVideoPluginGb>("PluginVideoGb.dll"));
         }
 
         private static void loadPluginsFromCurrentConfig(AsmHelper asm, object data)
@@ -598,6 +601,11 @@ namespace CadEditor
             return useSegaGraphics;
         }
 
+        public static bool isUseGbGraphics()
+        {
+            return useGbGraphics;
+        }
+
         public static bool isBlockSize4x4()
         {
             return blockSize4x4;
@@ -706,6 +714,7 @@ namespace CadEditor
         public static bool buildScreenFromSmallBlocks;
 
         public static bool useSegaGraphics;
+        public static bool useGbGraphics;
         public static bool blockSize4x4;
 
         public static int minObjCoordX;
@@ -794,5 +803,6 @@ namespace CadEditor
         public static List<IPlugin> plugins = new List<IPlugin>();
         public static IVideoPluginNes videoNes;
         public static IVideoPluginSega videoSega;
+        public static IVideoPluginGb videoGb;
     }
 }

@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 [RUS]
 Редактор уровней для игр [NES/SEGA/SNES/GBA].
-Версия 5.0+
+Версия 5.1
 -------------------------------------------------------------------------------
 
 Полный список поддерживаемых игр в файле cad_editor_supported_games.txt
@@ -628,22 +628,59 @@ v5.0+ (набор конфигов)
   Vice: Project Doom
   Guerilla War
   Bugs Bunny Birthday Blowout
+  
+v5.1
+- Инсталлятор, загрузчик на itch.io
+- Поддержка любого количества экранов разных размеров в одном конфиге, немного переделано задание размера экранов (для каждой группы экранов)
+- Исправление недочётов:
+  - Для плагина скриптов открывается папка со скриптами
+  - Нормальная работа с вертикальными экранами для прямоугольных блоков
+  - Закрытие окна выбора конфига при синтаксической ошибке в тексте конфига
+  - Нормальное выделение больших спрайтов объектов (для Ninja Cats)
+- Все конфиги разложены в соотвествующие корневые директории (settings_nes/settings_smd/settings_gba)
+- Конфиги для игр (NES):
+  Hudson Hawk (1 level)
+  Asterix (all levels)
+  Silent Assault (all levels)
+  Aliens FDS (all levels)
+  Gaiapolis (1 level)
+  Tagin's Dragon (all levels)
+  Ikari Warriors (1 level)
+  Parasol Henbee (all levels)
+  Doki Doki Yuuoenchi (all levels)
+  Super Pitfall (all levels)
+  Panda Prince (all levels)
+  Rocman X (all levels)
+  Jetsons (all levels)
+  Spelunker 2 (all levels)
+  Ji Qi Mao Xiao Ding Dang (all levels)
+  Garfield (all levels)
+  Wai Wai World (all levels)
+  Wizzard of The Oz (all levels)
+  Splatterhouse (all levels)
+  Indivisible (all levels)
+  Mickey's Safari in Letterland (all levels)
+  Juuonki (all levels)
+  Metal Storm (all levels)
+- Фикс конфигов:
+  Jackie Chan Action Kung Fu (title screen)
+  Super City Tank (fix addresses of levels)
 
 -------------------------------------------------------------------------------
 Благодарности: 
 -------------------------------------------------------------------------------
-  EmsiD       - рисование иконок, создание хаков Darkwing Duck.
+  EmsiD       - спрайты объектов, создание хаков Darkwing Duck.
   Mefisto     - идеи по развитию редактора, тестирование, написание компрессоров для сеговских игр.
   Lomax       - тестирование, создание хаков с помощью редактора
-  Roket       - тестирование, рисование иконок, конфиги для редактора анимаций Tale Spin, Little Mermaid, конфиги для игр Goonies 2, Mickey Mouse 3, Mickey's Adventures in Numberland, Hook, Indiana Jones Jr, Super Robin Hood, формат объектов Tom & Jerry, Little Nemo
-  lancuster   - конфиги для игр Dragon Fighter, Cheetahmen 2, Captain America, TMNT 1, Jackie Chan, Gun Smoke, Batman, Monster in my Pocket, Super C, Captain Planet, Mitsume ga Tooru и других (около 40 игр)
+  Roket       - тестирование, спрайты объектов, конфиги для редактора анимаций Tale Spin, Little Mermaid, конфиги для игр Goonies 2, Mickey Mouse 3, Mickey's Adventures in Numberland, Hook, Indiana Jones Jr, Super Robin Hood, формат объектов Tom & Jerry, Little Nemo
+  lancuster   - конфиги для более чем 100 игр для NES.
   evgeny      - идеи по развитию редактора, тестирование.
   Matrixz     - документация к Megaman 4.
   Nemesis_c   - конфиги для игры Zombies Ate My Neighbors.
   Darthatron  - документация по Final Fantasy Tactics Advance, кодирование.
   cah4e3      - собрание огромной базы Unpublished cheats list для NES, формат игры Contra Spirits/Mickey Mania.
   Megaplex    - документация по игре EarthWorm Jim 2 и использованию формата RNC
-  DANGER X    - конфиги для игры Banana Prince, Mighty Final Fight, SD Hero Soukessen
+  DANGER X    - конфиги для игр Banana Prince, Mighty Final Fight, SD Hero Soukessen
   Ti_         - помощь с дизассеблированием, конфиги для игр Contra Force, Jungle Book, Little Nemo, Battletoads, Battletoads & Double Dragon, Shatterhand, Tom & Jerry, Ninja Cats.
   Alxr        - разбор формата уровней Rockin' Kats.
   Proton      - финансовая поддержка, конфиги для игр Shatterhand, Dragon Fighter
@@ -657,11 +694,17 @@ sanya.boyko@gmail.com
 Документация к редактору:
 https://spiiin.github.io/CadEditor/
 
+Зеркало для скачивания редактора:
+https://spiiin.itch.io/cadeditor
+
 Поддержка проекта на Patreon:
 https://www.patreon.com/CadEditor
 
 Bitcoin-кошелёк:
 12a26G6BxzYqx1D82ZNQvVJuzGSPETnd9r
+
+Steemit:
+https://steemit.com/utopian-io/@pinkwonder/cadeditor-universal-level-editor-for-nes-smd-snes-games
 
 Кошелёк WebMoney для пожертвований:
 R122299008919
