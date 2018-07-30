@@ -16,6 +16,10 @@ namespace CadEditor
         public static T loadPlugin<T>(string path)
         {
             string appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            if (appPath == null)
+            {
+                return default(T);
+            }
             Assembly currentAssembly = Assembly.LoadFile(Path.Combine(appPath, path));
             foreach (Type type in currentAssembly.GetTypes())
             {
@@ -55,7 +59,7 @@ namespace CadEditor
 
         Bitmap makeScreen(int scrNo, int levelNo, int videoNo, int bigBlockNo, int blockNo, int palleteNo, bool withBorders = true);
 
-        Color[] NesColors { get; set; }
+        Color[] defaultNesColors { get; set; }
 
         string getName();
     }
@@ -72,14 +76,12 @@ namespace CadEditor
     public interface IVideoPluginSega
     {
         Image[] makeBigBlocks(byte[] mapping, byte[] tiles, byte[] palette, int count, MapViewType curViewType = MapViewType.Tiles);
-        Color[] GetPalette(byte[] pal);
-        Bitmap GetTileFromArray(byte[] Tiles, ref int Position, Color[] Palette, byte PalIndex);
-        Bitmap GetTileFrom2ColorArray(byte[] Tiles, ref int Position);
-        byte[] GetArrayFrom2ColorTile(Bitmap tile);
-        byte[] GetArrayFrom2ColorBlock(Bitmap block);
-        //Bitmap GetBlockFrom2ColorArray(byte[] Tiles, int Width);
-        Bitmap GetTile(byte[] tiles, ushort Word, Color[] palette, byte palIndex, bool HF, bool VF);
-        // Bitmap GetBlock(ushort[] mapping, byte[] tiles, Color[] palette, byte Index);
+        Color[] getPalette(byte[] pal);
+        Bitmap getTileFromArray(byte[] tiles, ref int position, Color[] palette, byte palIndex);
+        Bitmap getTileFrom2ColorArray(byte[] tiles, ref int position);
+        byte[] getArrayFrom2ColorTile(Bitmap tile);
+        byte[] getArrayFrom2ColorBlock(Bitmap block);
+        Bitmap getTile(byte[] tiles, ushort word, Color[] palette, byte palIndex, bool hf, bool vf);
 
         string getName();
     }

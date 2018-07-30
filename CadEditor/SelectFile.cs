@@ -18,8 +18,8 @@ namespace CadEditor
 
         private void btSelect_Click(object sender, EventArgs e)
         {
-            Result = true;
-            Filename = tbFileName.Text;
+            result = true;
+            filename = tbFileName.Text;
             Close();
         }
 
@@ -31,29 +31,29 @@ namespace CadEditor
             }
         }
 
-        public string Filename;
-        public bool ShowExportParams;
-        public bool Result;
+        public string filename;
+        public bool showExportParams;
+        public bool result;
 
         private void SelectFile_Load(object sender, EventArgs e)
         {
-            tbFileName.Text = Filename;
-            ofOpenDialog.FileName = Filename;
+            tbFileName.Text = filename;
+            ofOpenDialog.FileName = filename;
             cbExportType.SelectedIndexChanged -= cbExportType_SelectedIndexChanged;
             cbExportType.SelectedIndex = 0;
             cbExportType.SelectedIndexChanged += cbExportType_SelectedIndexChanged;
-            Result = false;
+            result = false;
 
-            lbExportType.Visible = cbExportType.Visible = ShowExportParams;
+            lbExportType.Visible = cbExportType.Visible = showExportParams;
         }
 
         private void cbExportType_SelectedIndexChanged(object sender, EventArgs e)
         {
             var exts = new Dictionary<ExportType, String> { {ExportType.Binary,".bin"}, {ExportType.Picture,".png"} };
             exportType = (ExportType)cbExportType.SelectedIndex;
-            Filename = System.IO.Path.ChangeExtension(Filename, exts[exportType]);
-            tbFileName.Text = Filename;
-            ofOpenDialog.FileName = Filename;
+            filename = System.IO.Path.ChangeExtension(filename, exts[exportType]);
+            tbFileName.Text = filename;
+            ofOpenDialog.FileName = filename;
         }
 
         public ExportType getExportType()

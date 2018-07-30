@@ -34,7 +34,7 @@ namespace CadEditor
             {
                 for (int i = 0; i < 16; i++)
                 {
-                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.NesColors[curPal[i]]), i % 4 * 32, (i / 4) * 32, 32, 32);
+                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.defaultNesColors[curPal[i]]), i % 4 * 32, (i / 4) * 32, 32, 32);
                     if (showNo)
                         g.DrawString(String.Format("{0:X2}", curPal[i]), new Font("Arial", 6), Brushes.White, new Rectangle(i % 4 * 32, (i / 4) * 32, 32, 32));
                 }
@@ -48,10 +48,10 @@ namespace CadEditor
             pbVideo.Image = ConfigScript.videoNes.makeImageRectangle(ConfigScript.getVideoChunk(curActiveVideo), curPal, curSubPal);
         }
 
-        private int curActiveVideo = 0;
+        private int curActiveVideo;
         private byte[] curPal = new byte[16];
         private int curSubPal;
-        private bool showNo = false;
+        private bool showNo;
 
         private void cbVideoNo_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -100,22 +100,22 @@ namespace CadEditor
         private void btExport_Click(object sender, EventArgs e)
         {
             var f = new SelectFile();
-            f.Filename = "exportedConfigScript.videoNes.bin";
+            f.filename = "exportedConfigScript.videoNes.bin";
             f.ShowDialog();
-            if (!f.Result)
+            if (!f.result)
                 return;
             var data = ConfigScript.getVideoChunk(curActiveVideo);
-            Utils.saveDataToFile(f.Filename, data);
+            Utils.saveDataToFile(f.filename, data);
         }
 
         private void btImport_Click(object sender, EventArgs e)
         {
             var f = new SelectFile();
-            f.Filename = "exportedConfigScript.videoNes.bin";
+            f.filename = "exportedConfigScript.videoNes.bin";
             f.ShowDialog();
-            if (!f.Result)
+            if (!f.result)
                 return;
-            var fn = f.Filename;
+            var fn = f.filename;
             var data = Utils.loadDataFromFile(fn);
             if (data == null)
                 return;

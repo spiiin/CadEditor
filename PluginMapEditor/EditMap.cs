@@ -100,10 +100,10 @@ namespace CadEditor
                 var sb = new Bitmap(16 * 4, 16);
                 using (Graphics g = Graphics.FromImage(sb))
                 {
-                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.NesColors[curPal[i * 4]]), 0, 0, 16, 16);
-                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.NesColors[curPal[i * 4 + 1]]), 16, 0, 16, 16);
-                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.NesColors[curPal[i * 4 + 2]]), 32, 0, 16, 16);
-                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.NesColors[curPal[i * 4 + 3]]), 48, 0, 16, 16);
+                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.defaultNesColors[curPal[i * 4]]), 0, 0, 16, 16);
+                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.defaultNesColors[curPal[i * 4 + 1]]), 16, 0, 16, 16);
+                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.defaultNesColors[curPal[i * 4 + 2]]), 32, 0, 16, 16);
+                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.defaultNesColors[curPal[i * 4 + 3]]), 48, 0, 16, 16);
                 }
                 subpalSprites.Images.Add(sb);
             }
@@ -275,7 +275,7 @@ namespace CadEditor
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
             var visibleRect = UtilsGui.getVisibleRectangle(this, blocksScreen);
-            MapEditor.RenderAllBlocks(e.Graphics, blocksScreen, videos[curActiveSubpal], TILE_SIZE, TILE_SIZE, visibleRect, 1.0f, curActiveBlock, showAxis);
+            MapEditor.renderAllBlocks(e.Graphics, blocksScreen, videos[curActiveSubpal], TILE_SIZE, TILE_SIZE, visibleRect, 1.0f, curActiveBlock, showAxis);
         }
 
         private void cbSubpalette_SelectedIndexChanged(object sender, EventArgs e)

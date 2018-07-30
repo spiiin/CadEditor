@@ -308,11 +308,11 @@ namespace CadEditor
         private void btExport_Click(object sender, EventArgs e)
         {
             var f = new SelectFile();
-            f.Filename = "level.png";
+            f.filename = "level.png";
             f.ShowDialog();
-            if (!f.Result)
+            if (!f.result)
                 return;
-            var fn = f.Filename;
+            var fn = f.filename;
             Bitmap levelImage = makeLevelImage();
             levelImage.Save(fn);
         }

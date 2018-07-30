@@ -26,9 +26,9 @@ namespace CadEditor
             var colors = new Bitmap(256, 256);
             using (Graphics g = Graphics.FromImage(colors))
             {
-                for (int i = 0; i < ConfigScript.videoNes.NesColors.Length; i++)
+                for (int i = 0; i < ConfigScript.videoNes.defaultNesColors.Length; i++)
                 {
-                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.NesColors[i]), i % 8 * 32, (i / 8) * 32, 32, 32);
+                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.defaultNesColors[i]), i % 8 * 32, (i / 8) * 32, 32, 32);
                     if (ShowNo)
                         g.DrawString(String.Format("{0:X2}",i), new Font("Arial", 6), Brushes.White, new Rectangle(i % 8 * 32, (i / 8) * 32, 32, 32));
                 }

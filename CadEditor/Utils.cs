@@ -54,9 +54,9 @@ namespace CadEditor
         public static byte[] getVideoChunk(int videoPageId)
         {
             //local version for cad & dwd
-            byte[] videoChunk = new byte[Globals.VIDEO_PAGE_SIZE];
+            byte[] videoChunk = new byte[Globals.videoPageSize];
             int videoAddr = ConfigScript.getVideoPageAddr(videoPageId);
-            Array.Copy(Globals.romdata, videoAddr, videoChunk, 0, Globals.VIDEO_PAGE_SIZE);
+            Array.Copy(Globals.romdata, videoAddr, videoChunk, 0, Globals.videoPageSize);
             return videoChunk;
         }
 
@@ -64,13 +64,13 @@ namespace CadEditor
         {
             //local version for cad & dwd
             int videoAddr = ConfigScript.getVideoPageAddr(videoPageId);
-            for (int i = 0; i < Globals.VIDEO_PAGE_SIZE; i++)
+            for (int i = 0; i < Globals.videoPageSize; i++)
                 Globals.romdata[videoAddr + i] = videoChunk[i];
         }
 
         public static byte[] getPalleteLinear(int palIndex)
         {
-            int palSize = ConfigScript.isUseSegaGraphics() ? Globals.SEGA_PAL_LEN : Globals.PAL_LEN; //isUseGbGraphics
+            int palSize = ConfigScript.isUseSegaGraphics() ? Globals.segaPalLen : Globals.palLen; //isUseGbGraphics
             var palette = new byte[palSize];
             int addr = ConfigScript.palOffset.beginAddr + palIndex * ConfigScript.palOffset.recSize;
             if (!ConfigScript.isUseSegaGraphics())
@@ -744,7 +744,7 @@ namespace CadEditor
 
         public static byte[] readVideoBankFrom16Pointers(int[] ptrs)
         {
-            byte[] videoChunk = new byte[Globals.VIDEO_PAGE_SIZE];
+            byte[] videoChunk = new byte[Globals.videoPageSize];
             for (int i = 0; i < ptrs.Length; i++)
             {
                 var ptr = ptrs[i];

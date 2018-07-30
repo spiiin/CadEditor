@@ -134,11 +134,11 @@ namespace CadEditor
 
         protected virtual void exportBlocks()
         {
-            var f = new SelectFile() { Filename = "exportedBigBlocks.png", ShowExportParams = true };
+            var f = new SelectFile() { filename = "exportedBigBlocks.png", showExportParams = true };
             f.ShowDialog();
-            if (!f.Result)
+            if (!f.result)
                 return;
-            var fn = f.Filename;
+            var fn = f.filename;
             //TODO: add export binaries //if (f.getExportType() == ExportType.Binary)
             exportPictures(fn);
         }
@@ -451,7 +451,7 @@ namespace CadEditor
             var sb0 = smallBlocksImages[0];
             int sbw = sb0[0].Width;
             int sbh = sb0[0].Height;
-            MapEditor.RenderAllBlocks(e.Graphics, blocksScreen, smallBlocksImages[0], sbw, sbh, visibleRect, 1.0f, curActiveBlock, false);
+            MapEditor.renderAllBlocks(e.Graphics, blocksScreen, smallBlocksImages[0], sbw, sbh, visibleRect, 1.0f, curActiveBlock, false);
         }
 
         private void blocksScreen_MouseDown(object sender, MouseEventArgs e)
@@ -461,10 +461,10 @@ namespace CadEditor
             var sb0 = smallBlocksImages[0];
             int sbw = sb0[0].Width;
             int sbh = sb0[0].Height;
-            int TILE_SIZE_X = (int)(sbw * 1.0f);
-            int TILE_SIZE_Y = (int)(sbh * 1.0f);
-            int tx = x / TILE_SIZE_X, ty = y / TILE_SIZE_Y;
-            int maxtX = blocksScreen.Width / TILE_SIZE_X;
+            int tileSizeX = (int)(sbw * 1.0f);
+            int tileSizeY = (int)(sbh * 1.0f);
+            int tx = x / tileSizeX, ty = y / tileSizeY;
+            int maxtX = blocksScreen.Width / tileSizeX;
             int index = ty * maxtX + tx;
             if ((tx < 0) || (tx >= maxtX) || (index < 0) || (index > sb0.Length))
             {

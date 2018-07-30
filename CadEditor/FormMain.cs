@@ -28,7 +28,7 @@ namespace CadEditor
         private void Form1_Load(object sender, EventArgs e)
         {
             KeyPreview = true;
-            if (OpenFile.FileName == "" || OpenFile.ConfigName == "")
+            if (OpenFile.fileName == "" || OpenFile.configName == "")
             {
                 if (!openFile())
                 {
@@ -38,7 +38,7 @@ namespace CadEditor
             }
             else
             {
-                if (!Globals.loadData(OpenFile.FileName, OpenFile.DumpName, OpenFile.ConfigName))
+                if (!Globals.loadData(OpenFile.fileName, OpenFile.dumpName, OpenFile.configName))
                 {
                     Close();
                     return;
@@ -231,8 +231,8 @@ namespace CadEditor
             int tileSizeY = (int)(bigBlocks[0].Height * curScale);
             if (curTileStruct != null)
             {
-                int width1 = curTileStruct.Width;
-                int height1 = curTileStruct.Height;
+                int width1 = curTileStruct.width;
+                int height1 = curTileStruct.height;
                 for (int x = 0; x < width1; x++)
                 {
                     for (int y = 0; y < height1; y++)
@@ -271,7 +271,7 @@ namespace CadEditor
             int tileSizeY = (int)(bigBlocks[0].Height * curScale);
             var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
             //ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X
-            MapEditor.Render(e.Graphics, bigBlocks, visibleRect, screens, screenNo, curScale, true, showAxis, ConfigScript.getScreenVertical() ? 0 : tileSizeX, ConfigScript.getScreenVertical() ? tileSizeY : 0, width, height);
+            MapEditor.render(e.Graphics, bigBlocks, visibleRect, screens, screenNo, curScale, true, showAxis, ConfigScript.getScreenVertical() ? 0 : tileSizeX, ConfigScript.getScreenVertical() ? tileSizeY : 0, width, height);
 
             if (!ConfigScript.getScreenVertical() && showNeiScreens && (screenNo > 0) && screen.layers[0].showLayer)
             {
@@ -454,8 +454,8 @@ namespace CadEditor
             int height = screen.height;
             if (curTileStruct!=null)
             {
-                int width1 = curTileStruct.Width;
-                int height1 = curTileStruct.Height;
+                int width1 = curTileStruct.width;
+                int height1 = curTileStruct.height;
                 for (int x = 0; x < width1; x++)
                 {
                     for (int y = 0; y < height1; y++)
@@ -577,7 +577,7 @@ namespace CadEditor
             var f = new OpenFile();
             if (f.ShowDialog() == DialogResult.OK)
             {
-                if (!Globals.loadData(OpenFile.FileName, OpenFile.DumpName, OpenFile.ConfigName))
+                if (!Globals.loadData(OpenFile.fileName, OpenFile.dumpName, OpenFile.configName))
                 {
                     Close();
                     return false;
@@ -815,7 +815,7 @@ namespace CadEditor
                 lbStructures.Items.Clear();
                 var tss = FormStructures.getTileStructures();
                 foreach (var ts in tss)
-                    lbStructures.Items.Add(ts.Name);
+                    lbStructures.Items.Add(ts.name);
             }
         }
 
@@ -843,7 +843,7 @@ namespace CadEditor
         {
             if (UtilsGui.askToSave(ref dirty, saveToFile, returnCbLevelIndex))
             {
-                if (!Globals.loadData(OpenFile.FileName, OpenFile.DumpName, OpenFile.ConfigName))
+                if (!Globals.loadData(OpenFile.fileName, OpenFile.dumpName, OpenFile.configName))
                 {
                     return;
                 }
@@ -886,7 +886,7 @@ namespace CadEditor
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
             var visibleRect = UtilsGui.getVisibleRectangle(pnBlocks, blocksScreen);
-            MapEditor.RenderAllBlocks(e.Graphics, blocksScreen, bigBlocks, bigBlocks[0].Width, bigBlocks[0].Height, visibleRect, curScale, curActiveBlock, showAxis);
+            MapEditor.renderAllBlocks(e.Graphics, blocksScreen, bigBlocks, bigBlocks[0].Width, bigBlocks[0].Height, visibleRect, curScale, curActiveBlock, showAxis);
         }
 
         private void blocksScreen_MouseDown(object sender, MouseEventArgs e)
@@ -988,7 +988,7 @@ namespace CadEditor
 
         private void setWindowText()
         {
-            Text = String.Format("CAD Editor v5.1 - {0}", OpenFile.FileName);
+            Text = String.Format("CAD Editor v5.1 - {0}", OpenFile.fileName);
         }
 
         private Screen getActiveScreen()

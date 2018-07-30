@@ -39,71 +39,71 @@ namespace CadEditor
 
     public static class Mapper
     {
-        public static ushort TileIdx(ushort Word)
+        public static ushort tileIdx(ushort Word)
         {
             return (ushort)(Word & 0x7FF);
         }
 
-        public static byte PalIdx(ushort Word)
+        public static byte palIdx(ushort Word)
         {
             return (byte)((Word & 0x6000) >> 13);
         }
 
-        public static bool HF(ushort Word)
+        public static bool hf(ushort Word)
         {
             return ((Word & 0x800) >> 11) == 1;
         }
 
-        public static bool VF(ushort Word)
+        public static bool vf(ushort Word)
         {
             return ((Word & 0x1000) >> 12) == 1;
         }
 
-        public static bool P(ushort Word)
+        public static bool p(ushort Word)
         {
             return ((Word & 0x8000) >> 15) == 1;
         }
 
-        public static ushort ApplyTileIdx(ushort Word, ushort tileIdx)
+        public static ushort applyTileIdx(ushort Word, ushort tileIdx)
         {
             return (ushort)((Word & ~0x07FF) | tileIdx);
         }
 
-        public static ushort ApplyPalIdx(ushort Word, byte palIdx)
+        public static ushort applyPalIdx(ushort Word, byte palIdx)
         {
             return (ushort)((Word & ~0x6000) | (palIdx << 13));
         }
 
-        public static ushort ApplyHF(ushort Word, int hf)
+        public static ushort applyHf(ushort Word, int hf)
         {
             return (ushort)((Word & ~0x0800) | (hf << 11));
         }
 
-        public static ushort ApplyVF(ushort Word, int vf)
+        public static ushort applyVf(ushort Word, int vf)
         {
             return (ushort)((Word & ~0x1000) | (vf << 12));
         }
 
-        public static ushort ApplyP(ushort Word, int p)
+        public static ushort applyP(ushort Word, int p)
         {
             return (ushort)((Word & ~0x8000) | (p << 15));
         }
 
-        public static ushort TilePos(ushort Word)
+        public static ushort tilePos(ushort Word)
         {
-            ushort idx = TileIdx(Word);
+            ushort idx = tileIdx(Word);
             ushort tilesPos = (ushort)(idx * 0x20);
             //if (idx >= 0x1F0 && idx <= 0x1FF) tilesPos += 0x200;
             return tilesPos;
         }
 
-        public static ushort EncodeTileInfo(ushort idx, bool hf, bool vf, byte PalIndex)
+        public static ushort encodeTileInfo(ushort idx, bool hf, bool vf, byte PalIndex)
         {
             int retn = ((PalIndex & 3) << 13) | ((vf ? 1 : 0) << 12) | ((hf ? 1 : 0) << 11) | (idx & 0x7FF);
             return (ushort)retn;
         }
 
-        public static void ApplyMapping(ref byte[] LevelMapping, ushort[] ChangedMapping)
+        public static void applyMapping(ref byte[] LevelMapping, ushort[] ChangedMapping)
         {
             int len = ChangedMapping.Length;
             for (int i = 0, j = 0; i < len; i++, j += 2)
@@ -113,7 +113,7 @@ namespace CadEditor
             }
         }
 
-        public static ushort[] LoadMapping(byte[] LevelMapping)
+        public static ushort[] loadMapping(byte[] LevelMapping)
         {
             int len = LevelMapping.Length / 2;
             ushort[] retn = new ushort[len];
@@ -125,7 +125,7 @@ namespace CadEditor
 
     public static class Helpers
     {
-        public static UInt16 ReadUInt16BE(this byte[] array, int index)
+        public static UInt16 readUInt16Be(this byte[] array, int index)
         {
             return (ushort)((array[index] << 8) | array[index + 1]);
         }

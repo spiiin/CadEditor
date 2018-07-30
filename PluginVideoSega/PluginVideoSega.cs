@@ -17,8 +17,8 @@ namespace PluginVideoSega
         public Image[] makeBigBlocks(byte[] mapping, byte[] tiles, byte[] palette, int count, MapViewType curViewType = MapViewType.Tiles)
         {
             var result = new Image[count];
-            ushort[] m = Mapper.LoadMapping(mapping);
-            Color[] cpal = GetPalette(palette);
+            ushort[] m = Mapper.loadMapping(mapping);
+            Color[] cpal = getPalette(palette);
             for (ushort i = 0; i < count; i++)
             {
                 if (!ConfigScript.isBlockSize4x4())
@@ -37,14 +37,14 @@ namespace PluginVideoSega
             return result;
         }
 
-        public Color[] GetPalette(byte[] pal)
+        public Color[] getPalette(byte[] pal)
         {
             Color[] retn = new Color[0x40];
             int offset = 0;
             for (int y = 0; y < 4; y++)
                 for (int x = 0; x < 16; x++, offset += 2)
                 {
-                    ushort W = pal.ReadUInt16BE(offset);
+                    ushort W = pal.readUInt16Be(offset);
                     byte r = (byte)((W & 0xE) * 0x10);
                     byte g = (byte)(((W / 0x10) & 0xE) * 0x10);
                     byte b = (byte)(((W / 0x100) & 0xE) * 0x10);
@@ -59,7 +59,7 @@ namespace PluginVideoSega
         }
 
         //
-        public Bitmap GetTileFromArray(byte[] Tiles, ref int Position, Color[] Palette, byte PalIndex)
+        public Bitmap getTileFromArray(byte[] Tiles, ref int Position, Color[] Palette, byte PalIndex)
         {
             Bitmap retn = new Bitmap(8, 8, PixelFormat.Format24bppRgb);
             BitmapData data = retn.LockBits(new Rectangle(0, 0, retn.Width, retn.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
@@ -86,7 +86,7 @@ namespace PluginVideoSega
             return retn;
         }
 
-        public Bitmap GetTileFrom2ColorArray(byte[] Tiles, ref int Position)
+        public Bitmap getTileFrom2ColorArray(byte[] Tiles, ref int Position)
         {
             Bitmap retn = new Bitmap(8, 8, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
 
@@ -100,7 +100,7 @@ namespace PluginVideoSega
             return retn;
         }
 
-        public byte[] GetArrayFrom2ColorTile(Bitmap tile)
+        public byte[] getArrayFrom2ColorTile(Bitmap tile)
         {
             byte[] retn = new byte[0x20];
 
@@ -114,7 +114,7 @@ namespace PluginVideoSega
             return retn;
         }
 
-        public byte[] GetArrayFrom2ColorBlock(Bitmap block)
+        public byte[] getArrayFrom2ColorBlock(Bitmap block)
         {
             byte[] retn = new byte[block.Width * block.Height / 2];
 
@@ -123,16 +123,16 @@ namespace PluginVideoSega
                 {
                     Bitmap tile = new Bitmap(8, 8, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
                     using (Graphics g = Graphics.FromImage(tile)) g.DrawImage(block, new Rectangle(0, 0, 8, 8), new Rectangle(x * 8, y * 8, 8, 8), GraphicsUnit.Pixel);
-                    Array.Copy(GetArrayFrom2ColorTile(tile), 0, retn, pos, 0x20);
+                    Array.Copy(getArrayFrom2ColorTile(tile), 0, retn, pos, 0x20);
                 }
 
             return retn;
         }
 
-        public Bitmap GetTile(byte[] Tiles, ushort Word, Color[] Palette, byte PalIndex, bool HF, bool VF)
+        public Bitmap getTile(byte[] Tiles, ushort Word, Color[] Palette, byte PalIndex, bool HF, bool VF)
         {
-            int pos = Mapper.TilePos(Word);
-            Bitmap retn = GetTileFromArray(Tiles, ref pos, Palette, PalIndex);
+            int pos = Mapper.tilePos(Word);
+            Bitmap retn = getTileFromArray(Tiles, ref pos, Palette, PalIndex);
 
             if (HF) retn.RotateFlip(RotateFlipType.RotateNoneFlipX);
             if (VF) retn.RotateFlip(RotateFlipType.RotateNoneFlipY);
@@ -147,11 +147,11 @@ namespace PluginVideoSega
                 for (int x = 0; x < 2; x++)
                 {
                     ushort Word = mapping[Index * 4 + y * 2 + x];
-                    byte palIndex = Mapper.PalIdx(Word);
-                    bool HF = Mapper.HF(Word);
-                    bool VF = Mapper.VF(Word);
+                    byte palIndex = Mapper.palIdx(Word);
+                    bool HF = Mapper.hf(Word);
+                    bool VF = Mapper.vf(Word);
 
-                    Bitmap tile = GetTile(tiles, Word, palette, palIndex, HF, VF);
+                    Bitmap tile = getTile(tiles, Word, palette, palIndex, HF, VF);
 
                     using (Graphics g = Graphics.FromImage(block)) g.DrawImage(tile, new Rectangle(x * 8, y * 8, 8, 8));
                 }
@@ -165,11 +165,11 @@ namespace PluginVideoSega
                 for (int x = 0; x < 4; x++)
                 {
                     ushort Word = mapping[Index * 0x10 + y * 4 + x];
-                    byte palIndex = Mapper.PalIdx(Word);
-                    bool HF = Mapper.HF(Word);
-                    bool VF = Mapper.VF(Word);
+                    byte palIndex = Mapper.palIdx(Word);
+                    bool HF = Mapper.hf(Word);
+                    bool VF = Mapper.vf(Word);
 
-                    Bitmap tile = GetTile(tiles, Word, palette, palIndex, HF, VF);
+                    Bitmap tile = getTile(tiles, Word, palette, palIndex, HF, VF);
 
                     using (Graphics g = Graphics.FromImage(block)) g.DrawImage(tile, new Rectangle(x * 8, y * 8, 8, 8));
                 }

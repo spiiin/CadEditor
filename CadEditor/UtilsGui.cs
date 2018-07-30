@@ -52,15 +52,15 @@ namespace CadEditor
             {
                 return;
             }
-            int TILE_SIZE_X = (int)(blockWidth * curScale);
-            int TILE_SIZE_Y = (int)(blockHeight * curScale);
-            int blocksOnRow = blocksScreen.Width / TILE_SIZE_X;
+            int tileSizeX = (int)(blockWidth * curScale);
+            int tileSizeY = (int)(blockHeight * curScale);
+            int blocksOnRow = blocksScreen.Width / tileSizeX;
             if (blocksOnRow == 0)
             {
                 blocksOnRow = 1;
             }
             int blocksOnCol = (int)Math.Ceiling(bigBlocks.Length *1.0f / blocksOnRow);
-            blocksScreen.Height = blocksOnCol * TILE_SIZE_Y;
+            blocksScreen.Height = blocksOnCol * tileSizeY;
         }
 
         public delegate bool SaveFunction();
@@ -72,16 +72,14 @@ namespace CadEditor
             DialogResult dr = MessageBox.Show("Level was changed. Do you want to save current level?", "Save", MessageBoxButtons.YesNoCancel);
             if (dr == DialogResult.Cancel)
             {
-                if (returnCbLevelIndex != null)
-                    returnCbLevelIndex();
+                returnCbLevelIndex?.Invoke();
                 return false;
             }
             else if (dr == DialogResult.Yes)
             {
                 if (!saveToFile())
                 {
-                    if (returnCbLevelIndex != null)
-                        returnCbLevelIndex();
+                    returnCbLevelIndex?.Invoke();
                     return false;
                 }
                 return true;

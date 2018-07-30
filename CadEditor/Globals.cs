@@ -16,12 +16,12 @@ namespace CadEditor
         {
         }
 
-        public static bool loadData(string Filename, string Dumpfile, string ConfigFilename)
+        public static bool loadData(string filename, string dumpfile, string configFilename)
         {
             try
             {
-                int size = (int)new FileInfo(Filename).Length;
-                using (FileStream f = File.OpenRead(Filename))
+                int size = (int)new FileInfo(filename).Length;
+                using (FileStream f = File.OpenRead(filename))
                 {
                     romdata = new byte[size];
                     f.Read(romdata, 0, size);
@@ -35,10 +35,10 @@ namespace CadEditor
 
             try
             {
-                if (Dumpfile != "")
+                if (dumpfile != "")
                 {
-                    int size = (int)new FileInfo(Dumpfile).Length;
-                    using (FileStream f = File.OpenRead(Dumpfile))
+                    int size = (int)new FileInfo(dumpfile).Length;
+                    using (FileStream f = File.OpenRead(dumpfile))
                     {
                         dumpdata = new byte[size];
                         f.Read(dumpdata, 0, size);
@@ -53,7 +53,7 @@ namespace CadEditor
             
             try
             {
-                ConfigScript.LoadFromFile(ConfigFilename);
+                ConfigScript.LoadFromFile(configFilename);
             }
             catch (Exception ex)
             {
@@ -66,11 +66,11 @@ namespace CadEditor
 
         public static bool flushToFile()
         {
-            if (OpenFile.DumpName != "")
+            if (OpenFile.dumpName != "")
             {
                 try
                 {
-                    using (FileStream f = File.OpenWrite(OpenFile.DumpName))
+                    using (FileStream f = File.OpenWrite(OpenFile.dumpName))
                     {
                         f.Write(Globals.dumpdata, 0, Globals.dumpdata.Length);
                         f.Seek(0, SeekOrigin.Begin);
@@ -85,7 +85,7 @@ namespace CadEditor
             }
             try
             {
-                using (FileStream f = File.OpenWrite(OpenFile.FileName))
+                using (FileStream f = File.OpenWrite(OpenFile.fileName))
                 {
                     f.Write(Globals.romdata, 0, Globals.romdata.Length);
                     f.Seek(0, SeekOrigin.Begin);
@@ -159,9 +159,9 @@ namespace CadEditor
 
         public static byte[] romdata;
         public static byte[] dumpdata;
-        public static int CHUNKS_COUNT = 256;
-        public static int VIDEO_PAGE_SIZE = 4096;
-        public static int PAL_LEN = 16;
-        public static int SEGA_PAL_LEN = 128;
+        public static int chunksCount = 256;
+        public static int videoPageSize = 4096;
+        public static int palLen = 16;
+        public static int segaPalLen = 128;
     }
 }

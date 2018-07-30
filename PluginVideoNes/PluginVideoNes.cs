@@ -297,10 +297,10 @@ namespace PluginVideoNes
             int scrH = screen.height;
             //capcom hardcode
 
-            return new Bitmap(MapEditor.ScreenToImage(bigBlocks, screens, scrNo, 2.0f, false, 0, 0, scrW, scrH));
+            return new Bitmap(MapEditor.screenToImage(bigBlocks, screens, scrNo, 2.0f, false, 0, 0, scrW, scrH));
         }
 
-        public Color[] NesColors
+        public Color[] defaultNesColors
         {
             get { return nesColors; }
             set { nesColors = value; }
