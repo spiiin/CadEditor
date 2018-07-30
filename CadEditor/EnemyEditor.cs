@@ -67,7 +67,11 @@ namespace CadEditor
             {
                 if (ConfigScript.isUseSegaGraphics())
                 {
-                    Globals.makeSegaBigBlocks(curVideoNo, curBigBlockNo, curPaletteNo, MapViewType.Tiles);
+                    bigBlocks = Globals.makeSegaBigBlocks(curVideoNo, curBigBlockNo, curPaletteNo, MapViewType.Tiles);
+                }
+                else if (ConfigScript.isUseGbGraphics())
+                {
+                    bigBlocks = Globals.makeGbBigBlocks(curVideoNo, curBigBlockNo, curPaletteNo, MapViewType.Tiles);
                 }
                 else
                 {

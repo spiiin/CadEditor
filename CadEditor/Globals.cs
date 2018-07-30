@@ -146,6 +146,17 @@ namespace CadEditor
             return ConfigScript.videoSega.makeBigBlocks(mapping, videoTiles, pal, count, curViewType);
         }
 
+        public static Image[] makeGbBigBlocks(int curActiveVideoNo, int curActiveBigBlockNo, int curActivePalleteNo, MapViewType curViewType)
+        {
+            byte[] videoTiles = ConfigScript.getVideoChunk(curActiveVideoNo);
+            ObjRec[] blocks = ConfigScript.getBlocksFunc(curActiveBigBlockNo);
+            var blocksData = new byte[blocks.Length * 4]; //hardcode small blocks sizes
+            Utils.writeBlocksLinear(blocks, blocksData, 0, 256, false, false);
+            byte[] pal = ConfigScript.getPal(curActivePalleteNo);
+            int count = ConfigScript.getBigBlocksCount(ConfigScript.getbigBlocksHierarchyCount() - 1);
+            return ConfigScript.videoGb.makeBigBlocks(videoTiles, blocksData, pal, count, curViewType);
+        }
+
         public static byte[] romdata;
         public static byte[] dumpdata;
         public static int CHUNKS_COUNT = 256;

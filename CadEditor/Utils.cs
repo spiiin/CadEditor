@@ -70,7 +70,7 @@ namespace CadEditor
 
         public static byte[] getPalleteLinear(int palIndex)
         {
-            int palSize = ConfigScript.isUseSegaGraphics() ? Globals.SEGA_PAL_LEN : Globals.PAL_LEN;
+            int palSize = ConfigScript.isUseSegaGraphics() ? Globals.SEGA_PAL_LEN : Globals.PAL_LEN; //isUseGbGraphics
             var palette = new byte[palSize];
             int addr = ConfigScript.palOffset.beginAddr + palIndex * ConfigScript.palOffset.recSize;
             if (!ConfigScript.isUseSegaGraphics())
