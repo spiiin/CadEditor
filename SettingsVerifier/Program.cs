@@ -15,15 +15,16 @@ namespace SettingsEditor
         {
             var counter = 0;
             Console.WriteLine("Checking settings files...");
-            string rootDirName = System.IO.Path.GetFullPath(".");
+            string rootDirName = Path.GetFullPath(".");
             var dirNames = new List<string>();
-            dirNames.AddRange(System.IO.Directory.GetDirectories(rootDirName + "\\settings_nes", "*", SearchOption.AllDirectories));
-            dirNames.AddRange(System.IO.Directory.GetDirectories(rootDirName + "\\settings_smd", "*", SearchOption.AllDirectories));
-            dirNames.AddRange(System.IO.Directory.GetDirectories(rootDirName + "\\settings_gba", "*", SearchOption.AllDirectories));
+            dirNames.AddRange(Directory.GetDirectories(rootDirName + "\\settings_nes", "*", SearchOption.AllDirectories));
+            dirNames.AddRange(Directory.GetDirectories(rootDirName + "\\settings_smd", "*", SearchOption.AllDirectories));
+            dirNames.AddRange(Directory.GetDirectories(rootDirName + "\\settings_gb" , "*", SearchOption.AllDirectories));
+            dirNames.AddRange(Directory.GetDirectories(rootDirName + "\\settings_gba", "*", SearchOption.AllDirectories));
 
             foreach (var dirName in dirNames)
             {
-                string[] fileNames = System.IO.Directory.GetFiles(dirName, "Settings_*.cs");
+                string[] fileNames = Directory.GetFiles(dirName, "Settings_*.cs");
                 foreach (var f in fileNames)
                 {
                     counter++;

@@ -30,6 +30,7 @@ COPY_FOLDER_LIST = [
   "shared_settings/",
   "settings_nes/",  #NEED TO REMOVE SUBFOLDERS WITH "_" prefix - unfinished configs
   "settings_smd/",
+  "settings_gb/",
   "settings_gba/",
   "IronPythonLib/",
   "exportTmx/pytmxlib/",
