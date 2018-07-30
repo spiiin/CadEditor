@@ -24,8 +24,8 @@ namespace CadEditor
             }
             if (args.Length >=2)
             {
-                OpenFile.FileName   = args[0];
-                OpenFile.ConfigName = args[1];             
+                OpenFile.fileName   = args[0];
+                OpenFile.configName = args[1];             
             }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

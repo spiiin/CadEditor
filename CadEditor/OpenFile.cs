@@ -51,9 +51,9 @@ namespace CadEditor
 
         private void updateCbConfigInDirectory(string text)
         {
+            var files = Directory.EnumerateFiles(Path.GetDirectoryName(text), "Settings_*.cs");
             try
             {
-                var files = Directory.EnumerateFiles(Path.GetDirectoryName(text), "Settings_*.cs");
                 cbConfigName.DropDownWidth = 600;
                 cbConfigName.Items.Clear();
                 cbConfigName.Items.AddRange(files.ToArray());
@@ -75,15 +75,15 @@ namespace CadEditor
 
         private void btOpen_Click(object sender, EventArgs e)
         {
-            FileName = tbFileName.Text;
-            ConfigName = cbConfigName.Text;
-            DumpName = ConfigScript.PreloadShowDumpField(ConfigName) ? tbDumpName.Text : "";
+            fileName = tbFileName.Text;
+            configName = cbConfigName.Text;
+            dumpName = ConfigScript.PreloadShowDumpField(configName) ? tbDumpName.Text : "";
             DialogResult = DialogResult.OK;
             Close();
 
-            Properties.Settings.Default["FileName"] = FileName;
-            Properties.Settings.Default["DumpName"] = DumpName;
-            Properties.Settings.Default["ConfigName"] = ConfigName;
+            Properties.Settings.Default["FileName"] = fileName;
+            Properties.Settings.Default["DumpName"] = dumpName;
+            Properties.Settings.Default["ConfigName"] = configName;
             Properties.Settings.Default.Save();
         }
 
@@ -93,9 +93,9 @@ namespace CadEditor
             Close();
         }
 
-        public static string FileName = "";
-        public static string DumpName = "";
-        public static string ConfigName="";
+        public static string fileName = "";
+        public static string dumpName = "";
+        public static string configName="";
 
         private void OpenFile_Load(object sender, EventArgs e)
         {
@@ -111,24 +111,24 @@ namespace CadEditor
             var showDumpField = ConfigScript.PreloadShowDumpField(cbConfigName.Text);
             updateDumpFieldVisible(showDumpField);
 
-            if (FileName == "" && ConfigScript.romName != "")
+            if (fileName == "" && ConfigScript.romName != "")
                 tbFileName.Text = ConfigScript.romName;
-            if (DumpName == "" && ConfigScript.dumpName != "")
+            if (dumpName == "" && ConfigScript.dumpName != "")
                 tbDumpName.Text = ConfigScript.dumpName;
-            if (ConfigName == "" && ConfigScript.cfgName != "")
+            if (configName == "" && ConfigScript.cfgName != "")
             {
                 cbConfigName.Text = ConfigScript.cfgName;
             }
 
             ofOpenDialog.InitialDirectory = Environment.CurrentDirectory;
-            if (FileName != "")
-                tbFileName.Text = FileName;
-            if (ConfigName != "")
+            if (fileName != "")
+                tbFileName.Text = fileName;
+            if (configName != "")
             {
-                cbConfigName.Text = ConfigName;
+                cbConfigName.Text = configName;
             }
-            if (DumpName != "")
-                tbDumpName.Text = DumpName;
+            if (dumpName != "")
+                tbDumpName.Text = dumpName;
 
             updateCbConfigInDirectory(cbConfigName.Text);
         }

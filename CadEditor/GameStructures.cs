@@ -31,16 +31,6 @@ namespace CadEditor
             //this.pointers = new int[0];
         }
 
-        public OffsetRec(int beginAddr, int recCount, int recSize, int width = 0, int height = 0, int[] pointers = null)
-        {
-            this.beginAddr = beginAddr;
-            this.recCount = recCount;
-            this.recSize = recSize;
-            this.width = width;
-            this.height = height;
-            //this.pointers = pointers ?? new int[0] ;
-        }
-
         public override string ToString()
         {
             return String.Format("Start address:0x{0:X}. Records count:{1}, Record Size:{2}", beginAddr, recCount, recSize);
@@ -96,13 +86,13 @@ namespace CadEditor
 
         public ObjRec(ObjRec other)
         {
-            this.w = other.w;
-            this.h = other.h;
-            this.type = other.type;
-            this.indexes = new int[other.indexes.Length];
-            this.palBytes = new int[other.palBytes.Length];
-            Array.Copy(other.indexes, this.indexes, this.indexes.Length);
-            Array.Copy(other.palBytes, this.palBytes, this.palBytes.Length);
+           w = other.w;
+           h = other.h;
+           type = other.type;
+           indexes = new int[other.indexes.Length];
+           palBytes = new int[other.palBytes.Length];
+            Array.Copy(other.indexes, indexes, indexes.Length);
+            Array.Copy(other.palBytes, palBytes, palBytes.Length);
         }
 
         public int[] indexes;
@@ -315,7 +305,7 @@ namespace CadEditor
         public int sy { get; set; }
         public Dictionary<String, int> additionalData;
 
-        public static int FIELD_COUNT = 6;
+        public static int fieldCount = 6;
 
         bool IEquatable<ObjectRec>.Equals(ObjectRec other)
         {
@@ -367,13 +357,13 @@ namespace CadEditor
             var smallBlocks = smallBlocksAll[0];
             int bWidth = smallBlocks[0].Width;
             int bHeight = smallBlocks[0].Height;
-            var b = new Bitmap(bWidth * this.width, bHeight * this.height);
+            var b = new Bitmap(bWidth * width, bHeight * height);
             using (Graphics g = Graphics.FromImage(b))
             {
-                g.DrawImage(smallBlocksAll[this.getPalBytes(0)][this.indexes[0]], new Rectangle(0, 0, bWidth, bHeight));
-                g.DrawImage(smallBlocksAll[this.getPalBytes(1)][this.indexes[1]], new Rectangle(bWidth, 0, bWidth, bHeight));
-                g.DrawImage(smallBlocksAll[this.getPalBytes(2)][this.indexes[2]], new Rectangle(0, bHeight, bWidth, bHeight));
-                g.DrawImage(smallBlocksAll[this.getPalBytes(3)][this.indexes[3]], new Rectangle(bWidth, bHeight, bWidth, bHeight));
+                g.DrawImage(smallBlocksAll[getPalBytes(0)][indexes[0]], new Rectangle(0, 0, bWidth, bHeight));
+                g.DrawImage(smallBlocksAll[getPalBytes(1)][indexes[1]], new Rectangle(bWidth, 0, bWidth, bHeight));
+                g.DrawImage(smallBlocksAll[getPalBytes(2)][indexes[2]], new Rectangle(0, bHeight, bWidth, bHeight));
+                g.DrawImage(smallBlocksAll[getPalBytes(3)][indexes[3]], new Rectangle(bWidth, bHeight, bWidth, bHeight));
             }
             return b;
         }
@@ -397,18 +387,18 @@ namespace CadEditor
             var smallBlocks = smallBlockss[0];
             int bWidth = smallBlocks[0].Width;
             int bHeight = smallBlocks[0].Height;
-            var b = new Bitmap(bWidth * this.width, bHeight * this.height);
+            var b = new Bitmap(bWidth * width, bHeight * height);
             using (Graphics g = Graphics.FromImage(b))
             {
-                for (int h = 0; h < this.height; h++)
+                for (int h = 0; h < height; h++)
                 {
-                    for (int w = 0; w < this.width; w++)
+                    for (int w = 0; w < width; w++)
                     {
                         int sbX = w * bWidth;
                         int sbY = h * bHeight;
-                        int idx = h * this.width + w;
+                        int idx = h * width + w;
                         var r = new Rectangle(sbX, sbY, bWidth, bHeight);
-                        g.DrawImage(smallBlocks[this.indexes[idx]], r);
+                        g.DrawImage(smallBlocks[indexes[idx]], r);
                     }
                 }
             }
@@ -427,6 +417,8 @@ namespace CadEditor
 
         bool IEquatable<BigBlock>.Equals(BigBlock other)
         {
+            if (other == null)
+                return false;
             return (width == other.width) && (height == other.height) && (indexes.SequenceEqual(other.indexes));
         }
 
@@ -496,8 +488,8 @@ namespace CadEditor
     {
         public Screen(BlockLayer layer, int width, int height)
         {
-            this.layers = new BlockLayer[1];
-            this.layers[0] = layer;
+            layers = new BlockLayer[1];
+            layers[0] = layer;
             this.width = width;
             this.height = height;
         }

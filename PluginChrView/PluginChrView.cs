@@ -27,8 +27,10 @@ namespace PluginPrgView
                 this.formMain = formMain;
                 var rm = new ResourceManager("PluginChrView.Icon", this.GetType().Assembly);
                 var icon = (System.Drawing.Bitmap)rm.GetObject("icon_video");
-                var item = new ToolStripButton("View video", icon, btHex_Click);
-                item.DisplayStyle = ToolStripItemDisplayStyle.Image;
+                var item = new ToolStripButton("View video", icon, btHex_Click)
+                {
+                    DisplayStyle = ToolStripItemDisplayStyle.Image
+                };
                 formMain.addSubeditorButton(item);
             }
 

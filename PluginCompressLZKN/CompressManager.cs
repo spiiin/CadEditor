@@ -45,11 +45,11 @@ namespace PluginCompressLZKN
                 tbLog.Text = "";
                 tbLog.AppendText("--------------------------------------------------------------------------------------------------\n");
                 tbLog.AppendText("Job start\n");
-                tbLog.AppendText(String.Format("Current file name: {0}\n", OpenFile.FileName));
+                tbLog.AppendText(String.Format("Current file name: {0}\n", OpenFile.fileName));
 
                 int selectedAddressIndex = cbAddress.SelectedIndex;
                 var inputFilename = CompressConfig.compressParams[selectedAddressIndex].fname;
-                var fullInputFilename = inputFilename == null ? OpenFile.DumpName : (ConfigScript.ConfigDirectory + inputFilename);
+                var fullInputFilename = inputFilename == null ? OpenFile.dumpName : (ConfigScript.ConfigDirectory + inputFilename);
                 tbLog.AppendText(String.Format("Input file name: {0}\n", fullInputFilename));
 
                 var compressedFileName = fullInputFilename + ".lzkn1";

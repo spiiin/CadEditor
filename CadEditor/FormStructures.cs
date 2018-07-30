@@ -38,14 +38,14 @@ namespace CadEditor
             curScale = 2.0f;
             //showAxis = true;
             curTileStruct = null;
-            resetControls(true);
+            resetControls();
         }
 
-        void resetControls(bool needToRefillBlockPanel)
+        void resetControls()
         {
             lbStructures.Items.Clear();
             for (int i = 0; i < tileStructs.Count; i++)
-                lbStructures.Items.Add(tileStructs[i].Name);
+                lbStructures.Items.Add(tileStructs[i].name);
             bigBlocks = formMain.getBigBlockImages();
             UtilsGui.resizeBlocksScreen(bigBlocks, blocksScreen, blockWidth, blockHeight, curScale);
             resetTileStructControls();
@@ -57,23 +57,15 @@ namespace CadEditor
             {
                 UtilsGui.setCbItemsCount(cbWidth, 64, 1);
                 UtilsGui.setCbItemsCount(cbHeight, 64, 1);
-                UtilsGui.setCbIndexWithoutUpdateLevel(cbWidth, cbWidth_SelectedIndexChanged, curTileStruct.Width - 1);
-                UtilsGui.setCbIndexWithoutUpdateLevel(cbHeight, cbWidth_SelectedIndexChanged, curTileStruct.Height - 1);
+                UtilsGui.setCbIndexWithoutUpdateLevel(cbWidth, cbWidth_SelectedIndexChanged, curTileStruct.width - 1);
+                UtilsGui.setCbIndexWithoutUpdateLevel(cbHeight, cbWidth_SelectedIndexChanged, curTileStruct.height - 1);
             }
-        }
-
-        private void buttonBlockClick(Object button, EventArgs e)
-        {
-            int index = ((Button)button).ImageIndex;
-            curActiveBlock = index;
         }
 
         private void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
             if (curTileStruct == null)
                 return;
-            int WIDTH = curTileStruct.Width;
-            int HEIGHT = curTileStruct.Height;
             int dx, dy;
             if (ConfigScript.getScreenVertical())
             {
@@ -86,7 +78,7 @@ namespace CadEditor
                 dy = e.Y / (int)(blockHeight * curScale);
             }
 
-            if (dx < 0 || dx >= curTileStruct.Width || dy < 0 || dy >= curTileStruct.Height)
+            if (dx < 0 || dx >= curTileStruct.width || dy < 0 || dy >= curTileStruct.height)
                 return;
 
             if (e.Button == MouseButtons.Left)
@@ -109,8 +101,8 @@ namespace CadEditor
             g.Clear(Color.Black);
             var blockLayer = new BlockLayer(curTileStruct.toArray());
             blockLayer.showLayer = true;
-            var screens = new Screen[] { new Screen(blockLayer, curTileStruct.Width, curTileStruct.Height) };
-            MapEditor.Render(g, bigBlocks, visibleRect, screens, 0, 2.0f, false, formMain.showAxis, 0, 0, curTileStruct.Width, curTileStruct.Height);
+            var screens = new[] { new Screen(blockLayer, curTileStruct.width, curTileStruct.height) };
+            MapEditor.render(g, bigBlocks, visibleRect, screens, 0, 2.0f, false, formMain.showAxis, 0, 0, curTileStruct.width, curTileStruct.height);
         }
 
         private void cbWidth_SelectedIndexChanged(object sender, EventArgs e)
@@ -125,7 +117,7 @@ namespace CadEditor
         {
             var ts = new TileStructure("Struct" + tileStructs.Count.ToString(), 4, 4);
             tileStructs.Add(ts);
-            lbStructures.Items.Add(ts.Name);
+            lbStructures.Items.Add(ts.name);
         }
 
         private void lbStructures_SelectedIndexChanged(object sender, EventArgs e)
@@ -186,18 +178,18 @@ namespace CadEditor
 
         private void btSave_Click(object sender, EventArgs e)
         {
-            if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
               serializeStructs(saveFileDialog1.FileName);
         }
 
         private void btLoad_Click(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 deserializeStructs(openFileDialog1.FileName);
                 lbStructures.Items.Clear();
                 for (int i = 0; i < tileStructs.Count; i++)
-                    lbStructures.Items.Add(tileStructs[i].Name);
+                    lbStructures.Items.Add(tileStructs[i].name);
             }
         }
 
@@ -207,16 +199,16 @@ namespace CadEditor
             if (index == -1)
                 return;
             var f = new FormStructuresName();
-            FormStructuresName.StructName = curTileStruct.Name;
-            FormStructuresName.StructWidth = curTileStruct.Width;
-            FormStructuresName.StructHeight = curTileStruct.Height;
+            FormStructuresName.structName = curTileStruct.name;
+            FormStructuresName.structWidth = curTileStruct.width;
+            FormStructuresName.structHeight = curTileStruct.height;
             f.ShowDialog();
-            if (FormStructuresName.Result)
+            if (FormStructuresName.result)
             {
                 var ts = tileStructs[index];
-                ts.Name = FormStructuresName.StructName;
-                ts.resetDim(FormStructuresName.StructWidth, FormStructuresName.StructHeight);
-                lbStructures.Items[index] = ts.Name;
+                ts.name = FormStructuresName.structName;
+                ts.resetDim(FormStructuresName.structWidth, FormStructuresName.structHeight);
+                lbStructures.Items[index] = ts.name;
                 lbStructures_SelectedIndexChanged(sender, new EventArgs());
             }
         }
@@ -249,7 +241,7 @@ namespace CadEditor
 
         private void FormStructures_FormClosing(object sender, FormClosingEventArgs e)
         {
-            bool closed = MessageBox.Show("Do you really want to close form (check that you save results)", "Attention", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes;
+            bool closed = MessageBox.Show("Do you really want to close form (check that you save results)", "Attention", MessageBoxButtons.YesNo) == DialogResult.Yes;
             e.Cancel = !closed;
         }
 
@@ -266,17 +258,17 @@ namespace CadEditor
         private void blocksScreen_Paint(object sender, PaintEventArgs e)
         {
             var visibleRect = UtilsGui.getVisibleRectangle(pnBlocks, blocksScreen);
-            MapEditor.RenderAllBlocks(e.Graphics, blocksScreen, bigBlocks, blockWidth, blockHeight, visibleRect, curScale, curActiveBlock, formMain.showAxis);
+            MapEditor.renderAllBlocks(e.Graphics, blocksScreen, bigBlocks, blockWidth, blockHeight, visibleRect, curScale, curActiveBlock, formMain.showAxis);
         }
 
         private void blocksScreen_MouseDown(object sender, MouseEventArgs e)
         {
             var p = blocksScreen.PointToClient(Cursor.Position);
             int x = p.X, y = p.Y;
-            int TILE_SIZE_X = (int)(blockWidth * curScale);
-            int TILE_SIZE_Y = (int)(blockHeight * curScale);
-            int tx = x / TILE_SIZE_X, ty = y / TILE_SIZE_Y;
-            int maxtX = blocksScreen.Width / TILE_SIZE_X;
+            int tileSizeX = (int)(blockWidth * curScale);
+            int tileSizeY = (int)(blockHeight * curScale);
+            int tx = x / tileSizeX, ty = y / tileSizeY;
+            int maxtX = blocksScreen.Width / tileSizeX;
             int index = ty * maxtX + tx;
             if ((tx < 0) || (tx >= maxtX) || (index < 0) || (index > bigBlocks.Length))
             {
@@ -307,20 +299,20 @@ namespace CadEditor
                     tileIndexes[x, y] = -1;
         }
 
-        public void resetDim(int width, int height)
+        public void resetDim(int widthD, int heightD)
         {
-            int[,] newIndexes = new int[width,height];
-            int endWidth = Math.Min(width, this.width);
-            int endHeight = Math.Min(height, this.height);
-            for (int x = 0; x < width; x++)
-                for (int y = 0; y < height; y++)
+            int[,] newIndexes = new int[widthD,heightD];
+            int endWidth = Math.Min(widthD, width);
+            int endHeight = Math.Min(heightD, height);
+            for (int x = 0; x < widthD; x++)
+                for (int y = 0; y < heightD; y++)
                     newIndexes[x, y] = -1;
             for (int x = 0; x < endWidth; x++)
                 for (int y = 0; y < endHeight; y++)
                     newIndexes[x,y] = tileIndexes[x,y];
             tileIndexes = newIndexes;
-            this.width = width;
-            this.height = height;
+            width = widthD;
+            height = heightD;
         }
 
         public int this[int x, int y]
@@ -331,7 +323,7 @@ namespace CadEditor
 
         public int[] toArray() //inverted
         {
-            int[] arr = new int[Width * Height];
+            int[] arr = new int[width * height];
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
                     arr[j*width + i] = tileIndexes[i,j];
@@ -339,12 +331,9 @@ namespace CadEditor
             return arr;
         }
 
-        public int Width { get { return width; } }
-        public int Height { get { return height; } }
-        public string Name { get { return name; } set { name = value; } }
-        string name;
-        int width;
-        int height;
+        public int width { get; private set; }
+        public int height { get; private set; }
+        public string name { get; set; }
         int[,] tileIndexes;
     }
 }

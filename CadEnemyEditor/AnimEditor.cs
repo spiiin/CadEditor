@@ -41,23 +41,23 @@ namespace CadEnemyEditor
 
         private void loadAnimData()
         {
-            int ANIM_COUNT = AnimConfig.ANIM_COUNT;
+            int animCount = AnimConfig.animCount;
             int animAddrHi = AnimConfig.animAddrHi;
             int animAddrLo = AnimConfig.animAddrLo;
 
-            int FRAME_COUNT = AnimConfig.FRAME_COUNT;
+            int frameCount = AnimConfig.frameCount;
             int frameAddr1Hi = AnimConfig.frameAddrHi;
             int frameAddr1Lo = AnimConfig.frameAddrLo;
 
-            int COORD_COUNT = AnimConfig.COORD_COUNT;
+            int coordCount = AnimConfig.coordCount;
             int coordAddrHi = AnimConfig.coordAddrHi;
             int coordAddrLo = AnimConfig.coordAddrLo;
 
-            animList = new AnimData[ANIM_COUNT];
-            frameList = new FrameData[FRAME_COUNT];
-            coordList = new CoordData[COORD_COUNT];
+            animList = new AnimData[animCount];
+            frameList = new FrameData[frameCount];
+            coordList = new CoordData[coordCount];
 
-            for (int i = 0; i < ANIM_COUNT; i++)
+            for (int i = 0; i < animCount; i++)
             {
                 byte hiAddrByte = Globals.romdata[animAddrHi + i];
                 byte loAddrByte = Globals.romdata[animAddrLo + i];
@@ -67,7 +67,7 @@ namespace CadEnemyEditor
                 int framesCount = frameCountAndShift % 128;
                 int frameShift = frameCountAndShift < 128 ? 0 : 256;
                 int timer = Globals.romdata[addrRom+1];
-                int[] frameIndexes = null;
+                int[] frameIndexes;
                 {
                     frameIndexes = new int[framesCount];
                     for (int frame = 0; frame < framesCount; frame++)
@@ -79,7 +79,7 @@ namespace CadEnemyEditor
                 animList[i] = new AnimData(i, addr, framesCount, timer, frameIndexes, frameShift);
             }
 
-            for (int frame = 0; frame < FRAME_COUNT; frame++)
+            for (int frame = 0; frame < frameCount; frame++)
             {
                 byte frameAddrHi = Globals.romdata[frameAddr1Hi + frame];
                 byte frameAddrLo = Globals.romdata[frameAddr1Lo + frame];
@@ -97,7 +97,7 @@ namespace CadEnemyEditor
                 frameList[frame] = frameData;
             }
 
-            for (int coord = 0; coord < COORD_COUNT; coord++)
+            for (int coord = 0; coord < coordCount; coord++)
             {
                 byte coordAddrHiByte = Globals.romdata[coordAddrHi + coord];
                 byte coordAddrLoByte = Globals.romdata[coordAddrLo + coord];
@@ -289,12 +289,12 @@ namespace CadEnemyEditor
         {
             if (activeFrame == null)
                 return;
-            int pal = cbTileIndex.SelectedIndex;
+            int palette = cbTileIndex.SelectedIndex;
             var tileIndexes = lvTiles.SelectedIndices;
             for (int ti = 0; ti < tileIndexes.Count; ti++)
             {
                 int p = activeFrame.tiles[tileIndexes[ti]].property;
-                p = p & 0xFC | pal;
+                p = p & 0xFC | palette;
                 activeFrame.tiles[tileIndexes[ti]].property = p;
             }
             drawFrame(activeFrame);
@@ -302,12 +302,12 @@ namespace CadEnemyEditor
 
         private void btSave_Click(object sender, EventArgs e)
         {
-            int FRAME_COUNT = AnimConfig.FRAME_COUNT;
+            int frameCount = AnimConfig.frameCount;
             int frameAddr1Hi = AnimConfig.frameAddrHi;
             int frameAddr1Lo = AnimConfig.frameAddrLo;
 
 
-            for (int frame = 0; frame < FRAME_COUNT; frame++)
+            for (int frame = 0; frame < frameCount; frame++)
             {
                 byte frameAddrHi = Globals.romdata[frameAddr1Hi + frame];
                 byte frameAddrLo = Globals.romdata[frameAddr1Lo + frame];
@@ -353,7 +353,7 @@ namespace CadEnemyEditor
             {
                 for (int i = 0; i < 16; i++)
                 {
-                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.NesColors[pal[i]]), i % 4 * 32, (i / 4) * 32, 32, 32);
+                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.defaultNesColors[pal[i]]), i % 4 * 32, (i / 4) * 32, 32, 32);
                 }
             }
             pbPal.Image = palImage;

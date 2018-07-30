@@ -15,15 +15,17 @@ namespace CadEditor
         public EditHexEditor()
         {
             InitializeComponent();
-            hexBox = new HexBox();
-            hexBox.UseFixedBytesPerLine = true;
-            hexBox.LineInfoVisible = true;
-            hexBox.VScrollBarVisible = true;
-            hexBox.Size = this.ClientSize;
+            hexBox = new HexBox
+            {
+                UseFixedBytesPerLine = true,
+                LineInfoVisible = true,
+                VScrollBarVisible = true,
+                Size = ClientSize
+            };
             /*hexBox.GroupSeparatorVisible = true;
-            hexBox.GroupSize = 4;*/
-            hexBox.Paint += new PaintEventHandler(hexBox_Paint);
-            this.Controls.Add(hexBox);
+hexBox.GroupSize = 4;*/
+            hexBox.Paint += hexBox_Paint;
+            Controls.Add(hexBox);
             hexBox.ByteProvider = new DynamicByteProvider(Globals.romdata);
         }
 
@@ -81,8 +83,11 @@ namespace CadEditor
             else if (dr == DialogResult.Yes)
             {
                 DynamicByteProvider bp = hexBox.ByteProvider as DynamicByteProvider;
-                bp.ApplyChanges();
-                bp.Bytes.CopyTo(Globals.romdata);
+                if (bp != null)
+                {
+                    bp.ApplyChanges();
+                    bp.Bytes.CopyTo(Globals.romdata);
+                }
             }
         }
 

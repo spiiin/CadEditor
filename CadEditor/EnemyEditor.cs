@@ -299,7 +299,7 @@ namespace CadEditor
             dgvObjects.AutoGenerateColumns = true;
             dgvObjects.DataSource = activeObjectList.objects;
 
-            if (dgvObjects.Columns.Count < ObjectRec.FIELD_COUNT)
+            if (dgvObjects.Columns.Count < ObjectRec.fieldCount)
             {
                 //add icon column
                 DataGridViewImageColumn iconColumn = new DataGridViewImageColumn();
@@ -389,7 +389,7 @@ namespace CadEditor
                         int leftMargin = (ConfigScript.getScreenVertical() ? scrHeight : scrWidth) * x;
                         int topMargin = (ConfigScript.getScreenVertical() ? scrWidth : scrHeight) * y;
                         
-                        MapEditor.Render(g, bigBlocks, visibleRect, screens, scrNo, curScale, false, showAxis, leftMargin, topMargin, width, height);
+                        MapEditor.render(g, bigBlocks, visibleRect, screens, scrNo, curScale, false, showAxis, leftMargin, topMargin, width, height);
                         if (showScreenAxis)
                         {
                             if (ConfigScript.getScreenVertical())
@@ -895,7 +895,7 @@ namespace CadEditor
                 var row = dgvObjects.Rows[e.RowIndex];
                 int cell0 = Convert.ToInt32(row.Cells[1].Value);
 
-                if (row.Cells.Count >= ObjectRec.FIELD_COUNT)
+                if (row.Cells.Count >= ObjectRec.fieldCount)
                 {
                     //update icon
                     if ((cell0 >= 0) && (cell0 < objectSprites.Images.Count))
@@ -959,7 +959,7 @@ namespace CadEditor
                 try
                 {
                     //check dict fields
-                    if (e.ColumnIndex >= ObjectRec.FIELD_COUNT)
+                    if (e.ColumnIndex >= ObjectRec.fieldCount)
                     {
                         var activeObjectList = objectLists[curActiveObjectListIndex];
                         var dict = activeObjectList.objects[e.RowIndex].additionalData;

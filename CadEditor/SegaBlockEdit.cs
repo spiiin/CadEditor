@@ -21,12 +21,12 @@ namespace CadEditor
             editMapMode = true;
         }
 
-        private bool editMapMode = false;
+        private bool editMapMode;
 
-        int curActiveBlock = 0;
-        int curActiveTile = 0;
-        int curActivePalNo = 0;
-        int curSelectedTilePart = 0;
+        int curActiveBlock;
+        int curActiveTile;
+        int curActivePalNo;
+        int curSelectedTilePart;
         private bool dirty;
 
         ushort[] tiles;
@@ -37,9 +37,9 @@ namespace CadEditor
 
         Image[] bigBlocks = new Image[0];
 
-        const int SEGA_TILES_COUNT = 0x800;
-        const int blockWidth = 32;
-        const int blockHeight = 32;
+        const int SegaTilesCount = 0x800;
+        const int BlockWidth = 32;
+        const int BlockHeight = 32;
 
         private void SegaBlockEdit_Load(object sender, EventArgs e)
         {
@@ -57,7 +57,7 @@ namespace CadEditor
             UtilsGui.setCbIndexWithoutUpdateLevel(cbPalSubpart, cbPalNo_SelectedIndexChanged);
 
             UtilsGui.setCbItemsCount(cbBlockNo, getBlocksCount(), inHex:true);
-            UtilsGui.setCbItemsCount(cbTile, SEGA_TILES_COUNT, inHex:true);
+            UtilsGui.setCbItemsCount(cbTile, SegaTilesCount, inHex:true);
             UtilsGui.setCbItemsCount(cbPal, 4);
             UtilsGui.setCbIndexWithoutUpdateLevel(cbBlockNo, cbBlockNo_SelectedIndexChanged);
             resetControls();
@@ -66,13 +66,13 @@ namespace CadEditor
         void reloadTiles()
         {
             var mapping = loadMappingData();
-            tiles = Mapper.LoadMapping(mapping);
+            tiles = Mapper.loadMapping(mapping);
         }
 
         bool saveTiles()
         {
             byte[] tileBytes = new byte[tiles.Length*2];
-            Mapper.ApplyMapping(ref tileBytes, tiles);
+            Mapper.applyMapping(ref tileBytes, tiles);
             ConfigScript.setSegaMapping(0, tileBytes);
             dirty = !Globals.flushToFile();
             return !dirty;
@@ -81,7 +81,7 @@ namespace CadEditor
         bool saveSegaBack()
         {
             byte[] tileBytes = new byte[tiles.Length * 2];
-            Mapper.ApplyMapping(ref tileBytes, tiles);
+            Mapper.applyMapping(ref tileBytes, tiles);
             ConfigScript.saveSegaBack(tileBytes);
             return true;
         }
@@ -89,9 +89,9 @@ namespace CadEditor
         void resetControls()
         {
             fillSegaTiles();
-            int TILE_WIDTH = getTileWidth();
-            int TILE_HEIGHT = getTileHeight();
-            mapScreen.Size = new Size(TILE_WIDTH * blockWidth, TILE_HEIGHT * blockHeight);
+            int tileWidth = getTileWidth();
+            int tileHeight = getTileHeight();
+            mapScreen.Size = new Size(tileWidth * BlockWidth, tileHeight * BlockHeight);
             updateBlocksImages();
         }
 
@@ -99,11 +99,11 @@ namespace CadEditor
         {
             videoChunk = ConfigScript.getVideoChunk(0);
             byte[] pal = ConfigScript.getPal(0);
-            cpal = ConfigScript.videoSega.GetPalette(pal);
-            bigBlocks = new Image[SEGA_TILES_COUNT];
-            for (ushort idx = 0; idx < SEGA_TILES_COUNT; idx++)
+            cpal = ConfigScript.videoSega.getPalette(pal);
+            bigBlocks = new Image[SegaTilesCount];
+            for (ushort idx = 0; idx < SegaTilesCount; idx++)
             {
-                bigBlocks[idx] = ConfigScript.videoSega.GetTile(videoChunk, idx, cpal, (byte)curActivePalNo, false, false);
+                bigBlocks[idx] = ConfigScript.videoSega.getTile(videoChunk, idx, cpal, (byte)curActivePalNo, false, false);
             }
         }
 
@@ -129,33 +129,33 @@ namespace CadEditor
         private void updateMappingControls(int index)
         {
             ushort word = tiles[index];
-            UtilsGui.setCbIndexWithoutUpdateLevel(cbTile, cbTile_SelectedIndexChanged, Mapper.TileIdx(word));
-            UtilsGui.setCbIndexWithoutUpdateLevel(cbPal, cbPal_SelectedIndexChanged, Mapper.PalIdx(word));
-            UtilsGui.setCbCheckedWithoutUpdateLevel(cbHFlip, cbHFlip_CheckedChanged, Mapper.HF(word));
-            UtilsGui.setCbCheckedWithoutUpdateLevel(cbVFlip, cbVFlip_CheckedChanged, Mapper.VF(word));
-            UtilsGui.setCbCheckedWithoutUpdateLevel(cbPrior, cbPrior_CheckedChanged, Mapper.P(word));
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbTile, cbTile_SelectedIndexChanged, Mapper.tileIdx(word));
+            UtilsGui.setCbIndexWithoutUpdateLevel(cbPal, cbPal_SelectedIndexChanged, Mapper.palIdx(word));
+            UtilsGui.setCbCheckedWithoutUpdateLevel(cbHFlip, cbHFlip_CheckedChanged, Mapper.hf(word));
+            UtilsGui.setCbCheckedWithoutUpdateLevel(cbVFlip, cbVFlip_CheckedChanged, Mapper.vf(word));
+            UtilsGui.setCbCheckedWithoutUpdateLevel(cbPrior, cbPrior_CheckedChanged, Mapper.p(word));
         }
 
         private void mapScreen_Paint(object sender, PaintEventArgs e)
         {
-            int TILE_WIDTH = getTileWidth();
-            int TILE_HEIGHT = getTileHeight(); 
-            int TILE_SIZE = TILE_WIDTH * TILE_HEIGHT;
-            int index = curActiveBlock * TILE_SIZE;
+            int tileWidth = getTileWidth();
+            int tileHeight = getTileHeight(); 
+            int tileSize = tileWidth * tileHeight;
+            int index = curActiveBlock * tileSize;
             var g = e.Graphics;
 
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
 
-            for (int i = 0; i < TILE_SIZE; i++)
+            for (int i = 0; i < tileSize; i++)
             {
                 ushort word = tiles[index + i];
-                var tileRect = new Rectangle(i % TILE_WIDTH * blockWidth, i / TILE_WIDTH * blockHeight, blockWidth, blockHeight);
-                ushort tileIdx = Mapper.TileIdx(word);
-                byte pal = Mapper.PalIdx(word);
-                bool hf = Mapper.HF(word);
-                bool vf = Mapper.VF(word);
-                var b = ConfigScript.videoSega.GetTile(videoChunk, tileIdx, cpal, pal, hf, vf);
+                var tileRect = new Rectangle(i % tileWidth * BlockWidth, i / tileWidth * BlockHeight, BlockWidth, BlockHeight);
+                ushort tileIdx = Mapper.tileIdx(word);
+                byte pal = Mapper.palIdx(word);
+                bool hf = Mapper.hf(word);
+                bool vf = Mapper.vf(word);
+                var b = ConfigScript.videoSega.getTile(videoChunk, tileIdx, cpal, pal, hf, vf);
                 g.DrawImage(b, tileRect);
                 if (showAxis)
                 {
@@ -170,30 +170,30 @@ namespace CadEditor
 
         private void mapScreen_MouseClick(object sender, MouseEventArgs e)
         {
-            int TILE_WIDTH = getTileWidth();
-            int TILE_HEIGHT = getTileHeight(); 
-            int TILE_SIZE = TILE_WIDTH * TILE_HEIGHT;
-            int index = curActiveBlock * TILE_SIZE;
+            int tileWidth = getTileWidth();
+            int tileHeight = getTileHeight(); 
+            int tileSize = tileWidth * tileHeight;
+            int index = curActiveBlock * tileSize;
 
-            int dx = e.X / (int)(blockWidth);
-            int dy = e.Y / (int)(blockHeight);
-            if (dx < 0 || dx >= TILE_WIDTH || dy < 0 || dy >= TILE_HEIGHT)
+            int dx = e.X / BlockWidth;
+            int dy = e.Y / BlockHeight;
+            if (dx < 0 || dx >= tileWidth || dy < 0 || dy >= tileHeight)
                 return;
-            int tileIdx = dy * TILE_WIDTH + dx;
+            int tileIdx = dy * tileWidth + dx;
             curSelectedTilePart = tileIdx;
             int changeIndex = getCurTileIdx();
             //
             if (e.Button == MouseButtons.Left)
             {
                 ushort w = tiles[changeIndex];
-                w = Mapper.ApplyPalIdx(w, (byte)curActivePalNo);
-                w = Mapper.ApplyTileIdx(w, (ushort)curActiveTile);
+                w = Mapper.applyPalIdx(w, (byte)curActivePalNo);
+                w = Mapper.applyTileIdx(w, (ushort)curActiveTile);
                 tiles[changeIndex] = w;
                 dirty = true;
             }
             else
             {
-                curActiveTile = Mapper.TileIdx(tiles[changeIndex]);
+                curActiveTile = Mapper.tileIdx(tiles[changeIndex]);
                 updateActiveTileNo();
                 blocksScreen.Invalidate();
             }
@@ -220,10 +220,9 @@ namespace CadEditor
 
         private int getCurTileSize()
         {
-            int TILE_WIDTH = getTileWidth();
-            int TILE_HEIGHT = getTileHeight();
-            int TILE_SIZE = TILE_WIDTH * TILE_HEIGHT;
-            return TILE_SIZE;
+            int tileWidth = getTileWidth();
+            int tileHeight = getTileHeight();
+            return tileWidth * tileHeight;
         }
 
 
@@ -233,14 +232,14 @@ namespace CadEditor
                 return;
             int tileIdx = getCurTileIdx();
             ushort val = (ushort)cbTile.SelectedIndex;
-            tiles[tileIdx] = Mapper.ApplyTileIdx(tiles[tileIdx], val);
+            tiles[tileIdx] = Mapper.applyTileIdx(tiles[tileIdx], val);
 
-            bool altPressed = Control.ModifierKeys == Keys.Alt;
+            bool altPressed = ModifierKeys == Keys.Alt;
             if (altPressed)
             {
                 for (int i = getCurTileBeginIdx(); i < getCurTileBeginIdx()+ getCurTileSize(); i++)
                 {
-                    tiles[i] = Mapper.ApplyTileIdx(tiles[i], val);
+                    tiles[i] = Mapper.applyTileIdx(tiles[i], val);
                 }
             }
 
@@ -254,14 +253,14 @@ namespace CadEditor
                 return;
             int tileIdx = getCurTileIdx();
             byte val = (byte)cbPal.SelectedIndex;
-            tiles[tileIdx] = Mapper.ApplyPalIdx(tiles[tileIdx], val);
+            tiles[tileIdx] = Mapper.applyPalIdx(tiles[tileIdx], val);
 
-            bool altPressed = Control.ModifierKeys == Keys.Alt;
+            bool altPressed = ModifierKeys == Keys.Alt;
             if (altPressed)
             {
                 for (int i = getCurTileBeginIdx(); i < getCurTileBeginIdx() + getCurTileSize(); i++)
                 {
-                    tiles[i] = Mapper.ApplyPalIdx(tiles[i], val);
+                    tiles[i] = Mapper.applyPalIdx(tiles[i], val);
                 }
             }
 
@@ -273,14 +272,14 @@ namespace CadEditor
         {
             int tileIdx = getCurTileIdx();
             int val = cbHFlip.Checked ? 1 : 0;
-            tiles[tileIdx] = Mapper.ApplyHF(tiles[tileIdx], val);
+            tiles[tileIdx] = Mapper.applyHf(tiles[tileIdx], val);
  
-            bool altPressed = Control.ModifierKeys == Keys.Alt;
+            bool altPressed = ModifierKeys == Keys.Alt;
             if (altPressed)
             {
                 for (int i = getCurTileBeginIdx(); i < getCurTileBeginIdx() + getCurTileSize(); i++)
                 {
-                    tiles[i] = Mapper.ApplyHF(tiles[i], val);
+                    tiles[i] = Mapper.applyHf(tiles[i], val);
                 }
             }
 
@@ -292,14 +291,14 @@ namespace CadEditor
         {
             int tileIdx = getCurTileIdx();
             int val = cbVFlip.Checked ? 1 : 0;
-            tiles[tileIdx] = Mapper.ApplyVF(tiles[tileIdx], val);
+            tiles[tileIdx] = Mapper.applyVf(tiles[tileIdx], val);
 
-            bool altPressed = Control.ModifierKeys == Keys.Alt;
+            bool altPressed = ModifierKeys == Keys.Alt;
             if (altPressed)
             {
                 for (int i = getCurTileBeginIdx(); i < getCurTileBeginIdx() + getCurTileSize(); i++)
                 {
-                    tiles[i] = Mapper.ApplyVF(tiles[i], val);
+                    tiles[i] = Mapper.applyVf(tiles[i], val);
                 }
             }
 
@@ -311,14 +310,14 @@ namespace CadEditor
         {
             int tileIdx = getCurTileIdx();
             int val = cbVFlip.Checked ? 1 : 0;
-            tiles[tileIdx] = Mapper.ApplyP(tiles[tileIdx], val);
+            tiles[tileIdx] = Mapper.applyP(tiles[tileIdx], val);
 
-            bool altPressed = Control.ModifierKeys == Keys.Alt;
+            bool altPressed = ModifierKeys == Keys.Alt;
             if (altPressed)
             {
                 for (int i = getCurTileBeginIdx(); i < getCurTileBeginIdx() + getCurTileSize(); i++)
                 {
-                    tiles[i] = Mapper.ApplyP(tiles[i], val);
+                    tiles[i] = Mapper.applyP(tiles[i], val);
                 }
             }
 
@@ -359,7 +358,7 @@ namespace CadEditor
 
         private int getTileHeight()
         {
-            return editMapMode ? ConfigScript.getSegaBackHeight() : ConfigScript.isBlockSize4x4() ? 4 : 2; ;
+            return editMapMode ? ConfigScript.getSegaBackHeight() : ConfigScript.isBlockSize4x4() ? 4 : 2;
         }
 
         private byte[] loadMappingData()
@@ -375,15 +374,15 @@ namespace CadEditor
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
 
-            MapEditor.RenderAllBlocks(g, blocksScreen, bigBlocks, blockWidth, blockHeight, visibleRect, 1.0f, curActiveTile, showAxis);
+            MapEditor.renderAllBlocks(g, blocksScreen, bigBlocks, BlockWidth, BlockHeight, visibleRect, 1.0f, curActiveTile, showAxis);
         }
 
         private void blocksScreen_MouseDown(object sender, MouseEventArgs e)
         {
             var p = blocksScreen.PointToClient(Cursor.Position);
             int x = p.X, y = p.Y;
-            int TILE_SIZE_X = (int)(blockWidth * 1.0f);
-            int TILE_SIZE_Y = (int)(blockHeight * 1.0f);
+            int TILE_SIZE_X = (int)(BlockWidth * 1.0f);
+            int TILE_SIZE_Y = (int)(BlockHeight * 1.0f);
             int tx = x / TILE_SIZE_X, ty = y / TILE_SIZE_Y;
             int maxtX = blocksScreen.Width / TILE_SIZE_X;
             int index = ty * maxtX + tx;
@@ -399,7 +398,7 @@ namespace CadEditor
 
         private void updateBlocksImages()
         {
-            UtilsGui.resizeBlocksScreen(bigBlocks, blocksScreen, blockWidth, blockHeight, 1.0f);
+            UtilsGui.resizeBlocksScreen(bigBlocks, blocksScreen, BlockWidth, BlockHeight, 1.0f);
             blocksScreen.Invalidate();
         }
 

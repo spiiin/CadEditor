@@ -192,6 +192,9 @@ Supported games:
     Pitfall The Mayan Adventure                     (1 level)
     World Of Illusion                               (1 level)
     
+----Screens/blocks editor (GameBoy games):
+    Darkwing Duck                                   (1 level)
+    
 ----Screens editor with prepared pictures (Sega Mega Drive/GBA games):
     Final Fantasy Tactics Advance                   (all levels)
     Lost Vikings                                    (1 level)

@@ -19,7 +19,7 @@ namespace CadEditor
         }
 
         int TILE_SIZE = 16;
-        bool showSecondNametable = false;
+        bool showSecondNametable;
 
         private void reloadAllData()
         {
@@ -58,7 +58,7 @@ namespace CadEditor
             cbShowSecondNametable.Checked =  mapDatas.Length > 1;
             cbShowSecondNametable.Visible = mapDatas.Length > 1;
 
-            cbSubpalette.DrawItem += new DrawItemEventHandler(cbSubpalette_DrawItemEvent);
+            cbSubpalette.DrawItem += cbSubpalette_DrawItemEvent;
         }
 
         protected void cbSubpalette_DrawItemEvent(object sender, DrawItemEventArgs e)
@@ -73,7 +73,7 @@ namespace CadEditor
             e.Graphics.DrawImage(subpalSprites.Images[e.Index], e.Bounds.Width - 63, e.Bounds.Y, 64, 16);
             string text = cbSubpalette.Items[e.Index].ToString();
             e.Graphics.DrawString(text, cbSubpalette.Font,
-                System.Drawing.Brushes.Black,
+                Brushes.Black,
                 new RectangleF(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height));
             e.DrawFocusRectangle();
         }
@@ -100,10 +100,10 @@ namespace CadEditor
                 var sb = new Bitmap(16 * 4, 16);
                 using (Graphics g = Graphics.FromImage(sb))
                 {
-                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.NesColors[curPal[i * 4]]), 0, 0, 16, 16);
-                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.NesColors[curPal[i * 4 + 1]]), 16, 0, 16, 16);
-                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.NesColors[curPal[i * 4 + 2]]), 32, 0, 16, 16);
-                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.NesColors[curPal[i * 4 + 3]]), 48, 0, 16, 16);
+                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.defaultNesColors[curPal[i * 4]]), 0, 0, 16, 16);
+                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.defaultNesColors[curPal[i * 4 + 1]]), 16, 0, 16, 16);
+                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.defaultNesColors[curPal[i * 4 + 2]]), 32, 0, 16, 16);
+                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.defaultNesColors[curPal[i * 4 + 3]]), 48, 0, 16, 16);
                 }
                 subpalSprites.Images.Add(sb);
             }
@@ -125,7 +125,7 @@ namespace CadEditor
                 {
                     var fname = sfSaveDialog.FileName;
                     using (FileStream f = File.OpenWrite(fname))
-                        f.Write(x, 0, (int)nn);
+                        f.Write(x, 0, nn);
                 }
             }
             catch (Exception ex)
@@ -135,13 +135,13 @@ namespace CadEditor
         }
 
         byte[] curPal;
-        int curActiveMapNo = 0;
+        int curActiveMapNo;
         int curActiveVideo = 10;
-        int curActiveBlock = 0;
+        int curActiveBlock;
         Image[][] videos;
         MapData[] mapDatas;
         bool showAxis = true;
-        private int curActiveSubpal = 0;
+        private int curActiveSubpal;
 
         private void renderMapScreen(Graphics g, MapData mapData)
         {
@@ -191,7 +191,7 @@ namespace CadEditor
                 return;
             }
 
-            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            if (e.Button == MouseButtons.Left)
             {
                 if (!MapConfig.readOnly)
                 {
@@ -254,10 +254,10 @@ namespace CadEditor
             int tilesCount = videos[0].Length;
             var p = blocksScreen.PointToClient(Cursor.Position);
             int x = p.X, y = p.Y;
-            int TILE_SIZE_X = TILE_SIZE;
-            int TILE_SIZE_Y = TILE_SIZE;
-            int tx = x / TILE_SIZE_X, ty = y / TILE_SIZE_Y;
-            int maxtX = blocksScreen.Width / TILE_SIZE_X;
+            int tileSizeX = TILE_SIZE;
+            int tileSizeY = TILE_SIZE;
+            int tx = x / tileSizeX, ty = y / tileSizeY;
+            int maxtX = blocksScreen.Width / tileSizeX;
             int index = ty * maxtX + tx;
             if ((tx < 0) || (tx >= maxtX) || (index < 0) || (index >= tilesCount))
             {
@@ -275,7 +275,7 @@ namespace CadEditor
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
             var visibleRect = UtilsGui.getVisibleRectangle(this, blocksScreen);
-            MapEditor.RenderAllBlocks(e.Graphics, blocksScreen, videos[curActiveSubpal], TILE_SIZE, TILE_SIZE, visibleRect, 1.0f, curActiveBlock, showAxis);
+            MapEditor.renderAllBlocks(e.Graphics, blocksScreen, videos[curActiveSubpal], TILE_SIZE, TILE_SIZE, visibleRect, 1.0f, curActiveBlock, showAxis);
         }
 
         private void cbSubpalette_SelectedIndexChanged(object sender, EventArgs e)

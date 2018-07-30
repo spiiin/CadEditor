@@ -6,13 +6,13 @@ namespace CadEditor
 {
     public class MapEditor
     {
-        public static void Render(Graphics g, Image[] bigBlocks, Rectangle? visibleRect,Screen[] screens, int scrNo, float CurScale, bool ShowBorder, bool showBlocksAxis, int LeftMargin, int TopMargin, int WIDTH, int HEIGHT)
+        public static void render(Graphics g, Image[] bigBlocks, Rectangle? visibleRect,Screen[] screens, int scrNo, float curScale, bool showBorder, bool showBlocksAxis, int leftMargin, int topMargin, int width, int height)
         {
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
 
             bool verticalScreen = ConfigScript.getScreenVertical();
-            int SIZE = WIDTH * HEIGHT;
+            int size = width * height;
 
             for (int layerIndex = 0; layerIndex < screens[scrNo].layers.Length; layerIndex++)
             {
@@ -23,17 +23,17 @@ namespace CadEditor
                     continue;
                 }
 
-                int TILE_SIZE_X = (int)(bigBlocks[0].Width* CurScale);
-                int TILE_SIZE_Y = (int)(bigBlocks[0].Height* CurScale);
+                int tileSizeX = (int)(bigBlocks[0].Width* curScale);
+                int tileSizeY = (int)(bigBlocks[0].Height* curScale);
 
-                for (int i = 0; i < SIZE; i++)
+                for (int i = 0; i < size; i++)
                 {
                     int bigBlockNo = ConfigScript.getBigTileNoFromScreen(layer.data, i);
                     Rectangle tileRect;
                     if (verticalScreen)
-                        tileRect = new Rectangle(i / WIDTH * TILE_SIZE_X + LeftMargin, (i % WIDTH) * TILE_SIZE_Y + TopMargin, TILE_SIZE_X, TILE_SIZE_Y);
+                        tileRect = new Rectangle(i / width * tileSizeX + leftMargin, (i % width) * tileSizeY + topMargin, tileSizeX, tileSizeY);
                     else
-                        tileRect = new Rectangle((i % WIDTH) * TILE_SIZE_X + LeftMargin, i / WIDTH * TILE_SIZE_Y + TopMargin, TILE_SIZE_X, TILE_SIZE_Y);
+                        tileRect = new Rectangle((i % width) * tileSizeX + leftMargin, i / width * tileSizeY + topMargin, tileSizeX, tileSizeY);
 
                     if (visibleRect == null || visibleRect.Value.Contains(tileRect) || visibleRect.Value.IntersectsWith(tileRect))
                     {
@@ -51,26 +51,26 @@ namespace CadEditor
                 }
             }
 
-            if (ShowBorder)
+            if (showBorder)
             {
-                int TILE_SIZE_X = (int)(bigBlocks[0].Width * CurScale);
-                int TILE_SIZE_Y = (int)(bigBlocks[0].Height * CurScale);
+                int tileSizeX = (int)(bigBlocks[0].Width * curScale);
+                int tileSizeY = (int)(bigBlocks[0].Height * curScale);
                 if (verticalScreen)
-                    g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(0, TILE_SIZE_Y, TILE_SIZE_X * HEIGHT, TILE_SIZE_Y * WIDTH));
+                    g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(0, tileSizeY, tileSizeX * height, tileSizeY * width));
                 else
-                    g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(TILE_SIZE_X, 0, TILE_SIZE_X * WIDTH, TILE_SIZE_Y * HEIGHT));
+                    g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(tileSizeX, 0, tileSizeX * width, tileSizeY * height));
             }
 
             //Additional rendering  //float to int!
-            ConfigScript.renderToMainScreen(g, (int)CurScale);
+            ConfigScript.renderToMainScreen(g, (int)curScale);
         }
 
-        public static void RenderAllBlocks(Graphics g, PictureBox parentControl, Image[] bigBlocks, int blockWidth, int blockHeight, Rectangle? visibleRect, float CurScale, int activeBlock, bool showBlocksAxis)
+        public static void renderAllBlocks(Graphics g, PictureBox parentControl, Image[] bigBlocks, int blockWidth, int blockHeight, Rectangle? visibleRect, float curScale, int activeBlock, bool showBlocksAxis)
         {
-            int TILE_SIZE_X = (int)(blockWidth * CurScale);
-            int TILE_SIZE_Y = (int)(blockHeight * CurScale);
-            int WIDTH = parentControl.Width / TILE_SIZE_X;
-            if (WIDTH == 0)
+            int tileSizeX = (int)(blockWidth * curScale);
+            int tileSizeY = (int)(blockHeight * curScale);
+            int width = parentControl.Width / tileSizeX;
+            if (width == 0)
             {
                 return;
             }
@@ -78,7 +78,7 @@ namespace CadEditor
             for (int i = 0; i < bigBlocks.Length; i++)
             {
                 int bigBlockNo = i;
-                Rectangle tileRect = new Rectangle((i % WIDTH) * TILE_SIZE_X, i / WIDTH * TILE_SIZE_Y, TILE_SIZE_X, TILE_SIZE_Y);
+                Rectangle tileRect = new Rectangle((i % width) * tileSizeX, i / width * tileSizeY, tileSizeX, tileSizeY);
 
                 if (visibleRect == null || visibleRect.Value.Contains(tileRect) || visibleRect.Value.IntersectsWith(tileRect))
                 {
@@ -100,21 +100,21 @@ namespace CadEditor
             }
         }
 
-        public static Image ScreenToImage(Image[] bigBlocks, Screen[] screens, int scrNo, float CurScale, bool ShowBorder, int LeftMargin, int TopMargin, int WIDTH, int HEIGHT)
+        public static Image screenToImage(Image[] bigBlocks, Screen[] screens, int scrNo, float curScale, bool showBorder, int leftMargin, int topMargin, int width, int height)
         {
             bool verticalScreen = ConfigScript.getScreenVertical();
-            int TILE_SIZE_X = (int)(bigBlocks[0].Width * CurScale);
-            int TILE_SIZE_Y = (int)(bigBlocks[0].Height * CurScale);
+            int tileSizeX = (int)(bigBlocks[0].Width * curScale);
+            int tileSizeY = (int)(bigBlocks[0].Height * curScale);
 
             Image result;
             if (verticalScreen)
-                result = new Bitmap(HEIGHT * TILE_SIZE_Y, WIDTH * TILE_SIZE_X);
+                result = new Bitmap(height * tileSizeY, width * tileSizeX);
             else
-                result = new Bitmap(WIDTH * TILE_SIZE_X, HEIGHT * TILE_SIZE_Y);
+                result = new Bitmap(width * tileSizeX, height * tileSizeY);
 
             using (var g = Graphics.FromImage(result))
             {
-                Render(g, bigBlocks, null, screens, scrNo, CurScale, ShowBorder, false, LeftMargin, TopMargin, WIDTH, HEIGHT);
+                render(g, bigBlocks, null, screens, scrNo, curScale, showBorder, false, leftMargin, topMargin, width, height);
             }
             return result;
         }

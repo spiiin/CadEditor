@@ -21,7 +21,7 @@ namespace PluginAnimEditor
         {
             this.formMain = formMain;
             var rm = new ResourceManager("PluginAnimEditor.Icon", this.GetType().Assembly);
-            var iconAnim = (System.Drawing.Bitmap)rm.GetObject("icon_anim");
+            var iconAnim = (Bitmap)rm.GetObject("icon_anim");
             var item = new ToolStripButton("Anim Editor", iconAnim, btAnim_Click);
             item.DisplayStyle = ToolStripItemDisplayStyle.Image;
             formMain.addSubeditorButton(item);
@@ -34,13 +34,13 @@ namespace PluginAnimEditor
         public void loadFromConfig(object asmObj, object data)
         {
             AsmHelper asm = (AsmHelper)asmObj;
-            AnimConfig.ANIM_COUNT = (int)asm.InvokeInst(data, "*.getAnimCount");
+            AnimConfig.animCount = (int)asm.InvokeInst(data, "*.getAnimCount");
             AnimConfig.animAddrHi = (int)asm.InvokeInst(data, "*.getAnimAddrHi");
             AnimConfig.animAddrLo = (int)asm.InvokeInst(data, "*.getAnimAddrLo");
-            AnimConfig.FRAME_COUNT = (int)asm.InvokeInst(data, "*.getFrameCount");
+            AnimConfig.frameCount = (int)asm.InvokeInst(data, "*.getFrameCount");
             AnimConfig.frameAddrHi = (int)asm.InvokeInst(data, "*.getFrameAddrHi");
             AnimConfig.frameAddrLo = (int)asm.InvokeInst(data, "*.getFrameAddrLo");
-            AnimConfig.COORD_COUNT = (int)asm.InvokeInst(data, "*.getCoordCount");
+            AnimConfig.coordCount = (int)asm.InvokeInst(data, "*.getCoordCount");
             AnimConfig.coordAddrHi = (int)asm.InvokeInst(data, "*.getCoordAddrHi");
             AnimConfig.coordAddrLo = (int)asm.InvokeInst(data, "*.getCoordAddrLo");
             AnimConfig.pal = (byte[])asm.InvokeInst(data, "*.getAnimPal");
@@ -58,15 +58,15 @@ namespace PluginAnimEditor
 
     public static class AnimConfig
     {
-        public static int ANIM_COUNT;
+        public static int animCount;
         public static int animAddrHi;
         public static int animAddrLo;
 
-        public static int FRAME_COUNT;
+        public static int frameCount;
         public static int frameAddrHi;
         public static int frameAddrLo;
 
-        public static int COORD_COUNT;
+        public static int coordCount;
         public static int coordAddrHi;
         public static int coordAddrLo;
 

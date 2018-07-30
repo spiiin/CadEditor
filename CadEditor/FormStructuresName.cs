@@ -20,10 +20,10 @@ namespace CadEditor
         {
             UtilsGui.setCbItemsCount(cbWidth, 64, 1);
             UtilsGui.setCbItemsCount(cbHeight, 64, 1);
-            cbWidth.SelectedIndex = StructWidth - 1;
-            cbHeight.SelectedIndex = StructHeight -1;
-            cbName.Text = StructName;
-            Result = false;
+            cbWidth.SelectedIndex = structWidth - 1;
+            cbHeight.SelectedIndex = structHeight -1;
+            cbName.Text = structName;
+            result = false;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -33,16 +33,16 @@ namespace CadEditor
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Result = true;
-            StructName = cbName.Text;
-            StructWidth = cbWidth.SelectedIndex + 1;
-            StructHeight = cbHeight.SelectedIndex + 1;
+            result = true;
+            structName = cbName.Text;
+            structWidth = cbWidth.SelectedIndex + 1;
+            structHeight = cbHeight.SelectedIndex + 1;
             Close();
         }
 
-        public static string StructName;
-        public static int StructWidth;
-        public static int StructHeight;
-        public static bool Result;
+        public static string structName;
+        public static int structWidth;
+        public static int structHeight;
+        public static bool result;
     }
 }
