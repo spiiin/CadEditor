@@ -17,7 +17,7 @@ namespace CadEditor
 
         private void EditColor_Load(object sender, EventArgs e)
         {
-            ColorIndex = -1;
+            colorIndex = -1;
             setColors();
         }
 
@@ -29,7 +29,7 @@ namespace CadEditor
                 for (int i = 0; i < ConfigScript.videoNes.defaultNesColors.Length; i++)
                 {
                     g.FillRectangle(new SolidBrush(ConfigScript.videoNes.defaultNesColors[i]), i % 8 * 32, (i / 8) * 32, 32, 32);
-                    if (ShowNo)
+                    if (showNo)
                         g.DrawString(String.Format("{0:X2}",i), new Font("Arial", 6), Brushes.White, new Rectangle(i % 8 * 32, (i / 8) * 32, 32, 32));
                 }
             }
@@ -39,11 +39,11 @@ namespace CadEditor
         private void pbColors_MouseClick(object sender, MouseEventArgs e)
         {
             int index = e.X / 32 + (e.Y / 32) * 8;
-            ColorIndex = index;
+            colorIndex = index;
             Close();
         }
 
-        public static int ColorIndex;
-        public bool ShowNo;
+        public static int colorIndex;
+        public bool showNo;
     }
 }

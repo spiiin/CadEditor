@@ -85,22 +85,22 @@ namespace PluginVideoNes
             nesColors[0x3E] = Color.FromArgb(0, 0, 0);
             nesColors[0x3F] = Color.FromArgb(0, 0, 0);
 
-            CadObjectTypeColors[0x0] = Color.FromArgb(196, 0, 255, 0);
-            CadObjectTypeColors[0x1] = Color.FromArgb(196, 0, 255, 0);
-            CadObjectTypeColors[0x2] = Color.FromArgb(196, 0, 196, 0);
-            CadObjectTypeColors[0x3] = Color.FromArgb(196, 255, 0, 0);
-            CadObjectTypeColors[0x4] = Color.FromArgb(196, 255, 0, 0);
-            CadObjectTypeColors[0x5] = Color.FromArgb(196, 255, 0, 0);
-            CadObjectTypeColors[0x6] = Color.FromArgb(196, 0, 255, 0);
-            CadObjectTypeColors[0x7] = Color.FromArgb(196, 255, 255, 0);
-            CadObjectTypeColors[0x8] = Color.FromArgb(196, 255, 0, 0);
-            CadObjectTypeColors[0x9] = Color.FromArgb(196, 255, 0, 0);
-            CadObjectTypeColors[0xA] = Color.FromArgb(196, 255, 0, 0);
-            CadObjectTypeColors[0xB] = Color.FromArgb(196, 0, 0, 0);
-            CadObjectTypeColors[0xC] = Color.FromArgb(196, 255, 0, 0);
-            CadObjectTypeColors[0xD] = Color.FromArgb(196, 255, 0, 0);
-            CadObjectTypeColors[0xE] = Color.FromArgb(196, 0, 255, 255);
-            CadObjectTypeColors[0xF] = Color.FromArgb(196, 0, 255, 255);
+            cadObjectTypeColors[0x0] = Color.FromArgb(196, 0, 255, 0);
+            cadObjectTypeColors[0x1] = Color.FromArgb(196, 0, 255, 0);
+            cadObjectTypeColors[0x2] = Color.FromArgb(196, 0, 196, 0);
+            cadObjectTypeColors[0x3] = Color.FromArgb(196, 255, 0, 0);
+            cadObjectTypeColors[0x4] = Color.FromArgb(196, 255, 0, 0);
+            cadObjectTypeColors[0x5] = Color.FromArgb(196, 255, 0, 0);
+            cadObjectTypeColors[0x6] = Color.FromArgb(196, 0, 255, 0);
+            cadObjectTypeColors[0x7] = Color.FromArgb(196, 255, 255, 0);
+            cadObjectTypeColors[0x8] = Color.FromArgb(196, 255, 0, 0);
+            cadObjectTypeColors[0x9] = Color.FromArgb(196, 255, 0, 0);
+            cadObjectTypeColors[0xA] = Color.FromArgb(196, 255, 0, 0);
+            cadObjectTypeColors[0xB] = Color.FromArgb(196, 0, 0, 0);
+            cadObjectTypeColors[0xC] = Color.FromArgb(196, 255, 0, 0);
+            cadObjectTypeColors[0xD] = Color.FromArgb(196, 255, 0, 0);
+            cadObjectTypeColors[0xE] = Color.FromArgb(196, 0, 255, 255);
+            cadObjectTypeColors[0xF] = Color.FromArgb(196, 0, 255, 255);
         }
 
         public void updateColorsFromConfig()
@@ -136,10 +136,10 @@ namespace PluginVideoNes
 
         public Bitmap makeImageStrip(byte[] videoChunk, byte[] pallete, int subPalIndex, bool withAlpha = false)
         {
-            Bitmap res = new Bitmap(8 * CHUNK_COUNT, 8);
+            Bitmap res = new Bitmap(8 * chunkCount, 8);
             using (Graphics g = Graphics.FromImage(res))
             {
-                for (int i = 0; i < CHUNK_COUNT; i++)
+                for (int i = 0; i < chunkCount; i++)
                 {
                     Bitmap onePic = makeImage(i, videoChunk, pallete, subPalIndex, withAlpha);
                     g.DrawImage(onePic, new Rectangle(i * 8, 0, 8, 8));
@@ -184,7 +184,7 @@ namespace PluginVideoNes
                 if (drawType == MapViewType.ObjType)
                 {
                     int objType = obj.getType();
-                    var col = (objType < CadObjectTypeColors.Length) ? CadObjectTypeColors[objType] : CadObjectTypeColors[0];
+                    var col = (objType < cadObjectTypeColors.Length) ? cadObjectTypeColors[objType] : cadObjectTypeColors[0];
                     g2.FillRectangle(new SolidBrush(col), new Rectangle(0, 0, scaleInt16, scaleInt16));
                     g2.DrawString(String.Format("{0:X}", obj.getType()), new Font("Arial", 6), Brushes.White, new Point(0, 0));
                 }
@@ -311,11 +311,11 @@ namespace PluginVideoNes
             return (hi ? 1 : 0) << 1 | (lo ? 1 : 0);
         }
 
-        public static int NES_COLORS_COUNT = 64;
-        public static int CHUNK_COUNT = 256;
-        public static Color[] nesColors = new Color[NES_COLORS_COUNT];
+        public static int nesColorsCount = 64;
+        public static int chunkCount = 256;
+        public static Color[] nesColors = new Color[nesColorsCount];
 
-        const int CAD_OBJTYPES_COUNT = 16;
-        public static Color[] CadObjectTypeColors = new Color[CAD_OBJTYPES_COUNT];
+        const int CadObjtypesCount = 16;
+        public static Color[] cadObjectTypeColors = new Color[CadObjtypesCount];
     }
 }

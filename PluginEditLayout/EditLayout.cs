@@ -38,7 +38,7 @@ namespace CadEditor
                 but.Size = new Size(32, 32);
                 but.ImageList = scrollSprites;
                 but.ImageIndex = i;
-                but.Click += new EventHandler(buttonScrollClick);
+                but.Click += buttonScrollClick;
                 objPanel.Controls.Add(but);
             }
             objPanel.ResumeLayout();
@@ -51,7 +51,7 @@ namespace CadEditor
                 but.Size = new Size(32, 32);
                 but.ImageList = doorSprites;
                 but.ImageIndex = i;
-                but.Click += new EventHandler(buttonDoorClick);
+                but.Click += buttonDoorClick;
                 doorsPanel.Controls.Add(but);
             }
             doorsPanel.ResumeLayout();
@@ -60,11 +60,13 @@ namespace CadEditor
             blocksPanel.SuspendLayout();
             for (int i = 0; i < ConfigScript.screensOffset[scrLevelNo].recCount; i++)
             {
-                var but = new Button();
-                but.Size = new Size(64, 64);
-                but.ImageList = screenImages;
-                but.ImageIndex = i;
-                but.Click += new EventHandler(buttonBlockClick);
+                var but = new Button
+                {
+                    Size = new Size(64, 64),
+                    ImageList = screenImages,
+                    ImageIndex = i
+                };
+                but.Click += buttonBlockClick;
                 blocksPanel.Controls.Add(but);
 
             }
@@ -117,8 +119,6 @@ namespace CadEditor
             }
             return b;
         }
-
-        const int SCREEN_SIZE = 64;
 
         private void pb_Paint(object sender, PaintEventArgs e)
         {
@@ -174,19 +174,19 @@ namespace CadEditor
             pbMap.Invalidate();
         }
 
-        private int curActiveBlock = 0;
+        private int curActiveBlock;
         private MapDrawMode drawMode = MapDrawMode.Screens;
-        private bool dirty = false;
-        private bool showScrolls = false;
-        private LevelLayerData curLevelLayerData = new LevelLayerData();
+        private bool dirty;
+        private bool showScrolls;
+        private LevelLayerData curLevelLayerData;
 
-        private int curActiveLayout = 0;
+        private int curActiveLayout;
 
         //for export params
-        private int curVideoNo = 0;
-        private int curBigBlockNo = 0;
-        private int curBlockNo = 0;
-        private int curPalleteNo = 0;
+        private int curVideoNo;
+        private int curBigBlockNo;
+        private int curBlockNo;
+        private int curPalleteNo;
 
         private int curWidth = 1;
         private int curHeight = 1;

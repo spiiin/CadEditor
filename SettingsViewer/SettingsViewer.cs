@@ -103,7 +103,7 @@ namespace SettingsViewer
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public string GetCurrentMethodNameWithoutGetter(int stacktraceLevel)
+        public string getCurrentMethodNameWithoutGetter(int stacktraceLevel)
         {
             StackTrace st = new StackTrace();
             StackFrame sf = st.GetFrame(stacktraceLevel); 
@@ -112,155 +112,155 @@ namespace SettingsViewer
             return fullName.Replace("get_", "");
         }
 
-        public MethodDelegate get() { return getMethod(GetCurrentMethodNameWithoutGetter(2));} //just shortcut
+        public MethodDelegate get() { return getMethod(getCurrentMethodNameWithoutGetter(2));} //just shortcut
 
         [Category("Show dump")]
-        public MethodDelegate showDumpFileField { get { return get(); } }
+        public MethodDelegate showDumpFileField => get();
         [Category("Levels count")]
-        public MethodDelegate getLevelsCount { get { return get(); } }
+        public MethodDelegate getLevelsCount => get();
         [Category("Offsets")]
-        public MethodDelegate getPalOffset { get { return get(); } }
+        public MethodDelegate getPalOffset => get();
         [Category("Offsets")]
-        public MethodDelegate getVideoOffset { get { return get(); } }
+        public MethodDelegate getVideoOffset => get();
         [Category("Offsets")]
-        public MethodDelegate getVideoObjOffset { get { return get(); } }
+        public MethodDelegate getVideoObjOffset => get();
         [Category("Offsets")]
-        public MethodDelegate getBlocksOffset { get { return get(); } }
+        public MethodDelegate getBlocksOffset => get();
         [Category("Offsets")]
-        public MethodDelegate getScreensOffset { get { return get(); } }
+        public MethodDelegate getScreensOffset => get();
         [Category("Screen params")]
-        public MethodDelegate loadScreensFunc { get { return get(); } }
+        public MethodDelegate loadScreensFunc => get();
         [Category("Screen params")]
-        public MethodDelegate saveScreensFunc { get { return get(); } }
+        public MethodDelegate saveScreensFunc => get();
         [Category("Screen params")]
-        public MethodDelegate getScreensOffsetsForLevels { get { return get(); } }
+        public MethodDelegate getScreensOffsetsForLevels => get();
         [Category("Screen params")]
-        public MethodDelegate getScreenVertical { get { return get(); } }
+        public MethodDelegate getScreenVertical => get();
         [Category("Screen params")]
-        public MethodDelegate getScreenDataStride { get { return get(); } }
+        public MethodDelegate getScreenDataStride => get();
         [Category("Screen params")]
-        public MethodDelegate getWordLen { get { return get(); } }
+        public MethodDelegate getWordLen => get();
         [Category("Screen params")]
-        public MethodDelegate isLittleEndian { get { return get(); } }
+        public MethodDelegate isLittleEndian => get();
         [Category("Sega graphics")]
-        public MethodDelegate isUseSegaGraphics { get { return get(); } }
+        public MethodDelegate isUseSegaGraphics => get();
         [Category("Sega graphics")]
-        public MethodDelegate isBlockSize4x4 { get { return get(); } }
+        public MethodDelegate isBlockSize4x4 => get();
         [Category("Screen params")]
-        public MethodDelegate isBuildScreenFromSmallBlocks { get { return get(); } }
+        public MethodDelegate isBuildScreenFromSmallBlocks => get();
         [Category("Level recs")]
-        public MethodDelegate getLevelRecsFunc { get { return get(); } }
+        public MethodDelegate getLevelRecsFunc => get();
         [Category("Min/max object params")]
-        public MethodDelegate getMinObjCoordX { get { return get(); } }
+        public MethodDelegate getMinObjCoordX => get();
         [Category("Min/max object params")]
-        public MethodDelegate getMinObjCoordY { get { return get(); } }
+        public MethodDelegate getMinObjCoordY => get();
         [Category("Min/max object params")]
-        public MethodDelegate getMinObjType { get { return get(); } }
+        public MethodDelegate getMinObjType => get();
         [Category("Min/max object params")]
-        public MethodDelegate getMaxObjCoordX { get { return get(); } }
+        public MethodDelegate getMaxObjCoordX => get();
         [Category("Min/max object params")]
-        public MethodDelegate getMaxObjCoordY { get { return get(); } }
+        public MethodDelegate getMaxObjCoordY => get();
         [Category("Min/max object params")]
-        public MethodDelegate getMaxObjType { get { return get(); } }
+        public MethodDelegate getMaxObjType => get();
         [Category("Blocks params")]
-        public MethodDelegate getBigBlocksHierarchyCount { get { return get(); } }
+        public MethodDelegate getBigBlocksHierarchyCount => get();
         [Category("Blocks params")]
-        public MethodDelegate getBigBlocksCountHierarchy { get { return get(); } }
+        public MethodDelegate getBigBlocksCountHierarchy => get();
         [Category("Blocks params")]
-        public MethodDelegate getBigBlocksCount { get { return get(); } }
+        public MethodDelegate getBigBlocksCount => get();
         [Category("Blocks params")]
-        public MethodDelegate getBigBlocksOffsetHierarchy { get { return get(); } }
+        public MethodDelegate getBigBlocksOffsetHierarchy => get();
         [Category("Offsets")]
-        public MethodDelegate getBigBlocksOffset { get { return get(); } }
+        public MethodDelegate getBigBlocksOffset => get();
         [Category("NES CHR funcs")]
-        public MethodDelegate getVideoPageAddrFunc { get { return get(); } }
+        public MethodDelegate getVideoPageAddrFunc => get();
         [Category("NES CHR funcs")]
-        public MethodDelegate getVideoChunkFunc { get { return get(); } }
+        public MethodDelegate getVideoChunkFunc => get();
         [Category("NES CHR funcs")]
-        public MethodDelegate setVideoChunkFunc { get { return get(); } }
+        public MethodDelegate setVideoChunkFunc => get();
         [Category("BigBlocks funcs")]
-        public MethodDelegate getBigBlocksFuncs { get { return get(); } }
+        public MethodDelegate getBigBlocksFuncs => get();
         [Category("BigBlocks funcs")]
-        public MethodDelegate setBigBlocksFuncs { get { return get(); } }
+        public MethodDelegate setBigBlocksFuncs => get();
         [Category("BigBlocks funcs")]
-        public MethodDelegate getBigBlocksFunc { get { return get(); } }
+        public MethodDelegate getBigBlocksFunc => get();
         [Category("BigBlocks funcs")]
-        public MethodDelegate setBigBlocksFunc { get { return get(); } }
+        public MethodDelegate setBigBlocksFunc => get();
         [Category("Sega blocks funcs")]
-        public MethodDelegate getSegaMappingFunc { get { return get(); } }
+        public MethodDelegate getSegaMappingFunc => get();
         [Category("Sega blocks funcs")]
-        public MethodDelegate setSegaMappingFunc { get { return get(); } }
+        public MethodDelegate setSegaMappingFunc => get();
         [Category("Blocks funcs")]
-        public MethodDelegate getBlocksFunc { get { return get(); } }
+        public MethodDelegate getBlocksFunc => get();
         [Category("Blocks funcs")]
-        public MethodDelegate setBlocksFunc { get { return get(); } }
+        public MethodDelegate setBlocksFunc => get();
         [Category("Pal funcs")]
-        public MethodDelegate getPalFunc { get { return get(); } }
+        public MethodDelegate getPalFunc => get();
         [Category("Pal funcs")]
-        public MethodDelegate setPalFunc { get { return get(); } }
+        public MethodDelegate setPalFunc => get();
         [Category("Objects funcs")]
-        public MethodDelegate getObjectsFunc { get { return get(); } }
+        public MethodDelegate getObjectsFunc => get();
         [Category("Objects funcs")]
-        public MethodDelegate setObjectsFunc { get { return get(); } }
+        public MethodDelegate setObjectsFunc => get();
         [Category("Objects funcs")]
-        public MethodDelegate sortObjectsFunc { get { return get(); } }
+        public MethodDelegate sortObjectsFunc => get();
         [Category("Layout funcs")]
-        public MethodDelegate getLayoutFunc { get { return get(); } }
+        public MethodDelegate getLayoutFunc => get();
         [Category("Layout funcs")]
-        public MethodDelegate setLayoutFunc { get { return get(); } }
+        public MethodDelegate setLayoutFunc => get();
         [Category("Converst screen to tile funcs")]
-        public MethodDelegate getConvertScreenTileFunc { get { return get(); } }
+        public MethodDelegate getConvertScreenTileFunc => get();
         [Category("Converst screen to tile funcs")]
-        public MethodDelegate getBackConvertScreenTileFunc { get { return get(); } }
+        public MethodDelegate getBackConvertScreenTileFunc => get();
         [Category("Converst screen to tile funcs")]
-        public MethodDelegate getBigTileNoFromScreenFunc { get { return get(); } }
+        public MethodDelegate getBigTileNoFromScreenFunc => get();
         [Category("Converst screen to tile funcs")]
-        public MethodDelegate setBigTileToScreenFunc { get { return get(); } }
+        public MethodDelegate setBigTileToScreenFunc => get();
         [Category("Objects funcs")]
-        public MethodDelegate getObjectDictionaryFunc { get { return get(); } }
+        public MethodDelegate getObjectDictionaryFunc => get();
         [Category("Sega back funcs")]
-        public MethodDelegate loadSegaBackFunc { get { return get(); } }
+        public MethodDelegate loadSegaBackFunc => get();
         [Category("Sega back funcs")]
-        public MethodDelegate saveSegaBackFunc { get { return get(); } }
+        public MethodDelegate saveSegaBackFunc => get();
         [Category("Sega back params")]
-        public MethodDelegate getSegaBackWidth { get { return get(); } }
+        public MethodDelegate getSegaBackWidth => get();
         [Category("Sega back params")]
-        public MethodDelegate getSegaBackHeight { get { return get(); } }
+        public MethodDelegate getSegaBackHeight => get();
         [Category("Render objects params")]
-        public MethodDelegate getDrawObjectFunc { get { return get(); } }
+        public MethodDelegate getDrawObjectFunc => get();
         [Category("Render objects params")]
-        public MethodDelegate getDrawObjectBigFunc { get { return get(); } }
+        public MethodDelegate getDrawObjectBigFunc => get();
         [Category("Render objects params")]
-        public MethodDelegate getRenderToMainScreenFunc { get { return get(); } }
+        public MethodDelegate getRenderToMainScreenFunc => get();
         [Category("Editors enable params")]
-        public MethodDelegate isBigBlockEditorEnabled { get { return get(); } }
+        public MethodDelegate isBigBlockEditorEnabled => get();
         [Category("Editors enable params")]
-        public MethodDelegate isBlockEditorEnabled { get { return get(); } }
+        public MethodDelegate isBlockEditorEnabled => get();
         [Category("Editors enable params")]
-        public MethodDelegate isEnemyEditorEnabled { get { return get(); } }
+        public MethodDelegate isEnemyEditorEnabled => get();
         [Category("Icons hints")]
-        public MethodDelegate getObjTypesPicturesDir { get { return get(); } }
+        public MethodDelegate getObjTypesPicturesDir => get();
         [Category("Scrolls params")]
-        public MethodDelegate isShowScrollsInLayout { get { return get(); } }
+        public MethodDelegate isShowScrollsInLayout => get();
         [Category("Scrolls params")]
-        public MethodDelegate getScrollsOffsetFromLayout { get { return get(); } }
+        public MethodDelegate getScrollsOffsetFromLayout => get();
         [Category("Scrolls params")]
-        public MethodDelegate getScrollByteArray { get { return get(); } }
+        public MethodDelegate getScrollByteArray => get();
         [Category("Blocks params")]
-        public MethodDelegate getBlocksCount { get { return get(); } }
+        public MethodDelegate getBlocksCount => get();
         [Category("Blocks pictures params")]
-        public MethodDelegate getBlocksFilename { get { return get(); } }
+        public MethodDelegate getBlocksFilename => get();
         [Category("Blocks pictures params")]
-        public MethodDelegate getPictureBlocksWidth { get { return get(); } }
+        public MethodDelegate getPictureBlocksWidth => get();
         [Category("Blocks params")]
-        public MethodDelegate getBlockTypeNames { get { return get(); } }
+        public MethodDelegate getBlockTypeNames => get();
         [Category("View params")]
-        public MethodDelegate getGroupsFunc { get { return get(); } }
+        public MethodDelegate getGroupsFunc => get();
         [Category("View params")]
-        public MethodDelegate getDefaultScale { get { return get(); } }
+        public MethodDelegate getDefaultScale => get();
         [Category("Blocks params")]
-        public MethodDelegate getPalBytesAddr { get { return get(); } }
+        public MethodDelegate getPalBytesAddr => get();
         [Category("Blocks params")]
-        public MethodDelegate getPhysicsBytesAddr { get { return get(); } }
+        public MethodDelegate getPhysicsBytesAddr => get();
     }
 }

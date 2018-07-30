@@ -24,12 +24,12 @@ namespace CadEditor
             UtilsGui.setCbItemsCount(cbCount, scrCount);
             cbFirst.SelectedIndex = 0;
             cbCount.SelectedIndex = scrCount - 1;
-            Result = false;
-            btOpen.Visible = ExportMode;
-            btImport.Visible = !ExportMode;
-            lbCount.Visible = ExportMode;
-            cbCount.Visible = ExportMode;
-            tbFileName.Text = Filename;
+            result = false;
+            btOpen.Visible = exportMode;
+            btImport.Visible = !exportMode;
+            lbCount.Visible = exportMode;
+            cbCount.Visible = exportMode;
+            tbFileName.Text = filename;
         }
 
         private void tbFileName_Click(object sender, EventArgs e)
@@ -42,17 +42,17 @@ namespace CadEditor
 
         private void btOpen_Click(object sender, EventArgs e)
         {
-            First = Utils.parseInt(cbFirst.Text);
-            Count = Utils.parseInt(cbCount.Text);
-            Filename = tbFileName.Text;
-            Result = true;
+            first = Utils.parseInt(cbFirst.Text);
+            count = Utils.parseInt(cbCount.Text);
+            filename = tbFileName.Text;
+            result = true;
             Close();
         }
 
-        public static int Count;
-        public static int First;
-        public static string Filename;
-        public static bool Result;
-        public static bool ExportMode = true;
+        public static int count;
+        public static int first;
+        public static string filename;
+        public static bool result;
+        public static bool exportMode = true;
     }
 }

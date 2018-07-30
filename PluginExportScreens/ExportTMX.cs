@@ -21,10 +21,6 @@ namespace PluginExportScreens
             InitializeComponent();
         }
 
-        private void tbFilename_Click(object sender, EventArgs e)
-        {
-        }
-
         private void btExport_Click(object sender, EventArgs e)
         {
             try

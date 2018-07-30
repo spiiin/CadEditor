@@ -19,8 +19,10 @@ namespace PluginSegaBackEditor
             this.formMain = formMain;
             var rm = new ResourceManager("PluginSegaBackEditor.Icon", this.GetType().Assembly);
             var iconMap = (System.Drawing.Bitmap)rm.GetObject("icon_map");
-            var item = new ToolStripButton("Back Editor", iconMap, btMap_Click);
-            item.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            var item = new ToolStripButton("Back Editor", iconMap, btMap_Click)
+            {
+                DisplayStyle = ToolStripItemDisplayStyle.Image
+            };
             formMain.addSubeditorButton(item);
         }
 

@@ -62,13 +62,12 @@ namespace CadEditor
 
         private void pbPal_MouseClick(object sender, MouseEventArgs e)
         {
-            var f = new EditColor();
-            f.ShowNo = showNo;
+            var f = new EditColor {showNo = showNo};
             f.ShowDialog();
-            if (EditColor.ColorIndex != -1)
+            if (EditColor.colorIndex != -1)
             {
                 int index = e.X / 32 + (e.Y / 32) * 4;
-                curPal[index] = (byte)EditColor.ColorIndex;
+                curPal[index] = (byte)EditColor.colorIndex;
                 reloadVideo();
             }
         }
@@ -99,8 +98,7 @@ namespace CadEditor
 
         private void btExport_Click(object sender, EventArgs e)
         {
-            var f = new SelectFile();
-            f.filename = "exportedConfigScript.videoNes.bin";
+            var f = new SelectFile {filename = "exportedConfigScript.videoNes.bin"};
             f.ShowDialog();
             if (!f.result)
                 return;
@@ -110,8 +108,7 @@ namespace CadEditor
 
         private void btImport_Click(object sender, EventArgs e)
         {
-            var f = new SelectFile();
-            f.filename = "exportedConfigScript.videoNes.bin";
+            var f = new SelectFile {filename = "exportedConfigScript.videoNes.bin"};
             f.ShowDialog();
             if (!f.result)
                 return;
