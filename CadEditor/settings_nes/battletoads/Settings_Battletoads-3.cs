@@ -5,6 +5,13 @@ using System.Drawing;
 
 public class Data
 { 
+  public string[] getPluginNames() 
+  {
+    return new string[] 
+    {
+      "PluginBattletoadsRaceEditor.dll",
+    };
+  }
   public OffsetRec getScreensOffset()     { return new OffsetRec(0x2802B, 1 , 48*7, 48, 7);  }
   public int getBigBlocksCount() { return 32; }
   public int getBlocksCount()    { return 32; }
@@ -26,7 +33,9 @@ public class Data
   
   public GetPalFunc           getPalFunc()           { return getPallete;}
   public SetPalFunc           setPalFunc()           { return null;}
-  
+  //----------------------------------------------------------------------------
+  public int getRaceObjectsCount() { return 114; }
+  public int getRaceObjectAddr()   { return 0x1EDFE; }
   //----------------------------------------------------------------------------
   public int getVideoAddress(int id)
   {

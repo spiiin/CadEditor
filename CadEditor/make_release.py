@@ -34,6 +34,7 @@ COPY_FOLDER_LIST = [
   "settings_gba/",
   "IronPythonLib/",
   "exportTmx/pytmxlib/",
+  "bt_objects/", #copied from PluginBattetoadsRaceEditor
 ]
 
 def removeAndCreate(path):
