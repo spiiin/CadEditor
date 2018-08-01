@@ -4,7 +4,7 @@ using System;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec( 0x0c010, 8 , 8*6, 8, 6);   }
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x0c010, 8 , 8*6, 8, 6);   }
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }
