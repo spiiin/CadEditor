@@ -16,7 +16,6 @@ public class Data
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0xDE7B  , 1  , 0x4000); }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0xDB33  , 1  , 0x4000); }
   public bool getScreenVertical()         { return true; }
-  public int    getPictureBlocksWidth()   { return 16; }
   
   public int getBlocksCount()    { return 163; }
   public int getBigBlocksCount() { return 105; }
