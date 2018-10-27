@@ -51,12 +51,15 @@ namespace CadEditor
 
         private void updateCbConfigInDirectory(string text)
         {
-            var files = Directory.EnumerateFiles(Path.GetDirectoryName(text), "Settings_*.cs");
             try
             {
-                cbConfigName.DropDownWidth = 600;
-                cbConfigName.Items.Clear();
-                cbConfigName.Items.AddRange(files.ToArray());
+                var dirName = Path.GetDirectoryName(text);
+                if (dirName != null)
+                {
+                    cbConfigName.DropDownWidth = 600;
+                    cbConfigName.Items.Clear();
+                    cbConfigName.Items.AddRange(Directory.EnumerateFiles(dirName, "Settings_*.cs").ToArray());
+                }
             }
             catch (Exception)
             {
