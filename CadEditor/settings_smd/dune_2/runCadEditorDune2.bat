@@ -1,2 +1,2 @@
-cd ..
-start CadEditor.exe settings_sega_dune_2/Config.cs
+cd ../..
+start CadEditor.exe -config=settings_smd/dune_2/Config.cs

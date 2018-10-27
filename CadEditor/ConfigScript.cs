@@ -280,6 +280,8 @@ namespace CadEditor
             defaultScale = callFromScript(asm, data, "*.getDefaultScale", -1.0f);
 
             loadAllPlugins(asm, data);
+
+            ConfigScript.videoNes.updateColorsFromConfig();
         }
 
         private static GetLevelRecsFunc getLevelRecsFuncDefault()
