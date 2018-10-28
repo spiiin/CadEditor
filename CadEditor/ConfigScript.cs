@@ -15,6 +15,7 @@ namespace CadEditor
     public delegate void   SetBlocksFunc(int blockIndex, ObjRec[] blocksData);
     public delegate BigBlock[] GetBigBlocksFunc(int bigBlockId);
     public delegate void   SetBigBlocksFunc(int bigTileIndex, BigBlock[] bigBlocks);
+    public delegate int GetBigBlocksAddrFunc(int bigBlockId);
     public delegate byte[] GetSegaMappingFunc(int bigBlockId);
     public delegate void   SetSegaMappingFunc(int bigTileIndex, byte[] bigBlocks);
     public delegate byte[] GetPalFunc(int palId);
@@ -211,15 +212,19 @@ namespace CadEditor
 
             getBigBlocksFuncs = new GetBigBlocksFunc[bigBlocksHierarchyCount];
             setBigBlocksFuncs = new SetBigBlocksFunc[bigBlocksHierarchyCount];
+            getBigBlocksAddrFuncs = new GetBigBlocksAddrFunc[bigBlocksHierarchyCount];
+
             getBigBlocksFuncs = callFromScript<GetBigBlocksFunc[]>(asm, data, "*.getBigBlocksFuncs", new GetBigBlocksFunc[1]);
             setBigBlocksFuncs = callFromScript<SetBigBlocksFunc[]>(asm, data, "*.setBigBlocksFuncs", new SetBigBlocksFunc[1]);
+            getBigBlocksAddrFuncs = callFromScript<GetBigBlocksAddrFunc[]>(asm, data, "*.getBigBlocksAddrFuncs", new GetBigBlocksAddrFunc[1]);
             if (!buildScreenFromSmallBlocks)
             {
                 getBigBlocksFuncs[0] = callFromScript<GetBigBlocksFunc>(asm, data, "*.getBigBlocksFunc", getBigBlocksFuncs[0]);
                 setBigBlocksFuncs[0] = callFromScript<SetBigBlocksFunc>(asm, data, "*.setBigBlocksFunc", setBigBlocksFuncs[0]);
+                getBigBlocksAddrFuncs[0] = callFromScript<GetBigBlocksAddrFunc>(asm, data, "*.getBigBlocksAddrFunc", getBigBlocksAddrFuncs[0]);
             }
 
-            getSegaMappingFunc = callFromScript<GetSegaMappingFunc>(asm, data, "*.getSegaMappingFunc", (int index) => { return Utils.readLinearBigBlockData(0, index); });
+            getSegaMappingFunc = callFromScript<GetSegaMappingFunc>(asm, data, "*.getSegaMappingFunc", (int index) => Utils.readLinearBigBlockData(0, index));
             setSegaMappingFunc = callFromScript<SetSegaMappingFunc>(asm, data, "*.setSegaMappingFunc", (int index, byte[] bb) => { Utils.writeLinearBigBlockData(0, index, bb); });
             getBlocksFunc = callFromScript<GetBlocksFunc>(asm,data,"*.getBlocksFunc");
             setBlocksFunc = callFromScript<SetBlocksFunc>(asm, data, "*.setBlocksFunc");
@@ -655,9 +660,16 @@ namespace CadEditor
             return ConfigScript.blocksOffset.beginAddr + ConfigScript.blocksOffset.recSize * id;
         }
 
-        public static int getBigTilesAddr(int heirarchyLevel, int id)
+        public static int getBigTilesAddr(int hierarchyLevel, int id)
         {
-            return ConfigScript.bigBlocksOffsets[heirarchyLevel].beginAddr + ConfigScript.bigBlocksOffsets[heirarchyLevel].recSize * id;
+            var getAddrFunc = ConfigScript.getBigBlocksAddrFuncs[hierarchyLevel];
+            return getAddrFunc?.Invoke(id) ?? getBigTilesAddrDefault(hierarchyLevel, id);
+        }
+
+        private static int getBigTilesAddrDefault(int hierarchyLevel, int id)
+        {
+            var bigBlocksOffset = ConfigScript.bigBlocksOffsets[hierarchyLevel];
+            return bigBlocksOffset.beginAddr + bigBlocksOffset.recSize * id;
         }
 
         public static int getLevelWidth(int levelNo)
@@ -739,6 +751,7 @@ namespace CadEditor
         public static int bigBlocksHierarchyCount;
         public static GetBigBlocksFunc[] getBigBlocksFuncs;
         public static SetBigBlocksFunc[] setBigBlocksFuncs;
+        public static GetBigBlocksAddrFunc[] getBigBlocksAddrFuncs;
 
         public static GetSegaMappingFunc getSegaMappingFunc;
         public static SetSegaMappingFunc setSegaMappingFunc;

@@ -75,7 +75,13 @@ public static class ShatterhandUtils
       int height = ConfigScript.getLevelHeight(curActiveLayout);
       int[] layer = new int[width * height];
       for (int i = 0; i < width * height; i++)
-          layer[i] = (Globals.romdata[layoutAddr + i] + 1)%256;
+      {
+          var scrNo = Globals.romdata[layoutAddr + i];
+          if (scrNo > 0) //not change zero values (for easy view)
+          {
+              layer[i] = (scrNo + 1)%256;
+          }
+      }
       return new LevelLayerData(width, height, layer, null, null);
   }
   
@@ -85,7 +91,10 @@ public static class ShatterhandUtils
       int width =  ConfigScript.getLevelWidth(curActiveLayout);
       int height = ConfigScript.getLevelHeight(curActiveLayout);
       for (int i = 0; i < width * height; i++)
-          Globals.romdata[layoutAddr + i] = (byte)(layerData.layer[i] - 1);
+      {
+          var scrNo = layerData.layer[i];
+          Globals.romdata[layoutAddr + i] = (byte)((scrNo == 0) ? scrNo : (scrNo-1));
+      }
       return true;
   }
   
