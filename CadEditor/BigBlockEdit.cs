@@ -54,11 +54,11 @@ namespace CadEditor
         {
             UtilsGui.setCbItemsCount(cbHierarchyLevel, ConfigScript.getbigBlocksHierarchyCount());
             UtilsGui.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
-            UtilsGui.setCbItemsCount(cbSmallBlock, ConfigScript.blocksOffset.recCount);
+            UtilsGui.setCbItemsCount(cbBigBlock, ConfigScript.bigBlocksOffsets[curHierarchyLevel].recCount);
             UtilsGui.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
             UtilsGui.setCbItemsCount(cbPart, Math.Max(ConfigScript.getBigBlocksCount(curHierarchyLevel) / 256, 1));
             cbTileset.Items.Clear();
-            for (int i = 0; i < ConfigScript.bigBlocksOffsets[curTileset].recCount; i++)
+            for (int i = 0; i < ConfigScript.blocksOffset.recCount; i++)
             {
                 var str = String.Format("Tileset{0}", i);
                 cbTileset.Items.Add(str);
@@ -66,9 +66,9 @@ namespace CadEditor
 
             //generic version
             cbHierarchyLevel.SelectedIndex = 0;
-            cbTileset.SelectedIndex = formMain.curActiveBigBlockNo;
+            cbTileset.SelectedIndex = formMain.curActiveBlockNo;
             cbVideoNo.SelectedIndex = formMain.curActiveVideoNo;
-            cbSmallBlock.SelectedIndex = formMain.curActiveBlockNo;
+            cbBigBlock.SelectedIndex = formMain.curActiveBigBlockNo;
             cbPaletteNo.SelectedIndex = formMain.curActivePalleteNo;
             cbPart.SelectedIndex = 0;
             cbViewType.SelectedIndex = Math.Min((int)formMain.curActiveViewType, cbViewType.Items.Count - 1);
@@ -79,7 +79,7 @@ namespace CadEditor
             curActiveBlock = 0;
             if (reloadBigBlocks)
             {
-                bigBlockIndexes = ConfigScript.getBigBlocksRecursive(curHierarchyLevel, curSmallBlockNo);
+                bigBlockIndexes = ConfigScript.getBigBlocksRecursive(curHierarchyLevel, curBigBlockNo);
             }
             setSmallBlocks();
             reloadBlocksPanel();
@@ -103,12 +103,12 @@ namespace CadEditor
             }
             else
             {
-                smallBlocksImages[0] = ConfigScript.videoNes.makeBigBlocks(curVideo, curTileset, ConfigScript.getBigBlocksRecursive(curHierarchyLevel-1, curSmallBlockNo), curPallete, curViewType, MapViewType.Tiles, curHierarchyLevel-1);
+                smallBlocksImages[0] = ConfigScript.videoNes.makeBigBlocks(curVideo, curBigBlockNo, curTileset, ConfigScript.getBigBlocksRecursive(curHierarchyLevel-1, curBigBlockNo), curPallete, curViewType, MapViewType.Tiles, curHierarchyLevel-1);
             }
             reloadBlocksPanel();
 
             //prerender big blocks
-            bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(curVideo, curTileset, bigBlockIndexes, curPallete, curViewType, MapViewType.Tiles, curHierarchyLevel);
+            bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(curVideo, curBigBlockNo, curTileset, bigBlockIndexes, curPallete, curViewType, MapViewType.Tiles, curHierarchyLevel);
             //
             int btc = Math.Min(ConfigScript.getBigBlocksCount(curHierarchyLevel), 256);
             int bblocksInRow = 16;
@@ -262,7 +262,7 @@ namespace CadEditor
 
         protected int curActiveBlock;
         protected int curTileset;
-        protected int curSmallBlockNo;
+        protected int curBigBlockNo;
         protected int curHierarchyLevel;
 
         //generic
@@ -293,7 +293,7 @@ namespace CadEditor
                 cbPaletteNo.SelectedIndex == -1 ||
                 cbPart.SelectedIndex == -1 ||
                 cbViewType.SelectedIndex == -1 || 
-                cbSmallBlock.SelectedIndex == -1 ||
+                cbBigBlock.SelectedIndex == -1 ||
                 cbHierarchyLevel.SelectedIndex == -1
                 )
             {
@@ -325,7 +325,7 @@ namespace CadEditor
             //generic version
             curHierarchyLevel = cbHierarchyLevel.SelectedIndex;
             curTileset = cbTileset.SelectedIndex;
-            curSmallBlockNo = cbSmallBlock.SelectedIndex;
+            curBigBlockNo = cbBigBlock.SelectedIndex;
             curViewType = (MapViewType)cbViewType.SelectedIndex;
 
             curVideo = cbVideoNo.SelectedIndex;
@@ -354,7 +354,7 @@ namespace CadEditor
 
         protected bool saveToFile()
         {
-            ConfigScript.setBigBlocksHierarchy(curHierarchyLevel, curSmallBlockNo, bigBlockIndexes);
+            ConfigScript.setBigBlocksHierarchy(curHierarchyLevel, curBigBlockNo, bigBlockIndexes);
             dirty = !Globals.flushToFile();
             updateSaveVisibility();
             return !dirty;
@@ -384,7 +384,7 @@ namespace CadEditor
             }
             dirty = true;
             updateSaveVisibility();
-            bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(curVideo, curTileset, bigBlockIndexes, curPallete, curViewType, MapViewType.Tiles, curHierarchyLevel);
+            bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(curVideo, curBigBlockNo, curTileset, bigBlockIndexes, curPallete, curViewType, MapViewType.Tiles, curHierarchyLevel);
             mapScreen.Invalidate();
         }
 

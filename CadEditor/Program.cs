@@ -16,8 +16,8 @@ namespace CadEditor
                 var globalConfigName = "Config.cs";
 
                 var optionSet = new OptionSet() {
-                    { "romName=",      v => OpenFile.fileName = v },
-                    { "configName=",  v => OpenFile.configName = v },
+                    { "romname=",      v => OpenFile.fileName = v },
+                    { "configname=",  v => OpenFile.configName = v },
                     { "config=",   v => globalConfigName = v },
                 };
                 var cmdOptions = optionSet.Parse(args);
