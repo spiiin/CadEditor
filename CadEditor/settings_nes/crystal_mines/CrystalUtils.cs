@@ -12,7 +12,7 @@ public static class CrystalUtils
   //----------------------------------------------------------------------------
   public static ObjRec[] getBlocks(int tileId)
   {
-      int bc = ConfigScript.getBlocksCount();
+      int bc = ConfigScript.getBlocksCount(tileId);
       int palAddr = getPalBytesAddr();
       byte[] blocksData = Utils.readDataFromUnalignedArrays(Globals.romdata, blockAddr1, blockAddr2, blockAddr3, blockAddr4, bc);
       var blocks = new ObjRec[bc];
@@ -27,7 +27,7 @@ public static class CrystalUtils
   
   public static void setBlocks(int tileId, ObjRec[] blocks)
   {
-      int bc = ConfigScript.getBlocksCount();
+      int bc = ConfigScript.getBlocksCount(tileId);
       int palAddr = getPalBytesAddr();
       byte[] blocksData = new byte[blocks.Length*4];
       for (int i = 0; i < blocks.Length; i++)

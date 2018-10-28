@@ -142,7 +142,7 @@ namespace CadEditor
             byte[] mapping = ConfigScript.getSegaMapping(curActiveBigBlockNo);
             byte[] videoTiles = ConfigScript.getVideoChunk(curActiveVideoNo);
             byte[] pal = ConfigScript.getPal(curActivePalleteNo);
-            int count = ConfigScript.getBigBlocksCount(ConfigScript.getbigBlocksHierarchyCount() - 1);
+            int count = ConfigScript.getBigBlocksCount(ConfigScript.getbigBlocksHierarchyCount() - 1, curActiveBigBlockNo);
             return ConfigScript.videoSega.makeBigBlocks(mapping, videoTiles, pal, count, curViewType);
         }
 
@@ -153,7 +153,7 @@ namespace CadEditor
             var blocksData = new byte[blocks.Length * 4]; //hardcode small blocks sizes
             Utils.writeBlocksLinear(blocks, blocksData, 0, 256, false, false);
             byte[] pal = ConfigScript.getPal(curActivePalleteNo);
-            int count = ConfigScript.getBigBlocksCount(ConfigScript.getbigBlocksHierarchyCount() - 1);
+            int count = ConfigScript.getBigBlocksCount(ConfigScript.getbigBlocksHierarchyCount() - 1, curActiveBigBlockNo);
             return ConfigScript.videoGb.makeBigBlocks(videoTiles, blocksData, pal, count, curViewType);
         }
 

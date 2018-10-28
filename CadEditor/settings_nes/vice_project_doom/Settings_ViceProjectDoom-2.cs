@@ -50,9 +50,9 @@ public class Data
 
   public static ObjRec[] getBlocks(int tileId)
   {
-     var objects = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), 2, 2, ConfigScript.getBlocksCount(), false, false);
-    int palAddr = ConfigScript.getPalBytesAddr();
-    for (int i = 0; i < ConfigScript.getBlocksCount(); i++)
+     var objects = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), 2, 2, ConfigScript.getBlocksCount(tileId), false, false);
+    int palAddr = ConfigScript.getPalBytesAddr(tileId);
+    for (int i = 0; i < ConfigScript.getBlocksCount(tileId); i++)
     {
         objects[i].palBytes[0] =  Globals.romdata[palAddr + i] & 0x3 >> 1;
         objects[i].type = Globals.romdata[palAddr + i] >> 2 & 0xf;
@@ -66,8 +66,8 @@ public class Data
   {
 
     int addr = ConfigScript.getTilesAddr(tileId);
-    int count = ConfigScript.getBlocksCount();
-    int palAddr = ConfigScript.getPalBytesAddr();
+    int count = ConfigScript.getBlocksCount(tileId);
+    int palAddr = ConfigScript.getPalBytesAddr(tileId);
     
     Utils.writeBlocksLinear(blocks, Globals.romdata, addr, count, false, false);
     

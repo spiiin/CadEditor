@@ -28,9 +28,9 @@ public class Data
   //----------------------------------------------------------------------------
   public static ObjRec[] getBlocks(int tileId)
   {
-      int count = ConfigScript.getBlocksCount();
+      int count = ConfigScript.getBlocksCount(tileId);
       var bb = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), 2, 2, count, false, false);
-      var palAddr = ConfigScript.getPalBytesAddr();
+      var palAddr = ConfigScript.getPalBytesAddr(tileId);
       for (int i = 0; i < count; i++)
       {
           bb[i].palBytes[0] = Globals.romdata[palAddr + i] & 0x3; //get only pal, not physics
@@ -41,8 +41,8 @@ public class Data
   public static void setBlocks(int tileId, ObjRec[] blocksData)
   {
     int addr = ConfigScript.getTilesAddr(tileId);
-    int count = ConfigScript.getBlocksCount();
-    var palAddr = ConfigScript.getPalBytesAddr();
+    int count = ConfigScript.getBlocksCount(tileId);
+    var palAddr = ConfigScript.getPalBytesAddr(tileId);
     Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, false, false);
     for (int i = 0; i < count; i++)
     {

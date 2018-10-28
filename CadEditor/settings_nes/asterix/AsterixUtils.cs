@@ -39,7 +39,7 @@ public static class AsterixUtils
      for (int i = 0; i < mapsInfo.Length; i++)
      {
          int da = getScrOffet().beginAddr + scrSize  * i;
-         int aa = ConfigScript.getPalBytesAddr() + 64*i;
+         int aa = ConfigScript.getPalBytesAddr(0) + 64*i;
          mapsInfo[i] = new MapInfo(){ dataAddr = da, palAddr = ConfigScript.palOffset.beginAddr, videoNo = 0, attribsAddr = aa};
      }
      return mapsInfo;

@@ -72,7 +72,7 @@ public class DragonUtils
      for (int i = 0; i < mapsInfo.Length; i++)
      {
          int da = getScreensOffset().beginAddr + scrSize  * i;
-         int aa = ConfigScript.getPalBytesAddr();
+         int aa = ConfigScript.getPalBytesAddr(0);
          mapsInfo[i] = new MapInfo(){ dataAddr = da, palAddr = ConfigScript.palOffset.beginAddr, videoNo = 0, attribsAddr = aa};
      }
      return mapsInfo;

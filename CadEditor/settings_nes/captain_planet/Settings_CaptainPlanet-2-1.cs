@@ -53,7 +53,7 @@ public class Data
   public static ObjRec[] getBlocks4x8(int blockIndex)
   {
       var addr = ConfigScript.getTilesAddr(blockIndex);
-      var count = ConfigScript.getBlocksCount();
+      var count = ConfigScript.getBlocksCount(blockIndex);
       var objects = new ObjRec[count];
       int w = 4;
       int h = 8;

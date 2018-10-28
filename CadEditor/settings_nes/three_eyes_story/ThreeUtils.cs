@@ -6,10 +6,10 @@ public static class ThreeUtils
     public static ObjRec[] getBlocks(int tileId)
     {
       int addr = ConfigScript.getTilesAddr(tileId);
-      var objects = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), 2, 2, ConfigScript.getBlocksCount(), false, false);
+      var objects = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), 2, 2, ConfigScript.getBlocksCount(tileId), false, false);
       for (int i = 0; i < objects.Length; i++)
       {
-          objects[i].palBytes[0] = Globals.romdata[ConfigScript.getPalBytesAddr() + i];
+          objects[i].palBytes[0] = Globals.romdata[ConfigScript.getPalBytesAddr(tileId) + i];
       }
       return objects;
     }
@@ -17,9 +17,9 @@ public static class ThreeUtils
     public static void setBlocks(int tileId, ObjRec[] blocks)
     {
       int addr = ConfigScript.getTilesAddr(tileId);
-      int blocksCount = ConfigScript.getBlocksCount();
+      int blocksCount = ConfigScript.getBlocksCount(tileId);
       Utils.writeBlocksLinear(blocks, Globals.romdata, addr, blocksCount, false, false);
-      int palBytesAddr = ConfigScript.getPalBytesAddr();
+      int palBytesAddr = ConfigScript.getPalBytesAddr(tileId);
       for (int i = 0; i < blocksCount; i++)
       {
           Globals.romdata[palBytesAddr + i] = (byte)blocks[i].palBytes[0];

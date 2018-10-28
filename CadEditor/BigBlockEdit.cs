@@ -56,7 +56,7 @@ namespace CadEditor
             UtilsGui.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
             UtilsGui.setCbItemsCount(cbBigBlock, ConfigScript.bigBlocksOffsets[curHierarchyLevel].recCount);
             UtilsGui.setCbItemsCount(cbPaletteNo, ConfigScript.palOffset.recCount);
-            UtilsGui.setCbItemsCount(cbPart, Math.Max(ConfigScript.getBigBlocksCount(curHierarchyLevel) / 256, 1));
+            UtilsGui.setCbItemsCount(cbPart, Math.Max(ConfigScript.getBigBlocksCount(curHierarchyLevel, curBigBlockNo) / 256, 1));
             cbTileset.Items.Clear();
             for (int i = 0; i < ConfigScript.blocksOffset.recCount; i++)
             {
@@ -110,7 +110,7 @@ namespace CadEditor
             //prerender big blocks
             bigBlocksImages = ConfigScript.videoNes.makeBigBlocks(curVideo, curBigBlockNo, curTileset, bigBlockIndexes, curPallete, curViewType, MapViewType.Tiles, curHierarchyLevel);
             //
-            int btc = Math.Min(ConfigScript.getBigBlocksCount(curHierarchyLevel), 256);
+            int btc = Math.Min(ConfigScript.getBigBlocksCount(curHierarchyLevel, curBigBlockNo), 256);
             int bblocksInRow = 16;
             int bblocksInCol = (btc / bblocksInRow) + 1;
             //
@@ -160,7 +160,7 @@ namespace CadEditor
         {
             int addIndexes = curPart * 256;
             Graphics g = e.Graphics;
-            int btc = Math.Min(ConfigScript.getBigBlocksCount(curHierarchyLevel), 256);
+            int btc = Math.Min(ConfigScript.getBigBlocksCount(curHierarchyLevel, curBigBlockNo), 256);
             int bblocksInRow = 16;
 
             var testBBlock = bigBlockIndexes[0];
@@ -191,7 +191,7 @@ namespace CadEditor
             int addIndexes = curPart * 256;
             dirty = true; updateSaveVisibility();
 
-            int btc = Math.Min(ConfigScript.getBigBlocksCount(curHierarchyLevel), 256);
+            int btc = Math.Min(ConfigScript.getBigBlocksCount(curHierarchyLevel, curBigBlockNo), 256);
             int bblocksInRow = 16;
 
             var testBBlock = bigBlockIndexes[0];
@@ -331,7 +331,7 @@ namespace CadEditor
             curVideo = cbVideoNo.SelectedIndex;
             curPallete = cbPaletteNo.SelectedIndex;
             curPart = cbPart.SelectedIndex;
-            UtilsGui.setCbItemsCount(cbPart, Math.Max(ConfigScript.getBigBlocksCount(curHierarchyLevel) / 256, 1));
+            UtilsGui.setCbItemsCount(cbPart, Math.Max(ConfigScript.getBigBlocksCount(curHierarchyLevel, curBigBlockNo) / 256, 1));
             UtilsGui.setCbIndexWithoutUpdateLevel(cbPart, cbLevelPair_SelectedIndexChanged, curPart);
             reloadLevel();
         }

@@ -40,11 +40,11 @@ public static class JetsonsUtils
   
   private static byte getTTSmallBlocksColorByte(int index)
   {
-    return Globals.romdata[ConfigScript.getPalBytesAddr()+index];
+    return Globals.romdata[ConfigScript.getPalBytesAddr(0)+index];
   }
   
   private static void setTTSmallBlocksColorByte(int index, byte colorByte)
   {
-    Globals.romdata[ConfigScript.getPalBytesAddr()+index] = colorByte;
+    Globals.romdata[ConfigScript.getPalBytesAddr(0)+index] = colorByte;
   }
 }

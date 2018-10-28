@@ -28,9 +28,9 @@ public class Data
   //----------------------------------------------------------------------------
   public ObjRec[] getBlocks(int tileId)
   {
-      var bb = Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), false);
-      int count = ConfigScript.getBlocksCount();
-      var palAddr = ConfigScript.getPalBytesAddr();
+      var bb = Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(tileId), false);
+      int count = ConfigScript.getBlocksCount(tileId);
+      var palAddr = ConfigScript.getPalBytesAddr(tileId);
       for (int i = 0; i < count; i++)
       {
           bb[i].palBytes[0] = Globals.romdata[palAddr + i] & 0x3; //get only pal, not physics
@@ -40,10 +40,10 @@ public class Data
   
   public void setBlocks(int tileId, ObjRec[] blocksData)
   {
-    Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), false, false);
+    Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(tileId), false, false);
     int addr = ConfigScript.getTilesAddr(tileId);
-    int count = ConfigScript.getBlocksCount();
-    var palAddr = ConfigScript.getPalBytesAddr();
+    int count = ConfigScript.getBlocksCount(tileId);
+    var palAddr = ConfigScript.getPalBytesAddr(tileId);
     for (int i = 0; i < count; i++)
     {
         int t = Globals.romdata[palAddr + i];

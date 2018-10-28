@@ -44,7 +44,7 @@ public class Data
   
   public ObjRec[] getBlocks(int blockIndex)
   {
-      var bb = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 2, 2, ConfigScript.getBlocksCount(), false, true);
+      var bb = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 2, 2, ConfigScript.getBlocksCount(blockIndex), false, true);
       for (int i = 0; i < bb.Length; i++)
       {
           var b = bb[i];
@@ -55,7 +55,7 @@ public class Data
   
   public void setBlocks(int blockIndex, ObjRec[] blocksData)
   {
-      Utils.writeBlocksLinear(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(), false, true);
+      Utils.writeBlocksLinear(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(blockIndex), false, true);
       for (int i = 0; i < blocksData.Length; i++)
       {
           var b = blocksData[i];

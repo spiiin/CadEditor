@@ -1,6 +1,5 @@
 using CadEditor;
 using System;
-using System.Drawing;
 
 public class RockinCatsBase 
 {
@@ -66,25 +65,25 @@ public class RockinCatsBase
   {
     int videoPageIndex1 = getVideoIndex1();
     int videoPageIndex2 = getVideoIndex2();
-    byte[] videoChunk = new byte[Globals.VIDEO_PAGE_SIZE];
+    byte[] videoChunk = new byte[Globals.videoPageSize];
     int videoAddr = 0x20010 + videoPageIndex1*0x400;
-    for (int i = 0; i < Globals.VIDEO_PAGE_SIZE/2; i++)
+    for (int i = 0; i < Globals.videoPageSize/2; i++)
         videoChunk[i] = Globals.romdata[videoAddr + i];
     videoAddr = 0x20010 + videoPageIndex2*0x400;
-    for (int i = 0; i < Globals.VIDEO_PAGE_SIZE/2; i++)
-        videoChunk[Globals.VIDEO_PAGE_SIZE/2 + i] = Globals.romdata[videoAddr + i];
+    for (int i = 0; i < Globals.videoPageSize/2; i++)
+        videoChunk[Globals.videoPageSize/2 + i] = Globals.romdata[videoAddr + i];
     return videoChunk;
   }
 
   //-------------------------------------------------------------------------------------------------------------------
   public ObjRec[] getBlocks(int blockIndex)
   {
-    return Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 2, 2, getBlocksCount(), true, false);
+    return Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 2, 2, ConfigScript.getBlocksCount(blockIndex), true, false);
   }
   
   public void setBlocks(int blockIndex, ObjRec[] blocksData)
   {
-    Utils.writeBlocksLinear(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount(), true, false);
+    Utils.writeBlocksLinear(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(blockIndex), true, false);
   }
   
   //-------------------------------------------------------------------------------------------------------------------

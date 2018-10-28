@@ -43,12 +43,12 @@ public class Data
   
   public static ObjRec[] getBlocks(int blockIndex)
   {
-      return readBlocksLinearTilesPal17(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount());
+      return readBlocksLinearTilesPal17(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(blockIndex));
   }
 
   public static void setBlocks(int blockIndex, ObjRec[] blocksData)
   {
-      writeBlocksLinearTilesPal17(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount());
+      writeBlocksLinearTilesPal17(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(blockIndex));
   }
   
   public static ObjRec[] readBlocksLinearTilesPal17(byte[] romdata, int addr, int count)

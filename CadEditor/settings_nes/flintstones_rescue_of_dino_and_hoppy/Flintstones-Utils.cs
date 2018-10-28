@@ -77,7 +77,7 @@ public static class FliUtils
   
   public static ObjRec[] getBlocks(int blockIndex)
   {
-    int count = ConfigScript.getBlocksCount();
+    int count = ConfigScript.getBlocksCount(blockIndex);
     int addr  = ConfigScript.getTilesAddr(blockIndex);
     var objects = Utils.readBlocksLinear(Globals.romdata, addr, 2, 2, count, false, true);
     int physicsAddr = ConfigScript.getPhysicsBytesAddr(); //can be read from A7-A8 RAM
@@ -91,7 +91,7 @@ public static class FliUtils
   
   public static void setBlocks(int blockIndex, ObjRec[] blocksData)
   {
-    int count = ConfigScript.getBlocksCount();
+    int count = ConfigScript.getBlocksCount(blockIndex);
     int addr  = ConfigScript.getTilesAddr(blockIndex);
     int physicsAddr = ConfigScript.getPhysicsBytesAddr();
     Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, false, true);

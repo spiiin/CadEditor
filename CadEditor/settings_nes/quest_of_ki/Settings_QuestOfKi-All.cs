@@ -93,11 +93,11 @@ public class Data
         
   public static ObjRec[] getBlocks(int blockIndex)
   {
-      return Utils.readBlocksLinear(Globals.romdata,  ConfigScript.getTilesAddr(blockIndex), 4, 4, ConfigScript.getBlocksCount(), false);
+      return Utils.readBlocksLinear(Globals.romdata,  ConfigScript.getTilesAddr(blockIndex), 4, 4, ConfigScript.getBlocksCount(tileId), false);
   }
 
   public static void setBlocks(int blockIndex, ObjRec[] blocksData)
   {
-      Utils.writeBlocksLinear(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(), false);
+      Utils.writeBlocksLinear(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(tileId), false);
   }
 }

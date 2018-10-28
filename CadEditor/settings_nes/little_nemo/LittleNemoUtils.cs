@@ -6,9 +6,9 @@ public class LittleNemoUtils
 { 
   public static ObjRec[] getBlocks(int blockIndex)
   {
-      int count = ConfigScript.getBlocksCount();
+      int count = ConfigScript.getBlocksCount(blockIndex);
       var bb = Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), count, false);
-      var palAddr = ConfigScript.getTilesAddr(blockIndex) + ConfigScript.getBlocksCount() * 4;
+      var palAddr = ConfigScript.getTilesAddr(blockIndex) + ConfigScript.getBlocksCount(blockIndex) * 4;
       for (int i = 0; i < count; i++)
       {
           int palType = Globals.romdata[palAddr + i];
@@ -20,9 +20,9 @@ public class LittleNemoUtils
   
   public static void setBlocks(int blockIndex, ObjRec[] blocksData)
   {
-    int count = ConfigScript.getBlocksCount();
+    int count = ConfigScript.getBlocksCount(blockIndex);
     Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), count, false, false);
-    var palAddr = ConfigScript.getTilesAddr(blockIndex) + ConfigScript.getBlocksCount() * 4;
+    var palAddr = ConfigScript.getTilesAddr(blockIndex) + ConfigScript.getBlocksCount(blockIndex) * 4;
     for (int i = 0; i < count; i++)
     {
         int t =  blocksData[i].getType() | ((blocksData[i].palBytes[0]&0x3)<<6);
@@ -33,7 +33,7 @@ public class LittleNemoUtils
   public static BigBlock[] getBigBlocks(int bigTileIndex)
   {
     var bigBlocksAddr = ConfigScript.getBigTilesAddr(0, bigTileIndex);
-    var data = Utils.readDataFromAlignedArrays(Globals.romdata, bigBlocksAddr, ConfigScript.getBigBlocksCount(0));
+    var data = Utils.readDataFromAlignedArrays(Globals.romdata, bigBlocksAddr, ConfigScript.getBigBlocksCount(0, bigTileIndex));
     return Utils.unlinearizeBigBlocks<BigBlock>(data, 2, 2);
   }
   
@@ -41,7 +41,7 @@ public class LittleNemoUtils
   {
     var bigBlocksAddr = ConfigScript.getBigTilesAddr(0, bigTileIndex);
     var data = Utils.linearizeBigBlocks(bigBlockIndexes);
-    Utils.writeDataToAlignedArrays(data, Globals.romdata, bigBlocksAddr, ConfigScript.getBigBlocksCount(0));
+    Utils.writeDataToAlignedArrays(data, Globals.romdata, bigBlocksAddr, ConfigScript.getBigBlocksCount(0, bigTileIndex));
   }
   
   public static List<ObjectList> getObjectsNemo(int levelNo)
@@ -50,7 +50,7 @@ public class LittleNemoUtils
       int objCount = lr.objCount, addr = lr.objectsBeginAddr;
       var objects = new List<ObjectRec>();
 
-      var objScreenAddr = ConfigScript.getPalBytesAddr(); //not palBytes, but object sx/sy decode
+      var objScreenAddr = ConfigScript.getPalBytesAddr(0); //not palBytes, but object sx/sy decode
       int screenIndex = 0;
       for (int i = 0; i < objCount; i++)
       {
@@ -101,7 +101,7 @@ public class LittleNemoUtils
       }
       
       //write how many objects at every screen
-      var objScreenAddr = ConfigScript.getPalBytesAddr(); //read screen sx/sy address
+      var objScreenAddr = ConfigScript.getPalBytesAddr(0); //read screen sx/sy address
       int totalSx = 0;
       for (int screenIndex = 0; screenIndex < screenIndexValues.Length-1; screenIndex++)
       {
