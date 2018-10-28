@@ -28,11 +28,14 @@ namespace PluginVideoGameBoy
                 tiles[i] = getTile(ppuData, pal, i);
             }
 
+            /*var im = getTilesRectangle(ppuData, pal);
+            im.Save("chr.png");*/
+
             for (int i = 0; i < count; i++)
             {
                 //linear 2x2 tiles only for now
                 int startIndex = i * 4;
-                var tileImages = new Image[]
+                var tileImages = new[]
                 {
                     tiles[tileData[startIndex]],
                     tiles[tileData[startIndex + 1]],

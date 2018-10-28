@@ -47,7 +47,7 @@ namespace PluginMapEditor
                     }
                 }
             }
-            return new MapData[] { new MapData(mapData, attrData, 32) , new MapData(mapData2, attrData2, 32) };
+            return new[] { new MapData(mapData, attrData, 32) , new MapData(mapData2, attrData2, 32) };
         }
 
         public static MapData[] loadMapCad(int mapNo)
@@ -90,7 +90,7 @@ namespace PluginMapEditor
                     }
                 }
             }
-            return new MapData[] { new MapData(mapData, attrData, 32), new MapData(mapData2, attrData2, 32) };
+            return new[] { new MapData(mapData, attrData, 32), new MapData(mapData2, attrData2, 32) };
         }
 
         static void foundLongestZeros(int[] data, int startIndex, int endIndex, out int firstZeroIndex, out int lastZeroIndex)
@@ -217,13 +217,13 @@ namespace PluginMapEditor
                 }
 
             }
-            return new MapData[] { new MapData(mapData, attrData, 32) };
+            return new[] { new MapData(mapData, attrData, 32) };
         }
 
         public static int saveMapDt2(int mapNo, MapData[] mapData, out byte[] packedData)
         {
             packedData = new byte[1024];
-            int returnPosition = 0;
+            int returnPosition;
             using (var s = new MemoryStream(packedData))
             {
                 byte repeatCode = 0xDC;
@@ -339,12 +339,12 @@ namespace PluginMapEditor
             int scrSize = screen.width * screen.height;
 
             //fill tiles region
-            int SCREEN_WIDTH = screen.width;
+            int screenWidth = screen.width;
             for (int i = 0; i < scrSize; i++)
             {
                 int blockIndex = Globals.readBlockIndexFromMap(Globals.romdata, romAddr, i);
-                int bx = i % SCREEN_WIDTH;
-                int by = i / SCREEN_WIDTH;
+                int bx = i % screenWidth;
+                int by = i / screenWidth;
                 if (vertical)
                 {
                     Utils.swap(ref bx, ref by);
@@ -353,7 +353,7 @@ namespace PluginMapEditor
             }
 
             fillAttribDelegate(attrData, Globals.romdata, attribAddr);
-            return new MapData[] { new MapData(mapData, attrData, mapWidth) };
+            return new[] { new MapData(mapData, attrData, mapWidth) };
         }
 
         public static MapData[] loadMapContraSpirits(int mapNo)

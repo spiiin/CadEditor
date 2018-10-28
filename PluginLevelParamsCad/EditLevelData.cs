@@ -16,7 +16,7 @@ namespace CadEditor
             InitializeComponent();
         }
 
-        private bool dirty = false;
+        private bool dirty;
         private int curActiveLevel;
 
         private void returnCbLevelIndex()
@@ -54,7 +54,7 @@ namespace CadEditor
             curActiveLevel = no;
             if (no == -1)
                 return;
-            bool isLevel = no < GlobalsCad.LEVELS_COUNT;
+            bool isLevel = no < GlobalsCad.levelsCount;
             if (isLevel)
             {
                 LevelData ld = GlobalsCad.levelData[no];
@@ -91,7 +91,7 @@ namespace CadEditor
             }
             else
             {
-                no -= GlobalsCad.LEVELS_COUNT;
+                no -= GlobalsCad.levelsCount;
                 DoorData ld = GlobalsCad.doorsData[no];
                 cbBackGfx.SelectedIndex = id89toIndex(ld.backId);
                 cbObjGfx.SelectedIndex = id89toIndex(ld.objId);
@@ -218,7 +218,7 @@ namespace CadEditor
             int no = cbLevel.SelectedIndex;
             if (no == -1)
                 return false;
-            bool isLevel = no < GlobalsCad.LEVELS_COUNT;
+            bool isLevel = no < GlobalsCad.levelsCount;
 
             if (isLevel)
             {
@@ -238,7 +238,7 @@ namespace CadEditor
             }
             else
             {
-                no -= GlobalsCad.LEVELS_COUNT;
+                no -= GlobalsCad.levelsCount;
                 DoorData ld = GlobalsCad.doorsData[no];
                 ld.backId = indexToId89(cbBackGfx.SelectedIndex);
                 ld.objId = indexToId89(cbObjGfx.SelectedIndex);

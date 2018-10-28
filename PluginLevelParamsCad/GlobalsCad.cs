@@ -18,25 +18,25 @@ namespace CadEditor
 
             levelData.Clear();
             doorsData.Clear();
-            for (int i = 0; i < LEVELS_COUNT; i++)
+            for (int i = 0; i < levelsCount; i++)
                 levelData.Add(LevelData.readFromFile(Globals.romdata, i));
-            for (int i = 0; i < DOORS_COUNT; i++)
+            for (int i = 0; i < doorsCount; i++)
                 doorsData.Add(DoorData.readFromFile(Globals.romdata, i));
         }
         //cad specific
-        public static int LEVELS_COUNT = 11;
-        public static int DOORS_COUNT = 25;
+        public static int levelsCount = 11;
+        public static int doorsCount = 25;
 
-        public static IList<LevelData> levelData = new List<LevelData>(LEVELS_COUNT);
-        public static IList<DoorData> doorsData = new List<DoorData>(DOORS_COUNT);
+        public static IList<LevelData> levelData = new List<LevelData>(levelsCount);
+        public static IList<DoorData> doorsData = new List<DoorData>(doorsCount);
 
         public static OffsetRec boxesBackOffset;
-        public static int LevelRecBaseOffset;
-        public static int LevelRecDirOffset;
-        public static int LayoutPtrAdd;
-        public static int ScrollPtrAdd;
-        public static int DirPtrAdd;
-        public static int DoorRecBaseOffset;
+        public static int levelRecBaseOffset;
+        public static int levelRecDirOffset;
+        public static int layoutPtrAdd;
+        public static int scrollPtrAdd;
+        public static int dirPtrAdd;
+        public static int doorRecBaseOffset;
     }
 
     public struct LevelData
@@ -163,11 +163,11 @@ namespace CadEditor
 
         public static void LoadOffsetsFromConfig()
         {
-            LevelRecBaseOffset = GlobalsCad.LevelRecBaseOffset;
-            LevelRecDirOffset = GlobalsCad.LevelRecDirOffset;
-            LayoutPtrAdd = GlobalsCad.LayoutPtrAdd;
-            ScrollPtrAdd = GlobalsCad.ScrollPtrAdd;
-            DirPtrAdd = GlobalsCad.DirPtrAdd;
+            LevelRecBaseOffset = GlobalsCad.levelRecBaseOffset;
+            LevelRecDirOffset = GlobalsCad.levelRecDirOffset;
+            LayoutPtrAdd = GlobalsCad.layoutPtrAdd;
+            ScrollPtrAdd = GlobalsCad.scrollPtrAdd;
+            DirPtrAdd = GlobalsCad.dirPtrAdd;
         }
     }
 
@@ -219,7 +219,7 @@ namespace CadEditor
 
         public static void LoadOffsetsFromConfig()
         {
-            DoorRecBaseOffset = GlobalsCad.DoorRecBaseOffset;
+            DoorRecBaseOffset = GlobalsCad.doorRecBaseOffset;
         }
     }
 }

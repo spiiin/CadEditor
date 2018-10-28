@@ -181,9 +181,9 @@ public class Data:CapcomBase
       "Door 18"      
     };*/
     
-    var groups = new GroupRec[GlobalsCad.LEVELS_COUNT];
+    var groups = new GroupRec[GlobalsCad.levelsCount];
     
-    for (int i = 0; i < GlobalsCad.LEVELS_COUNT; i++)
+    for (int i = 0; i < GlobalsCad.levelsCount; i++)
     {
       var levelData = levelsData[i];
       var levelName = levelNames[i];
@@ -293,7 +293,7 @@ public class Data:CapcomBase
           return true;
       
       }
-      catch (System.IndexOutOfRangeException ex)
+      catch (System.IndexOutOfRangeException)
       {
           return false;
       }
