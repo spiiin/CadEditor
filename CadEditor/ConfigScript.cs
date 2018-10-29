@@ -215,6 +215,7 @@ namespace CadEditor
                 bigBlocksCounts[hierLevel] = callFromScript(asm, data, "*.getBigBlocksCountHierarchy", 256, hierLevel);
             }
             bigBlocksCounts[0] = callFromScript(asm, data, "*.getBigBlocksCount", bigBlocksCounts[0]);
+            getBigBlocksCountFunc = callFromScript<GetBigBlocksCountFunc>(asm, data, "*.getBigBlocksCountFunc");
 
             bigBlocksOffsets = new OffsetRec[bigBlocksHierarchyCount];
             for (int hierLevel = 0; hierLevel < bigBlocksHierarchyCount; hierLevel++)
@@ -245,6 +246,7 @@ namespace CadEditor
             setSegaMappingFunc = callFromScript<SetSegaMappingFunc>(asm, data, "*.setSegaMappingFunc", (int index, byte[] bb) => { Utils.writeLinearBigBlockData(0, index, bb); });
             getBlocksFunc = callFromScript<GetBlocksFunc>(asm,data,"*.getBlocksFunc");
             setBlocksFunc = callFromScript<SetBlocksFunc>(asm, data, "*.setBlocksFunc");
+            getBlocksAddrFunc = callFromScript<GetBlocksAddrFunc> (asm, data, "*.getBlocksAddrFunc");
             getPalFunc = callFromScript<GetPalFunc>(asm, data, "*.getPalFunc");
             setPalFunc = callFromScript<SetPalFunc>(asm, data, "*.setPalFunc");
             getObjectsFunc = callFromScript<GetObjectsFunc>(asm, data, "*.getObjectsFunc");
@@ -276,7 +278,8 @@ namespace CadEditor
             scrollsOffsetFromLayout = callFromScript(asm, data, "*.getScrollsOffsetFromLayout", 0);
             scrollByteArray = callFromScript(asm, data, "*.getScrollByteArray", new byte[0]);
 
-            blocksCount    = callFromScript(asm, data, "*.getBlocksCount"   , 256);
+            blocksCount = callFromScript(asm, data, "*.getBlocksCount"   , 256);
+            getBlocksCountFunc = callFromScript<GetBlocksCountFunc>(asm, data, "*.getBlocksCountFunc");
 
             blocksPicturesFilename  = callFromScript(asm, data, "getBlocksFilename", "");
 
@@ -298,6 +301,7 @@ namespace CadEditor
 
             palBytesAddr = callFromScript(asm, data, "*.getPalBytesAddr", -1);
             physicsBytesAddr = callFromScript(asm, data, "*.getPhysicsBytesAddr", -1);
+            getPalBytesAddrFunc = callFromScript<GetPalBytesAddrFunc>(asm, data, "*.getPalBytesAddrFunc");
 
             defaultScale = callFromScript(asm, data, "*.getDefaultScale", -1.0f);
 
