@@ -35,7 +35,7 @@ public class Data
   public static ObjRec[] getBlocks(int tileId)
   {
       int addr = ConfigScript.getTilesAddr(tileId);
-      int count = ConfigScript.getBlocksCount();
+      int count = ConfigScript.getBlocksCount(tileId);
       var blocks = Utils.readBlocksLinear(Globals.romdata, addr, 2, 2, count, true, true);
       return blocks;
   }
@@ -43,13 +43,13 @@ public class Data
   public static void setBlocks(int tileId, ObjRec[] blocksData)
   {
     int addr = ConfigScript.getTilesAddr(tileId);
-    int count = ConfigScript.getBlocksCount();
+    int count = ConfigScript.getBlocksCount(tileId);
     Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, true, true);
   }
   
   public BigBlock[] getBigBlocks(int bigTileIndex)
   {
-      int count = ConfigScript.getBigBlocksCount(0);
+      int count = ConfigScript.getBigBlocksCount(0, bigTileIndex);
       var bigBlocks =  new BigBlockWithPal[count];
       var bigBlocksAddr = ConfigScript.getBigTilesAddr(0, bigTileIndex);
       for (int i = 0; i < count; i++)

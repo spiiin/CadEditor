@@ -6,7 +6,7 @@ public class FelixUtils
   
   public static ObjRec[] getBlocks(int tileId)
   {
-      int count = ConfigScript.getBlocksCount();
+      int count = ConfigScript.getBlocksCount(tileId);
       var bb = Utils.readBlocksFromAlignedArraysWithoutCropPal(Globals.romdata, ConfigScript.getTilesAddr(tileId), count);
       for (int i = 0; i < count; i++)
       {
@@ -18,7 +18,7 @@ public class FelixUtils
   public static void setBlocks(int tileId, ObjRec[] blocksData)
   {
     int addr = ConfigScript.getTilesAddr(tileId);
-    int count = ConfigScript.getBlocksCount();
+    int count = ConfigScript.getBlocksCount(tileId);
     var palAddr = addr + count * 4;
     for (int i = 0; i < count; i++)
     {

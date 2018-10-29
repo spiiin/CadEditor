@@ -179,15 +179,27 @@
 <p>Возвращает количество блоков в наборе.
 </p>
 
+<h3>public GetBlocksCountFunc getBlocksCountFunc()</h3>
+<p>Возвращает функцию, определяющую количество блоков в каждом из наборов
+</p>
+
 <h3>public int getBigBlocksCount()</h3>
 <p>
 Возвращает количество макроблоков в наборе. В случае если игра использует несколько уровней макроблоков, следует использовать функцию <b>getBigBlocksCountHierarchy</b>.
+</p>
+
+<h3>public GetBlocksCountFunc getBigBlocksCountFunc()</h3>
+<p>Возвращает функцию, определяющую количество макроблоков в каждом из наборов
 </p>
 
 <h3>public int getPalBytesAddr()</h3>
 <h3>public int getPhysicsBytesAddr()</h3>
 <p>
 В случае, если игра использует отдельный массивы описания бит палитры или физики для блоков, можно задать их адреса этими функциями. Следует отметить, что функции загрузки блоков по умолчанию не используют эти адреса, поэтому необходимо также переопределять функции загрузки блоков getBlocksFunc/getBigBlocksFunc так, чтобы они использовали адреса, возвращаемые этими функциями.
+</p>
+
+<h3>public GetPalBytesAddrFunc getPalBytesAddrFunc()</h3>
+<p>Возвращает функцию, определяющую адреса массивов описания бит палитры (можно задавать разный адрес для каждого из наборов)
 </p>
 
 <h3>public int getBigBlocksHierarchyCount()</h3>
@@ -224,12 +236,14 @@
 
 <h3>public GetBigBlocksFunc     getBigBlocksFunc()</h3>
 <h3>public SetBigBlocksFunc     setBigBlocksFunc()</h3>
+<h3>public GetBigBlocksAddrFunc getBigBlocksAddrFunc(int blockId)</h3>
 <p>
 Функции, которые позволяют определить, как именно будут загружаться и сохраняться обратно в ROM макроблоки.
 </p>
 
 <h3>public GetBigBlocksFunc[] getBigBlocksFuncs()</h3>
 <h3>public SetBigBlocksFunc[] setBigBlocksFuncs()</h3>
+<h3>public GetBigBlocksAddrFunc[] getBigBlocksAddrFuncs(int blockId)</h3>
 <p>
 Версии функций, которые позволяют определить способ загрузки и сохранения иерархии нескольких уровней макроблоков.
 </p>
@@ -257,6 +271,7 @@
 
 <h3>public GetBlocksFunc        getBlocksFunc()</h3>
 <h3>public SetBlocksFunc        setBlocksFunc()</h3>
+<h3>public GetBlocksAddrFunc    getBlocksAddrFunc(int blockId)</h3>
 <p>
 Функции, которые позволяют указать, как будут считываться/сохраняться наборы блоков.
 </p>

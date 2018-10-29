@@ -32,7 +32,7 @@ public class DoolyUtils
      for (int i = 0; i < mapsInfo.Length; i++)
      {
          int da = getScreensOffset().beginAddr + scrSize * i;
-         int aa = ConfigScript.getPalBytesAddr() + attrSize * i;
+         int aa = ConfigScript.getPalBytesAddr(0) + attrSize * i;
          mapsInfo[i] = new MapInfo(){ dataAddr = da, palAddr = ConfigScript.palOffset.beginAddr, videoNo = 0, attribsAddr = aa};
      }
      return mapsInfo;

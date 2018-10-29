@@ -20,11 +20,11 @@ public class TT2Utils
 
   public static ObjRec[] getBlocks(int tileId)
   {
-      int count = ConfigScript.getBlocksCount();
+      int count = ConfigScript.getBlocksCount(tileId);
       var bb = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), 2, 2, count, false, false);
       
-      var palAddr = ConfigScript.getPalBytesAddr();
-      int palInfoCount = ConfigScript.getBlocksCount()/4;
+      var palAddr = ConfigScript.getPalBytesAddr(tileId);
+      int palInfoCount = ConfigScript.getBlocksCount(tileId)/4;
       var palInfo = new byte[palInfoCount];
       for (int i = 0; i < palInfoCount; i++)
       {
@@ -45,11 +45,11 @@ public class TT2Utils
   public static void setBlocks(int tileId, ObjRec[] blocksData)
   {
     int addr = ConfigScript.getTilesAddr(tileId);
-    int count = ConfigScript.getBlocksCount();
-    var palAddr = ConfigScript.getPalBytesAddr();
+    int count = ConfigScript.getBlocksCount(tileId);
+    var palAddr = ConfigScript.getPalBytesAddr(tileId);
     Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, false, false);
     
-    int palInfoCount = ConfigScript.getBlocksCount()/4;
+    int palInfoCount = ConfigScript.getBlocksCount(tileId)/4;
     for (int i = 0; i < palInfoCount; i++)
     {
         var palInfoByte = 

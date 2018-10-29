@@ -70,6 +70,7 @@ Supported games:
     Garfield - A Week of Garfield                   (all levels)
     Ghosts'n Goblins                                (all levels)
     Ghoul School                                    (all levels)
+    Gounnies 2                                      (all levels)
     Gruniozerca 2 (PD)                              (all levels)
     Guerilla War                                    (1 level)
     Gun Smoke                                       (all levels)
@@ -166,7 +167,6 @@ Supported games:
 ----Screens editor with prepared pictures:
     Addams Family, The - Pugsley's Scavenger Hunt   (all levels)
     Banana Prince                                   (all levels)
-    Gounnies 2                                      (all levels)
     SD Hero Soukessen - Taose! Aku no Gundan        (all levels)
     Hook                                            (all levels)
     Mappy Kids                                      (all levels)

@@ -6,12 +6,12 @@ public class TakeshiUtils
 {
   public static ObjRec[] getBlocks(int blockIndex)
   {
-      return Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 2, 2, ConfigScript.getBlocksCount(), false, true);
+      return Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 2, 2, ConfigScript.getBlocksCount(blockIndex), false, true);
   }
 
   public static void setBlocks(int blockIndex, ObjRec[] blocksData)
   {
-      Utils.writeBlocksLinear(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(), false, true);
+      Utils.writeBlocksLinear(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(blockIndex), false, true);
   }
         
   public static GetPalFunc readPalFromBin(string fname)

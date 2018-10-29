@@ -29,7 +29,7 @@ public class Data
   
   public ObjRec[] getBlocks(int blockIndex)
   {
-    var bb = Utils.readBlocksFromAlignedArraysWithoutCropPal(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount());
+    var bb = Utils.readBlocksFromAlignedArraysWithoutCropPal(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(blockIndex));
     foreach (var b in bb)
     {
       b.palBytes[0] = b.palBytes[0] >> 4;
@@ -59,7 +59,7 @@ public class Data
   public BigBlock[] getBigBlocks(int bigTileIndex)
   {
     var bigBlocksAddr = ConfigScript.getBigTilesAddr(0, bigTileIndex);
-    var data = Utils.readDataFromAlignedArrays(Globals.romdata, bigBlocksAddr, ConfigScript.getBigBlocksCount(0));
+    var data = Utils.readDataFromAlignedArrays(Globals.romdata, bigBlocksAddr, ConfigScript.getBigBlocksCount(0, bigTileIndex));
     return Utils.unlinearizeBigBlocks<BigBlock>(data, 2, 2);
   }
   
@@ -67,6 +67,6 @@ public class Data
   {
     var bigBlocksAddr = ConfigScript.getBigTilesAddr(0, bigTileIndex);
     var data = Utils.linearizeBigBlocks(bigBlockIndexes);
-    Utils.writeDataToAlignedArrays(data, Globals.romdata, bigBlocksAddr, ConfigScript.getBigBlocksCount(0));
+    Utils.writeDataToAlignedArrays(data, Globals.romdata, bigBlocksAddr, ConfigScript.getBigBlocksCount(0, bigTileIndex));
   }
 }

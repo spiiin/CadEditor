@@ -9,6 +9,7 @@ COPY_FILE_LIST = [
   "CadEditor.exe",
   "Be.Windows.Forms.HexBox.dll",
   "CSScriptLibrary.dll",
+  "NDesk.Options.dll",
   "Newtonsoft.Json.dll",
   "IronPython.dll",
   "lzkn1.dll",

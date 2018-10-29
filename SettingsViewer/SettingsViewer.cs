@@ -18,6 +18,10 @@ namespace SettingsViewer
         public SettingsViewer()
         {
             InitializeComponent();
+            var globalSettings = CSScript.GlobalSettings;
+            globalSettings.AddSearchDir("./settings_nes");
+            globalSettings.AddSearchDir("./settings_smd");
+            globalSettings.AddSearchDir("./settings_gba");
         }
 
         private void tbConfigName_Click(object sender, EventArgs e)
@@ -171,6 +175,8 @@ namespace SettingsViewer
         [Category("Blocks params")]
         public MethodDelegate getBigBlocksCount => get();
         [Category("Blocks params")]
+        public MethodDelegate getBigBlocksCountFunc => get();
+        [Category("Blocks params")]
         public MethodDelegate getBigBlocksOffsetHierarchy => get();
         [Category("Offsets")]
         public MethodDelegate getBigBlocksOffset => get();
@@ -185,9 +191,13 @@ namespace SettingsViewer
         [Category("BigBlocks funcs")]
         public MethodDelegate setBigBlocksFuncs => get();
         [Category("BigBlocks funcs")]
+        public MethodDelegate getBigBlocksAddrFuncs => get();
+        [Category("BigBlocks funcs")]
         public MethodDelegate getBigBlocksFunc => get();
         [Category("BigBlocks funcs")]
         public MethodDelegate setBigBlocksFunc => get();
+        [Category("BigBlocks funcs")]
+        public MethodDelegate getBigBlocksAddrFunc => get();
         [Category("Sega blocks funcs")]
         public MethodDelegate getSegaMappingFunc => get();
         [Category("Sega blocks funcs")]
@@ -196,6 +206,8 @@ namespace SettingsViewer
         public MethodDelegate getBlocksFunc => get();
         [Category("Blocks funcs")]
         public MethodDelegate setBlocksFunc => get();
+        [Category("Blocks funcs")]
+        public MethodDelegate getBlocksAddrFunc => get();
         [Category("Pal funcs")]
         public MethodDelegate getPalFunc => get();
         [Category("Pal funcs")]
@@ -210,13 +222,13 @@ namespace SettingsViewer
         public MethodDelegate getLayoutFunc => get();
         [Category("Layout funcs")]
         public MethodDelegate setLayoutFunc => get();
-        [Category("Converst screen to tile funcs")]
+        [Category("Convert screen to tile funcs")]
         public MethodDelegate getConvertScreenTileFunc => get();
-        [Category("Converst screen to tile funcs")]
+        [Category("Convert screen to tile funcs")]
         public MethodDelegate getBackConvertScreenTileFunc => get();
-        [Category("Converst screen to tile funcs")]
+        [Category("Convert screen to tile funcs")]
         public MethodDelegate getBigTileNoFromScreenFunc => get();
-        [Category("Converst screen to tile funcs")]
+        [Category("Convert screen to tile funcs")]
         public MethodDelegate setBigTileToScreenFunc => get();
         [Category("Objects funcs")]
         public MethodDelegate getObjectDictionaryFunc => get();
@@ -250,6 +262,8 @@ namespace SettingsViewer
         public MethodDelegate getScrollByteArray => get();
         [Category("Blocks params")]
         public MethodDelegate getBlocksCount => get();
+        [Category("Blocks params")]
+        public MethodDelegate getBlocksCountFunc => get();
         [Category("Blocks pictures params")]
         public MethodDelegate getBlocksFilename => get();
         [Category("Blocks pictures params")]
@@ -262,6 +276,8 @@ namespace SettingsViewer
         public MethodDelegate getDefaultScale => get();
         [Category("Blocks params")]
         public MethodDelegate getPalBytesAddr => get();
+        [Category("Blocks params")]
+        public MethodDelegate getPalBytesAddrFunc => get();
         [Category("Blocks params")]
         public MethodDelegate getPhysicsBytesAddr => get();
     }

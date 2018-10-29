@@ -423,7 +423,7 @@ namespace CadEditor
             }
 
             int wordSize = ConfigScript.isUseSegaGraphics() ? 2 : 1;
-            int size = ConfigScript.getBigBlocksCount(hierLevel) * tileSize * wordSize;
+            int size = ConfigScript.getBigBlocksCount(hierLevel, bigTileIndex) * tileSize * wordSize;
 
             byte[] bigBlockIndexes = new byte[size];
             var bigBlocksAddr = ConfigScript.getBigTilesAddr(hierLevel, bigTileIndex);
@@ -502,27 +502,27 @@ namespace CadEditor
 
         public static ObjRec[] getBlocksFromTiles16Pal1(int blockIndex)
         {
-            return readBlocksLinearTiles16Pal1(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getPalBytesAddr(), ConfigScript.getBlocksCount());
+            return readBlocksLinearTiles16Pal1(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getPalBytesAddr(blockIndex), ConfigScript.getBlocksCount(blockIndex));
         }
 
         public static void setBlocksFromTiles16Pal1(int blockIndex, ObjRec[] blocksData)
         {
-            writeBlocksLinearTiles16Pal1(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getPalBytesAddr(), ConfigScript.getBlocksCount());
+            writeBlocksLinearTiles16Pal1(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getPalBytesAddr(blockIndex), ConfigScript.getBlocksCount(blockIndex));
         }
 
         public static ObjRec[] getBlocksLinear2x2withoutAttrib(int blockIndex)
         {
-            return Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 2, 2, ConfigScript.getBlocksCount(), false);
+            return Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 2, 2, ConfigScript.getBlocksCount(blockIndex), false);
         }
 
         public static ObjRec[] getBlocksLinear4x2withoutAttrib(int blockIndex)
         {
-            return Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 4, 2, ConfigScript.getBlocksCount(), false);
+            return Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 4, 2, ConfigScript.getBlocksCount(blockIndex), false);
         }
 
         public static void setBlocksLinearWithoutAttrib(int blockIndex, ObjRec[] blocksData)
         {
-            writeBlocksLinear(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(), false);
+            writeBlocksLinear(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(blockIndex), false);
         }
 
         public static ObjRec[] readBlocksLinearTiles16Pal1(byte[] romdata, int addr, int palBytesAddr, int count)

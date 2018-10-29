@@ -21,8 +21,8 @@ public class Data:CapcomBase
   public OffsetRec getPalOffset()       { return new OffsetRec(0x3E2F, 12   , 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x4D10 , 7   , 0xD00);  }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x4D10 , 7   , 0xD00);  }
-  public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x7310 , 3   , 0x4000); }
-  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x1008A , 5  , 0x440);  }
+  public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x7310 , 5   , 0x4000); }
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x1008A , 3  , 0x440);  }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x11d5a, 300 , 0x40, 8, 8);   }
   public string[] getBlockTypeNames()   { return objTypesDt2;  }
   
@@ -58,11 +58,11 @@ public class Data:CapcomBase
   {
     return new GroupRec[] { 
       new GroupRec("Niagara"         , 0,0,0,0, 0x01),
-      new GroupRec("Bermuda"         , 1,0,1,2, 0x20),
-      new GroupRec("Egypt"           , 2,1,2,4, 0x41),
-      new GroupRec("Mu"              , 3,1,3,6, 0x5F),
-      new GroupRec("Scotland"        , 4,2,4,8, 0x81),
-      new GroupRec("Scotland 2"      , 4,2,4,8, 0x9E),
+      new GroupRec("Bermuda"         , 1,1,0,2, 0x20),
+      new GroupRec("Egypt"           , 2,2,1,4, 0x41),
+      new GroupRec("Mu"              , 3,3,1,6, 0x5F),
+      new GroupRec("Scotland"        , 4,4,2,8, 0x81),
+      new GroupRec("Scotland 2"      , 4,4,2,8, 0x9E),
     };
   }
   

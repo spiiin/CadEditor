@@ -1,2 +1,2 @@
-cd ..
-start CadEditor.exe settings_battletoads/Config_6.cs
+cd ../..
+start CadEditor.exe -config=settings_nes/battletoads/Config_6.cs

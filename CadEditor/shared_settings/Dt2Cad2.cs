@@ -22,9 +22,9 @@ public static class BlockUtils
   
   public static ObjRec[] getBlocksDt2(int blockIndex)
   {
-    ObjRec[] blocks = Utils.readBlocksFromAlignedArraysWithoutCropPal(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount());
+    ObjRec[] blocks = Utils.readBlocksFromAlignedArraysWithoutCropPal(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(blockIndex));
     //decode palByte
-    int palInfoCount = ConfigScript.getBlocksCount()/4;
+    int palInfoCount = ConfigScript.getBlocksCount(blockIndex)/4;
     var palInfo = new byte[palInfoCount];
     for (int i = 0; i < palInfoCount; i++)
     {
@@ -49,7 +49,7 @@ public static class BlockUtils
   public static void setBlocksDt2(int blockIndex, ObjRec[] objects)
   {
     int addr = ConfigScript.getTilesAddr(blockIndex);
-    int count = ConfigScript.getBlocksCount();
+    int count = ConfigScript.getBlocksCount(blockIndex);
     for (int i = 0; i < count; i++)
     {
         var obj = objects[i];
@@ -59,7 +59,7 @@ public static class BlockUtils
         Globals.romdata[addr + count * 3 + i] = (byte)obj.indexes[3];
     }
     
-    int palInfoCount = ConfigScript.getBlocksCount()/4;
+    int palInfoCount = ConfigScript.getBlocksCount(blockIndex)/4;
     for (int i = 0; i < palInfoCount; i++)
     {
         var palInfoByte = 

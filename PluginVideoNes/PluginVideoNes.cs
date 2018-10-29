@@ -223,25 +223,25 @@ namespace PluginVideoNes
          public Image[] makeBigBlocks(int videoNo, int bigBlockNo, int blockNo, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
            MapViewType curViewType = MapViewType.Tiles, int hierarchyLevel = 0)
         {
-            BigBlock[] bigBlockIndexes = ConfigScript.getBigBlocksRecursive(hierarchyLevel, blockNo);
-            return makeBigBlocks(videoNo, bigBlockNo, bigBlockIndexes, palleteNo, smallObjectsViewType, curViewType, hierarchyLevel);
+            BigBlock[] bigBlockIndexes = ConfigScript.getBigBlocksRecursive(hierarchyLevel, bigBlockNo);
+            return makeBigBlocks(videoNo, bigBlockNo, blockNo, bigBlockIndexes, palleteNo, smallObjectsViewType, curViewType, hierarchyLevel);
         }
 
-        public Image[] makeBigBlocks(int videoNo, int bigBlockNo, BigBlock[] bigBlockIndexes, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
+        public Image[] makeBigBlocks(int videoNo, int bigBlockNo, int blockNo, BigBlock[] bigBlockIndexes, int palleteNo, MapViewType smallObjectsViewType = MapViewType.Tiles,
             MapViewType curViewType = MapViewType.Tiles, int hierarchyLevel = 0)
         {
-            int blockCount = ConfigScript.getBigBlocksCount(hierarchyLevel);
+            int blockCount = ConfigScript.getBigBlocksCount(hierarchyLevel, bigBlockNo);
             var bigBlocks = new Image[blockCount];
 
             Image[] smallBlocksPack;
             if (hierarchyLevel == 0)
             {
-                smallBlocksPack = makeObjects(videoNo, bigBlockNo, palleteNo, smallObjectsViewType);
+                smallBlocksPack = makeObjects(videoNo, blockNo, palleteNo, smallObjectsViewType);
             }
             else
             {
                 var bigBlockIndexesPrev = ConfigScript.getBigBlocksRecursive(hierarchyLevel - 1, bigBlockNo);
-                smallBlocksPack = makeBigBlocks(videoNo, bigBlockNo, bigBlockIndexesPrev, palleteNo, smallObjectsViewType, curViewType, hierarchyLevel - 1);
+                smallBlocksPack = makeBigBlocks(videoNo, bigBlockNo, blockNo, bigBlockIndexesPrev, palleteNo, smallObjectsViewType, curViewType, hierarchyLevel - 1);
             }
 
             //tt version hardcode

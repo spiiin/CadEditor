@@ -29,13 +29,15 @@ namespace CadEditor
             {
                 for (int j = 0; j < h; j++)
                 {
-                    var b = new Button();
-                    b.Size = new Size(28, 20);
-                    b.Location = new Point(i * 29, j * 21);
+                    var b = new Button
+                    {
+                        Size = new Size(28, 20),
+                        Location = new Point(i * 29, j * 21)
+                    };
                     int coord = j*w + i;
                     b.Text = String.Format("{0:X}",coord);
                     b.Tag = coord;
-                    b.Click += new EventHandler(b_Click);
+                    b.Click += b_Click;
                     pnScreens.Controls.Add(b);
                 }
             }

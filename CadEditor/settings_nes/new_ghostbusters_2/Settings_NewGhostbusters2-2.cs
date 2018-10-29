@@ -33,12 +33,12 @@ public class Data
   
   public static ObjRec[] getBlocks(int tileId)
   {
-      return Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), false);
+      return Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(tileId), false);
   }
   
   public static void setBlocks(int tileId, ObjRec[] blocksData)
   {
-      Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), true, false);
+      Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(tileId), true, false);
   }
   
   public byte[] getPallete(int palId)

@@ -1,2 +1,2 @@
-cd ..
-start CadEditor.exe settings_sega_mickey_mania/Config.cs
+cd ../..
+start CadEditor.exe -config=settings_smd/mickey_mania/Config.cs

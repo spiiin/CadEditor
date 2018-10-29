@@ -38,7 +38,7 @@
             this.subPalletes = new System.Windows.Forms.ImageList(this.components);
             this.pnGeneric = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
-            this.cbSmallBlock = new System.Windows.Forms.ComboBox();
+            this.cbBigBlock = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.cbPaletteNo = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -64,6 +64,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbActive)).BeginInit();
             this.pnGeneric.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -142,7 +143,7 @@
             // pnGeneric
             // 
             this.pnGeneric.Controls.Add(this.label8);
-            this.pnGeneric.Controls.Add(this.cbSmallBlock);
+            this.pnGeneric.Controls.Add(this.cbBigBlock);
             this.pnGeneric.Controls.Add(this.label9);
             this.pnGeneric.Controls.Add(this.cbPaletteNo);
             this.pnGeneric.Controls.Add(this.label7);
@@ -163,11 +164,11 @@
             this.label8.TabIndex = 50;
             this.label8.Text = "Big blocks:";
             // 
-            // cbSmallBlock
+            // cbBigBlock
             // 
-            this.cbSmallBlock.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbSmallBlock.FormattingEnabled = true;
-            this.cbSmallBlock.Items.AddRange(new object[] {
+            this.cbBigBlock.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBigBlock.FormattingEnabled = true;
+            this.cbBigBlock.Items.AddRange(new object[] {
             "0",
             "1",
             "2",
@@ -184,12 +185,12 @@
             "13",
             "14",
             "15"});
-            this.cbSmallBlock.Location = new System.Drawing.Point(8, 69);
-            this.cbSmallBlock.Margin = new System.Windows.Forms.Padding(4);
-            this.cbSmallBlock.Name = "cbSmallBlock";
-            this.cbSmallBlock.Size = new System.Drawing.Size(249, 24);
-            this.cbSmallBlock.TabIndex = 49;
-            this.cbSmallBlock.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
+            this.cbBigBlock.Location = new System.Drawing.Point(8, 69);
+            this.cbBigBlock.Margin = new System.Windows.Forms.Padding(4);
+            this.cbBigBlock.Name = "cbBigBlock";
+            this.cbBigBlock.Size = new System.Drawing.Size(249, 24);
+            this.cbBigBlock.TabIndex = 49;
+            this.cbBigBlock.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
             // 
             // label9
             // 
@@ -501,6 +502,7 @@
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.pnBlocks.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.blocksScreen)).EndInit();
@@ -529,7 +531,7 @@
         private System.Windows.Forms.ComboBox cbViewType;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ComboBox cbSmallBlock;
+        private System.Windows.Forms.ComboBox cbBigBlock;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton tbbSave;

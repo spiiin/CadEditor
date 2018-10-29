@@ -30,12 +30,12 @@ public static class AitMKUtils
   
   public static ObjRec[] getBlocks(int tileId)
   {
-    return Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), true);
+    return Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(tileId), true);
   }
   
   public static void setBlocks(int tileId, ObjRec[] blocks)
   {
-    Utils.writeBlocksToAlignedArrays(blocks, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), true, true);
+    Utils.writeBlocksToAlignedArrays(blocks, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(tileId), true, true);
   }
   
   public static GetPalFunc readPalFromBin(string[] fname)

@@ -16,7 +16,7 @@ public static class GunSmokeUtils
   
   public static BigBlock[] getBigBlocks(int bigTileIndex)
   {
-      int count = ConfigScript.getBigBlocksCount(0);
+      int count = ConfigScript.getBigBlocksCount(0, bigTileIndex);
       var bigBlocks =  new BigBlockWithPal[count];
       var bigBlocksAddr = ConfigScript.getBigTilesAddr(0, bigTileIndex);
       for (int i = 0; i < count; i++)

@@ -52,7 +52,7 @@ public static class NinjaCatUtils
   public static ObjRec[] getBlocks(int tileId)
   {
       int addr = ConfigScript.getTilesAddr(tileId);
-      int count = ConfigScript.getBlocksCount();
+      int count = ConfigScript.getBlocksCount(tileId);
       var blocks = Utils.readBlocksLinear(Globals.romdata, addr, 2, 2, count, false);
       return blocks;
   }
@@ -60,7 +60,7 @@ public static class NinjaCatUtils
   public static void setBlocks(int tileId, ObjRec[] blocksData)
   {
       int addr = ConfigScript.getTilesAddr(tileId);
-      int count = ConfigScript.getBlocksCount();
+      int count = ConfigScript.getBlocksCount(tileId);
       Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, false);
   }
   
@@ -70,7 +70,7 @@ public static class NinjaCatUtils
       var bb = Utils.unlinearizeBigBlocks<BigBlockWithPal>(data, 2, 2);
       for (int i = 0; i < bb.Length; i++)
       {
-          int palByte = Globals.romdata[ConfigScript.getPalBytesAddr() + i];
+          int palByte = Globals.romdata[ConfigScript.getPalBytesAddr(bigTileIndex) + i];
           bb[i].palBytes[0] = palByte >> 0 & 0x3;
           bb[i].palBytes[1] = palByte >> 2 & 0x3;
           bb[i].palBytes[2] = palByte >> 4 & 0x3;
@@ -88,7 +88,7 @@ public static class NinjaCatUtils
       {
           var bb = bigBlockIndexes[i] as BigBlockWithPal;
           int palByte = bb.palBytes[0] | bb.palBytes[1] << 2 | bb.palBytes[2]<<4 | bb.palBytes[3]<< 6;
-          Globals.romdata[ConfigScript.getPalBytesAddr() + i] = (byte)palByte;
+          Globals.romdata[ConfigScript.getPalBytesAddr(bigTileIndex) + i] = (byte)palByte;
       }
   }
   

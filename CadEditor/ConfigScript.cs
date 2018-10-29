@@ -11,33 +11,51 @@ namespace CadEditor
     public delegate int   GetVideoPageAddrFunc(int videoPageId);
     public delegate byte[] GetVideoChunkFunc(int videoPageId);
     public delegate void   SetVideoChunkFunc(int videoPageId, byte[] videoChunk);
+
     public delegate ObjRec[] GetBlocksFunc(int blockId);
     public delegate void   SetBlocksFunc(int blockIndex, ObjRec[] blocksData);
+    public delegate int GetBlocksAddrFunc(int blockId);
+    public delegate int GetBlocksCountFunc(int blockId);
+
     public delegate BigBlock[] GetBigBlocksFunc(int bigBlockId);
     public delegate void   SetBigBlocksFunc(int bigTileIndex, BigBlock[] bigBlocks);
+    public delegate int GetBigBlocksAddrFunc(int bigBlockId);
+    public delegate int GetBigBlocksCountFunc(int hierLevel, int bigBlockId);
+
     public delegate byte[] GetSegaMappingFunc(int bigBlockId);
     public delegate void   SetSegaMappingFunc(int bigTileIndex, byte[] bigBlocks);
+
     public delegate byte[] GetPalFunc(int palId);
     public delegate void   SetPalFunc(int palId, byte[] pallete);
+
     public delegate GroupRec[] GetGroupsFunc();
     public delegate IList<LevelRec> GetLevelRecsFunc();
+
     public delegate void   RenderToMainScreenFunc(Graphics g, int curScale);
+
     public delegate List<ObjectList> GetObjectsFunc(int levelNo);
     public delegate bool            SetObjectsFunc(int levelNo, List<ObjectList> objects); 
     public delegate void            SortObjectsFunc(int levelNo, int listNo, List<ObjectRec> objects);
+
     public delegate LevelLayerData  GetLayoutFunc(int levelNo);
     public delegate bool SetLayoutFunc(LevelLayerData date, int levelNo);
+
     public delegate Dictionary<String, int> GetObjectDictionaryFunc(int listNo, int objNo);
+
     public delegate int  ConvertScreenTileFunc(int val);
     public delegate int  GetBigTileNoFromScreenFunc(int[] screenData, int index);
     public delegate void SetBigTileToScreenFunc(int[] screenData, int index, int value);
+
     public delegate byte[] LoadSegaBackFunc();
     public delegate void SaveSegaBackFunc(byte[] data);
+
     public delegate void DrawObjectFunc(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, ImageList objectSprites, bool inactive, int leftMargin, int topMargin);
     public delegate void DrawObjectBigFunc(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, Image[] objectSprites, bool inactive, int leftMargin, int topMargin);
 
     public delegate Screen[] LoadScreensFunc();
     public delegate void SaveScreensFunc(Screen[] screens);
+
+    public delegate int GetPalBytesAddrFunc(int blockId);
 
     public class ConfigScript
     {
@@ -197,6 +215,7 @@ namespace CadEditor
                 bigBlocksCounts[hierLevel] = callFromScript(asm, data, "*.getBigBlocksCountHierarchy", 256, hierLevel);
             }
             bigBlocksCounts[0] = callFromScript(asm, data, "*.getBigBlocksCount", bigBlocksCounts[0]);
+            getBigBlocksCountFunc = callFromScript<GetBigBlocksCountFunc>(asm, data, "*.getBigBlocksCountFunc");
 
             bigBlocksOffsets = new OffsetRec[bigBlocksHierarchyCount];
             for (int hierLevel = 0; hierLevel < bigBlocksHierarchyCount; hierLevel++)
@@ -211,18 +230,23 @@ namespace CadEditor
 
             getBigBlocksFuncs = new GetBigBlocksFunc[bigBlocksHierarchyCount];
             setBigBlocksFuncs = new SetBigBlocksFunc[bigBlocksHierarchyCount];
+            getBigBlocksAddrFuncs = new GetBigBlocksAddrFunc[bigBlocksHierarchyCount];
+
             getBigBlocksFuncs = callFromScript<GetBigBlocksFunc[]>(asm, data, "*.getBigBlocksFuncs", new GetBigBlocksFunc[1]);
             setBigBlocksFuncs = callFromScript<SetBigBlocksFunc[]>(asm, data, "*.setBigBlocksFuncs", new SetBigBlocksFunc[1]);
+            getBigBlocksAddrFuncs = callFromScript<GetBigBlocksAddrFunc[]>(asm, data, "*.getBigBlocksAddrFuncs", new GetBigBlocksAddrFunc[1]);
             if (!buildScreenFromSmallBlocks)
             {
                 getBigBlocksFuncs[0] = callFromScript<GetBigBlocksFunc>(asm, data, "*.getBigBlocksFunc", getBigBlocksFuncs[0]);
                 setBigBlocksFuncs[0] = callFromScript<SetBigBlocksFunc>(asm, data, "*.setBigBlocksFunc", setBigBlocksFuncs[0]);
+                getBigBlocksAddrFuncs[0] = callFromScript<GetBigBlocksAddrFunc>(asm, data, "*.getBigBlocksAddrFunc", getBigBlocksAddrFuncs[0]);
             }
 
-            getSegaMappingFunc = callFromScript<GetSegaMappingFunc>(asm, data, "*.getSegaMappingFunc", (int index) => { return Utils.readLinearBigBlockData(0, index); });
+            getSegaMappingFunc = callFromScript<GetSegaMappingFunc>(asm, data, "*.getSegaMappingFunc", (int index) => Utils.readLinearBigBlockData(0, index));
             setSegaMappingFunc = callFromScript<SetSegaMappingFunc>(asm, data, "*.setSegaMappingFunc", (int index, byte[] bb) => { Utils.writeLinearBigBlockData(0, index, bb); });
             getBlocksFunc = callFromScript<GetBlocksFunc>(asm,data,"*.getBlocksFunc");
             setBlocksFunc = callFromScript<SetBlocksFunc>(asm, data, "*.setBlocksFunc");
+            getBlocksAddrFunc = callFromScript<GetBlocksAddrFunc> (asm, data, "*.getBlocksAddrFunc");
             getPalFunc = callFromScript<GetPalFunc>(asm, data, "*.getPalFunc");
             setPalFunc = callFromScript<SetPalFunc>(asm, data, "*.setPalFunc");
             getObjectsFunc = callFromScript<GetObjectsFunc>(asm, data, "*.getObjectsFunc");
@@ -254,7 +278,8 @@ namespace CadEditor
             scrollsOffsetFromLayout = callFromScript(asm, data, "*.getScrollsOffsetFromLayout", 0);
             scrollByteArray = callFromScript(asm, data, "*.getScrollByteArray", new byte[0]);
 
-            blocksCount    = callFromScript(asm, data, "*.getBlocksCount"   , 256);
+            blocksCount = callFromScript(asm, data, "*.getBlocksCount"   , 256);
+            getBlocksCountFunc = callFromScript<GetBlocksCountFunc>(asm, data, "*.getBlocksCountFunc");
 
             blocksPicturesFilename  = callFromScript(asm, data, "getBlocksFilename", "");
 
@@ -276,10 +301,13 @@ namespace CadEditor
 
             palBytesAddr = callFromScript(asm, data, "*.getPalBytesAddr", -1);
             physicsBytesAddr = callFromScript(asm, data, "*.getPhysicsBytesAddr", -1);
+            getPalBytesAddrFunc = callFromScript<GetPalBytesAddrFunc>(asm, data, "*.getPalBytesAddrFunc");
 
             defaultScale = callFromScript(asm, data, "*.getDefaultScale", -1.0f);
 
             loadAllPlugins(asm, data);
+
+            ConfigScript.videoNes.updateColorsFromConfig();
         }
 
         private static GetLevelRecsFunc getLevelRecsFuncDefault()
@@ -507,18 +535,17 @@ namespace CadEditor
 
         public static void renderToMainScreen(Graphics g, int scale)
         {
-            if (renderToMainScreenFunc!=null)
-                renderToMainScreenFunc(g, scale);
+            renderToMainScreenFunc?.Invoke(g, scale);
         }
 
-        public static int getBigBlocksCount(int hierarchyLevel)
+        public static int getBigBlocksCount(int hierarchyLevel, int bigBlockId)
         {
-            return bigBlocksCounts[hierarchyLevel];
+            return getBigBlocksCountFunc?.Invoke(hierarchyLevel, bigBlockId) ?? bigBlocksCounts[hierarchyLevel];
         }
 
-        public static int getBlocksCount()
+        public static int getBlocksCount(int blockId)
         {
-            return blocksCount;
+            return getBlocksCountFunc?.Invoke(blockId)?? blocksCount;
         }
 
         public static IList<LevelRec> getLevelRecs()
@@ -621,9 +648,9 @@ namespace CadEditor
             return getGroups()[i];
         }
 
-        public static int getPalBytesAddr()
+        public static int getPalBytesAddr(int blockId)
         {
-            return palBytesAddr;
+            return getPalBytesAddrFunc?.Invoke(blockId) ?? palBytesAddr;
         }
 
         public static int getPhysicsBytesAddr()
@@ -650,12 +677,30 @@ namespace CadEditor
 
         public static int getTilesAddr(int id)
         {
+            var getAddrFunc = ConfigScript.getBlocksAddrFunc;
+            return getAddrFunc?.Invoke(id) ?? getTilesAddrDefault(id);
+
+        }
+
+        private static int getTilesAddrDefault(int id)
+        {
             return ConfigScript.blocksOffset.beginAddr + ConfigScript.blocksOffset.recSize * id;
         }
 
-        public static int getBigTilesAddr(int heirarchyLevel, int id)
+        public static int getBigTilesAddr(int hierarchyLevel, int id)
         {
-            return ConfigScript.bigBlocksOffsets[heirarchyLevel].beginAddr + ConfigScript.bigBlocksOffsets[heirarchyLevel].recSize * id;
+            GetBigBlocksAddrFunc getAddrFunc = null;
+            if (hierarchyLevel < ConfigScript.getBigBlocksAddrFuncs.Length)
+            {
+                getAddrFunc = ConfigScript.getBigBlocksAddrFuncs[hierarchyLevel];
+            }
+            return getAddrFunc?.Invoke(id) ?? getBigTilesAddrDefault(hierarchyLevel, id);
+        }
+
+        private static int getBigTilesAddrDefault(int hierarchyLevel, int id)
+        {
+            var bigBlocksOffset = ConfigScript.bigBlocksOffsets[hierarchyLevel];
+            return bigBlocksOffset.beginAddr + bigBlocksOffset.recSize * id;
         }
 
         public static int getLevelWidth(int levelNo)
@@ -705,8 +750,6 @@ namespace CadEditor
         public static OffsetRec[] screensOffset;
         //public static OffsetRec boxesBackOffset;
         public static int levelsCount;
-        public static int[] bigBlocksCounts;
-        public static int blocksCount;
         public static bool screenVertical;
         public static int screenDataStride;
         public static int wordLen;
@@ -735,14 +778,20 @@ namespace CadEditor
         public static SetVideoChunkFunc setVideoChunkFunc;
 
         public static int bigBlocksHierarchyCount;
+        public static int[] bigBlocksCounts;
         public static GetBigBlocksFunc[] getBigBlocksFuncs;
         public static SetBigBlocksFunc[] setBigBlocksFuncs;
+        public static GetBigBlocksAddrFunc[] getBigBlocksAddrFuncs;
+        public static GetBigBlocksCountFunc getBigBlocksCountFunc;
 
         public static GetSegaMappingFunc getSegaMappingFunc;
         public static SetSegaMappingFunc setSegaMappingFunc;
 
+        public static int blocksCount;
         public static GetBlocksFunc getBlocksFunc;
         public static SetBlocksFunc setBlocksFunc;
+        public static GetBlocksAddrFunc getBlocksAddrFunc;
+        public static GetBlocksCountFunc getBlocksCountFunc;
 
         public static GetPalFunc getPalFunc;
         public static SetPalFunc setPalFunc;
@@ -790,6 +839,7 @@ namespace CadEditor
 
         public static int palBytesAddr;
         public static int physicsBytesAddr;
+        public static GetPalBytesAddrFunc getPalBytesAddrFunc;
 
         public static string[] blockTypeNames;
         public static string[] defaultBlockTypeNames = new[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F" };

@@ -5,22 +5,22 @@ public static class NinjaGaidenUtils
 { 
   public static ObjRec[] getBlocks(int blockIndex)
   {
-    return Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 2, 2, ConfigScript.getBlocksCount(), false, true);
+    return Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), 2, 2, ConfigScript.getBlocksCount(blockIndex), false, true);
   }
   
   public static void setBlocks(int blockIndex, ObjRec[] blocksData)
   {
-    Utils.writeBlocksLinear(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(), false, true);
+    Utils.writeBlocksLinear(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(blockIndex), false, true);
   }
   
   private static byte getTTSmallBlocksColorByte(int index)
   {
-    return Globals.romdata[ConfigScript.getPalBytesAddr()+index];
+    return Globals.romdata[ConfigScript.getPalBytesAddr(0)+index];
   }
   
   private static void setTTSmallBlocksColorByte(int index, byte colorByte)
   {
-    Globals.romdata[ConfigScript.getPalBytesAddr()+index] = colorByte;
+    Globals.romdata[ConfigScript.getPalBytesAddr(0)+index] = colorByte;
   }
   
   public static BigBlock[] getBigBlocksTT(int bigTileIndex)

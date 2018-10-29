@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
+using NDesk.Options;
 
 namespace CadEditor
 {
@@ -12,20 +13,20 @@ namespace CadEditor
         {
             try
             {
-                var globalConfigName = "Config.cs";   
-                if (args.Length == 1)
-                    globalConfigName = args[0];
+                var globalConfigName = "Config.cs";
+
+                var optionSet = new OptionSet() {
+                    { "romname=",      v => OpenFile.fileName = v },
+                    { "configname=",  v => OpenFile.configName = v },
+                    { "config=",   v => globalConfigName = v },
+                };
+                var cmdOptions = optionSet.Parse(args);
+
                 ConfigScript.LoadGlobalsFromFile(globalConfigName);
-                ConfigScript.videoNes.updateColorsFromConfig();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //pass
-            }
-            if (args.Length >=2)
-            {
-                OpenFile.fileName   = args[0];
-                OpenFile.configName = args[1];             
+                MessageBox.Show(ex.ToString());
             }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

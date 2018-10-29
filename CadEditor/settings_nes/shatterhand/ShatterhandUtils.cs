@@ -6,9 +6,9 @@ public static class ShatterhandUtils
 {
   public static ObjRec[] getBlocks(int tileId)
   {
-    var objects = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), 2, 2, ConfigScript.getBlocksCount(), false, true);
-    int palAddr = ConfigScript.getPalBytesAddr();
-    for (int i = 0; i < ConfigScript.getBlocksCount(); i++)
+    var objects = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), 2, 2, ConfigScript.getBlocksCount(tileId), false, true);
+    int palAddr = ConfigScript.getPalBytesAddr(tileId);
+    for (int i = 0; i < ConfigScript.getBlocksCount(tileId); i++)
     {
         objects[i].palBytes[0] =  Globals.romdata[palAddr + i] >> 6; //physics also in this blocks
     }
@@ -18,8 +18,8 @@ public static class ShatterhandUtils
   public static void setBlocks(int tileId, ObjRec[] blocks)
   {
     int addr = ConfigScript.getTilesAddr(tileId);
-    int count = ConfigScript.getBlocksCount();
-    int palAddr = ConfigScript.getPalBytesAddr();
+    int count = ConfigScript.getBlocksCount(tileId);
+    int palAddr = ConfigScript.getPalBytesAddr(tileId);
     Utils.writeBlocksLinear(blocks, Globals.romdata, addr, count, false, true);
     for (int i = 0; i < count; i++)
     {
@@ -75,7 +75,13 @@ public static class ShatterhandUtils
       int height = ConfigScript.getLevelHeight(curActiveLayout);
       int[] layer = new int[width * height];
       for (int i = 0; i < width * height; i++)
-          layer[i] = (Globals.romdata[layoutAddr + i] + 1)%256;
+      {
+          var scrNo = Globals.romdata[layoutAddr + i];
+          if (scrNo > 0) //not change zero values (for easy view)
+          {
+              layer[i] = (scrNo + 1)%256;
+          }
+      }
       return new LevelLayerData(width, height, layer, null, null);
   }
   
@@ -85,7 +91,10 @@ public static class ShatterhandUtils
       int width =  ConfigScript.getLevelWidth(curActiveLayout);
       int height = ConfigScript.getLevelHeight(curActiveLayout);
       for (int i = 0; i < width * height; i++)
-          Globals.romdata[layoutAddr + i] = (byte)(layerData.layer[i] - 1);
+      {
+          var scrNo = layerData.layer[i];
+          Globals.romdata[layoutAddr + i] = (byte)((scrNo == 0) ? scrNo : (scrNo-1));
+      }
       return true;
   }
   

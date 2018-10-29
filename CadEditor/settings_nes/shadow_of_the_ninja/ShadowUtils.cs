@@ -6,7 +6,7 @@ public static class ShadowUtils
 {
   public static ObjRec[] getBlocks(int tileId)
   {
-      int count = ConfigScript.getBlocksCount();
+      int count = ConfigScript.getBlocksCount(tileId);
       var bb = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), 2, 2, count, false, true);
       return bb;
   }
@@ -14,7 +14,7 @@ public static class ShadowUtils
   public static void setBlocks(int tileId, ObjRec[] blocksData)
   {
     int addr = ConfigScript.getTilesAddr(tileId);
-    int count = ConfigScript.getBlocksCount();
+    int count = ConfigScript.getBlocksCount(tileId);
     Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, false, true);
   }
   

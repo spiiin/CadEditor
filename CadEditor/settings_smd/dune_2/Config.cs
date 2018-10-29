@@ -5,5 +5,5 @@ public class Config
 {
   public string getFileName()      {  return "Dune - The Battle for Arrakis (U) [!].bin";     }
   public string getDumpName()      { return "";                                               }
-  public string getConfigName()    { return "settings_sega_dune_2/Settings_Dune2.cs";         }
+  public string getConfigName()    { return "settings_smd/dune_2/Settings_Dune2.cs";         }
 }

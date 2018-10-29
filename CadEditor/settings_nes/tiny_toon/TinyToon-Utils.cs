@@ -9,26 +9,26 @@ public static class TinyToonUtils
   //--------------------------------------------------------------------------------------------------------------
   public static ObjRec[] getBlocks(int blockIndex)
   {
-    return readBlocksFromAlignedArraysTT(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount());
+    return readBlocksFromAlignedArraysTT(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(blockIndex));
   }
   
   public static void setBlocks(int blockIndex, ObjRec[] blocksData)
   {
-    writeBlocksToAlignedArraysTT(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount());
+    writeBlocksToAlignedArraysTT(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), ConfigScript.getBlocksCount(blockIndex));
   }
   
   //--------------------------------------------------------------------------------------------------------------
   
   private static byte getTTSmallBlocksColorByte(int index)
   {
-      int btc = ConfigScript.getBigBlocksCount(0);
+      int btc = ConfigScript.getBigBlocksCount(0, 0);
       int addr = ConfigScript.getBigTilesAddr(0, 0);
       return Globals.romdata[addr + btc * 4 + index];
   }
   
     private static void setTTSmallBlocksColorByte(int index, byte colorByte)
   {
-      int btc = ConfigScript.getBigBlocksCount(0);
+      int btc = ConfigScript.getBigBlocksCount(0, 0);
       int addr = ConfigScript.getBigTilesAddr(0, 0);
       Globals.romdata[addr + btc * 4 + index] = colorByte;
   }
@@ -36,7 +36,7 @@ public static class TinyToonUtils
   public static BigBlock[] getBigBlocksTT(int bigTileIndex)
   {
     var bigBlocksAddr = ConfigScript.getBigTilesAddr(0, bigTileIndex);
-    var data = Utils.readDataFromAlignedArrays(Globals.romdata, bigBlocksAddr, ConfigScript.getBigBlocksCount(0));
+    var data = Utils.readDataFromAlignedArrays(Globals.romdata, bigBlocksAddr, ConfigScript.getBigBlocksCount(0, bigTileIndex));
     var bb = Utils.unlinearizeBigBlocks<BigBlockWithPal>(data, 2, 2);
     for (int i = 0; i < bb.Length; i++)
     {
@@ -53,7 +53,7 @@ public static class TinyToonUtils
   {
     var bigBlocksAddr = ConfigScript.getBigTilesAddr(0, bigTileIndex);
     var data = Utils.linearizeBigBlocks(bigBlockIndexes);
-    Utils.writeDataToAlignedArrays(data, Globals.romdata, bigBlocksAddr, ConfigScript.getBigBlocksCount(0));
+    Utils.writeDataToAlignedArrays(data, Globals.romdata, bigBlocksAddr, ConfigScript.getBigBlocksCount(0, bigTileIndex));
     //save pal bytes
     for (int i = 0; i < bigBlockIndexes.Length; i++)
     {

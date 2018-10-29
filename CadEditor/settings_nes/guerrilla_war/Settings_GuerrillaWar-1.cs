@@ -28,13 +28,13 @@ public class Data
   //----------------------------------------------------------------------------
   public ObjRec[] getBlocks(int tileId)
   {
-    var blocks = Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), false);
+    var blocks = Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(tileId), false);
     //decode palByte
-    int palInfoCount = ConfigScript.getBlocksCount()/4;
+    int palInfoCount = ConfigScript.getBlocksCount(tileId)/4;
     var palInfo = new byte[palInfoCount];
     for (int i = 0; i < palInfoCount; i++)
     {
-        palInfo[i] = Globals.romdata[ConfigScript.getPalBytesAddr()+i];
+        palInfo[i] = Globals.romdata[ConfigScript.getPalBytesAddr(tileId)+i];
     }
     for (int i = 0; i < blocks.Length; i++)
     {
@@ -47,8 +47,8 @@ public class Data
   
   public void setBlocks(int tileId, ObjRec[] blocks)
   {
-    Utils.writeBlocksToAlignedArrays(blocks, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(), false, false);
-    int palInfoCount = ConfigScript.getBlocksCount()/4;
+    Utils.writeBlocksToAlignedArrays(blocks, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(tileId), false, false);
+    int palInfoCount = ConfigScript.getBlocksCount(tileId)/4;
     for (int i = 0; i < palInfoCount; i++)
     {
         var palInfoByte = 
@@ -57,7 +57,7 @@ public class Data
           (blocks[i*4+2].palBytes[0]<<4) | 
           (blocks[i*4+3].palBytes[0]<<6);
           
-        Globals.romdata[ConfigScript.getPalBytesAddr() + i] = (byte)palInfoByte;
+        Globals.romdata[ConfigScript.getPalBytesAddr(tileId) + i] = (byte)palInfoByte;
     }
   }
   
