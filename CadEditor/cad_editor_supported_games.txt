@@ -70,7 +70,7 @@ Supported games:
     Garfield - A Week of Garfield                   (all levels)
     Ghosts'n Goblins                                (all levels)
     Ghoul School                                    (all levels)
-    Gounnies 2                                      (all levels)
+    Goonies 2, The                                  (all levels)
     Gruniozerca 2 (PD)                              (all levels)
     Guerilla War                                    (1 level)
     Gun Smoke                                       (all levels)
@@ -178,7 +178,7 @@ Supported games:
     
 ----Layout editor:
     Argos No Senshi                                 (all levels)
-    Fist of The Nortstar                            (3 levels)
+    Fist of the Northstar                           (3 levels)
     
 ----Screens/blocks editor (Sega Mega Drive games):
     Contra Hard Corps                               (all levels + object editor not complete)
