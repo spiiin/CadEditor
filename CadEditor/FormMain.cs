@@ -16,6 +16,8 @@ namespace CadEditor
             InitializeComponent();
         }
 
+        readonly float[] scaleFactors = { 0.25f, 0.5f, 1.0f, 2.0f, 3.0f, 4.0f };
+
         private void setDefaultScale()
         {
             curScale = ConfigScript.isBuildScreenFromSmallBlocks() ? 1 : 2;
@@ -128,6 +130,8 @@ namespace CadEditor
 
             pnGroups.Visible = ConfigScript.getGroups().Length > 0;
 
+            updateScaleMenuItemsChecked(Array.FindIndex(scaleFactors, el => el == curScale));
+            
             resetMapScreenSize();
         }
 
@@ -687,10 +691,21 @@ namespace CadEditor
             screens = newScreens;
         }
 
+        private void updateScaleMenuItemsChecked(int index)
+        {
+            foreach (ToolStripMenuItem bttScaleDropDownItem in bttScale.DropDownItems)
+            {
+                bttScaleDropDownItem.Checked = false;
+            }
+
+            (bttScale.DropDownItems[index] as ToolStripMenuItem).Checked = true;
+        }
+
         private void bttScale_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            float[] scaleFactors = { 0.25f, 0.5f, 1.0f, 2.0f, 3.0f, 4.0f };
-            curScale = scaleFactors [bttScale.DropDownItems.IndexOf(e.ClickedItem)];
+            int curScaleItemIndex = bttScale.DropDownItems.IndexOf(e.ClickedItem);
+            updateScaleMenuItemsChecked(curScaleItemIndex);
+            curScale = scaleFactors[curScaleItemIndex];
             cbLevel_SelectedIndexChanged(bttScale, new EventArgs());
         }
 
@@ -943,6 +958,11 @@ namespace CadEditor
         public void addSubeditorButton(ToolStripItem item)
         {
           toolStrip1.Items.Insert(toolStrip1.Items.IndexOf(bttEnemies)+1, item);
+        }
+
+        private void bttScale_ButtonClick(object sender, EventArgs e)
+        {
+            bttScale.ShowDropDown();
         }
 
         public void addToolButton(ToolStripItem item)
