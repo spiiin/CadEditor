@@ -131,6 +131,7 @@ namespace CadEditor
             pnGroups.Visible = ConfigScript.getGroups().Length > 0;
 
             updateScaleMenuItemsChecked(Array.FindIndex(scaleFactors, el => el == curScale));
+            updateLayersMenuItemsChecked(curActiveLayer);
             
             resetMapScreenSize();
         }
@@ -811,6 +812,14 @@ namespace CadEditor
         private void bttLayer_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             curActiveLayer = bttLayer.DropDownItems.IndexOf(e.ClickedItem);
+            updateLayersMenuItemsChecked(curActiveLayer);
+        }
+
+        private void updateLayersMenuItemsChecked(int curActiveLayer)
+        {
+            bool activeFirstLayer = curActiveLayer == 0;
+            (bttLayer.DropDownItems[0] as ToolStripMenuItem).Checked = activeFirstLayer;
+            (bttLayer.DropDownItems[1] as ToolStripMenuItem).Checked = !activeFirstLayer;
         }
 
         private void bttStructures_Click(object sender, EventArgs e)

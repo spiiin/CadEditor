@@ -396,7 +396,7 @@
             this.pnView.Location = new System.Drawing.Point(4, 4);
             this.pnView.Margin = new System.Windows.Forms.Padding(4);
             this.pnView.Name = "pnView";
-            this.pnView.Size = new System.Drawing.Size(1023, 615);
+            this.pnView.Size = new System.Drawing.Size(1022, 615);
             this.pnView.TabIndex = 53;
             // 
             // lbCoords
@@ -604,42 +604,43 @@
             this.bttScale.Name = "bttScale";
             this.bttScale.Size = new System.Drawing.Size(39, 24);
             this.bttScale.Text = "Scale";
+            this.bttScale.ButtonClick += new System.EventHandler(this.bttScale_ButtonClick);
             this.bttScale.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.bttScale_DropDownItemClicked);
             // 
             // x025ToolStripMenuItem
             // 
             this.x025ToolStripMenuItem.Name = "x025ToolStripMenuItem";
-            this.x025ToolStripMenuItem.Size = new System.Drawing.Size(118, 26);
+            this.x025ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.x025ToolStripMenuItem.Text = "x0.25";
             // 
             // x05ToolStripMenuItem
             // 
             this.x05ToolStripMenuItem.Name = "x05ToolStripMenuItem";
-            this.x05ToolStripMenuItem.Size = new System.Drawing.Size(118, 26);
+            this.x05ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.x05ToolStripMenuItem.Text = "x0.5";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(118, 26);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(181, 26);
             this.toolStripMenuItem2.Text = "x1";
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(118, 26);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(181, 26);
             this.toolStripMenuItem3.Text = "x2";
             // 
             // x3ToolStripMenuItem
             // 
             this.x3ToolStripMenuItem.Name = "x3ToolStripMenuItem";
-            this.x3ToolStripMenuItem.Size = new System.Drawing.Size(118, 26);
+            this.x3ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.x3ToolStripMenuItem.Text = "x3";
             // 
             // x4ToolStripMenuItem
             // 
             this.x4ToolStripMenuItem.Name = "x4ToolStripMenuItem";
-            this.x4ToolStripMenuItem.Size = new System.Drawing.Size(118, 26);
+            this.x4ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.x4ToolStripMenuItem.Text = "x4";
             // 
             // toolStripSeparator5
@@ -689,13 +690,13 @@
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(92, 26);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(181, 26);
             this.toolStripMenuItem4.Text = "1";
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(92, 26);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(181, 26);
             this.toolStripMenuItem5.Text = "2";
             // 
             // toolStripSeparator7
@@ -827,7 +828,7 @@
             this.pnViewScroll.Controls.Add(this.pnView);
             this.pnViewScroll.Location = new System.Drawing.Point(4, 8);
             this.pnViewScroll.Name = "pnViewScroll";
-            this.pnViewScroll.Size = new System.Drawing.Size(1031, 623);
+            this.pnViewScroll.Size = new System.Drawing.Size(1030, 623);
             this.pnViewScroll.TabIndex = 5;
             // 
             // lbPalBytesAddr
