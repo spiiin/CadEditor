@@ -132,6 +132,8 @@ namespace CadEditor
 
             updateScaleMenuItemsChecked(Array.FindIndex(scaleFactors, el => el == curScale));
             updateLayersMenuItemsChecked(curActiveLayer);
+
+            bttAdditionalRender.Visible = ConfigScript.renderToMainScreenFunc != null;
             
             resetMapScreenSize();
         }
@@ -276,7 +278,7 @@ namespace CadEditor
             int tileSizeY = (int)(bigBlocks[0].Height * curScale);
             var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
             //ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X
-            MapEditor.render(e.Graphics, bigBlocks, visibleRect, screens, screenNo, curScale, true, showAxis, ConfigScript.getScreenVertical() ? 0 : tileSizeX, ConfigScript.getScreenVertical() ? tileSizeY : 0, width, height);
+            MapEditor.render(e.Graphics, bigBlocks, visibleRect, screens, screenNo, curScale, true, showAxis, ConfigScript.getScreenVertical() ? 0 : tileSizeX, ConfigScript.getScreenVertical() ? tileSizeY : 0, width, height, additionalRenderEnabled);
 
             if (!ConfigScript.getScreenVertical() && showNeiScreens && (screenNo > 0) && screen.layers[0].showLayer)
             {
@@ -675,6 +677,8 @@ namespace CadEditor
         public bool showAxis { get; private set; }
         public int screenNo { get; private set; }
 
+        public bool additionalRenderEnabled { get; private set; } = true;
+
         public float curScale { get; private set; } = 2.0f;
 
         public Screen[] screens { get; private set; }
@@ -972,6 +976,12 @@ namespace CadEditor
         private void bttScale_ButtonClick(object sender, EventArgs e)
         {
             bttScale.ShowDropDown();
+        }
+
+        private void bttAdditionalRender_CheckedChanged(object sender, EventArgs e)
+        {
+            additionalRenderEnabled = bttAdditionalRender.Checked;
+            mapScreen.Invalidate();
         }
 
         public void addToolButton(ToolStripItem item)

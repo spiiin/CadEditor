@@ -87,6 +87,25 @@ public class Data
     }
   }
   
+  public RenderToMainScreenFunc getRenderToMainScreenFunc() { return renderObjects; }
+  
+  public void renderObjects(Graphics g, int curScale, int scrNo)
+  {
+    int w = getScreensOffset().width;
+    int h = getScreensOffset().height;
+    int physicsAddr = 0xC010 + scrNo * w * h;
+    for (int x = 0; x < w; x++)
+    {
+      for (int y = 0; y < h; y++)
+      {
+          byte physics  = Globals.romdata[physicsAddr + y*w + x];
+          var rect = new Rectangle(32*curScale*(x+1), 32*curScale*y, 32*curScale, 32*curScale);
+          g.DrawRectangle(new Pen(Color.Red, 2.0f), rect);
+          g.DrawString(String.Format("{0:X2}", physics), new Font("Arial", 8), Brushes.Red, rect.X + 8, rect.Y);
+      }
+    }
+  }
+  
   public byte[] getPallete(int palId)
   {
       return Utils.readBinFile("pal1.bin");

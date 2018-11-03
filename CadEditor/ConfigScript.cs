@@ -31,7 +31,7 @@ namespace CadEditor
     public delegate GroupRec[] GetGroupsFunc();
     public delegate IList<LevelRec> GetLevelRecsFunc();
 
-    public delegate void   RenderToMainScreenFunc(Graphics g, int curScale);
+    public delegate void   RenderToMainScreenFunc(Graphics g, int curScale, int scrNo);
 
     public delegate List<ObjectList> GetObjectsFunc(int levelNo);
     public delegate bool            SetObjectsFunc(int levelNo, List<ObjectList> objects); 
@@ -533,9 +533,9 @@ namespace CadEditor
             return (getObjectDictionaryFunc ?? ((_,__)=> null))(listNo, objType);
         }
 
-        public static void renderToMainScreen(Graphics g, int scale)
+        public static void renderToMainScreen(Graphics g, int scale, int scrNo)
         {
-            renderToMainScreenFunc?.Invoke(g, scale);
+            renderToMainScreenFunc?.Invoke(g, scale, scrNo);
         }
 
         public static int getBigBlocksCount(int hierarchyLevel, int bigBlockId)

@@ -15,7 +15,7 @@ public class Data
   
   public RenderToMainScreenFunc getRenderToMainScreenFunc() { return renderObjects; }
   
-  public void renderObjects(Graphics g, int curScale)
+  public void renderObjects(Graphics g, int curScale, int scrNo)
   {
     for (int i = 0; i < 64; i++)
     {

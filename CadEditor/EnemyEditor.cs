@@ -389,7 +389,7 @@ namespace CadEditor
                         int leftMargin = (ConfigScript.getScreenVertical() ? scrHeight : scrWidth) * x;
                         int topMargin = (ConfigScript.getScreenVertical() ? scrWidth : scrHeight) * y;
                         
-                        MapEditor.render(g, bigBlocks, visibleRect, screens, scrNo, curScale, false, showAxis, leftMargin, topMargin, width, height);
+                        MapEditor.render(g, bigBlocks, visibleRect, screens, scrNo, curScale, false, showAxis, leftMargin, topMargin, width, height, formMain.additionalRenderEnabled);
                         if (showScreenAxis)
                         {
                             if (ConfigScript.getScreenVertical())

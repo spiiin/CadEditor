@@ -6,7 +6,7 @@ namespace CadEditor
 {
     public class MapEditor
     {
-        public static void render(Graphics g, Image[] bigBlocks, Rectangle? visibleRect,Screen[] screens, int scrNo, float curScale, bool showBorder, bool showBlocksAxis, int leftMargin, int topMargin, int width, int height)
+        public static void render(Graphics g, Image[] bigBlocks, Rectangle? visibleRect,Screen[] screens, int scrNo, float curScale, bool showBorder, bool showBlocksAxis, int leftMargin, int topMargin, int width, int height, bool additionalRenderEnabled)
         {
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
@@ -62,7 +62,10 @@ namespace CadEditor
             }
 
             //Additional rendering  //float to int!
-            ConfigScript.renderToMainScreen(g, (int)curScale);
+            if (additionalRenderEnabled)
+            {
+                ConfigScript.renderToMainScreen(g, (int) curScale, scrNo);
+            }
         }
 
         public static void renderAllBlocks(Graphics g, PictureBox parentControl, Image[] bigBlocks, int blockWidth, int blockHeight, Rectangle? visibleRect, float curScale, int activeBlock, bool showBlocksAxis)
@@ -114,7 +117,7 @@ namespace CadEditor
 
             using (var g = Graphics.FromImage(result))
             {
-                render(g, bigBlocks, null, screens, scrNo, curScale, showBorder, false, leftMargin, topMargin, width, height);
+                render(g, bigBlocks, null, screens, scrNo, curScale, showBorder, false, leftMargin, topMargin, width, height, true);
             }
             return result;
         }

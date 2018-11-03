@@ -93,6 +93,7 @@
             this.lbStructures = new System.Windows.Forms.ListBox();
             this.pnViewScroll = new System.Windows.Forms.Panel();
             this.lbPalBytesAddr = new System.Windows.Forms.Label();
+            this.bttAdditionalRender = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.activeBlock)).BeginInit();
             this.pnGeneric.SuspendLayout();
@@ -396,7 +397,7 @@
             this.pnView.Location = new System.Drawing.Point(4, 4);
             this.pnView.Margin = new System.Windows.Forms.Padding(4);
             this.pnView.Name = "pnView";
-            this.pnView.Size = new System.Drawing.Size(1022, 615);
+            this.pnView.Size = new System.Drawing.Size(1021, 615);
             this.pnView.TabIndex = 53;
             // 
             // lbCoords
@@ -436,6 +437,7 @@
             this.bttShowLayer1,
             this.bttShowLayer2,
             this.bttLayer,
+            this.bttAdditionalRender,
             this.toolStripSeparator7,
             this.tbbShowPluginInfo,
             this.tbbShowInfo});
@@ -610,37 +612,37 @@
             // x025ToolStripMenuItem
             // 
             this.x025ToolStripMenuItem.Name = "x025ToolStripMenuItem";
-            this.x025ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.x025ToolStripMenuItem.Size = new System.Drawing.Size(118, 26);
             this.x025ToolStripMenuItem.Text = "x0.25";
             // 
             // x05ToolStripMenuItem
             // 
             this.x05ToolStripMenuItem.Name = "x05ToolStripMenuItem";
-            this.x05ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.x05ToolStripMenuItem.Size = new System.Drawing.Size(118, 26);
             this.x05ToolStripMenuItem.Text = "x0.5";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(181, 26);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(118, 26);
             this.toolStripMenuItem2.Text = "x1";
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(181, 26);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(118, 26);
             this.toolStripMenuItem3.Text = "x2";
             // 
             // x3ToolStripMenuItem
             // 
             this.x3ToolStripMenuItem.Name = "x3ToolStripMenuItem";
-            this.x3ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.x3ToolStripMenuItem.Size = new System.Drawing.Size(118, 26);
             this.x3ToolStripMenuItem.Text = "x3";
             // 
             // x4ToolStripMenuItem
             // 
             this.x4ToolStripMenuItem.Name = "x4ToolStripMenuItem";
-            this.x4ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.x4ToolStripMenuItem.Size = new System.Drawing.Size(118, 26);
             this.x4ToolStripMenuItem.Text = "x4";
             // 
             // toolStripSeparator5
@@ -828,7 +830,7 @@
             this.pnViewScroll.Controls.Add(this.pnView);
             this.pnViewScroll.Location = new System.Drawing.Point(4, 8);
             this.pnViewScroll.Name = "pnViewScroll";
-            this.pnViewScroll.Size = new System.Drawing.Size(1030, 623);
+            this.pnViewScroll.Size = new System.Drawing.Size(1029, 623);
             this.pnViewScroll.TabIndex = 5;
             // 
             // lbPalBytesAddr
@@ -841,6 +843,19 @@
             this.lbPalBytesAddr.TabIndex = 60;
             this.lbPalBytesAddr.Text = "Pal byte addr:";
             this.lbPalBytesAddr.Visible = false;
+            // 
+            // bttAdditionalRender
+            // 
+            this.bttAdditionalRender.Checked = true;
+            this.bttAdditionalRender.CheckOnClick = true;
+            this.bttAdditionalRender.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.bttAdditionalRender.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttAdditionalRender.Image = ((System.Drawing.Image)(resources.GetObject("bttAdditionalRender.Image")));
+            this.bttAdditionalRender.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttAdditionalRender.Name = "bttAdditionalRender";
+            this.bttAdditionalRender.Size = new System.Drawing.Size(24, 24);
+            this.bttAdditionalRender.Text = "Enable additional render";
+            this.bttAdditionalRender.CheckedChanged += new System.EventHandler(this.bttAdditionalRender_CheckedChanged);
             // 
             // FormMain
             // 
@@ -950,6 +965,7 @@
         private System.Windows.Forms.PictureBox blocksScreen;
         private System.Windows.Forms.Panel pnViewScroll;
         private System.Windows.Forms.ToolStripButton bttRunScript;
+        private System.Windows.Forms.ToolStripButton bttAdditionalRender;
     }
 }
 
