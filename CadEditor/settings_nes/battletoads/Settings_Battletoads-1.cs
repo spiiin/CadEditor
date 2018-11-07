@@ -25,7 +25,7 @@ public class Data
         byte b4  = Globals.romdata[0x2BE4D + i*6 + 3];
         byte b5  = Globals.romdata[0x2BE4D + i*6 + 4];
         byte b6  = Globals.romdata[0x2BE4D + i*6 + 5];
-        var rect = new Rectangle(32*curScale*(i+1), 8*32*curScale, 32*curScale*(i+2), (curScale*32*8)+80);
+        var rect = new Rectangle(64*curScale*(i+1), 0, 64*curScale*(i+2), curScale * 11 * 64);
         g.DrawRectangle(new Pen(Color.Red, 4.0f), rect);
         g.DrawString(String.Format("{0:X2}", b1), new Font("Arial", 8), Brushes.Red, rect);
         g.DrawString(String.Format("{0:X2}", b2), new Font("Arial", 8), Brushes.Red, rect.X + 16, rect.Y);
