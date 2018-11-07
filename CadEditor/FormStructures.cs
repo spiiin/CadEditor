@@ -66,17 +66,8 @@ namespace CadEditor
         {
             if (curTileStruct == null)
                 return;
-            int dx, dy;
-            if (ConfigScript.getScreenVertical())
-            {
-                dy = e.X / (int)(blockWidth * curScale);
-                dx = e.Y / (int)(blockHeight * curScale);
-            }
-            else
-            {
-                dx = e.X / (int)(blockWidth * curScale);
-                dy = e.Y / (int)(blockHeight * curScale);
-            }
+            int dx = e.X / (int)(blockWidth * curScale);
+            int dy = e.Y / (int)(blockHeight * curScale);
 
             if (dx < 0 || dx >= curTileStruct.width || dy < 0 || dy >= curTileStruct.height)
                 return;

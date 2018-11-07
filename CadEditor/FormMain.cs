@@ -148,10 +148,7 @@ namespace CadEditor
             if (bigBlocks.Length > 0)
             {
                 var screen = getActiveScreen();
-                if (ConfigScript.getScreenVertical())
-                    mapScreen.Size = new Size((int)(screen.height * bigBlocks[0].Width * curScale), (int)((screen.width + 2) * bigBlocks[0].Height * curScale));
-                else
-                    mapScreen.Size = new Size((int)((screen.width + 2) * bigBlocks[0].Width * curScale), (int)(screen.height * bigBlocks[0].Height * curScale));
+                mapScreen.Size = new Size((int)((screen.width + 2) * bigBlocks[0].Width * curScale), (int)(screen.height * bigBlocks[0].Height * curScale));
             }
         }
 
@@ -246,10 +243,7 @@ namespace CadEditor
                     {
                         int index = curTileStruct[x, y];
                         Rectangle tileRect;
-                        if (ConfigScript.getScreenVertical())
-                            tileRect = new Rectangle(curDy * tileSizeX + y * tileSizeX, (curDx + 1) * tileSizeY + x * tileSizeY, tileSizeX, tileSizeY);
-                        else
-                            tileRect = new Rectangle((curDx + 1) * tileSizeX + x * tileSizeX, curDy * tileSizeY + y * tileSizeY, tileSizeX, tileSizeY);
+                        tileRect = new Rectangle((curDx + 1) * tileSizeX + x * tileSizeX, curDy * tileSizeY + y * tileSizeY, tileSizeX, tileSizeY);
 
                         if ((visibleRect.Contains(tileRect)) || (visibleRect.IntersectsWith(tileRect)))
                         {
@@ -277,14 +271,13 @@ namespace CadEditor
             int tileSizeX = (int)(bigBlocks[0].Width * curScale);
             int tileSizeY = (int)(bigBlocks[0].Height * curScale);
             var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
-            //ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X
-            MapEditor.render(e.Graphics, bigBlocks, visibleRect, screens, screenNo, curScale, true, showAxis, ConfigScript.getScreenVertical() ? 0 : tileSizeX, ConfigScript.getScreenVertical() ? tileSizeY : 0, width, height, additionalRenderEnabled);
+            MapEditor.render(e.Graphics, bigBlocks, visibleRect, screens, screenNo, curScale, true, showAxis, tileSizeX, 0, width, height, additionalRenderEnabled);
 
-            if (!ConfigScript.getScreenVertical() && showNeiScreens && (screenNo > 0) && screen.layers[0].showLayer)
+            if (showNeiScreens && (screenNo > 0) && screen.layers[0].showLayer)
             {
                 renderNeighbornLine(g, screenNo - 1, (width - 1), 0);
             }
-            if (!ConfigScript.getScreenVertical() && showNeiScreens && (screenNo < ConfigScript.screensOffset[0].recCount - 1) && screen.layers[0].showLayer)
+            if (showNeiScreens && (screenNo < ConfigScript.screensOffset[0].recCount - 1) && screen.layers[0].showLayer)
             {
                 renderNeighbornLine(g, screenNo + 1, 0 , (width + 1) * tileSizeX);
             }
@@ -295,8 +288,8 @@ namespace CadEditor
             {
                 if (!useStructs)
                 {
-                    var tx = ConfigScript.getScreenVertical() ? curDy * tileSizeX : (curDx + 1) * tileSizeX;
-                    var ty = ConfigScript.getScreenVertical() ? (curDx + 1) * tileSizeY : curDy * tileSizeY;
+                    var tx = (curDx + 1) * tileSizeX;
+                    var ty = curDy * tileSizeY;
                     var tileRect = new Rectangle(tx, ty, tileSizeX, tileSizeY);
                     g.DrawImage(bigBlocks[curActiveBlock], tileRect);
                 }
@@ -351,17 +344,9 @@ namespace CadEditor
             var screen = getActiveScreen();
 
             int width = screen.width;
-            int dx, dy;
-            if (ConfigScript.getScreenVertical())
-            {
-                dy = ee.X / (int)(bigBlocks[0].Width * curScale);
-                dx = ee.Y / (int)(bigBlocks[0].Height * curScale) - 1;
-            }
-            else
-            {
-                dx = ee.X / (int)(bigBlocks[0].Width * curScale) - 1;
-                dy = ee.Y / (int)(bigBlocks[0].Height * curScale);
-            }
+
+            int dx = ee.X / (int) (bigBlocks[0].Width * curScale) - 1;
+            int dy = ee.Y / (int) (bigBlocks[0].Height * curScale);
 
             if (ea.Button == MouseButtons.Right)
             {
@@ -393,17 +378,8 @@ namespace CadEditor
             }
             var screen = getActiveScreen();
             int width = screen.width;
-            int dx, dy;
-            if (ConfigScript.getScreenVertical())
-            {
-                dy = ee.X / (int)(bigBlocks[0].Width * curScale);
-                dx = ee.Y / (int)(bigBlocks[0].Height * curScale) - 1;
-            }
-            else
-            {
-                dx = ee.X / (int)(bigBlocks[0].Width * curScale) - 1;
-                dy = ee.Y / (int)(bigBlocks[0].Height * curScale);
-            }
+            int dx = ee.X / (int) (bigBlocks[0].Width * curScale) - 1;
+            int dy = ee.Y / (int) (bigBlocks[0].Height * curScale);
             lbCoords.Text = String.Format("Coords:({0},{1})", dx, dy);
 
             bool curDeltaChanged = curDx != dx || curDy != dy;
@@ -520,10 +496,7 @@ namespace CadEditor
             var screen = getActiveScreen();
             if (senderIsScale)
             {
-                if (ConfigScript.getScreenVertical())
-                    mapScreen.Size = new Size((int)(screen.height * bigBlocks[0].Width * curScale), (int)((screen.width + 2) * bigBlocks[0].Height * curScale));
-                else
-                    mapScreen.Size = new Size((int)((screen.width + 2) * bigBlocks[0].Width * curScale), (int)(screen.height * bigBlocks[0].Height * curScale));
+                mapScreen.Size = new Size((int)((screen.width + 2) * bigBlocks[0].Width * curScale), (int)(screen.height * bigBlocks[0].Height * curScale));
                 updateBlocksImages();
             }
         }
@@ -787,16 +760,8 @@ namespace CadEditor
 
         private void convertMouseToDxDy(Point e, out int dx, out int dy)
         {
-            if (ConfigScript.getScreenVertical())
-            {
-                dy = e.X / (int)(bigBlocks[0].Width * curScale);
-                dx = e.Y / (int)(bigBlocks[0].Height * curScale) - 1;
-            }
-            else
-            {
-                dx = e.X / (int)(bigBlocks[0].Width * curScale) - 1;
-                dy = e.Y / (int)(bigBlocks[0].Height * curScale);
-            }
+            dx = e.X / (int)(bigBlocks[0].Width * curScale) - 1;
+            dy = e.Y / (int)(bigBlocks[0].Height * curScale);
         }
 
         private void bttShowLayer1_CheckedChanged(object sender, EventArgs e)

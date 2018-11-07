@@ -664,23 +664,28 @@ namespace CadEditor
             int dataStride = ConfigScript.getScreenDataStride();
             for (int i = 0; i < screensRec.recCount; i++)
             {
+                var dataToWrite = screensData[firstScreenIndex + i].layers[layerNo].data;
+                if (ConfigScript.getScreenVertical())
+                {
+                    dataToWrite = Utils.transpose(dataToWrite, screensRec.width, screensRec.height);
+                }
                 int addr = screensRec.beginAddr + i * screensRec.recSize * (dataStride * wordLen);
                 if (wordLen == 1)
                 {
                     for (int x = 0; x < screensRec.recSize; x++)
-                        arrayToSave[addr + x * dataStride] = (byte)ConfigScript.backConvertScreenTile(screensData[firstScreenIndex+i].layers[layerNo].data[x]);
+                        arrayToSave[addr + x * dataStride] = (byte)ConfigScript.backConvertScreenTile(dataToWrite[x]);
                 }
                 else if (wordLen == 2)
                 {
                     if (littleEndian)
                     {
                         for (int x = 0; x < screensRec.recSize; x++)
-                            Utils.writeWordLE(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(screensData[firstScreenIndex+i].layers[layerNo].data[x]));
+                            Utils.writeWordLE(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(dataToWrite[x]));
                     }
                     else
                     {
                         for (int x = 0; x < screensRec.recSize; x++)
-                            Utils.writeWord(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(screensData[firstScreenIndex+i].layers[layerNo].data[x]));
+                            Utils.writeWord(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(dataToWrite[x]));
                     }
                 }
             }

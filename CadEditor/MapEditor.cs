@@ -11,7 +11,6 @@ namespace CadEditor
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
 
-            bool verticalScreen = ConfigScript.getScreenVertical();
             int size = width * height;
 
             for (int layerIndex = 0; layerIndex < screens[scrNo].layers.Length; layerIndex++)
@@ -29,11 +28,7 @@ namespace CadEditor
                 for (int i = 0; i < size; i++)
                 {
                     int bigBlockNo = ConfigScript.getBigTileNoFromScreen(layer.data, i);
-                    Rectangle tileRect;
-                    if (verticalScreen)
-                        tileRect = new Rectangle(i / width * tileSizeX + leftMargin, (i % width) * tileSizeY + topMargin, tileSizeX, tileSizeY);
-                    else
-                        tileRect = new Rectangle((i % width) * tileSizeX + leftMargin, i / width * tileSizeY + topMargin, tileSizeX, tileSizeY);
+                    Rectangle tileRect = new Rectangle((i % width) * tileSizeX + leftMargin, i / width * tileSizeY + topMargin, tileSizeX, tileSizeY);
 
                     if (visibleRect == null || visibleRect.Value.Contains(tileRect) || visibleRect.Value.IntersectsWith(tileRect))
                     {
@@ -55,10 +50,7 @@ namespace CadEditor
             {
                 int tileSizeX = (int)(bigBlocks[0].Width * curScale);
                 int tileSizeY = (int)(bigBlocks[0].Height * curScale);
-                if (verticalScreen)
-                    g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(0, tileSizeY, tileSizeX * height, tileSizeY * width));
-                else
-                    g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(tileSizeX, 0, tileSizeX * width, tileSizeY * height));
+                g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(tileSizeX, 0, tileSizeX * width, tileSizeY * height));
             }
 
             //Additional rendering  //float to int!
@@ -105,15 +97,10 @@ namespace CadEditor
 
         public static Image screenToImage(Image[] bigBlocks, Screen[] screens, int scrNo, float curScale, bool showBorder, int leftMargin, int topMargin, int width, int height)
         {
-            bool verticalScreen = ConfigScript.getScreenVertical();
             int tileSizeX = (int)(bigBlocks[0].Width * curScale);
             int tileSizeY = (int)(bigBlocks[0].Height * curScale);
 
-            Image result;
-            if (verticalScreen)
-                result = new Bitmap(height * tileSizeY, width * tileSizeX);
-            else
-                result = new Bitmap(width * tileSizeX, height * tileSizeY);
+            Image result = new Bitmap(width * tileSizeX, height * tileSizeY);
 
             using (var g = Graphics.FromImage(result))
             {
