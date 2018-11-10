@@ -274,12 +274,13 @@ namespace CadEditor
             var g = e.Graphics;
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-            MapEditor.renderAllBlocks(e.Graphics, blocksScreen, curActiveBlock, new MapEditor.RenderParams
+            MapEditor.renderAllBlocks(e.Graphics, blocksScreen, curActiveBlock, videos[curActiveSubpal].Length, new MapEditor.RenderParams
             {
                 bigBlocks = videos[curActiveSubpal],
                 visibleRect = UtilsGui.getVisibleRectangle(this, blocksScreen),
                 curScale =1.0f,
                 showBlocksAxis = showAxis,
+                renderBlockFunc = MapEditor.renderBlocksOnPanelFunc
             });
         }
 

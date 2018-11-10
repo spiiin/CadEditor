@@ -258,12 +258,13 @@ namespace CadEditor
 
         private void blocksScreen_Paint(object sender, PaintEventArgs e)
         {
-            MapEditor.renderAllBlocks(e.Graphics, blocksScreen, curActiveBlock, new MapEditor.RenderParams
+            MapEditor.renderAllBlocks(e.Graphics, blocksScreen, curActiveBlock, bigBlocks.Length, new MapEditor.RenderParams
             {
                 bigBlocks = bigBlocks,
                 visibleRect = UtilsGui.getVisibleRectangle(pnBlocks, blocksScreen),
                 curScale =  curScale,
-                showBlocksAxis = formMain.showAxis
+                showBlocksAxis = formMain.showAxis,
+                renderBlockFunc = MapEditor.renderBlocksOnPanelFunc
             });
         }
 

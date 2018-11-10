@@ -74,10 +74,11 @@ namespace CadEditor
             }
         }
 
-        public static void renderAllBlocks(Graphics g, PictureBox parentControl, int activeBlock, RenderParams renderParams)
-        {
-            renderParams.renderBlockFunc = renderBlockOnPanel; //render block on panel
+        public static RenderParams.RenderBlockFunc renderBlocksOnPanelFunc = renderBlockOnPanel;
+        public static RenderParams.RenderBlockFunc renderPhysicsOnPanelFunc = renderPhysicsBlock;
 
+        public static void renderAllBlocks(Graphics g, PictureBox parentControl, int activeBlock, int renderBlocksCount, RenderParams renderParams)
+        {
             int tileSizeX = renderParams.getTileSizeX();
             int tileSizeY = renderParams.getTileSizeY();
             int width = parentControl.Width / tileSizeX;
@@ -86,7 +87,7 @@ namespace CadEditor
                 return;
             }
 
-            for (int bigBlockNo = 0; bigBlockNo < renderParams.bigBlocks.Length; bigBlockNo++)
+            for (int bigBlockNo = 0; bigBlockNo < renderBlocksCount; bigBlockNo++)
             {
                 var tileRect = new Rectangle((bigBlockNo % width) * tileSizeX, bigBlockNo / width * tileSizeY, tileSizeX, tileSizeY);
                 if (renderParams.needRenderTileRect(tileRect))

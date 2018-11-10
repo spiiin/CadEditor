@@ -897,13 +897,20 @@ namespace CadEditor
             var g = e.Graphics;
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-            MapEditor.renderAllBlocks(g, blocksScreen, curActiveBlock, new MapEditor.RenderParams
+
+            bool renderPhysics = false; //physicsLayerEnabled;
+            
+            var renderParams = new MapEditor.RenderParams
             {
                 bigBlocks = bigBlocks,
                 visibleRect = UtilsGui.getVisibleRectangle(pnBlocks, blocksScreen),
                 curScale = curScale,
-                showBlocksAxis =  showAxis,
-            });
+                showBlocksAxis = showAxis,
+                renderBlockFunc = renderPhysics ? MapEditor.renderPhysicsOnPanelFunc : MapEditor.renderBlocksOnPanelFunc
+            };
+
+            int blocksCount = renderPhysics ? 256 : bigBlocks.Length; //hardcode physics blocks count
+            MapEditor.renderAllBlocks(g, blocksScreen, curActiveBlock, blocksCount, renderParams);
         }
 
         private void blocksScreen_MouseDown(object sender, MouseEventArgs e)
@@ -984,6 +991,7 @@ namespace CadEditor
                 }
             }
             mapScreen.Invalidate();
+            blocksScreen.Invalidate();
         }
 
         public void addToolButton(ToolStripItem item)
