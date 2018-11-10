@@ -18,7 +18,7 @@ namespace CadEditor
                 renderLayer(g, layer, renderParams);
             }
 
-            //renderLayer(g, curScreen.physicsLayer, new RenderParams(renderParams) { renderBlockFunc = renderPhysicsBlock });
+            renderLayer(g, curScreen.physicsLayer, new RenderParams(renderParams) { renderBlockFunc = renderPhysicsBlock });
 
             if (renderParams.showBorder)
             {

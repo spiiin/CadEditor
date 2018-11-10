@@ -126,14 +126,20 @@ namespace CadEditor
             bttEnemies.Enabled = ConfigScript.isEnemyEditorEnabled;
 
             bool isTwoLayers = getLayersCount() > 1;
-            bttShowLayer1.Visible = bttShowLayer2.Visible = bttLayer.Visible = isTwoLayers;
+            bool isPhysicsLayers = ConfigScript.loadPhysicsLayerFunc != null;
+            bool isAdditionalRender = ConfigScript.renderToMainScreenFunc != null;
+
+            bttShowLayer1.Visible = isTwoLayers || isPhysicsLayers;
+            bttShowLayer2.Visible = isTwoLayers;
+
+            bttAdditionalRender.Visible = isAdditionalRender;
+            bttPhysicsLayerRender.Visible = isPhysicsLayers;
+            bttLayer.Visible = isTwoLayers; //|| isPhysicsLayers;
 
             pnGroups.Visible = ConfigScript.getGroups().Length > 0;
 
             updateScaleMenuItemsChecked(Array.FindIndex(scaleFactors, el => el == curScale));
             updateLayersMenuItemsChecked(curActiveLayer);
-
-            bttAdditionalRender.Visible = ConfigScript.renderToMainScreenFunc != null;
             
             resetMapScreenSize();
         }
@@ -663,6 +669,7 @@ namespace CadEditor
         public int screenNo { get; private set; }
 
         public bool additionalRenderEnabled { get; private set; } = true;
+        public bool physicsLayerEnabled { get; private set; } = false;
 
         public float curScale { get; private set; } = 2.0f;
 
@@ -958,6 +965,19 @@ namespace CadEditor
         private void bttAdditionalRender_CheckedChanged(object sender, EventArgs e)
         {
             additionalRenderEnabled = bttAdditionalRender.Checked;
+            mapScreen.Invalidate();
+        }
+
+        private void bttPhysicsLayerRender_CheckedChanged(object sender, EventArgs e)
+        {
+            physicsLayerEnabled = bttPhysicsLayerRender.Checked;
+            foreach (var screen in screens)
+            {
+                if (screen.physicsLayer != null)
+                {
+                    screen.physicsLayer.showLayer = physicsLayerEnabled;
+                }
+            }
             mapScreen.Invalidate();
         }
 

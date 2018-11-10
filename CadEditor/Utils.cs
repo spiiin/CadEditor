@@ -649,7 +649,15 @@ namespace CadEditor
                 for (int scrI = 0; scrI < offsets[i].recCount; scrI++)
                 {
                     var screen = Globals.getScreen(offsets[i], scrI);
-                    screen.physicsLayer = (ConfigScript.loadPhysicsLayerFunc != null) ? new BlockLayer(ConfigScript.loadPhysicsLayerFunc(scrI)) : null;
+                    if (ConfigScript.loadPhysicsLayerFunc != null)
+                    {
+                        screen.physicsLayer =
+                            new BlockLayer(ConfigScript.loadPhysicsLayerFunc(scrI))
+                            {
+                                showLayer = false
+                            }; //render disabled by default; 
+                    }
+
                     screens[currentScreen++] = screen;
                 }
             }
