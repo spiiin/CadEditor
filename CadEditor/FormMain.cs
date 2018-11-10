@@ -133,12 +133,17 @@ namespace CadEditor
             bttShowLayer2.Visible = isTwoLayers;
 
             bttAdditionalRender.Visible = isAdditionalRender;
+            bttPhysicsLayerRender.Checked = false;
             bttPhysicsLayerRender.Visible = isPhysicsLayer;
 
             bttLayer.Visible = isTwoLayers || isPhysicsLayer;
             tsLayer1.Enabled = true;
             tsLayer2.Enabled = isTwoLayers;
             tsLayerPhysics.Enabled = isPhysicsLayer;
+
+            curActiveLayer = 0;
+            physicsLayerSelected = false;
+            updateLayersMenuItemsChecked(curActiveLayer);
 
             pnGroups.Visible = ConfigScript.getGroups().Length > 0;
 
@@ -835,6 +840,7 @@ namespace CadEditor
                 physicsLayerSelected = true;
             }
             updateLayersMenuItemsChecked(curActiveLayer);
+            blocksScreen.Invalidate();
         }
 
         private void updateLayersMenuItemsChecked(int curActiveLayer)
@@ -932,7 +938,7 @@ namespace CadEditor
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
 
-            bool renderPhysics = false; //physicsLayerEnabled;
+            bool renderPhysics = isPhysicsLayerSelected();
             
             var renderParams = new MapEditor.RenderParams
             {
