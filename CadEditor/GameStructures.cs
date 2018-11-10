@@ -494,6 +494,7 @@ namespace CadEditor
             this.height = height;
         }
         public BlockLayer[] layers;
+        public BlockLayer physicsLayer;
 
         public int width;
         public int height;

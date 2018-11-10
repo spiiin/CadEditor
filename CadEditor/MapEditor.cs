@@ -6,58 +6,59 @@ namespace CadEditor
 {
     public class MapEditor
     {
-        public static void render(Graphics g, Image[] bigBlocks, Rectangle? visibleRect,Screen[] screens, int scrNo, float curScale, bool showBorder, bool showBlocksAxis, int leftMargin, int topMargin, int width, int height, bool additionalRenderEnabled)
+        public static void render(Graphics g, Screen[] screens, int scrNo, RenderParams renderParams)
         {
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
 
-            int size = width * height;
-
-            for (int layerIndex = 0; layerIndex < screens[scrNo].layers.Length; layerIndex++)
+            var curScreen = screens[scrNo];
+            for (int layerIndex = 0; layerIndex < curScreen.layers.Length; layerIndex++)
             {
                 var layer = screens[scrNo].layers[layerIndex];
-                bool needRenderLayer = layer != null && layer.showLayer;
-                if (!needRenderLayer)
-                {
-                    continue;
-                }
-
-                int tileSizeX = (int)(bigBlocks[0].Width* curScale);
-                int tileSizeY = (int)(bigBlocks[0].Height* curScale);
-
-                for (int i = 0; i < size; i++)
-                {
-                    int bigBlockNo = ConfigScript.getBigTileNoFromScreen(layer.data, i);
-                    Rectangle tileRect = new Rectangle((i % width) * tileSizeX + leftMargin, i / width * tileSizeY + topMargin, tileSizeX, tileSizeY);
-
-                    if (visibleRect == null || visibleRect.Value.Contains(tileRect) || visibleRect.Value.IntersectsWith(tileRect))
-                    {
-                        if (bigBlockNo > -1 && bigBlockNo < bigBlocks.Length)
-                        {
-                            g.DrawImage(bigBlocks[bigBlockNo], tileRect);
-                            if (showBlocksAxis)
-                            {
-                                g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), tileRect);
-                            }
-                        }
-                        //else
-                        //    g.FillRectangle(Brushes.White, tileRect);
-                    }
-                }
+                renderLayer(g, layer, renderParams);
             }
 
-            if (showBorder)
+            //renderLayer(g, curScreen.physicsLayer, new RenderParams(renderParams) { renderBlockFunc = renderPhysicsBlock });
+
+            if (renderParams.showBorder)
             {
-                int tileSizeX = (int)(bigBlocks[0].Width * curScale);
-                int tileSizeY = (int)(bigBlocks[0].Height * curScale);
-                g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(tileSizeX, 0, tileSizeX * width, tileSizeY * height));
+                int tileSizeX = (int)(renderParams.bigBlocks[0].Width * renderParams.curScale);
+                int tileSizeY = (int)(renderParams.bigBlocks[0].Height * renderParams.curScale);
+                g.DrawRectangle(new Pen(Color.Green, 4.0f), new Rectangle(tileSizeX, 0, tileSizeX * renderParams.width, tileSizeY * renderParams.height));
             }
 
             //Additional rendering  //float to int!
-            if (additionalRenderEnabled)
+            if (renderParams.additionalRenderEnabled)
             {
-                ConfigScript.renderToMainScreen(g, (int) curScale, scrNo);
+                ConfigScript.renderToMainScreen(g, (int) renderParams.curScale, scrNo);
             }
+        }
+
+        private static void renderLayer(Graphics g, BlockLayer layer, RenderParams renderParams)
+        {
+            bool needRenderLayer = layer != null && layer.showLayer;
+            if (!needRenderLayer)
+            {
+                return;
+            }
+
+            int tileSizeX = renderParams.getTileSizeX();
+            int tileSizeY = renderParams.getTileSizeY();
+
+            int size = renderParams.getLayerSize();
+            for (int i = 0; i < size; i++)
+            {
+                int bigBlockNo = ConfigScript.getBigTileNoFromScreen(layer.data, i);
+                Rectangle tileRect = new Rectangle((i % renderParams.width) * tileSizeX + renderParams.leftMargin, i / renderParams.width * tileSizeY + renderParams.topMargin, tileSizeX, tileSizeY);
+                renderParams.renderBlock(g,bigBlockNo, tileRect);
+            }
+        }
+
+        private static void renderPhysicsBlock(Graphics g, int bigBlockNo, Rectangle tileRect)
+        {
+            g.DrawRectangle(new Pen(Color.Red, 2.0f), tileRect);
+            g.FillRectangle(new SolidBrush(Color.FromArgb(128, 255, 255, 255)), tileRect);
+            g.DrawString(String.Format("{0:X2}", bigBlockNo), new Font("Arial", 8), Brushes.Red, tileRect.X + 8, tileRect.Y);
         }
 
         public static void renderAllBlocks(Graphics g, PictureBox parentControl, Image[] bigBlocks, int blockWidth, int blockHeight, Rectangle? visibleRect, float curScale, int activeBlock, bool showBlocksAxis)
@@ -95,23 +96,110 @@ namespace CadEditor
             }
         }
 
-        public static Image screenToImage(Image[] bigBlocks, Screen[] screens, int scrNo, float curScale, bool showBorder, int leftMargin, int topMargin, int width, int height)
+        public static Image screenToImage(Screen[] screens, int scrNo, RenderParams renderParams)
         {
-            int tileSizeX = (int)(bigBlocks[0].Width * curScale);
-            int tileSizeY = (int)(bigBlocks[0].Height * curScale);
+            int tileSizeX = (int)(renderParams.bigBlocks[0].Width * renderParams.curScale);
+            int tileSizeY = (int)(renderParams.bigBlocks[0].Height * renderParams.curScale);
 
-            Image result = new Bitmap(width * tileSizeX, height * tileSizeY);
+            Image result = new Bitmap(renderParams.width * tileSizeX, renderParams.height * tileSizeY);
 
             using (var g = Graphics.FromImage(result))
             {
-                render(g, bigBlocks, null, screens, scrNo, curScale, showBorder, false, leftMargin, topMargin, width, height, true);
+                render(g, screens, scrNo, renderParams);
             }
             return result;
         }
 
-        /*private static PictureBox mapScreen;
-        private static PictureBox activeBlock;
-        private static Panel pnView;
-        private static ImageList bigBlocks;*/
+        public class RenderParams
+        {
+            public RenderParams()
+            {
+                renderBlockFunc = renderBlockDefault;
+            }
+
+            public RenderParams(RenderParams other)
+            {
+                bigBlocks = other.bigBlocks;
+                visibleRect = other.visibleRect;
+                curScale = other.curScale;
+                showBorder = other.showBorder;
+                showBlocksAxis = other.showBlocksAxis;
+                leftMargin = other.leftMargin;
+                topMargin = other.topMargin;
+                width = other.width;
+                height = other.height;
+                additionalRenderEnabled = other.additionalRenderEnabled;
+                renderBlockFunc = other.renderBlockFunc;
+            }
+
+            public Image[] bigBlocks { get; set; }
+            public Rectangle? visibleRect { get; set; }
+            public float curScale { get; set; }
+            public bool showBorder { get; set; }
+            public bool showBlocksAxis { get; set; }
+            public int leftMargin { get; set; }
+            public int topMargin { get; set; }
+            public int width { get; set; }
+            public int height { get; set; }
+            public bool additionalRenderEnabled { get; set; }
+
+            public delegate void RenderBlockFunc(Graphics g, int bigBlockNo, Rectangle tileRect);
+
+            public RenderBlockFunc renderBlockFunc { get; set; }
+
+            public int getTileSizeX()
+            {
+                if (bigBlocks == null || bigBlocks?.Length < 1)
+                {
+                    return -1;
+                }
+
+                return (int) (bigBlocks[0].Width * curScale);
+            }
+
+            public int getTileSizeY()
+            {
+                if (bigBlocks == null || bigBlocks?.Length < 1)
+                {
+                    return -1;
+                }
+
+                return (int) (bigBlocks[0].Height * curScale);
+            }
+
+            public int getLayerSize()
+            {
+                return width * height;
+            }
+
+            public bool needRenderTileRect(Rectangle tileRect)
+            {
+                return visibleRect == null || 
+                       visibleRect.Value.Contains(tileRect) ||
+                       visibleRect.Value.IntersectsWith(tileRect);
+            }
+
+            private void renderBlockDefault(Graphics g, int bigBlockNo, Rectangle tileRect)
+            {
+                if (bigBlockNo > -1 && bigBlockNo < bigBlocks.Length)
+                {
+                    g.DrawImage(bigBlocks[bigBlockNo], tileRect);
+                    if (showBlocksAxis)
+                    {
+                        g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), tileRect);
+                    }
+                }
+                //else
+                //    g.FillRectangle(Brushes.White, tileRect);
+            }
+
+            public void renderBlock(Graphics g, int bigBlockNo, Rectangle tileRect)
+            {
+                if (needRenderTileRect(tileRect))
+                {
+                    renderBlockFunc(g, bigBlockNo, tileRect);
+                }
+            }
+        }
     }
 }

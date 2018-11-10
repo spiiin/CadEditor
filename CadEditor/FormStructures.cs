@@ -93,7 +93,17 @@ namespace CadEditor
             var blockLayer = new BlockLayer(curTileStruct.toArray());
             blockLayer.showLayer = true;
             var screens = new[] { new Screen(blockLayer, curTileStruct.width, curTileStruct.height) };
-            MapEditor.render(g, bigBlocks, visibleRect, screens, 0, 2.0f, false, formMain.showAxis, 0, 0, curTileStruct.width, curTileStruct.height, false);
+            MapEditor.render(g, screens, 0, new MapEditor.RenderParams
+            {
+                bigBlocks = bigBlocks,
+                visibleRect = visibleRect,
+                curScale = 2.0f,
+                showBlocksAxis = formMain.showAxis,
+                showBorder = false,
+                width = curTileStruct.width,
+                height = curTileStruct.height,
+                additionalRenderEnabled = false,
+            });
         }
 
         private void cbWidth_SelectedIndexChanged(object sender, EventArgs e)

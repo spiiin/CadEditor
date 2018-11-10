@@ -55,6 +55,9 @@ namespace CadEditor
     public delegate Screen[] LoadScreensFunc();
     public delegate void SaveScreensFunc(Screen[] screens);
 
+    public delegate int[] LoadPhysicsLayer(int scrNo);
+    public delegate void SavePhysicsLayer(int scrNo, int[] data);
+
     public delegate int GetPalBytesAddrFunc(int blockId);
 
     public class ConfigScript
@@ -285,6 +288,10 @@ namespace CadEditor
 
             loadScreensFunc = callFromScript<LoadScreensFunc>(asm, data, "*.loadScreensFunc");
             saveScreensFunc = callFromScript<SaveScreensFunc>(asm, data, "*.saveScreensFunc");
+
+            loadPhysicsLayerFunc = callFromScript<LoadPhysicsLayer>(asm, data, "*.loadPhysicsLayerFunc");
+            savePhysicsLayerFunc = callFromScript<SavePhysicsLayer>(asm, data, "*.savePhysicsLayerFunc");
+
             if (blocksPicturesFilename != "")
             {
                 if (!File.Exists(ConfigScript.getBlocksPicturesFilename()))
@@ -297,7 +304,7 @@ namespace CadEditor
 
             blockTypeNames = callFromScript(asm, data, "getBlockTypeNames", defaultBlockTypeNames);
 
-            getGroupsFunc = callFromScript<GetGroupsFunc>(asm, data, "*.getGroupsFunc", () => { return new GroupRec[0]; });
+            getGroupsFunc = callFromScript<GetGroupsFunc>(asm, data, "*.getGroupsFunc", () => new GroupRec[0]);
 
             palBytesAddr = callFromScript(asm, data, "*.getPalBytesAddr", -1);
             physicsBytesAddr = callFromScript(asm, data, "*.getPhysicsBytesAddr", -1);
@@ -819,6 +826,9 @@ namespace CadEditor
 
         public static LoadScreensFunc loadScreensFunc;
         public static SaveScreensFunc saveScreensFunc;
+
+        public static LoadPhysicsLayer loadPhysicsLayerFunc;
+        public static SavePhysicsLayer savePhysicsLayerFunc;
 
         public static float defaultScale;
 

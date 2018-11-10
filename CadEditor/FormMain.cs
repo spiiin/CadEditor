@@ -271,7 +271,19 @@ namespace CadEditor
             int tileSizeX = (int)(bigBlocks[0].Width * curScale);
             int tileSizeY = (int)(bigBlocks[0].Height * curScale);
             var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
-            MapEditor.render(e.Graphics, bigBlocks, visibleRect, screens, screenNo, curScale, true, showAxis, tileSizeX, 0, width, height, additionalRenderEnabled);
+            MapEditor.render(e.Graphics, screens, screenNo, new MapEditor.RenderParams
+            {
+                bigBlocks = bigBlocks,
+                visibleRect = visibleRect,
+                curScale = curScale,
+                showBlocksAxis = showAxis,
+                showBorder = true,
+                width = width,
+                height = height,
+                additionalRenderEnabled = additionalRenderEnabled,
+                leftMargin = tileSizeX,
+                topMargin = 0
+            });
 
             if (showNeiScreens && (screenNo > 0) && screen.layers[0].showLayer)
             {

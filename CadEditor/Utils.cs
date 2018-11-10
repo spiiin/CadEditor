@@ -648,7 +648,9 @@ namespace CadEditor
             {
                 for (int scrI = 0; scrI < offsets[i].recCount; scrI++)
                 {
-                    screens[currentScreen++] = Globals.getScreen(offsets[i], scrI);
+                    var screen = Globals.getScreen(offsets[i], scrI);
+                    screen.physicsLayer = (ConfigScript.loadPhysicsLayerFunc != null) ? new BlockLayer(ConfigScript.loadPhysicsLayerFunc(scrI)) : null;
+                    screens[currentScreen++] = screen;
                 }
             }
             return screens;
@@ -664,7 +666,9 @@ namespace CadEditor
             int dataStride = ConfigScript.getScreenDataStride();
             for (int i = 0; i < screensRec.recCount; i++)
             {
-                var dataToWrite = screensData[firstScreenIndex + i].layers[layerNo].data;
+                var curScrNo = firstScreenIndex + i;
+                var curScreen = screensData[curScrNo];
+                var dataToWrite = curScreen.layers[layerNo].data;
                 if (ConfigScript.getScreenVertical())
                 {
                     dataToWrite = Utils.transpose(dataToWrite, screensRec.width, screensRec.height);
@@ -687,6 +691,12 @@ namespace CadEditor
                         for (int x = 0; x < screensRec.recSize; x++)
                             Utils.writeWord(arrayToSave, addr + x * (dataStride * wordLen), ConfigScript.backConvertScreenTile(dataToWrite[x]));
                     }
+                }
+
+                //write physics info, if it present
+                if (curScreen.physicsLayer != null)
+                {
+                    ConfigScript.savePhysicsLayerFunc?.Invoke(curScrNo, curScreen.physicsLayer.data);
                 }
             }
         }
