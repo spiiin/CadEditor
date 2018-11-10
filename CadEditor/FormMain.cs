@@ -257,8 +257,7 @@ namespace CadEditor
                     for (int y = 0; y < height1; y++)
                     {
                         int index = curTileStruct[x, y];
-                        Rectangle tileRect;
-                        tileRect = new Rectangle((curDx + 1) * tileSizeX + x * tileSizeX, curDy * tileSizeY + y * tileSizeY, tileSizeX, tileSizeY);
+                        var tileRect = new Rectangle((curDx + 1) * tileSizeX + x * tileSizeX, curDy * tileSizeY + y * tileSizeY, tileSizeX, tileSizeY);
 
                         if ((visibleRect.Contains(tileRect)) || (visibleRect.IntersectsWith(tileRect)))
                         {
@@ -511,19 +510,12 @@ namespace CadEditor
             saveToFile();
         }
 
-        private void saveScreens(Screen[] screensData)
-        {
-            ConfigScript.saveScreens(screensData);
-        }
-
         private bool saveToFile()
         {
-            saveScreens(screens);
+            ConfigScript.saveScreens(screens);
             dirty = !Globals.flushToFile(); updateSaveVisibility();
             return !dirty;
         }
-
-
 
         private void cbLevel_SelectedIndexChanged(object sender, EventArgs ev)
         {
@@ -768,15 +760,11 @@ namespace CadEditor
                 convertMouseToDxDy(ee, out selectionEndX, out selectionEndY);
                 if (selectionEndX < selectionBeginX)
                 {
-                    selectionBeginX ^= selectionEndX;
-                    selectionEndX ^= selectionBeginX;
-                    selectionBeginX ^= selectionEndX;
+                    Utils.swap(ref selectionBeginX, ref selectionEndX);
                 }
                 if (selectionEndY < selectionBeginY)
                 {
-                    selectionBeginY ^= selectionEndY;
-                    selectionEndY ^= selectionBeginY;
-                    selectionBeginY ^= selectionEndY;
+                    Utils.swap(ref selectionBeginY, ref selectionEndY);
                 }
                 int deltaX = selectionEndX - selectionBeginX + 1;
                 int deltaY = selectionEndY - selectionBeginY + 1;
@@ -912,22 +900,7 @@ namespace CadEditor
 
         private void FormMain_KeyDown(object sender, KeyEventArgs e)
         {
-            /*
-            //useful for config debugging
-            if (e.KeyCode == Keys.Q)
-            {
-                ConfigScript.palBytesAddr += 16;
-                lbPalBytesAddr.Text = String.Format("PalBytesAddr:{0:X}", ConfigScript.palBytesAddr);
-                reloadLevel(true, true);
-                mapScreen.Invalidate();
-            }
-            else if (e.KeyCode == Keys.W)
-            {
-                ConfigScript.palBytesAddr -= 16;
-                lbPalBytesAddr.Text = String.Format("PalBytesAddr:{0:X}", ConfigScript.palBytesAddr);
-                reloadLevel(true, true);
-                mapScreen.Invalidate();
-            }*/
+            
         }
 
         private void blocksScreen_Paint(object sender, PaintEventArgs e)
