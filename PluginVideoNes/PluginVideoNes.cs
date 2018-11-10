@@ -293,11 +293,17 @@ namespace PluginVideoNes
             //var bigBlocks = makeBigBlocks(videoNo, bigBlockNo, blockNo, palleteNo, MapViewType.ObjType,MapViewType.Tiles, withBorders);
             var screens = ConfigScript.loadScreens(); //Need to send it to function parameters to avoid reloads for every screen
             Screen screen = screens[scrNo];
-            int scrW = screen.width;
-            int scrH = screen.height;
             //capcom hardcode
 
-            return new Bitmap(MapEditor.screenToImage(bigBlocks, screens, scrNo, 2.0f, false, 0, 0, scrW, scrH));
+            return new Bitmap(MapEditor.screenToImage(screens, scrNo, new MapEditor.RenderParams
+            {
+                bigBlocks = bigBlocks,
+                curScale = 2.0f,
+                showBorder = false,
+                width = screen.width,
+                height = screen.height
+
+            }));
         }
 
         public Color[] defaultNesColors
