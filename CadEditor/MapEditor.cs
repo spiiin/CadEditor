@@ -54,41 +54,47 @@ namespace CadEditor
             }
         }
 
-        private static void renderPhysicsBlock(Graphics g, int bigBlockNo, Rectangle tileRect)
+        private static void renderPhysicsBlock(Graphics g, int bigBlockNo, Rectangle tileRect, RenderParams renderParams)
         {
             g.DrawRectangle(new Pen(Color.Red, 2.0f), tileRect);
             g.FillRectangle(new SolidBrush(Color.FromArgb(128, 255, 255, 255)), tileRect);
             g.DrawString(String.Format("{0:X2}", bigBlockNo), new Font("Arial", 8), Brushes.Red, tileRect.X + 8, tileRect.Y);
         }
 
-        public static void renderAllBlocks(Graphics g, PictureBox parentControl, Image[] bigBlocks, int blockWidth, int blockHeight, Rectangle? visibleRect, float curScale, int activeBlock, bool showBlocksAxis)
+        private static void renderBlockOnPanel(Graphics g, int bigBlockNo, Rectangle tileRect, RenderParams renderParams)
         {
-            int tileSizeX = (int)(blockWidth * curScale);
-            int tileSizeY = (int)(blockHeight * curScale);
+            if (bigBlockNo > -1 && bigBlockNo < renderParams.bigBlocks.Length)
+                g.DrawImage(renderParams.bigBlocks[bigBlockNo], tileRect);
+            else
+                g.FillRectangle(Brushes.White, tileRect);
+
+            if (renderParams.showBlocksAxis)
+            {
+                g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), tileRect);
+            }
+        }
+
+        public static void renderAllBlocks(Graphics g, PictureBox parentControl, int activeBlock, RenderParams renderParams)
+        {
+            renderParams.renderBlockFunc = renderBlockOnPanel; //render block on panel
+
+            int tileSizeX = renderParams.getTileSizeX();
+            int tileSizeY = renderParams.getTileSizeY();
             int width = parentControl.Width / tileSizeX;
             if (width == 0)
             {
                 return;
             }
 
-            for (int i = 0; i < bigBlocks.Length; i++)
+            for (int bigBlockNo = 0; bigBlockNo < renderParams.bigBlocks.Length; bigBlockNo++)
             {
-                int bigBlockNo = i;
-                Rectangle tileRect = new Rectangle((i % width) * tileSizeX, i / width * tileSizeY, tileSizeX, tileSizeY);
-
-                if (visibleRect == null || visibleRect.Value.Contains(tileRect) || visibleRect.Value.IntersectsWith(tileRect))
+                var tileRect = new Rectangle((bigBlockNo % width) * tileSizeX, bigBlockNo / width * tileSizeY, tileSizeX, tileSizeY);
+                if (renderParams.needRenderTileRect(tileRect))
                 {
-                    if (bigBlockNo > -1 && bigBlockNo < bigBlocks.Length)
-                        g.DrawImage(bigBlocks[bigBlockNo], tileRect);
-                    else
-                        g.FillRectangle(Brushes.White, tileRect);
+                    renderParams.renderBlock(g, bigBlockNo, tileRect);
 
-                    if (showBlocksAxis)
-                    {
-                        g.DrawRectangle(new Pen(Color.FromArgb(255, 255, 255, 255)), tileRect);
-                    }
-
-                    if (i == activeBlock)
+                    //additinal border render for active block
+                    if (bigBlockNo == activeBlock)
                     {
                         g.DrawRectangle(new Pen(Brushes.Red, 3.0f), tileRect);
                     }
@@ -143,7 +149,7 @@ namespace CadEditor
             public int height { get; set; }
             public bool additionalRenderEnabled { get; set; }
 
-            public delegate void RenderBlockFunc(Graphics g, int bigBlockNo, Rectangle tileRect);
+            public delegate void RenderBlockFunc(Graphics g, int bigBlockNo, Rectangle tileRect, RenderParams renderParams);
 
             public RenderBlockFunc renderBlockFunc { get; set; }
 
@@ -179,7 +185,7 @@ namespace CadEditor
                        visibleRect.Value.IntersectsWith(tileRect);
             }
 
-            private void renderBlockDefault(Graphics g, int bigBlockNo, Rectangle tileRect)
+            private void renderBlockDefault(Graphics g, int bigBlockNo, Rectangle tileRect, RenderParams renderParams)
             {
                 if (bigBlockNo > -1 && bigBlockNo < bigBlocks.Length)
                 {
@@ -197,7 +203,7 @@ namespace CadEditor
             {
                 if (needRenderTileRect(tileRect))
                 {
-                    renderBlockFunc(g, bigBlockNo, tileRect);
+                    renderBlockFunc(g, bigBlockNo, tileRect, this);
                 }
             }
         }
