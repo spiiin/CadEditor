@@ -47,13 +47,13 @@ public static class JackalUtils
     {
       blocksData[i] = vertMirror(blocksData[i]); //TODO: remove inplace changes
     }
-    Utils.writeBlocksLinearTiles16Pal1(blocksData, Globals.romdata,tileAddr, ConfigScript.getPalBytesAddr(tileId), ConfigScript.getBlocksCount(tileId));
+    Utils.writeBlocksLinearTiles16Pal1(blocksData, Globals.romdata,tileAddr, ConfigScript.getPalBytesAddr(blockIndex), ConfigScript.getBlocksCount(blockIndex));
   }
   
   public static ObjRec[] getBlocksFromTiles16Pal1Shifted(int blockIndex)
   {
       int tileAddr = (blockIndex == 0) ? ConfigScript.getTilesAddr(0) : 0x10625; //two different block sets
-      var bb = Utils.readBlocksLinearTiles16Pal1(Globals.romdata, tileAddr, ConfigScript.getPalBytesAddr(tileId), ConfigScript.getBlocksCount(tileId));
+      var bb = Utils.readBlocksLinearTiles16Pal1(Globals.romdata, tileAddr, ConfigScript.getPalBytesAddr(blockIndex), ConfigScript.getBlocksCount(blockIndex));
       for (int i = 0; i < bb.Length; i++)
       {
         bb[i] = JackalUtils.vertMirror(bb[i]);
@@ -68,7 +68,7 @@ public static class JackalUtils
     {
       blocksData[i] = JackalUtils.vertMirror(blocksData[i]); //TODO: remove inplace changes
     }
-    Utils.writeBlocksLinearTiles16Pal1(blocksData, Globals.romdata,tileAddr, ConfigScript.getPalBytesAddr(tileId), ConfigScript.getBlocksCount(tileId));
+    Utils.writeBlocksLinearTiles16Pal1(blocksData, Globals.romdata,tileAddr, ConfigScript.getPalBytesAddr(blockIndex), ConfigScript.getBlocksCount(blockIndex));
   }
   
   public static int getBigTileNoFromScreen(int[] screenData, int index)

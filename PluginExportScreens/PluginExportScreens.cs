@@ -72,15 +72,20 @@ namespace PluginExportScreens
             {
                 if (SaveScreensCount.count <= 0)
                 {
-                    MessageBox.Show("Screens count value must be greater than 0", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Screens count value must be greater than 0", "Error", MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                     return;
                 }
+
                 int saveLastIndex = SaveScreensCount.first + SaveScreensCount.count;
                 var screens = ConfigScript.loadScreens();
                 int screensCount = screens.Length;
                 if (saveLastIndex > screensCount)
                 {
-                    MessageBox.Show(string.Format("First screen + Screens Count value ({0}) must be less than Total Screen Count in the game ({1}", saveLastIndex, screensCount), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(
+                        string.Format(
+                            "First screen + Screens Count value ({0}) must be less than Total Screen Count in the game ({1}",
+                            saveLastIndex, screensCount), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -89,7 +94,17 @@ namespace PluginExportScreens
                 int firstH = screens[0].height;
                 float curScale = formMain.curScale;
                 //only for screens with same sizes
-                var probeIm = MapEditor.screenToImage(formMain.bigBlocks,formMain.screens, formMain.screenNo, curScale, false, 0, 0, firstW, firstH);
+
+                var renderParams = new MapEditor.RenderParams
+                {
+                    bigBlocks = formMain.bigBlocks,
+                    curScale = curScale,
+                    showBorder = false,
+                    width = firstW,
+                    height = firstH
+                };
+
+                var probeIm = MapEditor.screenToImage(formMain.screens, formMain.screenNo, renderParams);
                 int screenCount = SaveScreensCount.count;
                 var resultImage = new Bitmap(probeIm.Width * screenCount, probeIm.Height);
                 using (var g = Graphics.FromImage(resultImage))
@@ -98,7 +113,7 @@ namespace PluginExportScreens
                     {
                         int width = screens[i].width;
                         int height = screens[i].height;
-                        var im = MapEditor.screenToImage(formMain.bigBlocks, formMain.screens, first + i, curScale, false, 0, 0, width, height);
+                        var im = MapEditor.screenToImage(formMain.screens, first + i, renderParams);
                         g.DrawImage(im, new Point(i * im.Width, 0));
                     }
                 }

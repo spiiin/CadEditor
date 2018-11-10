@@ -66,17 +66,8 @@ namespace CadEditor
         {
             if (curTileStruct == null)
                 return;
-            int dx, dy;
-            if (ConfigScript.getScreenVertical())
-            {
-                dy = e.X / (int)(blockWidth * curScale);
-                dx = e.Y / (int)(blockHeight * curScale);
-            }
-            else
-            {
-                dx = e.X / (int)(blockWidth * curScale);
-                dy = e.Y / (int)(blockHeight * curScale);
-            }
+            int dx = e.X / (int)(blockWidth * curScale);
+            int dy = e.Y / (int)(blockHeight * curScale);
 
             if (dx < 0 || dx >= curTileStruct.width || dy < 0 || dy >= curTileStruct.height)
                 return;
@@ -102,7 +93,17 @@ namespace CadEditor
             var blockLayer = new BlockLayer(curTileStruct.toArray());
             blockLayer.showLayer = true;
             var screens = new[] { new Screen(blockLayer, curTileStruct.width, curTileStruct.height) };
-            MapEditor.render(g, bigBlocks, visibleRect, screens, 0, 2.0f, false, formMain.showAxis, 0, 0, curTileStruct.width, curTileStruct.height);
+            MapEditor.render(g, screens, 0, new MapEditor.RenderParams
+            {
+                bigBlocks = bigBlocks,
+                visibleRect = visibleRect,
+                curScale = 2.0f,
+                showBlocksAxis = formMain.showAxis,
+                showBorder = false,
+                width = curTileStruct.width,
+                height = curTileStruct.height,
+                additionalRenderEnabled = false,
+            });
         }
 
         private void cbWidth_SelectedIndexChanged(object sender, EventArgs e)
@@ -257,8 +258,14 @@ namespace CadEditor
 
         private void blocksScreen_Paint(object sender, PaintEventArgs e)
         {
-            var visibleRect = UtilsGui.getVisibleRectangle(pnBlocks, blocksScreen);
-            MapEditor.renderAllBlocks(e.Graphics, blocksScreen, bigBlocks, blockWidth, blockHeight, visibleRect, curScale, curActiveBlock, formMain.showAxis);
+            MapEditor.renderAllBlocks(e.Graphics, blocksScreen, curActiveBlock, bigBlocks.Length, new MapEditor.RenderParams
+            {
+                bigBlocks = bigBlocks,
+                visibleRect = UtilsGui.getVisibleRectangle(pnBlocks, blocksScreen),
+                curScale =  curScale,
+                showBlocksAxis = formMain.showAxis,
+                renderBlockFunc = MapEditor.renderBlocksOnPanelFunc
+            });
         }
 
         private void blocksScreen_MouseDown(object sender, MouseEventArgs e)

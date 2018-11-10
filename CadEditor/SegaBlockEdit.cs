@@ -368,13 +368,18 @@ namespace CadEditor
 
         private void blocksScreen_Paint(object sender, PaintEventArgs e)
         {
-            var visibleRect = UtilsGui.getVisibleRectangle(pnBlocks, blocksScreen);
             var g = e.Graphics;
-
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
 
-            MapEditor.renderAllBlocks(g, blocksScreen, bigBlocks, BlockWidth, BlockHeight, visibleRect, 1.0f, curActiveTile, showAxis);
+            MapEditor.renderAllBlocks(g, blocksScreen, curActiveTile, bigBlocks.Length, new MapEditor.RenderParams
+            {
+                bigBlocks = bigBlocks,
+                visibleRect = UtilsGui.getVisibleRectangle(pnBlocks, blocksScreen),
+                curScale = 4.0f,
+                showBlocksAxis = showAxis,
+                renderBlockFunc = MapEditor.renderBlocksOnPanelFunc
+            });
         }
 
         private void blocksScreen_MouseDown(object sender, MouseEventArgs e)

@@ -134,7 +134,15 @@ namespace CadEditor
                 result[i] = readBlockIndexFromMap(arrayWithData, beginAddr, i);
             //TODO: read layer2
 
-            return new Screen(new BlockLayer(result), screenOffset.width, screenOffset.height);
+            int w = screenOffset.width;
+            int h = screenOffset.height;
+            if (ConfigScript.getScreenVertical())
+            {
+                Utils.swap(ref w, ref h);
+                result = Utils.transpose(result, w, h);
+            }
+
+            return new Screen(new BlockLayer(result), w, h);
         }
 
         public static Image[] makeSegaBigBlocks(int curActiveVideoNo, int curActiveBigBlockNo, int curActivePalleteNo, MapViewType curViewType)

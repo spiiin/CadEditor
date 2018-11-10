@@ -340,16 +340,21 @@ namespace PluginMapEditor
 
             //fill tiles region
             int screenWidth = screen.width;
+            var blockIndexes = new int[scrSize];
             for (int i = 0; i < scrSize; i++)
             {
-                int blockIndex = Globals.readBlockIndexFromMap(Globals.romdata, romAddr, i);
+                blockIndexes[i] = Globals.readBlockIndexFromMap(Globals.romdata, romAddr, i);
+            }
+
+            if (vertical)
+            {
+                blockIndexes = Utils.transpose(blockIndexes, screenWidth, screen.height);
+            }
+            for (int i = 0; i < scrSize; i++)
+            {
                 int bx = i % screenWidth;
                 int by = i / screenWidth;
-                if (vertical)
-                {
-                    Utils.swap(ref bx, ref by);
-                }
-                applyBlockToMap(mapData, blocks[blockIndex], bx, by, mapWidth, yShiftInTiles);
+                applyBlockToMap(mapData, blocks[blockIndexes[i]], bx, by, mapWidth, yShiftInTiles);
             }
 
             fillAttribDelegate(attrData, Globals.romdata, attribAddr);

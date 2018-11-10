@@ -24,9 +24,13 @@ public class Data
   public GetPalFunc           getPalFunc()    { return getPallete;}
   public SetPalFunc           setPalFunc()    { return null;}
   
+  public LoadPhysicsLayer loadPhysicsLayerFunc() { return loadPhysicsLayer; }
+  public SavePhysicsLayer savePhysicsLayerFunc() { return savePhysicsLayer; }
+  
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x5810, 1 , 0x4000); }
   public int getPalBytesAddr()          { return 0xA610; }
   public int getBigBlocksCount() { return 229; }
+ 
   //----------------------------------------------------------------------------
   public ObjRec[] getBlocksConsts(int blockIndex)
   {
@@ -86,6 +90,53 @@ public class Data
       Globals.romdata[getPalBytesAddr() + i] = (byte)palByte;
     }
   }
+  
+  int[] loadPhysicsLayer(int scrNo)
+  {
+    int w = getScreensOffset().width;
+    int h = getScreensOffset().height;
+    int size = w*h;
+    int physicsAddr = 0xC010 + scrNo * size;
+    
+    var ans = new int[size];
+    for (int i = 0; i < size; i++)
+    {
+       ans[i] = Globals.romdata[physicsAddr + i];
+    }
+    return ans;
+  }
+  
+  void savePhysicsLayer(int scrNo, int[] data)
+  {
+    int w = getScreensOffset().width;
+    int h = getScreensOffset().height;
+    int size = w*h;
+    int physicsAddr = 0xC010 + scrNo * size;
+    for (int i = 0; i < size; i++)
+    {
+       Globals.romdata[physicsAddr + i] = (byte)data[i];
+    }
+  }
+  
+  //public RenderToMainScreenFunc getRenderToMainScreenFunc() { return renderObjects; }
+  
+  /*public void renderObjects(Graphics g, int curScale, int scrNo)
+  {
+    int w = getScreensOffset().width;
+    int h = getScreensOffset().height;
+    int physicsAddr = 0xC010 + scrNo * w * h;
+    for (int x = 0; x < w; x++)
+    {
+      for (int y = 0; y < h; y++)
+      {
+          byte physics  = Globals.romdata[physicsAddr + y*w + x];
+          var rect = new Rectangle(32*curScale*(x+1), 32*curScale*y, 32*curScale, 32*curScale);
+          g.DrawRectangle(new Pen(Color.Red, 2.0f), rect);
+          g.FillRectangle(new SolidBrush(Color.FromArgb(128,255, 255, 255)), rect);
+          g.DrawString(String.Format("{0:X2}", physics), new Font("Arial", 8), Brushes.Red, rect.X + 8, rect.Y);
+      }
+    }
+  }*/
   
   public byte[] getPallete(int palId)
   {

@@ -16,6 +16,8 @@ namespace CadEditor
             InitializeComponent();
         }
 
+        readonly float[] scaleFactors = { 0.25f, 0.5f, 1.0f, 2.0f, 3.0f, 4.0f };
+
         private void setDefaultScale()
         {
             curScale = ConfigScript.isBuildScreenFromSmallBlocks() ? 1 : 2;
@@ -124,10 +126,30 @@ namespace CadEditor
             bttEnemies.Enabled = ConfigScript.isEnemyEditorEnabled;
 
             bool isTwoLayers = getLayersCount() > 1;
-            bttShowLayer1.Visible = bttShowLayer2.Visible = bttLayer.Visible = isTwoLayers;
+            bool isPhysicsLayer = ConfigScript.loadPhysicsLayerFunc != null;
+            bool isAdditionalRender = ConfigScript.renderToMainScreenFunc != null;
+
+            bttShowLayer1.Visible = isTwoLayers || isPhysicsLayer;
+            bttShowLayer2.Visible = isTwoLayers;
+
+            bttAdditionalRender.Visible = isAdditionalRender;
+            bttPhysicsLayerRender.Checked = false;
+            bttPhysicsLayerRender.Visible = isPhysicsLayer;
+
+            bttLayer.Visible = isTwoLayers || isPhysicsLayer;
+            tsLayer1.Enabled = true;
+            tsLayer2.Enabled = isTwoLayers;
+            tsLayerPhysics.Enabled = isPhysicsLayer;
+
+            curActiveLayer = 0;
+            physicsLayerSelected = false;
+            updateLayersMenuItemsChecked(curActiveLayer);
 
             pnGroups.Visible = ConfigScript.getGroups().Length > 0;
 
+            updateScaleMenuItemsChecked(Array.FindIndex(scaleFactors, el => el == curScale)); //float comparasion with == is danger
+            updateLayersMenuItemsChecked(curActiveLayer);
+            
             resetMapScreenSize();
         }
 
@@ -141,10 +163,7 @@ namespace CadEditor
             if (bigBlocks.Length > 0)
             {
                 var screen = getActiveScreen();
-                if (ConfigScript.getScreenVertical())
-                    mapScreen.Size = new Size((int)(screen.height * bigBlocks[0].Width * curScale), (int)((screen.width + 2) * bigBlocks[0].Height * curScale));
-                else
-                    mapScreen.Size = new Size((int)((screen.width + 2) * bigBlocks[0].Width * curScale), (int)(screen.height * bigBlocks[0].Height * curScale));
+                mapScreen.Size = new Size((int)((screen.width + 2) * bigBlocks[0].Width * curScale), (int)(screen.height * bigBlocks[0].Height * curScale));
             }
         }
 
@@ -239,10 +258,7 @@ namespace CadEditor
                     {
                         int index = curTileStruct[x, y];
                         Rectangle tileRect;
-                        if (ConfigScript.getScreenVertical())
-                            tileRect = new Rectangle(curDy * tileSizeX + y * tileSizeX, (curDx + 1) * tileSizeY + x * tileSizeY, tileSizeX, tileSizeY);
-                        else
-                            tileRect = new Rectangle((curDx + 1) * tileSizeX + x * tileSizeX, curDy * tileSizeY + y * tileSizeY, tileSizeX, tileSizeY);
+                        tileRect = new Rectangle((curDx + 1) * tileSizeX + x * tileSizeX, curDy * tileSizeY + y * tileSizeY, tileSizeX, tileSizeY);
 
                         if ((visibleRect.Contains(tileRect)) || (visibleRect.IntersectsWith(tileRect)))
                         {
@@ -270,34 +286,49 @@ namespace CadEditor
             int tileSizeX = (int)(bigBlocks[0].Width * curScale);
             int tileSizeY = (int)(bigBlocks[0].Height * curScale);
             var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
-            //ConfigScript.getScreenVertical() ? TILE_SIZE_Y : TILE_SIZE_X
-            MapEditor.render(e.Graphics, bigBlocks, visibleRect, screens, screenNo, curScale, true, showAxis, ConfigScript.getScreenVertical() ? 0 : tileSizeX, ConfigScript.getScreenVertical() ? tileSizeY : 0, width, height);
+            MapEditor.render(e.Graphics, screens, screenNo, new MapEditor.RenderParams
+            {
+                bigBlocks = bigBlocks,
+                visibleRect = visibleRect,
+                curScale = curScale,
+                showBlocksAxis = showAxis,
+                showBorder = true,
+                width = width,
+                height = height,
+                additionalRenderEnabled = additionalRenderEnabled,
+                leftMargin = tileSizeX,
+                topMargin = 0
+            });
 
-            if (!ConfigScript.getScreenVertical() && showNeiScreens && (screenNo > 0) && screen.layers[0].showLayer)
+            if (showNeiScreens && (screenNo > 0) && screen.layers[0].showLayer)
             {
                 renderNeighbornLine(g, screenNo - 1, (width - 1), 0);
             }
-            if (!ConfigScript.getScreenVertical() && showNeiScreens && (screenNo < ConfigScript.screensOffset[0].recCount - 1) && screen.layers[0].showLayer)
+            if (showNeiScreens && (screenNo < ConfigScript.screensOffset[0].recCount - 1) && screen.layers[0].showLayer)
             {
                 renderNeighbornLine(g, screenNo + 1, 0 , (width + 1) * tileSizeX);
             }
 
             //show brush
             bool altPressed = ModifierKeys == Keys.Alt;
-            if (showBrush && curActiveBlock != -1 && (curDx != Outside || curDy != Outside) && !altPressed)
+            if (!isPhysicsLayerSelected()) //not show brush is physics edit
             {
-                if (!useStructs)
+                if (showBrush && curActiveBlock != -1 && (curDx != Outside || curDy != Outside) && !altPressed)
                 {
-                    var tx = ConfigScript.getScreenVertical() ? curDy * tileSizeX : (curDx + 1) * tileSizeX;
-                    var ty = ConfigScript.getScreenVertical() ? (curDx + 1) * tileSizeY : curDy * tileSizeY;
-                    var tileRect = new Rectangle(tx, ty, tileSizeX, tileSizeY);
-                    g.DrawImage(bigBlocks[curActiveBlock], tileRect);
-                }
-                else
-                {
-                    drawActiveTileStruct(g, visibleRect);
+                    if (!useStructs)
+                    {
+                        var tx = (curDx + 1) * tileSizeX;
+                        var ty = curDy * tileSizeY;
+                        var tileRect = new Rectangle(tx, ty, tileSizeX, tileSizeY);
+                        g.DrawImage(bigBlocks[curActiveBlock], tileRect);
+                    }
+                    else
+                    {
+                        drawActiveTileStruct(g, visibleRect);
+                    }
                 }
             }
+
             if (altPressed && selectionRect)
             {
                 int x = Math.Min(selectionMouseX, selectionBeginMouseX);
@@ -326,7 +357,9 @@ namespace CadEditor
         private int curDx = Outside;
         private int curDy = Outside;
         private bool curClicked;
+
         private int curActiveLayer;
+        private bool physicsLayerSelected;
 
         //select rect if alt pressed
         private int selectionBeginX, selectionBeginY, selectionEndX, selectionEndY;
@@ -344,24 +377,17 @@ namespace CadEditor
             var screen = getActiveScreen();
 
             int width = screen.width;
-            int dx, dy;
-            if (ConfigScript.getScreenVertical())
-            {
-                dy = ee.X / (int)(bigBlocks[0].Width * curScale);
-                dx = ee.Y / (int)(bigBlocks[0].Height * curScale) - 1;
-            }
-            else
-            {
-                dx = ee.X / (int)(bigBlocks[0].Width * curScale) - 1;
-                dy = ee.Y / (int)(bigBlocks[0].Height * curScale);
-            }
+
+            int dx = ee.X / (int) (bigBlocks[0].Width * curScale) - 1;
+            int dy = ee.Y / (int) (bigBlocks[0].Height * curScale);
 
             if (ea.Button == MouseButtons.Right)
             {
                 if (dx == width || dx == -1)
                     return;
                 int index = dy * width + dx;
-                curActiveBlock = ConfigScript.getBigTileNoFromScreen(screens[screenNo].layers[curActiveLayer].data, index);
+                var layer = getActiveLayer(screens[screenNo]);
+                curActiveBlock = ConfigScript.getBigTileNoFromScreen(layer.data, index);
                 if (curActiveBlock != -1)
                 {
                     activeBlock.Image = bigBlocks[curActiveBlock];
@@ -386,17 +412,8 @@ namespace CadEditor
             }
             var screen = getActiveScreen();
             int width = screen.width;
-            int dx, dy;
-            if (ConfigScript.getScreenVertical())
-            {
-                dy = ee.X / (int)(bigBlocks[0].Width * curScale);
-                dx = ee.Y / (int)(bigBlocks[0].Height * curScale) - 1;
-            }
-            else
-            {
-                dx = ee.X / (int)(bigBlocks[0].Width * curScale) - 1;
-                dy = ee.Y / (int)(bigBlocks[0].Height * curScale);
-            }
+            int dx = ee.X / (int) (bigBlocks[0].Width * curScale) - 1;
+            int dy = ee.Y / (int) (bigBlocks[0].Height * curScale);
             lbCoords.Text = String.Format("Coords:({0},{1})", dx, dy);
 
             bool curDeltaChanged = curDx != dx || curDy != dy;
@@ -407,13 +424,14 @@ namespace CadEditor
             }
             if (curClicked)
             {
-                var activeScreens = screens;
                 if (dx == width)
                 {
                     if (screenNo < ConfigScript.screensOffset[0].recCount - 1)
                     {
                         int index = dy * width;
-                        ConfigScript.setBigTileToScreen(activeScreens[screenNo + 1].layers[curActiveLayer].data, index, curActiveBlock);
+                        var layer = getActiveLayer(screens[screenNo + 1]);
+                        curActiveBlock = ConfigScript.getBigTileNoFromScreen(layer.data, index);
+                        ConfigScript.setBigTileToScreen(layer.data, index, curActiveBlock);
                         dirty = true; updateSaveVisibility();
                     }
                 }
@@ -422,7 +440,9 @@ namespace CadEditor
                     if (screenNo > 0)
                     {
                         int index = dy * width + (width - 1);
-                        ConfigScript.setBigTileToScreen(activeScreens[screenNo - 1].layers[curActiveLayer].data, index, curActiveBlock);
+
+                        var layer = getActiveLayer(screens[screenNo - 1]);
+                        ConfigScript.setBigTileToScreen(layer.data, index, curActiveBlock);
                         dirty = true; updateSaveVisibility();
                     }
                 }
@@ -431,16 +451,21 @@ namespace CadEditor
                     if (!useStructs)
                     {
                         int index = dy * width + dx;
-                        if (index < activeScreens[screenNo].layers[curActiveLayer].data.Length)
+                        var layer = getActiveLayer(screens[screenNo]);
+                        if (index < layer.data.Length)
                         {
-                            ConfigScript.setBigTileToScreen(activeScreens[screenNo].layers[curActiveLayer].data, index, curActiveBlock);
+                            ConfigScript.setBigTileToScreen(layer.data, index, curActiveBlock);
                         }
                         dirty = true; updateSaveVisibility();
                     }
                     else
                     {
-                        appendCurTileStruct(dx, dy);
-                        dirty = true; updateSaveVisibility();
+                        if (!isPhysicsLayerSelected()) //disable structs for physics layer
+                        {
+                            appendCurTileStruct(dx, dy);
+                            dirty = true;
+                            updateSaveVisibility();
+                        }
                     }
                 }
             }
@@ -513,10 +538,7 @@ namespace CadEditor
             var screen = getActiveScreen();
             if (senderIsScale)
             {
-                if (ConfigScript.getScreenVertical())
-                    mapScreen.Size = new Size((int)(screen.height * bigBlocks[0].Width * curScale), (int)((screen.width + 2) * bigBlocks[0].Height * curScale));
-                else
-                    mapScreen.Size = new Size((int)((screen.width + 2) * bigBlocks[0].Width * curScale), (int)(screen.height * bigBlocks[0].Height * curScale));
+                mapScreen.Size = new Size((int)((screen.width + 2) * bigBlocks[0].Width * curScale), (int)(screen.height * bigBlocks[0].Height * curScale));
                 updateBlocksImages();
             }
         }
@@ -670,6 +692,9 @@ namespace CadEditor
         public bool showAxis { get; private set; }
         public int screenNo { get; private set; }
 
+        public bool additionalRenderEnabled { get; private set; } = true;
+        public bool physicsLayerEnabled { get; private set; } = false;
+
         public float curScale { get; private set; } = 2.0f;
 
         public Screen[] screens { get; private set; }
@@ -687,10 +712,21 @@ namespace CadEditor
             screens = newScreens;
         }
 
+        private void updateScaleMenuItemsChecked(int index)
+        {
+            foreach (ToolStripMenuItem bttScaleDropDownItem in bttScale.DropDownItems)
+            {
+                bttScaleDropDownItem.Checked = false;
+            }
+
+            (bttScale.DropDownItems[index] as ToolStripMenuItem).Checked = true;
+        }
+
         private void bttScale_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            float[] scaleFactors = { 0.25f, 0.5f, 1.0f, 2.0f, 3.0f, 4.0f };
-            curScale = scaleFactors [bttScale.DropDownItems.IndexOf(e.ClickedItem)];
+            int curScaleItemIndex = bttScale.DropDownItems.IndexOf(e.ClickedItem);
+            updateScaleMenuItemsChecked(curScaleItemIndex);
+            curScale = scaleFactors[curScaleItemIndex];
             cbLevel_SelectedIndexChanged(bttScale, new EventArgs());
         }
 
@@ -727,7 +763,7 @@ namespace CadEditor
             if (ee.X < 0) { ee.X += 32768 * 2; }
             if (ee.Y < 0) { ee.Y += 32768 * 2; }
 
-            if (selectionRect)
+            if (!isPhysicsLayerSelected() && selectionRect)
             {
                 convertMouseToDxDy(ee, out selectionEndX, out selectionEndY);
                 if (selectionEndX < selectionBeginX)
@@ -767,16 +803,8 @@ namespace CadEditor
 
         private void convertMouseToDxDy(Point e, out int dx, out int dy)
         {
-            if (ConfigScript.getScreenVertical())
-            {
-                dy = e.X / (int)(bigBlocks[0].Width * curScale);
-                dx = e.Y / (int)(bigBlocks[0].Height * curScale) - 1;
-            }
-            else
-            {
-                dx = e.X / (int)(bigBlocks[0].Width * curScale) - 1;
-                dy = e.Y / (int)(bigBlocks[0].Height * curScale);
-            }
+            dx = e.X / (int)(bigBlocks[0].Width * curScale) - 1;
+            dy = e.Y / (int)(bigBlocks[0].Height * curScale);
         }
 
         private void bttShowLayer1_CheckedChanged(object sender, EventArgs e)
@@ -795,7 +823,31 @@ namespace CadEditor
 
         private void bttLayer_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            curActiveLayer = bttLayer.DropDownItems.IndexOf(e.ClickedItem);
+            int selectedItem = bttLayer.DropDownItems.IndexOf(e.ClickedItem);
+            if (selectedItem == 0)
+            {
+                curActiveLayer = 0;
+                physicsLayerSelected = false;
+            }
+            else if (selectedItem == 1)
+            {
+                curActiveLayer = 1;
+                physicsLayerSelected = false;
+            }
+            else if (selectedItem == 2)
+            {
+                curActiveLayer = -1;
+                physicsLayerSelected = true;
+            }
+            updateLayersMenuItemsChecked(curActiveLayer);
+            blocksScreen.Invalidate();
+        }
+
+        private void updateLayersMenuItemsChecked(int curActiveLayer)
+        {
+            (bttLayer.DropDownItems[0] as ToolStripMenuItem).Checked = curActiveLayer == 0;
+            (bttLayer.DropDownItems[1] as ToolStripMenuItem).Checked = curActiveLayer == 1;
+            (bttLayer.DropDownItems[2] as ToolStripMenuItem).Checked = isPhysicsLayerSelected();
         }
 
         private void bttStructures_Click(object sender, EventArgs e)
@@ -885,8 +937,20 @@ namespace CadEditor
             var g = e.Graphics;
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-            var visibleRect = UtilsGui.getVisibleRectangle(pnBlocks, blocksScreen);
-            MapEditor.renderAllBlocks(e.Graphics, blocksScreen, bigBlocks, bigBlocks[0].Width, bigBlocks[0].Height, visibleRect, curScale, curActiveBlock, showAxis);
+
+            bool renderPhysics = isPhysicsLayerSelected();
+            
+            var renderParams = new MapEditor.RenderParams
+            {
+                bigBlocks = bigBlocks,
+                visibleRect = UtilsGui.getVisibleRectangle(pnBlocks, blocksScreen),
+                curScale = curScale,
+                showBlocksAxis = showAxis,
+                renderBlockFunc = renderPhysics ? MapEditor.renderPhysicsOnPanelFunc : MapEditor.renderBlocksOnPanelFunc
+            };
+
+            int blocksCount = renderPhysics ? 256 : bigBlocks.Length; //hardcode physics blocks count
+            MapEditor.renderAllBlocks(g, blocksScreen, curActiveBlock, blocksCount, renderParams);
         }
 
         private void blocksScreen_MouseDown(object sender, MouseEventArgs e)
@@ -945,6 +1009,31 @@ namespace CadEditor
           toolStrip1.Items.Insert(toolStrip1.Items.IndexOf(bttEnemies)+1, item);
         }
 
+        private void bttScale_ButtonClick(object sender, EventArgs e)
+        {
+            bttScale.ShowDropDown();
+        }
+
+        private void bttAdditionalRender_CheckedChanged(object sender, EventArgs e)
+        {
+            additionalRenderEnabled = bttAdditionalRender.Checked;
+            mapScreen.Invalidate();
+        }
+
+        private void bttPhysicsLayerRender_CheckedChanged(object sender, EventArgs e)
+        {
+            physicsLayerEnabled = bttPhysicsLayerRender.Checked;
+            foreach (var screen in screens)
+            {
+                if (screen.physicsLayer != null)
+                {
+                    screen.physicsLayer.showLayer = physicsLayerEnabled;
+                }
+            }
+            mapScreen.Invalidate();
+            blocksScreen.Invalidate();
+        }
+
         public void addToolButton(ToolStripItem item)
         {
             toolStrip1.Items.Insert(toolStrip1.Items.IndexOf(toolStripSeparator1) + 1, item);
@@ -994,6 +1083,16 @@ namespace CadEditor
         private Screen getActiveScreen()
         {
             return screens[screenNo];
+        }
+
+        private bool isPhysicsLayerSelected()
+        {
+            return physicsLayerSelected;
+        }
+
+        private BlockLayer getActiveLayer(Screen curScreen)
+        {
+            return isPhysicsLayerSelected() ? curScreen.physicsLayer: curScreen.layers[curActiveLayer];
         }
     }
 }
