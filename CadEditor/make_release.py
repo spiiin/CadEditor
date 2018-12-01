@@ -11,7 +11,6 @@ COPY_FILE_LIST = [
   "CSScriptLibrary.dll",
   "NDesk.Options.dll",
   "Newtonsoft.Json.dll",
-  "IronPython.dll",
   "lzkn1.dll",
   
   "Config.cs",
@@ -20,8 +19,6 @@ COPY_FILE_LIST = [
   "cad_editor_structures.txt",
   
   "Plugin*.dll",
-  
-  "exportTmx/exportTmx.py",
 ]
 
 COPY_FOLDER_LIST = [
@@ -33,8 +30,6 @@ COPY_FOLDER_LIST = [
   "settings_smd/",
   "settings_gb/",
   "settings_gba/",
-  "IronPythonLib/",
-  "exportTmx/pytmxlib/",
   "bt_objects/", #copied from PluginBattetoadsRaceEditor
 ]
 
