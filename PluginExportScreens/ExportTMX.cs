@@ -52,6 +52,61 @@ namespace PluginExportScreens
             return Convert.ToBase64String(packLayerData(data));
         }
 
+        public Image prepareImage(string imName)
+        {
+            //add scale?
+            var bigBlocksImages = formMain.bigBlocks;
+            int blockWidth = bigBlocksImages[0].Width;
+            int blockHeight = bigBlocksImages[0].Height;
+            int imWidthInBlocks = 16;
+            int imHeightInBlocks = (int)(Math.Ceiling(bigBlocksImages.Length * 1.0 / imWidthInBlocks));
+            var bigBlockImage = UtilsGDI.GlueImages(bigBlocksImages, imWidthInBlocks, imHeightInBlocks);
+            bigBlockImage.Save(imName);
+            return bigBlockImage;
+        }
+
+        private int[] prepaerLayerData()
+        {
+            int layoutNo = cbLayout.SelectedIndex;
+            var layout = ConfigScript.getLayout(layoutNo);
+
+            int scrNo = calcScrNo(layout, 0);
+            int width = formMain.screens[scrNo].width;
+            int height = formMain.screens[scrNo].height;
+
+            int layerWidth = layout.width * width;
+            int layerHeight = layout.height * height;
+            int[] layerData = new int[layerWidth * layerHeight];
+
+            for (int sy = 0; sy < layout.height; sy++)
+            {
+                for (int sx = 0; sx < layout.width; sx++)
+                {
+                    int scrIndex = sy * layout.width + sx;
+                    scrNo = calcScrNo(layout, scrIndex);
+                    if (scrNo >= 0 && scrNo < formMain.screens.Length)
+                    {
+                        var curScreen = formMain.screens[scrNo];
+                        var curScreenData = curScreen.layers[0].data;
+                        for (int y = 0; y < height; y++)
+                        {
+                            for (int x = 0; x < width; x++)
+                            {
+                                int index = y * width + x;
+                                int tileNo = ConfigScript.getBigTileNoFromScreen(curScreenData, index);
+                                int lx = sx * width + x;
+                                int ly = sy * height + y;
+
+                                layerData[ly * layerWidth + lx] = tileNo + 1; //Tiled indexes start from 1, not 0
+                            }
+                        }
+                    }
+                }
+            }
+
+            return layerData;
+        }
+
         private string tmxTemplate(int mapWidth, int mapHeight, int tileWidth, int tileHeight, string imageName, int imageWidth, int imageHeight, string base64mapDataString)
         {
             return $@"<?xml version='1.0' encoding='UTF-8'?>
@@ -67,56 +122,24 @@ namespace PluginExportScreens
                     return;
                 }
 
-                int layoutNo = cbLayout.SelectedIndex;
-
-                //add scale?
-                var bigBlocksImages = formMain.bigBlocks;
-                int blockWidth = bigBlocksImages[0].Width;
-                int blockHeight = bigBlocksImages[0].Height;
-                int imWidthInBlocks = 16;
-                int imHeightInBlocks = (int)(Math.Ceiling(bigBlocksImages.Length * 1.0 / imWidthInBlocks));
-                var bigBlockImage = UtilsGDI.GlueImages(bigBlocksImages, imWidthInBlocks, imHeightInBlocks);
                 var imName = Path.ChangeExtension(sfSave.FileName, "png");
-                bigBlockImage.Save(imName);
 
+                var bigBlockImage = prepareImage(imName);
+                var base64LayerData = toZippedBase64String(prepaerLayerData());
 
+                int layoutNo = cbLayout.SelectedIndex;
                 var layout = ConfigScript.getLayout(layoutNo);
 
                 int scrNo = calcScrNo(layout, 0);
                 int width = formMain.screens[scrNo].width;
                 int height = formMain.screens[scrNo].height;
+                var bigBlocksImages = formMain.bigBlocks;
+                int blockWidth = bigBlocksImages[0].Width;
+                int blockHeight = bigBlocksImages[0].Height;
 
                 int layerWidth = layout.width * width;
                 int layerHeight = layout.height * height;
-                int[] layerData = new int[layerWidth * layerHeight];
 
-                for (int sy = 0; sy < layout.height; sy++)
-                {
-                    for (int sx = 0; sx < layout.width; sx++)
-                    {
-                        int scrIndex = sy * layout.width + sx;
-                        scrNo = calcScrNo(layout, scrIndex);
-                        if (scrNo >= 0 && scrNo < formMain.screens.Length)
-                        {
-                            var curScreen = formMain.screens[scrNo];
-                            var curScreenData = curScreen.layers[0].data;
-                            for (int y = 0; y < height; y++)
-                            {
-                                for (int x = 0; x < width; x++)
-                                {
-                                    int index = y * width + x;
-                                    int tileNo = ConfigScript.getBigTileNoFromScreen(curScreenData, index);
-                                    int lx = sx * width + x;
-                                    int ly = sy * height + y;
-
-                                    layerData[ly*layerWidth + lx] = tileNo + 1; //Tiled indexes start from 1, not 0
-                                }
-                            }
-                        }
-                    }
-                }
-
-                var base64LayerData = toZippedBase64String(layerData);
                 using (var f = File.CreateText(sfSave.FileName))
                 {
                     f.Write(tmxTemplate(layerWidth, layerHeight, blockWidth, blockHeight, imName, bigBlockImage.Width, bigBlockImage.Height, base64LayerData));
