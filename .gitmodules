@@ -1,6 +1,0 @@
-[submodule "CadEditor/exportTmx/pytmxlib"]
-	path = CadEditor/exportTmx/pytmxlib
-	url = https://github.com/spiiin/pytmxlib
-[submodule "CadEditor/IronPythonLib"]
-	path = CadEditor/IronPythonLib
-	url = https://github.com/spiiin/IronPythonLib
