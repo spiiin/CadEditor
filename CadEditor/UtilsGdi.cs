@@ -31,7 +31,14 @@ namespace CadEditor
             var destRect = new Rectangle(0, 0, width, height);
             var destImage = new Bitmap(width, height);
 
-            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+            try
+            {
+                destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+            }
+            catch (ArgumentException ex)
+            {
+                //exception throw on Mono.
+            }
 
             using (var graphics = Graphics.FromImage(destImage))
             {
