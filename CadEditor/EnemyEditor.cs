@@ -386,8 +386,8 @@ namespace CadEditor
 
                         var visibleRect = UtilsGui.getVisibleRectangle(pnView, mapScreen);
 
-                        int leftMargin = (ConfigScript.getScreenVertical() ? scrHeight : scrWidth) * x;
-                        int topMargin = (ConfigScript.getScreenVertical() ? scrWidth : scrHeight) * y;
+                        int leftMargin = scrWidth * x;
+                        int topMargin = scrHeight * y;
                           
                         MapEditor.render(g, screens, scrNo, new MapEditor.RenderParams
                         {
@@ -399,8 +399,8 @@ namespace CadEditor
                             width = width,
                             height = height,
                             additionalRenderEnabled = formMain.additionalRenderEnabled,
-                            leftMargin = tileSizeX,
-                            topMargin = 0
+                            leftMargin = leftMargin,
+                            topMargin = topMargin
                         });
 
                         if (showScreenAxis)
