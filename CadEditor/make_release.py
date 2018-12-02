@@ -1,7 +1,7 @@
 #from __future__ import print_function
 import os, glob, shutil, zipfile
 
-VERSION        = "51"
+VERSION        = "52"
 RELEASE_FOLDER = "../Release/cad_editor_v%s" % VERSION
 ZIP_NAME       = "../Release/cad_editor_v%s.zip" % VERSION
 
