@@ -15,6 +15,7 @@ COPY_FILE_LIST = [
   
   "Config.cs",
   "readme.txt",
+  "changelog.txt",
   "cad_editor_supported_games.txt",
   "cad_editor_structures.txt",
   
