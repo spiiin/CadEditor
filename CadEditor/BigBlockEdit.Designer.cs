@@ -33,7 +33,6 @@
             this.mapScreen = new System.Windows.Forms.PictureBox();
             this.cbTileset = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.pbActive = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.subPalletes = new System.Windows.Forms.ImageList(this.components);
             this.pnGeneric = new System.Windows.Forms.Panel();
@@ -43,8 +42,6 @@
             this.cbPaletteNo = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cbVideoNo = new System.Windows.Forms.ComboBox();
-            this.cbPart = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.cbViewType = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -61,8 +58,8 @@
             this.tbbImport = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tbbDeleteAll = new System.Windows.Forms.ToolStripButton();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbActive)).BeginInit();
             this.pnGeneric.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -115,24 +112,15 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "Blocks:";
             // 
-            // pbActive
-            // 
-            this.pbActive.Location = new System.Drawing.Point(299, 220);
-            this.pbActive.Margin = new System.Windows.Forms.Padding(4);
-            this.pbActive.Name = "pbActive";
-            this.pbActive.Size = new System.Drawing.Size(43, 39);
-            this.pbActive.TabIndex = 13;
-            this.pbActive.TabStop = false;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(170, 258);
+            this.label3.Location = new System.Drawing.Point(177, 258);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(95, 17);
+            this.label3.Size = new System.Drawing.Size(46, 17);
             this.label3.TabIndex = 14;
-            this.label3.Text = "Currect block:";
+            this.label3.Text = "Block:";
             // 
             // subPalletes
             // 
@@ -260,29 +248,6 @@
             this.cbVideoNo.TabIndex = 41;
             this.cbVideoNo.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
             // 
-            // cbPart
-            // 
-            this.cbPart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbPart.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbPart.FormattingEnabled = true;
-            this.cbPart.Location = new System.Drawing.Point(1031, 2);
-            this.cbPart.Margin = new System.Windows.Forms.Padding(4);
-            this.cbPart.Name = "cbPart";
-            this.cbPart.Size = new System.Drawing.Size(49, 24);
-            this.cbPart.TabIndex = 55;
-            this.cbPart.SelectedIndexChanged += new System.EventHandler(this.cbLevelPair_SelectedIndexChanged);
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(984, 6);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(38, 17);
-            this.label5.TabIndex = 56;
-            this.label5.Text = "Part:";
-            // 
             // cbViewType
             // 
             this.cbViewType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -322,6 +287,8 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.label4);
+            this.splitContainer1.Panel1.Controls.Add(this.lbBigBlockNo);
             this.splitContainer1.Panel1.Controls.Add(this.pnBlocks);
             this.splitContainer1.Panel1.Controls.Add(this.cbHierarchyLevel);
             this.splitContainer1.Panel1.Controls.Add(this.label2);
@@ -329,7 +296,6 @@
             this.splitContainer1.Panel1.Controls.Add(this.cbTileset);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.pnGeneric);
-            this.splitContainer1.Panel1.Controls.Add(this.pbActive);
             this.splitContainer1.Panel1.Controls.Add(this.cbViewType);
             this.splitContainer1.Panel1.Controls.Add(this.label3);
             this.splitContainer1.Panel1.Controls.Add(this.label6);
@@ -337,10 +303,9 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.AutoScroll = true;
-            this.splitContainer1.Panel2.Controls.Add(this.lbBigBlockNo);
             this.splitContainer1.Panel2.Controls.Add(this.mapScreen);
             this.splitContainer1.Size = new System.Drawing.Size(1077, 673);
-            this.splitContainer1.SplitterDistance = 271;
+            this.splitContainer1.SplitterDistance = 282;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 62;
             // 
@@ -353,7 +318,7 @@
             this.pnBlocks.Controls.Add(this.blocksScreen);
             this.pnBlocks.Location = new System.Drawing.Point(8, 298);
             this.pnBlocks.Name = "pnBlocks";
-            this.pnBlocks.Size = new System.Drawing.Size(261, 370);
+            this.pnBlocks.Size = new System.Drawing.Size(272, 370);
             this.pnBlocks.TabIndex = 62;
             this.pnBlocks.SizeChanged += new System.EventHandler(this.pnBlocks_SizeChanged);
             // 
@@ -363,7 +328,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.blocksScreen.Location = new System.Drawing.Point(3, 3);
             this.blocksScreen.Name = "blocksScreen";
-            this.blocksScreen.Size = new System.Drawing.Size(254, 332);
+            this.blocksScreen.Size = new System.Drawing.Size(265, 332);
             this.blocksScreen.TabIndex = 5;
             this.blocksScreen.TabStop = false;
             this.blocksScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.blocksScreen_Paint);
@@ -393,7 +358,7 @@
             // lbActive
             // 
             this.lbActive.AutoSize = true;
-            this.lbActive.Location = new System.Drawing.Point(273, 240);
+            this.lbActive.Location = new System.Drawing.Point(254, 258);
             this.lbActive.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbActive.Name = "lbActive";
             this.lbActive.Size = new System.Drawing.Size(18, 17);
@@ -402,9 +367,8 @@
             // 
             // lbBigBlockNo
             // 
-            this.lbBigBlockNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lbBigBlockNo.AutoSize = true;
-            this.lbBigBlockNo.Location = new System.Drawing.Point(760, 650);
+            this.lbBigBlockNo.Location = new System.Drawing.Point(254, 278);
             this.lbBigBlockNo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbBigBlockNo.Name = "lbBigBlockNo";
             this.lbBigBlockNo.Size = new System.Drawing.Size(18, 17);
@@ -478,14 +442,22 @@
             this.tbbDeleteAll.Text = "Clear All";
             this.tbbDeleteAll.Click += new System.EventHandler(this.btClear_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(177, 278);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(69, 17);
+            this.label4.TabIndex = 63;
+            this.label4.Text = "Big block:";
+            // 
             // BigBlockEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1087, 715);
             this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.cbPart);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -495,13 +467,11 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BigBlockEdit_FormClosing);
             this.Load += new System.EventHandler(this.BigBlockEdit_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapScreen)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbActive)).EndInit();
             this.pnGeneric.ResumeLayout(false);
             this.pnGeneric.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.pnBlocks.ResumeLayout(false);
@@ -518,7 +488,6 @@
         private System.Windows.Forms.PictureBox mapScreen;
         private System.Windows.Forms.ComboBox cbTileset;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.PictureBox pbActive;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ImageList subPalletes;
         private System.Windows.Forms.Panel pnGeneric;
@@ -526,8 +495,6 @@
         private System.Windows.Forms.ComboBox cbPaletteNo;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cbVideoNo;
-        private System.Windows.Forms.ComboBox cbPart;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cbViewType;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
@@ -546,5 +513,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel pnBlocks;
         private System.Windows.Forms.PictureBox blocksScreen;
+        private System.Windows.Forms.Label label4;
     }
 }
