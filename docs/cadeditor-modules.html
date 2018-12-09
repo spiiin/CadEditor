@@ -45,7 +45,7 @@
 <h2><a id="osn" class="anchor" href="#osn" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Основные модули редактора</h2>
 <h3>Screen Editor (Редактор экранов).</h3>
 <p>
-<img src="images/tut1_cad_editor_main.png" alt="редактор экранов">
+<img src="images/tut1_cad_editor_main.png" alt="редактор экранов" class="center-img">
 Главное окно программы. Из него можно открывать остальные редакторы, а также изменять игровые экраны. Для некоторых игр один игровой экран соотвествует целому уровню, для других уровень строится из нескольких экранов одинаковой (реже разной) формы. Игровые экраны состоят из блоков, которые включают в себе один или несколько тайлов видеопамяти (а также информацию и палитре и физике, которая специфична для конкретной игры и платформы). Чаще всего встречаются блоки размеров 2x2 или 4x4 тайла, но бывают и другие варианты.
 </p>
 
@@ -56,7 +56,7 @@
 <p>
 Дополнительная возможность редактора экранов состоит в возможности объединения блоков в структуры (кнопка Make structures или просто выделить рамкой группу блоков на экране с зажатой кнопкой shift) - в этом случае создаётся виртуальная "кисть" из группы блоков. Она не будет сохранена в ROM, а просто позволит поставить на экране целую группу объектов (это удобно для игр с маленькими блоками и большими картами - например, можно выделить из сохранить как кисть большую группу блоков, которые составляют цельный объект, например, бочку или дерево):
 </p>
-<img src="images/tut1_cad_editor_structures.png" alt="редактор структур">
+<img src="images/tut1_cad_editor_structures.png" alt="редактор структур" class="center-img">
 <br>
 <h3>Block editor (Редактор блоков).</h3>
 <p>
@@ -65,11 +65,11 @@
 <p>
 Версия для NES-игр (поддерживает блоки любого размера):
 </p>
-<img src="images/tut1_cad_editor_blocks.png" alt="редактор блоков">
+<img src="images/tut1_cad_editor_blocks.png" alt="редактор блоков" class="center-img">
 <p>
 Версия для Sega-игр (поддерживает блоки размером 2x2 и 4x4 тайлов):
 </p>
-<img src="images/tut1_cad_editor_blocks_sega.png" alt="редактор блоков sega">
+<img src="images/tut1_cad_editor_blocks_sega.png" alt="редактор блоков sega" class="center-img">
 <br>
 <h3>Big Block Editor (Редактор макроблоков).</h3>
 <p>
@@ -78,12 +78,12 @@
 <p>
 В некоторых играх (Rokin' Cats, например), макроблоки могут сами объединяться в ещё большие макроблоки 2 уровня, и так далее. Это также может быть описано в конфиге игры и включено в редакторе макроблоков.
 </p>
-<img src="images/tut1_cad_editor_bigblocks2.png" alt="редактор больших больших блоков">
+<img src="images/tut1_cad_editor_bigblocks2.png" alt="редактор больших больших блоков" class="center-img">
 
 <p>
 В некоторых играх (Tiny Toon, Ninja Cats) информация о палитре и физических свойствах тайлов может кодироваться не на уровне блоков, а на уровне макроблоков, редактор поддерживает описание и таких макроблоков с дополнительной информацией.
 </p>
-<img src="images/tut1_cad_editor_bigblocks.png" alt="редактор больших блоков">
+<img src="images/tut1_cad_editor_bigblocks.png" alt="редактор больших блоков" class="center-img">
 <p>
 (На скриншоте видны макроблоки с изображениями облаков, которые состоят из одних и тех же блоков, но используют разные цвета в палитре).
 </p>
@@ -92,7 +92,7 @@
 <p>
 В редакторе объектов можно изменить список игровых объектов (враги, призы, двери - в зависимости от игры). Для некоторых игр разные объекты хранятся в разных списках, в конфигах можно задать несколько функций для чтения-записи этих списков, в этом случае в редакторе объектов будет доступно редактирование сразу нескольких списков. В самом общем случае объект представлен его номером и координатами на экране, различные игры могут добавлять к этому самую разную дополнительную информацию (здоровье каждого конкретного врага, выпадающий из него приз и т.п.).
 </p>
-<img src="images/tut1_cad_editor_enemy_editor.png" alt="редактор объектов">
+<img src="images/tut1_cad_editor_enemy_editor.png" alt="редактор объектов" class="center-img">
 
 <p>
 Для многих игровых движков также важен порядок хранения объектов в списке (например, в Chip & Dale Rescue Rangers объекты должны храниться в последовательности, в которой они будут появляться на экране, пока не появится предыдущий объект, следующий не будет прочитан), поэтому в редакторе также отображается последовательность хранения объектов в виде списка объектов в правой части окна.
@@ -122,75 +122,75 @@
 <p>
 Простой тайловый редактор для CHR-банков графики для игр NES.
 </p>
-<img src="images/tut1_cad_editor_chr_editor.png" alt="редактор тайлов">
+<img src="images/tut1_cad_editor_chr_editor.png" alt="редактор тайлов" class="center-img">
 
 <br>
 <h3>PluginEditLayout.</h3>
 <p>
 Редактор раскладок (формы уровня) для некоторых игр Capcom. Позволяет записывать номера экранок в раскладку уровня, а также менять направления скроллов на этих экранах.
 </p>
-<img src="images/tut1_cad_editor_layout.png" alt="редактор раскладок">
+<img src="images/tut1_cad_editor_layout.png" alt="редактор раскладок" class="center-img">
 
 <br>
 <h3>PluginHexEditor.</h3>
 <p>
 Примитивный шестнадцатеричный редактор, который позволяет изменить любой байт в ROM-файле, однако его возможности сильно ограничены, лучше использовать сторонний более мощный hex-редактор.
 </p>
-<img src="images/tut1_cad_editor_hex.png" alt="hex-редактор">
+<img src="images/tut1_cad_editor_hex.png" alt="hex-редактор" class="center-img">
 
 <br>
 <h3>PluginExportScreens.</h3>
 <p>
 Модуль для экспорта данных об индексах блоков на экранах. В виде картинки (для построения карты всего уровня) или бинарных данных (для использования в других проектах).
 </p>
-<img src="images/tut1_cad_editor_export_screens.png" alt="экспорт экранов">
+<img src="images/tut1_cad_editor_export_screens.png" alt="экспорт экранов" class="center-img">
 
 <p>
 Также позволяет экспортировать блоки и карту в формат <b>TMX</b>, который используется в редакторе <a href="http://www.mapeditor.org/">Tiled</a>.
 </p>
-<img src="images/tut1_cad_editor_tmx.png" alt="экспорт в tmx">
+<img src="images/tut1_cad_editor_tmx.png" alt="экспорт в tmx" class="center-img">
 
 <br>
 <h3>PluginLevelParamsCad.</h3>
 <p>
 Редактор параметров уровня для Chip & Dale (номера используемых банков памяти, палитры, мелодии и т.п.)
 </p>
-<img src="images/tut1_cad_editor_cad_levels.png" alt="параметры уровня">
+<img src="images/tut1_cad_editor_cad_levels.png" alt="параметры уровня" class="center-img">
 
 <br>
 <h3>PluginMapEditor.</h3>
 <p>
 Редактор глобальной карты (и некоторых других игровых экранов) для игр Capcom. Поддерживает 2 типа сжатия (rle и описательное), сохраняет карту в виде отдельного сжатого файла map.bin.
 </p>
-<img src="images/tut1_cad_editor_map.png" alt="карта мира">
+<img src="images/tut1_cad_editor_map.png" alt="карта мира" class="center-img">
 
 <br>
 <h3>PluginAnimEditor.</h3>
 <p>
 Редактор всех игровых анимаций для игр Capcom.
 </p>
-<img src="images/tut1_cad_editor_anim.png" alt="редактор анимаций">
+<img src="images/tut1_cad_editor_anim.png" alt="редактор анимаций" class="center-img">
 
 <br>
 <h3>PluginSegaBackEditor.</h3>
 <p>
 Редактор экранов, описанных маппингами для SMD-игр.
 </p>
-<img src="images/tut1_cad_editor_back_editor.png" alt="редактор фонов sega">
+<img src="images/tut1_cad_editor_back_editor.png" alt="редактор фонов sega" class="center-img">
 
 <br>
 <h3>PluginCompressLZKN.</h3>
 <p>
 Менеджер архивов LZKN. Позволяет сжимать дампы LKZN-1 (используется в играх <b>Konami</b>, например, <b>[SMD] Contra Hard Corps</b>). Использует библиотеку для сжатия от <b>r57Shell</b>.
 </p>
-<img src="images/tut1_cad_editor_lzkn.png" alt="редактор архивов lzkn">
+<img src="images/tut1_cad_editor_lzkn.png" alt="редактор архивов lzkn" class="center-img">
 
 <br>
 <h3>PluginBattletoadsRaceEditor.</h3>
 <p>
 Плагин для редактирования списка препятствий на трассе уровня Turbo Tunnel для игры Battletoads.
 </p>
-<img src="images/tut1_cad_editor_bt_race_editor.png" alt="редактор трасс Battletoads">
+<img src="images/tut1_cad_editor_bt_race_editor.png" alt="редактор трасс Battletoads" class="center-img">
 
   </section>
   </div> 

@@ -8,7 +8,7 @@ Run CadEditor.exe, select config file for game that you want to open and select 
 
 Important: if you download release archive from github, you must unblock it for correct running EXE and DLL files https://blogs.msdn.microsoft.com/delay/p/unblockingdownloadedfile/
 More explanations: http://www.romhacking.net/forum/index.php?topic=17150.msg356786#msg356786
-This will be fixed in future releases.
+You can use installer to avoid this problem.
 
 <b>CadEditor</b> is a universal level editor and some romhacking tools for many different games for NES and SMD platform.<br>
 Some of them:
@@ -24,20 +24,30 @@ Contra Hard Corps
 Earth Worm Jim 1-2
 Pitfall
 etc.</pre>
-There are more than 400 configs for 500 levels for more than 80 games.<br>
+There are more than 2000 configs for more than 200 games.<br>
 Configs are simple C# files, and they have simple structure, so new games can be added with no problems.<br>
 Full list of supported games:<br>
 https://github.com/spiiin/CadEditor/blob/master/CadEditor/cad_editor_supported_games.txt
 
-CadEditor can be built with Visual Studio or Mono, it can be run on Windows, Linux and MacOS platform.
+CadEditor can be built with Visual Studio or Mono, it can be run on Windows, Linux and MacOS platform.<br>
+(but only Windows platform tested now)
 
 <b>More info</b><br>
 http://spiiin.github.io/CadEditor/<br>
+Documentation<br>
+Articles about level formats<br>
+Romhacking info<br>
 (russian version)<br>
 
 <b>Patreon page of editor</b><br>
 https://www.patreon.com/CadEditor<br>
 <a href="https://www.patreon.com/bePatron?u=3158003" data-patreon-widget-type="become-patron-button">Become a Patron!</a>
+
+<b>Project on itch.io</b><br>
+https://spiiin.itch.io/cadeditor
+
+<b>project on Fundition.io<b><br>
+https://fundition.io/#!/@pinkwonder/94dye4s9a
 
 <b>Screenshots</b><br>
 <img src="http://spiiin.github.io/CadEditor/images/tut1_cad_editor_main.png"/>
@@ -49,6 +59,3 @@ https://www.patreon.com/CadEditor<br>
 
 <b>Latest release</b><br>
 https://github.com/spiiin/CadEditor/releases
-
-<b>Project on itch.io</b><br>
-https://spiiin.itch.io/cadeditor
