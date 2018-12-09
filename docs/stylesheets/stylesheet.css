@@ -12,7 +12,7 @@ body {
 
 .container {
   width: 90%;
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
@@ -81,8 +81,15 @@ header h2 {
   width: 100%;
   -webkit-font-smoothing: antialiased;
 }
-section img {
-  max-width: 100%
+
+img {
+  max-width: 100%;
+  align: right;
+}
+
+.center-img {
+  display: block;
+  margin: 0 auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -241,7 +248,7 @@ a {
 }
 
 p {
-text-align: justify; /* Выравнивание по ширине */
+text-align: left; /* Выравнивание по ширине */
 }
 
 /* Clearfix */
