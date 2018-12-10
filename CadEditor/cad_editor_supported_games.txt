@@ -84,6 +84,7 @@ Supported games:
     Isolated Warrior                                (all levels)
     Jackal                                          (all levels)
     Jackie Chan Action Kung Fu                      (all levels)
+    James Bond Jr                                   (1 level, dump editor)
     Jetsons, The - Cogswell's Caper!                (all levels)
     Ji Qi Mao Xiao Ding Dang (unlicensed)           (all levels)
     Jurassic Park                                   (1 level, dump editor)

@@ -141,6 +141,8 @@ namespace SettingsViewer
         [Category("Screen params")]
         public MethodDelegate savePhysicsLayerFunc => get();
         [Category("Screen params")]
+        public MethodDelegate getPhysicsBlocksCount => get();
+        [Category("Screen params")]
         public MethodDelegate getScreensOffsetsForLevels => get();
         [Category("Screen params")]
         public MethodDelegate getScreenVertical => get();
