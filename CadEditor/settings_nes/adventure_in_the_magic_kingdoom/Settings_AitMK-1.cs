@@ -1,6 +1,7 @@
 using CadEditor;
 using System.Collections.Generic;
 //css_include adventure_in_the_magic_kingdoom/AitMKUtils.cs;
+//css_include shared_settings/SharedUtils.cs;
 
 public class Data
 { 
@@ -12,8 +13,8 @@ public class Data
   
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x0 , 3   , 0x1000);  }
   public OffsetRec getPalOffset  ()     { return new OffsetRec(0x0 , 5   , 16); }
-  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return AitMKUtils.fakeVideoAddr(); }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return AitMKUtils.getVideoChunk(new[] {"chr1.bin", "chr1-2.bin", "chr1-3.bin"}); }
+  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SharedUtils.fakeVideoAddr(); }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk(new[] {"chr1.bin", "chr1-2.bin", "chr1-3.bin"}); }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x4010, 1  , 0x4000); }
@@ -28,6 +29,6 @@ public class Data
   public SetBlocksFunc        setBlocksFunc() { return AitMKUtils.setBlocks;}
   public GetBigBlocksFunc     getBigBlocksFunc()     { return Utils.getBigBlocksCapcomDefault;}
   public SetBigBlocksFunc     setBigBlocksFunc()     { return Utils.setBigBlocksCapcomDefault;}
-  public GetPalFunc           getPalFunc()           { return AitMKUtils.readPalFromBin(new[] {"pal1.bin", "pal1-2.bin", "pal1-3.bin", "pal1-4.bin", "pal1-5.bin"}); }
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin(new[] {"pal1.bin", "pal1-2.bin", "pal1-3.bin", "pal1-4.bin", "pal1-5.bin"}); }
   public SetPalFunc           setPalFunc()           { return null;}
 }
