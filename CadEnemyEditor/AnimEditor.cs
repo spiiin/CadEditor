@@ -129,10 +129,19 @@ namespace CadEnemyEditor
             tvAnims.Nodes.Add(root);
         }
 
+        private byte[] getOjbVideoChunk(int videoPageId)
+        {
+            //direct get obj video chunk
+            byte[] videoChunk = new byte[Globals.videoPageSize];
+            int videoAddr = Utils.getChrObjAddress(videoPageId);
+            Array.Copy(Globals.romdata, videoAddr, videoChunk, 0, Globals.videoPageSize);
+            return videoChunk;
+        }
+
         private void reloadVideo(int index)
         {
             int videoId = index;
-            var videoChunk = ConfigScript.getVideoChunk(videoId);
+            var videoChunk = getOjbVideoChunk(index);
             var videoStrip = ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 0, true);
             Bitmap resultVideo = new Bitmap(256, 256);
             using (Graphics g = Graphics.FromImage(resultVideo))
@@ -244,9 +253,11 @@ namespace CadEnemyEditor
 
         private void cbVideo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int index = cbVideo.SelectedIndex - 0x10;
-            reloadVideo(index);
-            drawFrame(activeFrame);
+            if (cbVideo.SelectedIndex >= 0)
+            {
+                reloadVideo(cbVideo.SelectedIndex);
+                drawFrame(activeFrame);
+            }
         }
 
         void flushToFile()
