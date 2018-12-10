@@ -1,6 +1,6 @@
 using CadEditor;
 using System;
-//css_include super_c/SuperCUtils.cs;
+//css_include shared_settings/SharedUtils.cs;
 
 public class Data 
 { 
@@ -14,8 +14,8 @@ public class Data
   
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x0 , 3   , 0x1000);  }
   public OffsetRec getPalOffset  ()     { return new OffsetRec(0x0 , 2   , 16); }
-  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SuperCUtils.fakeVideoAddr(); }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return SuperCUtils.getVideoChunk(new[] {"chr4(a).bin", "chr4(b).bin", "chr4(c).bin"}); }
+  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SharedUtils.fakeVideoAddr(); }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk(new[] {"chr4(a).bin", "chr4(b).bin", "chr4(c).bin"}); }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x80f6, 1  , 0x1000);  }
@@ -25,6 +25,6 @@ public class Data
   public GetBlocksFunc        getBlocksFunc() { return Utils.getBlocksFromTiles16Pal1;}
   public SetBlocksFunc        setBlocksFunc() { return Utils.setBlocksFromTiles16Pal1;}
   
-  public GetPalFunc           getPalFunc()           { return SuperCUtils.readPalFromBin(new[] {"pal4(a).bin", "pal4(b).bin"}); }
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin(new[] {"pal4(a).bin", "pal4(b).bin"}); }
   public SetPalFunc           setPalFunc()           { return null;}
 }

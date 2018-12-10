@@ -1,6 +1,6 @@
 using CadEditor;
 using System;
-using System.Drawing;
+//css_include shared_settings/SharedUtils.cs;
 
 public class Data 
 { 
@@ -12,8 +12,10 @@ public class Data
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
   
-  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getVideoAddress; }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChunk;   }
+  public OffsetRec getVideoOffset()     { return new OffsetRec(0x0 , 1   , 0x1000);  }
+  public OffsetRec getPalOffset  ()     { return new OffsetRec(0x0 , 1   , 16); }
+  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SharedUtils.fakeVideoAddr(); }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk(new[] {"chr1.bin"}); }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x4539 , 1  , 0x1000);  }
@@ -23,22 +25,6 @@ public class Data
   public GetBlocksFunc        getBlocksFunc() { return Utils.getBlocksFromTiles16Pal1;}
   public SetBlocksFunc        setBlocksFunc() { return Utils.setBlocksFromTiles16Pal1;}
   
-  public GetPalFunc           getPalFunc()           { return getPallete;}
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin(new[] {"pal1.bin"}); }
   public SetPalFunc           setPalFunc()           { return null;}
-  
-  //----------------------------------------------------------------------------
-  public int getVideoAddress(int id)
-  {
-    return -1;
-  }
-  
-  public byte[] getVideoChunk(int videoPageId)
-  {
-     return Utils.readVideoBankFromFile("chr1.bin", videoPageId);
-  }
-  
-  public byte[] getPallete(int palId)
-  {
-      return Utils.readBinFile("pal1.bin");
-  }
 }
