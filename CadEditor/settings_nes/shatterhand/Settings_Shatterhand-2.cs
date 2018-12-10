@@ -60,7 +60,7 @@ public class Data
   
   public int getBigBlocksAddr(int blockId)
   {
-    if (blockId == 0 )    { return getBigBlocksOffset().beginAddr;  }
+    if (blockId == 0 )     { return getBigBlocksOffset().beginAddr;  }
     else if (blockId == 1) { return getBigBlocksOffset2().beginAddr; }
     return -1;
   }
