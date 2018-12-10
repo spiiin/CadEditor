@@ -291,6 +291,7 @@ namespace CadEditor
 
             loadPhysicsLayerFunc = callFromScript<LoadPhysicsLayer>(asm, data, "*.loadPhysicsLayerFunc");
             savePhysicsLayerFunc = callFromScript<SavePhysicsLayer>(asm, data, "*.savePhysicsLayerFunc");
+            physicsBlocksCount = callFromScript(asm, data, "*.getPhysicsBlocksCount", 256);
 
             if (blocksPicturesFilename != "")
             {
@@ -553,6 +554,11 @@ namespace CadEditor
         public static int getBlocksCount(int blockId)
         {
             return getBlocksCountFunc?.Invoke(blockId)?? blocksCount;
+        }
+
+        public static int getPhysicsBlocksCount()
+        {
+            return physicsBlocksCount;
         }
 
         public static IList<LevelRec> getLevelRecs()
@@ -829,6 +835,7 @@ namespace CadEditor
 
         public static LoadPhysicsLayer loadPhysicsLayerFunc;
         public static SavePhysicsLayer savePhysicsLayerFunc;
+        public static int physicsBlocksCount;
 
         public static float defaultScale;
 

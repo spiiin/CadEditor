@@ -310,7 +310,7 @@ namespace CadEditor
 
             //show brush
             bool altPressed = ModifierKeys == Keys.Alt;
-            if (!isPhysicsLayerSelected()) //not show brush is physics edit
+            if (!isPhysicsLayerSelected()) //not show brush if physics editing
             {
                 if (showBrush && curActiveBlock != -1 && (curDx != Outside || curDy != Outside) && !altPressed)
                 {
@@ -922,7 +922,7 @@ namespace CadEditor
                 renderBlockFunc = renderPhysics ? MapEditor.renderPhysicsOnPanelFunc : MapEditor.renderBlocksOnPanelFunc
             };
 
-            int blocksCount = renderPhysics ? 256 : bigBlocks.Length; //hardcode physics blocks count
+            int blocksCount = renderPhysics ? ConfigScript.getPhysicsBlocksCount() : bigBlocks.Length; //hardcode physics blocks count
             MapEditor.renderAllBlocks(g, blocksScreen, curActiveBlock, blocksCount, renderParams);
         }
 
@@ -935,7 +935,9 @@ namespace CadEditor
             int tx = x / tileSizeX, ty = y / tileSizeY;
             int maxtX = blocksScreen.Width / tileSizeX;
             int index = ty * maxtX + tx;
-            if ((tx < 0) || (tx >= maxtX) || (index < 0) || (index >= bigBlocks.Length))
+            bool renderPhysics = isPhysicsLayerSelected();
+            int maxIndex = renderPhysics ? ConfigScript.getPhysicsBlocksCount() : bigBlocks.Length;
+            if ((tx < 0) || (tx >= maxtX) || (index < 0) || (index >= maxIndex))
             {
                 return;
             }
