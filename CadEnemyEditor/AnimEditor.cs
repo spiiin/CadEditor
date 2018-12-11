@@ -20,7 +20,6 @@ namespace CadEnemyEditor
             InitializeComponent();
         }
 
-        //byte[] Globals.romdata = null;
         AnimData[] animList;
         FrameData[] frameList;
         CoordData[] coordList;
@@ -30,11 +29,16 @@ namespace CadEnemyEditor
         byte[] pal = new byte[16];
         byte[] pal0 = AnimConfig.pal;
 
+        private bool showBack = true;
+        private Color backColor = Color.Black;
+
+        private int curScale = 4;
+        private byte[] chunk = new byte[Globals.videoPageSize];
+
         private void loadData()
         {
             loadAnimData();
 
-            //test fill pal
             for (int i = 0; i < 16; i++)
                 pal[i] = pal0[i];
         }
@@ -129,11 +133,18 @@ namespace CadEnemyEditor
             tvAnims.Nodes.Add(root);
         }
 
-        private void reloadVideo(int index)
+        private byte[] getOjbVideoChunk(int videoPageId)
         {
-            int videoId = index;
-            var videoChunk = ConfigScript.getVideoChunk(videoId);
-            var videoStrip = ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 0, true);
+            //direct get obj video chunk
+            byte[] videoChunk = new byte[Globals.videoPageSize];
+            int videoAddr = Utils.getChrObjAddress(videoPageId);
+            Array.Copy(Globals.romdata, videoAddr, videoChunk, 0, Globals.videoPageSize);
+            return videoChunk;
+        }
+
+        private void reloadVideo()
+        {
+            var videoStrip = ConfigScript.videoNes.makeImageStrip(chunk, pal, 0, true);
             Bitmap resultVideo = new Bitmap(256, 256);
             using (Graphics g = Graphics.FromImage(resultVideo))
             {
@@ -152,32 +163,50 @@ namespace CadEnemyEditor
             imageList3.Images.Clear();
             imageList4.Images.Clear();
             imageList1.Images.AddStrip(videoStrip);
-            imageList2.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 1, true));
-            imageList3.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 2, true));
-            imageList4.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 3, true));
+            imageList2.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(chunk, pal, 1, true));
+            imageList3.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(chunk, pal, 2, true));
+            imageList4.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(chunk, pal, 3, true));
 
             setPal();
+        }
+
+        private void updateBackColor(Color newColor)
+        {
+            backColor = newColor;
+            var b = new Bitmap(pbBack.Width, pbBack.Height);
+            using (var g = Graphics.FromImage(b))
+            {
+                g.FillRectangle(new SolidBrush(backColor), new Rectangle(0,0, b.Width, b.Height));
+            }
+            pbBack.Image = b;
+
+            drawFrame(activeFrame);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             loadData();
-            reloadVideo(0);
+            chunk = getOjbVideoChunk(0);
+            reloadVideo();
             cbVideo.SelectedIndex = 0;
+
+            updateBackColor(Color.Black);
+            cbScale.SelectedIndex = 3; //default scale = 4
         }
 
-        private void drawFrame(FrameData f, bool drawWithSelectedTiles = false)
+        private Bitmap renderFrame(FrameData f, bool drawWithSelectedTiles = false)
         {
+            Bitmap frame = new Bitmap(128 * curScale, 128 * curScale);
             if (f == null)
-                return;
-            int scale = 4;
-            Bitmap frame = new Bitmap(128 * scale, 128 * scale);
+            {
+                return frame;
+            }
 
             int count = f.tileCount;
             TileInfo[] tiles = f.tiles;
             int coordsAddr = coordList[f.coordsIndex].addr;
             int coordsRomAddr = Utils.getCapcomAnimAddr(AnimConfig.animBankNo, coordsAddr);
-            int addPart = (128 / 2 * scale);
+            int addPart = (128 / 2 * curScale);
 
             ImageList[] imageLists = { imageList1, imageList2, imageList3, imageList4 };
 
@@ -185,19 +214,23 @@ namespace CadEnemyEditor
             {
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
                 g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-                g.FillRectangle(Brushes.Black, new Rectangle(0,0,128*scale, 128*scale));
+                if (showBack)
+                {
+                    g.FillRectangle(new SolidBrush(backColor), new Rectangle(0, 0, 128 * curScale, 128 * curScale));
+                }
+
                 for (int i = 0; i < count; i++)
                 {
                     byte xcByte = Globals.romdata[coordsRomAddr + i * 2 + 1];
                     byte ycByte = Globals.romdata[coordsRomAddr + i * 2 + 0];
                     int xOrig = Utils.getSignedFromByte(xcByte);
                     int yOrig = Utils.getSignedFromByte(ycByte);
-                    int x = addPart + xOrig * scale;
-                    int y = addPart + yOrig * scale;
+                    int x = addPart + xOrig * curScale;
+                    int y = addPart + yOrig * curScale;
                     int index = tiles[i].index;
                     int property = tiles[i].property;
-                    int xh = x + 8 * scale;
-                    int yh = y + 8 * scale;
+                    int xh = x + 8 * curScale;
+                    int yh = y + 8 * curScale;
                     int subPalIndex = property & 0x3;
 
                     Point[] destPoints = new Point[3];
@@ -206,15 +239,21 @@ namespace CadEnemyEditor
                     destPoints[0] = new Point(xReverted ? xh : x, yReverted ? yh : y);
                     destPoints[1] = new Point(xReverted ? x : xh, yReverted ? yh : y);
                     destPoints[2] = new Point(xReverted ? xh : x, yReverted ? y : yh);
-                    g.DrawImage(imageLists[subPalIndex].Images[index], destPoints/*, new Rectangle(addPart + xs[i]*scale, addPart + ys[i]*scale, 8 * scale, 8 * scale)*/);
+                    g.DrawImage(imageLists[subPalIndex].Images[index], destPoints);
                     if (drawWithSelectedTiles)
                     {
                         if (lvTiles.SelectedIndices.Contains(i))
-                          g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle(destPoints[0].X, destPoints[0].Y, 8 * scale, 8 * scale));
+                            g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle(destPoints[0].X, destPoints[0].Y, 8 * curScale, 8 * curScale));
                     }
                 }
             }
-            pbFrame.Image = frame;
+
+            return frame;
+        }
+
+        private void drawFrame(FrameData f, bool drawWithSelectedTiles = false)
+        {
+            pbFrame.Image = renderFrame(f, drawWithSelectedTiles);
         }
 
         private void tvAnims_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -244,9 +283,12 @@ namespace CadEnemyEditor
 
         private void cbVideo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int index = cbVideo.SelectedIndex - 0x10;
-            reloadVideo(index);
-            drawFrame(activeFrame);
+            if (cbVideo.SelectedIndex >= 0)
+            {
+                chunk = getOjbVideoChunk(cbVideo.SelectedIndex);
+                reloadVideo();
+                drawFrame(activeFrame);
+            }
         }
 
         void flushToFile()
@@ -335,28 +377,124 @@ namespace CadEnemyEditor
 
         private void pbPal_MouseClick(object sender, MouseEventArgs e)
         {
-           /* var f = new EditColor();
+            /*var f = new EditColor();
             f.ShowDialog();
             if (EditColor.ColorIndex != -1)
             {
                 int index = e.X / 32 + (e.Y / 32) * 4;
                 pal[index] = (byte)EditColor.ColorIndex;
                 int videoIndex = cbVideo.SelectedIndex;
-                reloadVideo(videoIndex);
+                chunk = getObjVideoChunk(videoIndex);
+                reloadVideo();
             }*/
         }
 
         private void setPal()
         {
-            var palImage = new Bitmap(128, 128);
+            var palImage = new Bitmap(64, 64);
             using (Graphics g = Graphics.FromImage(palImage))
             {
                 for (int i = 0; i < 16; i++)
                 {
-                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.defaultNesColors[pal[i]]), i % 4 * 32, (i / 4) * 32, 32, 32);
+                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.defaultNesColors[pal[i]]), i % 4 * 16, (i / 4) * 16, 16, 16);
                 }
             }
             pbPal.Image = palImage;
+        }
+
+        private void pbBack_Click(object sender, EventArgs e)
+        {
+            if (cdBackColor.ShowDialog() == DialogResult.OK)
+            {
+                updateBackColor(cdBackColor.Color);
+            }
+        }
+
+        private void cbScale_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbScale.SelectedIndex < 0)
+            {
+                return;
+            }
+
+            curScale = cbScale.SelectedIndex + 1;
+            drawFrame(activeFrame);
+        }
+
+        private void cbShowBack_CheckedChanged(object sender, EventArgs e)
+        {
+            showBack = cbShowBack.Checked;
+            drawFrame(activeFrame);
+        }
+
+        private void btExportPng_Click(object sender, EventArgs e)
+        {
+            if (sfExportDialog.ShowDialog() == DialogResult.OK)
+            {
+                var fname = sfExportDialog.FileName;
+                var img = renderFrame(activeFrame, false);
+
+                if (!showBack)
+                {
+                    img = UtilsGDI.CropImage(img, UtilsGDI.FindBorderRect(img));
+                }
+
+                img.Save(fname);
+            }
+        }
+
+        private void btLoadPal_Click(object sender, EventArgs e)
+        {
+            if (ofOpenPal.ShowDialog() == DialogResult.OK)
+            {
+                var fname = ofOpenPal.FileName;
+                try
+                {
+                    var data = File.ReadAllBytes(fname);
+                    for (int i = 0; i < 16; i++)
+                    {
+                        pal[i] = (byte)(data[i] & 0x3f);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error while loading pal from file");
+                }
+
+                reloadVideo();
+                drawFrame(activeFrame);
+            }
+        }
+
+        private void btDefaultPal_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 16; i++)
+                pal[i] = pal0[i];
+            reloadVideo();
+            drawFrame(activeFrame);
+        }
+
+        private void btLoadChr_Click(object sender, EventArgs e)
+        {
+            if (ofOpenChr.ShowDialog() == DialogResult.OK)
+            {
+                var fname = ofOpenChr.FileName;
+                try
+                {
+                    var data = File.ReadAllBytes(fname);
+                    for (int i = 0; i < chunk.Length; i++)
+                    {
+                        chunk[i] = data[i];
+                    }
+
+                    reloadVideo();
+                    drawFrame(activeFrame);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error while loading CHR from file");
+                }
+            }
         }
     }
 
