@@ -48,14 +48,17 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pbPal = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btExportPng = new System.Windows.Forms.Button();
             this.cbShowBack = new System.Windows.Forms.CheckBox();
             this.cbScale = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.pbBack = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cdBackColor = new System.Windows.Forms.ColorDialog();
-            this.btExportPng = new System.Windows.Forms.Button();
             this.sfExportDialog = new System.Windows.Forms.SaveFileDialog();
+            this.label5 = new System.Windows.Forms.Label();
+            this.btLoadPal = new System.Windows.Forms.Button();
+            this.ofOpenPal = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pbVideo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFrame)).BeginInit();
             this.pnTileProperties.SuspendLayout();
@@ -171,7 +174,7 @@
             "1",
             "2",
             "3"});
-            this.cbTileIndex.Location = new System.Drawing.Point(231, 9);
+            this.cbTileIndex.Location = new System.Drawing.Point(250, 8);
             this.cbTileIndex.Margin = new System.Windows.Forms.Padding(4);
             this.cbTileIndex.Name = "cbTileIndex";
             this.cbTileIndex.Size = new System.Drawing.Size(84, 24);
@@ -184,9 +187,9 @@
             this.label1.Location = new System.Drawing.Point(197, 12);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(31, 17);
+            this.label1.Size = new System.Drawing.Size(54, 17);
             this.label1.TabIndex = 8;
-            this.label1.Text = "pal:";
+            this.label1.Text = "subpal:";
             // 
             // pnTileProperties
             // 
@@ -249,16 +252,18 @@
             // 
             // pbPal
             // 
-            this.pbPal.Location = new System.Drawing.Point(184, 462);
+            this.pbPal.Location = new System.Drawing.Point(243, 467);
             this.pbPal.Margin = new System.Windows.Forms.Padding(4);
             this.pbPal.Name = "pbPal";
-            this.pbPal.Size = new System.Drawing.Size(171, 190);
+            this.pbPal.Size = new System.Drawing.Size(64, 64);
             this.pbPal.TabIndex = 13;
             this.pbPal.TabStop = false;
             this.pbPal.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbPal_MouseClick);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btLoadPal);
+            this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.btExportPng);
             this.panel1.Controls.Add(this.cbShowBack);
             this.panel1.Controls.Add(this.cbScale);
@@ -276,6 +281,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(365, 656);
             this.panel1.TabIndex = 14;
+            // 
+            // btExportPng
+            // 
+            this.btExportPng.Location = new System.Drawing.Point(183, 431);
+            this.btExportPng.Margin = new System.Windows.Forms.Padding(4);
+            this.btExportPng.Name = "btExportPng";
+            this.btExportPng.Size = new System.Drawing.Size(175, 28);
+            this.btExportPng.TabIndex = 19;
+            this.btExportPng.Text = "Export png";
+            this.btExportPng.UseVisualStyleBackColor = true;
+            this.btExportPng.Click += new System.EventHandler(this.btExportPng_Click);
             // 
             // cbShowBack
             // 
@@ -331,22 +347,36 @@
             this.label3.TabIndex = 14;
             this.label3.Text = "Back color:";
             // 
-            // btExportPng
-            // 
-            this.btExportPng.Location = new System.Drawing.Point(183, 431);
-            this.btExportPng.Margin = new System.Windows.Forms.Padding(4);
-            this.btExportPng.Name = "btExportPng";
-            this.btExportPng.Size = new System.Drawing.Size(175, 28);
-            this.btExportPng.TabIndex = 19;
-            this.btExportPng.Text = "Export png";
-            this.btExportPng.UseVisualStyleBackColor = true;
-            this.btExportPng.Click += new System.EventHandler(this.btExportPng_Click);
-            // 
             // sfExportDialog
             // 
             this.sfExportDialog.FileName = "anim.png";
             this.sfExportDialog.Filter = "png|*.png";
             this.sfExportDialog.InitialDirectory = "*";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(190, 489);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(32, 17);
+            this.label5.TabIndex = 20;
+            this.label5.Text = "Pal:";
+            // 
+            // btLoadPal
+            // 
+            this.btLoadPal.Location = new System.Drawing.Point(182, 539);
+            this.btLoadPal.Margin = new System.Windows.Forms.Padding(4);
+            this.btLoadPal.Name = "btLoadPal";
+            this.btLoadPal.Size = new System.Drawing.Size(175, 28);
+            this.btLoadPal.TabIndex = 21;
+            this.btLoadPal.Text = "Load pal from file";
+            this.btLoadPal.UseVisualStyleBackColor = true;
+            this.btLoadPal.Click += new System.EventHandler(this.btLoadPal_Click);
+            // 
+            // ofOpenPal
+            // 
+            this.ofOpenPal.FileName = "pal.bin";
+            this.ofOpenPal.InitialDirectory = ".";
             // 
             // AnimEditor
             // 
@@ -401,6 +431,9 @@
         private System.Windows.Forms.CheckBox cbShowBack;
         private System.Windows.Forms.Button btExportPng;
         private System.Windows.Forms.SaveFileDialog sfExportDialog;
+        private System.Windows.Forms.Button btLoadPal;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.OpenFileDialog ofOpenPal;
     }
 }
 

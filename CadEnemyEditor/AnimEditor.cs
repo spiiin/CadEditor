@@ -38,7 +38,6 @@ namespace CadEnemyEditor
         {
             loadAnimData();
 
-            //test fill pal
             for (int i = 0; i < 16; i++)
                 pal[i] = pal0[i];
         }
@@ -377,7 +376,7 @@ namespace CadEnemyEditor
 
         private void pbPal_MouseClick(object sender, MouseEventArgs e)
         {
-           /* var f = new EditColor();
+            /*var f = new EditColor();
             f.ShowDialog();
             if (EditColor.ColorIndex != -1)
             {
@@ -390,12 +389,12 @@ namespace CadEnemyEditor
 
         private void setPal()
         {
-            var palImage = new Bitmap(128, 128);
+            var palImage = new Bitmap(64, 64);
             using (Graphics g = Graphics.FromImage(palImage))
             {
                 for (int i = 0; i < 16; i++)
                 {
-                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.defaultNesColors[pal[i]]), i % 4 * 32, (i / 4) * 32, 32, 32);
+                    g.FillRectangle(new SolidBrush(ConfigScript.videoNes.defaultNesColors[pal[i]]), i % 4 * 16, (i / 4) * 16, 16, 16);
                 }
             }
             pbPal.Image = palImage;
@@ -439,6 +438,29 @@ namespace CadEnemyEditor
                 }
 
                 img.Save(fname);
+            }
+        }
+
+        private void btLoadPal_Click(object sender, EventArgs e)
+        {
+            if (ofOpenPal.ShowDialog() == DialogResult.OK)
+            {
+                var fname = ofOpenPal.FileName;
+                try
+                {
+                    var data = File.ReadAllBytes(fname);
+                    for (int i = 0; i < 16; i++)
+                    {
+                        pal[i] = (byte)(data[i] & 0x3f);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error while loading pal from file");
+                }
+
+                reloadVideo(cbVideo.SelectedIndex);
+                drawFrame(activeFrame);
             }
         }
     }
