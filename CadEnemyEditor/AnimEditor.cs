@@ -202,50 +202,58 @@ namespace CadEnemyEditor
                 return frame;
             }
 
-            int count = f.tileCount;
-            TileInfo[] tiles = f.tiles;
-            int coordsAddr = coordList[f.coordsIndex].addr;
-            int coordsRomAddr = Utils.getCapcomAnimAddr(AnimConfig.animBankNo, coordsAddr);
-            int addPart = (128 / 2 * curScale);
-
-            ImageList[] imageLists = { imageList1, imageList2, imageList3, imageList4 };
-
-            using (Graphics g = Graphics.FromImage(frame))
+            try
             {
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-                if (showBack)
-                {
-                    g.FillRectangle(new SolidBrush(backColor), new Rectangle(0, 0, 128 * curScale, 128 * curScale));
-                }
+                int count = f.tileCount;
+                TileInfo[] tiles = f.tiles;
+                int coordsAddr = coordList[f.coordsIndex].addr;
+                int coordsRomAddr = Utils.getCapcomAnimAddr(AnimConfig.animBankNo, coordsAddr);
+                int addPart = (128 / 2 * curScale);
 
-                for (int i = 0; i < count; i++)
-                {
-                    byte xcByte = Globals.romdata[coordsRomAddr + i * 2 + 1];
-                    byte ycByte = Globals.romdata[coordsRomAddr + i * 2 + 0];
-                    int xOrig = Utils.getSignedFromByte(xcByte);
-                    int yOrig = Utils.getSignedFromByte(ycByte);
-                    int x = addPart + xOrig * curScale;
-                    int y = addPart + yOrig * curScale;
-                    int index = tiles[i].index;
-                    int property = tiles[i].property;
-                    int xh = x + 8 * curScale;
-                    int yh = y + 8 * curScale;
-                    int subPalIndex = property & 0x3;
+                ImageList[] imageLists = {imageList1, imageList2, imageList3, imageList4};
 
-                    Point[] destPoints = new Point[3];
-                    bool xReverted = (property & 0x40) == 0x40;
-                    bool yReverted = (property & 0x80) == 0x80;
-                    destPoints[0] = new Point(xReverted ? xh : x, yReverted ? yh : y);
-                    destPoints[1] = new Point(xReverted ? x : xh, yReverted ? yh : y);
-                    destPoints[2] = new Point(xReverted ? xh : x, yReverted ? y : yh);
-                    g.DrawImage(imageLists[subPalIndex].Images[index], destPoints);
-                    if (drawWithSelectedTiles)
+                using (Graphics g = Graphics.FromImage(frame))
+                {
+                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                    g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+                    if (showBack)
                     {
-                        if (lvTiles.SelectedIndices.Contains(i))
-                            g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle(destPoints[0].X, destPoints[0].Y, 8 * curScale, 8 * curScale));
+                        g.FillRectangle(new SolidBrush(backColor), new Rectangle(0, 0, 128 * curScale, 128 * curScale));
+                    }
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        byte xcByte = Globals.romdata[coordsRomAddr + i * 2 + 1];
+                        byte ycByte = Globals.romdata[coordsRomAddr + i * 2 + 0];
+                        int xOrig = Utils.getSignedFromByte(xcByte);
+                        int yOrig = Utils.getSignedFromByte(ycByte);
+                        int x = addPart + xOrig * curScale;
+                        int y = addPart + yOrig * curScale;
+                        int index = tiles[i].index;
+                        int property = tiles[i].property;
+                        int xh = x + 8 * curScale;
+                        int yh = y + 8 * curScale;
+                        int subPalIndex = property & 0x3;
+
+                        Point[] destPoints = new Point[3];
+                        bool xReverted = (property & 0x40) == 0x40;
+                        bool yReverted = (property & 0x80) == 0x80;
+                        destPoints[0] = new Point(xReverted ? xh : x, yReverted ? yh : y);
+                        destPoints[1] = new Point(xReverted ? x : xh, yReverted ? yh : y);
+                        destPoints[2] = new Point(xReverted ? xh : x, yReverted ? y : yh);
+                        g.DrawImage(imageLists[subPalIndex].Images[index], destPoints);
+                        if (drawWithSelectedTiles)
+                        {
+                            if (lvTiles.SelectedIndices.Contains(i))
+                                g.DrawRectangle(new Pen(Brushes.Red, 2.0f),
+                                    new Rectangle(destPoints[0].X, destPoints[0].Y, 8 * curScale, 8 * curScale));
+                        }
                     }
                 }
+            }
+            catch(Exception)
+            {
+                //pass
             }
 
             return frame;
@@ -269,15 +277,23 @@ namespace CadEnemyEditor
 
         private void setTiles(FrameData f)
         {
-            lvTiles.Items.Clear();
-            TileInfo[] tiles = f.tiles;
-            int coordsAddr = coordList[f.coordsIndex].addr;
-            int coordsRomAddr = Utils.getCapcomAnimAddr(AnimConfig.animBankNo, coordsAddr);
-            for (int i = 0; i < tiles.Length; i++)
+            try
             {
-                byte xcByte = Globals.romdata[coordsRomAddr + i * 2 + 1];
-                byte ycByte = Globals.romdata[coordsRomAddr + i * 2 + 0];
-                lvTiles.Items.Add(String.Format("T:{0,2:X2} P[{1,2:X2}] X:{2,2:X2} Y:{3,2:X2}", tiles[i].index, tiles[i].property, xcByte, ycByte));
+                lvTiles.Items.Clear();
+                TileInfo[] tiles = f.tiles;
+                int coordsAddr = coordList[f.coordsIndex].addr;
+                int coordsRomAddr = Utils.getCapcomAnimAddr(AnimConfig.animBankNo, coordsAddr);
+                for (int i = 0; i < tiles.Length; i++)
+                {
+                    byte xcByte = Globals.romdata[coordsRomAddr + i * 2 + 1];
+                    byte ycByte = Globals.romdata[coordsRomAddr + i * 2 + 0];
+                    lvTiles.Items.Add(String.Format("T:{0,2:X2} P[{1,2:X2}] X:{2,2:X2} Y:{3,2:X2}", tiles[i].index,
+                        tiles[i].property, xcByte, ycByte));
+                }
+            }
+            catch (Exception)
+            {
+                //pass
             }
         }
 
