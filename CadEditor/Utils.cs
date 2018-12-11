@@ -53,7 +53,6 @@ namespace CadEditor
 
         public static byte[] getVideoChunk(int videoPageId)
         {
-            //local version for cad & dwd
             byte[] videoChunk = new byte[Globals.videoPageSize];
             int videoAddr = ConfigScript.getVideoPageAddr(videoPageId);
             Array.Copy(Globals.romdata, videoAddr, videoChunk, 0, Globals.videoPageSize);
@@ -852,7 +851,7 @@ namespace CadEditor
             int x = curObject.x, y = curObject.y;
             int xsize = objectSpritesBig[curObject.type].Size.Width;
             int ysize = objectSpritesBig[curObject.type].Size.Height;
-            var rect = new Rectangle((int)(x * curScale) - xsize / 2 + leftMargin, (int)(y * curScale) - ysize / 2 + topMargin, xsize, ysize);
+            var rect = new Rectangle((int)((x - xsize/2) * curScale) + leftMargin, (int)((y - ysize/2) * curScale) + topMargin, (int)(xsize * curScale), (int)(ysize * curScale));
             if (curObject.type < objectSpritesBig.Length)
                 g.DrawImage(objectSpritesBig[curObject.type], rect);
             if (isSelected)

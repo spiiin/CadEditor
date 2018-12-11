@@ -702,7 +702,7 @@ namespace CadEditor
         private bool isMouseInside(ObjectRec obj, int x, int y, Image[] sprites)
         {
             var bigObject = sprites[obj.type];
-            return (x > (obj.x - bigObject.Width)) && (x < obj.x) && (y > (obj.y - bigObject.Height)) && (y < obj.y);
+            return (x > (obj.x - bigObject.Width/2)) && (x < obj.x + bigObject.Width/2) && (y > (obj.y - bigObject.Height/2)) && (y < obj.y + bigObject.Height/2);
         }
 
         private int oldX;
