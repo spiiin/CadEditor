@@ -463,6 +463,14 @@ namespace CadEnemyEditor
                 drawFrame(activeFrame);
             }
         }
+
+        private void btDefaultPal_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 16; i++)
+                pal[i] = pal0[i];
+            reloadVideo(cbVideo.SelectedIndex);
+            drawFrame(activeFrame);
+        }
     }
 
     class AnimData

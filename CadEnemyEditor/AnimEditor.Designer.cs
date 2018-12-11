@@ -48,6 +48,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pbPal = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btDefaultPal = new System.Windows.Forms.Button();
+            this.btLoadPal = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
             this.btExportPng = new System.Windows.Forms.Button();
             this.cbShowBack = new System.Windows.Forms.CheckBox();
             this.cbScale = new System.Windows.Forms.ComboBox();
@@ -56,8 +59,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cdBackColor = new System.Windows.Forms.ColorDialog();
             this.sfExportDialog = new System.Windows.Forms.SaveFileDialog();
-            this.label5 = new System.Windows.Forms.Label();
-            this.btLoadPal = new System.Windows.Forms.Button();
             this.ofOpenPal = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pbVideo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFrame)).BeginInit();
@@ -253,15 +254,16 @@
             // pbPal
             // 
             this.pbPal.Location = new System.Drawing.Point(243, 467);
-            this.pbPal.Margin = new System.Windows.Forms.Padding(4);
+            this.pbPal.Margin = new System.Windows.Forms.Padding(0);
             this.pbPal.Name = "pbPal";
-            this.pbPal.Size = new System.Drawing.Size(64, 64);
+            this.pbPal.Size = new System.Drawing.Size(96, 86);
             this.pbPal.TabIndex = 13;
             this.pbPal.TabStop = false;
             this.pbPal.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbPal_MouseClick);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btDefaultPal);
             this.panel1.Controls.Add(this.btLoadPal);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.btExportPng);
@@ -281,6 +283,37 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(365, 656);
             this.panel1.TabIndex = 14;
+            // 
+            // btDefaultPal
+            // 
+            this.btDefaultPal.Location = new System.Drawing.Point(182, 593);
+            this.btDefaultPal.Margin = new System.Windows.Forms.Padding(4);
+            this.btDefaultPal.Name = "btDefaultPal";
+            this.btDefaultPal.Size = new System.Drawing.Size(175, 28);
+            this.btDefaultPal.TabIndex = 22;
+            this.btDefaultPal.Text = "Default pal";
+            this.btDefaultPal.UseVisualStyleBackColor = true;
+            this.btDefaultPal.Click += new System.EventHandler(this.btDefaultPal_Click);
+            // 
+            // btLoadPal
+            // 
+            this.btLoadPal.Location = new System.Drawing.Point(182, 557);
+            this.btLoadPal.Margin = new System.Windows.Forms.Padding(4);
+            this.btLoadPal.Name = "btLoadPal";
+            this.btLoadPal.Size = new System.Drawing.Size(175, 28);
+            this.btLoadPal.TabIndex = 21;
+            this.btLoadPal.Text = "Load pal from file";
+            this.btLoadPal.UseVisualStyleBackColor = true;
+            this.btLoadPal.Click += new System.EventHandler(this.btLoadPal_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(190, 489);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(32, 17);
+            this.label5.TabIndex = 20;
+            this.label5.Text = "Pal:";
             // 
             // btExportPng
             // 
@@ -353,26 +386,6 @@
             this.sfExportDialog.Filter = "png|*.png";
             this.sfExportDialog.InitialDirectory = "*";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(190, 489);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(32, 17);
-            this.label5.TabIndex = 20;
-            this.label5.Text = "Pal:";
-            // 
-            // btLoadPal
-            // 
-            this.btLoadPal.Location = new System.Drawing.Point(182, 539);
-            this.btLoadPal.Margin = new System.Windows.Forms.Padding(4);
-            this.btLoadPal.Name = "btLoadPal";
-            this.btLoadPal.Size = new System.Drawing.Size(175, 28);
-            this.btLoadPal.TabIndex = 21;
-            this.btLoadPal.Text = "Load pal from file";
-            this.btLoadPal.UseVisualStyleBackColor = true;
-            this.btLoadPal.Click += new System.EventHandler(this.btLoadPal_Click);
-            // 
             // ofOpenPal
             // 
             this.ofOpenPal.FileName = "pal.bin";
@@ -434,6 +447,7 @@
         private System.Windows.Forms.Button btLoadPal;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.OpenFileDialog ofOpenPal;
+        private System.Windows.Forms.Button btDefaultPal;
     }
 }
 
