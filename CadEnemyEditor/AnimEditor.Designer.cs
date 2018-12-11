@@ -48,11 +48,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pbPal = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cbShowBack = new System.Windows.Forms.CheckBox();
+            this.cbScale = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.pbBack = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cdBackColor = new System.Windows.Forms.ColorDialog();
-            this.label4 = new System.Windows.Forms.Label();
-            this.cbScale = new System.Windows.Forms.ComboBox();
+            this.btExportPng = new System.Windows.Forms.Button();
+            this.sfExportDialog = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pbVideo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFrame)).BeginInit();
             this.pnTileProperties.SuspendLayout();
@@ -256,6 +259,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btExportPng);
+            this.panel1.Controls.Add(this.cbShowBack);
             this.panel1.Controls.Add(this.cbScale);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.pbBack);
@@ -271,6 +276,42 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(365, 656);
             this.panel1.TabIndex = 14;
+            // 
+            // cbShowBack
+            // 
+            this.cbShowBack.AutoSize = true;
+            this.cbShowBack.Checked = true;
+            this.cbShowBack.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbShowBack.Location = new System.Drawing.Point(128, 600);
+            this.cbShowBack.Name = "cbShowBack";
+            this.cbShowBack.Size = new System.Drawing.Size(18, 17);
+            this.cbShowBack.TabIndex = 18;
+            this.cbShowBack.UseVisualStyleBackColor = true;
+            this.cbShowBack.CheckedChanged += new System.EventHandler(this.cbShowBack_CheckedChanged);
+            // 
+            // cbScale
+            // 
+            this.cbScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbScale.FormattingEnabled = true;
+            this.cbScale.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4"});
+            this.cbScale.Location = new System.Drawing.Point(102, 619);
+            this.cbScale.Name = "cbScale";
+            this.cbScale.Size = new System.Drawing.Size(44, 24);
+            this.cbScale.TabIndex = 17;
+            this.cbScale.SelectedIndexChanged += new System.EventHandler(this.cbScale_SelectedIndexChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(18, 626);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(43, 17);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "Scale";
             // 
             // pbBack
             // 
@@ -290,29 +331,22 @@
             this.label3.TabIndex = 14;
             this.label3.Text = "Back color:";
             // 
-            // label4
+            // btExportPng
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(18, 626);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(43, 17);
-            this.label4.TabIndex = 16;
-            this.label4.Text = "Scale";
+            this.btExportPng.Location = new System.Drawing.Point(183, 431);
+            this.btExportPng.Margin = new System.Windows.Forms.Padding(4);
+            this.btExportPng.Name = "btExportPng";
+            this.btExportPng.Size = new System.Drawing.Size(175, 28);
+            this.btExportPng.TabIndex = 19;
+            this.btExportPng.Text = "Export png";
+            this.btExportPng.UseVisualStyleBackColor = true;
+            this.btExportPng.Click += new System.EventHandler(this.btExportPng_Click);
             // 
-            // cbScale
+            // sfExportDialog
             // 
-            this.cbScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbScale.FormattingEnabled = true;
-            this.cbScale.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4"});
-            this.cbScale.Location = new System.Drawing.Point(82, 619);
-            this.cbScale.Name = "cbScale";
-            this.cbScale.Size = new System.Drawing.Size(44, 24);
-            this.cbScale.TabIndex = 17;
-            this.cbScale.SelectedIndexChanged += new System.EventHandler(this.cbScale_SelectedIndexChanged);
+            this.sfExportDialog.FileName = "anim.png";
+            this.sfExportDialog.Filter = "png|*.png";
+            this.sfExportDialog.InitialDirectory = "*";
             // 
             // AnimEditor
             // 
@@ -364,6 +398,9 @@
         private System.Windows.Forms.ColorDialog cdBackColor;
         private System.Windows.Forms.ComboBox cbScale;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox cbShowBack;
+        private System.Windows.Forms.Button btExportPng;
+        private System.Windows.Forms.SaveFileDialog sfExportDialog;
     }
 }
 

@@ -20,7 +20,6 @@ namespace CadEnemyEditor
             InitializeComponent();
         }
 
-        //byte[] Globals.romdata = null;
         AnimData[] animList;
         FrameData[] frameList;
         CoordData[] coordList;
@@ -30,9 +29,10 @@ namespace CadEnemyEditor
         byte[] pal = new byte[16];
         byte[] pal0 = AnimConfig.pal;
 
-        private Color backColor;
+        private bool showBack = true;
+        private Color backColor = Color.Black;
 
-        private int curScale;
+        private int curScale = 4;
 
         private void loadData()
         {
@@ -195,11 +195,13 @@ namespace CadEnemyEditor
             cbScale.SelectedIndex = 3; //default scale = 4
         }
 
-        private void drawFrame(FrameData f, bool drawWithSelectedTiles = false)
+        private Bitmap renderFrame(FrameData f, bool drawWithSelectedTiles = false)
         {
-            if (f == null)
-                return;
             Bitmap frame = new Bitmap(128 * curScale, 128 * curScale);
+            if (f == null)
+            {
+                return frame;
+            }
 
             int count = f.tileCount;
             TileInfo[] tiles = f.tiles;
@@ -213,7 +215,11 @@ namespace CadEnemyEditor
             {
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
                 g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-                g.FillRectangle(new SolidBrush(backColor), new Rectangle(0, 0, 128 * curScale, 128 * curScale));
+                if (showBack)
+                {
+                    g.FillRectangle(new SolidBrush(backColor), new Rectangle(0, 0, 128 * curScale, 128 * curScale));
+                }
+
                 for (int i = 0; i < count; i++)
                 {
                     byte xcByte = Globals.romdata[coordsRomAddr + i * 2 + 1];
@@ -234,15 +240,21 @@ namespace CadEnemyEditor
                     destPoints[0] = new Point(xReverted ? xh : x, yReverted ? yh : y);
                     destPoints[1] = new Point(xReverted ? x : xh, yReverted ? yh : y);
                     destPoints[2] = new Point(xReverted ? xh : x, yReverted ? y : yh);
-                    g.DrawImage(imageLists[subPalIndex].Images[index], destPoints/*, new Rectangle(addPart + xs[i]*scale, addPart + ys[i]*scale, 8 * scale, 8 * scale)*/);
+                    g.DrawImage(imageLists[subPalIndex].Images[index], destPoints);
                     if (drawWithSelectedTiles)
                     {
                         if (lvTiles.SelectedIndices.Contains(i))
-                          g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle(destPoints[0].X, destPoints[0].Y, 8 * curScale, 8 * curScale));
+                            g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle(destPoints[0].X, destPoints[0].Y, 8 * curScale, 8 * curScale));
                     }
                 }
             }
-            pbFrame.Image = frame;
+
+            return frame;
+        }
+
+        private void drawFrame(FrameData f, bool drawWithSelectedTiles = false)
+        {
+            pbFrame.Image = renderFrame(f, drawWithSelectedTiles);
         }
 
         private void tvAnims_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -406,6 +418,22 @@ namespace CadEnemyEditor
 
             curScale = cbScale.SelectedIndex + 1;
             drawFrame(activeFrame);
+        }
+
+        private void cbShowBack_CheckedChanged(object sender, EventArgs e)
+        {
+            showBack = cbShowBack.Checked;
+            drawFrame(activeFrame);
+        }
+
+        private void btExportPng_Click(object sender, EventArgs e)
+        {
+            if (sfExportDialog.ShowDialog() == DialogResult.OK)
+            {
+                var fname = sfExportDialog.FileName;
+                var img = renderFrame(activeFrame, false);
+                img.Save(fname);
+            }
         }
     }
 
