@@ -33,6 +33,7 @@ namespace CadEnemyEditor
         private Color backColor = Color.Black;
 
         private int curScale = 4;
+        private byte[] chunk = new byte[Globals.videoPageSize];
 
         private void loadData()
         {
@@ -141,11 +142,9 @@ namespace CadEnemyEditor
             return videoChunk;
         }
 
-        private void reloadVideo(int index)
+        private void reloadVideo()
         {
-            int videoId = index;
-            var videoChunk = getOjbVideoChunk(index);
-            var videoStrip = ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 0, true);
+            var videoStrip = ConfigScript.videoNes.makeImageStrip(chunk, pal, 0, true);
             Bitmap resultVideo = new Bitmap(256, 256);
             using (Graphics g = Graphics.FromImage(resultVideo))
             {
@@ -164,9 +163,9 @@ namespace CadEnemyEditor
             imageList3.Images.Clear();
             imageList4.Images.Clear();
             imageList1.Images.AddStrip(videoStrip);
-            imageList2.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 1, true));
-            imageList3.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 2, true));
-            imageList4.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(videoChunk, pal, 3, true));
+            imageList2.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(chunk, pal, 1, true));
+            imageList3.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(chunk, pal, 2, true));
+            imageList4.Images.AddStrip(ConfigScript.videoNes.makeImageStrip(chunk, pal, 3, true));
 
             setPal();
         }
@@ -187,7 +186,8 @@ namespace CadEnemyEditor
         private void Form1_Load(object sender, EventArgs e)
         {
             loadData();
-            reloadVideo(0);
+            chunk = getOjbVideoChunk(0);
+            reloadVideo();
             cbVideo.SelectedIndex = 0;
 
             updateBackColor(Color.Black);
@@ -285,7 +285,8 @@ namespace CadEnemyEditor
         {
             if (cbVideo.SelectedIndex >= 0)
             {
-                reloadVideo(cbVideo.SelectedIndex);
+                chunk = getOjbVideoChunk(cbVideo.SelectedIndex);
+                reloadVideo();
                 drawFrame(activeFrame);
             }
         }
@@ -383,7 +384,8 @@ namespace CadEnemyEditor
                 int index = e.X / 32 + (e.Y / 32) * 4;
                 pal[index] = (byte)EditColor.ColorIndex;
                 int videoIndex = cbVideo.SelectedIndex;
-                reloadVideo(videoIndex);
+                chunk = getObjVideoChunk(videoIndex);
+                reloadVideo();
             }*/
         }
 
@@ -459,7 +461,7 @@ namespace CadEnemyEditor
                     MessageBox.Show(ex.Message, "Error while loading pal from file");
                 }
 
-                reloadVideo(cbVideo.SelectedIndex);
+                reloadVideo();
                 drawFrame(activeFrame);
             }
         }
@@ -468,8 +470,31 @@ namespace CadEnemyEditor
         {
             for (int i = 0; i < 16; i++)
                 pal[i] = pal0[i];
-            reloadVideo(cbVideo.SelectedIndex);
+            reloadVideo();
             drawFrame(activeFrame);
+        }
+
+        private void btLoadChr_Click(object sender, EventArgs e)
+        {
+            if (ofOpenChr.ShowDialog() == DialogResult.OK)
+            {
+                var fname = ofOpenChr.FileName;
+                try
+                {
+                    var data = File.ReadAllBytes(fname);
+                    for (int i = 0; i < chunk.Length; i++)
+                    {
+                        chunk[i] = data[i];
+                    }
+
+                    reloadVideo();
+                    drawFrame(activeFrame);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error while loading CHR from file");
+                }
+            }
         }
     }
 

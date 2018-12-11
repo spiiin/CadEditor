@@ -60,6 +60,8 @@
             this.cdBackColor = new System.Windows.Forms.ColorDialog();
             this.sfExportDialog = new System.Windows.Forms.SaveFileDialog();
             this.ofOpenPal = new System.Windows.Forms.OpenFileDialog();
+            this.btLoadChr = new System.Windows.Forms.Button();
+            this.ofOpenChr = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pbVideo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFrame)).BeginInit();
             this.pnTileProperties.SuspendLayout();
@@ -144,7 +146,7 @@
             this.cbVideo.Location = new System.Drawing.Point(82, 3);
             this.cbVideo.Margin = new System.Windows.Forms.Padding(4);
             this.cbVideo.Name = "cbVideo";
-            this.cbVideo.Size = new System.Drawing.Size(269, 24);
+            this.cbVideo.Size = new System.Drawing.Size(90, 24);
             this.cbVideo.TabIndex = 3;
             this.cbVideo.SelectedIndexChanged += new System.EventHandler(this.cbVideo_SelectedIndexChanged);
             // 
@@ -263,6 +265,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btLoadChr);
             this.panel1.Controls.Add(this.btDefaultPal);
             this.panel1.Controls.Add(this.btLoadPal);
             this.panel1.Controls.Add(this.label5);
@@ -391,6 +394,22 @@
             this.ofOpenPal.FileName = "pal.bin";
             this.ofOpenPal.InitialDirectory = ".";
             // 
+            // btLoadChr
+            // 
+            this.btLoadChr.Location = new System.Drawing.Point(176, 0);
+            this.btLoadChr.Margin = new System.Windows.Forms.Padding(4);
+            this.btLoadChr.Name = "btLoadChr";
+            this.btLoadChr.Size = new System.Drawing.Size(175, 28);
+            this.btLoadChr.TabIndex = 23;
+            this.btLoadChr.Text = "Load CHR from file";
+            this.btLoadChr.UseVisualStyleBackColor = true;
+            this.btLoadChr.Click += new System.EventHandler(this.btLoadChr_Click);
+            // 
+            // ofOpenChr
+            // 
+            this.ofOpenChr.FileName = "chr.bin";
+            this.ofOpenChr.InitialDirectory = ".";
+            // 
             // AnimEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -448,6 +467,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.OpenFileDialog ofOpenPal;
         private System.Windows.Forms.Button btDefaultPal;
+        private System.Windows.Forms.Button btLoadChr;
+        private System.Windows.Forms.OpenFileDialog ofOpenChr;
     }
 }
 
