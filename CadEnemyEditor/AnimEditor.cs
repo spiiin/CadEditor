@@ -432,6 +432,12 @@ namespace CadEnemyEditor
             {
                 var fname = sfExportDialog.FileName;
                 var img = renderFrame(activeFrame, false);
+
+                if (!showBack)
+                {
+                    img = UtilsGDI.CropImage(img, UtilsGDI.FindBorderRect(img));
+                }
+
                 img.Save(fname);
             }
         }

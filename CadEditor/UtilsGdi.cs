@@ -14,12 +14,112 @@ namespace CadEditor
     public static class UtilsGDI
     {
 
-        public static Image CropImage(Image source, Rectangle rect)
+        public static Bitmap CropImage(Bitmap source, Rectangle rect)
         {
             Bitmap bmp = new Bitmap(rect.Width, rect.Height);
             using (var g = Graphics.FromImage(bmp))
                 g.DrawImage(source, 0, 0, rect, GraphicsUnit.Pixel);
             return bmp;
+        }
+
+        public static Rectangle FindBorderRect(Image source)
+        {
+            var bmp = source as Bitmap;
+            int minX = 0, minY = 0, maxX = bmp.Width-1, maxY = bmp.Height-1;
+
+            for (int x = 0; x < bmp.Width; x++)
+            {
+                bool zeroCol = true;
+                for (int y = 0; y < bmp.Height; y++)
+                {
+                    var p = bmp.GetPixel(x, y);
+                    if (p.ToArgb() != 0)
+                    {
+                        zeroCol = false;
+                        break;
+                    }
+                }
+
+                if (zeroCol)
+                {
+                    minX = x+1;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            for (int x = bmp.Width-1; x >=0 ; x--)
+            {
+                bool zeroCol = true;
+                for (int y = 0; y < bmp.Height; y++)
+                {
+                    var p = bmp.GetPixel(x, y);
+                    if (p.ToArgb() != 0)
+                    {
+                        zeroCol = false;
+                        break;
+                    }
+                }
+
+                if (zeroCol)
+                {
+                    maxX = x;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            for (int y = 0; y < bmp.Height; y++)
+            {
+                bool zeroRow = true;
+                for (int x = 0; x < bmp.Width; x++)
+                {
+                    var p = bmp.GetPixel(x, y);
+                    if (p.ToArgb() != 0)
+                    {
+                        zeroRow = false;
+                        break;
+                    }
+                }
+
+                if (zeroRow)
+                {
+                    minY = y+1;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            for (int y = bmp.Height - 1; y >= 0; y--)
+            {
+                bool zeroRow = true;
+                for (int x = 0; x < bmp.Width; x++)
+                {
+                    var p = bmp.GetPixel(x, y);
+                    if (p.ToArgb() != 0)
+                    {
+                        zeroRow = false;
+                        break;
+                    }
+                }
+
+                if (zeroRow)
+                {
+                    maxY = y;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return new Rectangle(minX, minY, maxX - minX, maxY - minY);
         }
 
         public static Image ResizeBitmap(Image image, int width, int height)
@@ -238,7 +338,7 @@ namespace CadEditor
             {
                 for (int x = 0; x < imCountX; x++)
                 {
-                    var imBlock = CropImage(imSrc, new Rectangle(x * imBlockWidth, y * imBlockHeight, imBlockWidth, imBlockHeight));
+                    var imBlock = CropImage(imSrc as Bitmap, new Rectangle(x * imBlockWidth, y * imBlockHeight, imBlockWidth, imBlockHeight));
                     var imResized = ResizeBitmap(imBlock, (int)(curButtonScale * blockWidth), (int)(curButtonScale * blockHeight));
                     bigBlocks[y*imCountX + x] = imResized;
                 }
