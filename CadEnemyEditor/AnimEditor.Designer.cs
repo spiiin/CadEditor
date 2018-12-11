@@ -47,10 +47,16 @@
             this.btSave = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.pbPal = new System.Windows.Forms.PictureBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pbBack = new System.Windows.Forms.PictureBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cdBackColor = new System.Windows.Forms.ColorDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pbVideo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFrame)).BeginInit();
             this.pnTileProperties.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPal)).BeginInit();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBack)).BeginInit();
             this.SuspendLayout();
             // 
             // imageList1
@@ -61,8 +67,8 @@
             // 
             // pbVideo
             // 
-            this.pbVideo.Location = new System.Drawing.Point(365, 92);
-            this.pbVideo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pbVideo.Location = new System.Drawing.Point(17, 29);
+            this.pbVideo.Margin = new System.Windows.Forms.Padding(4);
             this.pbVideo.Name = "pbVideo";
             this.pbVideo.Size = new System.Drawing.Size(341, 315);
             this.pbVideo.TabIndex = 0;
@@ -72,7 +78,7 @@
             // pbFrame
             // 
             this.pbFrame.Location = new System.Drawing.Point(715, 21);
-            this.pbFrame.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pbFrame.Margin = new System.Windows.Forms.Padding(4);
             this.pbFrame.Name = "pbFrame";
             this.pbFrame.Size = new System.Drawing.Size(683, 630);
             this.pbFrame.TabIndex = 1;
@@ -99,7 +105,7 @@
             // tvAnims
             // 
             this.tvAnims.Location = new System.Drawing.Point(16, 21);
-            this.tvAnims.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tvAnims.Margin = new System.Windows.Forms.Padding(4);
             this.tvAnims.Name = "tvAnims";
             this.tvAnims.Size = new System.Drawing.Size(320, 629);
             this.tvAnims.TabIndex = 2;
@@ -126,8 +132,8 @@
             "13",
             "14",
             "15"});
-            this.cbVideo.Location = new System.Drawing.Point(432, 59);
-            this.cbVideo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbVideo.Location = new System.Drawing.Point(82, 3);
+            this.cbVideo.Margin = new System.Windows.Forms.Padding(4);
             this.cbVideo.Name = "cbVideo";
             this.cbVideo.Size = new System.Drawing.Size(269, 24);
             this.cbVideo.TabIndex = 3;
@@ -138,10 +144,10 @@
             this.lvTiles.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
             this.lvTiles.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.lvTiles.Location = new System.Drawing.Point(365, 449);
-            this.lvTiles.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lvTiles.Location = new System.Drawing.Point(17, 401);
+            this.lvTiles.Margin = new System.Windows.Forms.Padding(4);
             this.lvTiles.Name = "lvTiles";
-            this.lvTiles.Size = new System.Drawing.Size(157, 201);
+            this.lvTiles.Size = new System.Drawing.Size(157, 186);
             this.lvTiles.TabIndex = 4;
             this.lvTiles.UseCompatibleStateImageBehavior = false;
             this.lvTiles.View = System.Windows.Forms.View.Details;
@@ -161,7 +167,7 @@
             "2",
             "3"});
             this.cbTileIndex.Location = new System.Drawing.Point(231, 9);
-            this.cbTileIndex.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbTileIndex.Margin = new System.Windows.Forms.Padding(4);
             this.cbTileIndex.Name = "cbTileIndex";
             this.cbTileIndex.Size = new System.Drawing.Size(84, 24);
             this.cbTileIndex.TabIndex = 7;
@@ -183,8 +189,8 @@
             this.pnTileProperties.Controls.Add(this.cbFlipX);
             this.pnTileProperties.Controls.Add(this.label1);
             this.pnTileProperties.Controls.Add(this.cbTileIndex);
-            this.pnTileProperties.Location = new System.Drawing.Point(365, 415);
-            this.pnTileProperties.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnTileProperties.Location = new System.Drawing.Point(17, 352);
+            this.pnTileProperties.Margin = new System.Windows.Forms.Padding(4);
             this.pnTileProperties.Name = "pnTileProperties";
             this.pnTileProperties.Size = new System.Drawing.Size(341, 41);
             this.pnTileProperties.TabIndex = 9;
@@ -194,7 +200,7 @@
             this.cbFlipY.AutoSize = true;
             this.cbFlipY.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbFlipY.Location = new System.Drawing.Point(96, 11);
-            this.cbFlipY.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbFlipY.Margin = new System.Windows.Forms.Padding(4);
             this.cbFlipY.Name = "cbFlipY";
             this.cbFlipY.Size = new System.Drawing.Size(59, 21);
             this.cbFlipY.TabIndex = 10;
@@ -207,7 +213,7 @@
             this.cbFlipX.AutoSize = true;
             this.cbFlipX.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbFlipX.Location = new System.Drawing.Point(4, 11);
-            this.cbFlipX.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbFlipX.Margin = new System.Windows.Forms.Padding(4);
             this.cbFlipX.Name = "cbFlipX";
             this.cbFlipX.Size = new System.Drawing.Size(58, 21);
             this.cbFlipX.TabIndex = 9;
@@ -217,8 +223,8 @@
             // 
             // btSave
             // 
-            this.btSave.Location = new System.Drawing.Point(532, 449);
-            this.btSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btSave.Location = new System.Drawing.Point(184, 401);
+            this.btSave.Margin = new System.Windows.Forms.Padding(4);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(175, 28);
             this.btSave.TabIndex = 10;
@@ -229,7 +235,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(352, 63);
+            this.label2.Location = new System.Drawing.Point(9, 6);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(70, 17);
@@ -238,29 +244,57 @@
             // 
             // pbPal
             // 
-            this.pbPal.Location = new System.Drawing.Point(532, 485);
-            this.pbPal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pbPal.Location = new System.Drawing.Point(184, 437);
+            this.pbPal.Margin = new System.Windows.Forms.Padding(4);
             this.pbPal.Name = "pbPal";
-            this.pbPal.Size = new System.Drawing.Size(171, 158);
+            this.pbPal.Size = new System.Drawing.Size(171, 150);
             this.pbPal.TabIndex = 13;
             this.pbPal.TabStop = false;
             this.pbPal.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbPal_MouseClick);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.pbBack);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.pbPal);
+            this.panel1.Controls.Add(this.pbVideo);
+            this.panel1.Controls.Add(this.cbVideo);
+            this.panel1.Controls.Add(this.btSave);
+            this.panel1.Controls.Add(this.lvTiles);
+            this.panel1.Controls.Add(this.pnTileProperties);
+            this.panel1.Location = new System.Drawing.Point(343, 21);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(365, 629);
+            this.panel1.TabIndex = 14;
+            // 
+            // pbBack
+            // 
+            this.pbBack.Location = new System.Drawing.Point(102, 595);
+            this.pbBack.Name = "pbBack";
+            this.pbBack.Size = new System.Drawing.Size(27, 22);
+            this.pbBack.TabIndex = 15;
+            this.pbBack.TabStop = false;
+            this.pbBack.Click += new System.EventHandler(this.pbBack_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(18, 600);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(78, 17);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "Back color:";
             // 
             // AnimEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1413, 666);
-            this.Controls.Add(this.pbPal);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.btSave);
-            this.Controls.Add(this.pnTileProperties);
-            this.Controls.Add(this.lvTiles);
-            this.Controls.Add(this.cbVideo);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.tvAnims);
             this.Controls.Add(this.pbFrame);
-            this.Controls.Add(this.pbVideo);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AnimEditor";
             this.Text = "CAD Enemy Editor v0.2 by spiiin";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -269,8 +303,10 @@
             this.pnTileProperties.ResumeLayout(false);
             this.pnTileProperties.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPal)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbBack)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -294,6 +330,10 @@
         private System.Windows.Forms.Button btSave;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pbPal;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.PictureBox pbBack;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ColorDialog cdBackColor;
     }
 }
 

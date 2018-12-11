@@ -30,6 +30,8 @@ namespace CadEnemyEditor
         byte[] pal = new byte[16];
         byte[] pal0 = AnimConfig.pal;
 
+        private Color backColor;
+
         private void loadData()
         {
             loadAnimData();
@@ -168,11 +170,26 @@ namespace CadEnemyEditor
             setPal();
         }
 
+        private void updateBackColor(Color newColor)
+        {
+            backColor = newColor;
+            var b = new Bitmap(pbBack.Width, pbBack.Height);
+            using (var g = Graphics.FromImage(b))
+            {
+                g.FillRectangle(new SolidBrush(backColor), new Rectangle(0,0, b.Width, b.Height));
+            }
+            pbBack.Image = b;
+
+            drawFrame(activeFrame);
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             loadData();
             reloadVideo(0);
             cbVideo.SelectedIndex = 0;
+
+            updateBackColor(Color.Black);
         }
 
         private void drawFrame(FrameData f, bool drawWithSelectedTiles = false)
@@ -194,7 +211,7 @@ namespace CadEnemyEditor
             {
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
                 g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-                g.FillRectangle(Brushes.Black, new Rectangle(0,0,128*scale, 128*scale));
+                g.FillRectangle(new SolidBrush(backColor), new Rectangle(0,0,128*scale, 128*scale));
                 for (int i = 0; i < count; i++)
                 {
                     byte xcByte = Globals.romdata[coordsRomAddr + i * 2 + 1];
@@ -368,6 +385,14 @@ namespace CadEnemyEditor
                 }
             }
             pbPal.Image = palImage;
+        }
+
+        private void pbBack_Click(object sender, EventArgs e)
+        {
+            if (cdBackColor.ShowDialog() == DialogResult.OK)
+            {
+                updateBackColor(cdBackColor.Color);
+            }
         }
     }
 
