@@ -51,6 +51,8 @@
             this.pbBack = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cdBackColor = new System.Windows.Forms.ColorDialog();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cbScale = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbVideo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFrame)).BeginInit();
             this.pnTileProperties.SuspendLayout();
@@ -80,7 +82,7 @@
             this.pbFrame.Location = new System.Drawing.Point(715, 21);
             this.pbFrame.Margin = new System.Windows.Forms.Padding(4);
             this.pbFrame.Name = "pbFrame";
-            this.pbFrame.Size = new System.Drawing.Size(683, 630);
+            this.pbFrame.Size = new System.Drawing.Size(683, 656);
             this.pbFrame.TabIndex = 1;
             this.pbFrame.TabStop = false;
             // 
@@ -107,7 +109,7 @@
             this.tvAnims.Location = new System.Drawing.Point(16, 21);
             this.tvAnims.Margin = new System.Windows.Forms.Padding(4);
             this.tvAnims.Name = "tvAnims";
-            this.tvAnims.Size = new System.Drawing.Size(320, 629);
+            this.tvAnims.Size = new System.Drawing.Size(320, 656);
             this.tvAnims.TabIndex = 2;
             this.tvAnims.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvAnims_NodeMouseDoubleClick);
             // 
@@ -244,16 +246,18 @@
             // 
             // pbPal
             // 
-            this.pbPal.Location = new System.Drawing.Point(184, 437);
+            this.pbPal.Location = new System.Drawing.Point(184, 462);
             this.pbPal.Margin = new System.Windows.Forms.Padding(4);
             this.pbPal.Name = "pbPal";
-            this.pbPal.Size = new System.Drawing.Size(171, 150);
+            this.pbPal.Size = new System.Drawing.Size(171, 190);
             this.pbPal.TabIndex = 13;
             this.pbPal.TabStop = false;
             this.pbPal.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pbPal_MouseClick);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.cbScale);
+            this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.pbBack);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label2);
@@ -265,14 +269,14 @@
             this.panel1.Controls.Add(this.pnTileProperties);
             this.panel1.Location = new System.Drawing.Point(343, 21);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(365, 629);
+            this.panel1.Size = new System.Drawing.Size(365, 656);
             this.panel1.TabIndex = 14;
             // 
             // pbBack
             // 
             this.pbBack.Location = new System.Drawing.Point(102, 595);
             this.pbBack.Name = "pbBack";
-            this.pbBack.Size = new System.Drawing.Size(27, 22);
+            this.pbBack.Size = new System.Drawing.Size(24, 22);
             this.pbBack.TabIndex = 15;
             this.pbBack.TabStop = false;
             this.pbBack.Click += new System.EventHandler(this.pbBack_Click);
@@ -286,17 +290,41 @@
             this.label3.TabIndex = 14;
             this.label3.Text = "Back color:";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(18, 626);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(43, 17);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "Scale";
+            // 
+            // cbScale
+            // 
+            this.cbScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbScale.FormattingEnabled = true;
+            this.cbScale.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4"});
+            this.cbScale.Location = new System.Drawing.Point(82, 619);
+            this.cbScale.Name = "cbScale";
+            this.cbScale.Size = new System.Drawing.Size(44, 24);
+            this.cbScale.TabIndex = 17;
+            this.cbScale.SelectedIndexChanged += new System.EventHandler(this.cbScale_SelectedIndexChanged);
+            // 
             // AnimEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1413, 666);
+            this.ClientSize = new System.Drawing.Size(1413, 690);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tvAnims);
             this.Controls.Add(this.pbFrame);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AnimEditor";
-            this.Text = "CAD Enemy Editor v0.2 by spiiin";
+            this.Text = "Capcom Anim Editor";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbVideo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFrame)).EndInit();
@@ -334,6 +362,8 @@
         private System.Windows.Forms.PictureBox pbBack;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ColorDialog cdBackColor;
+        private System.Windows.Forms.ComboBox cbScale;
+        private System.Windows.Forms.Label label4;
     }
 }
 

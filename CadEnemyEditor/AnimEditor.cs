@@ -32,6 +32,8 @@ namespace CadEnemyEditor
 
         private Color backColor;
 
+        private int curScale;
+
         private void loadData()
         {
             loadAnimData();
@@ -190,20 +192,20 @@ namespace CadEnemyEditor
             cbVideo.SelectedIndex = 0;
 
             updateBackColor(Color.Black);
+            cbScale.SelectedIndex = 3; //default scale = 4
         }
 
         private void drawFrame(FrameData f, bool drawWithSelectedTiles = false)
         {
             if (f == null)
                 return;
-            int scale = 4;
-            Bitmap frame = new Bitmap(128 * scale, 128 * scale);
+            Bitmap frame = new Bitmap(128 * curScale, 128 * curScale);
 
             int count = f.tileCount;
             TileInfo[] tiles = f.tiles;
             int coordsAddr = coordList[f.coordsIndex].addr;
             int coordsRomAddr = Utils.getCapcomAnimAddr(AnimConfig.animBankNo, coordsAddr);
-            int addPart = (128 / 2 * scale);
+            int addPart = (128 / 2 * curScale);
 
             ImageList[] imageLists = { imageList1, imageList2, imageList3, imageList4 };
 
@@ -211,19 +213,19 @@ namespace CadEnemyEditor
             {
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
                 g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-                g.FillRectangle(new SolidBrush(backColor), new Rectangle(0,0,128*scale, 128*scale));
+                g.FillRectangle(new SolidBrush(backColor), new Rectangle(0, 0, 128 * curScale, 128 * curScale));
                 for (int i = 0; i < count; i++)
                 {
                     byte xcByte = Globals.romdata[coordsRomAddr + i * 2 + 1];
                     byte ycByte = Globals.romdata[coordsRomAddr + i * 2 + 0];
                     int xOrig = Utils.getSignedFromByte(xcByte);
                     int yOrig = Utils.getSignedFromByte(ycByte);
-                    int x = addPart + xOrig * scale;
-                    int y = addPart + yOrig * scale;
+                    int x = addPart + xOrig * curScale;
+                    int y = addPart + yOrig * curScale;
                     int index = tiles[i].index;
                     int property = tiles[i].property;
-                    int xh = x + 8 * scale;
-                    int yh = y + 8 * scale;
+                    int xh = x + 8 * curScale;
+                    int yh = y + 8 * curScale;
                     int subPalIndex = property & 0x3;
 
                     Point[] destPoints = new Point[3];
@@ -236,7 +238,7 @@ namespace CadEnemyEditor
                     if (drawWithSelectedTiles)
                     {
                         if (lvTiles.SelectedIndices.Contains(i))
-                          g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle(destPoints[0].X, destPoints[0].Y, 8 * scale, 8 * scale));
+                          g.DrawRectangle(new Pen(Brushes.Red, 2.0f), new Rectangle(destPoints[0].X, destPoints[0].Y, 8 * curScale, 8 * curScale));
                     }
                 }
             }
@@ -393,6 +395,17 @@ namespace CadEnemyEditor
             {
                 updateBackColor(cdBackColor.Color);
             }
+        }
+
+        private void cbScale_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbScale.SelectedIndex < 0)
+            {
+                return;
+            }
+
+            curScale = cbScale.SelectedIndex + 1;
+            drawFrame(activeFrame);
         }
     }
 
