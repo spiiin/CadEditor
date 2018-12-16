@@ -13,6 +13,7 @@ public class Data:CapcomBase
       "PluginAnimEditor.dll",
     };
   }
+  public string getObjTypesPicturesDir() { return "little_mermaid_sprites"; }
   public OffsetRec getPalOffset()       { return new OffsetRec(0x1DB53, 32  , 16);  }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0xC010, 1 , 0x1000); }
   public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x8010, 10, 0x400); }
