@@ -83,14 +83,6 @@ public class Data:CapcomBase
   
   public byte[] getDuckTalesVideoChunk(int videoPageId)
   {
-    //anim editor hack
-    if (videoPageId < 0x0)
-    {
-      var ptrs = new int[] { 
-        0x10  , 0x110 , 0x210, 0x310, 0x410, 0x510, 0x610, 0x710,
-        0x1710, 0x1410, 0xE10, 0xF10, 0xC10, 0xD10, 0x810, 0x910 };
-      return Utils.readVideoBankFrom16Pointers(ptrs);
-    }
     
     //background
     byte[] videoChunk = Utils.getVideoChunk(videoPageId);

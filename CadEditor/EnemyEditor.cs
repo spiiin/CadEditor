@@ -395,7 +395,6 @@ namespace CadEditor
                             visibleRect = visibleRect,
                             curScale = curScale,
                             showBlocksAxis = showAxis,
-                            showBorder = true,
                             width = width,
                             height = height,
                             additionalRenderEnabled = formMain.additionalRenderEnabled,
@@ -405,12 +404,8 @@ namespace CadEditor
 
                         if (showScreenAxis)
                         {
-                            if (ConfigScript.getScreenVertical())
-                                g.DrawRectangle(new Pen(Brushes.Black,2.0f), new Rectangle(leftMargin, topMargin, tileSizeX * height, tileSizeY * width));
-                            else
-                                g.DrawRectangle(new Pen(Brushes.Black,2.0f), new Rectangle(leftMargin, topMargin, tileSizeX * width, tileSizeY * height));
+                            g.DrawRectangle(new Pen(Brushes.Black,2.0f), new Rectangle(leftMargin, topMargin, tileSizeX * width, tileSizeY * height));
                         }
-                        //ConfigScript.renderToMainScreen(g, (int)curScale);
                     }
                     else
                     {
@@ -702,7 +697,7 @@ namespace CadEditor
         private bool isMouseInside(ObjectRec obj, int x, int y, Image[] sprites)
         {
             var bigObject = sprites[obj.type];
-            return (x > (obj.x - bigObject.Width)) && (x < obj.x) && (y > (obj.y - bigObject.Height)) && (y < obj.y);
+            return (x > (obj.x - bigObject.Width/2)) && (x < obj.x + bigObject.Width/2) && (y > (obj.y - bigObject.Height/2)) && (y < obj.y + bigObject.Height/2);
         }
 
         private int oldX;

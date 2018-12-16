@@ -53,7 +53,6 @@ namespace CadEditor
 
         public static byte[] getVideoChunk(int videoPageId)
         {
-            //local version for cad & dwd
             byte[] videoChunk = new byte[Globals.videoPageSize];
             int videoAddr = ConfigScript.getVideoPageAddr(videoPageId);
             Array.Copy(Globals.romdata, videoAddr, videoChunk, 0, Globals.videoPageSize);
@@ -782,9 +781,8 @@ namespace CadEditor
             const int objectsCount = 256; //limit for now
             var objSpritesDir = ConfigScript.getObjTypesPicturesDir();
             var objSpritesDirGeneric = "obj_sprites";
-            var templ = objSpritesDir + "/object{0}.png";
-            var templBig = objSpritesDir + "/object{0}b.png";
-            var templGenericBig = objSpritesDirGeneric + "/object{0}b.png";
+            var templ = objSpritesDir + "/{0:000}.png";
+            var templBig = objSpritesDir + "/{0:000}b.png";
             objectSprites.Images.Clear();
             objectSprites.Images.AddStrip(Image.FromFile(objSpritesDirGeneric + "/objSprites.png"));
             objectSpritesBig = new Image[256];
@@ -796,16 +794,10 @@ namespace CadEditor
                     objectSprites.Images[i] = Image.FromFile(fname);
                 }
 
-                //
                 var fnameBig = String.Format(templBig, i);
-                var fnameGenericBig = String.Format(templGenericBig, i);
                 if (File.Exists(fnameBig))
                 {
                     objectSpritesBig[i] = Image.FromFile(fnameBig);
-                }
-                else if (File.Exists(fnameGenericBig))
-                {
-                    objectSpritesBig[i] = Image.FromFile(fnameGenericBig);
                 }
                 else
                 {
@@ -852,7 +844,7 @@ namespace CadEditor
             int x = curObject.x, y = curObject.y;
             int xsize = objectSpritesBig[curObject.type].Size.Width;
             int ysize = objectSpritesBig[curObject.type].Size.Height;
-            var rect = new Rectangle((int)(x * curScale) - xsize / 2 + leftMargin, (int)(y * curScale) - ysize / 2 + topMargin, xsize, ysize);
+            var rect = new Rectangle((int)((x - xsize/2) * curScale) + leftMargin, (int)((y - ysize/2) * curScale) + topMargin, (int)(xsize * curScale), (int)(ysize * curScale));
             if (curObject.type < objectSpritesBig.Length)
                 g.DrawImage(objectSpritesBig[curObject.type], rect);
             if (isSelected)
