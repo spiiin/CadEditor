@@ -46,7 +46,7 @@ https://www.patreon.com/CadEditor<br>
 <b>Project on itch.io</b><br>
 https://spiiin.itch.io/cadeditor
 
-<b>project on Fundition.io<b><br>
+<b>project on Fundition.io</b><br>
 https://fundition.io/#!/@pinkwonder/94dye4s9a
 
 <b>Screenshots</b><br>
