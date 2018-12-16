@@ -781,9 +781,8 @@ namespace CadEditor
             const int objectsCount = 256; //limit for now
             var objSpritesDir = ConfigScript.getObjTypesPicturesDir();
             var objSpritesDirGeneric = "obj_sprites";
-            var templ = objSpritesDir + "/object{0}.png";
-            var templBig = objSpritesDir + "/object{0}b.png";
-            var templGenericBig = objSpritesDirGeneric + "/object{0}b.png";
+            var templ = objSpritesDir + "/{0:000}.png";
+            var templBig = objSpritesDir + "/{0:000}b.png";
             objectSprites.Images.Clear();
             objectSprites.Images.AddStrip(Image.FromFile(objSpritesDirGeneric + "/objSprites.png"));
             objectSpritesBig = new Image[256];
@@ -795,16 +794,10 @@ namespace CadEditor
                     objectSprites.Images[i] = Image.FromFile(fname);
                 }
 
-                //
                 var fnameBig = String.Format(templBig, i);
-                var fnameGenericBig = String.Format(templGenericBig, i);
                 if (File.Exists(fnameBig))
                 {
                     objectSpritesBig[i] = Image.FromFile(fnameBig);
-                }
-                else if (File.Exists(fnameGenericBig))
-                {
-                    objectSpritesBig[i] = Image.FromFile(fnameGenericBig);
                 }
                 else
                 {
