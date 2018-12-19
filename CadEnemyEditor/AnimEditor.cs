@@ -188,6 +188,8 @@ namespace CadEnemyEditor
             loadData();
             chunk = getOjbVideoChunk(0);
             reloadVideo();
+            int videoCount = ConfigScript.videoObjOffset.recCount;
+            UtilsGui.setCbItemsCount(cbVideo, videoCount);
             cbVideo.SelectedIndex = 0;
 
             updateBackColor(Color.Black);
