@@ -56,9 +56,6 @@ namespace CadEditor
                  { bttBlocks,       makeBlocksEditor },
                  { bttEnemies,      ()=>{ var f = new EnemyEditor();  f.setFormMain(this); return f;}  },
             };
-
-            ConfigScript.plugins.ForEach((p) => p.addToolButton(this));
-            ConfigScript.plugins.ForEach((p) => p.addSubeditorButton(this));
         }
 
         private Form makeBlocksEditor()
@@ -94,6 +91,10 @@ namespace CadEditor
 
         private void resetControls()
         {
+            clearSubeditorButtons();
+            ConfigScript.plugins.ForEach((p) => p.addToolButton(this));
+            ConfigScript.plugins.ForEach((p) => p.addSubeditorButton(this));
+
             resetScreens();
 
             UtilsGui.setCbItemsCount(cbVideoNo, ConfigScript.videoOffset.recCount);
@@ -979,6 +980,46 @@ namespace CadEditor
             updateBlocksImages();
         }
 
+        public void clearSubeditorButtons()
+        {
+            toolStrip1.Items.Clear();
+            ToolStripItem[] items = {
+                bttOpen,
+                bttSave,
+                bttReload,
+                toolStripSeparator1,
+                //place for plugin
+                sToolButtons,
+
+                bttBigBlocks,
+                bttBlocks,
+                bttEnemies,
+                toolStripSeparator2,
+
+                bttStructures,
+                bttRunScript,
+                toolStripSeparator3,
+
+                bttShowNei,
+                bttAxis,
+                bttShowBrush,
+                toolStripSeparator4,
+
+                bttScale,
+                bttShowLayer1,
+                bttShowLayer2,
+                bttPhysicsLayerRender,
+                bttLayer,
+                bttAdditionalRender,
+                toolStripSeparator5,
+
+                tbbShowInfo,
+                tbbShowPluginInfo,
+            };
+
+            toolStrip1.Items.AddRange(items);
+        }
+
         public void addSubeditorButton(ToolStripItem item)
         {
           toolStrip1.Items.Insert(toolStrip1.Items.IndexOf(bttEnemies)+1, item);
@@ -1012,6 +1053,7 @@ namespace CadEditor
         public void addToolButton(ToolStripItem item)
         {
             toolStrip1.Items.Insert(toolStrip1.Items.IndexOf(toolStripSeparator1) + 1, item);
+
         }
 
         private void tbbShowPluginInfo_Click(object sender, EventArgs e)
