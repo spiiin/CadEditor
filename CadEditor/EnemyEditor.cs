@@ -833,7 +833,6 @@ namespace CadEditor
                 var activeObjectList = objectLists[curActiveObjectListIndex];
                 activeObjectList.objects.Insert(insertPos, obj);
 
-                dgvObjects.DataSource = null;
                 fillObjectsDataGrid();
             }
             else if (curTool == ToolType.Delete)
@@ -900,7 +899,7 @@ namespace CadEditor
 
         private void dgvObjects_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (e.ColumnIndex == 1)
+            if (e.ColumnIndex == 0)
             {
                 var row = dgvObjects.Rows[e.RowIndex];
                 int cell0 = Convert.ToInt32(row.Cells[1].Value);
@@ -910,7 +909,8 @@ namespace CadEditor
                     //update icon
                     if ((cell0 >= 0) && (cell0 < objectSprites.Images.Count))
                     {
-                        row.Cells[0].Value = objectSprites.Images[cell0];
+                        e.Value = objectSprites.Images[cell0];
+                        e.FormattingApplied = true;
                     }
 
                     //update dictionary
