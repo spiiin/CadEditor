@@ -124,4 +124,10 @@ public static class NinjaCatUtils
           g.DrawRectangle(new Pen(Brushes.Black, 1.0f), rect);
       }
   }
+  
+  public static bool selectObjectBig(ObjectRec obj, Image[] objectSprites, int x, int y)
+  {
+      var bigObject = objectSprites[obj.type];
+      return (x > obj.x - bigObject.Width) && (x < obj.x) && (y > obj.y - bigObject.Height) && (y < obj.y);
+  }
 }

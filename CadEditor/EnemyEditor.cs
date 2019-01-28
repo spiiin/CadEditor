@@ -681,7 +681,9 @@ namespace CadEditor
                         var obj = activeObjectList.objects[i];
                         if ((obj.sx == sx) && (obj.sy == sy))
                         {
-                            if (isMouseInside(obj, x, y, objectSpritesBig))
+                            var selectObjectBigFunc = ConfigScript.selectObjectBigFunc;
+                            bool selected = selectObjectBigFunc?.Invoke(obj, objectSpritesBig, x, y) ?? isMouseInside(obj, x, y, objectSpritesBig);
+                            if (selected)
                             {
                                 dgvObjects.Rows[i].Selected = !dgvObjects.Rows[i].Selected;
                             }

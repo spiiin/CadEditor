@@ -51,6 +51,7 @@ namespace CadEditor
 
     public delegate void DrawObjectFunc(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, ImageList objectSprites, bool inactive, int leftMargin, int topMargin);
     public delegate void DrawObjectBigFunc(Graphics g, ObjectRec curObject, int listNo, bool selected, float curScale, Image[] objectSprites, bool inactive, int leftMargin, int topMargin);
+    public delegate bool SelectObjectBigFunc(ObjectRec objRec, Image[] objectSprites, int x, int y);
 
     public delegate Screen[] LoadScreensFunc();
     public delegate void SaveScreensFunc(Screen[] screens);
@@ -269,6 +270,7 @@ namespace CadEditor
 
             drawObjectFunc = callFromScript<DrawObjectFunc>(asm, data, "*.getDrawObjectFunc");
             drawObjectBigFunc = callFromScript<DrawObjectBigFunc>(asm, data, "*.getDrawObjectBigFunc");
+            selectObjectBigFunc = callFromScript<SelectObjectBigFunc>(asm, data, "*.getSelectObjectBigFunc");
 
             renderToMainScreenFunc = callFromScript<RenderToMainScreenFunc>(asm, data, "*.getRenderToMainScreenFunc");
 
@@ -829,6 +831,7 @@ namespace CadEditor
 
         public static DrawObjectFunc drawObjectFunc;
         public static DrawObjectBigFunc drawObjectBigFunc;
+        public static SelectObjectBigFunc selectObjectBigFunc;
 
         public static LoadScreensFunc loadScreensFunc;
         public static SaveScreensFunc saveScreensFunc;
