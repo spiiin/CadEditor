@@ -514,6 +514,16 @@ namespace CadEnemyEditor
                 }
             }
         }
+
+        private void collapseAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tvAnims.CollapseAll();
+        }
+
+        private void expandAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tvAnims.ExpandAll();
+        }
     }
 
     class AnimData

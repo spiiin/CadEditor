@@ -36,6 +36,9 @@
             this.imageList3 = new System.Windows.Forms.ImageList(this.components);
             this.imageList4 = new System.Windows.Forms.ImageList(this.components);
             this.tvAnims = new System.Windows.Forms.TreeView();
+            this.cmTree = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.collapseAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.expandAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cbVideo = new System.Windows.Forms.ComboBox();
             this.lvTiles = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -48,6 +51,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pbPal = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btLoadChr = new System.Windows.Forms.Button();
             this.btDefaultPal = new System.Windows.Forms.Button();
             this.btLoadPal = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
@@ -60,10 +64,10 @@
             this.cdBackColor = new System.Windows.Forms.ColorDialog();
             this.sfExportDialog = new System.Windows.Forms.SaveFileDialog();
             this.ofOpenPal = new System.Windows.Forms.OpenFileDialog();
-            this.btLoadChr = new System.Windows.Forms.Button();
             this.ofOpenChr = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pbVideo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFrame)).BeginInit();
+            this.cmTree.SuspendLayout();
             this.pnTileProperties.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPal)).BeginInit();
             this.panel1.SuspendLayout();
@@ -115,12 +119,36 @@
             // 
             // tvAnims
             // 
+            this.tvAnims.ContextMenuStrip = this.cmTree;
             this.tvAnims.Location = new System.Drawing.Point(16, 21);
             this.tvAnims.Margin = new System.Windows.Forms.Padding(4);
             this.tvAnims.Name = "tvAnims";
             this.tvAnims.Size = new System.Drawing.Size(320, 656);
             this.tvAnims.TabIndex = 2;
             this.tvAnims.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvAnims_NodeMouseDoubleClick);
+            // 
+            // cmTree
+            // 
+            this.cmTree.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.collapseAllToolStripMenuItem,
+            this.expandAllToolStripMenuItem});
+            this.cmTree.Name = "cmTree";
+            this.cmTree.Size = new System.Drawing.Size(158, 52);
+            // 
+            // collapseAllToolStripMenuItem
+            // 
+            this.collapseAllToolStripMenuItem.Name = "collapseAllToolStripMenuItem";
+            this.collapseAllToolStripMenuItem.Size = new System.Drawing.Size(157, 24);
+            this.collapseAllToolStripMenuItem.Text = "Collapse All";
+            this.collapseAllToolStripMenuItem.Click += new System.EventHandler(this.collapseAllToolStripMenuItem_Click);
+            // 
+            // expandAllToolStripMenuItem
+            // 
+            this.expandAllToolStripMenuItem.Name = "expandAllToolStripMenuItem";
+            this.expandAllToolStripMenuItem.Size = new System.Drawing.Size(157, 24);
+            this.expandAllToolStripMenuItem.Text = "Expand All";
+            this.expandAllToolStripMenuItem.Click += new System.EventHandler(this.expandAllToolStripMenuItem_Click);
             // 
             // cbVideo
             // 
@@ -287,6 +315,17 @@
             this.panel1.Size = new System.Drawing.Size(365, 656);
             this.panel1.TabIndex = 14;
             // 
+            // btLoadChr
+            // 
+            this.btLoadChr.Location = new System.Drawing.Point(176, 0);
+            this.btLoadChr.Margin = new System.Windows.Forms.Padding(4);
+            this.btLoadChr.Name = "btLoadChr";
+            this.btLoadChr.Size = new System.Drawing.Size(175, 28);
+            this.btLoadChr.TabIndex = 23;
+            this.btLoadChr.Text = "Load CHR from file";
+            this.btLoadChr.UseVisualStyleBackColor = true;
+            this.btLoadChr.Click += new System.EventHandler(this.btLoadChr_Click);
+            // 
             // btDefaultPal
             // 
             this.btDefaultPal.Location = new System.Drawing.Point(182, 593);
@@ -394,17 +433,6 @@
             this.ofOpenPal.FileName = "pal.bin";
             this.ofOpenPal.InitialDirectory = ".";
             // 
-            // btLoadChr
-            // 
-            this.btLoadChr.Location = new System.Drawing.Point(176, 0);
-            this.btLoadChr.Margin = new System.Windows.Forms.Padding(4);
-            this.btLoadChr.Name = "btLoadChr";
-            this.btLoadChr.Size = new System.Drawing.Size(175, 28);
-            this.btLoadChr.TabIndex = 23;
-            this.btLoadChr.Text = "Load CHR from file";
-            this.btLoadChr.UseVisualStyleBackColor = true;
-            this.btLoadChr.Click += new System.EventHandler(this.btLoadChr_Click);
-            // 
             // ofOpenChr
             // 
             this.ofOpenChr.FileName = "chr.bin";
@@ -424,6 +452,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbVideo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFrame)).EndInit();
+            this.cmTree.ResumeLayout(false);
             this.pnTileProperties.ResumeLayout(false);
             this.pnTileProperties.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPal)).EndInit();
@@ -469,6 +498,9 @@
         private System.Windows.Forms.Button btDefaultPal;
         private System.Windows.Forms.Button btLoadChr;
         private System.Windows.Forms.OpenFileDialog ofOpenChr;
+        private System.Windows.Forms.ContextMenuStrip cmTree;
+        private System.Windows.Forms.ToolStripMenuItem collapseAllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem expandAllToolStripMenuItem;
     }
 }
 
