@@ -21,7 +21,13 @@ public class Script
         var activeScreen = formMain.screens[currentScreenNo];
         int w = activeScreen.width;
         int h = activeScreen.height;
-        var im = MapEditor.screenToImage(formMain.bigBlocks, formMain.screens, currentScreenNo, formMain.curScale, false, 0, 0, w, h);
+        var im = MapEditor.screenToImage(formMain.screens, currentScreenNo, new MapEditor.RenderParams
+        {
+            bigBlocks = formMain.bigBlocks,
+            curScale = formMain.curScale,
+            width = w,
+            height = h,
+        });
         var fname = ConfigScript.ConfigDirectory + String.Format("screen{0}.png", currentScreenNo);
         im.Save(fname);
         formScript.writeLog(String.Format("Screen exported to file: {0}", fname));

@@ -25,6 +25,19 @@ namespace PluginExportScreens
             return layout.layer[noInLayout] - 1;
         }
 
+        private int findNonZeroScrNo(LevelLayerData layout)
+        {
+            foreach (var scrNo in layout.layer)
+            {
+                if (scrNo > 0)
+                {
+                    return scrNo - 1;
+                }
+            }
+
+            return -1;
+        }
+
         private byte[] packLayerData(int[] layerData)
         {
             var ms = new MemoryStream();
@@ -65,12 +78,12 @@ namespace PluginExportScreens
             return bigBlockImage;
         }
 
-        private int[] prepaerLayerData()
+        private int[] prepareLayerData()
         {
             int layoutNo = cbLayout.SelectedIndex;
             var layout = ConfigScript.getLayout(layoutNo);
 
-            int scrNo = calcScrNo(layout, 0);
+            int scrNo = findNonZeroScrNo(layout);
             int width = formMain.screens[scrNo].width;
             int height = formMain.screens[scrNo].height;
 
@@ -125,12 +138,12 @@ namespace PluginExportScreens
                 var imName = Path.ChangeExtension(sfSave.FileName, "png");
 
                 var bigBlockImage = prepareImage(imName);
-                var base64LayerData = toZippedBase64String(prepaerLayerData());
+                var base64LayerData = toZippedBase64String(prepareLayerData());
 
                 int layoutNo = cbLayout.SelectedIndex;
                 var layout = ConfigScript.getLayout(layoutNo);
 
-                int scrNo = calcScrNo(layout, 0);
+                int scrNo = findNonZeroScrNo(layout);
                 int width = formMain.screens[scrNo].width;
                 int height = formMain.screens[scrNo].height;
                 var bigBlocksImages = formMain.bigBlocks;

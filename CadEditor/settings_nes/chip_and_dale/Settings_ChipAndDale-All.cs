@@ -20,7 +20,7 @@ public class Data:CapcomBase
    
   public OffsetRec getPalOffset()       { return new OffsetRec(0x1C354, 32  , 16);     }
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x30010, 16  , 0x1000); }
-  public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x20010, 16  , 0x1000); }
+  public OffsetRec getVideoObjOffset()  { return new OffsetRec(0x20010, 32  , 0x1000); }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x36F0 , 8   , 0x4000); }
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x3AF0 , 8   , 0x4000); }
   public OffsetRec getScreensOffset()   { return new OffsetRec(0x10   , 300 , 0x40, 8, 8);   }

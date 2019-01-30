@@ -188,6 +188,8 @@ namespace CadEnemyEditor
             loadData();
             chunk = getOjbVideoChunk(0);
             reloadVideo();
+            int videoCount = ConfigScript.videoObjOffset.recCount;
+            UtilsGui.setCbItemsCount(cbVideo, videoCount);
             cbVideo.SelectedIndex = 0;
 
             updateBackColor(Color.Black);
@@ -246,7 +248,7 @@ namespace CadEnemyEditor
                         {
                             if (lvTiles.SelectedIndices.Contains(i))
                                 g.DrawRectangle(new Pen(Brushes.Red, 2.0f),
-                                    new Rectangle(destPoints[0].X, destPoints[0].Y, 8 * curScale, 8 * curScale));
+                                    new Rectangle(x, y, 8 * curScale, 8 * curScale));
                         }
                     }
                 }
@@ -388,6 +390,19 @@ namespace CadEnemyEditor
 
         private void lvTiles_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (lvTiles.SelectedIndices.Count > 0)
+            {
+                int selectedIndex = lvTiles.SelectedIndices[0];
+                TileInfo[] tiles = activeFrame.tiles;
+                if (selectedIndex > 0)
+                {
+                    var tile = tiles[selectedIndex];
+                    cbFlipX.Checked = (tile.property & 0x40) == 0x40;
+                    cbFlipY.Checked = (tile.property & 0x80) == 0x80;
+                    cbTileIndex.SelectedIndex = tile.property & 0x03;
+                }
+            }
+
             drawFrame(activeFrame, true);
         }
 
@@ -511,6 +526,16 @@ namespace CadEnemyEditor
                     MessageBox.Show(ex.Message, "Error while loading CHR from file");
                 }
             }
+        }
+
+        private void collapseAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tvAnims.CollapseAll();
+        }
+
+        private void expandAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tvAnims.ExpandAll();
         }
     }
 

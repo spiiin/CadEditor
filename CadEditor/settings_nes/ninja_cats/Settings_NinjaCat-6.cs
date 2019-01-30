@@ -14,6 +14,7 @@ public class Data
   
   public string getObjTypesPicturesDir() { return "obj_sprites_ninjacats"; }
   public DrawObjectBigFunc getDrawObjectBigFunc() { return NinjaCatUtils.drawObjectBig; }
+  public SelectObjectBigFunc getSelectObjectBigFunc() { return NinjaCatUtils.selectObjectBig; }
   
   public int getPalBytesAddr()          { return 0x4B2E; }
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x4052 , 8   , 0x4000); }

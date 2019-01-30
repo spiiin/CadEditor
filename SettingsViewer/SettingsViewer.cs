@@ -251,6 +251,8 @@ namespace SettingsViewer
         [Category("Render objects params")]
         public MethodDelegate getDrawObjectBigFunc => get();
         [Category("Render objects params")]
+        public MethodDelegate getSelectObjectBigFunc => get();
+        [Category("Render objects params")]
         public MethodDelegate getRenderToMainScreenFunc => get();
         [Category("Editors enable params")]
         public MethodDelegate isBigBlockEditorEnabled => get();
