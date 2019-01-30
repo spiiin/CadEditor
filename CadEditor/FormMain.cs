@@ -1094,7 +1094,7 @@ namespace CadEditor
 
         private void setWindowText()
         {
-            Text = String.Format("CAD Editor v5.2 - {0}", OpenFile.fileName);
+            Text = String.Format("CAD Editor v5.3 - {0}", OpenFile.fileName);
         }
 
         private Screen getActiveScreen()
