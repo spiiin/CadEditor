@@ -1,6 +1,7 @@
 using CadEditor;
 using System;
 //css_include shared_settings/SharedUtils.cs;
+//css_include addams_family_the_pugsley_s_scavenger_hunt/AddamsUtils.cs;
 
 public class Data 
 { 
@@ -22,39 +23,12 @@ public class Data
   
   public static int getPalBytesAddr()          { return 0x1063; }
 
-  public GetBlocksFunc        getBlocksFunc() { return getBlocks;}
-  public SetBlocksFunc        setBlocksFunc() { return setBlocks;}
+  public GetBlocksFunc        getBlocksFunc() { return AddamsUtils.getBlocks;}
+  public SetBlocksFunc        setBlocksFunc() { return AddamsUtils.setBlocks;}
   
   public GetBigBlocksFunc     getBigBlocksFunc()     { return Utils.getBigBlocksCapcomDefault;}
   public SetBigBlocksFunc     setBigBlocksFunc()     { return Utils.setBigBlocksCapcomDefault;}
   
   public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin(new[] {"pal1.bin"}); }
   public SetPalFunc           setPalFunc()           { return null;}
-  
-  public static ObjRec[] getBlocks(int tileId)
-  {
-      int addr = ConfigScript.getTilesAddr(tileId);
-      int count = ConfigScript.getBlocksCount(tileId);
-      var blocks = Utils.readBlocksLinear(Globals.romdata, addr, 2, 2, count, false);
-      for (int i = 0; i < blocks.Length; i++)
-      {
-        blocks[i].palBytes[0] = (Globals.romdata[getPalBytesAddr()+i] >> 4) & 0x3;
-      }
-      return blocks;
-  }
-  
-  public static void setBlocks(int tileId, ObjRec[] blocksData)
-  {
-    int addr = ConfigScript.getTilesAddr(tileId);
-    int count = ConfigScript.getBlocksCount(tileId);
-    Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, false);
-    for (int i = 0; i < blocksData.Length; i++)
-    {
-      var oldValue = Globals.romdata[getPalBytesAddr()+i];
-      //set only 2 last bits.
-      //really, game uses first nibble as pallette numbers for blocks on odd positions, 
-      // and second nibbles  for blocks on even positions, so there are two variants of blocks exists
-      Globals.romdata[getPalBytesAddr()+i] = (byte)((oldValue & 0xCF) | (blocksData[i].palBytes[0] << 4));
-    }
-  }
 }
