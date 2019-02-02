@@ -1,6 +1,6 @@
 using CadEditor;
 using System;
-using System.Drawing;
+//css_include shared_settings/SharedUtils.cs;
 
 public class Data 
 { 
@@ -10,8 +10,8 @@ public class Data
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
 
-  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getVideoAddress; }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChunk; }
+  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SharedUtils.fakeVideoAddr(); }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk(new[] {"chr1.bin"}); }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
 
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0xe70, 1, 0x1000); }
@@ -25,10 +25,10 @@ public class Data
   public GetBlocksFunc        getBlocksFunc() { return getBlocks;}
   public SetBlocksFunc        setBlocksFunc() { return setBlocks;}
   
-  public GetBigBlocksFunc     getBigBlocksFunc()     { return getBigBlocks;}
-  public SetBigBlocksFunc     setBigBlocksFunc()     { return setBigBlocks;}
+  public GetBigBlocksFunc     getBigBlocksFunc()     { return Utils.getBigBlocksCapcomDefault;}
+  public SetBigBlocksFunc     setBigBlocksFunc()     { return Utils.setBigBlocksCapcomDefault;}
   
-  public GetPalFunc           getPalFunc()           { return getPallete;}
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin(new[] {"pal1.bin"}); }
   public SetPalFunc           setPalFunc()           { return null;}
   
   public static ObjRec[] getBlocks(int tileId)
@@ -56,50 +56,5 @@ public class Data
       // and second nibbles  for blocks on even positions, so there are two variants of blocks exists
       Globals.romdata[getPalBytesAddr()+i] = (byte)((oldValue & 0xCF) | (blocksData[i].palBytes[0] << 4));
     }
-  }
-  
-  public BigBlock[] getBigBlocks(int bigTileIndex)
-  {
-      int count = ConfigScript.getBigBlocksCount(0, bigTileIndex);
-      var bigBlocks =  new BigBlock[count];
-      var bigBlocksAddr = ConfigScript.getBigTilesAddr(0, bigTileIndex);
-      for (int i = 0; i < count; i++)
-      {
-         var bb = new BigBlock(2, 2);
-         bb.indexes[0]  = Globals.romdata[bigBlocksAddr + i * 4 + 0];
-         bb.indexes[1]  = Globals.romdata[bigBlocksAddr + i * 4 + 1];
-         bb.indexes[2]  = Globals.romdata[bigBlocksAddr + i * 4 + 2];
-         bb.indexes[3]  = Globals.romdata[bigBlocksAddr + i * 4 + 3];
-         bigBlocks[i] = bb;
-      }
-      return bigBlocks;
-  }
-  
-  public void setBigBlocks(int bigTileIndex, BigBlock[] bigBlocks)
-  {
-      var bigBlocksAddr = ConfigScript.getBigTilesAddr(0, bigTileIndex); 
-      for (int i = 0; i < bigBlocks.Length; i++)
-      {
-         var bb = bigBlocks[i];
-         Globals.romdata[bigBlocksAddr + i * 4 + 0] = (byte)bb.indexes[0];
-         Globals.romdata[bigBlocksAddr + i * 4 + 1] = (byte)bb.indexes[1];
-         Globals.romdata[bigBlocksAddr + i * 4 + 2] = (byte)bb.indexes[2];
-         Globals.romdata[bigBlocksAddr + i * 4 + 3] = (byte)bb.indexes[3];
-      }
-  }
-  
-  public byte[] getPallete(int palId)
-  {
-      return Utils.readBinFile("pal1.bin");
-  }
-  
-  public int getVideoAddress(int id)
-  {
-    return -1;
-  }
-  
-  public byte[] getVideoChunk(int videoPageId)
-  {
-     return Utils.readVideoBankFromFile("chr1.bin", videoPageId);
   }
 }
