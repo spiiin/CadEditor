@@ -141,6 +141,7 @@ Supported games:
     Super Mario World (unlicensed)                  (all levels)
     Super Painter (PD)                              (all levels)
     Super Pitfall                                   (all levels)
+    Super Robin Good                                (all levels)
     Super Spy Hunter                                (1 level)
     Tagin's Dragon (unlicensed)                     (all levels)
     Takahashi Meijin no Bugutte Honey               (all levels)
@@ -174,7 +175,6 @@ Supported games:
     Micromashines                                   (1 level)
     MegaMan                                         (1 level)
     Predator                                        (all levels)
-    Super Robin Good                                (all levels)
     Young Indiana Jones Chronicles                  (all levels)
     
 ----Layout editor:
