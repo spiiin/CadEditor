@@ -97,6 +97,7 @@ Supported games:
     Little Red Hood                                 (all levels)
     Little Samson                                   (1 level)
     Low G Man                                       (all levels)
+    Mega Man                                         (1 level)
     Mega Man 3                                      (all levels)
     Mega Man 4                                      (all levels)
     Mega Man 5                                      (all levels)
@@ -173,7 +174,6 @@ Supported games:
     SD Hero Soukessen - Taose! Aku no Gundan        (all levels)
     Mappy Kids                                      (all levels)
     Micromashines                                   (1 level)
-    MegaMan                                         (1 level)
     Predator                                        (all levels)
     Young Indiana Jones Chronicles                  (all levels)
     
