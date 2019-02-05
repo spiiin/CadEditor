@@ -31,6 +31,8 @@ fnames = [
     "Captain Planet and The Planeteers (U) [!].nes",
     "Captain Silver (J) [!].nes",
     "Castlevania (E).nes",
+    "Castlevania II - Simon's Quest (E).nes",
+    "Castlevania III - Dracula's Curse (U) [!].nes",
     "Castle of Dragon (U) [!].nes",
     "Challenger (J).nes",
     "Cheetahmen, The (Action 52 Rip) (Unl).nes",
