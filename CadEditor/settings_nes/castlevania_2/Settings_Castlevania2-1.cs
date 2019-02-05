@@ -14,8 +14,8 @@ public class Data
   public bool isBuildScreenFromSmallBlocks() { return true; }
   
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x10d3c, 1  , 0x1000);  }
-  public int getBlocksCount()           { return 145; }
-  public int getBigBlocksCount()        { return 145; }
+  public int getBlocksCount()           { return 69; }
+  public int getBigBlocksCount()        { return 69; }
   public int getPalBytesAddr()          { return 0x10cf7; }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getVideoAddress; }
