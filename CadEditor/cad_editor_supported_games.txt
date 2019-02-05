@@ -43,6 +43,7 @@ Supported games:
     Captain Silver                                  (all levels)
     Castle of Dragon                                (all levels)
     Castlevania                                     (1 level)
+    Castlevania 3                                   (1 level)
     Challenger                                      (all levels)
     Cheetah Men II                                  (all levels)
     Cheetahmen, The (Action 52 Rip) (unlicensed)    (all levels)
