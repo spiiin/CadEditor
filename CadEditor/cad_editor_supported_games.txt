@@ -92,6 +92,7 @@ Supported games:
     Ji Qi Mao Xiao Ding Dang (unlicensed)           (all levels)
     Jurassic Park                                   (1 level, dump editor)
     Juuouki                                         (all levels)
+    Kabuki - Quantum Fighter                        (all levels, no pal layer)
     Kaiketsu Yanchamaru 3                           (all levels)
     Karnov                                          (all levels)
     Kick Master                                     (all levels)

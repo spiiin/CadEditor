@@ -89,6 +89,7 @@ fnames = [
     "Jungle Book, The (U) [!].nes",
     "Jurassic Park (U) [!].nes",
     "Juuouki (J) [!].nes",
+    "Kabuki - Quantum Fighter (U) [!].nes",
     "Kaiketsu Yanchamaru 3 - Taiketsu! Zouringen (J) [T+Eng1.00_Suicidal].nes",
     "Karnov (U) [!].nes",
     "Kick Master (U) [!].nes",
