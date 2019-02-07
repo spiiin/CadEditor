@@ -104,6 +104,7 @@ Supported games:
     Mega Man 3                                      (all levels)
     Mega Man 4                                      (all levels)
     Mega Man 5                                      (all levels)
+    Metal Mech - Man and Machine                    (all levels)
     Metal Storm                                     (all levels)
     Mickey Mania 7                                  (1 level, game protected for changes)
     Mickey Mouse                                    (all levels)
