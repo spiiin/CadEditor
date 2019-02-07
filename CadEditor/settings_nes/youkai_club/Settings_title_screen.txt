@@ -1,0 +1,2 @@
+Offset: 19be1-19fa0 (tilemap)
+Palette: 19fa1-19fe0 (00-FF)
