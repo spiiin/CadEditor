@@ -1,0 +1,8 @@
+Intro Level 2
+
+Offset: 1397-1603 (tilemap)
+Palette: 1604-1643
+
+Offset: 6015-61b9 (tilemap)
+Palette: 61ba-61f9
+
