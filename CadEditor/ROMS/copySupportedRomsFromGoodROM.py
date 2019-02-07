@@ -173,6 +173,7 @@ fnames = [
     "Universe Soldiers, The (Ch) [!].nes",
     "Utsurun Desu (J).nes",
     "Vice - Project Doom (U) [!].nes",
+    "Youkai Kurabu (J) [T+Eng1.01 Stardust (08.04.2014)].nes",
     "Yo! Noid (U) [!].nes",
     "Yume Penguin Monogatari (J) [T+Eng1.01_Vice].nes",
     "Wai Wai World 2 - SOS!! Paseri Jou (J).nes",

@@ -167,6 +167,7 @@ Supported games:
     Wai Wai World 2                                 (all levels)
     Whomp Em                                        (all levels)
     Wizard of The Oz (unlicensed)                   (all levels)
+    Youkai Club                                     (1 level, no pal layer)
     Yo-Noid                                         (all levels)
     Yume Penguin Monogatari                         (all levels)
     Zen Intergalactic Ninja                         (all levels)
