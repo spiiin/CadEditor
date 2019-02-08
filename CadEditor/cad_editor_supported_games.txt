@@ -136,6 +136,7 @@ Supported games:
     Rockin' Kats                                    (all levels)
     Rocman X (unlicensed)                           (all levels)
     Rollergames                                     (all levels)
+    SD Hero Soukessen - Taose! Aku no Gundan        (all levels)
     Shadow of the Ninja                             (all levels)
     Shatterhand (Tokkyuu Shirei Solbrain)           (all levels + object editor for 1 level)
     Silent Assault (unlicensed)                     (all levels)
@@ -178,7 +179,6 @@ Supported games:
 ----Screens editor with prepared pictures:
     Addams Family, The - Pugsley's Scavenger Hunt   (all levels)
     Banana Prince                                   (all levels)
-    SD Hero Soukessen - Taose! Aku no Gundan        (all levels)
     Mappy Kids                                      (all levels)
     Micromashines                                   (1 level)
     Predator                                        (all levels)
