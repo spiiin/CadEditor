@@ -29,6 +29,7 @@ Supported games:
     Asterix                                         (all levels)
     Athena                                          (all levels)
     Bad Dudes                                       (all levels)
+    Bananan Ouji no Daibouken (Banana Prince)       (all levels)
     Batman                                          (all levels)
     Batman Returns                                  (all levels)
     Battletoads                                     (all levels)
@@ -178,7 +179,6 @@ Supported games:
     
 ----Screens editor with prepared pictures:
     Addams Family, The - Pugsley's Scavenger Hunt   (all levels)
-    Bananan Ouji no Daibouken (Banana Prince)       (all levels)
     Mappy Kids                                      (all levels)
     Micromashines                                   (1 level)
     Predator                                        (all levels)
