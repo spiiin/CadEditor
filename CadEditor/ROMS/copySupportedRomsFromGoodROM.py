@@ -21,7 +21,7 @@ fnames = [
     "Batman III [p1].nes",
     "Battletoads & Double Dragon - The Ultimate Team (E) [!p].nes",
     "Battletoads (U) [!].nes",
-    "Banana Prince (G) [!].nes",
+    "Bananan Ouji no Daibouken (J) [!].nes",
     "BreakThru (U) [!].nes",
     "Bucky O'Hare (E).nes",
     "Bugs Bunny Birthday Blowout, The (U) [!].nes",
