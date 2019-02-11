@@ -5,7 +5,13 @@ using System;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x175a7, 1 , 6*96, 6, 96);   }
+  public OffsetRec[] getScreensOffsetsForLevels() {
+    var ans = new OffsetRec[] {
+      new OffsetRec(0x175a7, 1 , 6*96, 6, 96),
+      new OffsetRec(0x17d69, 1 , 6*29, 6, 29),
+    };
+    return ans;  
+  }
   public bool getScreenVertical()      { return true; }
   public bool isBuildScreenFromSmallBlocks() { return true; }
   
@@ -24,6 +30,7 @@ public class Data
   public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk("chr5.bin");    }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
-  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin("pal5.bin"); }
+  public OffsetRec getPalOffset()                    { return new OffsetRec(0, 2, 16);     }
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin(new[]{"pal5.bin", "pal52.bin"}); }
   public SetPalFunc           setPalFunc()           { return null;}
 }

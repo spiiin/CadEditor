@@ -5,7 +5,14 @@ using System;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x3950, 1 , 6*64, 6, 64);   }
+  public OffsetRec[] getScreensOffsetsForLevels() {
+    var ans = new OffsetRec[] {
+      new OffsetRec(0x1b849, 1 , 12*16, 12, 16),
+      new OffsetRec( 0x1ba09, 1 , 12*96, 12, 96),
+      new OffsetRec( 0x1be89, 1 , 6*32, 6, 32),
+    };
+    return ans;  
+  }
   public bool getScreenVertical()      { return true; }
   public bool isBuildScreenFromSmallBlocks() { return true; }
   
@@ -13,17 +20,17 @@ public class Data
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
   
-  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x3250, 1  , 0x1000);  }
-  public int getPalBytesAddr()          { return 0x3ad0; }
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x1b049, 1  , 0x1000);  }
+  public int getPalBytesAddr()          { return 0x1b909; }
   public GetBlocksFunc        getBlocksFunc() { return IndyUtils.getBlocksFromTiles16Pal1V;}
   public SetBlocksFunc        setBlocksFunc() { return IndyUtils.setBlocksFromTiles16Pal1V;}
-  public int getBigBlocksCount() { return 112; }
-  public int getBlocksCount()    { return 112; }
+  public int getBigBlocksCount() { return 128; }
+  public int getBlocksCount()    { return 128; }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SharedUtils.fakeVideoAddr(); }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk("chr6.bin");    }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk("chr7.bin");    }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
-  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin("pal6.bin"); }
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin("pal7.bin"); }
   public SetPalFunc           setPalFunc()           { return null;}
 }
