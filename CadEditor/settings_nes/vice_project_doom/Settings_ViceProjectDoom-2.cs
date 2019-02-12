@@ -31,7 +31,6 @@ public class Data
   public int getBlocksCount()           { return 177; }
 
   public int getPalBytesAddr()          { return 0x10355; }
-  public string[] getBlockTypeNames()   { return objTypesCad;  }
   
  
   public GetVideoPageAddrFunc getVideoPageAddrFunc()         { return Utils.getChrAddress; }
@@ -42,11 +41,6 @@ public class Data
   public SetBlocksFunc        setBlocksFunc()        { return setBlocks;}
   public GetPalFunc           getPalFunc()           { return getPalleteLevel_2_1;}
   public SetPalFunc           setPalFunc()           { return null;}
-  
-//  public byte[] getVideoChunk(int videoPageId)
-//  {
-//    return Utils.readVideoBankFromFile("chr2.bin", videoPageId);
-//  }
 
   public static ObjRec[] getBlocks(int tileId)
   {
@@ -54,8 +48,8 @@ public class Data
     int palAddr = ConfigScript.getPalBytesAddr(tileId);
     for (int i = 0; i < ConfigScript.getBlocksCount(tileId); i++)
     {
-        objects[i].palBytes[0] =  Globals.romdata[palAddr + i] & 0x3 >> 1;
-        objects[i].type = Globals.romdata[palAddr + i] >> 2 & 0xf;
+        objects[i].palBytes[0] =  Globals.romdata[palAddr + i] & 0x3;
+        //objects[i].type = Globals.romdata[palAddr + i] >> 2 & 0xf;
     }
     return objects; 
     
@@ -73,8 +67,8 @@ public class Data
     
     for (int i = 0; i < count; i++)
     {
-        int mask = Globals.romdata[palAddr + i] & 0x3;
-        Globals.romdata[palAddr + i] = (byte)(mask | (blocks[i].palBytes[0] >> 6));
+        int mask = Globals.romdata[palAddr + i] & 0xFC;
+        Globals.romdata[palAddr + i] = (byte)(mask | (blocks[i].palBytes[0]));
     }
     
   }
@@ -88,27 +82,4 @@ public class Data
     }; 
     return pallete;
   }
-  
-string[] objTypesCad =
-    new[]  {
-        "0 (background)",
-        "1 (solid)",
-        "2 ()",
-        "3 ()",
-        "4 ()",
-        "5 ()",
-        "6 ()",
-        "7 ()",
-        "8 (ledge)",
-        "9 ()",
-        "A ()",
-        "B ()",
-        "C (bo-bo)",
-        "D ()",
-        "E ()",
-        "F ()"
-    };
-
-  
-
 }

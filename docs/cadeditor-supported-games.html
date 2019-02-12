@@ -40,24 +40,32 @@
 
 <tr>
 <td>
-
 <table>
 <tr><td>Darkwing Duck</td></tr>
 <tr><td>Little Mermaid</td></tr>
 <tr><td>Tale Spin</td></tr>
 <tr><td>Chip & Dale</td></tr>
-<tr><td>Megaman 3</td></tr>
-<tr><td>Megaman 4</td></tr>
-<tr><td>Megaman 5</td></tr>
+<tr><td>Mega Man 3</td></tr>
+<tr><td>Mega Man 4</td></tr>
+<tr><td>Mega Man 5</td></tr>
 <tr><td>Mighty Final Fight</td></tr>
 <tr><td>Adventure in the Magic Kingdom</td></tr>
 </table>
-
 </td>
 <td>Aligned(2x2 + palByte1)</td>
 <td>Linear(2x2)</td>
 <td>Linear(8x8)</td>
 </tr>
+
+<tr>
+<td>
+Mega Man 6
+</td>
+<td>Aligned(2x2 + palByte1)</td>
+<td>Linear(2x2)</td>
+<td>(-)</td>
+</tr>
+
 
 <tr>
 <td>Duck Tales</td>
@@ -119,11 +127,21 @@
 <tr><td>Time Diver Eon Man</td></tr>
 <tr><td>Super City Tank</td></tr>
 <tr><td>Doraemon</td></tr>
+<tr><td>Kabuki Quantum Warrior (<i>прим.4</i>)</td></tr>
 </table>
 </td>
 <td>Linear(2x2) + palByte1</td>
 <td>-</td>
 <td>-</td>
+</tr>
+
+<tr>
+<td>
+SD Hero Soukessen - Taose! Aku no Gundan
+</td>
+<td>Linear(2x2) + palByte1</td>
+<td>-</td>
+<td>(-)T</td>
 </tr>
 
 <tr>
@@ -160,6 +178,7 @@ Jungle Book
 <tr><td>Terminator 2</td></tr>
 <tr><td>Takahashi Meijin no Bugutte Honey</td></tr>
 <tr><td>Zombie Nation</td></tr>
+<tr><td>Super Robin Good</td></tr>
 </table>
 </td>
 <td>Aligned(2x2 + palByte1)</td>
@@ -268,7 +287,19 @@ Linear(2x1)</td>
 
 <tr>
 <td>
-Super Contra 7 (unl)
+Snake's Revenge
+</td>
+<td>Linear(4x4) + palByte4</td>
+<td>-</td>
+<td>Rle(Linear(8x8))</td>
+</tr>
+
+<tr>
+<td>
+<table>
+<tr><td>Castlevania 2</td></tr>
+<tr><td>Super Contra 7 (unl)</td></tr>
+</table>
 </td>
 <td>Linear(4x4) + palByte4</td>
 <td>-</td>
@@ -414,6 +445,27 @@ Little Samson
 
 <tr>
 <td>
+Banana Prince
+</td>
+<td>const(2x2)T</td>
+<td>Linear(2x2) + palByte4</td>
+<td>Linear(8x8)</td>
+</tr>
+
+<tr>
+<td>
+<table>
+<tr><td>Mega Man</td></tr>
+<tr><td>Mega Man 2</td></tr>
+</table>
+</td>
+<td>const(2x2)T</td>
+<td>Linear(2x2)T + palByte4</td>
+<td>Linear(8x8)T</td>
+</tr>
+
+<tr>
+<td>
 <table>
 <tr><td>Gun Smoke</td></tr>
 <tr><td>Legendary Wings</td></tr>
@@ -478,6 +530,7 @@ Bugs Bunny Birthdata Blowout
 <tr><td>Happily Ever After</td></tr>
 <tr><td>Super Pitfall</td></tr>
 <tr><td>Ikari Warriors</td></tr>
+<tr><td>Metal Mech - Man and Machine</td></tr>
 </table>
 </td>
 <td>Linear(2x2) + palByte1</td>
@@ -531,6 +584,7 @@ Bugs Bunny Birthdata Blowout
 <tr><td>Karnov</td></tr>
 <tr><td>Robocop</td></tr>
 <tr><td>Parasol Henbee</td></tr>
+<tr><td>Vice: Project Doom (level 2)</td></tr>
 </table>
 </td>
 <td>Linear(2x2) + palByte1</td>
@@ -633,6 +687,7 @@ Jackal
 <tr><td>Bucky O'Hare</td></tr>
 <tr><td>Adventures of Bayou Billy</td></tr>
 <tr><td>Goonies 2</td></tr>
+<tr><td>Castlevania 3</td></tr>
 </table>
 </td>
 <td>Linear(4x4) + palByte4</td>
@@ -665,6 +720,15 @@ Batman
 <td>Linear(4x2)</td>
 <td>-</td>
 <td>Linear(8x15), palByteX</td>
+</tr>
+
+<tr>
+<td>
+Predator
+</td>
+<td>Linear(4x2)T<br><i>прим.3</i></td>
+<td>-</td>
+<td>(-)T, palByteX</td>
 </tr>
 
 <tr>
@@ -762,11 +826,41 @@ Circus Caper
 
 <tr>
 <td>
-Hudson Hawk
+<table>
+<tr><td>Hudson Hawk</td></tr>
+<tr><td>Youkai Club</td></tr>
+</table>
 </td>
 <td>Linear(2x2)</td>
 <td>-</td>
 <td>(-), palByteX</td>
+</tr>
+
+<tr>
+<td>
+Addams Family - Pugsley's Scavenger Hunt
+</td>
+<td>Linear(2x2) + palByte1 <br><i>прим.2</i></td>
+<td>Linear(2x2)</td>
+<td>(-)</td>
+</tr>
+
+<tr>
+<td>
+Young Indiana Jones Chronicles
+</td>
+<td>Linear(4x4)T + palByte1</td>
+<td>(-)</td>
+<td>(-)</td>
+</tr>
+
+<tr>
+<td>
+Vice: Project Doom (level 1)
+</td>
+<td>Linear(2x2) + palByte1</td>
+<td>Linear(2x2)T</td>
+<td>8x8</td>
 </tr>
 
 
@@ -790,6 +884,7 @@ Hudson Hawk
 <b>Comp()</b> - данные в ROM сжаты каким-либо образом.<br>
 <b>Linear(NxM); Linear(PxQ)</b> - в игре используются и структуры размером NxM, и структуры размером PxQ элементов в разных местах.<br>
 <b>mix(NxM, palByteX)</b> - биты палитры хранятся в тех же байтах, что и индексы элементов структуры.<br>
+<b>Rle()</b> - данные хранятся в запакованном алгоритмом RLE виде.<br>
 </p>
 
 <p>
@@ -802,6 +897,9 @@ Hudson Hawk
 <p>
 <h3>Примечения</h3>
 <b><i>прим.1</i></b> Отдельно хранятся старшие биты номеров блоков (игра поддерживает до 512 блоков на уровень)<br>
+<b><i>прим.2</i></b> Байты палитры хранят 2 варианта расцветки блока - для блоков стоящих на чётных и нечётных позициях<br>
+<b><i>прим.3</i></b> Блоки пересекаются между собой (блок 1 размером 4x2 тайла состоит из субблоков 1 и 2 по 2x2 тайла, блок 2 состоит из субблоков 2 и 3 - (субблок 2 входит и в блок 1 и в блок 2)<br>
+<b><i>прим.4</i></b> Формат слоя палитры не исследован. Предположительно один байт кодирует данные 2х блоков карты. Линии описаны вертикально
 </p>
 
 <p>
