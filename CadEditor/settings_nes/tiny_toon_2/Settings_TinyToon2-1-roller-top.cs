@@ -1,6 +1,7 @@
 using CadEditor;
 using System;
 //css_include tiny_toon_2/TT2Utils.cs;
+//css_include shared_settings/SharedUtils.cs;
 
 public class Data 
 {  
@@ -10,8 +11,8 @@ public class Data
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
   
-  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return TT2Utils.fakeVideoAddr(); }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return TT2Utils.getVideoChunk("chr1.bin");   }
+  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SharedUtils.fakeVideoAddr(); }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk("chr1.bin");   }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
@@ -23,6 +24,6 @@ public class Data
   
   public GetBlocksFunc        getBlocksFunc() { return TT2Utils.getBlocks;}
   public SetBlocksFunc        setBlocksFunc() { return TT2Utils.setBlocks;}
-  public GetPalFunc           getPalFunc()           { return TT2Utils.readPalFromBin("pal1.bin"); }
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin("pal1.bin"); }
   public SetPalFunc           setPalFunc()           { return null;}
 }
