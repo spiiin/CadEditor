@@ -20,7 +20,7 @@ public static class CaptainSilverUtils
     int addr = ConfigScript.getTilesAddr(tileId);
     int count = ConfigScript.getBlocksCount(tileId);
     var palAddr = ConfigScript.getPalBytesAddr(tileId);
-    Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, true, false);
+    Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, false, false);
     for (int i = 0; i < count; i++)
     {
         int t = Globals.romdata[palAddr + i];
