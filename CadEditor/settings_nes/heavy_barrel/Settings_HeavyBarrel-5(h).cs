@@ -1,6 +1,6 @@
 using CadEditor;
 using System;
-//css_include heavy_barrel/HeavyBarrelUtils.cs;
+//css_include shared_settings/BlockUtils.cs;
 public class Data 
 { 
   public OffsetRec getScreensOffset()  { return new OffsetRec(0x15518, 1 , 16*15+1, 16, 15);   }
@@ -20,8 +20,8 @@ public class Data
   public int getBigBlocksCount()        { return 256; }
   public int getPalBytesAddr()          { return 0x15c9e; }
   
-  public GetBlocksFunc        getBlocksFunc() { return HeavyBarrelUtils.getBlocks;}
-  public SetBlocksFunc        setBlocksFunc() { return HeavyBarrelUtils.setBlocks;}
+  public GetBlocksFunc        getBlocksFunc() { return BlockUtils.getBlocksLinear2x2Masked;}
+  public SetBlocksFunc        setBlocksFunc() { return BlockUtils.setBlocksLinear2x2Masked;}
   public GetPalFunc           getPalFunc()           { return getPallete;}
   public SetPalFunc           setPalFunc()           { return null;}
   //----------------------------------------------------------------------------
