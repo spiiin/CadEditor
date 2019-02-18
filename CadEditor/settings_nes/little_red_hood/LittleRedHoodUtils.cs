@@ -1,31 +1,26 @@
 using CadEditor;
 using System;
+using PluginMapEditor;
 
 public static class LittleRedHoodUtils 
-{ 
-  public static ObjRec[] getBlocks(int tileId)
+{  
+  public static OffsetRec getScreensOffset()
   {
-      int count = ConfigScript.getBlocksCount(tileId);
-      var bb = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), 2, 2, count, false, false);
-      var palAddr = ConfigScript.getPalBytesAddr(tileId);
-      for (int i = 0; i < count; i++)
-      {
-          bb[i].palBytes[0] = Globals.romdata[palAddr + i] & 0x3; //get only pal, not physics
-      }
-      return bb;
+    return ConfigScript.screensOffset[0];
   }
   
-  public static void setBlocks(int tileId, ObjRec[] blocksData)
+  public static MapInfo[] makeMapsInfo()
   {
-    int addr = ConfigScript.getTilesAddr(tileId);
-    int count = ConfigScript.getBlocksCount(tileId);
-    var palAddr = ConfigScript.getPalBytesAddr(tileId);
-    Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, false, false);
-    for (int i = 0; i < count; i++)
-    {
-        int t = Globals.romdata[palAddr + i];
-        t =  t &  0xFC | blocksData[i].palBytes[0];
-        Globals.romdata[palAddr + i] = (byte)t; //save only pal bits, not physics
-    }
+     var mapsInfo = new MapInfo[getScreensOffset().recCount];
+     int scrSize = getScreensOffset().width * getScreensOffset().height * ConfigScript.getWordLen();
+     int actualScrSize = getScreensOffset().recSize;
+     int attrSize = 64;
+     for (int i = 0; i < mapsInfo.Length; i++)
+     {
+         int da = getScreensOffset().beginAddr + actualScrSize * i;
+         int aa = ConfigScript.getPalBytesAddr(0);
+         mapsInfo[i] = new MapInfo(){ dataAddr = da, palAddr = ConfigScript.palOffset.beginAddr, videoNo = 0, attribsAddr = aa};
+     }
+     return mapsInfo;
   }
 }
