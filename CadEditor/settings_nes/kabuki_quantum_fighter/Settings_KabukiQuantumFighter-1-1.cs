@@ -1,6 +1,5 @@
 using CadEditor;
 using System;
-//css_include kabuki_quantum_fighter/KabukiUtils.cs;
 
 public class Data 
 {

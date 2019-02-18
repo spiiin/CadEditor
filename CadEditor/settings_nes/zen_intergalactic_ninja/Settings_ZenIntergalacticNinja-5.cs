@@ -1,6 +1,6 @@
 using CadEditor;
 using System;
-//css_include zen_intergalactic_ninja/ZenUtils.cs;
+//css_include shared_settings/SharedUtils.cs;
 
 public class Data 
 { 
@@ -14,8 +14,8 @@ public class Data
   
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x0 , 1   , 0x1000);  }
   public OffsetRec getPalOffset  ()     { return new OffsetRec(0x0 , 1   , 16); }
-  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return ZenUtils.fakeVideoAddr(); }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return ZenUtils.getVideoChunk(new[] {"chr6.bin"}); }
+  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return  SharedUtils.fakeVideoAddr(); }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return  SharedUtils.getVideoChunk(new[] {"chr6.bin"}); }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0xda30, 1  , 0x1000);  }
@@ -25,6 +25,6 @@ public class Data
   public GetBlocksFunc        getBlocksFunc() { return Utils.getBlocksFromTiles16Pal1;}
   public SetBlocksFunc        setBlocksFunc() { return Utils.setBlocksFromTiles16Pal1;}
   
-  public GetPalFunc           getPalFunc()           { return ZenUtils.readPalFromBin(new[] {"pal6.bin"}); }
+  public GetPalFunc           getPalFunc()           { return  SharedUtils.readPalFromBin(new[] {"pal6.bin"}); }
   public SetPalFunc           setPalFunc()           { return null;}
 }

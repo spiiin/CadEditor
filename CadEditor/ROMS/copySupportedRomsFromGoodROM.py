@@ -143,6 +143,7 @@ fnames = [
     "Shadow of the Ninja (U) [!].nes",
     "Shatterhand (U) [!].nes",
     "Silent Assault (Color Dreams) [!].nes",
+    "Silkworm (U) [!].nes",
     "Snake's Revenge (U) [!].nes",
     "Sonic The Hedgehog (Unl) [!].nes",
     "Spelunker 2 - Yuusha heno Chousen (J) [b1][T+Eng0.9_Sarysa].nes",

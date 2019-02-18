@@ -1,7 +1,7 @@
 using CadEditor;
 using System;
 //css_include shared_settings/SharedUtils.cs;
-//css_include shared_settings/BlockUtils.cs;
+//css_include captain_silver/CaptainSilverUtils.cs;
 
 public class Data 
 { 
@@ -22,8 +22,8 @@ public class Data
   public int getBigBlocksCount()        { return 114; }
   public int getPalBytesAddr()          { return 0x503c; }
   
-  public GetBlocksFunc        getBlocksFunc() { return BlockUtils.getBlocksLinear2x2MaskedWithAttribs;}
-  public SetBlocksFunc        setBlocksFunc() { return BlockUtils.setBlocksLinear2x2MaskedWithAttribs;}
+  public GetBlocksFunc        getBlocksFunc() { return CaptainSilverUtils.getBlocksLinear2x2MaskedWithAttribs;}
+  public SetBlocksFunc        setBlocksFunc() { return CaptainSilverUtils.setBlocksLinear2x2MaskedWithAttribs;}
   public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin("pal4-2.bin"); }
   public SetPalFunc           setPalFunc()           { return null;}
 }

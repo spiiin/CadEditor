@@ -141,6 +141,7 @@ Supported games:
     Shadow of the Ninja                             (all levels)
     Shatterhand (Tokkyuu Shirei Solbrain)           (all levels + object editor for 1 level)
     Silent Assault (unlicensed)                     (all levels)
+    Silkworm                                        (1 level)
     Snake's Revenge                                 (1 level, rle packed - save not working)
     Sonic the Hedgehog (unlicensed)                 (all levels)
     Spelunker 2                                     (all levels)

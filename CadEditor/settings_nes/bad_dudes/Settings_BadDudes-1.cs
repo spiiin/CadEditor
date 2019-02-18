@@ -1,6 +1,7 @@
 using CadEditor;
 using System;
-//css_include bad_dudes/BadDudesUtils.cs;
+//css_include shared_settings/BlockUtils.cs;
+//css_include shared_settings/SharedUtils.cs;
 
 public class Data 
 { 
@@ -10,8 +11,8 @@ public class Data
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
   
-  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getVideoAddress; }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChunk;   }
+  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SharedUtils.fakeVideoAddr(); }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk(new[] {"chr1.bin"}); }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
@@ -21,24 +22,8 @@ public class Data
   public int getBigBlocksCount()        { return 192; }
   public int getPalBytesAddr()          { return 0x5300; }
   
-  public GetBlocksFunc        getBlocksFunc() { return BadDudesUtils.getBlocks;}
-  public SetBlocksFunc        setBlocksFunc() { return BadDudesUtils.setBlocks;}
-  public GetPalFunc           getPalFunc()           { return getPallete;}
+  public GetBlocksFunc        getBlocksFunc() { return BlockUtils.getBlocksLinear2x2Masked;}
+  public SetBlocksFunc        setBlocksFunc() { return BlockUtils.setBlocksLinear2x2Masked;}
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin(new[] {"pal1.bin"}); }
   public SetPalFunc           setPalFunc()           { return null;}
-  //----------------------------------------------------------------------------
-  
-  public byte[] getPallete(int palId)
-  {
-      return Utils.readBinFile("pal1.bin");
-  }
-  
-  public int getVideoAddress(int id)
-  {
-      return -1;
-  }
-  
-  public byte[] getVideoChunk(int videoPageId)
-  {
-      return Utils.readVideoBankFromFile("chr1.bin", videoPageId);
-  }
 }

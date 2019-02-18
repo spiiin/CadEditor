@@ -1,6 +1,6 @@
 using CadEditor;
 using System;
-//css_include bucky_ohare/BuckyUtils.cs;
+//css_include shared_settings/SharedUtils.cs;
 
 public class Data 
 { 
@@ -14,8 +14,8 @@ public class Data
   
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x0 , 5   , 0x1000);  }
   public OffsetRec getPalOffset  ()     { return new OffsetRec(0x0 , 5   , 16); }
-  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return BuckyUtils.fakeVideoAddr(); }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return BuckyUtils.getVideoChunk(new[] {"chr7(d).bin", "chr7(a).bin", "chr7(b).bin", "chr7(c).bin", "chr7(e).bin"}); }
+  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SharedUtils.fakeVideoAddr(); }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk(new[] {"chr7(d).bin", "chr7(a).bin", "chr7(b).bin", "chr7(c).bin", "chr7(e).bin"}); }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0xe3fd, 1  , 0x1000);  }
@@ -25,6 +25,6 @@ public class Data
   public GetBlocksFunc        getBlocksFunc() { return Utils.getBlocksFromTiles16Pal1;}
   public SetBlocksFunc        setBlocksFunc() { return Utils.setBlocksFromTiles16Pal1;}
   
-  public GetPalFunc           getPalFunc()           { return BuckyUtils.readPalFromBin(new[] {"pal7(c).bin", "pal7(a).bin", "pal7(b).bin", "pal7(d).bin", "pal7(e).bin"}); }
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin(new[] {"pal7(c).bin", "pal7(a).bin", "pal7(b).bin", "pal7(d).bin", "pal7(e).bin"}); }
   public SetPalFunc           setPalFunc()           { return null;}
 }

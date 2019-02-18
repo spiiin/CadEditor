@@ -1,6 +1,6 @@
 using CadEditor;
 using System;
-//css_include kaiketsu_yanchamaru_3/KaiketsuUtils.cs;
+//css_include shared_settings/BlockUtils.cs;
 
 public class Data 
 { 
@@ -21,8 +21,8 @@ public class Data
   public int getBigBlocksCount()        { return 256; }
   public int getPalBytesAddr()          { return 0xe710; }
   
-  public GetBlocksFunc        getBlocksFunc() { return KaiketsuUtils.getBlocks;}
-  public SetBlocksFunc        setBlocksFunc() { return KaiketsuUtils.setBlocks;}
+  public GetBlocksFunc        getBlocksFunc() { return BlockUtils.getBlocksLinear2x2Masked;}
+  public SetBlocksFunc        setBlocksFunc() { return BlockUtils.setBlocksLinear2x2Masked;}
   public GetPalFunc           getPalFunc()           { return getPallete;}
   public SetPalFunc           setPalFunc()           { return null;}
   //----------------------------------------------------------------------------

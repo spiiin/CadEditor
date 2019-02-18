@@ -1,7 +1,7 @@
 using CadEditor;
 using System;
-using PluginMapEditor;
-//css_include low_g_man/LowGManUtils.cs;
+//css_include shared_settings/BlockUtils.cs;
+//css_include shared_settings/SharedUtils.cs;
 
 public class Data 
 {  
@@ -11,8 +11,8 @@ public class Data
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
   
-  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return LowGManUtils.fakeVideoAddr(); }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return LowGManUtils.getVideoChunk("chr-title.bin");   }
+  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SharedUtils.fakeVideoAddr(); }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk("chr-title.bin");   }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
@@ -22,8 +22,8 @@ public class Data
   public int getBigBlocksCount()        { return 256; }
   public int getPalBytesAddr()          { return 0x5e0b; }
   
-  public GetBlocksFunc        getBlocksFunc() { return LowGManUtils.getBlocks;}
-  public SetBlocksFunc        setBlocksFunc() { return LowGManUtils.setBlocks;}
-  public GetPalFunc           getPalFunc()           { return LowGManUtils.readPalFromBin("pal-title.bin"); }
+  public GetBlocksFunc        getBlocksFunc() { return BlockUtils.getBlocksLinear2x2Masked;}
+  public SetBlocksFunc        setBlocksFunc() { return BlockUtils.setBlocksLinear2x2Masked;}
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin("pal-title.bin"); }
   public SetPalFunc           setPalFunc()           { return null;}
 }
