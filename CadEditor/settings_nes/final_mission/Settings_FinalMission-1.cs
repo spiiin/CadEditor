@@ -25,6 +25,7 @@ public class Data
   public GetPalFunc           getPalFunc()           { return getPallete;}
   public SetPalFunc           setPalFunc()           { return null;}
   //----------------------------------------------------------------------------
+  //real, there are 1 attrib BEFORE block, every 2 bit encode one of 4 colors of block at 4 different position at screen
   public static ObjRec[] getBlocks(int tileId)
   {
       int count = ConfigScript.getBlocksCount(tileId);
