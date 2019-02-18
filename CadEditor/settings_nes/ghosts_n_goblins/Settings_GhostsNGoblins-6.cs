@@ -1,6 +1,7 @@
 using CadEditor;
 using System;
-//css_include ghosts_n_goblins/GnGUtils.cs;
+//css_include shared_settings/BlockUtils.cs;
+//css_include shared_settings/SharedUtils.cs;
 
 public class Data 
 { 
@@ -10,8 +11,8 @@ public class Data
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
   
-  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getVideoAddress; }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChunk;   }
+  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SharedUtils.fakeVideoAddr(); }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk(new[] {"chr4.bin"}); }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
@@ -21,9 +22,9 @@ public class Data
   public int getBigBlocksCount()        { return 256; }
   public int getPalBytesAddr()          { return 0xfdf5; }
   
-  public GetBlocksFunc        getBlocksFunc() { return GnGUtils.getBlocks;}
-  public SetBlocksFunc        setBlocksFunc() { return GnGUtils.setBlocks;}
-  public GetPalFunc           getPalFunc()           { return getPallete;}
+  public GetBlocksFunc        getBlocksFunc() { return BlockUtils.getBlocksLinear2x2Masked;}
+  public SetBlocksFunc        setBlocksFunc() { return BlockUtils.setBlocksLinear2x2Masked;}
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin(new[] {"pal5(a).bin"}); }
   public SetPalFunc           setPalFunc()           { return null;}
   //----------------------------------------------------------------------------
   
