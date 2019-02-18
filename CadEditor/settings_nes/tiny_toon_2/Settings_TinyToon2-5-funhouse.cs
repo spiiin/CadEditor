@@ -5,7 +5,18 @@ using System;
 
 public class Data 
 {  
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x3683, 11 , 16*12, 16, 12);   }
+  public OffsetRec[] getScreensOffsetsForLevels() {
+    var ans = new OffsetRec[] {
+      new OffsetRec(0x1843, 7 , 16*12, 16, 12),
+      new OffsetRec(0x1daf, 13, 16*15, 16, 15),
+      new OffsetRec(0x29df, 1 , 16*21, 16, 21),
+      new OffsetRec(0x2b4f, 7 , 16*15, 16, 15),
+      new OffsetRec(0x31df, 3 , 16*12, 16, 12),
+      new OffsetRec(0x3429, 3 , 16*12, 16, 12),
+      new OffsetRec(0x3683, 11, 16*12, 16, 12),
+    };
+    return ans;  
+  }
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }

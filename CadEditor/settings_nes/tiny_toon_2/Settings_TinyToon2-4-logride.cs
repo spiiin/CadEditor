@@ -5,7 +5,14 @@ using System;
 
 public class Data 
 {  
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0xad3d, 13 , 16*12, 16, 12);   }
+  public OffsetRec[] getScreensOffsetsForLevels() {
+    var ans = new OffsetRec[] {
+      new OffsetRec(0xa2ed, 11 , 16*15, 16, 15),
+      new OffsetRec(0xad3d, 13 , 16*12, 16, 12),
+      new OffsetRec(0xb6fd,  9 , 16*12, 16, 12),
+    };
+    return ans;  
+  }
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }
@@ -24,6 +31,7 @@ public class Data
   
   public GetBlocksFunc        getBlocksFunc() { return TT2Utils.getBlocks;}
   public SetBlocksFunc        setBlocksFunc() { return TT2Utils.setBlocks;}
-  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin("pal4.bin"); }
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin(new[] {"pal4.bin", "pal4(a).bin"}); }
+  public OffsetRec getPalOffset  ()     { return new OffsetRec(0x0 , 2   , 16); }
   public SetPalFunc           setPalFunc()           { return null;}
 }
