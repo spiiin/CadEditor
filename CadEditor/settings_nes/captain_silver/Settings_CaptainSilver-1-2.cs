@@ -1,7 +1,7 @@
 using CadEditor;
 using System;
 //css_include shared_settings/SharedUtils.cs;
-//css_include shared_settings/BlockUtils.cs;
+//css_include captain_silver/CaptainSilverUtils.cs;
 
 public class Data 
 { 
@@ -20,10 +20,10 @@ public class Data
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0xf22, 1  , 0x1000);  }
   public int getBlocksCount()           { return 157; }
   public int getBigBlocksCount()        { return 157; }
-  public int getPalBytesAddr()          { return 0x122e; }
+  public int getPalBytesAddr()          { return 0x1233; }
   
-  public GetBlocksFunc        getBlocksFunc() { return BlockUtils.getBlocksLinear2x2MaskedWithAttribs;}
-  public SetBlocksFunc        setBlocksFunc() { return BlockUtils.setBlocksLinear2x2MaskedWithAttribs;}
+  public GetBlocksFunc        getBlocksFunc() { return CaptainSilverUtils.getBlocksLinear2x2MaskedWithAttribs;}
+  public SetBlocksFunc        setBlocksFunc() { return CaptainSilverUtils.setBlocksLinear2x2MaskedWithAttribs;}
   public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin("pal1-2.bin"); }
   public SetPalFunc           setPalFunc()           { return null;}
 }
