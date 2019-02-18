@@ -1,6 +1,8 @@
 using CadEditor;
 using System;
-//css_include captain_america/CaptainAmericaUtils.cs;
+//css_include shared_settings/BlockUtils.cs;
+//css_include shared_settings/SharedUtils.cs;
+
 public class Data 
 { 
   public OffsetRec getScreensOffset()  { return new OffsetRec(0x46a0, 1 , 16*15, 16, 15);   }
@@ -9,8 +11,8 @@ public class Data
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
   
-  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getVideoAddress; }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChunk;   }
+  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SharedUtils.fakeVideoAddr(); }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk(new[] {"chr4.bin"}); }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
@@ -20,24 +22,8 @@ public class Data
   public int getBigBlocksCount()        { return 138; }
   public int getPalBytesAddr()          { return 0x5140; }
   
-  public GetBlocksFunc        getBlocksFunc() { return CAUtils.getBlocks;}
-  public SetBlocksFunc        setBlocksFunc() { return CAUtils.setBlocks;}
-  public GetPalFunc           getPalFunc()           { return getPallete;}
+  public GetBlocksFunc        getBlocksFunc() { return BlockUtils.getBlocksLinear2x2Masked;}
+  public SetBlocksFunc        setBlocksFunc() { return BlockUtils.setBlocksLinear2x2Masked;}
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin(new[] {"pal4.bin"}); }
   public SetPalFunc           setPalFunc()           { return null;}
-  //----------------------------------------------------------------------------
-  
-  public byte[] getPallete(int palId)
-  {
-      return Utils.readBinFile("pal4.bin");
-  }
-  
-  public int getVideoAddress(int id)
-  {
-    return -1;
-  }
-  
-  public byte[] getVideoChunk(int videoPageId)
-  {
-     return Utils.readVideoBankFromFile("chr4.bin", videoPageId);
-  }
 }
