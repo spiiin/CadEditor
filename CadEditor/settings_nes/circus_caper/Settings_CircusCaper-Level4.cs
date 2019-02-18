@@ -2,6 +2,7 @@ using CadEditor;
 using System;
 using PluginMapEditor;
 //css_include circus_caper/CircusCaperUtils.cs;
+//css_include shared_settings/SharedUtils.cs;
 
 public class Data 
 {
@@ -20,8 +21,8 @@ public class Data
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
   
-  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return CircusCaperUtils.fakeVideoAddr(); }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return CircusCaperUtils.getVideoChunk("chr4.bin");   }
+  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SharedUtils.fakeVideoAddr(); }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk("chr4.bin");   }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
@@ -33,7 +34,7 @@ public class Data
   
   public GetBlocksFunc        getBlocksFunc() { return Utils.getBlocksLinear2x2withoutAttrib;}
   public SetBlocksFunc        setBlocksFunc() { return Utils.setBlocksLinearWithoutAttrib;}
-  public GetPalFunc           getPalFunc()           { return CircusCaperUtils.readPalFromBin("pal4.bin"); }
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin("pal4.bin"); }
   public SetPalFunc           setPalFunc()           { return null;}
   //----------------------------------------------------------------------------
   public MapInfo[] getMapsInfo()      { return CircusCaperUtils.makeMapsInfo(); }
