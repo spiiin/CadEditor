@@ -4,26 +4,33 @@ using System;
 //css_include shared_settings/SharedUtils.cs;
 
 public class Data 
-{  
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x8eec, 1 , 16*15, 16, 15);   }
+{
+  public OffsetRec[] getScreensOffsetsForLevels() {
+    var ans = new OffsetRec[] {
+      new OffsetRec(0x25c4, 2 , 16*15, 16, 15),
+      new OffsetRec(0x27a4, 2 , 16*12, 16, 12),
+      new OffsetRec(0x2924, 2 , 16*15, 16, 15),
+    };
+    return ans;  
+  }
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SharedUtils.fakeVideoAddr(); }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk("chr3-2.bin");   }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk("chr5-2.bin");   }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
   
-  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x926c, 1  , 0x1000);  }
-  public int getBlocksCount()           { return 160; }
-  public int getBigBlocksCount()        { return 160; }
-  public int getPalBytesAddr()          { return 0x9488; }
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x2b04, 1  , 0x1000);  }
+  public int getBlocksCount()           { return 256; }
+  public int getBigBlocksCount()        { return 256; }
+  public int getPalBytesAddr()          { return 0x2cf0; }
   
   public GetBlocksFunc        getBlocksFunc() { return BlockUtils.getBlocksLinear2x2Masked;}
   public SetBlocksFunc        setBlocksFunc() { return BlockUtils.setBlocksLinear2x2Masked;}
-  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin("pal3-2.bin"); }
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin("pal5-2.bin"); }
   public SetPalFunc           setPalFunc()           { return null;}
 }

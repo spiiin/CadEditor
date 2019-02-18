@@ -4,8 +4,17 @@ using System;
 //css_include shared_settings/SharedUtils.cs;
 
 public class Data 
-{  
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0xae15, 2 , 16*15, 16, 15);   }
+{
+  public OffsetRec[] getScreensOffsetsForLevels() {
+    var ans = new OffsetRec[] {
+      new OffsetRec(0xae15, 2 , 16*15, 16, 15),
+      new OffsetRec(0xaff5, 3 , 16*12, 16, 12),
+      new OffsetRec(0xb235, 1 , 16*15, 16, 15),
+      new OffsetRec(0xb325, 2 , 16*12, 16, 12),
+      new OffsetRec(0xb4a5, 2 , 16*5, 16, 5),
+    };
+    return ans;  
+  }
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }
