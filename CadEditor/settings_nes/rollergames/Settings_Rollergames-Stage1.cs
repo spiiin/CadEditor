@@ -4,7 +4,14 @@ using System;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x4e9d, 10 , 8*8, 8, 8);   }
+  public OffsetRec[] getScreensOffsetsForLevels() {
+    var ans = new OffsetRec[] {
+      new OffsetRec(0x4097, 14 , 8*4, 8, 4),
+      new OffsetRec(0x4257, 47 , 8*8, 8, 8),
+      new OffsetRec(0x4e9d, 10 , 8*8, 8, 8),
+    };
+    return ans;  
+  }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
   
@@ -13,7 +20,7 @@ public class Data
   public bool isEnemyEditorEnabled()    { return false; }
   
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x0 , 1   , 0x1000);  }
-  public OffsetRec getPalOffset  ()     { return new OffsetRec(0x0 , 1   , 16); }
+  public OffsetRec getPalOffset  ()     { return new OffsetRec(0x0 , 2   , 16); }
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SharedUtils.fakeVideoAddr(); }
   public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk(new[] {"chr1-1.bin"}); }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
@@ -25,6 +32,6 @@ public class Data
   public GetBlocksFunc        getBlocksFunc() { return Utils.getBlocksFromTiles16Pal1;}
   public SetBlocksFunc        setBlocksFunc() { return Utils.setBlocksFromTiles16Pal1;}
   
-  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin(new[] {"pal1-2.bin"}); }
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin(new[] {"pal1-1.bin", "pal1-2.bin"}); }
   public SetPalFunc           setPalFunc()           { return null;}
 }
