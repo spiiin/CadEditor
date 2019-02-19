@@ -15,7 +15,7 @@ public class Data
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x0 , 2   , 0x1000);  }
   public OffsetRec getPalOffset  ()     { return new OffsetRec(0x0 , 3   , 16); }
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SharedUtils.fakeVideoAddr(); }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk(new[] {"chr6(c).bin", "chr6(d).bin"}); }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk(new[] {"chr6.bin", "chr6(d).bin"}); }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0xadaf, 1  , 0x1000);  }
