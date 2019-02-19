@@ -34,7 +34,7 @@ public class Data
   
   public GetBlocksFunc        getBlocksFunc() { return Utils.getBlocksLinear2x2withoutAttrib;}
   public SetBlocksFunc        setBlocksFunc() { return Utils.setBlocksLinearWithoutAttrib;}
-  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin("pal-bonus2.bin"); }
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin("pal2-3.bin"); }
   public SetPalFunc           setPalFunc()           { return null;}
   //----------------------------------------------------------------------------
   public MapInfo[] getMapsInfo()      { return AsterixUtils.makeMapsInfo(); }

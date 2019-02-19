@@ -39,6 +39,6 @@ public class Data
   
   public byte[] getVideoChunk(int videoPageId)
   {
-     return Utils.readVideoBankFromFile("chr-ship.bin", videoPageId);
+     return Utils.readVideoBankFromFile("chr6.bin", videoPageId);
   }
 }
