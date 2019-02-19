@@ -40,7 +40,7 @@ public int getBigBlocksCountShatterhand(int hierLevel, int bigBlockId)
   public GetPalBytesAddrFunc getPalBytesAddrFunc() { return getPalBytesAddr; }
   
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x0 , 1   , 0x1000);  }
-  public OffsetRec getPalOffset  ()     { return new OffsetRec(0x0 , 3   , 16); }
+  public OffsetRec getPalOffset  ()     { return new OffsetRec(0x0 , 2   , 16); }
 
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return ShatterhandUtils.fakeVideoAddr(); }
   public GetVideoChunkFunc    getVideoChunkFunc()    { return ShatterhandUtils.getVideoChunk(new[]{"chr6.bin"});   }
@@ -51,7 +51,7 @@ public int getBigBlocksCountShatterhand(int hierLevel, int bigBlockId)
   public GetBlocksFunc        getBlocksFunc()        { return ShatterhandUtils.getBlocks;}
   public SetBlocksFunc        setBlocksFunc()        { return ShatterhandUtils.setBlocks;}
   public GetBlocksAddrFunc    getBlocksAddrFunc()    { return getBlocksAddr; }
-  public GetPalFunc           getPalFunc()           { return ShatterhandUtils.readPalFromBin(new[]{"pal6.bin", "pal6-2.bin", "pal6-3.bin"}); }
+  public GetPalFunc           getPalFunc()           { return ShatterhandUtils.readPalFromBin(new[]{"pal6.bin", "pal6-3.bin"}); }
   public SetPalFunc           setPalFunc()           { return null;}
   //public GetObjectsFunc       getObjectsFunc()       { return ShatterhandUtils.getObjects; }
   //public SetObjectsFunc       setObjectsFunc()       { return ShatterhandUtils.setObjects; }
@@ -83,8 +83,8 @@ public int getBigBlocksCountShatterhand(int hierLevel, int bigBlockId)
   {
     return new GroupRec[] { 
       new GroupRec("6-1"         , 0,0,0,0, 1),
-      new GroupRec("6-2"         , 0,1,1,1, 12),
-      new GroupRec("6-boss"      , 0,1,1,2, 14),
+      new GroupRec("6-2"         , 0,1,1,0, 12),
+      new GroupRec("6-boss"      , 0,1,1,1, 14),
     };
   }
   
