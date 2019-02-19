@@ -12,7 +12,7 @@ public class Data
   public bool isEnemyEditorEnabled()    { return false; }
   
   public OffsetRec getVideoOffset()     { return new OffsetRec(0x0 , 2   , 0x1000);  }
-  public OffsetRec getPalOffset  ()     { return new OffsetRec(0x0 , 4   , 16); }
+  public OffsetRec getPalOffset  ()     { return new OffsetRec(0x0 , 3   , 16); }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SharedUtils.fakeVideoAddr(); }
   public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk(new[] {"chr2.bin", "chr2-2.bin"}); }
@@ -30,6 +30,6 @@ public class Data
   public SetBlocksFunc        setBlocksFunc() { return AitMKUtils.setBlocks;}
   public GetBigBlocksFunc     getBigBlocksFunc()     { return Utils.getBigBlocksCapcomDefault;}
   public SetBigBlocksFunc     setBigBlocksFunc()     { return Utils.setBigBlocksCapcomDefault;}
-  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin(new[] {"pal2.bin", "pal2-2.bin", "pal2-3.bin", "pal2-4.bin"}); }
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin(new[] {"pal2.bin", "pal2-2.bin", "pal2-3.bin"}); }
   public SetPalFunc           setPalFunc()           { return null;}
 }
