@@ -23,7 +23,7 @@ public class Data
     public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
     
     public OffsetRec getPalOffset() { return new OffsetRec(0x0 , 1   , 16); }
-    public GetPalFunc getPalFunc()  { return ThreeUtils.readPalFromBin(new[] {"pal5-4(a).bin"}); }
+    public GetPalFunc getPalFunc()  { return ThreeUtils.readPalFromBin(new[] {"pal5-2(b).bin"}); }
     public SetPalFunc setPalFunc()  { return null;}
     
     public bool isBigBlockEditorEnabled() { return true;  }

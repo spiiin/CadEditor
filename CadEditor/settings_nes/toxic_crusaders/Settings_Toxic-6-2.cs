@@ -21,7 +21,7 @@ public class Data
   public bool isEnemyEditorEnabled()    { return false; }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SharedUtils.fakeVideoAddr(); }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return  SharedUtils.getVideoChunk("chr6-2.bin");   }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return  SharedUtils.getVideoChunk("chr3-1.bin");   }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
