@@ -1,6 +1,10 @@
+#!/usr/bin/env python2
+#Script for crop all big binary files inside folder to 4096 bytes.
+#DO NOT USE ON ROOT FOLDER!!!
+
 import os, glob, shutil, zipfile, path
 
-def applyToAllFilesInFolder ( folder, fileexts, func, *params):
+def applyToAllFilesInFolder(folder, fileexts, func, *params):
   """apply function with params func to all files with extenstions from list fileext in folder
      example:
        applyToAllFilesInFolder ("C:", [".txt"], lambda filename:None)
@@ -10,7 +14,7 @@ def applyToAllFilesInFolder ( folder, fileexts, func, *params):
       shortName, ext = os.path.splitext(name)
       if ext.lower() in fileexts:
         func(os.path.join(dirname, name), *params)
-  os.path.walk( folder, visit, 0)
+  os.path.walk(folder, visit, 0)
   
 def crop(fname):
   with open(fname, "rb") as f:

@@ -33,7 +33,7 @@ public class Data
   
   public GetBlocksFunc        getBlocksFunc() { return Utils.getBlocksLinear2x2withoutAttrib;}
   public SetBlocksFunc        setBlocksFunc() { return Utils.setBlocksLinearWithoutAttrib;}
-  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin("pal5(b).bin"); }
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin("pal4.bin"); }
   public SetPalFunc           setPalFunc()           { return null;}
   //----------------------------------------------------------------------------
   public MapInfo[] getMapsInfo()      { return CircusCaperUtils.makeMapsInfo(); }

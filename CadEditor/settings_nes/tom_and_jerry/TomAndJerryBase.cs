@@ -1,6 +1,7 @@
 using CadEditor;
 using System.Collections.Generic;
 using System;
+//css_include shared_settings/BlockUtils.cs;
 
 public class TomAndJerryBase
 {
@@ -12,8 +13,8 @@ public class TomAndJerryBase
   public virtual SetVideoChunkFunc    setVideoChunkFunc()    { return Utils.setVideoChunk; }
   public virtual GetBigBlocksFunc     getBigBlocksFunc()     { return Utils.getBigBlocksCapcomDefault;}
   public virtual SetBigBlocksFunc     setBigBlocksFunc()     { return Utils.setBigBlocksCapcomDefault;}
-  public virtual GetBlocksFunc        getBlocksFunc()        { return getBlocks;}
-  public virtual SetBlocksFunc        setBlocksFunc()        { return setBlocks;}
+  public GetBlocksFunc                getBlocksFunc()        { return BlockUtils.getBlocksFromAlignedArrays;}
+  public SetBlocksFunc                setBlocksFunc()        { return BlockUtils.setBlocksToAlignedArrays;}
   public virtual GetPalFunc           getPalFunc()           { return Utils.getPalleteLinear;}
   public virtual SetPalFunc           setPalFunc()           { return Utils.setPalleteLinear;}
   
@@ -22,16 +23,6 @@ public class TomAndJerryBase
   public virtual GetObjectDictionaryFunc getObjectDictionaryFunc() { return getObjectDictionary; }
   
   public virtual int getCheeseAddr() { return -1; }
-  
-  public ObjRec[] getBlocks(int blockIndex)
-  {
-    return Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount(), false);
-  }
-  
-  public void setBlocks(int blockIndex, ObjRec[] blocksData)
-  {
-    Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(blockIndex), getBlocksCount(), true, false);
-  }
   
   //-------------------------------------------------------------------------------
   public List<ObjectList> getObjects(int levelNo)

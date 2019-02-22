@@ -21,7 +21,7 @@ public class Data
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x572A  , 8   , 0x440); }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc()          { return NinjaCatUtils.fakeVideoAddr(); }
-  public GetVideoChunkFunc    getVideoChunkFunc()             { return NinjaCatUtils.getVideoChunk("chr10.bin");   }
+  public GetVideoChunkFunc    getVideoChunkFunc()             { return NinjaCatUtils.getVideoChunk("chr9.bin");   }
   public SetVideoChunkFunc    setVideoChunkFunc()             { return null; }
   public GetBlocksFunc        getBlocksFunc()                 { return NinjaCatUtils.getBlocks;}
   public SetBlocksFunc        setBlocksFunc()                 { return NinjaCatUtils.setBlocks;}

@@ -29,7 +29,7 @@ public class Data
   
   public byte[] getPallete(int palId)
   {
-      return Utils.readBinFile("pal2(b).bin");
+      return Utils.readBinFile("pal2.bin");
   }
   
   public int getVideoAddress(int id)

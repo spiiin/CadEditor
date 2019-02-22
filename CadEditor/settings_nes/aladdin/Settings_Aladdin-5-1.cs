@@ -1,6 +1,7 @@
 using CadEditor;
 using System;
-using System.Drawing;
+//css_include shared_settings/BlockUtils.cs;
+//css_include shared_settings/SharedUtils.cs;
 
 public class Data 
 { 
@@ -9,8 +10,8 @@ public class Data
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
   
-  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return getVideoAddress; }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChunk;   }
+  public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SharedUtils.fakeVideoAddr(); }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk(new[] {"chr5-1.bin"}); }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
@@ -19,34 +20,8 @@ public class Data
   public int getBlocksCount()           { return 256; }
   public int getBigBlocksCount()        { return 256; }
   
-  public GetBlocksFunc        getBlocksFunc() { return getBlocks;}
-  public SetBlocksFunc        setBlocksFunc() { return setBlocks;}
-  public GetPalFunc           getPalFunc()           { return getPallete;}
+  public GetBlocksFunc        getBlocksFunc() { return BlockUtils.getBlocksFromAlignedArrays;}
+  public SetBlocksFunc        setBlocksFunc() { return BlockUtils.setBlocksToAlignedArrays;}
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin(new[] {"pal5-1.bin"}); }
   public SetPalFunc           setPalFunc()           { return null;}
-  
-  //----------------------------------------------------------------------------
-  public ObjRec[] getBlocks(int tileId)
-  {
-    return Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(tileId), false);
-  }
-  
-  public void setBlocks(int tileId, ObjRec[] blocks)
-  {
-    Utils.writeBlocksToAlignedArrays(blocks, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(tileId), true, false);
-  }
-  
-  public byte[] getPallete(int palId)
-  {
-      return Utils.readBinFile("pal5-1.bin");
-  }
-  
-  public int getVideoAddress(int id)
-  {
-    return -1;
-  }
-  
-  public byte[] getVideoChunk(int videoPageId)
-  {
-     return Utils.readVideoBankFromFile("chr5-1.bin", videoPageId);
-  }
 }

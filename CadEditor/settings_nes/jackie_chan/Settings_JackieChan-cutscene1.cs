@@ -40,6 +40,6 @@ public class Data
   
   public byte[] getPallete(int palId)
   {
-      return Utils.readBinFile("pal-cutscene1.bin");
+      return Utils.readBinFile("pal-1.bin");
   }
 }

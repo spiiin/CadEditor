@@ -34,7 +34,7 @@ public class Data
   
   public byte[] getVideoChunk(int videoPageId)
   {
-     return Utils.readVideoBankFromFile("chr-space.bin", videoPageId);
+     return Utils.readVideoBankFromFile("chr-ending1.bin", videoPageId);
   }
   
   public byte[] getPallete(int palId)

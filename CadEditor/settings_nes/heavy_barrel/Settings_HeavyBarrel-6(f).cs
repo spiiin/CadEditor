@@ -29,7 +29,7 @@ public class Data
   
   public byte[] getPallete(int palId)
   {
-      return Utils.readBinFile("pal6(c).bin");
+      return Utils.readBinFile("pal6(a).bin");
   }
   
   public int getVideoAddress(int id)
@@ -39,6 +39,6 @@ public class Data
   
   public byte[] getVideoChunk(int videoPageId)
   {
-     return Utils.readVideoBankFromFile("chr6(c).bin", videoPageId);
+     return Utils.readVideoBankFromFile("chr6(a).bin", videoPageId);
   }
 }

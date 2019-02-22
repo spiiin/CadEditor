@@ -6,13 +6,12 @@ public static class BlockUtils
   //-----------------------------------------------------------------------------------------------------------------
   public static ObjRec[] getBlocksFromAlignedArrays(int tileId)
   {
-      var bb = Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(tileId), false);
-      return bb;
+      return Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(tileId), false);
   }
   
   public static void setBlocksToAlignedArrays(int tileId, ObjRec[] blocksData)
   {
-    Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(tileId), true, false);
+      Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(tileId), true, false);
   }
   
   //-----------------------------------------------------------------------------------------------------------------
@@ -102,33 +101,6 @@ public static class BlockUtils
     int count = ConfigScript.getBlocksCount(tileId);
     var palAddr = ConfigScript.getPalBytesAddr(tileId);
     Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, false, true);
-    for (int i = 0; i < count; i++)
-    {
-        int t = Globals.romdata[palAddr + i];
-        t =  t &  0xFC | blocksData[i].palBytes[0];
-        Globals.romdata[palAddr + i] = (byte)t; //save only pal bits, not physics
-    }
-  }
-  
-  //-----------------------------------------------------------------------------------------------------------------
-  public static ObjRec[] getBlocksLinear2x2MaskedWithAttribs(int tileId)
-  {
-      int count = ConfigScript.getBlocksCount(tileId);
-      var bb = Utils.readBlocksLinear(Globals.romdata, ConfigScript.getTilesAddr(tileId), 2, 2, count, true, false);
-      var palAddr = ConfigScript.getPalBytesAddr(tileId);
-      for (int i = 0; i < count; i++)
-      {
-          bb[i].palBytes[0] = Globals.romdata[palAddr + i] & 0x3; //get only pal, not physics
-      }
-      return bb;
-  }
-  
-  public static void setBlocksLinear2x2MaskedWithAttribs(int tileId, ObjRec[] blocksData)
-  {
-    int addr = ConfigScript.getTilesAddr(tileId);
-    int count = ConfigScript.getBlocksCount(tileId);
-    var palAddr = ConfigScript.getPalBytesAddr(tileId);
-    Utils.writeBlocksLinear(blocksData, Globals.romdata, addr, count, true, false);
     for (int i = 0; i < count; i++)
     {
         int t = Globals.romdata[palAddr + i];

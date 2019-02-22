@@ -12,7 +12,7 @@ public class Data
   public bool isEnemyEditorEnabled()    { return false; }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return SharedUtils.fakeVideoAddr(); }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk(new[] {"chr3c.bin"}); }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return SharedUtils.getVideoChunk(new[] {"chr3b.bin"}); }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0, 1 , 0x1000);  }
@@ -22,7 +22,7 @@ public class Data
   public SetBigBlocksFunc     setBigBlocksFunc() { return BananaUtils.setBigBlocks;}
   public GetBlocksFunc        getBlocksFunc() { return BananaUtils.getBlocksConsts;}
   public SetBlocksFunc        setBlocksFunc() { return null;}
-  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin(new[] {"pal3c.bin"}); }
+  public GetPalFunc           getPalFunc()           { return SharedUtils.readPalFromBin(new[] {"pal3b.bin"}); }
   public SetPalFunc           setPalFunc()    { return null;}
   
   public OffsetRec getBigBlocksOffset() { return new OffsetRec(0x6a1a, 1 , 0x4000); }

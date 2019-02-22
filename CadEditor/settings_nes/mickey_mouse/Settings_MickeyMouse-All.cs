@@ -5,7 +5,7 @@ public class Data
 { 
   public OffsetRec getScreensOffset()  { return new OffsetRec(0xa010, 1, 64*64, 64, 64);   }
   
-  public OffsetRec getVideoOffset()     { return new OffsetRec(0x0 , 4   , 0x1000);  }
+  public OffsetRec getVideoOffset()     { return new OffsetRec(0x0 , 3   , 0x1000);  }
   public OffsetRec getPalOffset  ()     { return new OffsetRec(0x0 , 6   , 16); }
   
   public bool isBigBlockEditorEnabled() { return true; }
@@ -13,7 +13,7 @@ public class Data
   public bool isEnemyEditorEnabled()    { return false; }
   
   public GetVideoPageAddrFunc getVideoPageAddrFunc() { return MickeyUtils.fakeVideoAddr(); }
-  public GetVideoChunkFunc    getVideoChunkFunc()    { return MickeyUtils.getVideoChunk(new[] {"chr1.bin", "chr2.bin", "chr3.bin", "chr4.bin"}); }
+  public GetVideoChunkFunc    getVideoChunkFunc()    { return MickeyUtils.getVideoChunk(new[] {"chr1.bin", "chr2.bin", "chr4.bin"}); }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
   public OffsetRec getBlocksOffset()    { return new OffsetRec(0x4389, 1  , 0x1000);  }
@@ -35,10 +35,10 @@ public class Data
     return new GroupRec[] { 
       new GroupRec("Level 1" , 0,0,0,0, 0x01),
       new GroupRec("Level 2" , 1,0,0,1, 0x01),
-      new GroupRec("Level 3" , 2,0,0,2, 0x01),
-      new GroupRec("Level 3-flowers", 2,0,0,3, 0x01),
-      new GroupRec("Level 4" , 3,0,0,4, 0x01),
-      new GroupRec("Level 5" , 3,0,0,5, 0x01),
+      new GroupRec("Level 3" , 1,0,0,2, 0x01),
+      new GroupRec("Level 3-flowers", 1,0,0,3, 0x01),
+      new GroupRec("Level 4" , 2,0,0,4, 0x01),
+      new GroupRec("Level 5" , 2,0,0,5, 0x01),
     };
   }
 }

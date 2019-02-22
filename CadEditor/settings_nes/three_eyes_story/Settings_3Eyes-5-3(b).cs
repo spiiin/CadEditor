@@ -19,7 +19,7 @@ public class Data
     
     public OffsetRec getVideoOffset()                  { return new OffsetRec(0x0 , 1   , 0x1000);  }
     public GetVideoPageAddrFunc getVideoPageAddrFunc() { return ThreeUtils.fakeVideoAddr(); }
-    public GetVideoChunkFunc    getVideoChunkFunc()    { return ThreeUtils.getVideoChunk(new[] {"chr5-3(b).bin"}); }
+    public GetVideoChunkFunc    getVideoChunkFunc()    { return ThreeUtils.getVideoChunk(new[] {"chr5-2.bin"}); }
     public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
     
     public OffsetRec getPalOffset() { return new OffsetRec(0x0 , 1   , 16); }
