@@ -144,6 +144,7 @@ Supported games:
     Silkworm                                        (1 level)
     Snake's Revenge                                 (1 level, rle packed - save not working)
     Sonic the Hedgehog (unlicensed)                 (all levels)
+    Spartan X2                                      (1 level)
     Spelunker 2                                     (all levels)
     Splatter House                                  (all levels)
     Super C                                         (all levels)
