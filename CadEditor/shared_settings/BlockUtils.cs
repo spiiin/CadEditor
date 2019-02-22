@@ -6,13 +6,12 @@ public static class BlockUtils
   //-----------------------------------------------------------------------------------------------------------------
   public static ObjRec[] getBlocksFromAlignedArrays(int tileId)
   {
-      var bb = Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(tileId), false);
-      return bb;
+      return Utils.readBlocksFromAlignedArrays(Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(tileId), false);
   }
   
   public static void setBlocksToAlignedArrays(int tileId, ObjRec[] blocksData)
   {
-    Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(tileId), true, false);
+      Utils.writeBlocksToAlignedArrays(blocksData, Globals.romdata, ConfigScript.getTilesAddr(tileId), ConfigScript.getBlocksCount(tileId), true, false);
   }
   
   //-----------------------------------------------------------------------------------------------------------------
