@@ -25,6 +25,6 @@ public class Data
   
   public GetBlocksFunc        getBlocksFunc() { return FelixUtils.getBlocks;}
   public SetBlocksFunc        setBlocksFunc() { return FelixUtils.setBlocks;}
-  public GetPalFunc           getPalFunc()           { return FelixUtils.readPalFromBin("pal1.bin"); }
+  public GetPalFunc           getPalFunc()           { return FelixUtils.readPalFromBin("pal2.bin"); }
   public SetPalFunc           setPalFunc()           { return null;}
 }
