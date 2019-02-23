@@ -139,6 +139,7 @@ fnames = [
     "Rockin' Kats (U) [!].nes",
     "Rocman X (Sachen) (Eng) [!].nes",
     "Rollergames (U) [!].nes",
+    "Rush'n Attack (E).nes",
     "SD Hero Soukessen - Taose! Aku no Gundan (J) [!].nes",
     "Shadow of the Ninja (U) [!].nes",
     "Shatterhand (U) [!].nes",
