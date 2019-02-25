@@ -2,10 +2,18 @@ using CadEditor;
 using System;
 using System.Drawing;
 
-public class Data 
+public class Data
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec( 0x10fd9, 1 , 64*12, 64, 12);   }
-  
+  public OffsetRec[] getScreensOffsetsForLevels() {
+    var ans = new OffsetRec[] {
+        new OffsetRec( 0x100ee, 1 , 64*13, 64, 13),
+        new OffsetRec( 0x1042e, 1 , 59*19, 59, 19),
+        new OffsetRec( 0x1088f, 1 , 40*19, 40, 19),
+        new OffsetRec( 0x10b87, 1 , 41*22, 41, 22),
+   };
+    return ans;
+  }
+
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
@@ -16,10 +24,10 @@ public class Data
   public GetVideoChunkFunc    getVideoChunkFunc()    { return getVideoChunk;   }
   public SetVideoChunkFunc    setVideoChunkFunc()    { return null; }
   
-  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x14e13 , 1  , 0x1000);  }
-  public int getBlocksCount()           { return 158; }
-  public int getBigBlocksCount()        { return 158; }
-  public int getPalBytesAddr()          { return 0x15801; }
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x18010 , 1  , 0x1000);  }
+  public int getBlocksCount()           { return 214; }
+  public int getBigBlocksCount()        { return 214; }
+  public int getPalBytesAddr()          { return 0x18010+214*16; }
   public GetBlocksFunc        getBlocksFunc() { return Utils.getBlocksFromTiles16Pal1;}
   public SetBlocksFunc        setBlocksFunc() { return Utils.setBlocksFromTiles16Pal1;}
   
@@ -34,11 +42,11 @@ public class Data
   
   public byte[] getVideoChunk(int videoPageId)
   {
-     return Utils.readVideoBankFromFile("chr4.bin", videoPageId);
+     return Utils.readVideoBankFromFile("chr2.bin", videoPageId);
   }
   
   public byte[] getPallete(int palId)
   {
-      return Utils.readBinFile("pal4.bin");
+      return Utils.readBinFile("pal2.bin");
   }
 }

@@ -3,9 +3,17 @@ using System;
 using System.Drawing;
 
 public class Data 
-{ 
-  public OffsetRec getScreensOffset()  { return new OffsetRec( 0x1190b, 1 , 52*20, 52, 20);   }
-
+{
+  public OffsetRec[] getScreensOffsetsForLevels() {
+    var ans = new OffsetRec[] {
+        new OffsetRec( 0x10fd9, 1 , 64*12, 64, 12),
+        new OffsetRec( 0x112d9, 1 , 40*15, 40, 15),
+        new OffsetRec( 0x11531, 1 , 58*17, 58, 17),
+        new OffsetRec( 0x1190b, 1 , 52*20, 52, 20),
+   };
+    return ans;
+  }
+  
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }

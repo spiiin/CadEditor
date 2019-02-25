@@ -1,11 +1,18 @@
 using CadEditor;
 using System;
-using System.Drawing;
 
 public class Data 
-{ 
-  public OffsetRec getScreensOffset()  { return new OffsetRec( 0x0c51c, 1 , 55*21, 55, 21);   }
-
+{
+  public OffsetRec[] getScreensOffsetsForLevels() {
+    var ans = new OffsetRec[] {
+        new OffsetRec( 0x0c11a, 1 , 57*18, 57, 18),
+        new OffsetRec( 0x0c51c, 1 , 55*21, 55, 21),
+        new OffsetRec( 0x0c99f, 1 , 42*30, 42, 30),
+        new OffsetRec( 0x0ce8b, 1 , 48*26, 48, 26),
+    };
+    return ans;
+  }
+  
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }
   public bool isEnemyEditorEnabled()    { return false; }
