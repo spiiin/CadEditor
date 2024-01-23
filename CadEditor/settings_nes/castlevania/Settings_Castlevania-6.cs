@@ -4,8 +4,9 @@ using System.Drawing;
 
 public class Data 
 { 
-  public OffsetRec getScreensOffset()  { return new OffsetRec(0x1001A, 16 , 8*6, 6, 8); }		// screen 8x6 block 6x8  
-  public bool getScreenVertical()      { return true; }  
+  public OffsetRec getScreensOffset()  { return new OffsetRec(0x12217, 14 , 8*6, 6, 8); }	
+
+  public bool getScreenVertical()      { return true; }
   
   public bool isBigBlockEditorEnabled() { return false; }
   public bool isBlockEditorEnabled()    { return true; }
@@ -13,8 +14,9 @@ public class Data
   
   public bool isBuildScreenFromSmallBlocks() { return true; }
   
-  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x1031b, 1  , 0x1000);  }		//TSA 
- 
+  public OffsetRec getBlocksOffset()    { return new OffsetRec(0x12548, 1  , 0x1000);  } 
+
+  
   public int getBlocksCount()           { return 256; }
   public int getBigBlocksCount()        { return 256; }
   
@@ -34,13 +36,14 @@ public class Data
   
   public byte[] getVideoChunk(int videoPageId)
   {
- return Utils.readVideoBankFromFile("chr1.bin", 0);		//6018
+   return Utils.readVideoBankFromFile("chr6.bin", 0);		//d198
 
   }
   
   public byte[] getPallete(int palId)
   {
-      return Utils.readBinFile("pal1.bin");		// 1ce3a
+
+		return Utils.readBinFile("pal6.bin");       // 1ce99
 
   }
   
